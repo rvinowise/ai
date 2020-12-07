@@ -6,7 +6,7 @@ using rvinowise.unity.ai.action;
 using UnityEngine;
 using rvinowise.unity.extensions;
 using Action = rvinowise.unity.ai.action.Action;
-using rvinowise.ai.action;
+
 using rvinowise.ai.patterns;
 
 namespace rvinowise.unity.ai.patterns {
@@ -21,11 +21,11 @@ public class Pattern_finder: IPattern_finder
     public void find_new_patterns(
         int begin, int end
     ) {
-        ISet<IPattern> familiar_patterns = find_familiar_patterns(interval);
+        /* ISet<IPattern> familiar_patterns = find_familiar_patterns(interval);
         foreach (IPattern pattern in familiar_patterns)
         {
             
-        }
+        } */
     }
 
     private ISet<IPattern> find_familiar_patterns(
@@ -42,14 +42,16 @@ public class Pattern_finder: IPattern_finder
     }
 
     public IReadOnlyList<IPattern_appearance> find_repeated_pairs(
-        IReadOnlyList<IPattern_appearance> beginnings
+        IReadOnlyList<IPattern_appearance> beginnings,
         IReadOnlyList<IPattern_appearance> endings
     ) {
-
+        throw new NotImplementedException();
     }
 
-    
-    
+    public void find_new_patterns(IHistory_interval interval)
+    {
+        throw new NotImplementedException();
+    }
 }
 
 

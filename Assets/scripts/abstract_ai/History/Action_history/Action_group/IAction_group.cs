@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Numerics;
 using rvinowise.ai.patterns;
 
-namespace rvinowise.ai.action {
+namespace rvinowise.ai.patterns {
 
 public interface IAction_group {
 
@@ -11,7 +11,7 @@ public interface IAction_group {
 
     BigInteger moment{get;}
     
-    bool has_action(IPattern pattern, action.type_t type);
-    
+    bool has_action<TAction>(IPattern pattern) where TAction: IAction;
+    void add_action(IAction action);
 }
 }

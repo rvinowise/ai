@@ -1,6 +1,7 @@
 ﻿
 
 using System.Collections.Generic;
+using System.Numerics;
 
 namespace rvinowise.ai.patterns {
 public interface IPattern {
@@ -9,10 +10,14 @@ public interface IPattern {
         get;
     }
 
+    IPattern_appearance create_appearance(
+        IAction_group start_group,
+        IAction_group end_group
+    );
 
-    void add_appearance();
-
-    IReadOnlyList<IPattern_appearance> appearances {get;}
+    IReadOnlyList<IPattern_appearance> get_appearances_in_interval(
+        BigInteger start, BigInteger end
+    );
 
 }
 }

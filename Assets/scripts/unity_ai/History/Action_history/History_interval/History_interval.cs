@@ -20,13 +20,12 @@ public class History_interval:
             IPattern_appearance
         >();
 
-    public IHistory_interval parent_interval;
     public BigInteger start_moment{get; protected set;}
     public BigInteger end_moment{get; protected set;}
 
-    readonly BigInteger max_interval = int.MaxValue;
+    private IList<Action_group> groups = new List<Action_group>();
+    private readonly BigInteger max_interval = int.MaxValue;
     public History_interval(
-        IHistory_interval parent,
         BigInteger start_moment,
         BigInteger end_moment
     ) {
@@ -35,8 +34,6 @@ public class History_interval:
             "a history interval should be small enough to iterate through"
         );
         Contract.Requires(start_moment < end_moment);
-        Contract.Requires(parent.Count < end_moment);
-        this.parent_interval = parent;
         this.start_moment = start_moment;
         this.end_moment = end_moment;
     }
@@ -49,18 +46,18 @@ public class History_interval:
         return pattern_appearances[pattern].AsReadOnly();
     }
 
-    public IEnumerator<Action_group> GetEnumerator() {
-        for (int i=start_moment;i<end_moment;i++) {
-            yield return parent_interval[i];
+    public IEnumerator<IAction_group> GetEnumerator() {
+        for (int i=0;i<groups.Count;i++) {
+            yield return groups[i];
         }
     }
 
-    public Action_group this[int i] {
-        get { return parent_interval[start_moment + i]; }
+    public IAction_group this[int i] {
+        get { return groups[i]; }
     }
 
     public int Count {
-        get { return end_moment - start_moment; }
+        get { return groups.Count; }
     }
 }
 }

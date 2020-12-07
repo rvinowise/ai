@@ -13,6 +13,15 @@ public class Pattern_storage: MonoBehaviour {
         init_test_patterns(100);
     }
 
+    public IEnumerable<Pattern> get_selected_patterns() {
+        IList<Pattern> result = new List<Pattern>();
+        foreach(Pattern pattern in known_patterns) {
+            if (pattern.selected) {
+                result.Add(pattern);
+            }
+        }
+        return result;
+    }
     private void init_test_patterns(int qty) {
         for (int i=0;i<qty;i++) {
             Pattern pattern = pattern_prefab.get_from_pool<Pattern>();

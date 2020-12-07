@@ -111,6 +111,7 @@ LineRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -224,6 +225,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1086963756058008109, guid: 1c95ce0906d46284f8a798512e7924e0,
           type: 3}
+        m_TargetAssemblyTypeName: 
         m_MethodName: update_curve
         m_Mode: 1
         m_Arguments:
@@ -297,9 +299,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0088d65e0b2c473496efc681716e4b75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  start: {fileID: 0}
-  end: {fileID: 0}
+  start_appearance_prefab: {fileID: -7210517488555364797, guid: 09c28a2e5e0c0a345850548b6f7b3fcf,
+    type: 3}
+  end_appearance_prefab: {fileID: -4221996888324545884, guid: 7af617ac1bfbb9549bbab588c4eb8d87,
+    type: 3}
   bezier: {fileID: 5028659124518550879}
+  bezier_prefab: {fileID: 0}
 --- !u!114 &6416084840532676476
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -329,6 +334,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 5028659124518550879}
+        m_TargetAssemblyTypeName: 
         m_MethodName: update_curve
         m_Mode: 1
         m_Arguments:

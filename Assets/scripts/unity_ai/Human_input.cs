@@ -49,27 +49,6 @@ public class Human_input : patterns.Input {
         return name_to_pattern;
     }
 
-    void Update() {
-        if (input_mode == Input_mode.One_letter) {
-            read_input_as_one_letter();
-        } else if (input_mode == Input_mode.Long) {
-            
-        } else if (input_mode == Input_mode.Several_short_names) {
-            read_input_as_several_one_letter_patterns();
-        }
-        
-    }
-
-    private void read_input_as_one_letter() {
-        foreach (KeyValuePair<string, Pattern> item in name_to_pattern) {
-            if (UnityEngine.Input.GetKeyDown(
-                item.Key
-            )) {
-                receiver.input_pattern(item.Value);
-            }
-        }
-        
-    }
 
     private static readonly KeyCode key_submit = KeyCode.Return;
     private void read_input_as_several_one_letter_patterns() {
