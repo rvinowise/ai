@@ -1,7 +1,7 @@
 
 
 using rvinowise.ai.patterns;
-using rvinowise.unity.ai.patterns;
+using rvinowise.unity.ai;
 using rvinowise.unity.extensions;
 using rvinowise.unity.extensions.attributes;
 
@@ -20,11 +20,14 @@ IAction
   
     
     public virtual Action init_for_pattern_appearance(
-        Pattern_appearance in_appearance
+        Pattern_appearance in_appearance,
+        IAction_group in_action_group
     ) {
         pattern = in_appearance.pattern;
         pattern_appearance = in_appearance;
         set_label(pattern.id);
+        in_action_group.add_action(this);
+        action_group = in_action_group;
         return this;
     }
    

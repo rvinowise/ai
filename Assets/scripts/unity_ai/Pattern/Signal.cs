@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-namespace rvinowise.unity.ai.patterns {
+namespace rvinowise.unity.ai {
 
 
 public class Signal : MonoBehaviour {

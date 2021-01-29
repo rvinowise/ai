@@ -8,13 +8,34 @@ using rvinowise.ai.patterns;
 using System.Linq;
 using System.Numerics;
 
-namespace rvinowise.unity.ai.patterns {
+namespace rvinowise.unity.ai {
 public partial class Action_history:
-    Input_receiver
+Input_receiver,
+IAction_history
 {
 
-    [HideInInspector]
-    public IList<Action_group> action_groups = 
+    
+
+    #region IAction_history
+    public BigInteger last_moment => current_moment - 1;
+
+    public IReadOnlyList<IAction_group> get_action_groups(
+        BigInteger begin, 
+        BigInteger end
+    ) {
+        List<IAction_group> result = action_groups.Where(
+            action_group => 
+            (action_group.moment >= begin) &&
+            (action_group.moment <= end)
+        ).ToList<IAction_group>();
+
+        return result.AsReadOnly();
+    }
+    #endregion
+
+
+
+    private IList<Action_group> action_groups = 
         new List<Action_group>();
 
     private Dictionary_of_lists<
@@ -28,18 +49,6 @@ public partial class Action_history:
     private ulong _count;
 
     private BigInteger current_moment;
-
-    public IHistory_interval get_interval(
-        Action_group start, 
-        Action_group end
-    ) {
-        History_interval interval =
-            new History_interval(
-                start.moment,
-                end.moment
-            );
-        return interval;
-    }
     
     
     public override void input_selected_patterns() {
@@ -101,6 +110,8 @@ public partial class Action_history:
     public IEnumerator<Action_group> GetEnumerator() {
         return action_groups.GetEnumerator();
     }
+
+        
 
     public Action_group this[int i] {
         get { return action_groups[i]; }

@@ -40,6 +40,7 @@ public class Main_camera : MonoBehaviour {
 
     void Update() {
         input_change_zoom();
+        drag_by_mouse();
     }
 
     private static float zoom_speed = 0.0016f;
@@ -51,5 +52,36 @@ public class Main_camera : MonoBehaviour {
 
     private float preserve_possible_zoom(float zoom) {
         return Mathf.Clamp(zoom, min_zoom, max_zoom);
+    }
+
+
+    private Vector2 click_position;
+    private Vector2 start_position;
+    private bool is_dragging;
+    void drag_by_mouse() {
+        Vector2 mouse_screen_position = UnityEngine.Input.mousePosition;
+        bool button_pressed = UnityEngine.Input.GetMouseButton(1);
+        if (
+            (!is_dragging)&&(button_pressed)
+        ) {
+                click_position = mouse_screen_position;
+                start_position = transform.position;
+                is_dragging = true;
+        }
+        if (is_dragging) {
+            if (!button_pressed) {
+                is_dragging = false;
+            } else {
+                Vector2 mouse_offset = mouse_screen_position - click_position;
+                transform.position = 
+                    start_position-
+                    mouse_offset/pixels_per_unit();
+            }
+        }
+        
+    }
+
+    public float pixels_per_unit() {
+        return main_camera.orthographicSize;
     }
 }

@@ -1,13 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using rvinowise.ai.patterns;
 using rvinowise.rvi.contracts;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
 
-namespace rvinowise.unity.ai.patterns {
+namespace rvinowise.unity.ai {
 
 public enum Input_mode {
     One_letter = 1,
@@ -15,16 +16,15 @@ public enum Input_mode {
     Several_short_names = 3,
     Text_field=4
 }
-public class Human_input : patterns.Input {
+public class Human_input : Input {
     public Input_receiver receiver;
     public Pattern_storage pattern_storage;
     public Input_mode input_mode;
     [SerializeField]
     private TMP_InputField input_field;
     
-    private Dictionary<string, Pattern> name_to_pattern = 
-        new Dictionary<string, Pattern>();
-    private ISet<Pattern> selected_patterns = new HashSet<Pattern>();
+    private Dictionary<string, IPattern> name_to_pattern = 
+        new Dictionary<string, IPattern>();
 
 
     void Awake() {
@@ -39,11 +39,11 @@ public class Human_input : patterns.Input {
         input_field.ActivateInputField();
     }
 
-    private Dictionary<string, Pattern> create_map_name_to_pattern(
-        ICollection<Pattern> patterns    
+    private Dictionary<string, IPattern> create_map_name_to_pattern(
+        ICollection<IPattern> patterns    
     ) {
-        Dictionary<string, Pattern> name_to_pattern = new Dictionary<string, Pattern>();
-        foreach (Pattern pattern in patterns) {
+        Dictionary<string, IPattern> name_to_pattern = new Dictionary<string, IPattern>();
+        foreach (IPattern pattern in patterns) {
             name_to_pattern.Add(pattern.id, pattern);
         }
         return name_to_pattern;
@@ -57,11 +57,15 @@ public class Human_input : patterns.Input {
         )) {
             input_selected_patterns();
         }
-        foreach (KeyValuePair<string, Pattern> item in name_to_pattern) {
+        foreach (KeyValuePair<string, IPattern> item in name_to_pattern) {
             if (UnityEngine.Input.GetKeyDown(
                 item.Key
             )) {
-                toggle_pattern_selection(item.Value);
+                Contract.Requires(
+                    item.Value is Pattern, 
+                    "can't input other implementations"
+                );
+                toggle_pattern_selection((Pattern)item.Value);
             }
         }
     }
@@ -75,9 +79,7 @@ public class Human_input : patterns.Input {
 
 
     public void on_enter_clicked() {
-        if (selected_patterns.Any()) {
-            input_selected_patterns();
-        }
+        input_selected_patterns();
         input_field.text = "";
         input_field.ActivateInputField();
     }
@@ -93,35 +95,26 @@ public class Human_input : patterns.Input {
         string[] names = in_string.Split(' ')
             .Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
         foreach (string name in names) {
-            Pattern pattern;
+            IPattern pattern;
             name_to_pattern.TryGetValue(name, out pattern);
-            if (pattern) {
-                select_pattern(pattern);
+            if (pattern != null) {
+                select_pattern((Pattern)pattern);
             }
         }
     }
 
     private void select_pattern(Pattern in_pattern) {
         in_pattern.selected = true;
-        selected_patterns.Add(in_pattern);
     }
 
     private void toggle_pattern_selection(Pattern in_pattern) {
-        if (in_pattern.selected) {
-            selected_patterns.Remove(in_pattern);
-        }
-        else {
-            selected_patterns.Add(in_pattern);
-        }
         in_pattern.selected = !in_pattern.selected;
     }
 
     private void deselect_all_patterns() {
-        foreach (var pattern in selected_patterns) {
+        foreach (var pattern in pattern_storage.get_selected_patterns()) {
             pattern.selected = false;
         }
-        selected_patterns.Clear();
-        
     }
     
 }

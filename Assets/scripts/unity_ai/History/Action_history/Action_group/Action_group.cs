@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using rvinowise.unity.ai.patterns;
+using rvinowise.unity.ai;
 using rvinowise.unity.extensions;
 using rvinowise.unity.extensions.attributes;
 using rvinowise.ai.patterns;
@@ -13,9 +13,21 @@ public partial class Action_group:IAction_group {
   
     public IEnumerator<IAction> GetEnumerator() => actions.GetEnumerator();
 
-    [HideInInspector] public BigInteger moment{get; protected set;}
+    [HideInInspector] public BigInteger moment{
+        get {
+            return _moment;
+        }
+        protected set {
+            _moment = value;
+            moment_label.SetText(value.ToString());
+        }
+    }
+    private BigInteger _moment;
     private IList<IAction> actions = new List<IAction>();
     
+    void Awake() {
+    }
+
     [called_by_prefab]
     public Action_group get_for_moment(
         BigInteger moment

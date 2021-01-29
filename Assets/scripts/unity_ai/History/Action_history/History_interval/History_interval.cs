@@ -6,7 +6,7 @@ using rvinowise.unity.ai.action;
 using rvinowise.unity.extensions;
 using UnityEngine.Assertions;
 
-namespace rvinowise.unity.ai.patterns {
+namespace rvinowise.unity.ai {
 public class History_interval: 
     IHistory_interval 
 {

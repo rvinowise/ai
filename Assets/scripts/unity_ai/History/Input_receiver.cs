@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace rvinowise.unity.ai.patterns {
+namespace rvinowise.unity.ai {
 public abstract class Input_receiver: MonoBehaviour {
     
     public Pattern_storage pattern_storage;

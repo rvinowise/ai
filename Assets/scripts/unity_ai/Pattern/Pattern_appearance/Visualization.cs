@@ -3,10 +3,11 @@ using rvinowise.ai.patterns;
 using UnityEngine;
 using Action = rvinowise.unity.ai.action.Action;
 
-namespace rvinowise.unity.ai.patterns {
+namespace rvinowise.unity.ai {
 public partial class Pattern_appearance: 
 MonoBehaviour,
-IPattern_appearance
+IPattern_appearance,
+IHave_destructor
 {
     public Bezier bezier;
     private Action_history action_history;

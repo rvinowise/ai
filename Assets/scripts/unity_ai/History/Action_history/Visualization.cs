@@ -4,7 +4,7 @@ using rvinowise.unity.ai.action;
 using UnityEngine;
 using rvinowise.unity.extensions;
 
-namespace rvinowise.unity.ai.patterns {
+namespace rvinowise.unity.ai {
 public partial class Action_history
 {
     
