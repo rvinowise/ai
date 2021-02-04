@@ -13,5 +13,6 @@ public interface IAction_group {
     
     bool has_action<TAction>(IPattern pattern) where TAction: IAction;
     void add_action(IAction action);
+    void remove_action(IAction action);
 }
 }

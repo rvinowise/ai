@@ -24,10 +24,7 @@ IHave_destructor
         lable.text = in_text;
     }
 
-    public void destroy()
-    {
-        ((MonoBehaviour)this).destroy();
-    }
+    
 
     
     public bool highlighted {

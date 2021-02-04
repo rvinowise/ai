@@ -87,7 +87,7 @@ IPattern_finder
             );
         foreach (IPattern ending_pattern in familiar_patterns)
         {
-            if (beginning_pattern == ending_pattern) {
+            if (!is_possible_pattern(beginning_pattern, ending_pattern)) {
                 continue;
             }
             var appearances_of_ending = 
@@ -109,6 +109,27 @@ IPattern_finder
         return new_patterns;
 
         
+    }
+
+    private bool is_possible_pattern(
+        IPattern beginning,
+        IPattern ending
+    ) {
+        if (beginning == ending) {
+            return false;
+        }
+        IPattern checked_pattern = pattern_preafab.get_for_repeated_pair(
+            beginning,
+            ending
+        );
+        if (pattern_is_known(checked_pattern)) {
+            return false;
+        }
+        return true;
+    }
+
+    private bool pattern_is_known(IPattern pattern) {
+
     }
 
 

@@ -4,7 +4,7 @@ using rvinowise.ai.patterns;
 using rvinowise.unity.ai;
 using rvinowise.unity.extensions;
 using rvinowise.unity.extensions.attributes;
-
+using UnityEngine;
 
 namespace rvinowise.unity.ai.action {
 
@@ -29,6 +29,12 @@ IAction
         in_action_group.add_action(this);
         action_group = in_action_group;
         return this;
+    }
+
+    public void destroy()
+    {
+        action_group.remove_action(this);
+        ((MonoBehaviour)this).destroy();
     }
    
 }
