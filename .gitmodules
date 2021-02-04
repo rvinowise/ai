@@ -1,0 +1,3 @@
+[submodule "Assets/scripts/extensions"]
+	path = Assets/scripts/extensions
+	url = https://github.com/rvinowise/unity-extensions.git

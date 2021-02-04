@@ -122,15 +122,11 @@ IPattern_finder
             beginning,
             ending
         );
-        if (pattern_is_known(checked_pattern)) {
-            return false;
-        }
+        
         return true;
     }
 
-    private bool pattern_is_known(IPattern pattern) {
-
-    }
+  
 
 
     private struct Appearance_in_list {
