@@ -11,14 +11,22 @@ public partial class Action_history
     public Action_group action_group_prefab;
     public Pattern_appearance pattern_appearance_preafab;
     public Vector2 action_group_offset = new Vector2(2f,0f);
+    public float lines_offset = -4f;
     
-    private Vector2 carret = new Vector2(0,0);
+    public Transform carret;
 
 
     private void place_new_action_group(Action_group in_group) {
         in_group.transform.parent = transform;
-        in_group.transform.localPosition = carret;
-        carret += action_group_offset;
+        in_group.transform.position = carret.position;
+        carret.Translate(action_group_offset);
+    }
+
+    public override void start_new_line() {
+        carret.position = new Vector2(
+            0,
+            carret.position.y+lines_offset
+        );
     }
     
     private void place_new_pattern_appearance(

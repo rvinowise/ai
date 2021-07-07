@@ -10,11 +10,9 @@ using System.Numerics;
 
 namespace rvinowise.unity.ai {
 public partial class Action_history:
-Input_receiver,
+Visual_input_receiver,
 IAction_history
 {
-
-    
 
     #region IAction_history
     public BigInteger last_moment => current_moment - 1;
@@ -56,31 +54,34 @@ IAction_history
         if (!selected_patterns.Any()) {
             return;
         }
-        Action_group group_start = create_action_group_for_moment(
-            current_moment++
-        );
-        Action_group group_end = create_action_group_for_moment(
-            current_moment++
-        );
+        float new_mood = get_last_mood()+pattern_storage.get_selected_mood();
+
+        Action_group start_group = add_action_group(new_mood);
+        Action_group end_group = add_action_group(new_mood);
 
         create_pattern_appearances(
             selected_patterns,
-            group_start,
-            group_end
+            start_group,
+            end_group
         );
     }
 
-    private Action_group create_action_group_for_moment(
-        BigInteger moment
-    ) {
+    private Action_group add_action_group(float in_mood = 0f) {
         Action_group new_group =
             action_group_prefab.get_for_moment(
-                moment
+                current_moment++
             );
+        new_group.init_mood(in_mood);
         place_new_action_group(new_group);
-        
         action_groups.Add(new_group);
         return new_group;
+    }
+
+    private float get_last_mood() {
+        if (action_groups.Any()) {
+            return action_groups.Last().mood;
+        }
+        return 0f;
     }
 
     private void create_pattern_appearances(

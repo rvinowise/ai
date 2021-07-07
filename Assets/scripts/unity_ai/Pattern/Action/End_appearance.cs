@@ -14,12 +14,10 @@ Action,
 IAppearance_end
 {
 
-    public new End_appearance init_for_pattern_appearance(
-        Pattern_appearance appearance,
+    public new End_appearance put_into_moment(
         IAction_group in_action_group
     ) {
-        return base.init_for_pattern_appearance(
-            appearance,
+        return base.put_into_moment(
             in_action_group
         ) as End_appearance;
     }

@@ -1,5 +1,6 @@
 ﻿//#define DEBUG
 //#define UNITY_ASSERTIONS
+#define RVI_CONTRACTS
 
 using System;
 using System.Diagnostics;

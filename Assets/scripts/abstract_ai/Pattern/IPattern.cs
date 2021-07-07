@@ -10,10 +10,6 @@ public interface IPattern {
         get;
     }
 
-    IPattern beginning {get;}
-    IPattern ending {get;}
-
-
     IPattern_appearance create_appearance(
         IAction_group start_group,
         IAction_group end_group

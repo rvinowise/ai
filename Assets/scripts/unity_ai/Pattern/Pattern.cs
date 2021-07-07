@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
@@ -10,6 +11,8 @@ using rvinowise.unity.extensions.attributes;
 using TMPro;
 using UnityEditor.UI;
 using UnityEngine;
+
+using Action = rvinowise.unity.ai.action.Action;
 
 namespace rvinowise.unity.ai {
 public class Pattern : 
@@ -39,8 +42,11 @@ IHave_destructor
         set { lable.text = value; }
     }
 
-    public IPattern beginning {get;private set;}
-    public IPattern ending {get;private set;}
+
+    [SerializeField]
+    private List<IPattern_appearance> _appearances = new List<IPattern_appearance>();
+
+    private bool _selected;
 
     [called_by_prefab]
     public Pattern get_for_appearances(
@@ -61,8 +67,6 @@ IHave_destructor
         IPattern ending
     ) {
         Pattern pattern = this.get_from_pool<Pattern>();
-        pattern.beginning = beginning; 
-        pattern.ending = ending;
         pattern.id = get_id_for(beginning, ending);
         return pattern; 
     }
@@ -75,7 +79,7 @@ IHave_destructor
         return pattern;
     }
 
-    public string get_id_for(IPattern beginning, IPattern ending) {
+    public static string get_id_for(IPattern beginning, IPattern ending) {
         return string.Format("{0}{1}",beginning.id, ending.id);
     }
 
@@ -95,6 +99,7 @@ IHave_destructor
         IAction_group start_group,
         IAction_group end_group
     ) {
+        Debug.Log(String.Format("Pattern {0} create_appearance",id));
         animator.SetTrigger("fire");
 
         Pattern_appearance appearance =
@@ -102,14 +107,13 @@ IHave_destructor
                 this, start_group, end_group
             );
         
+        
         _appearances.Add(appearance);
         
         return appearance;
     }
 
-    private List<IPattern_appearance> _appearances = new List<IPattern_appearance>();
-
-    private bool _selected;
+    
 
     void Awake() {
         animator = GetComponent<Animator>();
@@ -133,13 +137,21 @@ IHave_destructor
         return result.AsReadOnly();
     }
 
+    
+
     public virtual void destroy() {
+        Debug.Log(String.Format("Pattern {0} destroy",id));
+        remove_appearances();
+        ((MonoBehaviour)this).destroy();
+    }
+
+    private void remove_appearances() {
         foreach(var appearance in _appearances) {
             if (appearance is IHave_destructor destructable) {
                 destructable.destroy();
             }
         }
-        ((MonoBehaviour)this).destroy();
+        _appearances.Clear();
     }
 
     void OnMouseDown() {
@@ -149,13 +161,11 @@ IHave_destructor
 
     private void set_appearances_are_highlighted(bool value) {
         foreach(var appearance in this.appearances) {
-            if (appearance.start is Action unity_start) {
-                unity_start.highlighted = value;
-            }
-            if (appearance.end is Action unity_end) {
-                unity_end.highlighted = value;
+            if (appearance is Pattern_appearance unity_appearance) {
+                unity_appearance.selected = value;
             }
         }
     }
+
 }
 }

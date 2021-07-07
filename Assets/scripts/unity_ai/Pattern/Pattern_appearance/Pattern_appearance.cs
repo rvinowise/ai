@@ -47,28 +47,44 @@ IHave_destructor
         appearance.pattern = in_pattern;
         
         appearance.start_appearance.
-            init_for_pattern_appearance(appearance, start_group);
+            put_into_moment(start_group);
         appearance.end_appearance.
-            init_for_pattern_appearance(appearance, end_group);
+            put_into_moment(end_group);
 
         appearance.create_curved_line();
         
         return appearance;
     }
 
+    void Awake() {
+        pooled_object = GetComponent<Pooled_object>();
+        start_appearance.pattern_appearance = this;
+        end_appearance.pattern_appearance = this;
+    }
+
+    void Start() {
+        //bezier.gameObject.SetActive(false);
+        selected = false;
+    }
+    
     public bool is_entirely_before(IPattern_appearance appearance) {
         return end_moment < appearance.start_moment;
     }
 
     public virtual void destroy() {
-        if (start is IHave_destructor destructable_start) {
-            destructable_start.destroy();
-        }
-        if (end is IHave_destructor destructable_end) {
-            destructable_end.destroy();
-        }
+        store_action_as_child(start_appearance);
+        store_action_as_child(end_appearance);
+        start_appearance.transform.parent = transform;
+        end_appearance.transform.parent = transform;
         ((MonoBehaviour)this).destroy();
     }
+
+    private void store_action_as_child(Action in_action) {
+        in_action.action_group.remove_action(in_action);
+        in_action.transform.parent = transform;
+    }
+
+    
 
     
 }

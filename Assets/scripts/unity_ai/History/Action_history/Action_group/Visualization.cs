@@ -13,7 +13,7 @@ MonoBehaviour
     public Vector2 action_offset = new Vector2(0,2);
     //public GameObject body;
     public SpriteRenderer sprite_renderer;
-    
+    public Mood_label mood_label;
     public TextMeshPro moment_label;
 
     private void place_next_action(Action in_action) {

@@ -18,7 +18,6 @@ IHave_destructor
     
     void Awake() {
         animator = GetComponent<Animator>();
-        
     }
     public void set_label(string in_text) {
         lable.text = in_text;

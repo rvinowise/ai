@@ -13,12 +13,10 @@ public class Start_appearance:
 Action,
 IAppearance_start
 {
-    public new Start_appearance init_for_pattern_appearance(
-        Pattern_appearance appearance,
+    public new Start_appearance put_into_moment(
         IAction_group in_action_group
     ) {
-        return base.init_for_pattern_appearance(
-            appearance,
+        return base.put_into_moment(
             in_action_group
         ) as Start_appearance;
     }

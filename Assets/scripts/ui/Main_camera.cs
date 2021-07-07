@@ -22,8 +22,20 @@ public class Main_camera : MonoBehaviour {
         zoom = main_camera.orthographicSize;
     }
 
+    
+
+
+    void LateUpdate() {
+        input_change_zoom();
+        
+        drag_by_mouse();
+    }
+
+    // void Update() {
+    //     Zoom();
+    // }
+
     private void input_change_zoom() {
-        //float wheel_movement = context.ReadValue<float>();
         float wheel_movement = Input.instance.scroll_value;
         
         if (Input.instance.zoom_held 
@@ -32,18 +44,48 @@ public class Main_camera : MonoBehaviour {
         {
             zoom -= adjust_to_current_zoom(wheel_movement);
             zoom = preserve_possible_zoom(zoom);
+            
+            Vector3 mouseOnWorld = main_camera.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
             main_camera.orthographicSize = zoom;
-            //Debug.Log("orthographicSize:" + main_camera.orthographicSize);
+            Vector3 mouseOnWorld1 = main_camera.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
+
+            Vector3 posDiff = mouseOnWorld - mouseOnWorld1;
+
+            Vector3 camPos = main_camera.transform.position;
+            Vector3 targetPos = new Vector3(
+                camPos.x + posDiff.x,
+                camPos.y + posDiff.y,
+                camPos.z);
+
+            main_camera.transform.position = targetPos;
         }
     }
 
-
-    void Update() {
-        input_change_zoom();
-        drag_by_mouse();
-    }
-
     private static float zoom_speed = 0.0016f;
+    private void Zoom()
+    {
+        float mouseScrollWheel = Input.instance.scroll_value;
+        
+        float newZoomLevel = main_camera.orthographicSize - mouseScrollWheel;
+
+        Vector3 mouseOnWorld = main_camera.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
+        main_camera.orthographicSize = Mathf.Clamp(newZoomLevel, min_zoom, max_zoom);
+        Vector3 mouseOnWorld1 = main_camera.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
+
+        Vector3 posDiff = mouseOnWorld - mouseOnWorld1;
+
+        Vector3 camPos = main_camera.transform.position;
+        Vector3 targetPos = new Vector3(
+            camPos.x + posDiff.x,
+            camPos.y + posDiff.y,
+            camPos.z);
+
+        main_camera.transform.position = targetPos;
+    }
+ 
+    
+
+    
     private float adjust_to_current_zoom(float zoom_delta) {
         //zoom_delta = (zoom / max_zoom) * zoom_delta * zoom_speed;
         zoom_delta = Mathf.Pow(zoom, 0.8f) * zoom_delta * zoom_speed;
@@ -55,28 +97,39 @@ public class Main_camera : MonoBehaviour {
     }
 
 
-    private Vector2 click_position;
-    private Vector2 start_position;
+    
+    private Vector3 click_position;
     private bool is_dragging;
     void drag_by_mouse() {
-        Vector2 mouse_screen_position = UnityEngine.Input.mousePosition;
         bool button_pressed = UnityEngine.Input.GetMouseButton(1);
         if (
             (!is_dragging)&&(button_pressed)
         ) {
-                click_position = mouse_screen_position;
-                start_position = transform.position;
-                is_dragging = true;
+            start_dragging();
         }
         if (is_dragging) {
             if (!button_pressed) {
                 is_dragging = false;
             } else {
-                Vector2 mouse_offset = mouse_screen_position - click_position;
-                transform.position = 
-                    start_position-
-                    mouse_offset/pixels_per_unit();
+                perform_dragging();
             }
+        }
+
+        void start_dragging() {
+            click_position = Camera.main.ScreenToWorldPoint (
+                UnityEngine.Input.mousePosition
+            );
+            is_dragging = true;
+        }
+
+        void perform_dragging() {
+            Vector3 mouse_position = Camera.main.ScreenToWorldPoint (
+                UnityEngine.Input.mousePosition
+            );
+            Vector3 difference = mouse_position -
+                Camera.main.transform.position;
+            Camera.main.transform.position = 
+                click_position-difference;
         }
         
     }

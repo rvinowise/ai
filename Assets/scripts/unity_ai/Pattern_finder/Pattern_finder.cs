@@ -13,8 +13,8 @@ using System.Numerics;
 namespace rvinowise.unity.ai {
 
 public class Pattern_finder:
-MonoBehaviour,
-IPattern_finder
+MonoBehaviour
+//,IPattern_finder
 {
     public Pattern pattern_preafab;
     public Action_history action_history;
@@ -27,38 +27,22 @@ IPattern_finder
     private IReadOnlyList<IAction_group> action_groups;
 
     public void enrich_pattern_storage() {
-        var patterns = get_new_patterns(
-            action_history.get_action_groups(
-                0,
-                action_history.last_moment
-            )
+         action_groups = action_history.get_action_groups(
+            0,
+            action_history.last_moment
         );
-        pattern_storage.append_patterns(patterns);
-    }
-
-    public 
-    IDictionary<string, IPattern>
-    get_new_patterns(
-        IReadOnlyList<IAction_group> in_action_groups
-    ) {
-        action_groups = in_action_groups;
         ISet<IPattern> familiar_patterns = find_familiar_patterns(
             action_groups
         );
-        var result = new Dictionary<string, IPattern>();
         foreach (IPattern beginning_pattern in familiar_patterns)
         {
-            
-            result = result.Union(
-                find_new_patterns_starting_with(
-                    beginning_pattern,
-                    familiar_patterns
-                )
-            ).ToDictionary(k=>k.Key, v=>v.Value);
+            find_new_patterns_starting_with(
+                beginning_pattern,
+                familiar_patterns
+            );
         }
-
-        return result;
     }
+
 
     private ISet<IPattern> find_familiar_patterns(
         IReadOnlyList<IAction_group> action_groups
@@ -73,43 +57,107 @@ IPattern_finder
         return result;
     }
 
-    private IDictionary<string, IPattern> 
-    find_new_patterns_starting_with(
+    private void find_new_patterns_starting_with(
         IPattern beginning_pattern,
         ISet<IPattern> familiar_patterns
     ) {
-        IDictionary<string, IPattern> new_patterns = 
-            new Dictionary<string, IPattern>();
-        IReadOnlyList<IPattern_appearance> appearances_of_beginning = 
-            beginning_pattern.get_appearances_in_interval(
-                action_groups.First().moment,
-                action_groups.Last().moment
-            );
+
+        
         foreach (IPattern ending_pattern in familiar_patterns)
         {
             if (!is_possible_pattern(beginning_pattern, ending_pattern)) {
                 continue;
             }
-            var appearances_of_ending = 
-                ending_pattern.get_appearances_in_interval(
-                    action_groups.First().moment,
-                    action_groups.Last().moment
-                );
-            if (check_if_pattern_appeared(
+
+            IPattern signal_pair = get_pattern_for_pair(
+                beginning_pattern,
+                ending_pattern
+            );
+            IReadOnlyList<IPattern_appearance> appearances_of_beginning = 
+            get_unused_in_beginning_appearances_in_interval(
+                action_groups.First().moment,
+                action_groups.Last().moment,
+                beginning_pattern,
+                signal_pair
+            );
+            var appearances_of_ending = get_unused_in_ending_appearances_in_interval(
+                action_groups.First().moment,
+                action_groups.Last().moment,
+                ending_pattern,
+                signal_pair
+            );
+            if (
+                appearances_of_beginning.Any() && 
+                appearances_of_ending.Any()
+            ) {
+                save_pattern_appearances(
+                    signal_pair,
                     appearances_of_beginning,
                     appearances_of_ending
-                ) is IPattern new_pattern
-            ) {
-                new_patterns.Add(
-                    new_pattern.id,
-                    new_pattern
                 );
             }
         }
-        return new_patterns;
 
         
     }
+
+    IReadOnlyList<IPattern_appearance> get_unused_in_beginning_appearances_in_interval(
+        BigInteger start, 
+        BigInteger end,
+        IPattern pattern_used_in_beginning,
+        IPattern user_pattern
+    ) {
+        var child_appearances = pattern_used_in_beginning.get_appearances_in_interval(
+            start, 
+            end
+        );
+        var user_appearances = user_pattern.get_appearances_in_interval(
+            start, 
+            end
+        );
+        
+        IReadOnlyList<IPattern_appearance> result = child_appearances.Where(
+            child_appearance => 
+            (
+                !user_appearances.Any(
+                    user_appearance => user_appearance.start_moment == 
+                    child_appearance.start_moment
+                )
+            )
+        ).ToList<IPattern_appearance>();
+
+        
+        return result;
+    }
+    IReadOnlyList<IPattern_appearance> get_unused_in_ending_appearances_in_interval(
+        BigInteger start, 
+        BigInteger end,
+        IPattern pattern_used_in_ending,
+        IPattern user_pattern
+    ) {
+        var child_appearances = pattern_used_in_ending.get_appearances_in_interval(
+            start, 
+            end
+        );
+        var user_appearances = user_pattern.get_appearances_in_interval(
+            start, 
+            end
+        );
+        
+        IReadOnlyList<IPattern_appearance> result = child_appearances.Where(
+            child_appearance => 
+            (
+                !user_appearances.Any(
+                    user_appearance => user_appearance.end_moment ==
+                    child_appearance.end_moment
+                )
+            )
+        ).ToList<IPattern_appearance>();
+
+        
+        return result;
+    } 
+
 
     private bool is_possible_pattern(
         IPattern beginning,
@@ -118,16 +166,9 @@ IPattern_finder
         if (beginning == ending) {
             return false;
         }
-        IPattern checked_pattern = pattern_preafab.get_for_repeated_pair(
-            beginning,
-            ending
-        );
         
         return true;
     }
-
-  
-
 
     private struct Appearance_in_list {
         public int index;
@@ -144,15 +185,12 @@ IPattern_finder
             return appearance != null;
         }
     }
-    public IPattern check_if_pattern_appeared(
+    public void save_pattern_appearances(
+        IPattern signal_pair,
         IReadOnlyList<IPattern_appearance> beginnings,
         IReadOnlyList<IPattern_appearance> endings
     ) {
-        IPattern imagined_pattern = pattern_preafab.get_for_repeated_pair(
-            beginnings.First().pattern,
-            endings.First().pattern
-        );
-
+ 
         int i_ending = 0;
         int i_next_beginning = 0;
         while (i_ending < endings.Count) {
@@ -164,7 +202,7 @@ IPattern_finder
                 potential_ending.start_moment
             );
             if (closest_beginning.is_found()) {
-                imagined_pattern.create_appearance(
+                signal_pair.create_appearance(
                     closest_beginning.appearance.start.action_group,
                     potential_ending.end.action_group
                 );
@@ -174,19 +212,37 @@ IPattern_finder
             i_ending++;
         }
 
-        if (pattern_appeared_at_least_twice(imagined_pattern)) {
-            return imagined_pattern;
-        } else {
-            ((Pattern)imagined_pattern).destroy();
+        if (!pattern_appeared_at_least_twice(signal_pair)) {
+            pattern_storage.remove_pattern(signal_pair);
+            ((Pattern)signal_pair).destroy();
         }
-        return null;
 
-        bool pattern_appeared_at_least_twice(IPattern pattern) {
-            return pattern.get_appearances_in_interval(
-                0,
-                action_groups.Last().moment
-            ).Count >= 2;
+        
+    }
+
+    private bool pattern_appeared_at_least_twice(IPattern pattern) {
+        return pattern.get_appearances_in_interval(
+            0,
+            action_groups.Last().moment
+        ).Count >= 2;
+    }
+
+    IPattern get_pattern_for_pair(
+        IPattern beginning,
+        IPattern ending
+    ) {
+        if (
+            pattern_storage.get_pattern_having(beginning, ending)
+            is IPattern old_pattern
+        ) {
+            return old_pattern;
         }
+        IPattern new_pattern = pattern_preafab.get_for_repeated_pair(
+            beginning,
+            ending
+        );
+        pattern_storage.append_pattern(new_pattern);
+        return new_pattern;
     }
 
     Appearance_in_list find_appearance_closest_to_moment(
