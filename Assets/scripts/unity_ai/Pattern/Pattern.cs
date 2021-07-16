@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using abstract_ai;
 using rvinowise.ai.patterns;
 using rvinowise.rvi.contracts;
 using rvinowise.unity.ai.action;
@@ -35,36 +36,27 @@ IHave_destructor
             this.set_appearances_are_highlighted(selected);
         }
     }
+    
+    [SerializeField]
+    private List<IPattern_appearance> _appearances = new List<IPattern_appearance>();
 
+    private bool _selected;
+    
     #region IPattern interface
     public string id {
         get { return lable.text; }
         set { lable.text = value; }
     }
+    public IFigure first_half { get; private set; }
+    public IFigure second_half { get; private set; }
 
+    
 
-    [SerializeField]
-    private List<IPattern_appearance> _appearances = new List<IPattern_appearance>();
-
-    private bool _selected;
-
-    [called_by_prefab]
-    public Pattern get_for_appearances(
-        List<IPattern_appearance> appearances
-    ) {
-        Contract.Requires(appearances.Count > 1);
-        Pattern pattern = this.get_for_repeated_pair(
-            appearances.First().start.pattern,
-            appearances.First().end.pattern
-        );
-        pattern._appearances = appearances;
-        return pattern;
-    }
 
     [called_by_prefab]
     public Pattern get_for_repeated_pair(
-        IPattern beginning,
-        IPattern ending
+        IFigure beginning,
+        IFigure ending
     ) {
         Pattern pattern = this.get_from_pool<Pattern>();
         pattern.id = get_id_for(beginning, ending);
@@ -79,16 +71,19 @@ IHave_destructor
         return pattern;
     }
 
-    public static string get_id_for(IPattern beginning, IPattern ending) {
-        return string.Format("{0}{1}",beginning.id, ending.id);
+    public static string get_id_for(IFigure beginning, IFigure ending) {
+        string begin = beginning is IPattern beginning_pattern ? beginning_pattern.id : "f";
+        string end = beginning is IPattern end_pattern ? end_pattern.id : "f";
+        return string.Format("{0}{1}", begin, end);
     }
 
 
     IPattern_appearance IPattern.create_appearance(
-        IAction_group start_group,
-        IAction_group end_group
-    ) => create_appearance(start_group, end_group);
-    
+        BigInteger start,
+        BigInteger end
+    ) => create_appearance(start, end);
+
+
     public IReadOnlyList<IPattern_appearance> appearances {
         get => _appearances.AsReadOnly();
     }
@@ -96,15 +91,30 @@ IHave_destructor
     #endregion
 
     public Pattern_appearance create_appearance(
-        IAction_group start_group,
-        IAction_group end_group
+        BigInteger start,
+        BigInteger end
     ) {
-        Debug.Log(String.Format("Pattern {0} create_appearance",id));
         animator.SetTrigger("fire");
 
         Pattern_appearance appearance =
             pattern_appearance_preafab.get_for_interval(
-                this, start_group, end_group
+                this, start, end
+            );
+        
+        
+        _appearances.Add(appearance);
+        
+        return appearance;
+    }
+    public IPattern_appearance create_appearance(
+        IFigure_appearance in_first_half,
+        IFigure_appearance in_second_half
+    ) {
+        animator.SetTrigger("fire");
+
+        Pattern_appearance appearance =
+            pattern_appearance_preafab.get_for_subfigures(
+                this, in_first_half, in_second_half
             );
         
         
@@ -125,7 +135,7 @@ IHave_destructor
 
   
 
-    public IReadOnlyList<IPattern_appearance> get_appearances_in_interval(
+    public IReadOnlyList<IFigure_appearance> get_appearances_in_interval(
         BigInteger start, BigInteger end
     ) {
         List<IPattern_appearance> result = appearances.Where(
@@ -167,5 +177,18 @@ IHave_destructor
         }
     }
 
+    #region IFigure
+    public string as_dot_graph() {
+        throw new NotImplementedException();
+    }
+
+    public IReadOnlyList<IFigure_appearance> get_appearances(IFigure in_where) {
+        if (in_where == Action_history.instance) {
+            return appearances;
+        }
+        return null;
+    }
+    
+    #endregion
 }
 }

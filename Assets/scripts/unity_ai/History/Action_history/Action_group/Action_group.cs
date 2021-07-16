@@ -71,7 +71,7 @@ public partial class Action_group:IAction_group {
     public bool has_action<TAction>(IPattern pattern) where TAction: IAction {
         foreach (var action in actions) {
             if (
-                (action.pattern == pattern)&&
+                (action.figure == pattern)&&
                 (action is TAction)
                 ) {
                 return true;

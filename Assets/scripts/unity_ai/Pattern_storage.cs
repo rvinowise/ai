@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using abstract_ai;
 using rvinowise.ai.patterns;
 using rvinowise.rvi.contracts;
 using rvinowise.unity.extensions;
@@ -119,13 +120,14 @@ public class Pattern_storage: MonoBehaviour {
     }
 
     public IPattern get_pattern_having(
-        IPattern beginning,
-        IPattern ending
+        IFigure beginning,
+        IFigure ending
     ) {
         foreach(var pattern in known_patterns) {
             if (
-               beginning.id+ending.id == pattern.id
-             ) {
+                pattern.first_half == beginning &&
+                pattern.second_half == ending
+            ) {
                 return pattern;
             }
         }

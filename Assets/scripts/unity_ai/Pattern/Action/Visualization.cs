@@ -1,4 +1,5 @@
 
+using System;
 using UnityEngine;
 using TMPro;
 using rvinowise.unity.extensions;
@@ -24,7 +25,13 @@ IHave_destructor
     }
 
     
+    void OnMouseDown() {
+        if (figure_appearance is Pattern_appearance appearance) {
+            appearance.selected_with_subfigures =
+                !appearance.selected_with_subfigures;
+        }
 
+    }
     
     public bool highlighted {
         set {
@@ -39,5 +46,9 @@ IHave_destructor
         get {return _highlighted;}
     }
     private bool _highlighted;
+    
+    public string as_dot_graph() {
+        throw new NotImplementedException();
+    }
 }
 }

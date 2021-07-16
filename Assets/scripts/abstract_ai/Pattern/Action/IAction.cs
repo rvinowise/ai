@@ -1,5 +1,6 @@
 
 using System.Collections.Generic;
+using abstract_ai;
 using rvinowise.ai.patterns;
 
 
@@ -8,10 +9,11 @@ namespace rvinowise.ai.patterns {
 
 public interface IAction {
     
-    IPattern pattern{get;}
-    IAction_group action_group{get;}
-    //IPattern_appearance pattern_appearance{get;}
+    IFigure figure{get;}
+    IFigure_appearance figure_appearance{get;}
     
+    // IFigure figure { get; }
+    // IFigure_appearance figure_appearance { get; }
 }
 
 }

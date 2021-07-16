@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using rvinowise.unity.ai.action;
 using UnityEngine;
 using rvinowise.unity.extensions;
+using rvinowise.ai.patterns;
+using rvinowise.rvi.contracts;
 
 namespace rvinowise.unity.ai {
 public partial class Action_history
@@ -16,6 +18,10 @@ public partial class Action_history
     public Transform carret;
 
 
+    protected void Awake() {
+        Contract.Assert(instance==null, "singleton");
+        instance = this;
+    }
     private void place_new_action_group(Action_group in_group) {
         in_group.transform.parent = transform;
         in_group.transform.position = carret.position;
@@ -30,9 +36,11 @@ public partial class Action_history
     }
     
     private void place_new_pattern_appearance(
-        Pattern_appearance appearance
+        IPattern_appearance in_appearance
     ) {
-        appearance.transform.parent = transform;
+        if (in_appearance is Pattern_appearance appearance) {
+            appearance.transform.parent = transform;
+        }
     }
     
 }

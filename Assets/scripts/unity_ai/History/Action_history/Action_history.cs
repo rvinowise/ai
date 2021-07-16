@@ -7,6 +7,8 @@ using Action = rvinowise.unity.ai.action.Action;
 using rvinowise.ai.patterns;
 using System.Linq;
 using System.Numerics;
+using abstract_ai;
+using rvinowise.rvi.contracts;
 
 namespace rvinowise.unity.ai {
 public partial class Action_history:
@@ -31,10 +33,13 @@ IAction_history
     }
     #endregion
 
-
+    public static Action_history instance {get;private set;}
 
     private IList<Action_group> action_groups = 
         new List<Action_group>();
+    
+    private Dictionary<BigInteger, Action_group> moments_to_action_groups=
+        new Dictionary<BigInteger, Action_group>();
 
     private Dictionary_of_lists<
         IPattern,
@@ -61,19 +66,21 @@ IAction_history
 
         create_pattern_appearances(
             selected_patterns,
-            start_group,
-            end_group
+            start_group.moment,
+            end_group.moment
         );
     }
 
     private Action_group add_action_group(float in_mood = 0f) {
         Action_group new_group =
             action_group_prefab.get_for_moment(
-                current_moment++
+                current_moment
             );
         new_group.init_mood(in_mood);
         place_new_action_group(new_group);
         action_groups.Add(new_group);
+        moments_to_action_groups.Add(current_moment, new_group);
+        current_moment++;
         return new_group;
     }
 
@@ -85,20 +92,37 @@ IAction_history
     }
 
     private void create_pattern_appearances(
-        IEnumerable<Pattern> patterns,
-        Action_group group_start,
-        Action_group group_end
+        IEnumerable<IPattern> patterns,
+        BigInteger start,
+        BigInteger end
     ) {
         foreach (var pattern in patterns) {
-            Pattern_appearance appearance =
-                pattern.create_appearance(group_start, group_end);
-            
-            place_new_pattern_appearance(appearance);
+            create_pattern_appearance(pattern, start, end);
         }
-        group_start.extend_to_accomodate_children();
-        group_end.extend_to_accomodate_children();
+        get_action_group_at_moment(start).
+            extend_to_accomodate_children();
+        get_action_group_at_moment(end).
+            extend_to_accomodate_children();
     }
 
+    public void create_pattern_appearance(
+        IPattern pattern,
+        BigInteger start,
+        BigInteger end
+    ) {
+        IPattern_appearance appearance =
+            pattern.create_appearance(start, end);
+        
+        place_new_pattern_appearance(appearance);
+    }
+
+    public Action_group get_action_group_at_moment(
+        BigInteger moment
+    ) {
+        Action_group result;
+        moments_to_action_groups.TryGetValue(moment,out result);
+        return result;
+    }
     
     /* IHistory_interval interface */
     public IReadOnlyList<IPattern_appearance> get_pattern_appearances(
@@ -121,5 +145,30 @@ IAction_history
     public int Count {
         get => action_groups.Count;
     }
+    
+    #region IFigure
+    public string as_dot_graph() {
+        throw new System.NotImplementedException();
+    }
+
+    public IReadOnlyList<IFigure_appearance> get_appearances(IFigure in_where) {
+        Contract.Assert(false, "Action history is retrieved via the 'instance' field");
+        return null;
+    }
+
+    public IReadOnlyList<IFigure_appearance> get_appearances_in_interval(BigInteger start, BigInteger end) {
+        throw new System.NotImplementedException();
+    }
+
+    #endregion
+
+    #region IFigure_appearance
+
+    public IFigure figure { get; }
+    public IFigure place { get; } = null;
+    public BigInteger start_moment { get; }
+    public BigInteger end_moment { get; }
+
+    #endregion
 }
 }

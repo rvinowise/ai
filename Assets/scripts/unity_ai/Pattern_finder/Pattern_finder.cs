@@ -9,6 +9,7 @@ using Action = rvinowise.unity.ai.action.Action;
 using rvinowise.rvi.contracts;
 using rvinowise.ai.patterns;
 using System.Numerics;
+using abstract_ai;
 
 namespace rvinowise.unity.ai {
 
@@ -31,26 +32,26 @@ MonoBehaviour
             0,
             action_history.last_moment
         );
-        ISet<IPattern> familiar_patterns = find_familiar_patterns(
+        ISet<IFigure> familiar_figures = find_familiar_figures(
             action_groups
         );
-        foreach (IPattern beginning_pattern in familiar_patterns)
+        foreach (IFigure beginning_figure in familiar_figures)
         {
             find_new_patterns_starting_with(
-                beginning_pattern,
-                familiar_patterns
+                beginning_figure,
+                familiar_figures
             );
         }
     }
 
 
-    private ISet<IPattern> find_familiar_patterns(
+    private ISet<IFigure> find_familiar_figures(
         IReadOnlyList<IAction_group> action_groups
     ) {
-        ISet<IPattern> result = new HashSet<IPattern>(); 
+        ISet<IFigure> result = new HashSet<IFigure>(); 
         foreach (IAction_group group in action_groups) {
             foreach (IAction action in group) {
-                result.Add(action.pattern);
+                result.Add(action.figure);
             }
         }
 
@@ -58,32 +59,36 @@ MonoBehaviour
     }
 
     private void find_new_patterns_starting_with(
-        IPattern beginning_pattern,
-        ISet<IPattern> familiar_patterns
+        IFigure beginning_figure,
+        ISet<IFigure> familiar_figures
     ) {
 
         
-        foreach (IPattern ending_pattern in familiar_patterns)
+        foreach (IFigure ending_figure in familiar_figures)
         {
-            if (!is_possible_pattern(beginning_pattern, ending_pattern)) {
+            if (!is_possible_pattern(beginning_figure, ending_figure)) {
                 continue;
             }
 
             IPattern signal_pair = get_pattern_for_pair(
-                beginning_pattern,
-                ending_pattern
+                beginning_figure,
+                ending_figure
             );
-            IReadOnlyList<IPattern_appearance> appearances_of_beginning = 
+            if (signal_pair.id == "10") {
+                var test = true;
+            }
+            IReadOnlyList<IFigure_appearance> appearances_of_beginning = 
             get_unused_in_beginning_appearances_in_interval(
                 action_groups.First().moment,
                 action_groups.Last().moment,
-                beginning_pattern,
+                beginning_figure,
                 signal_pair
             );
-            var appearances_of_ending = get_unused_in_ending_appearances_in_interval(
+            var appearances_of_ending = 
+            get_unused_in_ending_appearances_in_interval(
                 action_groups.First().moment,
                 action_groups.Last().moment,
-                ending_pattern,
+                ending_figure,
                 signal_pair
             );
             if (
@@ -101,13 +106,13 @@ MonoBehaviour
         
     }
 
-    IReadOnlyList<IPattern_appearance> get_unused_in_beginning_appearances_in_interval(
+    IReadOnlyList<IFigure_appearance> get_unused_in_beginning_appearances_in_interval(
         BigInteger start, 
         BigInteger end,
-        IPattern pattern_used_in_beginning,
+        IFigure figure_used_in_beginning,
         IPattern user_pattern
     ) {
-        var child_appearances = pattern_used_in_beginning.get_appearances_in_interval(
+        var child_appearances = figure_used_in_beginning.get_appearances_in_interval(
             start, 
             end
         );
@@ -116,26 +121,27 @@ MonoBehaviour
             end
         );
         
-        IReadOnlyList<IPattern_appearance> result = child_appearances.Where(
+        IReadOnlyList<IFigure_appearance> result = 
+        child_appearances.Where(
             child_appearance => 
             (
-                !user_appearances.Any(
-                    user_appearance => user_appearance.start_moment == 
-                    child_appearance.start_moment
+                user_appearances.All(
+                    user_appearance => 
+                        user_appearance.start_moment != child_appearance.start_moment
+                        )
                 )
-            )
-        ).ToList<IPattern_appearance>();
+        ).ToList();
 
         
         return result;
     }
-    IReadOnlyList<IPattern_appearance> get_unused_in_ending_appearances_in_interval(
+    IReadOnlyList<IFigure_appearance> get_unused_in_ending_appearances_in_interval(
         BigInteger start, 
         BigInteger end,
-        IPattern pattern_used_in_ending,
+        IFigure figure_used_in_ending,
         IPattern user_pattern
     ) {
-        var child_appearances = pattern_used_in_ending.get_appearances_in_interval(
+        var child_appearances = figure_used_in_ending.get_appearances_in_interval(
             start, 
             end
         );
@@ -144,15 +150,14 @@ MonoBehaviour
             end
         );
         
-        IReadOnlyList<IPattern_appearance> result = child_appearances.Where(
+        IReadOnlyList<IFigure_appearance> result = child_appearances.Where(
             child_appearance => 
             (
-                !user_appearances.Any(
-                    user_appearance => user_appearance.end_moment ==
-                    child_appearance.end_moment
+                user_appearances.All(
+                    user_appearance => user_appearance.end_moment != child_appearance.end_moment
+                    )
                 )
-            )
-        ).ToList<IPattern_appearance>();
+        ).ToList();
 
         
         return result;
@@ -160,8 +165,8 @@ MonoBehaviour
 
 
     private bool is_possible_pattern(
-        IPattern beginning,
-        IPattern ending
+        IFigure beginning,
+        IFigure ending
     ) {
         if (beginning == ending) {
             return false;
@@ -172,10 +177,10 @@ MonoBehaviour
 
     private struct Appearance_in_list {
         public int index;
-        public IPattern_appearance appearance;
+        public IFigure_appearance appearance;
 
         public Appearance_in_list(
-            IPattern_appearance in_appearance,
+            IFigure_appearance in_appearance,
             int in_index
         ) {
             appearance = in_appearance;
@@ -187,29 +192,37 @@ MonoBehaviour
     }
     public void save_pattern_appearances(
         IPattern signal_pair,
-        IReadOnlyList<IPattern_appearance> beginnings,
-        IReadOnlyList<IPattern_appearance> endings
+        IReadOnlyList<IFigure_appearance> beginnings,
+        IReadOnlyList<IFigure_appearance> endings
     ) {
- 
+        
         int i_ending = 0;
         int i_next_beginning = 0;
         while (i_ending < endings.Count) {
-            var potential_ending = endings[i_ending];
+            var potential_ending = endings[i_ending++];
             
             var closest_beginning = find_appearance_closest_to_moment(
                 beginnings,
                 i_next_beginning,
                 potential_ending.start_moment
             );
-            if (closest_beginning.is_found()) {
-                signal_pair.create_appearance(
-                    closest_beginning.appearance.start.action_group,
-                    potential_ending.end.action_group
-                );
-                i_next_beginning = closest_beginning.index + 1;
+            if (!closest_beginning.is_found()) {
+                continue;
             }
+            if (same_patterns_exist_inside(
+                signal_pair,
+                closest_beginning.appearance.start_moment,
+                potential_ending.end_moment
+            )) {
+                continue;
+            }
+            signal_pair.create_appearance(
+                closest_beginning.appearance,
+                potential_ending
+            );
+            i_next_beginning = closest_beginning.index + 1;
             
-            i_ending++;
+            
         }
 
         if (!pattern_appeared_at_least_twice(signal_pair)) {
@@ -217,6 +230,14 @@ MonoBehaviour
             ((Pattern)signal_pair).destroy();
         }
 
+        bool same_patterns_exist_inside(
+            IPattern pattern,
+            BigInteger start,
+            BigInteger end
+        ) {
+            return 
+            pattern.get_appearances_in_interval(start, end).Any();
+        }
         
     }
 
@@ -228,8 +249,8 @@ MonoBehaviour
     }
 
     IPattern get_pattern_for_pair(
-        IPattern beginning,
-        IPattern ending
+        IFigure beginning,
+        IFigure ending
     ) {
         if (
             pattern_storage.get_pattern_having(beginning, ending)
@@ -246,7 +267,7 @@ MonoBehaviour
     }
 
     Appearance_in_list find_appearance_closest_to_moment(
-        IReadOnlyList<IPattern_appearance> appearances,
+        IReadOnlyList<IFigure_appearance> appearances,
         int start_index,
         BigInteger moment
     ) {

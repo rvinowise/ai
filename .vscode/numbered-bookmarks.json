@@ -1,19 +1,93 @@
 {
-	"bookmarks": [
+	"files": [
 		{
-			"fsPath": "$ROOTPATH$\\Assets\\scripts\\unity_ai\\Pattern\\Pattern_appearance\\Pattern_appearance.cs",
+			"path": "Assets/scripts/unity_ai/Pattern_storage.cs",
 			"bookmarks": [
-				-1,
-				43,
-				27,
-				-1,
-				-1,
-				-1,
-				-1,
-				-1,
-				-1,
-				-1,
-				-1
+				{
+					"line": -1,
+					"column": 0
+				},
+				{
+					"line": -1,
+					"column": 0
+				},
+				{
+					"line": -1,
+					"column": 0
+				},
+				{
+					"line": 54,
+					"column": 0
+				},
+				{
+					"line": -1,
+					"column": 0
+				},
+				{
+					"line": -1,
+					"column": 0
+				},
+				{
+					"line": -1,
+					"column": 0
+				},
+				{
+					"line": -1,
+					"column": 0
+				},
+				{
+					"line": -1,
+					"column": 0
+				},
+				{
+					"line": -1,
+					"column": 0
+				}
+			]
+		},
+		{
+			"path": "Assets/scripts/unity_ai/History/Action_history/Action_group/Action_group.cs",
+			"bookmarks": [
+				{
+					"line": -1,
+					"column": 0
+				},
+				{
+					"line": -1,
+					"column": 0
+				},
+				{
+					"line": 31,
+					"column": 0
+				},
+				{
+					"line": -1,
+					"column": 0
+				},
+				{
+					"line": -1,
+					"column": 0
+				},
+				{
+					"line": -1,
+					"column": 0
+				},
+				{
+					"line": -1,
+					"column": 0
+				},
+				{
+					"line": -1,
+					"column": 0
+				},
+				{
+					"line": -1,
+					"column": 0
+				},
+				{
+					"line": -1,
+					"column": 0
+				}
 			]
 		}
 	]

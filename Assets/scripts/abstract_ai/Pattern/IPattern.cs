@@ -2,44 +2,31 @@
 
 using System.Collections.Generic;
 using System.Numerics;
+using abstract_ai;
 
 namespace rvinowise.ai.patterns {
-public interface IPattern {
+public interface IPattern:
+IFigure
+{
 
     string id {
         get;
     }
+    
+    public IFigure first_half { get; }
+    public IFigure second_half { get; } 
 
     IPattern_appearance create_appearance(
-        IAction_group start_group,
-        IAction_group end_group
+        BigInteger start,
+        BigInteger end
+    );
+    IPattern_appearance create_appearance(
+        IFigure_appearance first_half,
+        IFigure_appearance second_half
     );
 
-    IReadOnlyList<IPattern_appearance> get_appearances_in_interval(
-        BigInteger start, BigInteger end
-    );
+    
 
 }
 
-public class EqualityComparer: IEqualityComparer<IPattern> {
-
-    public bool Equals(IPattern p1, IPattern p2)
-    {
-        if (
-            (p1==null)&&(p2==null)
-        ) {
-            return true;
-        } else if (
-            (p1==null)||(p2==null)
-        ) {
-            return false;
-        }
-        return p1.id == p2.id;
-    }
-
-    public int GetHashCode(IPattern obj)
-    {
-       return obj.id.GetHashCode();
-    }
-}
 }

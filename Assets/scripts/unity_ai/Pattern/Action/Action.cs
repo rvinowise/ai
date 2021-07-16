@@ -1,5 +1,6 @@
 
-
+using System.Numerics;
+using abstract_ai;
 using rvinowise.ai.patterns;
 using rvinowise.unity.ai;
 using rvinowise.unity.extensions;
@@ -12,27 +13,33 @@ namespace rvinowise.unity.ai.action {
 public partial class Action: 
 IAction
 {
-
-    public IPattern pattern{get;private set;}
+    #region IAction interface
+    public IFigure figure{get;private set;}
+    public IFigure_appearance figure_appearance{get; internal set;}
+    
+    #endregion //IAction
+    
     public IAction_group action_group{get;private set;}
-    public Pattern_appearance pattern_appearance;
 
     void Start() {
-        pattern = pattern_appearance.pattern;
-        set_label(pattern.id);
+        figure = figure_appearance.figure;
+        if (figure is IPattern pattern) {
+            set_label(pattern.id);
+        }
+        else {
+            set_label("f");
+        }
     }
 
-    void OnMouseDown() {
-        this.pattern_appearance.selected = !this.pattern_appearance.selected;
-        
-    }
+    
 
-    public virtual Action put_into_moment(
-        IAction_group in_action_group
+    public void put_into_moment(
+        BigInteger in_moment
     ) {
+        Action_group in_action_group = Action_history.instance.
+            get_action_group_at_moment(in_moment);
         in_action_group.add_action(this);
         action_group = in_action_group;
-        return this;
     }
 
     public void destroy()
