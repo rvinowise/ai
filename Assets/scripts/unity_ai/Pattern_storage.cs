@@ -120,18 +120,34 @@ public class Pattern_storage: MonoBehaviour {
     }
 
     public IPattern get_pattern_having(
-        IFigure beginning,
-        IFigure ending
+        IReadOnlyList<IFigure> subfigures
     ) {
         foreach(var pattern in known_patterns) {
             if (
-                pattern.first_half == beginning &&
-                pattern.second_half == ending
+                pattern.as_lowlevel_sequence().SequenceEqual(subfigures)
             ) {
                 return pattern;
             }
         }
         return null;
+    }
+    
+    public IPattern get_pattern_for_pair(
+        IFigure beginning,
+        IFigure ending
+    ) {
+        var subfigures = Pattern.get_sequence_of_subfigures_from(beginning, ending);
+        if (
+            get_pattern_having(subfigures)
+                is IPattern old_pattern
+        ) {
+            return old_pattern;
+        }
+        IPattern new_pattern = pattern_prefab.get_for_sequence_of_subfigures(
+            subfigures
+        );
+        append_pattern(new_pattern);
+        return new_pattern;
     }
 
     /* space-separated pattern names  */

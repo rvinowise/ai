@@ -9,9 +9,7 @@ public interface IPattern:
 IFigure
 {
 
-    string id {
-        get;
-    }
+    IReadOnlyList<IFigure> subfigures { get; }
     
     public IFigure first_half { get; }
     public IFigure second_half { get; } 
@@ -25,7 +23,7 @@ IFigure
         IFigure_appearance second_half
     );
 
-    
+    IReadOnlyList<IFigure> as_lowlevel_sequence();
 
 }
 

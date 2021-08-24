@@ -50,5 +50,14 @@ IHave_destructor
     public string as_dot_graph() {
         throw new NotImplementedException();
     }
+    
+    #region IHave_destructor
+    
+    public void destroy()
+    {
+        action_group.remove_action(this);
+        ((MonoBehaviour)this).destroy();
+    }
+    #endregion
 }
 }

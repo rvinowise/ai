@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using System.Text;
 using abstract_ai;
 using rvinowise.ai.patterns;
 using rvinowise.rvi.contracts;
@@ -42,55 +43,22 @@ IHave_destructor
 
     private bool _selected;
     
-    #region IPattern interface
+    #region IPattern
     public string id {
         get { return lable.text; }
         set { lable.text = value; }
     }
+
+    public IReadOnlyList<IFigure> subfigures { get; private set; }
     public IFigure first_half { get; private set; }
     public IFigure second_half { get; private set; }
 
-    
-
-
-    [called_by_prefab]
-    public Pattern get_for_repeated_pair(
-        IFigure beginning,
-        IFigure ending
-    ) {
-        Pattern pattern = this.get_from_pool<Pattern>();
-        pattern.id = get_id_for(beginning, ending);
-        return pattern; 
-    }
-
-    [called_by_prefab]
-    public Pattern get_for_base_input(string id) {
-        Pattern pattern = this.get_from_pool<Pattern>();
-        pattern.id = id;
-        pattern.name = string.Format("pattern {0}", pattern.id);
-        return pattern;
-    }
-
-    public static string get_id_for(IFigure beginning, IFigure ending) {
-        string begin = beginning is IPattern beginning_pattern ? beginning_pattern.id : "f";
-        string end = beginning is IPattern end_pattern ? end_pattern.id : "f";
-        return string.Format("{0}{1}", begin, end);
-    }
-
-
-    IPattern_appearance IPattern.create_appearance(
+    /*IPattern_appearance IPattern.create_appearance(
         BigInteger start,
         BigInteger end
-    ) => create_appearance(start, end);
-
-
-    public IReadOnlyList<IPattern_appearance> appearances {
-        get => _appearances.AsReadOnly();
-    }
+    ) => create_appearance(start, end);*/
     
-    #endregion
-
-    public Pattern_appearance create_appearance(
+    public IPattern_appearance create_appearance(
         BigInteger start,
         BigInteger end
     ) {
@@ -101,11 +69,11 @@ IHave_destructor
                 this, start, end
             );
         
-        
         _appearances.Add(appearance);
         
         return appearance;
     }
+    
     public IPattern_appearance create_appearance(
         IFigure_appearance in_first_half,
         IFigure_appearance in_second_half
@@ -117,12 +85,74 @@ IHave_destructor
                 this, in_first_half, in_second_half
             );
         
-        
         _appearances.Add(appearance);
         
         return appearance;
     }
 
+    public IReadOnlyList<IFigure> as_lowlevel_sequence() {
+        if (subfigures != null) {
+            return subfigures;
+        }
+        return new List<IFigure> {this};
+    }
+    
+    #endregion
+
+    public IReadOnlyList<IPattern_appearance> appearances {
+        get => _appearances.AsReadOnly();
+    }
+    
+    
+
+    [called_by_prefab]
+    public Pattern get_for_sequence_of_subfigures(
+        IReadOnlyList<IFigure> subfigures
+    ) {
+        Pattern pattern = this.get_from_pool<Pattern>();
+
+        pattern.subfigures = subfigures;
+        pattern.id = get_id_for(subfigures);
+
+        return pattern;
+    }
+
+    public static IReadOnlyList<IFigure> get_sequence_of_subfigures_from(
+        IFigure beginning, IFigure ending
+    ) {
+        return get_sequence_of_subfigures_from(beginning).Concat(
+            get_sequence_of_subfigures_from(ending)
+        ).ToList();
+    }
+    
+    private static IReadOnlyList<IFigure> get_sequence_of_subfigures_from(IFigure figure) {
+        if (figure is IPattern pattern) {
+            if (pattern.subfigures != null) {
+                return pattern.subfigures; 
+            }
+        }
+        return new List<IFigure>{figure};
+    }
+
+    [called_by_prefab]
+    public Pattern get_for_base_input(string id) {
+        Pattern pattern = this.get_from_pool<Pattern>();
+        pattern.id = id;
+        pattern.name = string.Format("pattern {0}", pattern.id);
+        return pattern;
+    }
+
+
+    public static string get_id_for(IReadOnlyList<IFigure> subfigures) {
+        StringBuilder res = new StringBuilder();
+        foreach (var subfigure in subfigures) {
+            res.Append(subfigure.id);
+        }
+
+        return res.ToString();
+    }
+
+    
     
 
     void Awake() {

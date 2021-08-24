@@ -147,6 +147,9 @@ IAction_history
     }
     
     #region IFigure
+
+    public string id { get; }
+
     public string as_dot_graph() {
         throw new System.NotImplementedException();
     }

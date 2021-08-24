@@ -17,7 +17,7 @@ public class Pattern_finder:
 MonoBehaviour
 //,IPattern_finder
 {
-    public Pattern pattern_preafab;
+    
     public Action_history action_history;
     public Pattern_storage pattern_storage;
     //private ISet<IPattern> checked_patterns;
@@ -62,21 +62,16 @@ MonoBehaviour
         IFigure beginning_figure,
         ISet<IFigure> familiar_figures
     ) {
-
-        
         foreach (IFigure ending_figure in familiar_figures)
         {
             if (!is_possible_pattern(beginning_figure, ending_figure)) {
                 continue;
             }
 
-            IPattern signal_pair = get_pattern_for_pair(
+            IPattern signal_pair = pattern_storage.get_pattern_for_pair(
                 beginning_figure,
                 ending_figure
             );
-            if (signal_pair.id == "10") {
-                var test = true;
-            }
             IReadOnlyList<IFigure_appearance> appearances_of_beginning = 
             get_unused_in_beginning_appearances_in_interval(
                 action_groups.First().moment,
@@ -248,23 +243,7 @@ MonoBehaviour
         ).Count >= 2;
     }
 
-    IPattern get_pattern_for_pair(
-        IFigure beginning,
-        IFigure ending
-    ) {
-        if (
-            pattern_storage.get_pattern_having(beginning, ending)
-            is IPattern old_pattern
-        ) {
-            return old_pattern;
-        }
-        IPattern new_pattern = pattern_preafab.get_for_repeated_pair(
-            beginning,
-            ending
-        );
-        pattern_storage.append_pattern(new_pattern);
-        return new_pattern;
-    }
+    
 
     Appearance_in_list find_appearance_closest_to_moment(
         IReadOnlyList<IFigure_appearance> appearances,

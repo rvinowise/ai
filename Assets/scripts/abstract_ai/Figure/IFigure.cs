@@ -6,7 +6,7 @@ namespace abstract_ai {
 
 public interface IFigure {
 
-    
+    string id { get; }
     
     string as_dot_graph();
     

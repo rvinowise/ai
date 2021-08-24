@@ -13,11 +13,11 @@ namespace rvinowise.unity.ai.action {
 public partial class Action: 
 IAction
 {
-    #region IAction interface
+    #region IAction
     public IFigure figure{get;private set;}
     public IFigure_appearance figure_appearance{get; internal set;}
     
-    #endregion //IAction
+    #endregion IAction
     
     public IAction_group action_group{get;private set;}
 
@@ -42,11 +42,7 @@ IAction
         action_group = in_action_group;
     }
 
-    public void destroy()
-    {
-        action_group.remove_action(this);
-        ((MonoBehaviour)this).destroy();
-    }
+    
    
 }
 }
