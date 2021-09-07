@@ -44,20 +44,33 @@ IHave_destructor
     private bool _selected;
     
     #region IPattern
+
+    #region IFigure
     public string id {
         get { return lable.text; }
         set { lable.text = value; }
     }
+    public string as_dot_graph() {
+        throw new NotImplementedException();
+    }
+    public IReadOnlyList<IFigure_appearance> get_appearances_in_interval(
+        BigInteger start, BigInteger end
+    ) {
+        List<IPattern_appearance> result = appearances.Where(
+            appearance => 
+            (appearance.start_moment >= start) &&
+            (appearance.end_moment <= end)
+        ).ToList<IPattern_appearance>();
+
+        return result.AsReadOnly();
+    }
+
+    #endregion IFigure
 
     public IReadOnlyList<IFigure> subfigures { get; private set; }
     public IFigure first_half { get; private set; }
     public IFigure second_half { get; private set; }
 
-    /*IPattern_appearance IPattern.create_appearance(
-        BigInteger start,
-        BigInteger end
-    ) => create_appearance(start, end);*/
-    
     public IPattern_appearance create_appearance(
         BigInteger start,
         BigInteger end
@@ -97,7 +110,7 @@ IHave_destructor
         return new List<IFigure> {this};
     }
     
-    #endregion
+    #endregion IPattern
 
     public IReadOnlyList<IPattern_appearance> appearances {
         get => _appearances.AsReadOnly();
@@ -165,17 +178,7 @@ IHave_destructor
 
   
 
-    public IReadOnlyList<IFigure_appearance> get_appearances_in_interval(
-        BigInteger start, BigInteger end
-    ) {
-        List<IPattern_appearance> result = appearances.Where(
-            appearance => 
-            (appearance.start_moment >= start) &&
-            (appearance.end_moment <= end)
-        ).ToList<IPattern_appearance>();
-
-        return result.AsReadOnly();
-    }
+    
 
     
 
@@ -207,18 +210,6 @@ IHave_destructor
         }
     }
 
-    #region IFigure
-    public string as_dot_graph() {
-        throw new NotImplementedException();
-    }
 
-    public IReadOnlyList<IFigure_appearance> get_appearances(IFigure in_where) {
-        if (in_where == Action_history.instance) {
-            return appearances;
-        }
-        return null;
-    }
-    
-    #endregion
 }
 }
