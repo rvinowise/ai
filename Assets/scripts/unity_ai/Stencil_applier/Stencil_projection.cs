@@ -4,9 +4,9 @@ using abstract_ai;
 
 namespace rvinowise.unity.ai.Figure {
 
-public class Stencil: Figure {
+public class Stencil_projection {
     
-    IList<Output_subfigure> outputs = new List();
+    IList<Subfigures> subfigures = new IList<Subfigures>();
     
     
     
