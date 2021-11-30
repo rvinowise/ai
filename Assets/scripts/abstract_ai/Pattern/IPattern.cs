@@ -11,8 +11,6 @@ IFigure
 
     IReadOnlyList<IFigure> subfigures { get; }
     
-    public IFigure first_half { get; }
-    public IFigure second_half { get; } 
 
     IPattern_appearance create_appearance(
         BigInteger start,

@@ -20,8 +20,10 @@ IHave_destructor
 
     #region IPattern_appearance
 
-    public BigInteger start_moment => start_appearance.action_group.moment;
-    public BigInteger end_moment => end_appearance.action_group.moment;
+    public BigInteger start_moment 
+        => start_appearance.action_group.moment;
+    public BigInteger end_moment 
+        => end_appearance.action_group.moment;
 
     #endregion
 
@@ -30,11 +32,10 @@ IHave_destructor
     public Start_appearance start_appearance;
     public End_appearance end_appearance;
 
+    #region debug
     public IFigure_appearance first_half;
     public IFigure_appearance second_half;
-    public IList<IPattern_appearance> subpatterns = 
-        new List<IPattern_appearance>();
-        
+    #endregion debug
 
     [called_by_prefab]
     public Pattern_appearance get_for_interval(

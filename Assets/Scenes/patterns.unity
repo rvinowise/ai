@@ -879,8 +879,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff30017a425623b41ad672ad2953e1fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pattern_preafab: {fileID: 6404254444997730862, guid: f2327897f83f3ba4c97a718be186705d,
-    type: 3}
   action_history: {fileID: 735816290}
   pattern_storage: {fileID: 1261505313}
 --- !u!1 &488207161
@@ -1052,10 +1050,10 @@ RectTransform:
   m_Father: {fileID: 1719276589}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 1, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 1}
-  m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1541, y: 40}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 960, y: 0}
+  m_SizeDelta: {x: 1920, y: 40}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &490470994
 MonoBehaviour:
@@ -2743,6 +2741,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3529ccab6e726ee4e83546a329498c12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rect: {fileID: 0}
 --- !u!1 &1251795401
 GameObject:
   m_ObjectHideFlags: 0
@@ -2875,6 +2874,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3529ccab6e726ee4e83546a329498c12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rect: {fileID: 0}
 --- !u!114 &1261505313 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3463566815954382860, guid: ce27bf212c3ac6147b60b7bb154835a7,
