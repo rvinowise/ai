@@ -15,12 +15,10 @@ namespace rvinowise.unity.ai {
 
 public class Pattern_finder:
 MonoBehaviour
-//,IPattern_finder
 {
     
     public Action_history action_history;
     public Pattern_storage pattern_storage;
-    //private ISet<IPattern> checked_patterns;
 
     private IDictionary<string, IPattern> found_patterns = 
         new Dictionary<string, IPattern>();
@@ -72,8 +70,8 @@ MonoBehaviour
                 beginning_figure,
                 ending_figure
             );
-            IReadOnlyList<IFigure_appearance> appearances_of_beginning = 
-            get_unused_in_beginning_appearances_in_interval(
+            IReadOnlyList<IFigure_appearance> appearances_of_beginning 
+            = get_unused_in_beginning_appearances_in_interval(
                 action_groups.First().moment,
                 action_groups.Last().moment,
                 beginning_figure,
@@ -216,8 +214,6 @@ MonoBehaviour
                 potential_ending
             );
             i_next_beginning = closest_beginning.index + 1;
-            
-            
         }
 
         if (!pattern_appeared_at_least_twice(signal_pair)) {

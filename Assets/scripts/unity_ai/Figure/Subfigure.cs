@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using abstract_ai;
 
-namespace rvinowise.unity.ai.Figure {
+namespace rvinowise.unity.ai.figure {
 
 public class Subfigure: ISubfigure {
     public IFigure parent { get; private set; }

@@ -7,14 +7,12 @@ using System.Text;
 using abstract_ai;
 using rvinowise.ai.patterns;
 using rvinowise.rvi.contracts;
-using rvinowise.unity.ai.action;
 using rvinowise.unity.extensions;
 using rvinowise.unity.extensions.attributes;
 using TMPro;
 using UnityEditor.UI;
 using UnityEngine;
 
-using Action = rvinowise.unity.ai.action.Action;
 
 namespace rvinowise.unity.ai {
 public class Pattern : 
@@ -68,8 +66,6 @@ IHave_destructor
     #endregion IFigure
 
     public IReadOnlyList<IFigure> subfigures { get; private set; }
-    public IFigure first_half { get; private set; }
-    public IFigure second_half { get; private set; }
 
     public IPattern_appearance create_appearance(
         BigInteger start,

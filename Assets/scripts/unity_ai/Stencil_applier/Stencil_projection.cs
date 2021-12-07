@@ -2,11 +2,11 @@
 using System.Numerics;
 using abstract_ai;
 
-namespace rvinowise.unity.ai.Figure {
+namespace rvinowise.unity.ai.figure {
 
 public class Stencil_projection {
     
-    IList<Subfigures> subfigures = new IList<Subfigures>();
+    IList<Subfigure> subfigures = new List<Subfigure>();
     
     
     

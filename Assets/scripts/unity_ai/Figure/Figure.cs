@@ -2,12 +2,13 @@
 using System.Numerics;
 using abstract_ai;
 
-namespace rvinowise.unity.ai.Figure {
+namespace rvinowise.unity.ai.figure {
 
 public class Figure: IFigure {
     
-    public IReadOnlyList<ISubfigure> first_subfigures { get; private set; } 
-		= new List<ISubfigure>();
+    public IReadOnlyList<ISubfigure> first_subfigures {
+        get; private set;
+    } = new List<ISubfigure>();
 
     #region IFigure
 

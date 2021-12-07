@@ -1,8 +1,8 @@
 ﻿using System.Numerics;
 using abstract_ai;
+using System.Collections.Generic;
 
-
-namespace rvinowise.unity.ai.Figure {
+namespace rvinowise.unity.ai.figure {
 
 public class Figure_appearance:IFigure_appearance {
     
