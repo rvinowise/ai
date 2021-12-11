@@ -18,29 +18,66 @@ namespace rvinowise.unity.ai {
 public class Stencil_applier: MonoBehaviour {
     
     
-    /* public IList<IFigure> apply_stencil(Stencil stencil, IFigure target) {
-        IList<Stencil_projection> projections 
-        = project_stencil_on_target(stencil, target);
+    // public static IList<IFigure> apply_stencil(
+    //     IReadOnlyList<IAction_group> action_groups,
+    //     Stencil stencil
+    // ) {
+    //     Stencil applied_stencil = this;
+    //     IFigure stencil_subfigure = stencil.;
+    //     foreach(
+    //         IAction_group action_group in action_groups 
+    //     ) {
+    //         if (
+    //             action_group.has_action<Appearance_start>(
+    //                 stencil_subfigure
+    //             )
+    //         ) {
 
-        foreach(Stencil_projection projection in projections) {
-            IList<Figure> out_figures
-            = extract_figures_out_of_projected_stencils(projection);
-        }
+    //         }
+    //     }
+    // }
+
+    // public static IList<IFigure> apply_stencil(
+    //     Stencil stencil,
+    //     IReadOnlyList<IAction_group> action_groups
         
-        foreach(Subfigure subfigure in stencil.first_subfigures) {
-            IList<Subfigure> matching_figures
-            = target.get_subfigures_of_type(
-                subfigure.figure
-            );
-        }
-    } */
+    // ) {
+    //     // stencils can be only applied to the Figures. 
+    //     // conversion img: conversion of Action_istory into Figure
+    //     IFigure figure = create_figure_from_action_history(action_groups);
+    //     return apply_stencil(stencil, figure);
+    // }
 
-    /* private IList<Stencil_projection> project_stencil_on_target(
-        Stencil stencil, IFigure target
-    ) {
-        IList<Stencil_projection> = new List<Stencil_projection>();
+    
 
-    } */
+    // public IList<IFigure> apply_stencil(
+    //     Stencil stencil, 
+    //     IFigure target
+    // ) {
+    //     IList<Stencil_projection> projections 
+    //     = project_stencil_on_target(stencil, target);
+
+    //     foreach(Stencil_projection projection in projections) {
+    //         IList<Figure> out_figures
+    //         = extract_figures_out_of_projected_stencils(projection);
+    //     }
+        
+    
+    // }
+
+    // private IList<Stencil_projection> project_stencil_on_target(
+    //     Stencil stencil, IFigure target
+    // ) {
+    //     IList<Stencil_projection> result = new List<Stencil_projection>();
+
+    //     return result;
+    // }
+
+    // IList<Figure> extract_figures_out_of_projected_stencils(
+    //     Stencil_projection projection
+    // ) {
+
+    // }
 }
 
 

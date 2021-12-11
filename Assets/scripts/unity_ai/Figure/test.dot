@@ -1,0 +1,11 @@
+digraph Figure1 {
+layout="dot"
+rankdir=LR;
+
+a -> c
+a->d
+c -> e
+e -> f
+b -> d
+b->e
+}

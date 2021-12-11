@@ -7,6 +7,7 @@ using rvinowise.ai.patterns;
 using UnityEngine;
 using System.Numerics;
 using rvinowise.rvi.contracts;
+using abstract_ai;
 
 namespace rvinowise.unity.ai.action {
 
@@ -68,10 +69,10 @@ public partial class Action_group:IAction_group {
     }
 
 
-    public bool has_action<TAction>(IPattern pattern) where TAction: IAction {
+    public bool has_action<TAction>(IFigure figure) where TAction: IAction {
         foreach (var action in actions) {
             if (
-                (action.figure == pattern)&&
+                (action.figure == figure)&&
                 (action is TAction)
                 ) {
                 return true;

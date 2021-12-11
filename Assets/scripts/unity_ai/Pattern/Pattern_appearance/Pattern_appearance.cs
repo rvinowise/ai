@@ -29,8 +29,8 @@ IHave_destructor
 
     public IPattern pattern{get; protected set;}
     
-    public Start_appearance start_appearance;
-    public End_appearance end_appearance;
+    public Appearance_start start_appearance;
+    public Appearance_end end_appearance;
 
     #region debug
     public IFigure_appearance first_half;
