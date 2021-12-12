@@ -17,8 +17,8 @@ MonoBehaviour
         get {return _selected;}
         set {
             _selected = value;
-            start_appearance.highlighted = value;
-            end_appearance.highlighted = value;
+            start_appearance.selected = value;
+            end_appearance.selected = value;
             bezier.gameObject.SetActive(value);
         }
     }

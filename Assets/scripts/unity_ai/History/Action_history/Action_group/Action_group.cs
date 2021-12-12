@@ -36,7 +36,7 @@ public partial class Action_group:IAction_group {
     }
 
     private BigInteger _moment;
-    private IList<IAction> actions = new List<IAction>();
+    public IList<IAction> actions = new List<IAction>();
     
     void Awake() {
     }

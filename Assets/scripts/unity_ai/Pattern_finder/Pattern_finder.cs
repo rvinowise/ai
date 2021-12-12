@@ -26,7 +26,7 @@ MonoBehaviour
     private IReadOnlyList<IAction_group> action_groups;
 
     public void enrich_pattern_storage() {
-         action_groups = action_history.get_action_groups(
+        action_groups = action_history.get_action_groups(
             0,
             action_history.last_moment
         );

@@ -33,19 +33,19 @@ IHave_destructor
 
     }
     
-    public bool highlighted {
+    public bool selected {
         set {
-            _highlighted = value;
-            animator.SetBool("selected", _highlighted);
+            _selected = value;
+            animator.SetBool("selected", _selected);
             if (value) {
                 transform.set_z(transform.parent.position.z - 1);
             } else {
                 transform.set_z(transform.parent.position.z - 0.1f);
             }
         }
-        get {return _highlighted;}
+        get {return _selected;}
     }
-    private bool _highlighted;
+    private bool _selected;
     
     public string as_dot_graph() {
         throw new NotImplementedException();

@@ -1,8 +1,0 @@
-{
-	"name": "graphical_effects",
-	"references": [
-		"debug",
-		"extensions",
-		"third_party"
-	]
-}

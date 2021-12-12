@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿
+using UnityEngine;
+using System.Collections.Generic;
 using System.Numerics;
 using abstract_ai;
 using rvinowise.ai.patterns;
@@ -6,9 +8,10 @@ using rvinowise.rvi.contracts;
 
 namespace rvinowise.unity.ai.figure {
 
-public class Figure_builder {
-    
-    
+public class Figure_builder: MonoBehaviour {
+
+    public Action_history action_history;
+    public Figure_storage figure_storage; 
 
     private Figure figure;
     private List<ISubfigure> all_subfigures = new List<ISubfigure>();
@@ -17,6 +20,11 @@ public class Figure_builder {
     private Dictionary<IFigure_appearance, ISubfigure> 
     appearance_to_subfigure 
     = new Dictionary<IFigure_appearance, ISubfigure>();
+
+
+    public void on_create_figure_from_actions() {
+        //create_figure_from_action_history();
+    }
 
     public IFigure create_figure_from_action_history(
         IReadOnlyList<IAction_group> action_groups
