@@ -17,6 +17,8 @@ public class Figure_storage: MonoBehaviour {
     public Dictionary<string, IFigure> name_to_figure = 
         new Dictionary<string, IFigure>();
 
+    public Figure figure_prefab;
+    public int last_id;
 
     public IEnumerable<Figure> get_selected_figures() {
         IList<Figure> result = new List<Figure>();
@@ -28,12 +30,19 @@ public class Figure_storage: MonoBehaviour {
         return result;
     }
 
-    public void append_figure(IFigure figure) { 
+    public void append_figure(Figure figure) { 
         Figure unity_figure = figure as Figure;
 
         known_figures.Add(figure);
         name_to_figure.Add(figure.id, figure);
         figure_table.add_item(unity_figure);
+    }
+
+    public IFigure add_new_figure() {
+        Figure new_figure = figure_prefab.get_from_pool<Figure>();
+        new_figure.id = (last_id++).ToString();
+        append_figure(new_figure);
+        return new_figure;
     }
 
     public void remove_figure(IFigure figure) {

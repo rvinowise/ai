@@ -9,76 +9,115 @@ using rvinowise.unity.ai;
 using rvinowise.unity.ai.action;
 using Action = rvinowise.unity.ai.action.Action;
 using rvinowise.ai.patterns;
+using rvinowise.unity.geometry2d;
+using UnityEngine.EventSystems;
 
 namespace rvinowise.unity.ui.input.mouse {
 
+public class Rectangle {
+    public float left; 
+    public float right;
+    public float bottom;
+    public float top;
+
+    public Vector2 top_left => new Vector2(left, top);
+    public Vector2 top_right => new Vector2(right, top);
+    public Vector2 bottom_left => new Vector2(left, bottom);
+    public Vector2 bottom_right => new Vector2(right, bottom);
+
+    public void update_from_points(Vector2 start, Vector2 end) {
+        if (start.x > end.x) {
+            left = end.x;
+            right = start.x;
+        } else {
+            left = start.x;
+            right = end.x;
+        }
+        if (start.y > end.y) {
+            top = start.y;
+            bottom = end.y;
+        } else {
+            top = end.y;
+            bottom = start.y;
+        }
+    }
+}
 public class Box_selector: MonoBehaviour {
 
     #region what can be selected
     public Action_history action_history;
     #endregion
-    private Vector2 start_position;
 
-    private Vector2 bottom_left_position;
-    private Vector2 top_right_position;
+    
+    private Vector2 start_position;
+    private Rectangle rect = new Rectangle();
+    private bool is_selecting = false;
+
+    public LineRenderer line_renderer;
+
+    void Awake() {
+        line_renderer = GetComponent<LineRenderer>();
+        line_renderer.loop = true;
+        line_renderer.positionCount = 4;
+    }
 
     void Update() {
         Vector2 mouse_position = Input.instance.mouse_world_position;
-
+        
         if (UnityEngine.Input.GetMouseButtonDown(0)) {
-            start_position = mouse_position;
-            deselect_previous();
+            if (EventSystem.current.IsPointerOverGameObject()) {
+                return;
+            }
+            
+            start_selection(mouse_position);
         }
 
         if (UnityEngine.Input.GetMouseButtonUp(0)) {
-
+            end_selection();
         }
-
-        if (UnityEngine.Input.GetMouseButton(0)) {
+        
+        if (is_selecting) {
             update_selection(
                 start_position, 
                 mouse_position
             );
+            if (start_position.distance_to(mouse_position) > 5) {
+                bool test = true;
+            }
         }
     }
 
-    void deselect_previous() {
+    private void start_selection(Vector2 mouse_position) {
+        start_position = mouse_position;
+        line_renderer.enabled = true;
+        is_selecting = true;
+        deselect_previous();
+    }
 
+    private void end_selection() {
+        line_renderer.enabled = false;
+        is_selecting = false;
+    }
+
+    void deselect_previous() {
+        Selection.instance.deselect_all();
     }
 
     private void update_selection(
         Vector2 start, Vector2 end
     ) {
-        update_positions_for_comparing(start, end);
-        update_selecting_box(start, end);
+        deselect_previous();
+        rect.update_from_points(start, end);
+        update_selecting_box(rect);
         select_objects();
     }
 
-    private void update_positions_for_comparing(
-        Vector2 start, Vector2 end
-    ) {
-        float left; float right; float bottom; float top;
-        if (start.x > end.x) {
-            left = start.x;
-            right = end.x;
-        } else {
-            left = end.x;
-            right = start.x;
-        }
-        if (start.y > end.y) {
-            bottom = start.y;
-            top = end.y;
-        } else {
-            bottom = end.y;
-            top = start.y;
-        }
 
-        bottom_left_position = new Vector2(left, bottom);
-        top_right_position = new Vector2(right, top);
-    }
-
-    private void update_selecting_box(Vector2 start, Vector2 end) {
-
+    private void update_selecting_box(Rectangle rect) {
+        line_renderer.SetPosition(0, rect.top_left);
+        line_renderer.SetPosition(1, rect.top_right);
+        line_renderer.SetPosition(2, rect.bottom_right);
+        line_renderer.SetPosition(3, rect.bottom_left);
     }
     private void select_objects() {
         IReadOnlyList<IAction_group> action_groups 
@@ -88,11 +127,8 @@ public class Box_selector: MonoBehaviour {
                 (group is Action_group unity_group)&&
                 (is_inside_selection(unity_group))
             ) {
-                foreach(IAction action in unity_group.actions) {
-                    if (action is Action unity_action) {
-                        unity_action.selected = true;
-                    }
-                }
+                Selection.instance.select(unity_group);
+                
             }
         }
     }
@@ -107,10 +143,10 @@ public class Box_selector: MonoBehaviour {
     bool is_inside_selection(MonoBehaviour entity) {
         Vector2 position = entity.transform.position;
         return (
-            (position.x > bottom_left_position.x)&&
-            (position.x < top_right_position.x)&&
-            (position.y > bottom_left_position.y)&&
-            (position.y < top_right_position.y)
+            (position.x > rect.left)&&
+            (position.x < rect.right)&&
+            (position.y > rect.bottom)&&
+            (position.y < rect.top)
         );
     }
 

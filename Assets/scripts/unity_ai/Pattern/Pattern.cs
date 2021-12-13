@@ -194,8 +194,7 @@ IHave_destructor
     }
 
     void OnMouseDown() {
-        this.selected = !selected;
-        
+        selected = !selected;
     }
 
     private void set_appearances_are_highlighted(bool value) {

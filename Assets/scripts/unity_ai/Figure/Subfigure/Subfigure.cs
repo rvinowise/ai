@@ -1,4 +1,5 @@
 ﻿
+using System;
 using System.Collections.Generic;
 using abstract_ai;
 
@@ -22,6 +23,12 @@ public class Subfigure: ISubfigure {
 
     private List<ISubfigure> _next =   new List<ISubfigure>();
     private List<ISubfigure> _previous =   new List<ISubfigure>();
+
+    public string id;
+
+    public String get_name() {
+        return String.Format("{0}({1})", figure.id, id);
+    }
     
     #region building
     public void connext_to_next(ISubfigure next_subfigure) {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Numerics;
+using System.Text;
 using System.Threading.Tasks;
 using abstract_ai;
 using rvinowise.ai.patterns;
@@ -16,15 +17,15 @@ public class Figure_renderer: MonoBehaviour {
     public Figure_storage figure_storage;
     private Figure figure;
     private String dot_file_template = 
-$@"digraph {1} {{
+@"digraph {0} {{
 layout=""dot""
 rankdir=LR;
 
-{2}
+{1}
 
 }}";
     
-    public String get_dot_format(IFigure figure) {
+    public String get_dot_format(Figure figure) {
         String node_connections
         = get_nodes_connections(figure);
         return String.Format(
@@ -33,13 +34,28 @@ rankdir=LR;
              node_connections
         );
     }
-    private String get_nodes_connections(IFigure figure) {
-        return "a->b";
+    private String get_nodes_connections(Figure figure) {
+        StringBuilder result = new StringBuilder();
+        foreach (Subfigure subfigure in figure.subfigures) {
+            write_next_nodes_for(subfigure, result);
+        }
+        return result.ToString();
     }
 
-    public void save_picture(IFigure figure) {
+    private void write_next_nodes_for(Subfigure subfigure, StringBuilder result) {
+        foreach (Subfigure next_sunfigure in subfigure.next) {
+            result.AppendFormat(
+                "\"{0}\" -> \"{1}\"\n",
+                subfigure.get_name(),
+                next_sunfigure.get_name()
+            );
+        }
+    }
+
+    private String out_path = "D:\\prj\\unity_ai\\Assets\\scripts\\unity_ai\\Figure\\";
+    public void save_picture(Figure figure) {
         System.IO.File.WriteAllText(
-            $"Figure_{figure.id}.dot", 
+            $"{out_path}Figure_{figure.id}.dot", 
             get_dot_format(figure)
         );
     }
@@ -49,7 +65,7 @@ rankdir=LR;
         foreach(
             IFigure figure in figure_storage.get_selected_figures()
         ) {
-            save_picture(figure);
+            save_picture(figure as Figure);
         }
     }
 }

@@ -9,23 +9,25 @@ public class Figure:
 MonoBehaviour,
 IFigure {
     
-    public IReadOnlyList<ISubfigure> first_subfigures {
-        get; private set;
-    } = new List<ISubfigure>();
+    public List<ISubfigure> first_subfigures = new List<ISubfigure>();
+
+    public List<ISubfigure> subfigures = new List<ISubfigure>();
 
     public bool selected {
         get { return _selected; }
         set {
-            _selected = value;
-            //animator.SetBool("selected", _selected);
+            _selected = value; 
+            animator.SetBool("selected", _selected);
             //this.set_appearances_are_highlighted(selected);
         }
     }
     private bool _selected = false;
-
+    [HideInInspector]
+    public Animator animator;
+    
     #region IFigure
 
-    public string id { get; }
+    public string id { get; set; }
 
     public string as_dot_graph() {
         throw new System.NotImplementedException();
@@ -35,6 +37,14 @@ IFigure {
         throw new System.NotImplementedException();
     }
     #endregion IFigure
+    
+    
+    void Awake() {
+        animator = GetComponent<Animator>();
+    }
+    void OnMouseDown() {
+        selected = !selected;
+    }
     
 
     #region building

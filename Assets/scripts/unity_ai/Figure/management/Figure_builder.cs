@@ -1,40 +1,59 @@
 ﻿
 using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
 using System.Numerics;
 using abstract_ai;
 using rvinowise.ai.patterns;
 using rvinowise.rvi.contracts;
+using rvinowise.unity.extensions;
+using rvinowise.unity.ui.input;
 
 namespace rvinowise.unity.ai.figure {
 
 public class Figure_builder: MonoBehaviour {
 
     public Action_history action_history;
-    public Figure_storage figure_storage; 
-
+    public Figure_storage figure_storage;
+    private Figure figure_prefab;
+    
     private Figure figure;
     private List<ISubfigure> all_subfigures = new List<ISubfigure>();
-    private List<ISubfigure> finished_subfigures = new List<ISubfigure>();
+    private List<ISubfigure> ended_subfigures = new List<ISubfigure>();
     
     private Dictionary<IFigure_appearance, ISubfigure> 
     appearance_to_subfigure 
     = new Dictionary<IFigure_appearance, ISubfigure>();
 
+    private int last_subfigure_id;
 
+    void Awake() {
+        figure_prefab = figure_storage.figure_prefab;
+    }
+    
     public void on_create_figure_from_actions() {
-        //create_figure_from_action_history();
+        var selected_groups = Selection.instance.sorted_action_groups;
+        IFigure new_figure = create_figure_from_action_history(selected_groups);
     }
 
     public IFigure create_figure_from_action_history(
         IReadOnlyList<IAction_group> action_groups
     ) {
-        figure = new Figure();
+        clear();
+        figure = figure_storage.add_new_figure() as Figure;
         
         foreach(IAction_group group in action_groups) {
             parce_actions_of(group);
         }
         return figure;
+    }
+
+    private void clear() {
+        appearance_to_subfigure.Clear();
+        all_subfigures.Clear();
+        ended_subfigures.Clear();
+        figure = null;
+        last_subfigure_id = 0;
     }
     private void parce_actions_of(IAction_group group) {
         foreach(IAction action in group) {
@@ -49,9 +68,17 @@ public class Figure_builder: MonoBehaviour {
     private void add_next_subfigure(
         IFigure_appearance appended_figure
     ) {
-        ISubfigure new_subfigure = new Subfigure(appended_figure.figure);
-        foreach(ISubfigure ended_subfigure in finished_subfigures) {
-            ended_subfigure.connext_to_next(new_subfigure);
+        Subfigure new_subfigure = new Subfigure(appended_figure.figure);
+        new_subfigure.id = (last_subfigure_id++).ToString();
+        figure.subfigures.Add(new_subfigure);
+        appearance_to_subfigure.Add(appended_figure, new_subfigure);
+        if (ended_subfigures.Any()) {
+            foreach (ISubfigure ended_subfigure in ended_subfigures) {
+                ended_subfigure.connext_to_next(new_subfigure);
+            }
+        }
+        else {
+            figure.first_subfigures.Add(new_subfigure);
         }
     }
 
@@ -63,7 +90,7 @@ public class Figure_builder: MonoBehaviour {
             finished_appearance, out started_subfigure
         );
         if (started_subfigure != null) {
-            finished_subfigures.Add(started_subfigure);
+            ended_subfigures.Add(started_subfigure);
         }
     }
 

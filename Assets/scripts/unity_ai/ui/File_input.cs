@@ -26,6 +26,7 @@ public class File_input : Input {
     }
     protected void Start() {
         init_file_dialog();
+        
     }
 
     private void init_file_dialog() {
@@ -59,7 +60,7 @@ public class File_input : Input {
 
     }
    
-    void read_file(string file_path) {
+    public void read_file(string file_path) {
         string input_string = File.ReadAllText(file_path);
         foreach(char symbol in input_string.ToCharArray()) {
             if (symbol == '\n') {
