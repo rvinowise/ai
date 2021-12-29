@@ -24,7 +24,15 @@ rankdir=LR;
 {1}
 
 }}";
-    
+    private String out_path;
+    void Awake() {
+        out_path = String.Format(
+            "{0}/output/",
+            Application.dataPath
+        );
+        DirectoryInfo out_path_info = Directory.CreateDirectory(out_path);
+    }
+
     public String get_dot_format(Figure figure) {
         String node_connections
         = get_nodes_connections(figure);
@@ -52,7 +60,7 @@ rankdir=LR;
         }
     }
 
-    private String out_path = "D:\\prj\\unity_ai\\Assets\\scripts\\unity_ai\\Figure\\";
+    
     public void save_picture(Figure figure) {
         System.IO.File.WriteAllText(
             $"{out_path}Figure_{figure.id}.dot", 

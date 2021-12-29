@@ -31,7 +31,7 @@ public class Test_initialiser : MonoBehaviour {
     }
 
     void Start() {
-        file_input.read_file("C:\\Users\\rvino\\Desktop/input.txt"); //test example
+        //file_input.read_file("C:\\Users\\rvino\\Desktop/input.txt"); //test example
         // var selected_groups = action_history.get_action_groups(
         //     3,8
         // );

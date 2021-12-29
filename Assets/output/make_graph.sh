@@ -1,0 +1,1 @@
+dot -Tbmp Figure_0.dot > figure.bmp

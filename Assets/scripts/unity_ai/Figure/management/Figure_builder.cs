@@ -17,7 +17,7 @@ public class Figure_builder: MonoBehaviour {
     public Figure_storage figure_storage;
     private Figure figure_prefab;
     
-    private Figure figure;
+    private Figure figure; //which is being built by this builder
     private List<ISubfigure> all_subfigures = new List<ISubfigure>();
     private List<ISubfigure> ended_subfigures = new List<ISubfigure>();
     
@@ -68,9 +68,10 @@ public class Figure_builder: MonoBehaviour {
     private void add_next_subfigure(
         IFigure_appearance appended_figure
     ) {
-        Subfigure new_subfigure = new Subfigure(appended_figure.figure);
+        Subfigure new_subfigure = 
+            figure.subfigure_prefab.create_for_figure(appended_figure.figure);
         new_subfigure.id = (last_subfigure_id++).ToString();
-        figure.subfigures.Add(new_subfigure);
+        figure.add_subfigure(appended_figure.figure);
         appearance_to_subfigure.Add(appended_figure, new_subfigure);
         if (ended_subfigures.Any()) {
             foreach (ISubfigure ended_subfigure in ended_subfigures) {

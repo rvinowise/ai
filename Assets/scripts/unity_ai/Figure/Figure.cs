@@ -2,12 +2,14 @@
 using System.Numerics;
 using abstract_ai;
 using UnityEngine;
-
+using Vector3 = UnityEngine.Vector3;
+using System.Linq;
 namespace rvinowise.unity.ai.figure {
 
 public class Figure: 
 MonoBehaviour,
-IFigure {
+IFigure 
+{
     
     public List<ISubfigure> first_subfigures = new List<ISubfigure>();
 
@@ -25,6 +27,17 @@ IFigure {
     [HideInInspector]
     public Animator animator;
     
+    #region building
+    public void add_subfigure(IFigure child_figure) {
+        Subfigure subfigure = subfigure_prefab.
+            create_for_figure(child_figure);
+        subfigure.transform.parent = subfigures_folder.transform;
+        position_subfigure(subfigure);
+        subfigures.Add(subfigure);
+    }
+    
+    #endregion
+
     #region IFigure
 
     public string id { get; set; }
@@ -38,19 +51,34 @@ IFigure {
     }
     #endregion IFigure
     
-    
+    #region visualisation
+    [SerializeField]
+    public Subfigure subfigure_prefab;
+    public Transform subfigures_folder;
+    private Vector3 subfigures_offset = new Vector3(2,0,0);
     void Awake() {
         animator = GetComponent<Animator>();
     }
     void OnMouseDown() {
         selected = !selected;
     }
-    
 
-    #region building
+    private void position_subfigure(Subfigure subfigure) {
+        
+        subfigure.transform.position = 
+            get_position_of_last_subfigure()+ subfigures_offset;
+    }
 
-    
+    private Vector3 get_position_of_last_subfigure() {
+        if (subfigures.Any()) {
+            var last_subfigue = subfigures.Last() as Subfigure;
+            return last_subfigue.transform.position;
+        }
+        return transform.position + new Vector3(0,-2,0);
+    }
     #endregion
+
+    
     
 }
 }
