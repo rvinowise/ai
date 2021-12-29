@@ -302,6 +302,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 1
   lable: {fileID: 2187192685330894839}
+  connections_folder: {fileID: 1176777911035951212}
+  connection_prefab: {fileID: 1570354073089387821, guid: 7ef0d88101bff5343897b1d5aa1b46ba,
+    type: 3}
 --- !u!114 &-5629631866678586756
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using abstract_ai;
+using rvinowise.unity.ai.visuals;
 using rvinowise.unity.extensions.attributes;
 using rvinowise.unity.extensions;
 using TMPro;
@@ -11,7 +12,8 @@ namespace rvinowise.unity.ai.figure {
 
 public class Subfigure:
 MonoBehaviour,
-ISubfigure 
+ISubfigure,
+ICircle
 {
 
     #region ISubfigure
@@ -53,6 +55,9 @@ ISubfigure
     public void connext_to_next(ISubfigure next_subfigure) {
         append_next(next_subfigure);
         next_subfigure.append_previous(this);
+        if (next_subfigure is Subfigure unity_subfigure) {
+            create_connection_arrow_to(unity_subfigure);
+        }
     }
     public void append_next(ISubfigure subfigure) {
         _next.Add(subfigure);
@@ -61,11 +66,20 @@ ISubfigure
         _previous.Add(subfigure);
     }
 
+    private void create_connection_arrow_to(Subfigure next) {
+        Connection new_connection = connection_prefab.create(this, next);
+        new_connection.transform.parent = connections_folder;
+    }
+
     #endregion
 
     #region visualisation
     [SerializeField]
-    private TextMeshPro lable; 
+    private TextMeshPro lable;
+    [SerializeField]
+    private Transform connections_folder;
+    [SerializeField]
+    private Connection connection_prefab;
     void Awake() {
         lines_to_next = GetComponent<LineRenderer>();
     }
@@ -76,6 +90,9 @@ ISubfigure
     private void update_connections() {
         
     }
+
+    public float radius => 0.5f;
+
     #endregion
 }
 }

@@ -28,12 +28,13 @@ IFigure
     public Animator animator;
     
     #region building
-    public void add_subfigure(IFigure child_figure) {
+    public Subfigure add_subfigure(IFigure child_figure) {
         Subfigure subfigure = subfigure_prefab.
             create_for_figure(child_figure);
         subfigure.transform.parent = subfigures_folder.transform;
         position_subfigure(subfigure);
         subfigures.Add(subfigure);
+        return subfigure;
     }
     
     #endregion
