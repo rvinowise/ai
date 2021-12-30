@@ -7,6 +7,7 @@ using System.Text;
 using abstract_ai;
 using rvinowise.ai.patterns;
 using rvinowise.rvi.contracts;
+using rvinowise.unity.ai.visuals;
 using rvinowise.unity.extensions;
 using rvinowise.unity.extensions.attributes;
 using TMPro;
@@ -18,7 +19,8 @@ namespace rvinowise.unity.ai {
 public class Pattern : 
 MonoBehaviour,
 IPattern,
-IHave_destructor
+IHave_destructor,
+ICircle
 {
 
     public TextMeshPro lable;
@@ -205,6 +207,11 @@ IHave_destructor
         }
     }
 
+    #region visualisation
+
+    public float radius => transform.localScale.x;
+
+    #endregion
 
 }
 }

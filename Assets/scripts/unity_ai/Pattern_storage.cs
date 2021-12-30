@@ -7,6 +7,7 @@ using rvinowise.rvi.contracts;
 using rvinowise.unity.extensions;
 using rvinowise.unity.ui.table;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace rvinowise.unity.ai {
 public class Pattern_storage: MonoBehaviour {
@@ -20,9 +21,30 @@ public class Pattern_storage: MonoBehaviour {
         new Dictionary<string, IPattern>();
 
     private string[] symbol_patterns = {",",";","=","+","-"};
+
+    
     void Awake() {
+        pattern_table.init(pattern_prefab);
         create_initial_patterns();
     }
+    
+    private void create_initial_patterns() {
+        foreach(string pattern_id in symbol_patterns) {
+            Pattern pattern = pattern_prefab.get_for_base_input(
+                pattern_id
+            );
+            Contract.Ensures(pattern != null);
+            append_pattern(pattern);
+        }
+        for (int i=0;i<=9;i++) {
+            Pattern pattern = pattern_prefab.get_for_base_input(
+                get_id_for_index(i)
+            );
+            Contract.Ensures(pattern != null);
+            append_pattern(pattern);
+        }
+    }
+
 
     virtual protected void Start() {
         name_to_pattern = create_map_name_to_pattern(
@@ -73,22 +95,7 @@ public class Pattern_storage: MonoBehaviour {
     }
 
     
-    private void create_initial_patterns() {
-        foreach(string pattern_id in symbol_patterns) {
-            Pattern pattern = pattern_prefab.get_for_base_input(
-                pattern_id
-            );
-            Contract.Ensures(pattern != null);
-            append_pattern(pattern);
-        }
-        for (int i=0;i<=9;i++) {
-            Pattern pattern = pattern_prefab.get_for_base_input(
-                get_id_for_index(i)
-            );
-            Contract.Ensures(pattern != null);
-            append_pattern(pattern);
-        }
-    }
+    
 
     private string get_id_for_index(int in_index) {
         return string.Format("{0}",in_index);
