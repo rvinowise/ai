@@ -59,8 +59,8 @@ MonoBehaviour
             destination.transform.position.degrees_to(source.transform.position)
         );
             
-        line_renderer.SetPosition(0, source.transform.position);
-        line_renderer.SetPosition(1, destination.transform.position);
+        line_renderer.SetPosition(0, tail_attachment);
+        line_renderer.SetPosition(1, head_attachment);
         tail.transform.position = tail_attachment;
         head.transform.position = head_attachment;
         tail.transform.direct_to(destination.transform.position);

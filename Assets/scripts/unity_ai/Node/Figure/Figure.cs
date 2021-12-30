@@ -4,11 +4,14 @@ using abstract_ai;
 using UnityEngine;
 using Vector3 = UnityEngine.Vector3;
 using System.Linq;
+using rvinowise.unity.ai.visuals;
+
 namespace rvinowise.unity.ai.figure {
 
 public class Figure: 
 MonoBehaviour,
-IFigure 
+IFigure,
+ICircle
 {
     
     public List<ISubfigure> first_subfigures = new List<ISubfigure>();
@@ -77,9 +80,15 @@ IFigure
         }
         return transform.position + new Vector3(0,-2,0);
     }
+    #region ICircle
+
+    public float radius => transform.localScale.x;
+
     #endregion
 
-    
-    
+    #endregion
+
+
+
 }
 }

@@ -20,6 +20,10 @@ public class Figure_storage: MonoBehaviour {
     public Figure figure_prefab;
     public int last_id;
 
+    void Awake() {
+        figure_table.init(figure_prefab);
+    }
+    
     public IEnumerable<Figure> get_selected_figures() {
         IList<Figure> result = new List<Figure>();
         foreach(Figure figure in known_figures) {
