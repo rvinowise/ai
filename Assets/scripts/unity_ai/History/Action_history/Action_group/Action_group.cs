@@ -9,9 +9,12 @@ using System.Numerics;
 using rvinowise.rvi.contracts;
 using abstract_ai;
 
+
 namespace rvinowise.unity.ai.action {
 
-public partial class Action_group:IAction_group {
+public partial class Action_group:
+IAction_group
+ {
   
     public IEnumerator<IAction> GetEnumerator() => actions.GetEnumerator();
 

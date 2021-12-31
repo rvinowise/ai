@@ -4,11 +4,13 @@ using rvinowise.unity.ai;
 using rvinowise.unity.extensions;
 using UnityEngine;
 using TMPro;
+using rvinowise.unity.ui.input.mouse;
 
 namespace rvinowise.unity.ai.action {
 
 public partial class Action_group:
-MonoBehaviour
+MonoBehaviour,
+ISelectable
 {
     public Vector2 action_offset = new Vector2(0,2);
     //public GameObject body;
@@ -26,6 +28,32 @@ MonoBehaviour
         sprite_renderer.size += action_offset * (actions.Count-1);
         
     }
+
+    #region ISelectable
+    public Collider collider => null;
+    public bool selected {
+        set {
+            _selected = value;
+            if (value)
+                select_actions();
+            else
+                deselect_actions();
+        }
+        get => _selected;
+    }
+    private bool _selected;
+
+    private void select_actions() {
+        foreach (Action action in actions) {
+            action.selected = true;
+        }
+    }
+    private void deselect_actions() {
+        foreach (Action action in actions) {
+            action.selected = false;
+        }
+    }
+    #endregion
     
 }
 }

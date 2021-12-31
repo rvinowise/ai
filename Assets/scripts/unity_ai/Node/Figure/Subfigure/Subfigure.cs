@@ -7,13 +7,15 @@ using rvinowise.unity.extensions.attributes;
 using rvinowise.unity.extensions;
 using TMPro;
 using UnityEngine;
+using rvinowise.unity.ui.input.mouse;
 
 namespace rvinowise.unity.ai.figure {
 
 public class Subfigure:
 MonoBehaviour,
 ISubfigure,
-ICircle
+ICircle,
+ISelectable
 {
 
     #region ISubfigure
@@ -80,8 +82,10 @@ ICircle
     private Transform connections_folder;
     [SerializeField]
     private Connection connection_prefab;
+    
     void Awake() {
         lines_to_next = GetComponent<LineRenderer>();
+        collider = GetComponent<Collider>();
     }
 
     private void set_appearance_for_figure(IFigure figure) {
@@ -93,6 +97,17 @@ ICircle
 
     public float radius => 0.5f;
 
+
+    #region ISelectable
+    public Collider collider{get;set;}
+    public bool selected{
+        set {
+            _selected = value;
+        }
+        get => _selected;
+    }
+    private bool _selected;
+    #endregion
     #endregion
 }
 }

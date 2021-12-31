@@ -124,10 +124,10 @@ public class Box_selector: MonoBehaviour {
         = get_all_action_groups();
         foreach(IAction_group group in action_groups) {
             if (
-                (group is Action_group unity_group)&&
-                (is_inside_selection(unity_group))
+                (group is ISelectable selectable)&&
+                (is_inside_selection(selectable))
             ) {
-                Selection.instance.select(unity_group);
+                Selection.instance.select(selectable);
                 
             }
         }
@@ -140,7 +140,7 @@ public class Box_selector: MonoBehaviour {
         );// as IReadOnlyList<Action_group>;
     }
 
-    bool is_inside_selection(MonoBehaviour entity) {
+    bool is_inside_selection(ISelectable entity) {
         Vector2 position = entity.transform.position;
         return (
             (position.x > rect.left)&&

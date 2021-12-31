@@ -12,6 +12,7 @@ using Action = rvinowise.unity.ai.action.Action;
 using rvinowise.ai.patterns;
 using rvinowise.unity.geometry2d;
 using UnityEngine.Assertions;
+using rvinowise.unity.ui.input.mouse;
 
 namespace rvinowise.unity.ui.input {
 
@@ -24,6 +25,7 @@ public class Selection : MonoBehaviour {
     #region what can be selected
 
     public Action_history action_history;
+    
 
     #endregion
 
@@ -35,6 +37,7 @@ public class Selection : MonoBehaviour {
             ).ToList();
         }
     }
+    public HashSet<ISelectable> selectables = new HashSet<ISelectable>();
 
     public static Selection instance;
     
@@ -43,7 +46,7 @@ public class Selection : MonoBehaviour {
         instance = this;
     }
 
-    public void select(IAction_group action_group) {
+    public void select(Action_group action_group) {
         action_groups.Add(action_group);
         if (action_group is Action_group unity_group) {
             foreach (IAction action in unity_group.actions) {
@@ -53,10 +56,18 @@ public class Selection : MonoBehaviour {
             }
         }
     }
+    public void select(ISelectable selectable) {
+        selectables.Add(selectable);
+        selectable.selected = true;
+    }
 
     public void deselect(IAction_group action_group) {
         deselect_actions_of_group(action_group);
         action_groups.Remove(action_group);
+    }
+    public void deselect(ISelectable selectable) {
+        selectables.Remove(selectable);
+        selectable.selected = false;
     }
 
     private void deselect_actions_of_group(IAction_group action_group) {
@@ -74,16 +85,9 @@ public class Selection : MonoBehaviour {
             deselect_actions_of_group(action_group);
         }
         action_groups.Clear();
-
+        selectables.Clear();
     }
 
-    // public IReadOnlyList<IAction_group> selected_history_interval {
-    //     get {
-    //         foreach (IAction_group action_group in selected_action_groups) {
-    //             
-    //         }
-    //     }
-    // }
 
     private IReadOnlyList<IAction_group> get_all_action_groups() {
         return action_history.get_action_groups(
