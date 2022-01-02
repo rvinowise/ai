@@ -10,6 +10,7 @@ using rvinowise.rvi.contracts;
 using rvinowise.unity.ai.visuals;
 using rvinowise.unity.extensions;
 using rvinowise.unity.extensions.attributes;
+using rvinowise.unity.ui.input.mouse;
 using TMPro;
 using UnityEditor.UI;
 using UnityEngine;
@@ -20,7 +21,8 @@ public class Pattern :
 MonoBehaviour,
 IPattern,
 IHave_destructor,
-ICircle
+ICircle,
+ISelectable
 {
 
     public TextMeshPro lable;
@@ -29,14 +31,7 @@ ICircle
 
     public Pattern_appearance pattern_appearance_preafab;
 
-    public bool selected {
-        get { return _selected; }
-        set {
-            _selected = value;
-            animator.SetBool("selected", _selected);
-            this.set_appearances_are_highlighted(selected);
-        }
-    }
+    
     
     [SerializeField]
     private List<IPattern_appearance> _appearances = new List<IPattern_appearance>();
@@ -168,6 +163,8 @@ ICircle
 
     void Awake() {
         animator = GetComponent<Animator>();
+        collider = GetComponent<Collider>();
+        sprite_renderer = GetComponent<SpriteRenderer>();
     }
     
     void Start() {
@@ -195,10 +192,6 @@ ICircle
         _appearances.Clear();
     }
 
-    void OnMouseDown() {
-        selected = !selected;
-    }
-
     private void set_appearances_are_highlighted(bool value) {
         foreach(var appearance in this.appearances) {
             if (appearance is Pattern_appearance unity_appearance) {
@@ -208,9 +201,23 @@ ICircle
     }
 
     #region visualisation
-
+    #region ICircle
     public float radius => transform.localScale.x;
+    #endregion
 
+    #region ISelectable
+    public bool selected {
+        get { return _selected; }
+        set {
+            _selected = value;
+            //animator.SetBool("selected", _selected);
+            this.set_appearances_are_highlighted(selected);
+        }
+    }
+    public SpriteRenderer sprite_renderer{get; private set;}
+
+    public new Collider collider{get;set;}
+    #endregion
     #endregion
 
 }

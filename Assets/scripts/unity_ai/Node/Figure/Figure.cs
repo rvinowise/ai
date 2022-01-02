@@ -18,15 +18,7 @@ ICircle
 
     public List<ISubfigure> subfigures = new List<ISubfigure>();
 
-    public bool selected {
-        get { return _selected; }
-        set {
-            _selected = value; 
-            animator.SetBool("selected", _selected);
-            //this.set_appearances_are_highlighted(selected);
-        }
-    }
-    private bool _selected = false;
+    
     [HideInInspector]
     public Animator animator;
     
@@ -62,9 +54,7 @@ ICircle
     private Vector3 subfigures_offset = new Vector3(2,0,0);
     void Awake() {
         animator = GetComponent<Animator>();
-    }
-    void OnMouseDown() {
-        selected = !selected;
+        //sprite_renderer  = GetComponent<SpriteRenderer>();
     }
 
     private void position_subfigure(Subfigure subfigure) {
@@ -84,6 +74,24 @@ ICircle
 
     public float radius => transform.localScale.x;
 
+    #endregion
+
+    #region ISelectable
+    public bool selected {
+        get { return _selected; }
+        set {
+            _selected = value; 
+            // if (value) {
+            //     sprite_renderer.color = new Color(1,0,0);
+            // } else {
+            //     sprite_renderer.color = new Color(1,1,1);
+            // }
+            //this.set_appearances_are_highlighted(selected);
+        }
+    }
+    private bool _selected = false;
+    [SerializeField]
+    public SpriteRenderer sprite_renderer{get; private set;}
     #endregion
 
     #endregion

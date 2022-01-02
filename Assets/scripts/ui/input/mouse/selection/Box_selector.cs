@@ -68,6 +68,9 @@ public class Box_selector: MonoBehaviour {
             if (EventSystem.current.IsPointerOverGameObject()) {
                 return;
             }
+            if (Selection.instance.get_selectable_under_mouse() != null) {
+                return;
+            }
             
             start_selection(mouse_position);
         }
@@ -81,9 +84,6 @@ public class Box_selector: MonoBehaviour {
                 start_position, 
                 mouse_position
             );
-            if (start_position.distance_to(mouse_position) > 5) {
-                bool test = true;
-            }
         }
     }
 

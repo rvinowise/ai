@@ -8,12 +8,13 @@ using UnityEngine;
 using System.Numerics;
 using rvinowise.rvi.contracts;
 using abstract_ai;
-
+using rvinowise.unity.ui.input.mouse;
 
 namespace rvinowise.unity.ai.action {
 
 public partial class Action_group:
-IAction_group
+IAction_group,
+ISelectable
  {
   
     public IEnumerator<IAction> GetEnumerator() => actions.GetEnumerator();
@@ -41,8 +42,6 @@ IAction_group
     private BigInteger _moment;
     public IList<IAction> actions = new List<IAction>();
     
-    void Awake() {
-    }
 
     [called_by_prefab]
     public Action_group get_for_moment(
@@ -84,6 +83,8 @@ IAction_group
         
         return false;
     }
+
+  
 
  
 }

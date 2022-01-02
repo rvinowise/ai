@@ -8,6 +8,7 @@ using rvinowise.unity.extensions;
 using TMPro;
 using UnityEngine;
 using rvinowise.unity.ui.input.mouse;
+using rvinowise.unity.ui.input;
 
 namespace rvinowise.unity.ai.figure {
 
@@ -86,6 +87,7 @@ ISelectable
     void Awake() {
         lines_to_next = GetComponent<LineRenderer>();
         collider = GetComponent<Collider>();
+        sprite_renderer = GetComponent<SpriteRenderer>();
     }
 
     private void set_appearance_for_figure(IFigure figure) {
@@ -99,14 +101,17 @@ ISelectable
 
 
     #region ISelectable
-    public Collider collider{get;set;}
+    public new Collider collider{get;set;}
     public bool selected{
         set {
             _selected = value;
+            
         }
         get => _selected;
     }
     private bool _selected;
+    public SpriteRenderer sprite_renderer{get; private set;}
+   
     #endregion
     #endregion
 }

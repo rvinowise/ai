@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7123233204321199927}
   - component: {fileID: 3574110407381504126}
-  - component: {fileID: 7595215543226168235}
+  - component: {fileID: 846985276897315571}
   - component: {fileID: 6404254444997730862}
   - component: {fileID: -6048971847781024765}
   m_Layer: 0
@@ -56,22 +56,19 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!58 &7595215543226168235
-CircleCollider2D:
+--- !u!135 &846985276897315571
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1147289563755264135}
-  m_Enabled: 1
-  m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &6404254444997730862
 MonoBehaviour:
   m_ObjectHideFlags: 0

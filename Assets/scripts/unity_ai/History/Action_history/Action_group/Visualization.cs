@@ -5,6 +5,8 @@ using rvinowise.unity.extensions;
 using UnityEngine;
 using TMPro;
 using rvinowise.unity.ui.input.mouse;
+using rvinowise.unity.ui.input;
+using rvinowise.ai.patterns;
 
 namespace rvinowise.unity.ai.action {
 
@@ -14,10 +16,12 @@ ISelectable
 {
     public Vector2 action_offset = new Vector2(0,2);
     //public GameObject body;
-    public SpriteRenderer sprite_renderer;
     public Mood_label mood_label;
     public TextMeshPro moment_label;
 
+    void Awake() {
+        sprite_renderer = GetComponent<SpriteRenderer>();
+    }
     private void place_next_action(Action in_action) {
         in_action.transform.parent = this.transform;
         in_action.transform.localPosition = 
@@ -30,14 +34,17 @@ ISelectable
     }
 
     #region ISelectable
-    public Collider collider => null;
+    public new Collider collider => null;
     public bool selected {
         set {
             _selected = value;
-            if (value)
-                select_actions();
-            else
-                deselect_actions();
+            // if (value) {
+            //     sprite_renderer.color = new Color(1,0,0);
+            //     //select_actions();
+            // } else {
+            //     sprite_renderer.color = new Color(1,1,1);
+            //     //deselect_actions();
+            // }
         }
         get => _selected;
     }
@@ -53,6 +60,9 @@ ISelectable
             action.selected = false;
         }
     }
+    [SerializeField]
+    public SpriteRenderer sprite_renderer{get; private set;}
+ 
     #endregion
     
 }

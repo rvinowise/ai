@@ -13,6 +13,7 @@ using rvinowise.ai.patterns;
 using rvinowise.unity.geometry2d;
 using UnityEngine.Assertions;
 using rvinowise.unity.ui.input.mouse;
+using rvinowise.unity.ai.figure;
 
 namespace rvinowise.unity.ui.input {
 
@@ -37,54 +38,65 @@ public class Selection : MonoBehaviour {
             ).ToList();
         }
     }
+    public HashSet<Subfigure> subfigures = new HashSet<Subfigure>();
     public HashSet<ISelectable> selectables = new HashSet<ISelectable>();
 
     public static Selection instance;
+
+    public Color selected_color = new Color(1,0,0);
+    public Color normal_color = new Color(1,1,1);
+    private Vector3 get_mouse_position_from_top() {
+        return new Vector3(
+            rvinowise.unity.ui.input.Input.instance.mouse_world_position.x,
+            rvinowise.unity.ui.input.Input.instance.mouse_world_position.y,
+            -100
+        );
+    }
+    private Vector3 mouse_world_position {
+        get {
+            return new Vector3(
+                rvinowise.unity.ui.input.Input.instance.mouse_world_position.x,
+                rvinowise.unity.ui.input.Input.instance.mouse_world_position.y,
+                0
+            );
+        }
+    }
+
     
     void Awake() {
         Contract.Assert(instance == null, "singleton");
         instance = this;
     }
 
+    public void select(Subfigure subfigure) {
+        subfigures.Add(subfigure);
+    }
     public void select(Action_group action_group) {
         action_groups.Add(action_group);
-        if (action_group is Action_group unity_group) {
-            foreach (IAction action in unity_group.actions) {
-                if (action is Action unity_action) {
-                    unity_action.selected = true;
-                }
-            }
-        }
+        
     }
     public void select(ISelectable selectable) {
         selectables.Add(selectable);
         selectable.selected = true;
+        selectable.sprite_renderer.color = selected_color;
     }
 
     public void deselect(IAction_group action_group) {
-        deselect_actions_of_group(action_group);
         action_groups.Remove(action_group);
     }
     public void deselect(ISelectable selectable) {
         selectables.Remove(selectable);
         selectable.selected = false;
+        selectable.sprite_renderer.color = normal_color;
     }
 
-    private void deselect_actions_of_group(IAction_group action_group) {
-        if (action_group is Action_group unity_group) {
-            foreach (IAction action in unity_group.actions) {
-                if (action is Action unity_action) {
-                    unity_action.selected = false;
-                }
-            }
-        }
-    }
 
     public void deselect_all() {
-        foreach (IAction_group action_group in action_groups) {
-            deselect_actions_of_group(action_group);
+        foreach(ISelectable selectable in selectables) {
+            selectable.selected = false;
         }
         action_groups.Clear();
+        subfigures.Clear();
         selectables.Clear();
     }
 
@@ -96,7 +108,33 @@ public class Selection : MonoBehaviour {
         );// as IReadOnlyList<Action_group>;
     }
 
+    void Update() {
+        
+        if (UnityEngine.Input.GetMouseButtonDown (0)) {    
+            ISelectable selectable = get_selectable_under_mouse();                        
+            if (selectable != null) {
+                if (!selectable.selected) {
+                    select(selectable);  
+                } else {
+                    deselect(selectable);
+                }
+            }
+        }
+    }    
 
+    public ISelectable get_selectable_under_mouse() {
+        Ray ray = new Ray(get_mouse_position_from_top(), Vector3.forward);
+        RaycastHit hit;
 
+        if (Physics.Raycast(ray, out hit)) {
+            if(
+                hit.transform.GetComponent<ISelectable>() 
+                is ISelectable selectable
+            ) { 
+                return selectable;
+            }
+        }
+        return null;
+    }
 }
 }
