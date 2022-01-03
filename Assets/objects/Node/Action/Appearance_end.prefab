@@ -335,6 +335,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lable: {fileID: 4814822081984517378}
   animator: {fileID: 0}
+  sprite_renderer: {fileID: 846032873419937461}
 --- !u!135 &5378505294995810207
 SphereCollider:
   m_ObjectHideFlags: 0

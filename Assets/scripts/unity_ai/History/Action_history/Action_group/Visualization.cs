@@ -18,9 +18,10 @@ ISelectable
     //public GameObject body;
     public Mood_label mood_label;
     public TextMeshPro moment_label;
-
+    [SerializeField]
+    SpriteRenderer actions_sprite_renderer;
     void Awake() {
-        sprite_renderer = GetComponent<SpriteRenderer>();
+        //actions_sprite_renderer = GetComponent<SpriteRenderer>();
     }
     private void place_next_action(Action in_action) {
         in_action.transform.parent = this.transform;
@@ -29,7 +30,7 @@ ISelectable
     }
 
     public void extend_to_accomodate_children() {
-        sprite_renderer.size += action_offset * (actions.Count-1);
+        actions_sprite_renderer.size += action_offset * (actions.Count-1);
         
     }
 
@@ -61,7 +62,7 @@ ISelectable
         }
     }
     [SerializeField]
-    public SpriteRenderer sprite_renderer{get; private set;}
+    public SpriteRenderer selection_sprite_renderer => actions_sprite_renderer;
  
     #endregion
     

@@ -570,9 +570,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   action_offset: {x: 0, y: 1.3}
-  sprite_renderer: {fileID: 5992616771233387056}
   mood_label: {fileID: 7695226959052143943}
   moment_label: {fileID: 6204312336563357411}
+  actions_sprite_renderer: {fileID: 5992616771233387056}
 --- !u!114 &9110312524460144412
 MonoBehaviour:
   m_ObjectHideFlags: 0

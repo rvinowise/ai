@@ -348,6 +348,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lable: {fileID: 4814822081984517378}
   animator: {fileID: 0}
+  sprite_renderer: {fileID: 3457228435851579516}
 --- !u!1 &9060572916869541114
 GameObject:
   m_ObjectHideFlags: 0

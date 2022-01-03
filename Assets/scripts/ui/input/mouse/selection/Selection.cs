@@ -14,6 +14,7 @@ using rvinowise.unity.geometry2d;
 using UnityEngine.Assertions;
 using rvinowise.unity.ui.input.mouse;
 using rvinowise.unity.ai.figure;
+using UnityEngine.EventSystems;
 
 namespace rvinowise.unity.ui.input {
 
@@ -45,6 +46,7 @@ public class Selection : MonoBehaviour {
 
     public Color selected_color = new Color(1,0,0);
     public Color normal_color = new Color(1,1,1);
+    public Mover_of_selected mover_of_selected;
     private Vector3 get_mouse_position_from_top() {
         return new Vector3(
             rvinowise.unity.ui.input.Input.instance.mouse_world_position.x,
@@ -78,7 +80,9 @@ public class Selection : MonoBehaviour {
     public void select(ISelectable selectable) {
         selectables.Add(selectable);
         selectable.selected = true;
-        selectable.sprite_renderer.color = selected_color;
+        if (selectable.selection_sprite_renderer !=null) {
+            selectable.selection_sprite_renderer.color = selected_color;
+        }
     }
 
     public void deselect(IAction_group action_group) {
@@ -86,14 +90,17 @@ public class Selection : MonoBehaviour {
     }
     public void deselect(ISelectable selectable) {
         selectables.Remove(selectable);
+        mark_object_as_deselected(selectable);
+    }
+    private void mark_object_as_deselected(ISelectable selectable) {
         selectable.selected = false;
-        selectable.sprite_renderer.color = normal_color;
+        selectable.selection_sprite_renderer.color = normal_color;
     }
 
 
     public void deselect_all() {
         foreach(ISelectable selectable in selectables) {
-            selectable.selected = false;
+            mark_object_as_deselected(selectable);
         }
         action_groups.Clear();
         subfigures.Clear();
@@ -108,19 +115,58 @@ public class Selection : MonoBehaviour {
         );// as IReadOnlyList<Action_group>;
     }
 
+    public ISelectable last_click_target;
+    bool last_click_selected;
     void Update() {
         
-        if (UnityEngine.Input.GetMouseButtonDown (0)) {    
-            ISelectable selectable = get_selectable_under_mouse();                        
-            if (selectable != null) {
-                if (!selectable.selected) {
-                    select(selectable);  
-                } else {
-                    deselect(selectable);
+        if (UnityEngine.Input.GetMouseButtonDown (0)) {
+            if (EventSystem.current.IsPointerOverGameObject()) {
+                return;
+            } 
+            last_click_target = get_selectable_under_mouse();                        
+            if (last_click_target != null) { // clicked on an object
+                if (!last_click_target.selected) { //the object is for selection by this click
+                    select(last_click_target);
+                    last_click_selected = true;
+                    Debug.Log("select for "+last_click_target);
+                } else { // the object is for moving (already was selected)
+                    last_click_selected = false;
+                    Debug.Log("click on selected "+last_click_target);
                 }
+                //mover_of_selected.start_moving_selected_objects();
+            } else { // clicked on the emptiness
+                deselect_all();
             }
         }
-    }    
+        //release button
+        if (UnityEngine.Input.GetMouseButtonUp (0)) {
+            if (
+                (!last_click_selected)&&
+                (!mover_of_selected.moved_since_last_click)
+            ) {
+                Debug.Log("release, last_click_selected==true for "+last_click_target);
+                ISelectable target_of_release = get_selectable_under_mouse();
+                //deselect on release. initial click is used to move objects.
+                if (same_object_received_click_and_release(
+                    target_of_release, last_click_target
+                )) {
+                    deselect(target_of_release);
+                    Debug.Log("deselect for "+last_click_target);
+                }
+            }
+        } 
+
+        mover_of_selected.update();
+
+        bool same_object_received_click_and_release(
+            ISelectable target_of_release, ISelectable target_of_last_click
+        ) {
+            if (target_of_release == null) {
+                return false;
+            }
+            return target_of_release == target_of_last_click;
+        } 
+    }
 
     public ISelectable get_selectable_under_mouse() {
         Ray ray = new Ray(get_mouse_position_from_top(), Vector3.forward);

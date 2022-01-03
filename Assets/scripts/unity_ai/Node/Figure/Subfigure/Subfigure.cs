@@ -87,7 +87,6 @@ ISelectable
     void Awake() {
         lines_to_next = GetComponent<LineRenderer>();
         collider = GetComponent<Collider>();
-        sprite_renderer = GetComponent<SpriteRenderer>();
     }
 
     private void set_appearance_for_figure(IFigure figure) {
@@ -110,8 +109,9 @@ ISelectable
         get => _selected;
     }
     private bool _selected;
-    public SpriteRenderer sprite_renderer{get; private set;}
-   
+    public SpriteRenderer selection_sprite_renderer => sprite_renderer;
+    [SerializeField]
+    private SpriteRenderer sprite_renderer; 
     #endregion
     #endregion
 }

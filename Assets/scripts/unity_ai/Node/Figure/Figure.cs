@@ -5,13 +5,15 @@ using UnityEngine;
 using Vector3 = UnityEngine.Vector3;
 using System.Linq;
 using rvinowise.unity.ai.visuals;
+using rvinowise.unity.ui.input.mouse;
 
 namespace rvinowise.unity.ai.figure {
 
 public class Figure: 
 MonoBehaviour,
 IFigure,
-ICircle
+ICircle,
+ISelectable
 {
     
     public List<ISubfigure> first_subfigures = new List<ISubfigure>();
@@ -54,6 +56,7 @@ ICircle
     private Vector3 subfigures_offset = new Vector3(2,0,0);
     void Awake() {
         animator = GetComponent<Animator>();
+        collider = GetComponent<Collider>();
         //sprite_renderer  = GetComponent<SpriteRenderer>();
     }
 
@@ -91,7 +94,10 @@ ICircle
     }
     private bool _selected = false;
     [SerializeField]
-    public SpriteRenderer sprite_renderer{get; private set;}
+    public SpriteRenderer selection_sprite_renderer => sprite_renderer;
+    [SerializeField]
+    private SpriteRenderer sprite_renderer;
+    public Collider collider{get;private set;}
     #endregion
 
     #endregion

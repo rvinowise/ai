@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7123233204321199927}
-  - component: {fileID: 3574110407381504126}
   - component: {fileID: 846985276897315571}
   - component: {fileID: 6404254444997730862}
   - component: {fileID: -6048971847781024765}
@@ -37,25 +36,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &3574110407381504126
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1147289563755264135}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: b8a3aba462c906b4eb18f70cf0468a17, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!135 &846985276897315571
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -85,6 +65,7 @@ MonoBehaviour:
   animator: {fileID: 0}
   pattern_appearance_preafab: {fileID: 5028659124600057119, guid: 1c95ce0906d46284f8a798512e7924e0,
     type: 3}
+  sprite_renderer: {fileID: 5722252197040285172}
 --- !u!114 &-6048971847781024765
 MonoBehaviour:
   m_ObjectHideFlags: 0

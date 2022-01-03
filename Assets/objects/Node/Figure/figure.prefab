@@ -267,6 +267,7 @@ MonoBehaviour:
   subfigure_prefab: {fileID: 8661386053568504741, guid: 54f571c8cc59d9d4fae62f128728b97a,
     type: 3}
   subfigures_folder: {fileID: 4035209655239369078}
+  sprite_renderer: {fileID: 4035209654898522261}
 --- !u!114 &4035209654722239886
 MonoBehaviour:
   m_ObjectHideFlags: 0

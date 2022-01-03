@@ -43,17 +43,21 @@ public class Mover_of_selected: MonoBehaviour {
         instance = this;
     }
 
-    void Update() {
+    
+
+    public bool moved_since_last_click;
+    public void update() {
        
         if (UnityEngine.Input.GetMouseButtonDown (0)) {    
-            ISelectable selectable = Selection.instance.get_selectable_under_mouse();                        
-            if (selectable != null) {
-                is_moving = true;                       
+            if (selection.last_click_target != null) {
+                start_moving();
+                Debug.Log("start_moving");           
             }
         }
 
         if (UnityEngine.Input.GetMouseButtonUp(0)) {
-            is_moving = false;
+            stop_moving();
+            Debug.Log("stop_moving");
         }
         
         if (is_moving) {
@@ -62,11 +66,23 @@ public class Mover_of_selected: MonoBehaviour {
         }
         old_mouse_position = mouse_world_position;
     }
+    public void start_moving() {
+        is_moving = true;
+    }
+    private void stop_moving() {
+        moved_since_last_click = false;
+        is_moving = false;
+    }
 
     private void update_position(Vector3 difference) {
-        foreach(ISelectable selectable in Selection.instance.selectables) {
-            selectable.transform.position += difference;
+        if (difference.magnitude > float.MinValue) {
+            moved_since_last_click = true;
+            Debug.Log("moved_since_last_click = true");
+            foreach(ISelectable selectable in selection.selectables) {
+                selectable.transform.position += difference;
+            }
         }
+        
     }
 
 }

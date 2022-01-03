@@ -21,15 +21,11 @@ ISelectable
     
     void Awake() {
         animator = GetComponent<Animator>();
-        collider  = GetComponent<Collider>();
+        collider = GetComponent<Collider>();
     }
     public void set_label(string in_text) {
         lable.text = in_text;
     }
-
-    
-    
-    
     
     public string as_dot_graph() {
         throw new NotImplementedException();
@@ -63,7 +59,9 @@ ISelectable
     }
     private bool _selected;
     //Collider ISelectable.collider => collider;
-    public SpriteRenderer sprite_renderer{get; private set;}
+    public SpriteRenderer selection_sprite_renderer => sprite_renderer;
+    [SerializeField]
+    private SpriteRenderer sprite_renderer;
     public new Collider collider{get;set;}
     #endregion
 }

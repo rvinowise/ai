@@ -36,6 +36,7 @@ ISelectable
     [SerializeField]
     private List<IPattern_appearance> _appearances = new List<IPattern_appearance>();
 
+    [SerializeField] //debug
     private bool _selected;
     
     #region IPattern
@@ -68,7 +69,9 @@ ISelectable
         BigInteger start,
         BigInteger end
     ) {
-        animator.SetTrigger("fire");
+        if (animator != null) {
+            animator.SetTrigger("fire");
+        }
 
         Pattern_appearance appearance =
             pattern_appearance_preafab.get_for_interval(
@@ -84,7 +87,9 @@ ISelectable
         IFigure_appearance in_first_half,
         IFigure_appearance in_second_half
     ) {
-        animator.SetTrigger("fire");
+        if (animator != null) {
+            animator.SetTrigger("fire");
+        }
 
         Pattern_appearance appearance =
             pattern_appearance_preafab.get_for_subfigures(
@@ -164,7 +169,6 @@ ISelectable
     void Awake() {
         animator = GetComponent<Animator>();
         collider = GetComponent<Collider>();
-        sprite_renderer = GetComponent<SpriteRenderer>();
     }
     
     void Start() {
@@ -214,8 +218,9 @@ ISelectable
             this.set_appearances_are_highlighted(selected);
         }
     }
-    public SpriteRenderer sprite_renderer{get; private set;}
-
+    public SpriteRenderer selection_sprite_renderer => sprite_renderer;
+    [SerializeField]
+    private SpriteRenderer sprite_renderer;
     public new Collider collider{get;set;}
     #endregion
     #endregion
