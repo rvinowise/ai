@@ -83,6 +83,9 @@ public class Selection : MonoBehaviour {
         if (selectable.selection_sprite_renderer !=null) {
             selectable.selection_sprite_renderer.color = selected_color;
         }
+        if (selectable is Action_group action_group) {
+            action_groups.Add(action_group);
+        }
     }
 
     public void deselect(IAction_group action_group) {
@@ -94,7 +97,9 @@ public class Selection : MonoBehaviour {
     }
     private void mark_object_as_deselected(ISelectable selectable) {
         selectable.selected = false;
-        selectable.selection_sprite_renderer.color = normal_color;
+        if (selectable.selection_sprite_renderer!=null) {
+            selectable.selection_sprite_renderer.color = normal_color;
+        }
     }
 
 

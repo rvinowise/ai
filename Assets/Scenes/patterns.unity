@@ -5426,6 +5426,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selection: {fileID: 1689671352}
+  moved_since_last_click: 0
 --- !u!1 &2032726195
 GameObject:
   m_ObjectHideFlags: 0

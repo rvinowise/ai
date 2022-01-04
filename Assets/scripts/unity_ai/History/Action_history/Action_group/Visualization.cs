@@ -20,11 +20,14 @@ ISelectable
     public TextMeshPro moment_label;
     [SerializeField]
     SpriteRenderer actions_sprite_renderer;
+
+    [SerializeField]
+    Transform actions_attachment;
     void Awake() {
         //actions_sprite_renderer = GetComponent<SpriteRenderer>();
     }
     private void place_next_action(Action in_action) {
-        in_action.transform.parent = this.transform;
+        in_action.transform.parent = this.actions_attachment;
         in_action.transform.localPosition = 
             action_offset * (actions.Count-1);
     }

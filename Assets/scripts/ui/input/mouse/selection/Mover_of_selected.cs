@@ -75,9 +75,9 @@ public class Mover_of_selected: MonoBehaviour {
     }
 
     private void update_position(Vector3 difference) {
-        if (difference.magnitude > float.MinValue) {
+        if (difference.magnitude > float.Epsilon) {
             moved_since_last_click = true;
-            Debug.Log("moved_since_last_click = true");
+            //Debug.Log("moved_since_last_click = true");
             foreach(ISelectable selectable in selection.selectables) {
                 selectable.transform.position += difference;
             }

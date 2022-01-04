@@ -49,15 +49,16 @@ MonoBehaviour
     void Update() {
         update();
     }
+    Vector3 shift_to_background = new Vector3(0,0,0.5f);
     public void update() {
         Vector3 tail_attachment = source.transform.position.offset_in_direction(
             source.radius,
             source.transform.position.degrees_to(destination.transform.position)
-        );
+        )+shift_to_background;
         Vector3 head_attachment = destination.transform.position.offset_in_direction(
             source.radius,
             destination.transform.position.degrees_to(source.transform.position)
-        );
+        )+shift_to_background;
             
         line_renderer.SetPosition(0, tail_attachment);
         line_renderer.SetPosition(1, head_attachment);

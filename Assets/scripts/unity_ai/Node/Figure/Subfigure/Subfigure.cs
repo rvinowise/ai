@@ -71,7 +71,7 @@ ISelectable
 
     private void create_connection_arrow_to(Subfigure next) {
         Connection new_connection = connection_prefab.create(this, next);
-        new_connection.transform.parent = connections_folder;
+        new_connection.transform.parent = connections_attachment;
     }
 
     #endregion
@@ -80,12 +80,11 @@ ISelectable
     [SerializeField]
     private TextMeshPro lable;
     [SerializeField]
-    private Transform connections_folder;
+    private Transform connections_attachment;
     [SerializeField]
     private Connection connection_prefab;
     
     void Awake() {
-        lines_to_next = GetComponent<LineRenderer>();
         collider = GetComponent<Collider>();
     }
 
