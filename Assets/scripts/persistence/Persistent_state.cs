@@ -50,9 +50,9 @@ public class Persistent_state {
                 continue;
             }
             // Recursively tell the child to prepare to save
-            dynamicObject.persistentState.PrepareToSave(childTransform.gameObject);
+            dynamicObject.persistent_state.PrepareToSave(childTransform.gameObject);
             // Add the child's guid to the list of children
-            childrenGuidsList.Add(dynamicObject.persistentState.guid);
+            childrenGuidsList.Add(dynamicObject.persistent_state.guid);
         }
         childrenGuids = childrenGuidsList.ToArray();
     }
@@ -70,7 +70,7 @@ public class Persistent_state {
                 continue;
             }
             // Save the descendants' object states into a flat list
-            savedObjects.AddRange(dynamicObject.persistentState.Save(childTransform.gameObject));
+            savedObjects.AddRange(dynamicObject.persistent_state.Save(childTransform.gameObject));
         }
         // Save this object state into the list as well
         savedObjects.Add(this);
@@ -78,14 +78,14 @@ public class Persistent_state {
         return savedObjects;
     }
 
-    public static List<Persistent_state> SaveObjects(GameObject rootObject) {
+    public static List<Persistent_state> SaveObjects(Transform saved_root) {
         List<Persistent_state> objectStates = new List<Persistent_state>();
-        foreach (Transform child in rootObject.transform) {
+        foreach (Transform child in saved_root) {
             Persistent dynamicObject = child.GetComponent<Persistent>();
             if (dynamicObject == null) {
                 continue;
             }
-            objectStates.AddRange(dynamicObject.persistentState.Save(child.gameObject));
+            objectStates.AddRange(dynamicObject.persistent_state.Save(child.gameObject));
         }
         return objectStates;
     }

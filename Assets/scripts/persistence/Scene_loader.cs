@@ -16,7 +16,7 @@ public class Scene_loader:
     // A dictionary of prefab guid to prefab
     public Dictionary<string, GameObject> prefabs;
 
-    public string SAVE_OBJECTS_PATH = Application.dataPath + "/objects.json";
+    public string SAVE_OBJECTS_PATH;
 
     private JsonSerializerSettings jsonSerializerSettings = new JsonSerializerSettings
         {TypeNameHandling = TypeNameHandling.None};
@@ -25,6 +25,7 @@ public class Scene_loader:
     void Awake() {
         Contract.Assert(instance == null);
         instance = this;
+        SAVE_OBJECTS_PATH = Application.dataPath + "/objects.json";
         prefabs = LoadPrefabs(PREFABS_PATH);
     }
     
@@ -38,24 +39,24 @@ public class Scene_loader:
             if (dynamicObject == null) {
                 throw new InvalidOperationException("Prefab does not contain DynamicObject");
             }
-            if (!dynamicObject.persistentState.isPrefab) {
+            if (!dynamicObject.persistent_state.isPrefab) {
                 throw new InvalidOperationException("Prefab's ObjectState isPrefab = false");
             }
-            prefabs.Add(dynamicObject.persistentState.prefabGuid, prefab);
+            prefabs.Add(dynamicObject.persistent_state.prefabGuid, prefab);
         }
 
         Debug.Log("Loaded " + prefabs.Count + " saveable prefabs.");
         return prefabs;
     }
 
-    public void load_scene() {
+    public void on_load_scene() {
         LoadDynamicObjects(SAVE_OBJECTS_PATH);
     }
 
     public Persistent FindDynamicObjectByGuid(string guid) {
         Persistent[] dynamicObjects = GetRootDynamicObject().GetComponentsInChildren<Persistent>();
         foreach (Persistent dynamicObject in dynamicObjects) {
-            if (dynamicObject.persistentState.guid.Equals(guid)) {
+            if (dynamicObject.persistent_state.guid.Equals(guid)) {
                 return dynamicObject;
             }
         }

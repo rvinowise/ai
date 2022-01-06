@@ -7,9 +7,11 @@ using System.Text;
 using abstract_ai;
 using rvinowise.ai.patterns;
 using rvinowise.rvi.contracts;
+using rvinowise.unity.ai.figure;
 using rvinowise.unity.ai.visuals;
 using rvinowise.unity.extensions;
 using rvinowise.unity.extensions.attributes;
+using rvinowise.unity.persistence;
 using rvinowise.unity.ui.input.mouse;
 using TMPro;
 using UnityEditor.UI;
@@ -63,7 +65,8 @@ ISelectable
 
     #endregion IFigure
 
-    public IReadOnlyList<IFigure> subfigures { get; private set; }
+    public IReadOnlyList<IFigure> subfigures { get; private set; } 
+        = new List<IFigure>();
 
     public IPattern_appearance create_appearance(
         BigInteger start,
@@ -102,7 +105,7 @@ ISelectable
     }
 
     public IReadOnlyList<IFigure> as_lowlevel_sequence() {
-        if (subfigures != null) {
+        if (subfigures.Any()) {
             return subfigures;
         }
         return new List<IFigure> {this};
@@ -138,7 +141,7 @@ ISelectable
     
     private static IReadOnlyList<IFigure> get_sequence_of_subfigures_from(IFigure figure) {
         if (figure is IPattern pattern) {
-            if (pattern.subfigures != null) {
+            if (pattern.subfigures.Any()) {
                 return pattern.subfigures; 
             }
         }
@@ -163,23 +166,16 @@ ISelectable
         return res.ToString();
     }
 
-    
-    
-
     void Awake() {
         animator = GetComponent<Animator>();
         collider = GetComponent<Collider>();
+        persistent = GetComponent<Persistent>();
+        persistent.prepare_to_saving += prepare_to_saving;
     }
-    
+
     void Start() {
         id = lable.text;
     }
-
-  
-
-    
-
-    
 
     public virtual void destroy() {
         Debug.Log(String.Format("Pattern {0} destroy",id));
@@ -225,5 +221,26 @@ ISelectable
     #endregion
     #endregion
 
+    #region Persistence
+    Persistent persistent;
+    private void prepare_to_saving(Persistent_state persistent_state) {
+        persistent_state.genericValues["Pattern.id"] = id;
+        save_all_subfigures(persistent_state);
+    }
+    private void save_all_subfigures(Persistent_state persistent_state) {
+        List<string> subfigure_ids = new List<string>();
+        foreach(IFigure subfigure in subfigures) {
+            if (subfigure is Component unity_subfigure) {
+                subfigure_ids.Add(
+                    unity_subfigure.GetComponent<Persistent>().persistent_state.guid
+                );
+            }
+        }
+        persistent_state.genericValues["Pattern.subfigures"] = subfigure_ids;
+    }
+    private void save_halves() {
+        //persistent_state.genericValues["Pattern.left_half"] = left_half;
+    }
+    #endregion
 }
 }

@@ -10,14 +10,6 @@ namespace rvinowise.unity.persistence {
 public class Scene_persistence: 
     MonoBehaviour
 {
-
-    // The directory under Resources that the dynamic objects' prefabs can be loaded from
-    private string PREFABS_PATH = "Prefabs/";
-    // A dictionary of prefab guid to prefab
-    public Dictionary<string, GameObject> prefabs;
-
-    public string SAVE_OBJECTS_PATH = Application.dataPath + "/objects.json";
-
     private JsonSerializerSettings jsonSerializerSettings = new JsonSerializerSettings
         {TypeNameHandling = TypeNameHandling.None};
 

@@ -5,34 +5,32 @@ namespace rvinowise.unity.persistence {
 public class Persistent : MonoBehaviour {
     public delegate void LoadObjectStateEvent(Persistent_state persistent_state);
 
-    public event LoadObjectStateEvent loadObjectStateDelegates;
+    public event LoadObjectStateEvent load_persistent_state;
 
     public delegate void PrepareToSaveEvent(Persistent_state persistent_state);
 
-    public event PrepareToSaveEvent prepareToSaveDelegates;
+    public event PrepareToSaveEvent prepare_to_saving;
 
-    public Persistent_state persistentState;
+    public Persistent_state persistent_state = new Persistent_state();
 
-    void Start() {
-        if ((persistentState != null) && persistentState.isPrefab && persistentState.guid.Equals(persistentState.prefabGuid)) {
-            // Create a unique guid for each prefab instantiation
-            persistentState.guid = Persistent_state.CreateGuid();
-        }
+    
+    void Awake() {
+        persistent_state.guid = Persistent_state.CreateGuid();
     }
 
     public void Load(Persistent_state persistent_state) {
-        this.persistentState = persistent_state;
+        this.persistent_state = persistent_state;
         StartCoroutine(LoadAfterFrame(persistent_state));
     }
 
     private IEnumerator LoadAfterFrame(Persistent_state persistent_state) {
         // Wait for the next frame so that all objects have been created from ObjectStates
         yield return null;
-        loadObjectStateDelegates?.Invoke(persistent_state);
+        load_persistent_state?.Invoke(persistent_state);
     }
 
     public void PrepareToSave() {
-        prepareToSaveDelegates?.Invoke(persistentState);
+        prepare_to_saving?.Invoke(persistent_state);
     }
 }
 

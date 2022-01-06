@@ -33,8 +33,8 @@ public class WolfBehavior : MonoBehaviour
         }
 
         Persistent dynamicObject = GetComponent<Persistent>();
-        dynamicObject.prepareToSaveDelegates += PrepareToSaveObjectState;
-        dynamicObject.loadObjectStateDelegates += LoadObjectState;
+        dynamicObject.prepare_to_saving += prepare_to_saving;
+        dynamicObject.load_persistent_state += LoadObjectState;
     }
 
     void Update()
@@ -66,7 +66,7 @@ public class WolfBehavior : MonoBehaviour
         }
     }
 
-    private void PrepareToSaveObjectState(Persistent_state persistent_state)
+    private void prepare_to_saving(Persistent_state persistent_state)
     {
         persistent_state.genericValues["WolfBehavior.speed"] = speed;
         persistent_state.genericValues["WolfBehavior.timeToWalkRemaining"] = timeToWalkRemaining;
@@ -74,7 +74,7 @@ public class WolfBehavior : MonoBehaviour
         if (favoriteTree != null)
         {
             persistent_state.genericValues["WolfBehavior.favoriteTree"]
-            = favoriteTree.GetComponent<Persistent>().persistentState.guid;
+            = favoriteTree.GetComponent<Persistent>().persistent_state.guid;
         } else if (persistent_state.genericValues.ContainsKey("WolfBehavior.favoriteTree"))
         {
             persistent_state.genericValues.Remove("WolfBehavior.favoriteTree");

@@ -24,8 +24,8 @@ public class SaraBehavior : MonoBehaviour {
         rigidbody2d = GetComponent<Rigidbody2D>();
 
         Persistent dynamicObject = GetComponent<Persistent>();
-        dynamicObject.prepareToSaveDelegates += PrepareToSaveObjectState;
-        dynamicObject.loadObjectStateDelegates += LoadObjectState;
+        dynamicObject.prepare_to_saving += prepare_to_saving;
+        dynamicObject.load_persistent_state += LoadObjectState;
     }
 
     void Update() {
@@ -54,10 +54,10 @@ public class SaraBehavior : MonoBehaviour {
         }
 
         if (Input.GetKeyDown(KeyCode.LeftBracket)) {
-            Scene_saver.instance.save_scene();
+            Scene_saver.instance.on_save_scene();
         }
         if (Input.GetKeyDown(KeyCode.RightBracket)) {
-            Scene_loader.instance.load_scene();
+            Scene_loader.instance.on_load_scene();
         }
     }
 
@@ -90,11 +90,11 @@ public class SaraBehavior : MonoBehaviour {
         }
     }
 
-    private void PrepareToSaveObjectState(Persistent_state persistent_state) {
+    private void prepare_to_saving(Persistent_state persistent_state) {
         persistent_state.genericValues["SaraBehavior.treeContainer"] =
-            treeContainer.GetComponent<Persistent>().persistentState.guid;
+            treeContainer.GetComponent<Persistent>().persistent_state.guid;
         persistent_state.genericValues["SaraBehavior.wolfContainer"] =
-            wolfContainer.GetComponent<Persistent>().persistentState.guid;
+            wolfContainer.GetComponent<Persistent>().persistent_state.guid;
     }
 
     private void LoadObjectState(Persistent_state persistent_state) {

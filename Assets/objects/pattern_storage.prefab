@@ -82,6 +82,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3463566815954382863}
   - component: {fileID: 3463566815954382860}
+  - component: {fileID: 8425608057927694028}
   m_Layer: 0
   m_Name: pattern_storage
   m_TagString: Untagged
@@ -114,7 +115,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3463566815954382862}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 93fe5344bd8b31f49bc7fa48d802fe6c, type: 3}
+  m_Script: {fileID: 11500000, guid: ed3f7df448a37bf4b890cd5239457294, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   pattern_prefab: {fileID: 6404254444997730862, guid: f2327897f83f3ba4c97a718be186705d,
@@ -122,6 +123,27 @@ MonoBehaviour:
   pleasure_pattern: {fileID: 7008412871732244129}
   pain_pattern: {fileID: 3836574614761674645}
   pattern_table: {fileID: 2234745761016369544}
+--- !u!114 &8425608057927694028
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3463566815954382862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09496b95fb9cbc248982d48527b17648, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  persistent_state:
+    guid: 6b2fadad-2f9a-443f-81bf-ff834ed5dfb9
+    objectName: 
+    objectTag: 
+    objectLayer: 0
+    position: []
+    isPrefab: 0
+    prefabGuid: 6b2fadad-2f9a-443f-81bf-ff834ed5dfb9
+    childrenGuids: []
 --- !u!1 &8734456440623265625
 GameObject:
   m_ObjectHideFlags: 0

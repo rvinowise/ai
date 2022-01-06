@@ -5,12 +5,13 @@ using abstract_ai;
 using rvinowise.ai.patterns;
 using rvinowise.rvi.contracts;
 using rvinowise.unity.extensions;
+using rvinowise.unity.persistence;
 using rvinowise.unity.ui.table;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace rvinowise.unity.ai {
-public class Pattern_storage: MonoBehaviour {
+public partial class Pattern_storage: MonoBehaviour {
     public Pattern pattern_prefab;
     public List<IPattern> known_patterns = new List<IPattern>();
     public Pattern pleasure_pattern;
@@ -26,6 +27,9 @@ public class Pattern_storage: MonoBehaviour {
     void Awake() {
         pattern_table.init(pattern_prefab);
         create_initial_patterns();
+        persistent = GetComponent<Persistent>();
+        persistent.prepare_to_saving += prepare_to_saving;
+        //persistent.load_persistent_state += LoadObjectState;
     }
     
     private void create_initial_patterns() {
@@ -143,7 +147,9 @@ public class Pattern_storage: MonoBehaviour {
         IFigure beginning,
         IFigure ending
     ) {
-        var subfigures = Pattern.get_sequence_of_subfigures_from(beginning, ending);
+        var subfigures = Pattern.get_sequence_of_subfigures_from(
+            beginning, ending
+        );
         if (
             get_pattern_having(subfigures)
                 is IPattern old_pattern
@@ -188,5 +194,6 @@ public class Pattern_storage: MonoBehaviour {
             pattern.selected = false;
         }
     }
+
 }
 }

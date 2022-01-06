@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 846985276897315571}
   - component: {fileID: 6404254444997730862}
   - component: {fileID: -6048971847781024765}
+  - component: {fileID: -3505526793768650406}
   m_Layer: 0
   m_Name: pattern
   m_TagString: Untagged
@@ -65,6 +66,7 @@ MonoBehaviour:
   animator: {fileID: 0}
   pattern_appearance_preafab: {fileID: 5028659124600057119, guid: 1c95ce0906d46284f8a798512e7924e0,
     type: 3}
+  _selected: 0
   sprite_renderer: {fileID: 5722252197040285172}
 --- !u!114 &-6048971847781024765
 MonoBehaviour:
@@ -78,6 +80,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d965d2efaeb472b90aa7303a16aa181, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-3505526793768650406
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1147289563755264135}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09496b95fb9cbc248982d48527b17648, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  persistent_state:
+    guid: 03f511a1-55a0-4670-adb6-cf6039e528c0
+    objectName: 
+    objectTag: 
+    objectLayer: 0
+    position: []
+    isPrefab: 0
+    prefabGuid: 03f511a1-55a0-4670-adb6-cf6039e528c0
+    childrenGuids: []
 --- !u!1 &2834699607616493519
 GameObject:
   m_ObjectHideFlags: 0
