@@ -5,7 +5,7 @@ using System.IO;
 using UnityEngine;
 
 
-namespace rvinowise.unity.persistence {
+namespace rvinowise.unity.ai.persistence {
 public class Convertor
 {
     

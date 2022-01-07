@@ -6,14 +6,14 @@ using rvinowise.rvi.contracts;
 using UnityEngine;
 
 
-namespace rvinowise.unity.persistence {
-public class Scene_persistence: 
+namespace rvinowise.unity.ai.persistence {
+public class Network_persistence: 
     MonoBehaviour
 {
     private JsonSerializerSettings jsonSerializerSettings = new JsonSerializerSettings
         {TypeNameHandling = TypeNameHandling.None};
 
-    public static Scene_persistence instance;
+    public static Network_persistence instance;
     void Awake() {
         Contract.Assert(instance == null);
         instance = this;

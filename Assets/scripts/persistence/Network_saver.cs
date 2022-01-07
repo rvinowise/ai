@@ -7,7 +7,7 @@ using UnityEngine;
 using rvinowise.ai.patterns;
 using rvinowise.unity.ai;
 
-namespace rvinowise.unity.persistence {
+namespace rvinowise.unity.ai.persistence {
 public class Network_saver:
     MonoBehaviour 
 {
@@ -41,8 +41,8 @@ public class Network_saver:
 
     private void save_actions() {
         
-        foreach(IAction_group action_group in action_history.get_action_groups()) {
-
+        foreach(IAction_group action_group in action_history.get_action_groups(0, action_history.last_moment)) {
+            
         }
     }
     
@@ -67,7 +67,6 @@ public class Network_saver:
     private void SaveDynamicObjects(string path) {
         List<Persistent_state> objectStates = Persistent_state.SaveObjects(saved_object);
         WriteJson(path, objectStates);
-        Debug.Log("Saved objects to: " + path);
     }
 
     private void WriteJson<T>(string path, T obj) {

@@ -5,7 +5,7 @@ using abstract_ai;
 using rvinowise.ai.patterns;
 using rvinowise.rvi.contracts;
 using rvinowise.unity.extensions;
-using rvinowise.unity.persistence;
+using rvinowise.unity.ai.persistence;
 using rvinowise.unity.ui.table;
 using UnityEngine;
 using UnityEngine.UI;
