@@ -7,7 +7,7 @@ using UnityEngine;
 
 
 namespace rvinowise.unity.persistence {
-public class Scene_loader: 
+public class Network_loader: 
     MonoBehaviour
 {
 
@@ -21,7 +21,7 @@ public class Scene_loader:
     private JsonSerializerSettings jsonSerializerSettings = new JsonSerializerSettings
         {TypeNameHandling = TypeNameHandling.None};
     
-    public static Scene_loader instance;
+    public static Network_loader instance;
     void Awake() {
         Contract.Assert(instance == null);
         instance = this;
