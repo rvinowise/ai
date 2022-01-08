@@ -27,9 +27,6 @@ public partial class Pattern_storage: MonoBehaviour {
     void Awake() {
         pattern_table.init(pattern_prefab);
         create_initial_patterns();
-        persistent = GetComponent<Persistent>();
-        persistent.prepare_to_saving += prepare_to_saving;
-        //persistent.load_persistent_state += LoadObjectState;
     }
     
     private void create_initial_patterns() {

@@ -20,6 +20,8 @@ ISelectable
 
     public List<ISubfigure> subfigures = new List<ISubfigure>();
 
+    public List<IPattern_appearance> appearances 
+        = new List<IPattern_appearance>();
     
     [HideInInspector]
     public Animator animator;
@@ -29,6 +31,7 @@ ISelectable
         Subfigure subfigure = subfigure_prefab.
             create_for_figure(child_figure);
         subfigure.transform.parent = subfigures_folder.transform;
+        subfigure.parent = this;
         position_subfigure(subfigure);
         subfigures.Add(subfigure);
         return subfigure;
@@ -44,8 +47,14 @@ ISelectable
         throw new System.NotImplementedException();
     }
 
-    public IReadOnlyList<IFigure_appearance> get_appearances_in_interval(BigInteger start, BigInteger end) {
-        throw new System.NotImplementedException();
+    public IReadOnlyList<IFigure_appearance> get_appearances_in_interval(
+        BigInteger start, BigInteger end
+    ) {
+        return appearances.Where(
+            appearance => 
+                (appearance.start_moment >= start) &&
+                (appearance.end_moment <= end)
+        ).ToList().AsReadOnly();
     }
     #endregion IFigure
     

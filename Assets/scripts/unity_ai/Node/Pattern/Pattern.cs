@@ -36,7 +36,11 @@ ISelectable
     
     [SerializeField]
     private List<IPattern_appearance> _appearances 
-    = new List<IPattern_appearance>();
+        = new List<IPattern_appearance>();
+    
+    public IReadOnlyList<IPattern_appearance> appearances {
+        get => _appearances.AsReadOnly();
+    }
 
     [SerializeField] //debug
     private bool _selected;
@@ -54,13 +58,11 @@ ISelectable
     public IReadOnlyList<IFigure_appearance> get_appearances_in_interval(
         BigInteger start, BigInteger end
     ) {
-        List<IPattern_appearance> result = appearances.Where(
+        return appearances.Where(
             appearance => 
             (appearance.start_moment >= start) &&
             (appearance.end_moment <= end)
-        ).ToList<IPattern_appearance>();
-
-        return result.AsReadOnly();
+        ).ToList().AsReadOnly();
     }
 
     #endregion IFigure
@@ -113,9 +115,7 @@ ISelectable
     
     #endregion IPattern
 
-    public IReadOnlyList<IPattern_appearance> appearances {
-        get => _appearances.AsReadOnly();
-    }
+    
     
     
 
@@ -169,8 +169,6 @@ ISelectable
     void Awake() {
         animator = GetComponent<Animator>();
         collider = GetComponent<Collider>();
-        persistent = GetComponent<Persistent>();
-        persistent.prepare_to_saving += prepare_to_saving;
     }
 
     void Start() {
@@ -221,26 +219,6 @@ ISelectable
     #endregion
     #endregion
 
-    #region Persistence
-    Persistent persistent;
-    private void prepare_to_saving(Persistent_state persistent_state) {
-        persistent_state.genericValues["Pattern.id"] = id;
-        save_all_subfigures(persistent_state);
-    }
-    private void save_all_subfigures(Persistent_state persistent_state) {
-        List<string> subfigure_ids = new List<string>();
-        foreach(IFigure subfigure in subfigures) {
-            if (subfigure is Component unity_subfigure) {
-                subfigure_ids.Add(
-                    unity_subfigure.GetComponent<Persistent>().persistent_state.guid
-                );
-            }
-        }
-        persistent_state.genericValues["Pattern.subfigures"] = subfigure_ids;
-    }
-    private void save_halves() {
-        //persistent_state.genericValues["Pattern.left_half"] = left_half;
-    }
-    #endregion
+    
 }
 }

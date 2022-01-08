@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using rvinowise.unity.extensions;
 using System.Collections.Generic;
-using rvinowise.unity.ai.visuals;
+using rvinowise.ai.unity.visuals;
 using UnityEngine.UI;
 
 namespace rvinowise.unity.ui.table {

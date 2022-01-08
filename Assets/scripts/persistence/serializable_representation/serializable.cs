@@ -46,17 +46,16 @@ public class Action {
 
 [Serializable]
 public class Figure {
-    public string guid;
     public string id;
     public List<string> subfigures = new List<string>();
     
     #region visualisation
-    Position position;
+    public Position position;
     #endregion
 
     public Figure(unity.Figure figure) {
         id = figure.id;
-        foreach(Subfigure ai_subfigure in figure.subfigures) {
+        foreach(ISubfigure ai_subfigure in figure.subfigures) {
             subfigures.Add(ai_subfigure.id);
         }
         position = new Position(figure.transform.position);
@@ -73,7 +72,7 @@ public class Subfigure {
     public List<string> next_subfigures = new List<string>();
     
     #region visualisation
-    Position position;
+    public Position position;
     #endregion
 
     public Subfigure(general.ISubfigure ai_subfigure) {
@@ -98,22 +97,19 @@ public class Pattern {
 
     public Pattern(rvinowise.ai.general.IPattern pattern) {
         id = pattern.id;
-        foreach(ISubfigure subfigure in pattern.subfigures) {
+        foreach(IFigure subfigure in pattern.subfigures) {
             subfigures.Add(subfigure.id);
         }
     }
 }
 [Serializable]
 public class Figure_appearance {
-    public string id;
     public string appeared_figure;
     public string start_moment;
     public string end_moment;
 
     public Figure_appearance(general.IFigure_appearance appearance) {
-        if (appearance is unity.Figure_appearance unity_appearance) {
-            id = unity_appearance.id;
-        }
+        
         appeared_figure = appearance.figure.id;
         start_moment = appearance.start_moment.ToString();
         end_moment = appearance.end_moment.ToString();
@@ -131,10 +127,6 @@ public class Position {
         y = unity_vector.y;
         z = unity_vector.z;
     }
-    // public static Position from_unity_vector(UnityEngine.Vector3 unity_vector) {
-        //Position result = new Position;
-        //unity_vector
-    // }
 }
 
 }

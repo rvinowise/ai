@@ -13,10 +13,10 @@ public class Network_saver:
     MonoBehaviour 
 {
     
-    string SAVE_OBJECTS_PATH;
+    string out_file;
     [SerializeField]
     Transform saved_object;
-    [SerializeField] IAction_history action_history;
+    [SerializeField] Action_history action_history;
     [SerializeField] Pattern_storage pattern_storage;
     [SerializeField] Figure_storage figure_storage;
     private JsonSerializerSettings jsonSerializerSettings = new JsonSerializerSettings {
@@ -28,19 +28,20 @@ public class Network_saver:
     void Awake() {
         Contract.Assert(instance == null);
         instance = this;
-        SAVE_OBJECTS_PATH = Application.dataPath + "/objects.json";
+        out_file = Application.dataPath + "/network.json";
     }
     
     public void on_save() {
-        create_serializable_network();
-        
+        serializable.Network out_network = create_serializable_network();
+        write_json(out_file, out_network);
     }
 
-    public void create_serializable_network() {
+    public serializable.Network create_serializable_network() {
         serializable.Network out_network = new serializable.Network();
         serialize_action_groups(out_network);
         serialize_patterns(out_network);
         serialize_figures(out_network);
+        return out_network;
     }
 
     private void serialize_action_groups(serializable.Network out_network) {
@@ -102,7 +103,7 @@ public class Network_saver:
             IFigure_appearance appearance in 
             figure.get_appearances_in_interval(
                 0,
-                action_history.end_moment
+                action_history.last_moment
             )
         ) {
             out_network.figure_appearances.Add(
@@ -110,16 +111,10 @@ public class Network_saver:
             );
         }
     }
-
-    private void SaveDynamicObjects(string path) {
-        List<Persistent_state> objectStates = Persistent_state.SaveObjects(saved_object);
-        WriteJson(path, objectStates);
-    }
-
-    private void WriteJson<T>(string path, T obj) {
+    
+    private void write_json<T>(string path, T obj) {
         string json = JsonConvert.SerializeObject(obj, Formatting.Indented, jsonSerializerSettings);
         File.WriteAllText(path, json);
     }
-
 }
 }
