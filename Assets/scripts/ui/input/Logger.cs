@@ -6,10 +6,10 @@ using UnityEngine;
 using rvinowise;
 using rvinowise.rvi.contracts;
 using Input = rvinowise.unity.ui.input.Input;
-using rvinowise.unity.ai;
-using rvinowise.unity.ai.action;
-using Action = rvinowise.unity.ai.action.Action;
-using rvinowise.ai.patterns;
+using rvinowise.ai.unity;
+using rvinowise.ai.unity;
+using Action = rvinowise.ai.unity.Action;
+using rvinowise.ai.general;
 using rvinowise.unity.geometry2d;
 using UnityEngine.Assertions;
 

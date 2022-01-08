@@ -1,7 +1,7 @@
 ﻿
-using abstract_ai;
+using rvinowise.ai.general;
 
-namespace rvinowise.unity.ai.figure {
+namespace rvinowise.ai.unity {
 
 public interface ISubfigure_appearance {
     public ISubfigure subfigure {get;}

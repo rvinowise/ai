@@ -1,16 +1,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using abstract_ai;
-using rvinowise.ai.patterns;
+using rvinowise.ai.general;
+using rvinowise.ai.general;
 using rvinowise.rvi.contracts;
 using rvinowise.unity.extensions;
-using rvinowise.unity.ai.persistence;
+using rvinowise.ai.unity.persistence;
 using rvinowise.unity.ui.table;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace rvinowise.unity.ai {
+namespace rvinowise.ai.unity {
 public partial class Pattern_storage {
     Persistent persistent;
 

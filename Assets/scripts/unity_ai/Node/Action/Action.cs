@@ -1,13 +1,9 @@
 
 using System.Numerics;
-using abstract_ai;
-using rvinowise.ai.patterns;
-using rvinowise.unity.ai;
-using rvinowise.unity.extensions;
-using rvinowise.unity.extensions.attributes;
+using rvinowise.ai.general;
 using UnityEngine;
 
-namespace rvinowise.unity.ai.action {
+namespace rvinowise.ai.unity {
 
 
 public partial class Action: 

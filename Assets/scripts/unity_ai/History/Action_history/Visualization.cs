@@ -1,12 +1,12 @@
 /* visualises all the actions that were input into the system */
 using System.Collections.Generic;
-using rvinowise.unity.ai.action;
+using rvinowise.ai.unity;
 using UnityEngine;
 using rvinowise.unity.extensions;
-using rvinowise.ai.patterns;
+using rvinowise.ai.general;
 using rvinowise.rvi.contracts;
 
-namespace rvinowise.unity.ai {
+namespace rvinowise.ai.unity {
 public partial class Action_history
 {
     

@@ -1,8 +1,8 @@
 using System.Collections.Generic;
-using rvinowise.ai.patterns;
+using rvinowise.ai.general;
 using UnityEngine;
 
-namespace rvinowise.unity.ai {
+namespace rvinowise.ai.unity {
 
 public abstract class Input: MonoBehaviour {
 

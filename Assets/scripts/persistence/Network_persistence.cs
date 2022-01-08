@@ -6,7 +6,7 @@ using rvinowise.rvi.contracts;
 using UnityEngine;
 
 
-namespace rvinowise.unity.ai.persistence {
+namespace rvinowise.ai.unity.persistence {
 public class Network_persistence: 
     MonoBehaviour
 {

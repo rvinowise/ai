@@ -2,9 +2,8 @@
 
 using System.Collections.Generic;
 using System.Numerics;
-using abstract_ai;
 
-namespace rvinowise.ai.patterns {
+namespace rvinowise.ai.general {
 public interface IPattern:
 IFigure
 {

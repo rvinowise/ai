@@ -2,16 +2,16 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using rvinowise.unity.ai.action;
+using rvinowise.ai.unity;
 using UnityEngine;
 using rvinowise.unity.extensions;
-using Action = rvinowise.unity.ai.action.Action;
+using Action = rvinowise.ai.unity.Action;
 using rvinowise.rvi.contracts;
-using rvinowise.ai.patterns;
+using rvinowise.ai.general;
 using System.Numerics;
-using abstract_ai;
+using rvinowise.ai.general;
 
-namespace rvinowise.unity.ai {
+namespace rvinowise.ai.unity {
 
 public class Pattern_finder:
 MonoBehaviour

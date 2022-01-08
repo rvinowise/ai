@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Input = UnityEngine.Input;
 
-namespace rvinowise.unity.ai {
+namespace rvinowise.ai.unity {
 
 public class Menu_bar : MonoBehaviour {
     private Menu_panel[] panels;

@@ -1,10 +1,10 @@
 using System.Collections.Generic;
-using rvinowise.ai.patterns;
+using rvinowise.ai.general;
 using rvinowise.unity.extensions.pooling;
 using UnityEngine;
-using Action = rvinowise.unity.ai.action.Action;
+using Action = rvinowise.ai.unity.Action;
 
-namespace rvinowise.unity.ai {
+namespace rvinowise.ai.unity {
 public partial class Pattern_appearance: 
 MonoBehaviour
 {

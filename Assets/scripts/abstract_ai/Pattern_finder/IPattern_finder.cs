@@ -2,7 +2,7 @@
 
 using System.Collections.Generic;
 
-namespace rvinowise.ai.patterns {
+namespace rvinowise.ai.general {
 public interface IPattern_finder {
 
 

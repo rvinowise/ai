@@ -1,5 +1,5 @@
 
-namespace rvinowise.ai.patterns {
+namespace rvinowise.ai.general {
 public interface IInput_receiver {
     
     //IPattern_storage pattern_storage;

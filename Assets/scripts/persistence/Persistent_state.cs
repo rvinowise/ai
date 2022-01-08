@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace rvinowise.unity.ai.persistence {
+namespace rvinowise.ai.unity.persistence {
 
 [Serializable]
 public class Persistent_state {

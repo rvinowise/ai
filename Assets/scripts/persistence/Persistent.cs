@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-namespace rvinowise.unity.ai.persistence {
+namespace rvinowise.ai.unity.persistence {
 public class Persistent : MonoBehaviour {
     public delegate void LoadObjectStateEvent(Persistent_state persistent_state);
 

@@ -1,14 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
-using rvinowise.unity.ai;
+using rvinowise.ai.unity;
 using rvinowise.unity.extensions;
 using UnityEngine;
 using TMPro;
 using rvinowise.unity.ui.input.mouse;
 using rvinowise.unity.ui.input;
-using rvinowise.ai.patterns;
+using rvinowise.ai.general;
 
-namespace rvinowise.unity.ai.action {
+namespace rvinowise.ai.unity {
 
 public partial class Action_group:
 MonoBehaviour,

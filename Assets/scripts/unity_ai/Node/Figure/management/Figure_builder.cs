@@ -3,13 +3,13 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
-using abstract_ai;
-using rvinowise.ai.patterns;
+using rvinowise.ai.general;
+using rvinowise.ai.general;
 using rvinowise.rvi.contracts;
 using rvinowise.unity.extensions;
 using rvinowise.unity.ui.input;
 
-namespace rvinowise.unity.ai.figure {
+namespace rvinowise.ai.unity {
 
 public class Figure_builder: MonoBehaviour {
 

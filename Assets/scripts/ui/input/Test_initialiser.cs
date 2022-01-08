@@ -2,15 +2,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using abstract_ai;
+using rvinowise.ai.general;
 using UnityEngine;
 using rvinowise.rvi.contracts;
 using Input = rvinowise.unity.ui.input.Input;
-using rvinowise.unity.ai;
-using rvinowise.unity.ai.action;
-using Action = rvinowise.unity.ai.action.Action;
-using rvinowise.ai.patterns;
-using rvinowise.unity.ai.figure;
+using rvinowise.ai.unity;
+using rvinowise.ai.unity;
+using Action = rvinowise.ai.unity.Action;
+using rvinowise.ai.general;
+using rvinowise.ai.unity;
 
 
 namespace rvinowise.unity.ui.input {

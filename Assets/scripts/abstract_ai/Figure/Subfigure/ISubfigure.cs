@@ -1,11 +1,10 @@
 ﻿
 using System.Collections.Generic;
-using abstract_ai;
 
-namespace rvinowise.unity.ai.figure {
+namespace rvinowise.ai.general {
 
 public interface ISubfigure {
-
+    string id {get;}
     IFigure parent { get; }
     IFigure figure {get; }
     IReadOnlyList<ISubfigure> next { get; }

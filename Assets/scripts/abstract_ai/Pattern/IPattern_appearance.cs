@@ -1,8 +1,8 @@
 
 using System.Numerics;
-using abstract_ai;
+using rvinowise.ai.general;
 
-namespace rvinowise.ai.patterns {
+namespace rvinowise.ai.general {
 public interface IPattern_appearance:
 IFigure_appearance
 {

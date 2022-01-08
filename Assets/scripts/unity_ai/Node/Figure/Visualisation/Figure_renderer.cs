@@ -4,12 +4,12 @@ using System.IO;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
-using abstract_ai;
-using rvinowise.ai.patterns;
+using rvinowise.ai.general;
+using rvinowise.ai.general;
 using rvinowise.rvi.contracts;
 using UnityEngine;
 
-namespace rvinowise.unity.ai.figure {
+namespace rvinowise.ai.unity {
 
 public class Figure_renderer: MonoBehaviour {
     

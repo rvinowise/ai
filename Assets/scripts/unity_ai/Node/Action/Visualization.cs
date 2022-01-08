@@ -4,8 +4,9 @@ using UnityEngine;
 using TMPro;
 using rvinowise.unity.extensions;
 using rvinowise.unity.ui.input.mouse;
+using rvinowise.unity;
 
-namespace rvinowise.unity.ai.action {
+namespace rvinowise.ai.unity {
 
 
 public partial class Action: 
@@ -45,20 +46,10 @@ ISelectable
         set {
             _selected = value;
             animator.SetBool("selected", _selected);
-            // if (value) {
-            //     transform.set_z(transform.parent.position.z - 1);
-            // } else {
-            //     transform.set_z(transform.parent.position.z - 0.1f);
-            // }
-            // if (figure_appearance is Pattern_appearance appearance) {
-            //     appearance.selected_with_subfigures =
-            //         !appearance.selected_with_subfigures;
-            // }
         }
         get {return _selected;}
     }
     private bool _selected;
-    //Collider ISelectable.collider => collider;
     public SpriteRenderer selection_sprite_renderer => sprite_renderer;
     [SerializeField]
     private SpriteRenderer sprite_renderer;

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Numerics;
 
-namespace rvinowise.ai.patterns {
+namespace rvinowise.ai.general {
 public interface IHistory_interval {
     BigInteger start_moment{get;}
     BigInteger end_moment{get;} 

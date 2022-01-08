@@ -1,16 +1,16 @@
 ﻿
 using System;
 using System.Collections.Generic;
-using abstract_ai;
-using rvinowise.unity.ai.visuals;
+using rvinowise.ai.general;
+using rvinowise.ai.unity.visuals;
 using rvinowise.unity.extensions.attributes;
 using rvinowise.unity.extensions;
 using TMPro;
 using UnityEngine;
 using rvinowise.unity.ui.input.mouse;
-using rvinowise.unity.ui.input;
+using rvinowise.ai.unity;
 
-namespace rvinowise.unity.ai.figure {
+namespace rvinowise.ai.unity {
 
 public class Subfigure:
 MonoBehaviour,
@@ -20,6 +20,7 @@ ISelectable
 {
 
     #region ISubfigure
+    public string id {get;set;}
     public IFigure parent {get;set;}
     public IFigure figure {get;set;}
     #endregion
@@ -27,6 +28,7 @@ ISelectable
     [called_by_prefab]
     public Subfigure create_for_figure(IFigure figure) {
         Subfigure subfigure = this.get_from_pool<Subfigure>();
+        subfigure.id = Id_assigner.get_next_id();
         subfigure.figure = figure;
         subfigure.set_appearance_for_figure(figure);
         return subfigure;
@@ -45,7 +47,6 @@ ISelectable
     private List<ISubfigure> _next = new List<ISubfigure>();
     private List<ISubfigure> _previous = new List<ISubfigure>();
 
-    public string id;
 
     private LineRenderer lines_to_next;
     

@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 using System.Numerics;
-using rvinowise.ai.patterns;
+using rvinowise.ai.general;
 using rvinowise.rvi.contracts;
-using rvinowise.unity.ai.action;
+using rvinowise.ai.unity;
 using rvinowise.unity.extensions;
 using UnityEngine.Assertions;
 
-namespace rvinowise.unity.ai {
+namespace rvinowise.ai.unity {
 public class History_interval: 
     IHistory_interval 
 {

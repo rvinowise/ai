@@ -1,7 +1,7 @@
 ﻿
 using UnityEngine;
 
-namespace rvinowise.unity.ai {
+namespace rvinowise.ai.unity {
 
 public class Menu_panel:MonoBehaviour {
 

@@ -1,9 +1,9 @@
 
 using System.Collections.Generic;
-using rvinowise.ai.patterns;
+using rvinowise.ai.general;
 
 
-namespace rvinowise.ai.patterns {
+namespace rvinowise.ai.general {
 
 
 public interface IAppearance_end: IAction {

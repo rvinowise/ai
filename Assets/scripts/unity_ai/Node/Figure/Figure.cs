@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Numerics;
-using abstract_ai;
+using rvinowise.ai.general;
 using UnityEngine;
 using Vector3 = UnityEngine.Vector3;
 using System.Linq;
-using rvinowise.unity.ai.visuals;
+using rvinowise.ai.unity.visuals;
 using rvinowise.unity.ui.input.mouse;
 
-namespace rvinowise.unity.ai.figure {
+namespace rvinowise.ai.unity {
 
 public class Figure: 
 MonoBehaviour,
@@ -97,7 +97,7 @@ ISelectable
     public SpriteRenderer selection_sprite_renderer => sprite_renderer;
     [SerializeField]
     private SpriteRenderer sprite_renderer;
-    public Collider collider{get;private set;}
+    public new Collider collider{get;private set;}
     #endregion
 
     #endregion

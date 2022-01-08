@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Numerics;
-using abstract_ai;
+using rvinowise.ai.general;
 
-namespace rvinowise.ai.patterns {
+namespace rvinowise.ai.general {
 public interface IAction_history:
     IFigure,
     IFigure_appearance

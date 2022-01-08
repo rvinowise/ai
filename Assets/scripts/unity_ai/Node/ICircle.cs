@@ -1,7 +1,7 @@
 ﻿
 using UnityEngine;
 
-namespace rvinowise.unity.ai.visuals {
+namespace rvinowise.ai.unity.visuals {
 
 public interface ICircle
 {

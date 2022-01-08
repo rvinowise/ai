@@ -1,8 +1,8 @@
 ﻿
 using System.Collections.Generic;
-using abstract_ai;
+using rvinowise.ai.general;
 
-namespace rvinowise.unity.ai.figure {
+namespace rvinowise.ai.unity {
 
 public class Output_subfigure : Subfigure
 {

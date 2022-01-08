@@ -1,15 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using abstract_ai;
-using rvinowise.ai.patterns;
+using rvinowise.ai.general;
+using rvinowise.ai.general;
 using rvinowise.rvi.contracts;
-using rvinowise.unity.ai.figure;
+using rvinowise.ai.unity;
 using rvinowise.unity.extensions;
 using rvinowise.unity.ui.table;
 using UnityEngine;
 
-namespace rvinowise.unity.ai {
+namespace rvinowise.ai.unity {
 public class Figure_storage: MonoBehaviour {
     public List<IFigure> known_figures = new List<IFigure>();
     public Table figure_table;

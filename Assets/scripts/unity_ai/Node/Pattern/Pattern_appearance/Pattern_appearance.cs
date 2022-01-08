@@ -1,16 +1,15 @@
 using rvinowise.rvi.contracts;
-using rvinowise.unity.ai.action;
+using rvinowise.ai.unity;
 
-using rvinowise.ai.patterns;
+using rvinowise.ai.general;
 using rvinowise.unity.extensions;
 using rvinowise.unity.extensions.attributes;
 using rvinowise.unity.extensions.pooling;
 using UnityEngine;
 using System.Numerics;
-using System.Collections.Generic;
-using abstract_ai;
+using rvinowise.unity;
 
-namespace rvinowise.unity.ai {
+namespace rvinowise.ai.unity {
 
 [RequireComponent(typeof(Pooled_object))]
 public partial class Pattern_appearance: 
@@ -45,7 +44,7 @@ IHave_destructor
     ) {
         Contract.Requires(
             start < end,
-            ""
+            "should have a positive time interval"
         );
         Pattern_appearance appearance = 
             this.get_from_pool<Pattern_appearance>();
@@ -67,9 +66,11 @@ IHave_destructor
         IFigure_appearance in_first_half,
         IFigure_appearance in_second_half        
     ) {
-        if (in_pattern.id.Length == 1) {
-            Contract.Assert(false, "Pattern_appearance for_subpatterns for a base signal!");
-        }
+        Contract.Assert(
+            in_pattern.id.Length > 1, 
+            "Pattern consisting of subfigures should have a longer name"
+        );
+
         Pattern_appearance appearance = get_for_interval(
             in_pattern,
             in_first_half.start_moment,

@@ -1,15 +1,15 @@
 ﻿
 using System;
 using System.Collections.Generic;
-using abstract_ai;
-using rvinowise.unity.ai.visuals;
+using rvinowise.ai.general;
+using rvinowise.ai.unity.visuals;
 using rvinowise.unity.extensions.attributes;
 using rvinowise.unity.extensions;
 using rvinowise.unity.geometry2d;
 using TMPro;
 using UnityEngine;
 
-namespace rvinowise.unity.ai.figure {
+namespace rvinowise.ai.unity {
 
 public class Connection:
 MonoBehaviour

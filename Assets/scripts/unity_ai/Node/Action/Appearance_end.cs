@@ -1,13 +1,13 @@
 
 
 using System.Numerics;
-using rvinowise.ai.patterns;
-using rvinowise.unity.ai;
+using rvinowise.ai.general;
+using rvinowise.ai.unity;
 using rvinowise.unity.extensions;
 using rvinowise.unity.extensions.attributes;
 
 
-namespace rvinowise.unity.ai.action {
+namespace rvinowise.ai.unity {
 
 
 public class Appearance_end: 

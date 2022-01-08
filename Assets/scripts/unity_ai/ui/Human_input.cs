@@ -1,14 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using rvinowise.ai.patterns;
+using rvinowise.ai.general;
 using rvinowise.rvi.contracts;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
 
-namespace rvinowise.unity.ai {
+namespace rvinowise.ai.unity {
 
 public enum Input_mode {
     One_letter = 1,

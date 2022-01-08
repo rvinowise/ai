@@ -4,11 +4,11 @@
     <e p="C:\Users\rvino\.Rider2018.3\system\extResources" t="IncludeRecursive" />
     <e p="C:\Users\rvino\.Rider2018.3\system\resharper-host\local\Transient\ReSharperHost\v183\SolutionCaches\_patterns.1998893916.00" t="ExcludeRecursive" />
     <e p="D:\prj\patterns" t="IncludeRecursive">
-      <e p="abstract_ai.csproj" t="IncludeRecursive" />
+      <e p="rvinowise.ai.general.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
         <e p="scripts" t="Include">
-          <e p="abstract_ai" t="Include">
+          <e p="rvinowise.ai.general" t="Include">
             <e p="abstract.asmdef" t="Include" />
             <e p="History" t="Include">
               <e p="Action_history" t="Include">

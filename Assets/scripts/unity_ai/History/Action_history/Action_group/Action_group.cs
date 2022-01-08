@@ -1,23 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
-using rvinowise.unity.ai;
+using rvinowise.ai.unity;
 using rvinowise.unity.extensions;
 using rvinowise.unity.extensions.attributes;
-using rvinowise.ai.patterns;
+using rvinowise.ai.general;
 using UnityEngine;
 using System.Numerics;
 using rvinowise.rvi.contracts;
-using abstract_ai;
 using rvinowise.unity.ui.input.mouse;
 
-namespace rvinowise.unity.ai.action {
+namespace rvinowise.ai.unity {
 
 public partial class Action_group:
 IAction_group,
 ISelectable
  {
   
-    public IEnumerator<IAction> GetEnumerator() => actions.GetEnumerator();
+    public IEnumerator<IAction> GetEnumerator() => 
+        actions.GetEnumerator();
 
     [HideInInspector] public BigInteger moment{
         get {

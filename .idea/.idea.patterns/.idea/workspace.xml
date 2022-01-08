@@ -121,7 +121,7 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Assets/scripts/abstract_ai/History/Action_history/Action_group/IAction_group.cs">
+        <entry file="file://$PROJECT_DIR$/Assets/scripts/rvinowise.ai.general/History/Action_history/Action_group/IAction_group.cs">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="76">
               <caret line="4" column="17" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
@@ -217,7 +217,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/scripts/patterns/History/Action_history/Visualization.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/scripts/extesions/attributes/called_by_prefab.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/scripts/third_party/clipper.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/scripts/abstract_ai/History/Action_history/Action_group/IAction_group.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/scripts/rvinowise.ai.general/History/Action_history/Action_group/IAction_group.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/scripts/extesions/Dictionary_of_containers_for_types.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/scripts/extesions/Vector.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/scripts/patterns/Node/Action/Visualization.cs" root0="FORCE_HIGHLIGHTING" />
@@ -321,7 +321,7 @@
         <option value="$PROJECT_DIR$/Assets/scripts/patterns/History/Action_history/Action_group/Action_group.cs" />
         <option value="$PROJECT_DIR$/Assets/scripts/patterns/History/Action_history/Visualization.cs" />
         <option value="$PROJECT_DIR$/Assets/scripts/patterns/Pattern_recognizer/Pattern_recognizer.cs" />
-        <option value="$PROJECT_DIR$/Assets/scripts/abstract_ai/History/Action_history/Action_group/IAction_group.cs" />
+        <option value="$PROJECT_DIR$/Assets/scripts/rvinowise.ai.general/History/Action_history/Action_group/IAction_group.cs" />
       </list>
     </option>
   </component>
@@ -352,20 +352,20 @@
               <item name="Project" type="e068e287:UnityExplorerRootNode" />
               <item name="Assets" type="48f920db:UnityExplorerNode$AssetsRoot" />
               <item name="scripts" type="1045f7f1:UnityExplorerNode" />
-              <item name="abstract_ai" type="1045f7f1:UnityExplorerNode" />
+              <item name="rvinowise.ai.general" type="1045f7f1:UnityExplorerNode" />
             </path>
             <path>
               <item name="Project" type="e068e287:UnityExplorerRootNode" />
               <item name="Assets" type="48f920db:UnityExplorerNode$AssetsRoot" />
               <item name="scripts" type="1045f7f1:UnityExplorerNode" />
-              <item name="abstract_ai" type="1045f7f1:UnityExplorerNode" />
+              <item name="rvinowise.ai.general" type="1045f7f1:UnityExplorerNode" />
               <item name="History" type="1045f7f1:UnityExplorerNode" />
             </path>
             <path>
               <item name="Project" type="e068e287:UnityExplorerRootNode" />
               <item name="Assets" type="48f920db:UnityExplorerNode$AssetsRoot" />
               <item name="scripts" type="1045f7f1:UnityExplorerNode" />
-              <item name="abstract_ai" type="1045f7f1:UnityExplorerNode" />
+              <item name="rvinowise.ai.general" type="1045f7f1:UnityExplorerNode" />
               <item name="History" type="1045f7f1:UnityExplorerNode" />
               <item name="Action_history" type="1045f7f1:UnityExplorerNode" />
             </path>
@@ -373,7 +373,7 @@
               <item name="Project" type="e068e287:UnityExplorerRootNode" />
               <item name="Assets" type="48f920db:UnityExplorerNode$AssetsRoot" />
               <item name="scripts" type="1045f7f1:UnityExplorerNode" />
-              <item name="abstract_ai" type="1045f7f1:UnityExplorerNode" />
+              <item name="rvinowise.ai.general" type="1045f7f1:UnityExplorerNode" />
               <item name="History" type="1045f7f1:UnityExplorerNode" />
               <item name="Action_history" type="1045f7f1:UnityExplorerNode" />
               <item name="Action_group" type="1045f7f1:UnityExplorerNode" />
@@ -1270,7 +1270,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/scripts/abstract_ai/History/Action_history/Action_group/IAction_group.cs">
+    <entry file="file://$PROJECT_DIR$/Assets/scripts/rvinowise.ai.general/History/Action_history/Action_group/IAction_group.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="76">
           <caret line="4" column="17" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />

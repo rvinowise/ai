@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.IO;
 using System;
-using rvinowise.ai.patterns;
+using rvinowise.ai.general;
 using rvinowise.rvi.contracts;
 using TMPro;
 using UnityEngine;
@@ -11,7 +11,7 @@ using UnityEngine.Events;
 using UnityEngine.Serialization;
 using SimpleFileBrowser;
 
-namespace rvinowise.unity.ai {
+namespace rvinowise.ai.unity {
 
 
 public class File_input : Input {

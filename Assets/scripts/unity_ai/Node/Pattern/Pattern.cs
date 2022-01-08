@@ -4,21 +4,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using System.Text;
-using abstract_ai;
-using rvinowise.ai.patterns;
+using rvinowise.ai.general;
 using rvinowise.rvi.contracts;
-using rvinowise.unity.ai.figure;
-using rvinowise.unity.ai.visuals;
+using rvinowise.ai.unity;
+using rvinowise.ai.unity.visuals;
 using rvinowise.unity.extensions;
 using rvinowise.unity.extensions.attributes;
-using rvinowise.unity.ai.persistence;
+using rvinowise.ai.unity.persistence;
 using rvinowise.unity.ui.input.mouse;
 using TMPro;
 using UnityEditor.UI;
 using UnityEngine;
+using rvinowise.unity;
 
-
-namespace rvinowise.unity.ai {
+namespace rvinowise.ai.unity {
 public class Pattern : 
 MonoBehaviour,
 IPattern,
@@ -36,7 +35,8 @@ ISelectable
     
     
     [SerializeField]
-    private List<IPattern_appearance> _appearances = new List<IPattern_appearance>();
+    private List<IPattern_appearance> _appearances 
+    = new List<IPattern_appearance>();
 
     [SerializeField] //debug
     private bool _selected;
