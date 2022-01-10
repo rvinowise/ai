@@ -1,0 +1,394 @@
+{
+  "action_groups": [
+    {
+      "moment": "0"
+    },
+    {
+      "moment": "1"
+    },
+    {
+      "moment": "2"
+    },
+    {
+      "moment": "3"
+    },
+    {
+      "moment": "4"
+    },
+    {
+      "moment": "5"
+    },
+    {
+      "moment": "6"
+    },
+    {
+      "moment": "7"
+    },
+    {
+      "moment": "8"
+    },
+    {
+      "moment": "9"
+    },
+    {
+      "moment": "10"
+    },
+    {
+      "moment": "11"
+    },
+    {
+      "moment": "12"
+    },
+    {
+      "moment": "13"
+    },
+    {
+      "moment": "14"
+    },
+    {
+      "moment": "15"
+    },
+    {
+      "moment": "16"
+    },
+    {
+      "moment": "17"
+    },
+    {
+      "moment": "18"
+    },
+    {
+      "moment": "19"
+    },
+    {
+      "moment": "20"
+    },
+    {
+      "moment": "21"
+    },
+    {
+      "moment": "22"
+    },
+    {
+      "moment": "23"
+    },
+    {
+      "moment": "24"
+    },
+    {
+      "moment": "25"
+    }
+  ],
+  "actions": [],
+  "figures": [],
+  "patterns": [
+    {
+      "id": ",",
+      "subfigures": []
+    },
+    {
+      "id": ";",
+      "subfigures": []
+    },
+    {
+      "id": "=",
+      "subfigures": []
+    },
+    {
+      "id": "+",
+      "subfigures": []
+    },
+    {
+      "id": "-",
+      "subfigures": []
+    },
+    {
+      "id": "0",
+      "subfigures": []
+    },
+    {
+      "id": "1",
+      "subfigures": []
+    },
+    {
+      "id": "2",
+      "subfigures": []
+    },
+    {
+      "id": "3",
+      "subfigures": []
+    },
+    {
+      "id": "4",
+      "subfigures": []
+    },
+    {
+      "id": "5",
+      "subfigures": []
+    },
+    {
+      "id": "6",
+      "subfigures": []
+    },
+    {
+      "id": "7",
+      "subfigures": []
+    },
+    {
+      "id": "8",
+      "subfigures": []
+    },
+    {
+      "id": "9",
+      "subfigures": []
+    },
+    {
+      "id": "01",
+      "subfigures": [
+        "0",
+        "1"
+      ]
+    },
+    {
+      "id": "02",
+      "subfigures": [
+        "0",
+        "2"
+      ]
+    },
+    {
+      "id": "03",
+      "subfigures": [
+        "0",
+        "3"
+      ]
+    },
+    {
+      "id": "10",
+      "subfigures": [
+        "1",
+        "0"
+      ]
+    },
+    {
+      "id": "12",
+      "subfigures": [
+        "1",
+        "2"
+      ]
+    },
+    {
+      "id": "13",
+      "subfigures": [
+        "1",
+        "3"
+      ]
+    },
+    {
+      "id": "20",
+      "subfigures": [
+        "2",
+        "0"
+      ]
+    },
+    {
+      "id": "21",
+      "subfigures": [
+        "2",
+        "1"
+      ]
+    },
+    {
+      "id": "30",
+      "subfigures": [
+        "3",
+        "0"
+      ]
+    },
+    {
+      "id": "31",
+      "subfigures": [
+        "3",
+        "1"
+      ]
+    }
+  ],
+  "subfigures": [],
+  "figure_appearances": [
+    {
+      "appeared_figure": "0",
+      "start_moment": "0",
+      "end_moment": "1"
+    },
+    {
+      "appeared_figure": "0",
+      "start_moment": "4",
+      "end_moment": "5"
+    },
+    {
+      "appeared_figure": "0",
+      "start_moment": "12",
+      "end_moment": "13"
+    },
+    {
+      "appeared_figure": "0",
+      "start_moment": "16",
+      "end_moment": "17"
+    },
+    {
+      "appeared_figure": "0",
+      "start_moment": "20",
+      "end_moment": "21"
+    },
+    {
+      "appeared_figure": "0",
+      "start_moment": "24",
+      "end_moment": "25"
+    },
+    {
+      "appeared_figure": "1",
+      "start_moment": "2",
+      "end_moment": "3"
+    },
+    {
+      "appeared_figure": "1",
+      "start_moment": "10",
+      "end_moment": "11"
+    },
+    {
+      "appeared_figure": "1",
+      "start_moment": "22",
+      "end_moment": "23"
+    },
+    {
+      "appeared_figure": "2",
+      "start_moment": "6",
+      "end_moment": "7"
+    },
+    {
+      "appeared_figure": "2",
+      "start_moment": "18",
+      "end_moment": "19"
+    },
+    {
+      "appeared_figure": "3",
+      "start_moment": "8",
+      "end_moment": "9"
+    },
+    {
+      "appeared_figure": "3",
+      "start_moment": "14",
+      "end_moment": "15"
+    },
+    {
+      "appeared_figure": "01",
+      "start_moment": "0",
+      "end_moment": "3"
+    },
+    {
+      "appeared_figure": "01",
+      "start_moment": "4",
+      "end_moment": "11"
+    },
+    {
+      "appeared_figure": "01",
+      "start_moment": "20",
+      "end_moment": "23"
+    },
+    {
+      "appeared_figure": "02",
+      "start_moment": "4",
+      "end_moment": "7"
+    },
+    {
+      "appeared_figure": "02",
+      "start_moment": "16",
+      "end_moment": "19"
+    },
+    {
+      "appeared_figure": "03",
+      "start_moment": "4",
+      "end_moment": "9"
+    },
+    {
+      "appeared_figure": "03",
+      "start_moment": "12",
+      "end_moment": "15"
+    },
+    {
+      "appeared_figure": "10",
+      "start_moment": "2",
+      "end_moment": "5"
+    },
+    {
+      "appeared_figure": "10",
+      "start_moment": "10",
+      "end_moment": "13"
+    },
+    {
+      "appeared_figure": "10",
+      "start_moment": "22",
+      "end_moment": "25"
+    },
+    {
+      "appeared_figure": "12",
+      "start_moment": "2",
+      "end_moment": "7"
+    },
+    {
+      "appeared_figure": "12",
+      "start_moment": "10",
+      "end_moment": "19"
+    },
+    {
+      "appeared_figure": "13",
+      "start_moment": "2",
+      "end_moment": "9"
+    },
+    {
+      "appeared_figure": "13",
+      "start_moment": "10",
+      "end_moment": "15"
+    },
+    {
+      "appeared_figure": "20",
+      "start_moment": "6",
+      "end_moment": "13"
+    },
+    {
+      "appeared_figure": "20",
+      "start_moment": "18",
+      "end_moment": "21"
+    },
+    {
+      "appeared_figure": "21",
+      "start_moment": "6",
+      "end_moment": "11"
+    },
+    {
+      "appeared_figure": "21",
+      "start_moment": "18",
+      "end_moment": "23"
+    },
+    {
+      "appeared_figure": "30",
+      "start_moment": "8",
+      "end_moment": "13"
+    },
+    {
+      "appeared_figure": "30",
+      "start_moment": "14",
+      "end_moment": "17"
+    },
+    {
+      "appeared_figure": "31",
+      "start_moment": "8",
+      "end_moment": "11"
+    },
+    {
+      "appeared_figure": "31",
+      "start_moment": "14",
+      "end_moment": "23"
+    }
+  ]
+}

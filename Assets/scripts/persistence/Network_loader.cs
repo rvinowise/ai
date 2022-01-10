@@ -2,7 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using rvinowise.ai.general;
 using rvinowise.rvi.contracts;
+using SimpleFileBrowser;
 using UnityEngine;
 
 
@@ -10,80 +13,72 @@ namespace rvinowise.ai.unity.persistence {
 public class Network_loader: 
     MonoBehaviour
 {
+    public Network_persistence persistence;
+    private Pattern_storage pattern_storage;
 
-    // The directory under Resources that the dynamic objects' prefabs can be loaded from
-    private string PREFABS_PATH = "Prefabs/";
-    // A dictionary of prefab guid to prefab
-    public Dictionary<string, GameObject> prefabs;
-
-    public string SAVE_OBJECTS_PATH;
-
-    private JsonSerializerSettings jsonSerializerSettings = new JsonSerializerSettings
-        {TypeNameHandling = TypeNameHandling.None};
-    
     public static Network_loader instance;
+    
     void Awake() {
         Contract.Assert(instance == null);
         instance = this;
-        SAVE_OBJECTS_PATH = Application.dataPath + "/objects.json";
-        prefabs = LoadPrefabs(PREFABS_PATH);
+        
+    }
+
+    private void init_file_dialog() {
+        FileBrowser.SetFilters( 
+            true, 
+            new FileBrowser.Filter( ".json", ".json") 
+        );
+        FileBrowser.SetDefaultFilter( ".json" );
+        FileBrowser.SetExcludedExtensions( ".lnk", ".tmp", ".zip", ".rar", ".exe" );
+        FileBrowser.AddQuickLink( "Savings", persistence.saving_path);
     }
     
+    public void on_btn_open_file() {
+        init_file_dialog();
+        FileBrowser.ShowLoadDialog( 
+            on_load,
+            null, 
+            FileBrowser.PickMode.Files
+        );
+    }
     
-    private Dictionary<string, GameObject> LoadPrefabs(string prefabsPath) {
-        Dictionary<string, GameObject> prefabs = new Dictionary<string, GameObject>();
+    public void on_load(string[] files) {
+        on_load(files[0]);
+    }
+    public void on_load(string file) {
+        serializable.Network in_network = read_json<serializable.Network>(file);
+        reconstruct_network(in_network);
+    }
 
-        GameObject[] allPrefabs = Resources.LoadAll<GameObject>(prefabsPath);
-        foreach (GameObject prefab in allPrefabs) {
-            Persistent dynamicObject = prefab.GetComponent<Persistent>();
-            if (dynamicObject == null) {
-                throw new InvalidOperationException("Prefab does not contain DynamicObject");
+    private void reconstruct_network(serializable.Network network) {
+        load_patterns(network.patterns);
+    }
+
+    private void load_patterns(List<serializable.Pattern> patterns) {
+        pattern_storage = persistence.pattern_storage;
+        foreach (serializable.Pattern pattern in patterns) {
+            IPattern new_pattern;
+            if (pattern.subfigures.Any()) {
+                new_pattern = pattern_storage.pattern_prefab.get_for_base_input(pattern.id);
             }
-            if (!dynamicObject.persistent_state.isPrefab) {
-                throw new InvalidOperationException("Prefab's ObjectState isPrefab = false");
+            else {
+                new_pattern = get_pattern_having(pattern.subfigures);
             }
-            prefabs.Add(dynamicObject.persistent_state.prefabGuid, prefab);
+            pattern_storage.append_pattern(new_pattern);
         }
-
-        Debug.Log("Loaded " + prefabs.Count + " saveable prefabs.");
-        return prefabs;
     }
-
-    public void on_load_scene() {
-        LoadDynamicObjects(SAVE_OBJECTS_PATH);
-    }
-
-    public Persistent FindDynamicObjectByGuid(string guid) {
-        Persistent[] dynamicObjects = GetRootDynamicObject().GetComponentsInChildren<Persistent>();
-        foreach (Persistent dynamicObject in dynamicObjects) {
-            if (dynamicObject.persistent_state.guid.Equals(guid)) {
-                return dynamicObject;
-            }
+    private IPattern get_pattern_having(IList<string> subfigures_ids) {
+        List<IFigure> subfigures = new List<IFigure>();
+        foreach (string subfigure_id in subfigures_ids) {
+            subfigures.Add(pattern_storage.get_pattern_for_base_input(subfigure_id));
         }
-        return null;
+        return pattern_storage.get_pattern_having(subfigures);
     }
 
-    private GameObject GetRootDynamicObject() {
-        foreach (GameObject gameObject in GameObject.FindGameObjectsWithTag("DynamicRoot")) {
-            if (gameObject.activeSelf) {
-                return gameObject;
-            }
-        }
-        throw new InvalidOperationException("Cannot find root of dynamic objects");
-    }
-
-
-
-    private void LoadDynamicObjects(string path) {
-        List<Persistent_state> objectStates = ReadJson<List<Persistent_state>>(path);
-        Persistent_state.LoadObjects(prefabs, objectStates, GetRootDynamicObject());
-        Debug.Log("Loaded objects from: " + path);
-    }
-
-
-    private T ReadJson<T>(string path) {
+    private T read_json<T>(string path) {
         string json = File.ReadAllText(path);
-        return JsonConvert.DeserializeObject<T>(json, jsonSerializerSettings);
+        return JsonConvert.DeserializeObject<T>(json, persistence.json_setting);
     }
 
   

@@ -24,6 +24,8 @@ public class Action_group {
     Position position;
     #endregion
 
+    public Action_group() { }
+
     public Action_group( general.IAction_group action_group) {
         moment = action_group.moment.ToString();
         
@@ -53,6 +55,8 @@ public class Figure {
     public Position position;
     #endregion
 
+    public Figure() { }
+
     public Figure(unity.Figure figure) {
         id = figure.id;
         foreach(ISubfigure ai_subfigure in figure.subfigures) {
@@ -75,6 +79,8 @@ public class Subfigure {
     public Position position;
     #endregion
 
+    public Subfigure() { }
+
     public Subfigure(general.ISubfigure ai_subfigure) {
         id = ai_subfigure.id;
         parent_figure = ai_subfigure.parent.id;
@@ -95,6 +101,8 @@ public class Pattern {
     public string id;
     public List<string> subfigures = new List<string>(); //actual figures and patterns
 
+    public Pattern() { }
+
     public Pattern(rvinowise.ai.general.IPattern pattern) {
         id = pattern.id;
         foreach(IFigure subfigure in pattern.subfigures) {
@@ -107,6 +115,8 @@ public class Figure_appearance {
     public string appeared_figure;
     public string start_moment;
     public string end_moment;
+
+    public Figure_appearance() { }
 
     public Figure_appearance(general.IFigure_appearance appearance) {
         
@@ -121,6 +131,8 @@ public class Position {
     public float x;
     public float y;
     public float z;
+
+    public Position() { }
 
     public Position(UnityEngine.Vector3 unity_vector) {
         x = unity_vector.x;

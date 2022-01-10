@@ -10,6 +10,11 @@ This plugin helps you show save/load dialogs during gameplay with its uGUI based
 ### HOW TO
 The file browser can be shown either as a save dialog or a load dialog. In load mode, the returned path(s) always lead to existing files or folders. In save mode, the returned path(s) can point to non-existing files, as well.
 
+File browser comes bundled with two premade skins in the Skins directory: LightSkin and DarkSkin. New UISkins can be created via "Assets-Create-yasirkula-SimpleFileBrowser-UI Skin". A UISkin can be assigned to the file browser in two ways:
+
+- By changing SimpleFileBrowserCanvas prefab's Skin field
+- By changing the value of FileBrowser.Skin property from a C# script
+
 
 ### NEW INPUT SYSTEM SUPPORT
 This plugin supports Unity's new Input System but it requires some manual modifications (if both the legacy and the new input systems are active at the same time, no changes are needed):
@@ -49,6 +54,9 @@ public enum PickMode { Files = 0, Folders = 1, FilesAndFolders = 2 };
 public delegate void OnSuccess( string[] paths );
 public delegate void OnCancel();
 
+// Changing the dialog's skin
+public static UISkin Skin { get; set; }
+
 // Showing dialog
 bool ShowSaveDialog( OnSuccess onSuccess, OnCancel onCancel, PickMode pickMode, bool allowMultiSelection = false, string initialPath = null, string initialFilename = null, string title = "Save", string saveButtonText = "Save" );
 bool ShowLoadDialog( OnSuccess onSuccess, OnCancel onCancel, PickMode pickMode, bool allowMultiSelection = false, string initialPath = null, string initialFilename = null, string title = "Load", string loadButtonText = "Select" );
@@ -81,7 +89,7 @@ bool FileBrowserHelpers.FileExists( string path );
 bool FileBrowserHelpers.DirectoryExists( string path );
 bool FileBrowserHelpers.IsDirectory( string path );
 string FileBrowserHelpers.GetDirectoryName( string path );
-FileSystemEntry[] FileBrowserHelpers.GetEntriesInDirectory( string path ); // Returns all files and folders in a directory
+FileSystemEntry[] FileBrowserHelpers.GetEntriesInDirectory( string path, bool extractOnlyLastSuffixFromExtensions ); // Returns all files and folders in a directory. If you want "File.tar.gz"s extension to be extracted as ".tar.gz" instead of ".gz", set 'extractOnlyLastSuffixFromExtensions' to false
 string FileBrowserHelpers.CreateFileInDirectory( string directoryPath, string filename ); // Returns the created file's path
 string FileBrowserHelpers.CreateFolderInDirectory( string directoryPath, string folderName ); // Returns the created folder's path
 void FileBrowserHelpers.WriteBytesToFile( string targetPath, byte[] bytes );

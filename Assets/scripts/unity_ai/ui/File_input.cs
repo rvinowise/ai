@@ -21,45 +21,29 @@ public class File_input : Input {
         new Dictionary<string, IPattern>();
 
 
-    override protected void Awake() {
-        base.Awake();
-    }
-    protected void Start() {
-        init_file_dialog();
-        
-    }
-
     private void init_file_dialog() {
-
-		FileBrowser.SetFilters( true, 
+		FileBrowser.SetFilters( 
+            true, 
             new FileBrowser.Filter( "Text Files", ".txt", ".csv" ) 
         );
-
 		FileBrowser.SetDefaultFilter( ".txt" );
 		FileBrowser.SetExcludedExtensions( ".lnk", ".tmp", ".zip", ".rar", ".exe" );
-
-		FileBrowser.AddQuickLink( "Users", "C:\\Users", null );
-
-		//StartCoroutine( ShowLoadDialogCoroutine() );
+		FileBrowser.AddQuickLink( "Users", "C:\\Users" );
     }
 
     public void on_btn_open_file() {
+        init_file_dialog();
         FileBrowser.ShowLoadDialog( 
             on_file_selected,
-            on_cancel, 
+            null, 
             FileBrowser.PickMode.Files
         );
     }
 
     public void on_file_selected(string[] paths) {
-        Contract.Requires(paths.Count() == 1);
         read_file(paths[0]);
     }
 
-    public void on_cancel() {
-
-    }
-   
     public void read_file(string file_path) {
         string input_string = File.ReadAllText(file_path);
         foreach(char symbol in input_string.ToCharArray()) {

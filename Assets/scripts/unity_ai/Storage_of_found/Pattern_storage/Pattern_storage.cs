@@ -47,7 +47,7 @@ public partial class Pattern_storage: MonoBehaviour {
     }
 
 
-    virtual protected void Start() {
+    protected virtual void Start() {
         name_to_pattern = create_map_name_to_pattern(
             known_patterns
         );
@@ -127,8 +127,45 @@ public partial class Pattern_storage: MonoBehaviour {
         }
     }
 
+    public IPattern get_pattern_for_base_input(
+        string id
+    ) {
+        if (find_pattern_for_base_input(id) is IPattern old_pattern) {
+            return old_pattern;
+        }
+        IPattern new_pattern = pattern_prefab.get_for_base_input(id);
+        append_pattern(new_pattern);
+        return new_pattern;
+    } 
+
+    public IPattern find_pattern_for_base_input(
+        string id
+    ) {
+        foreach(var pattern in known_patterns) {
+            if (
+                pattern.id == id
+            ) {
+                return pattern;
+            }
+        }
+        return null;
+    }
+
     public IPattern get_pattern_having(
         IReadOnlyList<IFigure> subfigures
+    ) {
+        if (find_pattern_having(subfigures) is IPattern old_pattern) {
+            return old_pattern;
+        }    
+        IPattern new_pattern = pattern_prefab.get_for_sequence_of_subfigures(
+            subfigures
+        );
+        append_pattern(new_pattern);
+        return new_pattern;
+    }
+
+    public IPattern find_pattern_having(
+    IReadOnlyList<IFigure> subfigures
     ) {
         foreach(var pattern in known_patterns) {
             if (
@@ -139,7 +176,7 @@ public partial class Pattern_storage: MonoBehaviour {
         }
         return null;
     }
-    
+
     public IPattern get_pattern_for_pair(
         IFigure beginning,
         IFigure ending
@@ -147,17 +184,7 @@ public partial class Pattern_storage: MonoBehaviour {
         var subfigures = Pattern.get_sequence_of_subfigures_from(
             beginning, ending
         );
-        if (
-            get_pattern_having(subfigures)
-                is IPattern old_pattern
-        ) {
-            return old_pattern;
-        }
-        IPattern new_pattern = pattern_prefab.get_for_sequence_of_subfigures(
-            subfigures
-        );
-        append_pattern(new_pattern);
-        return new_pattern;
+        return get_pattern_having(subfigures);
     }
 
     /* space-separated pattern names  */

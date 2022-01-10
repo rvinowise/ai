@@ -7,33 +7,54 @@ using UnityEngine;
 using rvinowise.ai.general;
 using rvinowise.ai.unity;
 using rvinowise.ai.unity.persistence.serializable;
+using SimpleFileBrowser;
 
 namespace rvinowise.ai.unity.persistence {
 public class Network_saver:
     MonoBehaviour 
 {
     
-    string out_file;
-    [SerializeField]
-    Transform saved_object;
+    string saving_path;
+    public Network_persistence persistence;
+    
     [SerializeField] Action_history action_history;
     [SerializeField] Pattern_storage pattern_storage;
     [SerializeField] Figure_storage figure_storage;
-    private JsonSerializerSettings jsonSerializerSettings = new JsonSerializerSettings {
-        TypeNameHandling = TypeNameHandling.None
-    };
 
     public static Network_saver instance;
 
     void Awake() {
         Contract.Assert(instance == null);
         instance = this;
-        out_file = Application.dataPath + "/network.json";
+        
     }
     
-    public void on_save() {
+    private void init_file_dialog() {
+        FileBrowser.SetFilters( 
+            true, 
+            new FileBrowser.Filter( ".json", ".json") 
+        );
+        FileBrowser.SetDefaultFilter( ".json" );
+        FileBrowser.SetExcludedExtensions( ".lnk", ".tmp", ".zip", ".rar", ".exe" );
+        FileBrowser.AddQuickLink( "Savings", saving_path);
+    }
+    
+    public void on_btn_open_file() {
+        init_file_dialog();
+        FileBrowser.ShowSaveDialog( 
+            on_save,
+            null, 
+            FileBrowser.PickMode.Files
+        );
+    }
+    
+    public void on_save(string[] files) {
+        on_save(files[0]);
+    }
+    
+    public void on_save(string file) {
         serializable.Network out_network = create_serializable_network();
-        write_json(out_file, out_network);
+        write_json(file, out_network);
     }
 
     public serializable.Network create_serializable_network() {
@@ -113,7 +134,7 @@ public class Network_saver:
     }
     
     private void write_json<T>(string path, T obj) {
-        string json = JsonConvert.SerializeObject(obj, Formatting.Indented, jsonSerializerSettings);
+        string json = JsonConvert.SerializeObject(obj, Formatting.Indented, persistence.json_setting);
         File.WriteAllText(path, json);
     }
 }
