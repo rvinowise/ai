@@ -5,7 +5,7 @@ using UnityEngine;
 using Action = rvinowise.ai.unity.Action;
 
 namespace rvinowise.ai.unity {
-public partial class Pattern_appearance: 
+public partial class Repetition_appearance: 
 MonoBehaviour
 {
     public Bezier bezier;
@@ -23,22 +23,9 @@ MonoBehaviour
         }
     }
     private bool _selected;
-    private bool _selected_with_subfigures;
+    
 
-    public bool selected_with_subfigures {
-        get {return _selected_with_subfigures;}
-        set {
-            if (first_half is Pattern_appearance first_appearance) {
-                first_appearance.selected_with_subfigures = value;
-            }
-            if (second_half is Pattern_appearance second_appearance) {
-                second_appearance.selected_with_subfigures = value;
-            }
-            _selected_with_subfigures = value;
-            selected = value;
-        }
-
-    }
+    
 
     public void create_curved_line() {
         bezier.init_between_points(

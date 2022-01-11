@@ -12,55 +12,36 @@ using rvinowise.unity;
 namespace rvinowise.ai.unity {
 
 [RequireComponent(typeof(Pooled_object))]
-public partial class Pattern_appearance: 
+public class Pattern_appearance: 
+Repetition_appearance,
 IPattern_appearance,
 IHave_destructor
 {
 
-    #region IPattern_appearance
-
-    public BigInteger start_moment 
-        => start_appearance.action_group.moment;
-    public BigInteger end_moment 
-        => end_appearance.action_group.moment;
-
-    #endregion
-
-    public IFigure pattern{get; protected set;}
     
-    public Appearance_start start_appearance;
-    public Appearance_end end_appearance;
-
     #region debug
     public IFigure_appearance first_half;
     public IFigure_appearance second_half;
     #endregion debug
 
-    [called_by_prefab]
-    public Pattern_appearance get_for_pattern(
-        IFigure in_pattern
-    ) {
-        
-        Pattern_appearance appearance = 
-            this.get_from_pool<Pattern_appearance>();
-        
-        appearance.pattern = in_pattern;
-        
-        return appearance;
+
+    public bool selected_with_subfigures {
+        get {return _selected_with_subfigures;}
+        set {
+            if (first_half is Pattern_appearance first_appearance) {
+                first_appearance.selected_with_subfigures = value;
+            }
+            if (second_half is Pattern_appearance second_appearance) {
+                second_appearance.selected_with_subfigures = value;
+            }
+            _selected_with_subfigures = value;
+            selected = value;
+        }
+
     }
+    private bool _selected_with_subfigures;
 
-
-
-    void Awake() {
-        pooled_object = GetComponent<Pooled_object>();
-        start_appearance.figure_appearance = this;
-        end_appearance.figure_appearance = this;
-    }
-
-    
-    
-
-    public virtual void destroy() {
+    public override void destroy() {
         store_action_as_child(start_appearance);
         store_action_as_child(end_appearance);
         start_appearance.transform.parent = transform;
@@ -75,10 +56,5 @@ IHave_destructor
         in_action.transform.parent = transform;
     }
 
-    #region IFigure_appearance
-
-    public IFigure figure => pattern;
-    public IFigure place { get; }
-    #endregion
 }
 }

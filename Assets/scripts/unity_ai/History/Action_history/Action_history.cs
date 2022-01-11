@@ -7,7 +7,6 @@ using Action = rvinowise.ai.unity.Action;
 using rvinowise.ai.general;
 using System.Linq;
 using System.Numerics;
-using rvinowise.ai.general;
 using rvinowise.rvi.contracts;
 
 namespace rvinowise.ai.unity {
@@ -63,7 +62,7 @@ IAction_history
         Action_group start_group = add_action_group(new_mood);
         Action_group end_group = add_action_group(new_mood);
 
-        create_pattern_appearances(
+        create_figure_appearances(
             selected_patterns,
             start_group.moment,
             end_group.moment
@@ -95,8 +94,8 @@ IAction_history
         BigInteger start,
         BigInteger end
     ) {
-        foreach (var pattern in figures) {
-            create_figure_appearance(pattern, start, end);
+        foreach (var figure in figures) {
+            create_figure_appearance(figure, start, end);
         }
         get_action_group_at_moment(start).
             extend_to_accomodate_children();
@@ -109,8 +108,17 @@ IAction_history
         BigInteger start,
         BigInteger end
     ) {
-        return null; //create_figure_appearance(figure);
-
+        Contract.Requires(
+            start < end,
+            "should have a positive time interval"
+        );
+        Figure_appearance appearance = figure_appearance_prefab
+            .get_for_figure(figure);
+        figure.add_appearance(appearance);
+        put_action_into_moment(appearance.start_appearance, start);
+        put_action_into_moment(appearance.end_appearance, end);
+        appearance.create_curved_line();
+        return appearance;
     }
  
     public Pattern_appearance create_pattern_appearance(
@@ -122,7 +130,7 @@ IAction_history
             start < end,
             "should have a positive time interval"
         );
-        Pattern_appearance appearance = pattern_appearance_preafab.get_for_pattern(pattern);
+        Pattern_appearance appearance = pattern_appearance_prefab.get_for_pattern(pattern);
         pattern.add_appearance(appearance);
         put_action_into_moment(appearance.start_appearance, start);
         put_action_into_moment(appearance.end_appearance, end);
