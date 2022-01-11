@@ -23,6 +23,9 @@ ISelectable
     public List<IPattern_appearance> appearances 
         = new List<IPattern_appearance>();
     
+    public Pattern_appearance appearance_preafab;
+    
+    
     [HideInInspector]
     public Animator animator;
     
@@ -55,6 +58,21 @@ ISelectable
                 (appearance.start_moment >= start) &&
                 (appearance.end_moment <= end)
         ).ToList().AsReadOnly();
+    }
+
+    public IFigure_appearance create_appearance(BigInteger start, BigInteger end) {
+        if (animator != null) {
+            animator.SetTrigger("fire");
+        }
+
+        Pattern_appearance appearance =
+            appearance_preafab.get_for_pattern(
+                this, start, end
+            );
+        
+        appearances.Add(appearance);
+        
+        return appearance;
     }
     #endregion IFigure
     

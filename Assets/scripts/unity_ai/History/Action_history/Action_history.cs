@@ -49,7 +49,6 @@ IAction_history
             IPattern,
             IPattern_appearance
         >();
-    private ulong _count;
 
     private BigInteger current_moment;
     
@@ -91,13 +90,13 @@ IAction_history
         return 0f;
     }
 
-    private void create_pattern_appearances(
-        IEnumerable<IPattern> patterns,
+    private void create_figure_appearances(
+        IEnumerable<IFigure> figures,
         BigInteger start,
         BigInteger end
     ) {
-        foreach (var pattern in patterns) {
-            create_pattern_appearance(pattern, start, end);
+        foreach (var pattern in figures) {
+            create_figure_appearance(pattern, start, end);
         }
         get_action_group_at_moment(start).
             extend_to_accomodate_children();
@@ -105,15 +104,58 @@ IAction_history
             extend_to_accomodate_children();
     }
 
-    public void create_pattern_appearance(
+    public IFigure_appearance create_figure_appearance(
+        IFigure figure,
+        BigInteger start,
+        BigInteger end
+    ) {
+        return null; //create_figure_appearance(figure);
+
+    }
+ 
+    public Pattern_appearance create_pattern_appearance(
         IPattern pattern,
         BigInteger start,
         BigInteger end
     ) {
-        IPattern_appearance appearance =
-            pattern.create_appearance(start, end);
+        Contract.Requires(
+            start < end,
+            "should have a positive time interval"
+        );
+        Pattern_appearance appearance = pattern_appearance_preafab.get_for_pattern(pattern);
+        pattern.add_appearance(appearance);
+        put_action_into_moment(appearance.start_appearance, start);
+        put_action_into_moment(appearance.end_appearance, end);
+        appearance.create_curved_line();
+        return appearance;
+    }
+
+    private void put_action_into_moment(
+        Action appearance, 
+        BigInteger moment
+    ) {
         
-        place_new_pattern_appearance(appearance);
+    }
+    public IPattern_appearance create_pattern_appearance(
+        IPattern pattern,
+        IFigure_appearance in_first_half,
+        IFigure_appearance in_second_half
+    ) {
+        Contract.Assert(
+            pattern.id.Length > 1, 
+            "Pattern consisting of subfigures should have a longer name"
+        );
+        
+        Pattern_appearance appearance = create_pattern_appearance(
+            pattern,
+            in_first_half.start_moment,
+            in_first_half.end_moment
+        );
+        appearance.first_half = in_first_half;
+        appearance.second_half = in_second_half;
+        
+        
+        return appearance;
     }
 
     public Action_group get_action_group_at_moment(

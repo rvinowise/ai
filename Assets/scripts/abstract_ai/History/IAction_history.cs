@@ -3,9 +3,7 @@ using System.Numerics;
 using rvinowise.ai.general;
 
 namespace rvinowise.ai.general {
-public interface IAction_history:
-    IFigure,
-    IFigure_appearance
+public interface IAction_history
 {
     
     BigInteger last_moment{get;} 

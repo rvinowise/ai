@@ -35,8 +35,8 @@ public partial class Action_history
         );
     }
     
-    private void place_new_pattern_appearance(
-        IPattern_appearance in_appearance
+    private void place_new_figure_appearance(
+        IFigure_appearance in_appearance
     ) {
         if (in_appearance is Pattern_appearance appearance) {
             appearance.transform.parent = transform;

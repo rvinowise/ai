@@ -66,7 +66,7 @@ MonoBehaviour
                 continue;
             }
 
-            IPattern signal_pair = pattern_storage.get_pattern_for_pair(
+            IPattern signal_pair = pattern_storage.provide_pattern_for_pair(
                 beginning_figure,
                 ending_figure
             );
@@ -209,7 +209,8 @@ MonoBehaviour
             )) {
                 continue;
             }
-            signal_pair.create_appearance(
+            action_history.create_pattern_appearance(
+                signal_pair,
                 closest_beginning.appearance,
                 potential_ending
             );

@@ -1,0 +1,69 @@
+{
+  "action_groups": [],
+  "actions": [],
+  "figures": [],
+  "patterns": [
+    {
+      "id": ",",
+      "subfigures": []
+    },
+    {
+      "id": ";",
+      "subfigures": []
+    },
+    {
+      "id": "=",
+      "subfigures": []
+    },
+    {
+      "id": "+",
+      "subfigures": []
+    },
+    {
+      "id": "-",
+      "subfigures": []
+    },
+    {
+      "id": "0",
+      "subfigures": []
+    },
+    {
+      "id": "1",
+      "subfigures": []
+    },
+    {
+      "id": "2",
+      "subfigures": []
+    },
+    {
+      "id": "3",
+      "subfigures": []
+    },
+    {
+      "id": "4",
+      "subfigures": []
+    },
+    {
+      "id": "5",
+      "subfigures": []
+    },
+    {
+      "id": "6",
+      "subfigures": []
+    },
+    {
+      "id": "7",
+      "subfigures": []
+    },
+    {
+      "id": "8",
+      "subfigures": []
+    },
+    {
+      "id": "9",
+      "subfigures": []
+    }
+  ],
+  "subfigures": [],
+  "figure_appearances": []
+}

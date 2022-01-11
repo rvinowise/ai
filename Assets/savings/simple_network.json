@@ -1,82 +1,238 @@
 {
   "action_groups": [
     {
-      "moment": "0"
+      "moment": "0",
+      "mood": 0,
+      "position": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      }
     },
     {
-      "moment": "1"
+      "moment": "1",
+      "mood": 0,
+      "position": {
+        "x": 2.0,
+        "y": 0.0,
+        "z": 0.0
+      }
     },
     {
-      "moment": "2"
+      "moment": "2",
+      "mood": 0,
+      "position": {
+        "x": 4.0,
+        "y": 0.0,
+        "z": 0.0
+      }
     },
     {
-      "moment": "3"
+      "moment": "3",
+      "mood": 0,
+      "position": {
+        "x": 6.0,
+        "y": 0.0,
+        "z": 0.0
+      }
     },
     {
-      "moment": "4"
+      "moment": "4",
+      "mood": 0,
+      "position": {
+        "x": 8.0,
+        "y": 0.0,
+        "z": 0.0
+      }
     },
     {
-      "moment": "5"
+      "moment": "5",
+      "mood": 0,
+      "position": {
+        "x": 10.0,
+        "y": 0.0,
+        "z": 0.0
+      }
     },
     {
-      "moment": "6"
+      "moment": "6",
+      "mood": 0,
+      "position": {
+        "x": 12.0,
+        "y": 0.0,
+        "z": 0.0
+      }
     },
     {
-      "moment": "7"
+      "moment": "7",
+      "mood": 0,
+      "position": {
+        "x": 14.0,
+        "y": 0.0,
+        "z": 0.0
+      }
     },
     {
-      "moment": "8"
+      "moment": "8",
+      "mood": 0,
+      "position": {
+        "x": 16.0,
+        "y": 0.0,
+        "z": 0.0
+      }
     },
     {
-      "moment": "9"
+      "moment": "9",
+      "mood": 0,
+      "position": {
+        "x": 18.0,
+        "y": 0.0,
+        "z": 0.0
+      }
     },
     {
-      "moment": "10"
+      "moment": "10",
+      "mood": 0,
+      "position": {
+        "x": 20.0,
+        "y": 0.0,
+        "z": 0.0
+      }
     },
     {
-      "moment": "11"
+      "moment": "11",
+      "mood": 0,
+      "position": {
+        "x": 22.0,
+        "y": 0.0,
+        "z": 0.0
+      }
     },
     {
-      "moment": "12"
+      "moment": "12",
+      "mood": 0,
+      "position": {
+        "x": 24.0,
+        "y": 0.0,
+        "z": 0.0
+      }
     },
     {
-      "moment": "13"
+      "moment": "13",
+      "mood": 0,
+      "position": {
+        "x": 26.0,
+        "y": 0.0,
+        "z": 0.0
+      }
     },
     {
-      "moment": "14"
+      "moment": "14",
+      "mood": 0,
+      "position": {
+        "x": 28.0,
+        "y": 0.0,
+        "z": 0.0
+      }
     },
     {
-      "moment": "15"
+      "moment": "15",
+      "mood": 0,
+      "position": {
+        "x": 30.0,
+        "y": 0.0,
+        "z": 0.0
+      }
     },
     {
-      "moment": "16"
+      "moment": "16",
+      "mood": 0,
+      "position": {
+        "x": 32.0,
+        "y": 0.0,
+        "z": 0.0
+      }
     },
     {
-      "moment": "17"
+      "moment": "17",
+      "mood": 0,
+      "position": {
+        "x": 34.0,
+        "y": 0.0,
+        "z": 0.0
+      }
     },
     {
-      "moment": "18"
+      "moment": "18",
+      "mood": 0,
+      "position": {
+        "x": 36.0,
+        "y": 0.0,
+        "z": 0.0
+      }
     },
     {
-      "moment": "19"
+      "moment": "19",
+      "mood": 0,
+      "position": {
+        "x": 38.0,
+        "y": 0.0,
+        "z": 0.0
+      }
     },
     {
-      "moment": "20"
+      "moment": "20",
+      "mood": 0,
+      "position": {
+        "x": 40.0,
+        "y": 0.0,
+        "z": 0.0
+      }
     },
     {
-      "moment": "21"
+      "moment": "21",
+      "mood": 0,
+      "position": {
+        "x": 42.0,
+        "y": 0.0,
+        "z": 0.0
+      }
     },
     {
-      "moment": "22"
+      "moment": "22",
+      "mood": 0,
+      "position": {
+        "x": 44.0,
+        "y": 0.0,
+        "z": 0.0
+      }
     },
     {
-      "moment": "23"
+      "moment": "23",
+      "mood": 0,
+      "position": {
+        "x": 46.0,
+        "y": 0.0,
+        "z": 0.0
+      }
     },
     {
-      "moment": "24"
+      "moment": "24",
+      "mood": 0,
+      "position": {
+        "x": 48.0,
+        "y": 0.0,
+        "z": 0.0
+      }
     },
     {
-      "moment": "25"
+      "moment": "25",
+      "mood": 0,
+      "position": {
+        "x": 50.0,
+        "y": 0.0,
+        "z": 0.0
+      }
     }
   ],
   "actions": [],

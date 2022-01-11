@@ -53,28 +53,57 @@ public class Network_loader:
 
     private void reconstruct_network(serializable.Network network) {
         load_patterns(network.patterns);
+        load_action_groups(network.action_groups);
+        load_figire_appearances(network.figure_appearances);
     }
 
+    #region patterns
     private void load_patterns(List<serializable.Pattern> patterns) {
         pattern_storage = persistence.pattern_storage;
         foreach (serializable.Pattern pattern in patterns) {
-            IPattern new_pattern;
             if (pattern.subfigures.Any()) {
-                new_pattern = pattern_storage.pattern_prefab.get_for_base_input(pattern.id);
+                create_pattern_having(pattern.subfigures);
             }
             else {
-                new_pattern = get_pattern_having(pattern.subfigures);
+                pattern_storage.provide_pattern_for_base_input(pattern.id);
             }
-            pattern_storage.append_pattern(new_pattern);
         }
     }
-    private IPattern get_pattern_having(IList<string> subfigures_ids) {
+    private void create_pattern_having(IList<string> subfigures_ids) {
         List<IFigure> subfigures = new List<IFigure>();
         foreach (string subfigure_id in subfigures_ids) {
-            subfigures.Add(pattern_storage.get_pattern_for_base_input(subfigure_id));
+            subfigures.Add(pattern_storage.provide_pattern_for_base_input(subfigure_id));
         }
-        return pattern_storage.get_pattern_having(subfigures);
+        pattern_storage.provide_pattern_having(subfigures);
     }
+    #endregion patterns
+    
+    #region action_groups
+
+    private void load_action_groups( IList<serializable.Action_group> action_groups) {
+        Action_history history = persistence.action_history;
+        foreach (serializable.Action_group group in action_groups) {
+            
+        }
+    }
+    
+    #endregion
+    
+    #region figure_appearances
+
+    private void load_figire_appearances(IList<serializable.Figure_appearance> appearances) {
+        Action_history history = persistence.action_history;
+        Pattern_storage storage = persistence.pattern_storage;
+        foreach (serializable.Figure_appearance appearance in appearances) {
+            IPattern pattern = storage.find_pattern_with_id(appearance.appeared_figure);
+            Contract.Ensures(
+                pattern != null, 
+                "patterns should be loaded before their appearances"
+            );
+            history.
+        }
+    }
+    #endregion figure_appearances
 
     private T read_json<T>(string path) {
         string json = File.ReadAllText(path);

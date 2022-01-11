@@ -26,7 +26,7 @@ IHave_destructor
 
     #endregion
 
-    public IPattern pattern{get; protected set;}
+    public IFigure pattern{get; protected set;}
     
     public Appearance_start start_appearance;
     public Appearance_end end_appearance;
@@ -37,50 +37,19 @@ IHave_destructor
     #endregion debug
 
     [called_by_prefab]
-    public Pattern_appearance get_for_interval(
-        Pattern in_pattern,
-        BigInteger start,
-        BigInteger end
+    public Pattern_appearance get_for_pattern(
+        IFigure in_pattern
     ) {
-        Contract.Requires(
-            start < end,
-            "should have a positive time interval"
-        );
+        
         Pattern_appearance appearance = 
             this.get_from_pool<Pattern_appearance>();
         
         appearance.pattern = in_pattern;
         
-        appearance.start_appearance.
-            put_into_moment(start);
-        appearance.end_appearance.
-            put_into_moment(end);
-
-        appearance.create_curved_line();
-        
         return appearance;
     }
 
-    public Pattern_appearance get_for_subfigures(
-        Pattern in_pattern, 
-        IFigure_appearance in_first_half,
-        IFigure_appearance in_second_half        
-    ) {
-        Contract.Assert(
-            in_pattern.id.Length > 1, 
-            "Pattern consisting of subfigures should have a longer name"
-        );
 
-        Pattern_appearance appearance = get_for_interval(
-            in_pattern,
-            in_first_half.start_moment,
-            in_second_half.end_moment
-
-        );
-        appearance.first_half = in_first_half;
-        appearance.second_half = in_second_half;
-        return appearance;
-    }
 
     void Awake() {
         pooled_object = GetComponent<Pooled_object>();

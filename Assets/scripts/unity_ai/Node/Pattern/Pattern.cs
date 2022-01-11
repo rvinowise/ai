@@ -33,14 +33,10 @@ ISelectable
     public Pattern_appearance pattern_appearance_preafab;
 
     
+    public List<IFigure_appearance> appearances = new List<IFigure_appearance>();
     
-    [SerializeField]
-    private List<IPattern_appearance> _appearances 
-        = new List<IPattern_appearance>();
-    
-    public IReadOnlyList<IPattern_appearance> appearances {
-        get => _appearances.AsReadOnly();
-    }
+    public IReadOnlyList<IFigure> subfigures { get; private set; } 
+        = new List<IFigure>();
 
     [SerializeField] //debug
     private bool _selected;
@@ -67,43 +63,14 @@ ISelectable
 
     #endregion IFigure
 
-    public IReadOnlyList<IFigure> subfigures { get; private set; } 
-        = new List<IFigure>();
-
-    public IPattern_appearance create_appearance(
-        BigInteger start,
-        BigInteger end
+    public void add_appearance(
+        IFigure_appearance appearance
     ) {
         if (animator != null) {
             animator.SetTrigger("fire");
         }
 
-        Pattern_appearance appearance =
-            pattern_appearance_preafab.get_for_interval(
-                this, start, end
-            );
-        
-        _appearances.Add(appearance);
-        
-        return appearance;
-    }
-    
-    public IPattern_appearance create_appearance(
-        IFigure_appearance in_first_half,
-        IFigure_appearance in_second_half
-    ) {
-        if (animator != null) {
-            animator.SetTrigger("fire");
-        }
-
-        Pattern_appearance appearance =
-            pattern_appearance_preafab.get_for_subfigures(
-                this, in_first_half, in_second_half
-            );
-        
-        _appearances.Add(appearance);
-        
-        return appearance;
+        appearances.Add(appearance);
     }
 
     public IReadOnlyList<IFigure> as_lowlevel_sequence() {
@@ -182,12 +149,12 @@ ISelectable
     }
 
     private void remove_appearances() {
-        foreach(var appearance in _appearances) {
+        foreach(var appearance in appearances) {
             if (appearance is IHave_destructor destructable) {
                 destructable.destroy();
             }
         }
-        _appearances.Clear();
+        appearances.Clear();
     }
 
     private void set_appearances_are_highlighted(bool value) {

@@ -39,8 +39,8 @@ MonoBehaviour
         }
 
     }
-    
-    private void create_curved_line() {
+
+    public void create_curved_line() {
         bezier.init_between_points(
             ((Component)start_appearance).transform,
             ((Component)end_appearance).transform,

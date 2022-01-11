@@ -18,10 +18,11 @@ public class Network {
 [Serializable]
 public class Action_group {
     public string moment;
+    public int mood;
     //public List<string> actions = new List<string>();
     
     #region visualisation
-    Position position;
+    public Position position;
     #endregion
 
     public Action_group() { }

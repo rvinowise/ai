@@ -13,6 +13,10 @@ public interface IFigure {
     IReadOnlyList<IFigure_appearance> get_appearances_in_interval(
         BigInteger start, BigInteger end
     );
+
+    void add_appearance(
+        IFigure_appearance appearance
+    );
 }
 
 }

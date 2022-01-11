@@ -116,18 +116,10 @@ public partial class Pattern_storage: MonoBehaviour {
             pattern_table.remove_item(unity_pattern);
         }
     }
+    
+    #region creating patterns
 
-    public void append_patterns(
-        IDictionary<string, IPattern> new_patterns
-    ) {
-        foreach(var item in new_patterns) {
-            if (item.Value is Pattern pattern) {
-                append_pattern(pattern);
-            }
-        }
-    }
-
-    public IPattern get_pattern_for_base_input(
+    public IPattern provide_pattern_for_base_input(
         string id
     ) {
         if (find_pattern_for_base_input(id) is IPattern old_pattern) {
@@ -151,7 +143,7 @@ public partial class Pattern_storage: MonoBehaviour {
         return null;
     }
 
-    public IPattern get_pattern_having(
+    public IPattern provide_pattern_having(
         IReadOnlyList<IFigure> subfigures
     ) {
         if (find_pattern_having(subfigures) is IPattern old_pattern) {
@@ -177,16 +169,24 @@ public partial class Pattern_storage: MonoBehaviour {
         return null;
     }
 
-    public IPattern get_pattern_for_pair(
+    public IPattern provide_pattern_for_pair(
         IFigure beginning,
         IFigure ending
     ) {
         var subfigures = Pattern.get_sequence_of_subfigures_from(
             beginning, ending
         );
-        return get_pattern_having(subfigures);
+        return provide_pattern_having(subfigures);
     }
 
+    #endregion creating patterns
+
+    public IPattern find_pattern_with_id(string id) {
+        IPattern pattern;
+        name_to_pattern.TryGetValue(id, out pattern);
+        return pattern;
+    }
+    
     /* space-separated pattern names  */
     public void select_patterns_from_string(string in_string) {
         deselect_all_patterns();
@@ -198,9 +198,7 @@ public partial class Pattern_storage: MonoBehaviour {
             if (pattern != null) {
                 select_pattern((Pattern)pattern);
             } else {
-                Debug.LogErrorFormat(
-                    "trying to select non-existing pattern \"{0}\"",name
-                );
+                Debug.Log($"trying to select non-existing pattern \"{name}\"");
             }
         }
     }
