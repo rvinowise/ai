@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Numerics;
 using rvinowise.ai.general;
 using rvinowise.rvi.contracts;
 using SimpleFileBrowser;
@@ -54,7 +55,7 @@ public class Network_loader:
     private void reconstruct_network(serializable.Network network) {
         load_patterns(network.patterns);
         load_action_groups(network.action_groups);
-        load_figire_appearances(network.figure_appearances);
+        load_figure_appearances(network.figure_appearances);
     }
 
     #region patterns
@@ -83,7 +84,7 @@ public class Network_loader:
     private void load_action_groups( IList<serializable.Action_group> action_groups) {
         Action_history history = persistence.action_history;
         foreach (serializable.Action_group group in action_groups) {
-            
+            history.actio
         }
     }
     
@@ -91,7 +92,7 @@ public class Network_loader:
     
     #region figure_appearances
 
-    private void load_figire_appearances(IList<serializable.Figure_appearance> appearances) {
+    private void load_figure_appearances(IList<serializable.Figure_appearance> appearances) {
         Action_history history = persistence.action_history;
         Pattern_storage storage = persistence.pattern_storage;
         foreach (serializable.Figure_appearance appearance in appearances) {
@@ -100,7 +101,11 @@ public class Network_loader:
                 pattern != null, 
                 "patterns should be loaded before their appearances"
             );
-            history.
+            history.create_pattern_appearance(
+                pattern,
+                appearance.get_start_moment(),
+                appearance.get_end_moment()
+            );
         }
     }
     #endregion figure_appearances

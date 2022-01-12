@@ -51,7 +51,7 @@ public class File_input : Input {
                 receiver.start_new_line();
             } else {
                 pattern_storage.select_patterns_from_string(symbol.ToString());
-                receiver.input_selected_patterns();
+                receiver.input_selected_figures();
             }
         }  
     }

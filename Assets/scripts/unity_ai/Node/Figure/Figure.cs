@@ -20,8 +20,8 @@ ISelectable
 
     public List<ISubfigure> subfigures = new List<ISubfigure>();
 
-    public List<IPattern_appearance> appearances 
-        = new List<IPattern_appearance>();
+    public List<IFigure_appearance> appearances 
+        = new List<IFigure_appearance>();
     
     public Pattern_appearance appearance_preafab;
     
@@ -60,19 +60,11 @@ ISelectable
         ).ToList().AsReadOnly();
     }
 
-    public IFigure_appearance create_appearance(BigInteger start, BigInteger end) {
+    public void add_appearance(IFigure_appearance appearance) {
         if (animator != null) {
             animator.SetTrigger("fire");
         }
-
-        Pattern_appearance appearance =
-            appearance_preafab.get_for_pattern(
-                this, start, end
-            );
-        
         appearances.Add(appearance);
-        
-        return appearance;
     }
     #endregion IFigure
     

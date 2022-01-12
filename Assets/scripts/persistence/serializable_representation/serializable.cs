@@ -125,6 +125,17 @@ public class Figure_appearance {
         start_moment = appearance.start_moment.ToString();
         end_moment = appearance.end_moment.ToString();
     }
+
+    public BigInteger get_start_moment() {
+        BigInteger result;
+        BigInteger.TryParse(start_moment, out result);
+        return result;
+    }
+    public BigInteger get_end_moment() {
+        BigInteger result;
+        BigInteger.TryParse(end_moment, out result);
+        return result;
+    }
 }
 
 [Serializable]

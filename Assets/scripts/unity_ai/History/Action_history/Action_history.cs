@@ -52,15 +52,15 @@ IAction_history
     private BigInteger current_moment;
     
     
-    public override void input_selected_patterns() {
+    public override void input_selected_figures() {
         var selected_patterns = pattern_storage.get_selected_patterns();
         if (!selected_patterns.Any()) {
             return;
         }
         float new_mood = get_last_mood()+pattern_storage.get_selected_mood();
 
-        Action_group start_group = add_action_group(new_mood);
-        Action_group end_group = add_action_group(new_mood);
+        Action_group start_group = create_action_group(new_mood);
+        Action_group end_group = create_action_group(new_mood);
 
         create_figure_appearances(
             selected_patterns,
@@ -69,7 +69,7 @@ IAction_history
         );
     }
 
-    private Action_group add_action_group(float in_mood = 0f) {
+    public Action_group create_action_group(float in_mood = 0f) {
         Action_group new_group =
             action_group_prefab.get_for_moment(
                 current_moment
@@ -138,16 +138,10 @@ IAction_history
         return appearance;
     }
 
-    private void put_action_into_moment(
-        Action appearance, 
-        BigInteger moment
-    ) {
-        
-    }
-    public IPattern_appearance create_pattern_appearance(
-        IPattern pattern,
-        IFigure_appearance in_first_half,
-        IFigure_appearance in_second_half
+    public Pattern_appearance create_pattern_appearance(
+    IPattern pattern,
+    IFigure_appearance in_first_half,
+    IFigure_appearance in_second_half
     ) {
         Contract.Assert(
             pattern.id.Length > 1, 
@@ -162,8 +156,20 @@ IAction_history
         appearance.first_half = in_first_half;
         appearance.second_half = in_second_half;
         
-        
         return appearance;
+    }
+
+    private void put_action_into_moment(
+        Action action, 
+        BigInteger moment
+    ) {
+        Action_group group = get_action_group_at_moment(moment);
+        Contract.Ensures(
+            group != null,
+            "first action_group must be creared, then actions added to it"
+        );
+        group.add_action(action);
+        action.action_group = group;
     }
 
     public Action_group get_action_group_at_moment(

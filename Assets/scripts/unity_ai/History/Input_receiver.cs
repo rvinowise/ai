@@ -9,7 +9,7 @@ MonoBehaviour
 {
     
     public Pattern_storage pattern_storage;
-    public abstract void input_selected_patterns();
+    public abstract void input_selected_figures();
     public abstract void start_new_line(); 
 }
 }

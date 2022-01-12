@@ -15,7 +15,7 @@ IAction
     
     #endregion IAction
     
-    public IAction_group action_group{get;private set;}
+    public IAction_group action_group{get;set;}
 
     void Start() {
         figure = figure_appearance.figure;

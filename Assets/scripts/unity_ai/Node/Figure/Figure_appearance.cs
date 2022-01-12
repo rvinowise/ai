@@ -7,16 +7,13 @@ using rvinowise.unity.extensions;
 
 namespace rvinowise.ai.unity {
 
-public class Figure_appearance:IFigure_appearance {
+public class Figure_appearance:
+    Repetition_appearance
+{
 
     #region IFigure_apperance
     public string id;
-    public IFigure figure { get; set;}
-    public BigInteger start_moment { get; }
-    public BigInteger end_moment { get; }
     #endregion IFigure_apperance
-    public Appearance_start start_appearance;
-    public Appearance_end end_appearance;
 
     public Figure_appearance get_for_figure(IFigure figure) {
         Figure_appearance appearance = 

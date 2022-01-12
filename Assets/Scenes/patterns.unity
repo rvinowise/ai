@@ -2129,8 +2129,9 @@ MonoBehaviour:
   pattern_storage: {fileID: 1261505313}
   action_group_prefab: {fileID: 6215398481586266527, guid: 40465ecd755e5b842a234782f8109ccb,
     type: 3}
-  pattern_appearance_preafab: {fileID: 5028659124600057119, guid: 1c95ce0906d46284f8a798512e7924e0,
+  pattern_appearance_prefab: {fileID: 5028659124600057119, guid: 1c95ce0906d46284f8a798512e7924e0,
     type: 3}
+  figure_appearance_prefab: {fileID: 0}
   action_group_offset: {x: 2, y: 0}
   lines_offset: -4
   carret: {fileID: 200842375}

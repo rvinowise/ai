@@ -13,9 +13,7 @@ namespace rvinowise.ai.unity {
 
 [RequireComponent(typeof(Pooled_object))]
 public class Pattern_appearance: 
-Repetition_appearance,
-IPattern_appearance,
-IHave_destructor
+Repetition_appearance
 {
 
     

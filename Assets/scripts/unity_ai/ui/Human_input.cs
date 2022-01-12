@@ -41,7 +41,7 @@ public class Human_input : Input {
         if (UnityEngine.Input.GetKeyDown(
             key_submit
         )) {
-            receiver.input_selected_patterns();
+            receiver.input_selected_figures();
         }
         foreach (
             KeyValuePair<string, IPattern> item in 
@@ -65,7 +65,7 @@ public class Human_input : Input {
         if (entering_control_command()) {
             input_control_commands(input_field.text);
         } else {
-            receiver.input_selected_patterns();
+            receiver.input_selected_figures();
             pattern_storage.deselect_all_patterns();
         }
 
