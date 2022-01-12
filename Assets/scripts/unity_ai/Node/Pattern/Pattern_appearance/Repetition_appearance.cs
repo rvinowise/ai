@@ -32,7 +32,7 @@ IHave_destructor
     public Appearance_end end_appearance;
 
     [called_by_prefab]
-    public Pattern_appearance get_for_pattern(
+    public Pattern_appearance get_for_repetition(
         IFigure in_pattern
     ) {
         Pattern_appearance appearance = 

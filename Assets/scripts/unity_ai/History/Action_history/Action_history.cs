@@ -130,7 +130,7 @@ IAction_history
             start < end,
             "should have a positive time interval"
         );
-        Pattern_appearance appearance = pattern_appearance_prefab.get_for_pattern(pattern);
+        Pattern_appearance appearance = pattern_appearance_prefab.get_for_repetition(pattern);
         pattern.add_appearance(appearance);
         put_action_into_moment(appearance.start_appearance, start);
         put_action_into_moment(appearance.end_appearance, end);
