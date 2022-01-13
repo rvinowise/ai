@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using rvinowise.ai.general;
-using rvinowise.ai.general;
 using rvinowise.rvi.contracts;
 using rvinowise.unity.extensions;
 using rvinowise.ai.unity.persistence;
@@ -102,12 +101,30 @@ public class Sequence_builder: MonoBehaviour {
         IFigure beginning,
         IFigure ending
     ) {
-        var subfigures = Pattern.get_sequence_of_subfigures_from(
+        var subfigures = get_sequence_of_subfigures_from(
             beginning, ending
         );
         return provide_figure_having_sequence(subfigures);
     }
 
+    private IReadOnlyList<IFigure> get_sequence_of_subfigures_from(
+        IFigure beginning, IFigure ending
+    ) {
+        return get_sequence_of_subfigures_from(beginning).Concat(
+            get_sequence_of_subfigures_from(ending)
+        ).ToList();
+    }
+    
+    private IReadOnlyList<IFigure> get_sequence_of_subfigures_from(
+        IFigure figure
+    ) {
+        if (figure is IPattern pattern) {
+            if (pattern.subfigures.Any()) {
+                return pattern.subfigures; 
+            }
+        }
+        return new List<IFigure>{figure};
+    }
     
 
 }

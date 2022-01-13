@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using rvinowise.ai.general;
-using rvinowise.ai.general;
 using rvinowise.rvi.contracts;
 using rvinowise.ai.unity;
 using rvinowise.unity.extensions;
@@ -14,6 +13,8 @@ public class Figure_storage: MonoBehaviour {
     public List<IFigure> known_figures = new List<IFigure>();
     public List<IFigure> known_sequential_figures = new List<IFigure>();
     public Table figure_table;
+    public IFigure pleasure_signal;
+    public IFigure pain_signal;
     
     public Dictionary<string, IFigure> name_to_figure = 
         new Dictionary<string, IFigure>();
@@ -72,6 +73,12 @@ public class Figure_storage: MonoBehaviour {
         foreach (var figure in get_selected_figures()) {
             figure.selected = false;
         }
+    }
+
+    public IFigure find_figure_with_id(string id) {
+        IFigure figure;
+        name_to_figure.TryGetValue(id, out figure);
+        return figure;
     }
 }
 }

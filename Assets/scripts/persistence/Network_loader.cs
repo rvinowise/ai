@@ -96,15 +96,17 @@ public class Network_loader:
 
     private void load_figure_appearances(IList<serializable.Figure_appearance> appearances) {
         Action_history history = persistence.action_history;
-        Pattern_storage storage = persistence.pattern_storage;
+        Figure_storage storage = persistence.figure_storage;
         foreach (serializable.Figure_appearance appearance in appearances) {
-            IPattern pattern = storage.find_pattern_with_id(appearance.appeared_figure);
-            Contract.Ensures(
-                pattern != null, 
-                "patterns should be loaded before their appearances"
+            IFigure figure = storage.find_figure_with_id(
+                appearance.appeared_figure
             );
-            history.create_pattern_appearance(
-                pattern,
+            Contract.Ensures(
+                figure != null, 
+                "figures should be loaded before their appearances"
+            );
+            history.create_figure_appearance(
+                figure,
                 appearance.get_start_moment(),
                 appearance.get_end_moment()
             );
