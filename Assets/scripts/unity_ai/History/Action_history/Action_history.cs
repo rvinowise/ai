@@ -59,8 +59,8 @@ IAction_history
         }
         float new_mood = get_last_mood()+pattern_storage.get_selected_mood();
 
-        Action_group start_group = create_action_group(new_mood);
-        Action_group end_group = create_action_group(new_mood);
+        Action_group start_group = create_next_action_group(new_mood);
+        Action_group end_group = create_next_action_group(new_mood);
 
         create_figure_appearances(
             selected_patterns,
@@ -69,7 +69,7 @@ IAction_history
         );
     }
 
-    public Action_group create_action_group(float in_mood = 0f) {
+    public Action_group create_next_action_group(float in_mood = 0f) {
         Action_group new_group =
             action_group_prefab.get_for_moment(
                 current_moment

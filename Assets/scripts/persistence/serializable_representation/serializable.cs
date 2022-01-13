@@ -151,6 +151,14 @@ public class Position {
         y = unity_vector.y;
         z = unity_vector.z;
     }
+
+    public UnityEngine.Vector3 to_unity() {
+        return new UnityEngine.Vector3(
+            x,y,z
+        );
+    }
 }
+
+
 
 }

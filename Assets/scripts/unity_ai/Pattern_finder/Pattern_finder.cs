@@ -9,7 +9,6 @@ using Action = rvinowise.ai.unity.Action;
 using rvinowise.rvi.contracts;
 using rvinowise.ai.general;
 using System.Numerics;
-using rvinowise.ai.general;
 
 namespace rvinowise.ai.unity {
 
@@ -100,7 +99,8 @@ MonoBehaviour
         
     }
 
-    IReadOnlyList<IFigure_appearance> get_unused_in_beginning_appearances_in_interval(
+    IReadOnlyList<IFigure_appearance> 
+    get_unused_in_beginning_appearances_in_interval(
         BigInteger start, 
         BigInteger end,
         IFigure figure_used_in_beginning,

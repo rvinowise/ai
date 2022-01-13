@@ -84,7 +84,9 @@ public class Network_loader:
     private void load_action_groups( IList<serializable.Action_group> action_groups) {
         Action_history history = persistence.action_history;
         foreach (serializable.Action_group group in action_groups) {
-            //history.actio
+            Action_group new_group = 
+                history.create_next_action_group(group.mood);
+            new_group.transform.position = group.position.to_unity();
         }
     }
     

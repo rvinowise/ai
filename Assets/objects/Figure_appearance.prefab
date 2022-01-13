@@ -222,7 +222,7 @@ GameObject:
   - component: {fileID: 6416084840532676476}
   - component: {fileID: 4068091968182110870}
   m_Layer: 0
-  m_Name: Pattern_appearance
+  m_Name: Figure_appearance
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

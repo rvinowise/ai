@@ -20,7 +20,6 @@ IHave_destructor
 {
 
     #region IFigure_appearance
-
     public IFigure figure{get; protected set;}
     public BigInteger start_moment 
         => start_appearance.action_group.moment;
