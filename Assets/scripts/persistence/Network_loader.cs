@@ -84,7 +84,7 @@ public class Network_loader:
     private void load_action_groups( IList<serializable.Action_group> action_groups) {
         Action_history history = persistence.action_history;
         foreach (serializable.Action_group group in action_groups) {
-            history.actio
+            //history.actio
         }
     }
     

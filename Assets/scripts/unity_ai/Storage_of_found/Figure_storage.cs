@@ -12,6 +12,7 @@ using UnityEngine;
 namespace rvinowise.ai.unity {
 public class Figure_storage: MonoBehaviour {
     public List<IFigure> known_figures = new List<IFigure>();
+    public List<IFigure> known_sequential_figures = new List<IFigure>();
     public Table figure_table;
     
     public Dictionary<string, IFigure> name_to_figure = 

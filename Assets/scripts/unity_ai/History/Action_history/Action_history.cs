@@ -42,11 +42,11 @@ IAction_history
 
     private Dictionary_of_lists<
         IPattern,
-        IPattern_appearance
-    > pattern_appearances =
+        IFigure_appearance
+    > Figure_appearances =
         new Dictionary_of_lists<
             IPattern,
-            IPattern_appearance
+            IFigure_appearance
         >();
 
     private BigInteger current_moment;
@@ -120,41 +120,24 @@ IAction_history
         appearance.create_curved_line();
         return appearance;
     }
- 
-    public Pattern_appearance create_pattern_appearance(
-        IPattern pattern,
-        BigInteger start,
-        BigInteger end
-    ) {
-        Contract.Requires(
-            start < end,
-            "should have a positive time interval"
-        );
-        Pattern_appearance appearance = pattern_appearance_prefab.get_for_repetition(pattern);
-        pattern.add_appearance(appearance);
-        put_action_into_moment(appearance.start_appearance, start);
-        put_action_into_moment(appearance.end_appearance, end);
-        appearance.create_curved_line();
-        return appearance;
-    }
 
-    public Pattern_appearance create_pattern_appearance(
-    IPattern pattern,
-    IFigure_appearance in_first_half,
-    IFigure_appearance in_second_half
+    public IFigure_appearance create_figure_appearance(
+        IFigure pattern,
+        IFigure_appearance in_first_half,
+        IFigure_appearance in_second_half
     ) {
         Contract.Assert(
             pattern.id.Length > 1, 
             "Pattern consisting of subfigures should have a longer name"
         );
         
-        Pattern_appearance appearance = create_pattern_appearance(
+        IFigure_appearance appearance = create_figure_appearance(
             pattern,
             in_first_half.start_moment,
             in_first_half.end_moment
         );
-        appearance.first_half = in_first_half;
-        appearance.second_half = in_second_half;
+        //appearance.first_half = in_first_half;
+        //appearance.second_half = in_second_half;
         
         return appearance;
     }
@@ -181,11 +164,11 @@ IAction_history
     }
     
     /* IHistory_interval interface */
-    public IReadOnlyList<IPattern_appearance> get_pattern_appearances(
+    public IReadOnlyList<IFigure_appearance> get_Figure_appearances(
         IPattern pattern    
     ) {
-        return pattern_appearances[pattern].AsReadOnly() 
-            as IReadOnlyList<IPattern_appearance>;
+        return Figure_appearances[pattern].AsReadOnly() 
+            as IReadOnlyList<IFigure_appearance>;
     }
 
     public IEnumerator<Action_group> GetEnumerator() {

@@ -5,6 +5,8 @@ using UnityEngine;
 using Vector3 = UnityEngine.Vector3;
 using System.Linq;
 using rvinowise.ai.unity.visuals;
+using rvinowise.unity.extensions;
+using rvinowise.unity.extensions.attributes;
 using rvinowise.unity.ui.input.mouse;
 
 namespace rvinowise.ai.unity {
@@ -68,6 +70,9 @@ ISelectable
     }
     #endregion IFigure
     
+    
+    
+    
     #region visualisation
     [SerializeField]
     public Subfigure subfigure_prefab;
@@ -96,7 +101,7 @@ ISelectable
 
     public float radius => transform.localScale.x;
 
-    #endregion
+    #endregion ICircle
 
     #region ISelectable
     public bool selected {
@@ -117,9 +122,9 @@ ISelectable
     [SerializeField]
     private SpriteRenderer sprite_renderer;
     public new Collider collider{get;private set;}
-    #endregion
+    #endregion ISelectable
 
-    #endregion
+    #endregion visualisation
 
 
 

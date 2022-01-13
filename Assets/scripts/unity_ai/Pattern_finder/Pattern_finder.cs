@@ -18,10 +18,11 @@ MonoBehaviour
 {
     
     public Action_history action_history;
-    public Pattern_storage pattern_storage;
+    public Figure_storage figure_storage;
+    public Sequence_builder sequence_builder;
 
-    private IDictionary<string, IPattern> found_patterns = 
-        new Dictionary<string, IPattern>();
+    private IDictionary<string, IFigure> found_patterns = 
+        new Dictionary<string, IFigure>();
 
     private IReadOnlyList<IAction_group> action_groups;
 
@@ -66,7 +67,7 @@ MonoBehaviour
                 continue;
             }
 
-            IPattern signal_pair = pattern_storage.provide_pattern_for_pair(
+            IFigure signal_pair = sequence_builder.provide_pattern_for_pair(
                 beginning_figure,
                 ending_figure
             );
@@ -103,7 +104,7 @@ MonoBehaviour
         BigInteger start, 
         BigInteger end,
         IFigure figure_used_in_beginning,
-        IPattern user_pattern
+        IFigure user_pattern
     ) {
         var child_appearances = figure_used_in_beginning.get_appearances_in_interval(
             start, 
@@ -132,7 +133,7 @@ MonoBehaviour
         BigInteger start, 
         BigInteger end,
         IFigure figure_used_in_ending,
-        IPattern user_pattern
+        IFigure user_pattern
     ) {
         var child_appearances = figure_used_in_ending.get_appearances_in_interval(
             start, 
@@ -184,7 +185,7 @@ MonoBehaviour
         }
     }
     public void save_pattern_appearances(
-        IPattern signal_pair,
+        IFigure signal_pair,
         IReadOnlyList<IFigure_appearance> beginnings,
         IReadOnlyList<IFigure_appearance> endings
     ) {
@@ -209,7 +210,7 @@ MonoBehaviour
             )) {
                 continue;
             }
-            action_history.create_pattern_appearance(
+            action_history.create_figure_appearance(
                 signal_pair,
                 closest_beginning.appearance,
                 potential_ending
@@ -218,12 +219,12 @@ MonoBehaviour
         }
 
         if (!pattern_appeared_at_least_twice(signal_pair)) {
-            pattern_storage.remove_pattern(signal_pair);
+            figure_storage.remove_figure(signal_pair);
             ((Pattern)signal_pair).destroy();
         }
 
         bool same_patterns_exist_inside(
-            IPattern pattern,
+            IFigure pattern,
             BigInteger start,
             BigInteger end
         ) {
@@ -233,7 +234,7 @@ MonoBehaviour
         
     }
 
-    private bool pattern_appeared_at_least_twice(IPattern pattern) {
+    private bool pattern_appeared_at_least_twice(IFigure pattern) {
         return pattern.get_appearances_in_interval(
             0,
             action_groups.Last().moment

@@ -11,7 +11,6 @@ public partial class Action_history
 {
     
     public Action_group action_group_prefab;
-    public Pattern_appearance pattern_appearance_prefab;
     public Figure_appearance figure_appearance_prefab;
     public Vector2 action_group_offset = new Vector2(2f,0f);
     public float lines_offset = -4f;
