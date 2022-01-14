@@ -21,15 +21,15 @@ ISelectable
 
     #region ISubfigure
     public string id {get;set;}
-    public IFigure parent {get;set;}
-    public IFigure figure {get;set;}
+    public IFigure_representation parent {get;set;}
+    public IFigure referenced_figure {get;set;}
     #endregion
 
     [called_by_prefab]
     public Subfigure create_for_figure(IFigure figure) {
         Subfigure subfigure = this.get_from_pool<Subfigure>();
         subfigure.id = Id_assigner.get_next_id();
-        subfigure.figure = figure;
+        subfigure.referenced_figure = figure;
         subfigure.set_appearance_for_figure(figure);
         return subfigure;
     }
@@ -52,7 +52,7 @@ ISelectable
     
 
     public String get_name() {
-        return String.Format("{0}({1})", figure.id, id);
+        return String.Format("{0}({1})", referenced_figure.id, id);
     }
     
     #region building

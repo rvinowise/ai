@@ -19,8 +19,10 @@ ISelectable
 {
     
     public List<ISubfigure> first_subfigures = new List<ISubfigure>();
-
     public List<ISubfigure> subfigures = new List<ISubfigure>();
+
+    public List<Figure_representation> representations 
+        = new List<Figure_representation>();
 
     public List<IFigure_appearance> appearances 
         = new List<IFigure_appearance>();
@@ -93,29 +95,14 @@ ISelectable
 
 
     #region visualisation
-    [SerializeField]
-    public Subfigure subfigure_prefab;
-    public Transform subfigures_folder;
-    private Vector3 subfigures_offset = new Vector3(2,0,0);
+
     void Awake() {
         animator = GetComponent<Animator>();
         collider = GetComponent<Collider>();
         //sprite_renderer  = GetComponent<SpriteRenderer>();
     }
 
-    private void position_subfigure(Subfigure subfigure) {
-        
-        subfigure.transform.position = 
-            get_position_of_last_subfigure()+ subfigures_offset;
-    }
-
-    private Vector3 get_position_of_last_subfigure() {
-        if (subfigures.Any()) {
-            var last_subfigue = subfigures.Last() as Subfigure;
-            return last_subfigue.transform.position;
-        }
-        return transform.position + new Vector3(0,-2,0);
-    }
+    
     #region ICircle
 
     public float radius => transform.localScale.x;

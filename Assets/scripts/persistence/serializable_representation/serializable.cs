@@ -85,7 +85,7 @@ public class Subfigure {
     public Subfigure(general.ISubfigure ai_subfigure) {
         id = ai_subfigure.id;
         parent_figure = ai_subfigure.parent.id;
-        referenced_figure = ai_subfigure.figure.id;
+        referenced_figure = ai_subfigure.referenced_figure.id;
         foreach(ISubfigure previous_subfigure in ai_subfigure.previous) {
             previous_subfigures.Add(previous_subfigure.id);
         }

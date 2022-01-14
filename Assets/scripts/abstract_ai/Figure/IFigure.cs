@@ -8,7 +8,6 @@ public interface IFigure {
 
     string id { get; }
     
-    string as_dot_graph();
     
     IReadOnlyList<IFigure_appearance> get_appearances_in_interval(
         BigInteger start, BigInteger end
