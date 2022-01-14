@@ -31,6 +31,10 @@ ISelectable
     [HideInInspector]
     public Animator animator;
     
+    public override int GetHashCode() {
+        return base.GetHashCode();
+    }
+    
     #region building
     public Subfigure add_subfigure(IFigure child_figure) {
         Subfigure subfigure = subfigure_prefab.
@@ -71,8 +75,23 @@ ISelectable
     #endregion IFigure
     
     
+    #region sequential figure
+    public List<IFigure> sequence = new List<IFigure>();
+    public IReadOnlyList<IFigure> as_lowlevel_sequence() {
+        if (sequence.Any()) {
+            return sequence.AsReadOnly();
+        }
+        return new List<IFigure> {this};
+    }
+
+    public bool is_sequential() {
+        return sequence.Any();
+    }
+    #endregion sequential figure
+
     
-    
+
+
     #region visualisation
     [SerializeField]
     public Subfigure subfigure_prefab;

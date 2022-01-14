@@ -14,6 +14,8 @@ public interface IFigure {
         BigInteger start, BigInteger end
     );
 
+    IReadOnlyList<IFigure> as_lowlevel_sequence();
+
     void add_appearance(
         IFigure_appearance appearance
     );

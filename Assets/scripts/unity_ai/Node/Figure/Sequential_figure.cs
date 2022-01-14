@@ -14,6 +14,7 @@ namespace rvinowise.ai.unity {
 public class Sequential_figure: 
 Figure 
 {
+    /*
     public IList<IFigure> sequence;
 
     public IReadOnlyList<IFigure> as_lowlevel_sequence() {
@@ -22,6 +23,7 @@ Figure
         }
         return new List<IFigure> {this};
     }
+    */
 
 }
 }
