@@ -18,6 +18,7 @@ public class Figure_builder: MonoBehaviour {
     private Figure figure_prefab;
     
     private Figure figure; //which is being built by this builder
+    private Figure_representation representation; //which is being built by this builder
     private List<ISubfigure> all_subfigures = new List<ISubfigure>();
     private List<ISubfigure> ended_subfigures = new List<ISubfigure>();
     
@@ -33,7 +34,7 @@ public class Figure_builder: MonoBehaviour {
     
     public void on_create_figure_from_actions() {
         var selected_groups = Selection.instance.sorted_action_groups;
-        IFigure new_figure = create_figure_from_action_history(selected_groups);
+        create_figure_from_action_history(selected_groups);
     }
 
     public IFigure create_figure_from_action_history(
@@ -41,6 +42,7 @@ public class Figure_builder: MonoBehaviour {
     ) {
         clear();
         figure = figure_storage.add_new_figure() as Figure;
+        representation = figure.create_representation();
         
         foreach(IAction_group group in action_groups) {
             parce_actions_of(group);
@@ -53,6 +55,7 @@ public class Figure_builder: MonoBehaviour {
         all_subfigures.Clear();
         ended_subfigures.Clear();
         figure = null;
+        representation = null;
         last_subfigure_id = 0;
     }
     private void parce_actions_of(IAction_group group) {
@@ -68,7 +71,7 @@ public class Figure_builder: MonoBehaviour {
     private void add_next_subfigure(
         IFigure_appearance appended_figure
     ) {
-        Subfigure new_subfigure = figure.add_subfigure(appended_figure.figure);
+        Subfigure new_subfigure = representation.add_subfigure(appended_figure.figure);
         new_subfigure.id = (last_subfigure_id++).ToString();
         appearance_to_subfigure.Add(appended_figure, new_subfigure);
         if (ended_subfigures.Any()) {
@@ -77,7 +80,7 @@ public class Figure_builder: MonoBehaviour {
             }
         }
         else {
-            figure.first_subfigures.Add(new_subfigure);
+            representation.first_subfigures.Add(new_subfigure);
         }
     }
 

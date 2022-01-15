@@ -44,8 +44,8 @@ public class Human_input : Input {
             receiver.input_selected_figures();
         }
         foreach (
-            KeyValuePair<string, IPattern> item in 
-            pattern_storage.name_to_pattern
+            KeyValuePair<string, IFigure> item in 
+            figure_storage.name_to_figure
         ) {
             if (UnityEngine.Input.GetKeyDown(
                 item.Key
@@ -54,7 +54,7 @@ public class Human_input : Input {
                     item.Value is Pattern, 
                     "can't input other implementations"
                 );
-                pattern_storage.toggle_pattern_selection((Pattern)item.Value);
+                figure_storage.toggle_figure_selection((Figure)item.Value);
             }
         }
     }
@@ -66,7 +66,7 @@ public class Human_input : Input {
             input_control_commands(input_field.text);
         } else {
             receiver.input_selected_figures();
-            pattern_storage.deselect_all_patterns();
+            figure_storage.deselect_all_figures();
         }
 
         input_field.text = "";
@@ -82,7 +82,7 @@ public class Human_input : Input {
     public void on_text_field_edited() {
         
         if (!entering_control_command()) {
-            pattern_storage.select_patterns_from_string(
+            figure_storage.select_figures_from_string(
                 input_field.text
             );
         }

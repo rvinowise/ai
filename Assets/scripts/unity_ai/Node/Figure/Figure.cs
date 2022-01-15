@@ -8,6 +8,7 @@ using rvinowise.ai.unity.visuals;
 using rvinowise.unity.extensions;
 using rvinowise.unity.extensions.attributes;
 using rvinowise.unity.ui.input.mouse;
+using TMPro;
 
 namespace rvinowise.ai.unity {
 
@@ -27,7 +28,8 @@ ISelectable
     public List<IFigure_appearance> appearances 
         = new List<IFigure_appearance>();
     
-    public Pattern_appearance appearance_preafab;
+    public Figure_appearance appearance_preafab;
+    public Figure_representation representation_prefab;
     
     
     [HideInInspector]
@@ -38,21 +40,22 @@ ISelectable
     }
     
     #region building
-    public Subfigure add_subfigure(IFigure child_figure) {
-        Subfigure subfigure = subfigure_prefab.
-            create_for_figure(child_figure);
-        subfigure.transform.parent = subfigures_folder.transform;
-        subfigure.parent = this;
-        position_subfigure(subfigure);
-        subfigures.Add(subfigure);
-        return subfigure;
+
+    public Figure_representation  create_representation() {
+        Figure_representation representation = representation_prefab.get_from_pool<Figure_representation>();
+        representations.Add(representation);
+        representation.transform.parent = representations_folder;
+        return representation;
     }
-    
+
     #endregion
 
     #region IFigure
 
-    public string id { get; set; }
+    public string id {
+        get { return label.text; }
+        set { label.text = value; }
+    }
 
     public string as_dot_graph() {
         throw new System.NotImplementedException();
@@ -95,6 +98,9 @@ ISelectable
 
 
     #region visualisation
+
+    public TextMeshPro label;
+    [SerializeField] private Transform representations_folder;
 
     void Awake() {
         animator = GetComponent<Animator>();

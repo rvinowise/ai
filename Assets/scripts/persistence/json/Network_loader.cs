@@ -15,7 +15,8 @@ public class Network_loader:
     MonoBehaviour
 {
     public Network_persistence persistence;
-    private Pattern_storage pattern_storage;
+    [SerializeField] private Figure_storage figure_storage;
+    //[SerializeField] private 
 
     public static Network_loader instance;
     
@@ -53,31 +54,31 @@ public class Network_loader:
     }
 
     private void reconstruct_network(serializable.Network network) {
-        load_patterns(network.patterns);
+        //load_figures(network.figures);
         load_action_groups(network.action_groups);
         load_figure_appearances(network.figure_appearances);
     }
 
-    #region patterns
-    private void load_patterns(List<serializable.Pattern> patterns) {
-        pattern_storage = persistence.pattern_storage;
-        foreach (serializable.Pattern pattern in patterns) {
-            if (pattern.subfigures.Any()) {
-                create_pattern_having(pattern.subfigures);
+    #region figures
+    /*private void load_figures(List<serializable.Figure> figures) {
+        figure_storage = persistence.figure_storage;
+        foreach (serializable.Figure figure in figures) {
+            if (figure.subfigures.Any()) {
+                create_figure_having(figure.subfigures);
             }
             else {
-                pattern_storage.provide_pattern_for_base_input(pattern.id);
+                figure_storage.provide_pattern_for_base_input(pattern.id);
             }
         }
     }
-    private void create_pattern_having(IList<string> subfigures_ids) {
+    private void create_figure_having(IList<string> subfigures_ids) {
         List<IFigure> subfigures = new List<IFigure>();
         foreach (string subfigure_id in subfigures_ids) {
-            subfigures.Add(pattern_storage.provide_pattern_for_base_input(subfigure_id));
+            subfigures.Add(figure_storage.provide_pattern_for_base_input(subfigure_id));
         }
-        pattern_storage.provide_pattern_having(subfigures);
-    }
-    #endregion patterns
+        figure_storage.provide_pattern_having(subfigures);
+    }*/
+    #endregion figures
     
     #region action_groups
 

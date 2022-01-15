@@ -18,15 +18,6 @@ public class Sequence_builder: MonoBehaviour {
     private IReadOnlyList<IFigure> known_figures => figure_storage.known_figures;
 
 
-    private Figure create_signal_of_base_input(
-        string id
-    ) {
-        Figure figure = figure_prefab.get_from_pool<Figure>();
-        figure.id = id;
-        figure.name = $"pattern {figure.id}";
-        return figure;
-    }
-
     public IFigure provide_signal_of_base_input(
         string id
     ) {
@@ -36,7 +27,16 @@ public class Sequence_builder: MonoBehaviour {
         Figure new_signal = create_signal_of_base_input(id);
         figure_storage.append_figure(new_signal);
         return new_signal;
-    } 
+    }
+
+    private Figure create_signal_of_base_input(
+        string id
+    ) {
+        Figure figure = figure_prefab.get_from_pool<Figure>();
+        figure.id = id;
+        figure.name = $"pattern {figure.id}";
+        return figure;
+    }
 
     public IFigure find_signal_of_base_input(
         string id
@@ -57,8 +57,9 @@ public class Sequence_builder: MonoBehaviour {
         Figure figure = figure_prefab.get_from_pool<Figure>();
         figure.id = get_id_for(subfigures);
 
+        var representation = figure.create_representation();
         foreach (IFigure child_figure in subfigures) {
-            figure.add_subfigure(child_figure);
+            representation.add_subfigure(child_figure);
         }
         //pattern.subfigures = subfigures;
 

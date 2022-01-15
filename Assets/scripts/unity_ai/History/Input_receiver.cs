@@ -8,7 +8,7 @@ MonoBehaviour
 ,IInput_receiver
 {
     
-    public Pattern_storage pattern_storage;
+    public Figure_storage figure_storage;
     public abstract void input_selected_figures();
     public abstract void start_new_line(); 
 }

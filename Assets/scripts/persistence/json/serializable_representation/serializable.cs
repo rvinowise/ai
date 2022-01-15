@@ -11,7 +11,6 @@ public class Network {
     public List<Action_group> action_groups = new List<Action_group>();
     public List<Action> actions = new List<Action>();
     public List<Figure> figures = new List<Figure>();
-    public List<Pattern> patterns = new List<Pattern>();
     public List<Subfigure> subfigures = new List<Subfigure>();
     public List<Figure_appearance> figure_appearances = new List<Figure_appearance>();
 }
@@ -50,8 +49,8 @@ public class Action {
 [Serializable]
 public class Figure {
     public string id;
-    public List<string> subfigures = new List<string>();
     
+    public List<Figure_representation> representations = new List<Figure_representation>(); 
     #region visualisation
     public Position position;
     #endregion
@@ -60,8 +59,11 @@ public class Figure {
 
     public Figure(unity.Figure figure) {
         id = figure.id;
-        foreach(ISubfigure ai_subfigure in figure.subfigures) {
-            subfigures.Add(ai_subfigure.id);
+        
+        foreach(unity.Figure_representation ai_representation in figure.representations) {
+            representations.Add(
+                new Figure_representation(ai_representation)
+            );
         }
         position = new Position(figure.transform.position);
     }
@@ -69,9 +71,25 @@ public class Figure {
 }
 
 [Serializable]
+public class Figure_representation {
+    //public string id;
+    public List<Subfigure> subfigures = new List<Subfigure>();
+    public Figure_representation() { }
+
+    public Figure_representation(unity.Figure_representation representation) {
+        //id = representation.id;
+        foreach(ISubfigure ai_subfigure in representation.subfigures) {
+            subfigures.Add(
+                new Subfigure(ai_subfigure)
+            );
+        }
+    }
+}
+
+[Serializable]
 public class Subfigure {
     public string id;
-    public string parent_figure;
+    public string figure_representation;
     public string referenced_figure;
     public List<string> previous_subfigures = new List<string>();
     public List<string> next_subfigures = new List<string>();
@@ -84,7 +102,7 @@ public class Subfigure {
 
     public Subfigure(general.ISubfigure ai_subfigure) {
         id = ai_subfigure.id;
-        parent_figure = ai_subfigure.parent.id;
+        figure_representation = ai_subfigure.parent.id;
         referenced_figure = ai_subfigure.referenced_figure.id;
         foreach(ISubfigure previous_subfigure in ai_subfigure.previous) {
             previous_subfigures.Add(previous_subfigure.id);

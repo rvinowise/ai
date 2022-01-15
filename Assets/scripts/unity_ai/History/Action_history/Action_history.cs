@@ -53,17 +53,17 @@ IAction_history
     
     
     public override void input_selected_figures() {
-        var selected_patterns = pattern_storage.get_selected_patterns();
-        if (!selected_patterns.Any()) {
+        var selected_figures = figure_storage.get_selected_figures();
+        if (!selected_figures.Any()) {
             return;
         }
-        float new_mood = get_last_mood()+pattern_storage.get_selected_mood();
+        float new_mood = get_last_mood()+figure_storage.get_selected_mood();
 
         Action_group start_group = create_next_action_group(new_mood);
         Action_group end_group = create_next_action_group(new_mood);
 
         create_figure_appearances(
-            selected_patterns,
+            selected_figures,
             start_group.moment,
             end_group.moment
         );

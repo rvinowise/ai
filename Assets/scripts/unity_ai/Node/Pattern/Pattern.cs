@@ -26,7 +26,7 @@ ICircle,
 ISelectable
 {
 
-    public TextMeshPro lable;
+    public TextMeshPro label;
     [HideInInspector]
     public Animator animator;
 
@@ -45,8 +45,8 @@ ISelectable
 
     #region IFigure
     public string id {
-        get { return lable.text; }
-        set { lable.text = value; }
+        get { return label.text; }
+        set { label.text = value; }
     }
     public string as_dot_graph() {
         throw new NotImplementedException();
@@ -139,7 +139,7 @@ ISelectable
     }
 
     void Start() {
-        id = lable.text;
+        id = label.text;
     }
 
     public virtual void destroy() {

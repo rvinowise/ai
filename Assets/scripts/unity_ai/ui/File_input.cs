@@ -50,7 +50,7 @@ public class File_input : Input {
             if (symbol == '\n') {
                 receiver.start_new_line();
             } else {
-                pattern_storage.select_patterns_from_string(symbol.ToString());
+                figure_storage.select_figures_from_string(symbol.ToString());
                 receiver.input_selected_figures();
             }
         }  
