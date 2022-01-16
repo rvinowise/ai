@@ -22,7 +22,7 @@ public class Figure_storage: MonoBehaviour {
     
 
     public Figure figure_prefab;
-    public int last_id;
+    
 
     void Awake() {
         figure_table.init(figure_prefab);
@@ -54,6 +54,9 @@ public class Figure_storage: MonoBehaviour {
         return 0f;
     }
 
+
+    
+
     public void append_figure(IFigure figure) { 
         Figure unity_figure = figure as Figure;
 
@@ -62,12 +65,8 @@ public class Figure_storage: MonoBehaviour {
         figure_table.add_item(unity_figure);
     }
 
-    public IFigure add_new_figure() {
-        Figure new_figure = figure_prefab.get_from_pool<Figure>();
-        new_figure.id = (last_id++).ToString();
-        append_figure(new_figure);
-        return new_figure;
-    }
+    
+
 
     public void remove_figure(IFigure figure) {
         known_figures.Remove(figure);

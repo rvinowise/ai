@@ -41,13 +41,27 @@ public class Figure_builder: MonoBehaviour {
         IReadOnlyList<IAction_group> action_groups
     ) {
         clear();
-        figure = figure_storage.add_new_figure() as Figure;
+        figure = create_new_figure("f") as Figure;
         representation = figure.create_representation();
         
         foreach(IAction_group group in action_groups) {
             parce_actions_of(group);
         }
+        figure_storage.append_figure(figure);
         return figure;
+    }
+    public Dictionary<string,int> last_ids = new Dictionary<string, int>();
+    public IFigure create_new_figure(string prefix = "") {
+        Figure new_figure = figure_prefab.get_from_pool<Figure>();
+        new_figure.id = get_next_id_for_prefix(prefix);
+        return new_figure;
+    }
+
+    private string get_next_id_for_prefix(string prefix) {
+        int next_id = 0;
+        last_ids.TryGetValue(prefix, out next_id);
+        last_ids[prefix] = ++next_id;
+        return $"{prefix}{next_id}";
     }
 
     private void clear() {

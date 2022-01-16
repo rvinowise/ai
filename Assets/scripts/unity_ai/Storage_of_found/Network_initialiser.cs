@@ -20,14 +20,14 @@ public class Network_initialiser: MonoBehaviour {
     
     private void create_base_signals() {
         foreach(string pattern_id in symbol_figures) {
-            IFigure figure = get_base_signal(
+            IFigure figure = create_base_signal(
                 pattern_id
             );
             Contract.Ensures(figure != null);
             figure_storage.append_figure(figure);
         }
         for (int i=0;i<=9;i++) {
-            IFigure figure = get_base_signal(
+            IFigure figure = create_base_signal(
                 get_id_for_index(i)
             );
             Contract.Ensures(figure != null);
@@ -35,7 +35,7 @@ public class Network_initialiser: MonoBehaviour {
         }
     }
 
-    private IFigure get_base_signal(string id) {
+    private IFigure create_base_signal(string id) {
         Figure signal = figure_storage.figure_prefab.get_from_pool<Figure>();
         signal.id = id;
         signal.name = string.Format("signal {0}", signal.id);
