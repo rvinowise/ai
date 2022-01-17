@@ -10,7 +10,7 @@ public partial class Action:
 IAction
 {
     #region IAction
-    public IFigure figure{get;private set;}
+    public IFigure figure => figure_appearance.figure;
     public IFigure_appearance figure_appearance{get; internal set;}
     
     #endregion IAction

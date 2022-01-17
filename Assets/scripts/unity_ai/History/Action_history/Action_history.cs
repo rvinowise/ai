@@ -134,11 +134,9 @@ IAction_history
         IFigure_appearance appearance = create_figure_appearance(
             pattern,
             in_first_half.start_moment,
-            in_first_half.end_moment
+            in_second_half.end_moment
         );
-        //appearance.first_half = in_first_half;
-        //appearance.second_half = in_second_half;
-        
+
         return appearance;
     }
 

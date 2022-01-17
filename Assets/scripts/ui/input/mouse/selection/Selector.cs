@@ -22,7 +22,7 @@ public class Selected {
     
 }
 
-public class Selection : MonoBehaviour {
+public class Selector : MonoBehaviour {
 
     #region what can be selected
 
@@ -42,7 +42,7 @@ public class Selection : MonoBehaviour {
     public HashSet<Subfigure> subfigures = new HashSet<Subfigure>();
     public HashSet<ISelectable> selectables = new HashSet<ISelectable>();
 
-    public static Selection instance;
+    public static Selector instance;
 
     public Color selected_color = new Color(1,0,0);
     public Color normal_color = new Color(1,1,1);
@@ -70,14 +70,21 @@ public class Selection : MonoBehaviour {
         instance = this;
     }
 
-    public void select(Subfigure subfigure) {
+    public static void select(ISelectable selectable) {
+        instance._select(selectable);
+    }
+    public static void deselect(ISelectable selectable) {
+        instance._deselect(selectable);
+    }
+
+    public void _select(Subfigure subfigure) {
         subfigures.Add(subfigure);
     }
-    public void select(Action_group action_group) {
+    public void _select(Action_group action_group) {
         action_groups.Add(action_group);
         
     }
-    public void select(ISelectable selectable) {
+    public void _select(ISelectable selectable) {
         selectables.Add(selectable);
         selectable.selected = true;
         if (selectable.selection_sprite_renderer !=null) {
@@ -88,10 +95,14 @@ public class Selection : MonoBehaviour {
         }
     }
 
-    public void deselect(IAction_group action_group) {
+    public bool selected(ISelectable selectable) {
+        return selectables.Contains(selectable);
+    }
+
+    public void _deselect(IAction_group action_group) {
         action_groups.Remove(action_group);
     }
-    public void deselect(ISelectable selectable) {
+    public void _deselect(ISelectable selectable) {
         selectables.Remove(selectable);
         mark_object_as_deselected(selectable);
     }
@@ -131,7 +142,7 @@ public class Selection : MonoBehaviour {
             last_click_target = get_selectable_under_mouse();                        
             if (last_click_target != null) { // clicked on an object
                 if (!last_click_target.selected) { //the object is for selection by this click
-                    select(last_click_target);
+                    _select(last_click_target);
                     last_click_selected = true;
                     Debug.Log("select for "+last_click_target);
                 } else { // the object is for moving (already was selected)
@@ -155,7 +166,7 @@ public class Selection : MonoBehaviour {
                 if (same_object_received_click_and_release(
                     target_of_release, last_click_target
                 )) {
-                    deselect(target_of_release);
+                    _deselect(target_of_release);
                     Debug.Log("deselect for "+last_click_target);
                 }
             }

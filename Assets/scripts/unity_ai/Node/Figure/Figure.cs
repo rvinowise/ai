@@ -120,19 +120,31 @@ ISelectable
         get { return _selected; }
         set {
             _selected = value; 
-            // if (value) {
-            //     sprite_renderer.color = new Color(1,0,0);
-            // } else {
-            //     sprite_renderer.color = new Color(1,1,1);
-            // }
-            //this.set_appearances_are_highlighted(selected);
+            if (value) {
+                select_appearances();
+            } else {
+                deselect_appearances();
+            }
         }
     }
     private bool _selected = false;
-    [SerializeField]
-    public SpriteRenderer selection_sprite_renderer => sprite_renderer;
-    [SerializeField]
-    private SpriteRenderer sprite_renderer;
+
+    private void select_appearances() {
+        foreach(var appearance in appearances) {
+            if (appearance is Figure_appearance unity_appearance) {
+                unity_appearance.selected = true;
+            }
+        }
+    }
+    private void deselect_appearances() {
+        foreach(var appearance in appearances) {
+            if (appearance is Figure_appearance unity_appearance) {
+                unity_appearance.selected = false;
+            }
+        }
+    }
+    [SerializeField] public SpriteRenderer selection_sprite_renderer => sprite_renderer;
+    [SerializeField] private SpriteRenderer sprite_renderer;
     public new Collider collider{get;private set;}
     #endregion ISelectable
 

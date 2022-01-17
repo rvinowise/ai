@@ -68,7 +68,7 @@ public class Box_selector: MonoBehaviour {
             if (EventSystem.current.IsPointerOverGameObject()) {
                 return;
             }
-            if (Selection.instance.get_selectable_under_mouse() != null) {
+            if (Selector.instance.get_selectable_under_mouse() != null) {
                 return;
             }
             
@@ -100,7 +100,7 @@ public class Box_selector: MonoBehaviour {
     }
 
     void deselect_previous() {
-        Selection.instance.deselect_all();
+        Selector.instance.deselect_all();
     }
 
     private void update_selection(
@@ -127,7 +127,7 @@ public class Box_selector: MonoBehaviour {
                 (group is ISelectable selectable)&&
                 (is_inside_selection(selectable))
             ) {
-                Selection.instance.select(selectable);
+                Selector.instance._select(selectable);
                 
             }
         }

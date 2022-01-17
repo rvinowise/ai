@@ -12,7 +12,7 @@ using System.Numerics;
 
 namespace rvinowise.ai.unity {
 
-public class Pattern_finder:
+public class Sequence_finder:
 MonoBehaviour
 {
     
@@ -25,7 +25,7 @@ MonoBehaviour
 
     private IReadOnlyList<IAction_group> action_groups;
 
-    public void enrich_pattern_storage() {
+    public void enrich_storage_with_sequences() {
         action_groups = action_history.get_action_groups(
             0,
             action_history.last_moment
@@ -35,7 +35,7 @@ MonoBehaviour
         );
         foreach (IFigure beginning_figure in familiar_figures)
         {
-            find_new_patterns_starting_with(
+            find_new_sequences_starting_with(
                 beginning_figure,
                 familiar_figures
             );
@@ -56,17 +56,17 @@ MonoBehaviour
         return result;
     }
 
-    private void find_new_patterns_starting_with(
+    private void find_new_sequences_starting_with(
         IFigure beginning_figure,
         ISet<IFigure> familiar_figures
     ) {
         foreach (IFigure ending_figure in familiar_figures)
         {
-            if (!is_possible_pattern(beginning_figure, ending_figure)) {
+            if (!is_possible_sequence(beginning_figure, ending_figure)) {
                 continue;
             }
 
-            IFigure signal_pair = sequence_builder.provide_pattern_for_pair(
+            IFigure signal_pair = sequence_builder.provide_sequence_for_pair(
                 beginning_figure,
                 ending_figure
             );
@@ -88,7 +88,7 @@ MonoBehaviour
                 appearances_of_beginning.Any() && 
                 appearances_of_ending.Any()
             ) {
-                save_pattern_appearances(
+                save_sequence_appearances(
                     signal_pair,
                     appearances_of_beginning,
                     appearances_of_ending
@@ -106,24 +106,24 @@ MonoBehaviour
         IFigure figure_used_in_beginning,
         IFigure user_pattern
     ) {
-        var child_appearances = figure_used_in_beginning.get_appearances_in_interval(
+        var child_appearances 
+        = figure_used_in_beginning.get_appearances_in_interval(
             start, 
             end
         );
-        var user_appearances = user_pattern.get_appearances_in_interval(
+        var user_appearances 
+        = user_pattern.get_appearances_in_interval(
             start, 
             end
         );
         
-        IReadOnlyList<IFigure_appearance> result = 
-        child_appearances.Where(
+        IReadOnlyList<IFigure_appearance> result 
+        = child_appearances.Where(
             child_appearance => 
-            (
-                user_appearances.All(
-                    user_appearance => 
-                        user_appearance.start_moment != child_appearance.start_moment
-                        )
-                )
+            user_appearances.All(
+                user_appearance => 
+                    user_appearance.start_moment != child_appearance.start_moment
+            )
         ).ToList();
 
         
@@ -135,22 +135,22 @@ MonoBehaviour
         IFigure figure_used_in_ending,
         IFigure user_pattern
     ) {
-        var child_appearances = figure_used_in_ending.get_appearances_in_interval(
+        var child_appearances 
+        = figure_used_in_ending.get_appearances_in_interval(
             start, 
             end
         );
-        var user_appearances = user_pattern.get_appearances_in_interval(
+        var user_appearances
+        = user_pattern.get_appearances_in_interval(
             start, 
             end
         );
         
         IReadOnlyList<IFigure_appearance> result = child_appearances.Where(
             child_appearance => 
-            (
-                user_appearances.All(
-                    user_appearance => user_appearance.end_moment != child_appearance.end_moment
-                    )
-                )
+            user_appearances.All(
+                user_appearance => user_appearance.end_moment != child_appearance.end_moment
+            )
         ).ToList();
 
         
@@ -158,7 +158,7 @@ MonoBehaviour
     } 
 
 
-    private bool is_possible_pattern(
+    private bool is_possible_sequence(
         IFigure beginning,
         IFigure ending
     ) {
@@ -184,7 +184,7 @@ MonoBehaviour
             return appearance != null;
         }
     }
-    public void save_pattern_appearances(
+    public void save_sequence_appearances(
         IFigure signal_pair,
         IReadOnlyList<IFigure_appearance> beginnings,
         IReadOnlyList<IFigure_appearance> endings
@@ -203,7 +203,7 @@ MonoBehaviour
             if (!closest_beginning.is_found()) {
                 continue;
             }
-            if (same_patterns_exist_inside(
+            if (same_sequences_exist_inside(
                 signal_pair,
                 closest_beginning.appearance.start_moment,
                 potential_ending.end_moment
@@ -218,24 +218,25 @@ MonoBehaviour
             i_next_beginning = closest_beginning.index + 1;
         }
 
-        if (!pattern_appeared_at_least_twice(signal_pair)) {
-            figure_storage.remove_figure(signal_pair);
-            ((Pattern)signal_pair).destroy();
+        if (sequence_appeared_at_least_twice(signal_pair)) {
+            figure_storage.append_figure(signal_pair);
+        } else {
+            ((Figure)signal_pair).destroy();
         }
 
-        bool same_patterns_exist_inside(
-            IFigure pattern,
+        bool same_sequences_exist_inside(
+            IFigure sequence,
             BigInteger start,
             BigInteger end
         ) {
             return 
-            pattern.get_appearances_in_interval(start, end).Any();
+            sequence.get_appearances_in_interval(start, end).Any();
         }
         
     }
 
-    private bool pattern_appeared_at_least_twice(IFigure pattern) {
-        return pattern.get_appearances_in_interval(
+    private bool sequence_appeared_at_least_twice(IFigure sequence) {
+        return sequence.get_appearances_in_interval(
             0,
             action_groups.Last().moment
         ).Count >= 2;

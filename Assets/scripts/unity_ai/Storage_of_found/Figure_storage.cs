@@ -5,7 +5,9 @@ using rvinowise.ai.general;
 using rvinowise.rvi.contracts;
 using rvinowise.ai.unity;
 using rvinowise.unity.extensions;
+using rvinowise.unity.ui.input;
 using rvinowise.unity.ui.table;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 namespace rvinowise.ai.unity {
@@ -102,7 +104,8 @@ public class Figure_storage: MonoBehaviour {
 
     public void deselect_all_figures() {
         foreach (var figure in get_selected_figures()) {
-            figure.selected = false;
+            //figure.selected = false;
+            Selector.deselect(figure);
         }
     }
 

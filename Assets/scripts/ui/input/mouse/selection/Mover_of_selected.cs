@@ -13,7 +13,7 @@ public class Mover_of_selected: MonoBehaviour {
 
     public static Mover_of_selected instance;
     [SerializeField]
-    public Selection selection;
+    public Selector selector;
 
     private bool is_moving;
     private Vector3 old_mouse_position;
@@ -49,7 +49,7 @@ public class Mover_of_selected: MonoBehaviour {
     public void update() {
        
         if (UnityEngine.Input.GetMouseButtonDown (0)) {    
-            if (selection.last_click_target != null) {
+            if (selector.last_click_target != null) {
                 start_moving();
                 Debug.Log("start_moving");           
             }
@@ -78,7 +78,7 @@ public class Mover_of_selected: MonoBehaviour {
         if (difference.magnitude > float.Epsilon) {
             moved_since_last_click = true;
             //Debug.Log("moved_since_last_click = true");
-            foreach(ISelectable selectable in selection.selectables) {
+            foreach(ISelectable selectable in selector.selectables) {
                 selectable.transform.position += difference;
             }
         }

@@ -48,7 +48,7 @@ public class Sequence_builder: MonoBehaviour {
             return old_pattern;
         }
         Figure new_figure = create_figure_for_sequence_of_subfigures(subfigures);
-        figure_storage.append_figure(new_figure);
+        
         return new_figure;
     }
 
@@ -65,7 +65,7 @@ public class Sequence_builder: MonoBehaviour {
         return null;
     }
 
-    public IFigure provide_pattern_for_pair(
+    public IFigure provide_sequence_for_pair(
         IFigure beginning,
         IFigure ending
     ) {

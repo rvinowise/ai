@@ -33,7 +33,7 @@ public class Figure_builder: MonoBehaviour {
     }
     
     public void on_create_figure_from_actions() {
-        var selected_groups = Selection.instance.sorted_action_groups;
+        var selected_groups = Selector.instance.sorted_action_groups;
         create_figure_from_action_history(selected_groups);
     }
 

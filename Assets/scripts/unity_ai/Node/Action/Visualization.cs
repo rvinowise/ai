@@ -14,7 +14,8 @@ MonoBehaviour,
 IHave_destructor,
 ISelectable
 {
-
+    #region visualisation
+    
     [SerializeField]
     private TextMeshPro lable;
     [HideInInspector]
@@ -27,11 +28,7 @@ ISelectable
     public void set_label(string in_text) {
         lable.text = in_text;
     }
-    
-    public string as_dot_graph() {
-        throw new NotImplementedException();
-    }
-    
+   
     #region IHave_destructor
     
     public void destroy()
@@ -54,6 +51,8 @@ ISelectable
     [SerializeField]
     private SpriteRenderer sprite_renderer;
     public new Collider collider{get;set;}
-    #endregion
+    #endregion ISelectable
+    
+    #endregion visualisation
 }
 }

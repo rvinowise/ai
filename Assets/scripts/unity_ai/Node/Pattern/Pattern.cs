@@ -158,7 +158,7 @@ ISelectable
     }
 
     private void set_appearances_are_highlighted(bool value) {
-        foreach(var appearance in this.appearances) {
+        foreach(var appearance in appearances) {
             if (appearance is Pattern_appearance unity_appearance) {
                 unity_appearance.selected = value;
             }
