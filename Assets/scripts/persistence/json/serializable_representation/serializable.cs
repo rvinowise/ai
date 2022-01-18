@@ -115,20 +115,7 @@ public class Subfigure {
         }
     }
 }
-[Serializable]
-public class Pattern {
-    public string id;
-    public List<string> subfigures = new List<string>(); //actual figures and patterns
 
-    public Pattern() { }
-
-    public Pattern(rvinowise.ai.general.IPattern pattern) {
-        id = pattern.id;
-        foreach(IFigure subfigure in pattern.subfigures) {
-            subfigures.Add(subfigure.id);
-        }
-    }
-}
 [Serializable]
 public class Figure_appearance {
     public string appeared_figure;

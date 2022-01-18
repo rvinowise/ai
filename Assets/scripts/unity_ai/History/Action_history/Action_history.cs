@@ -8,6 +8,7 @@ using rvinowise.ai.general;
 using System.Linq;
 using System.Numerics;
 using rvinowise.rvi.contracts;
+using rvinowise.unity.ui.input;
 
 namespace rvinowise.ai.unity {
 public partial class Action_history:
@@ -41,11 +42,11 @@ IAction_history
         new Dictionary<BigInteger, Action_group>();
 
     private Dictionary_of_lists<
-        IPattern,
+        IFigure,
         IFigure_appearance
-    > Figure_appearances =
+    > figure_appearances =
         new Dictionary_of_lists<
-            IPattern,
+            IFigure,
             IFigure_appearance
         >();
 
@@ -53,11 +54,11 @@ IAction_history
     
     
     public override void input_selected_figures() {
-        var selected_figures = figure_storage.get_selected_figures();
+        var selected_figures = Selector.instance.figures;
         if (!selected_figures.Any()) {
             return;
         }
-        float new_mood = get_last_mood()+figure_storage.get_selected_mood();
+        float new_mood = get_last_mood()+Selector.instance.get_selected_mood();
 
         Action_group start_group = create_next_action_group(new_mood);
         Action_group end_group = create_next_action_group(new_mood);
@@ -122,17 +123,17 @@ IAction_history
     }
 
     public IFigure_appearance create_figure_appearance(
-        IFigure pattern,
+        IFigure figure,
         IFigure_appearance in_first_half,
         IFigure_appearance in_second_half
     ) {
         Contract.Assert(
-            pattern.id.Length > 1, 
+            figure.id.Length > 1, 
             "Pattern consisting of subfigures should have a longer name"
         );
         
         IFigure_appearance appearance = create_figure_appearance(
-            pattern,
+            figure,
             in_first_half.start_moment,
             in_second_half.end_moment
         );
@@ -162,10 +163,10 @@ IAction_history
     }
     
     /* IHistory_interval interface */
-    public IReadOnlyList<IFigure_appearance> get_Figure_appearances(
-        IPattern pattern    
+    public IReadOnlyList<IFigure_appearance> get_figure_appearances(
+        IFigure figure    
     ) {
-        return Figure_appearances[pattern].AsReadOnly() 
+        return figure_appearances[figure].AsReadOnly() 
             as IReadOnlyList<IFigure_appearance>;
     }
 

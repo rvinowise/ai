@@ -38,32 +38,15 @@ ISelectable
     }
 
     #region ISelectable
+    public void accept_selection(Selector selector) {
+        selector.select(this);
+    }
+    public void accept_deselection(Selector selector) {
+        selector.deselect(this);
+    }
     public new Collider collider => null;
-    public bool selected {
-        set {
-            _selected = value;
-            // if (value) {
-            //     sprite_renderer.color = new Color(1,0,0);
-            //     //select_actions();
-            // } else {
-            //     sprite_renderer.color = new Color(1,1,1);
-            //     //deselect_actions();
-            // }
-        }
-        get => _selected;
-    }
-    private bool _selected;
+  
 
-    private void select_actions() {
-        foreach (Action action in actions) {
-            action.selected = true;
-        }
-    }
-    private void deselect_actions() {
-        foreach (Action action in actions) {
-            action.selected = false;
-        }
-    }
     [SerializeField]
     public SpriteRenderer selection_sprite_renderer => actions_sprite_renderer;
  

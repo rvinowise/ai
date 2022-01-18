@@ -78,20 +78,9 @@ public class Sequence_builder: MonoBehaviour {
     private IReadOnlyList<IFigure> get_sequence_of_subfigures_from(
         IFigure beginning, IFigure ending
     ) {
-        return get_sequence_of_subfigures_from(beginning).Concat(
-            get_sequence_of_subfigures_from(ending)
+        return beginning.as_lowlevel_sequence().Concat(
+            ending.as_lowlevel_sequence()
         ).ToList();
-    }
-    
-    private IReadOnlyList<IFigure> get_sequence_of_subfigures_from(
-        IFigure figure
-    ) {
-        if (figure is IPattern pattern) {
-            if (pattern.subfigures.Any()) {
-                return pattern.subfigures; 
-            }
-        }
-        return new List<IFigure>{figure};
     }
     
 

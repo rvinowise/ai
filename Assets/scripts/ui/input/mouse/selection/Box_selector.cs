@@ -127,8 +127,7 @@ public class Box_selector: MonoBehaviour {
                 (group is ISelectable selectable)&&
                 (is_inside_selection(selectable))
             ) {
-                Selector.instance._select(selectable);
-                
+                Selector.select(selectable);
             }
         }
     }

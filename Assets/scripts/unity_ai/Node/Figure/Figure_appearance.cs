@@ -63,21 +63,7 @@ public class Figure_appearance:
 
     private Pooled_object pooled_object;
 
-    public bool selected {
-        get {return _selected;}
-        set {
-            _selected = value;
-            start_appearance.selected = value;
-            end_appearance.selected = value;
-            bezier.gameObject.SetActive(value);
-        }
-    }
-    private bool _selected;
-    
-    void Start() {
-        selected = false;
-    }
-    
+
     public void create_curved_line() {
         bezier.init_between_points(
             start_appearance.transform,

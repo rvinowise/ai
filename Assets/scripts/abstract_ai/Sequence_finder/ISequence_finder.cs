@@ -1,14 +1,14 @@
-
+﻿
 
 using System.Collections.Generic;
 
 namespace rvinowise.ai.general {
-public interface IPattern_finder {
+public interface ISequence_finder {
 
 
      
-    IDictionary<string, IPattern>
-    get_new_patterns(
+    IDictionary<string, IFigure>
+    get_new_sequences(
         IReadOnlyList<IAction_group> in_action_groups
     );
 

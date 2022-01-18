@@ -24,14 +24,13 @@ public class Selected {
 
 public class Selector : MonoBehaviour {
 
-    #region what can be selected
+    #region selected elements
 
     public Action_history action_history;
+    public Figure_storage figure_storage;
     
-
-    #endregion
-
     public HashSet<IAction_group> action_groups = new HashSet<IAction_group>();
+    public HashSet<IAction> actions = new HashSet<IAction>();
     public IReadOnlyList<IAction_group> sorted_action_groups {
         get {
             return action_groups.OrderBy(
@@ -39,9 +38,14 @@ public class Selector : MonoBehaviour {
             ).ToList();
         }
     }
+    public HashSet<IFigure> figures = new HashSet<IFigure>();
+    public int mood;
+    
     public HashSet<Subfigure> subfigures = new HashSet<Subfigure>();
     public HashSet<ISelectable> selectables = new HashSet<ISelectable>();
 
+    #endregion selected elements
+    
     public static Selector instance;
 
     public Color selected_color = new Color(1,0,0);
@@ -70,44 +74,90 @@ public class Selector : MonoBehaviour {
         instance = this;
     }
 
+    public int get_selected_mood() {
+        return mood;
+    }
+
     public static void select(ISelectable selectable) {
-        instance._select(selectable);
+        selectable.accept_selection(instance);
     }
     public static void deselect(ISelectable selectable) {
-        instance._deselect(selectable);
+        selectable.accept_deselection(instance);
     }
 
-    public void _select(Subfigure subfigure) {
+
+    public void select(Figure figure) {
+        select_generally(figure);
+        
+        if (figure == figure_storage.pleasure_signal) {
+            mood += 1;
+        } else if (figure ==  figure_storage.pain_signal) {
+            mood -= 1;
+        }
+        else {
+            mood = 0;
+            figures.Add(figure);
+        }
+    }
+    
+    public void select(Subfigure subfigure) {
+        select_generally(subfigure);
         subfigures.Add(subfigure);
     }
-    public void _select(Action_group action_group) {
+    public void select(Action_group action_group) {
+        select_generally(action_group);
         action_groups.Add(action_group);
-        
     }
-    public void _select(ISelectable selectable) {
+    public void select(Action action) {
+        select_generally(action);
+        actions.Add(action);
+    }
+    private void select_generally(ISelectable selectable) {
         selectables.Add(selectable);
-        selectable.selected = true;
-        if (selectable.selection_sprite_renderer !=null) {
-            selectable.selection_sprite_renderer.color = selected_color;
+        mark_object_as_selected(selectable);
+    }
+    
+    public void deselect(Figure figure) {
+        deselect_generally(figure);
+        
+        if (figure == figure_storage.pleasure_signal) {
+            mood -= 1;
+        } else if (figure ==  figure_storage.pain_signal) {
+            mood += 1;
         }
-        if (selectable is Action_group action_group) {
-            action_groups.Add(action_group);
+        else {
+            figures.Add(figure);
         }
     }
-
+    
+    public void deselect(Subfigure subfigure) {
+        deselect_generally(subfigure);
+        subfigures.Remove(subfigure);
+    }
+    public void deselect(Action_group action_group) {
+        deselect_generally(action_group);
+        action_groups.Remove(action_group);
+    }
+    public void deselect(Action action) {
+        deselect_generally(action);
+        actions.Remove(action);
+    }
+    
+    private void deselect_generally(ISelectable selectable) {
+        selectables.Add(selectable);
+        mark_object_as_deselected(selectable);
+    }
+    
     public bool selected(ISelectable selectable) {
         return selectables.Contains(selectable);
     }
-
-    public void _deselect(IAction_group action_group) {
-        action_groups.Remove(action_group);
-    }
-    public void _deselect(ISelectable selectable) {
-        selectables.Remove(selectable);
-        mark_object_as_deselected(selectable);
+    
+    private void mark_object_as_selected(ISelectable selectable) {
+        if (selectable.selection_sprite_renderer!=null) {
+            selectable.selection_sprite_renderer.color = selected_color;
+        }
     }
     private void mark_object_as_deselected(ISelectable selectable) {
-        selectable.selected = false;
         if (selectable.selection_sprite_renderer!=null) {
             selectable.selection_sprite_renderer.color = normal_color;
         }
@@ -121,6 +171,14 @@ public class Selector : MonoBehaviour {
         action_groups.Clear();
         subfigures.Clear();
         selectables.Clear();
+    }
+
+    public void deselect_all_figures() {
+        foreach(var figure in figures) {
+            var selectable = (ISelectable) figure;
+            mark_object_as_deselected(selectable);
+        }
+        figures.Clear();
     }
 
 
@@ -141,8 +199,8 @@ public class Selector : MonoBehaviour {
             } 
             last_click_target = get_selectable_under_mouse();                        
             if (last_click_target != null) { // clicked on an object
-                if (!last_click_target.selected) { //the object is for selection by this click
-                    _select(last_click_target);
+                if (!selected(last_click_target)) { //the object is for selection by this click
+                    select(last_click_target);
                     last_click_selected = true;
                     Debug.Log("select for "+last_click_target);
                 } else { // the object is for moving (already was selected)
@@ -166,7 +224,7 @@ public class Selector : MonoBehaviour {
                 if (same_object_received_click_and_release(
                     target_of_release, last_click_target
                 )) {
-                    _deselect(target_of_release);
+                    deselect(target_of_release);
                     Debug.Log("deselect for "+last_click_target);
                 }
             }
@@ -197,6 +255,20 @@ public class Selector : MonoBehaviour {
             }
         }
         return null;
+    }
+    
+    public void select_figures_from_string(string in_string) {
+        deselect_all_figures();
+        string[] ids = in_string.Split(' ')
+            .Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
+        foreach (string id in ids) {
+            IFigure figure = figure_storage.find_figure_with_id(id);
+            if (figure != null) {
+                select((Figure)figure);
+            } else {
+                Debug.Log($"trying to select non-existing figure \"{name}\"");
+            }
+        }
     }
 }
 }

@@ -6,8 +6,8 @@ public interface IHistory_interval {
     BigInteger start_moment{get;}
     BigInteger end_moment{get;} 
 
-    IReadOnlyList<IPattern_appearance> get_pattern_appearances(
-        IPattern pattern
+    IReadOnlyList<IFigure_appearance> get_figure_appearances(
+        IFigure figure
     );
 
     #region collection interface 

@@ -7,23 +7,21 @@ using System.Linq;
 using rvinowise.ai.unity.visuals;
 using rvinowise.unity.extensions;
 using rvinowise.unity.extensions.attributes;
+using rvinowise.unity.ui.input;
 using rvinowise.unity.ui.input.mouse;
 using TMPro;
 
 namespace rvinowise.ai.unity {
 
-public class Figure: 
+public partial class Figure: 
 MonoBehaviour,
 IFigure,
 ICircle,
 ISelectable
 {
     
-    public List<ISubfigure> first_subfigures = new List<ISubfigure>();
-    public List<ISubfigure> subfigures = new List<ISubfigure>();
-
-    public List<Figure_representation> representations 
-        = new List<Figure_representation>();
+    public List<IFigure_representation> representations 
+        = new List<IFigure_representation>();
 
     public List<IFigure_appearance> appearances 
         = new List<IFigure_appearance>();
@@ -35,13 +33,9 @@ ISelectable
     [HideInInspector]
     public Animator animator;
     
-    public override int GetHashCode() {
-        return base.GetHashCode();
-    }
-    
     #region building
 
-    public Figure_representation  create_representation() {
+    public Figure_representation create_representation() {
         Figure_representation representation = representation_prefab.get_from_pool<Figure_representation>();
         representations.Add(representation);
         representation.transform.parent = representations_folder;
@@ -55,10 +49,6 @@ ISelectable
     public string id {
         get { return label.text; }
         set { label.text = value; }
-    }
-
-    public string as_dot_graph() {
-        throw new System.NotImplementedException();
     }
 
     public IReadOnlyList<IFigure_appearance> get_appearances_in_interval(
@@ -115,38 +105,7 @@ ISelectable
 
     #endregion ICircle
 
-    #region ISelectable
-    public bool selected {
-        get { return _selected; }
-        set {
-            _selected = value; 
-            if (value) {
-                select_appearances();
-            } else {
-                deselect_appearances();
-            }
-        }
-    }
-    private bool _selected = false;
-
-    private void select_appearances() {
-        foreach(var appearance in appearances) {
-            if (appearance is Figure_appearance unity_appearance) {
-                unity_appearance.selected = true;
-            }
-        }
-    }
-    private void deselect_appearances() {
-        foreach(var appearance in appearances) {
-            if (appearance is Figure_appearance unity_appearance) {
-                unity_appearance.selected = false;
-            }
-        }
-    }
-    [SerializeField] public SpriteRenderer selection_sprite_renderer => sprite_renderer;
-    [SerializeField] private SpriteRenderer sprite_renderer;
-    public new Collider collider{get;private set;}
-    #endregion ISelectable
+    
 
     #endregion visualisation
 

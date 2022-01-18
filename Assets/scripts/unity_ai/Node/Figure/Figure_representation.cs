@@ -19,11 +19,7 @@ IFigure_representation
     public List<ISubfigure> first_subfigures = new List<ISubfigure>();
 
     public List<ISubfigure> subfigures = new List<ISubfigure>();
-
     
-    public override int GetHashCode() {
-        return base.GetHashCode();
-    }
     
     #region building
     public Subfigure add_subfigure(IFigure child_figure) {

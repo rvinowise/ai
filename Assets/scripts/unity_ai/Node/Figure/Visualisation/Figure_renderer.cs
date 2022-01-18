@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using rvinowise.ai.general;
 using rvinowise.ai.general;
 using rvinowise.rvi.contracts;
+using rvinowise.unity.ui.input;
 using UnityEngine;
 
 namespace rvinowise.ai.unity {
@@ -33,18 +35,18 @@ rankdir=LR;
         DirectoryInfo out_path_info = Directory.CreateDirectory(out_path);
     }
 
-    public String get_dot_format(Figure figure) {
+    public String get_dot_format(Figure_representation representation) {
         String node_connections
-        = get_nodes_connections(figure);
+        = get_nodes_connections(representation);
         return String.Format(
             dot_file_template,
             "Figure",
              node_connections
         );
     }
-    private String get_nodes_connections(Figure figure) {
+    private String get_nodes_connections(Figure_representation representation) {
         StringBuilder result = new StringBuilder();
-        foreach (Subfigure subfigure in figure.subfigures) {
+        foreach (Subfigure subfigure in representation.subfigures) {
             write_next_nodes_for(subfigure, result);
         }
         return result.ToString();
@@ -61,19 +63,20 @@ rankdir=LR;
     }
 
     
-    public void save_picture(Figure figure) {
+    public void save_picture(Figure_representation representation) {
         System.IO.File.WriteAllText(
-            $"{out_path}Figure_{figure.id}.dot", 
-            get_dot_format(figure)
+            $"{out_path}Figure_{representation.id}.dot", 
+            get_dot_format(representation)
         );
     }
 
     
     public void on_save_into_file() {
         foreach(
-            IFigure figure in figure_storage.get_selected_figures()
+            IFigure figure in Selector.instance.figures
         ) {
-            save_picture(figure as Figure);
+            Figure_representation representation = ((Figure) figure).representations.First() as Figure_representation;
+            save_picture(representation);
         }
     }
 }

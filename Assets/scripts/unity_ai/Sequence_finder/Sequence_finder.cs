@@ -104,7 +104,7 @@ MonoBehaviour
         BigInteger start, 
         BigInteger end,
         IFigure figure_used_in_beginning,
-        IFigure user_pattern
+        IFigure user_sequence
     ) {
         var child_appearances 
         = figure_used_in_beginning.get_appearances_in_interval(
@@ -112,7 +112,7 @@ MonoBehaviour
             end
         );
         var user_appearances 
-        = user_pattern.get_appearances_in_interval(
+        = user_sequence.get_appearances_in_interval(
             start, 
             end
         );
@@ -133,7 +133,7 @@ MonoBehaviour
         BigInteger start, 
         BigInteger end,
         IFigure figure_used_in_ending,
-        IFigure user_pattern
+        IFigure user_sequence
     ) {
         var child_appearances 
         = figure_used_in_ending.get_appearances_in_interval(
@@ -141,7 +141,7 @@ MonoBehaviour
             end
         );
         var user_appearances
-        = user_pattern.get_appearances_in_interval(
+        = user_sequence.get_appearances_in_interval(
             start, 
             end
         );

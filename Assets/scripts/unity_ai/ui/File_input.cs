@@ -5,6 +5,7 @@ using System.IO;
 using System;
 using rvinowise.ai.general;
 using rvinowise.rvi.contracts;
+using rvinowise.unity.ui.input;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -17,10 +18,6 @@ namespace rvinowise.ai.unity {
 public class File_input : Input {
     
     
-    private Dictionary<string, IPattern> name_to_pattern = 
-        new Dictionary<string, IPattern>();
-
-
     private void init_file_dialog() {
 		FileBrowser.SetFilters( 
             true, 
@@ -50,8 +47,9 @@ public class File_input : Input {
             if (symbol == '\n') {
                 receiver.start_new_line();
             } else {
-                figure_storage.select_figures_from_string(symbol.ToString());
+                Selector.instance.select_figures_from_string(symbol.ToString());
                 receiver.input_selected_figures();
+                Selector.instance.deselect_all_figures();
             }
         }  
     }

@@ -17,7 +17,6 @@ public class Network_persistence:
 
     
     [SerializeField] public Action_history action_history;
-    [SerializeField] public Pattern_storage pattern_storage;
     [SerializeField] public Figure_storage figure_storage;
     
     public static Network_persistence instance;

@@ -29,34 +29,8 @@ public class Figure_storage: MonoBehaviour {
     void Awake() {
         figure_table.init(figure_prefab);
     }
-    
 
     
-    public IEnumerable<Figure> get_selected_figures() {
-        IList<Figure> result = new List<Figure>();
-        foreach(Figure figure in known_figures) {
-            if (figure.selected) {
-                result.Add(figure);
-            }
-        }
-        return result;
-    }
-    
-    public float get_selected_mood() {
-        Contract.Requires(
-            !pleasure_signal.selected ||
-            pleasure_signal.selected != pain_signal.selected,
-            "either pain or pleasure at the same time"
-        );
-        if (pleasure_signal.selected) {
-            return 1f;
-        } else if (pain_signal.selected) {
-            return -1f;
-        }
-        return 0f;
-    }
-
-
     
 
     public void append_figure(IFigure figure) { 
@@ -77,39 +51,7 @@ public class Figure_storage: MonoBehaviour {
             figure_table.remove_item(unity_figure);
         }
     }
-
-    #region selecting figures
-    public void select_figures_from_string(string in_string) {
-        deselect_all_figures();
-        string[] names = in_string.Split(' ')
-            .Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
-        foreach (string name in names) {
-            IFigure figure;
-            name_to_figure.TryGetValue(name, out figure);
-            if (figure != null) {
-                select_figure((Figure)figure);
-            } else {
-                Debug.Log($"trying to select non-existing figure \"{name}\"");
-            }
-        }
-    }
-
-    public void select_figure(Figure figure) {
-        figure.selected = true;
-    }
-
-    public void toggle_figure_selection(Figure figure) {
-        figure.selected = !figure.selected;
-    }
-
-    public void deselect_all_figures() {
-        foreach (var figure in get_selected_figures()) {
-            //figure.selected = false;
-            Selector.deselect(figure);
-        }
-    }
-
-    #endregion selecting figures
+    
     
     public IFigure find_figure_with_id(string id) {
         IFigure figure;

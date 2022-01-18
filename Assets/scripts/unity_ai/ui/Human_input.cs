@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using rvinowise.ai.general;
 using rvinowise.rvi.contracts;
+using rvinowise.unity.ui.input;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -23,10 +24,6 @@ public class Human_input : Input {
     
     
 
-
-    override protected void Awake() {
-        base.Awake();
-    }
      protected void Start() {
 
         input_field.Select();
@@ -37,7 +34,7 @@ public class Human_input : Input {
 
 
     private static readonly KeyCode key_submit = KeyCode.Return;
-    private void read_input_as_several_one_letter_patterns() {
+    private void read_input_as_several_one_letter_signals() {
         if (UnityEngine.Input.GetKeyDown(
             key_submit
         )) {
@@ -51,10 +48,10 @@ public class Human_input : Input {
                 item.Key
             )) {
                 Contract.Requires(
-                    item.Value is Pattern, 
+                    item.Value is Figure, 
                     "can't input other implementations"
                 );
-                figure_storage.toggle_figure_selection((Figure)item.Value);
+                Selector.instance.select((Figure)item.Value); //it was "toggle"
             }
         }
     }
@@ -66,7 +63,7 @@ public class Human_input : Input {
             input_control_commands(input_field.text);
         } else {
             receiver.input_selected_figures();
-            figure_storage.deselect_all_figures();
+            Selector.instance.deselect_all_figures();
         }
 
         input_field.text = "";
@@ -82,7 +79,7 @@ public class Human_input : Input {
     public void on_text_field_edited() {
         
         if (!entering_control_command()) {
-            figure_storage.select_figures_from_string(
+            Selector.instance.select_figures_from_string(
                 input_field.text
             );
         }

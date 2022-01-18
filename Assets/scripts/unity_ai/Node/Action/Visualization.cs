@@ -5,6 +5,7 @@ using TMPro;
 using rvinowise.unity.extensions;
 using rvinowise.unity.ui.input.mouse;
 using rvinowise.unity;
+using rvinowise.unity.ui.input;
 
 namespace rvinowise.ai.unity {
 
@@ -39,14 +40,13 @@ ISelectable
     #endregion
 
     #region ISelectable
-    public bool selected {
-        set {
-            _selected = value;
-            animator.SetBool("selected", _selected);
-        }
-        get {return _selected;}
+    public void accept_selection(Selector selector) {
+        selector.select(this);
     }
-    private bool _selected;
+    public void accept_deselection(Selector selector) {
+        selector.deselect(this);
+    }
+    
     public SpriteRenderer selection_sprite_renderer => sprite_renderer;
     [SerializeField]
     private SpriteRenderer sprite_renderer;

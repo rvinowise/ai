@@ -9,6 +9,7 @@ using TMPro;
 using UnityEngine;
 using rvinowise.unity.ui.input.mouse;
 using rvinowise.ai.unity;
+using rvinowise.unity.ui.input;
 
 namespace rvinowise.ai.unity {
 
@@ -111,8 +112,15 @@ ISelectable
     private bool _selected;
     public SpriteRenderer selection_sprite_renderer => sprite_renderer;
     [SerializeField]
-    private SpriteRenderer sprite_renderer; 
-    #endregion
+    private SpriteRenderer sprite_renderer;
+    
+    public void accept_selection(Selector selector) {
+        selector.select(this);
+    }
+    public void accept_deselection(Selector selector) {
+        selector.deselect(this);
+    }
+    #endregion ISelectable
     #endregion
 }
 }

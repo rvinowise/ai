@@ -18,7 +18,6 @@ public class Network_saver:
     public Network_persistence persistence;
     
     [SerializeField] Action_history action_history;
-    [SerializeField] Pattern_storage pattern_storage;
     [SerializeField] Figure_storage figure_storage;
 
     public static Network_saver instance;

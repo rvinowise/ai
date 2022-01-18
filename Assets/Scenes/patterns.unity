@@ -5117,7 +5117,7 @@ GameObject:
   - component: {fileID: 1689671351}
   - component: {fileID: 1689671352}
   m_Layer: 0
-  m_Name: Selection
+  m_Name: Selector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5152,7 +5152,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   action_history: {fileID: 735816290}
-  selected_color: {r: 1, g: 0, b: 0, a: 1}
+  figure_storage: {fileID: 1171707164805649098}
+  mood: 0
+  selected_color: {r: 0, g: 1, b: 0.059127808, a: 1}
   normal_color: {r: 1, g: 1, b: 1, a: 1}
   mover_of_selected: {fileID: 2013752249}
 --- !u!1 &1719276588
@@ -5990,7 +5992,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18bacc822a92c8d48844120762224a89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selection: {fileID: 1689671352}
+  selector: {fileID: 1689671352}
   moved_since_last_click: 0
 --- !u!1 &2032726195
 GameObject:
