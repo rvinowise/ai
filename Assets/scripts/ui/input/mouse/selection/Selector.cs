@@ -39,6 +39,7 @@ public class Selector : MonoBehaviour {
         }
     }
     public HashSet<IFigure> figures = new HashSet<IFigure>();
+    public HashSet<Figure_appearance> figure_appearances = new HashSet<Figure_appearance>();
     public int mood;
     
     public HashSet<Subfigure> subfigures = new HashSet<Subfigure>();
@@ -58,17 +59,7 @@ public class Selector : MonoBehaviour {
             -100
         );
     }
-    private Vector3 mouse_world_position {
-        get {
-            return new Vector3(
-                rvinowise.unity.ui.input.Input.instance.mouse_world_position.x,
-                rvinowise.unity.ui.input.Input.instance.mouse_world_position.y,
-                0
-            );
-        }
-    }
 
-    
     void Awake() {
         Contract.Assert(instance == null, "singleton");
         instance = this;
@@ -95,28 +86,12 @@ public class Selector : MonoBehaviour {
             mood -= 1;
         }
         else {
-            mood = 0;
             figures.Add(figure);
+            foreach (Figure_appearance appearance in figure.appearances) {
+                select(appearance);
+            }
         }
     }
-    
-    public void select(Subfigure subfigure) {
-        select_generally(subfigure);
-        subfigures.Add(subfigure);
-    }
-    public void select(Action_group action_group) {
-        select_generally(action_group);
-        action_groups.Add(action_group);
-    }
-    public void select(Action action) {
-        select_generally(action);
-        actions.Add(action);
-    }
-    private void select_generally(ISelectable selectable) {
-        selectables.Add(selectable);
-        mark_object_as_selected(selectable);
-    }
-    
     public void deselect(Figure figure) {
         deselect_generally(figure);
         
@@ -126,23 +101,59 @@ public class Selector : MonoBehaviour {
             mood += 1;
         }
         else {
-            figures.Add(figure);
+            figures.Remove(figure);
+            foreach (Figure_appearance appearance in figure.appearances) {
+                deselect(appearance);
+            }
         }
     }
+
+    public void select(Figure_appearance appearance) {
+        select_generally(appearance);
+        figure_appearances.Add(appearance);
+        appearance.bezier.enabled = true;
+        select(appearance.appearance_start);
+        select(appearance.appearance_end);
+    }
+    public void deselect(Figure_appearance appearance) {
+        deselect_generally(appearance);
+        figure_appearances.Remove(appearance);
+        appearance.bezier.enabled = false;
+        deselect(appearance.appearance_start);
+        deselect(appearance.appearance_end);
+    }
     
+    public void select(Subfigure subfigure) {
+        select_generally(subfigure);
+        subfigures.Add(subfigure);
+    }
     public void deselect(Subfigure subfigure) {
         deselect_generally(subfigure);
         subfigures.Remove(subfigure);
+    }
+    public void select(Action_group action_group) {
+        select_generally(action_group);
+        action_groups.Add(action_group);
     }
     public void deselect(Action_group action_group) {
         deselect_generally(action_group);
         action_groups.Remove(action_group);
     }
+    
+    public void select(Action action) {
+        select_generally(action);
+        actions.Add(action);
+    }
+
     public void deselect(Action action) {
         deselect_generally(action);
         actions.Remove(action);
     }
     
+    private void select_generally(ISelectable selectable) {
+        selectables.Add(selectable);
+        mark_object_as_selected(selectable);
+    }
     private void deselect_generally(ISelectable selectable) {
         selectables.Add(selectable);
         mark_object_as_deselected(selectable);
@@ -169,7 +180,10 @@ public class Selector : MonoBehaviour {
             mark_object_as_deselected(selectable);
         }
         action_groups.Clear();
+        actions.Clear();
+        figures.Clear();
         subfigures.Clear();
+        figure_appearances.Clear();
         selectables.Clear();
     }
 

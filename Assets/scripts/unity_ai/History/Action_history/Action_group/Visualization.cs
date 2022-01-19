@@ -14,7 +14,7 @@ public partial class Action_group:
 MonoBehaviour,
 ISelectable
 {
-    public Vector2 action_offset = new Vector2(0,2);
+    public Vector3 action_offset = new Vector3(0,2, 0);
     //public GameObject body;
     public Mood_label mood_label;
     public TextMeshPro moment_label;
@@ -23,17 +23,15 @@ ISelectable
 
     [SerializeField]
     Transform actions_attachment;
-    void Awake() {
-        //actions_sprite_renderer = GetComponent<SpriteRenderer>();
-    }
+ 
     private void place_next_action(Action in_action) {
-        in_action.transform.parent = this.actions_attachment;
-        in_action.transform.localPosition = 
-            action_offset * (actions.Count-1);
+        //in_action.transform.parent = this.actions_attachment;
+        in_action.transform.position = 
+            actions_attachment.position + action_offset * (actions.Count-1);
     }
 
     public void extend_to_accomodate_children() {
-        actions_sprite_renderer.size += action_offset * (actions.Count-1);
+        actions_sprite_renderer.size += (Vector2)action_offset * (actions.Count-1);
         
     }
 

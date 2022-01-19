@@ -94,6 +94,17 @@ MonoBehaviour
                     appearances_of_ending
                 );
             }
+            if (it_is_new_sequence(signal_pair)) {
+                if (sequence_appeared_at_least_twice(signal_pair)) {
+                    figure_storage.append_figure(signal_pair);
+                } else {
+                    ((Figure)signal_pair).destroy();
+                }
+            }
+
+            bool it_is_new_sequence(IFigure signal_pair) {
+                return figure_storage.find_figure_with_id(signal_pair.id) != null;
+            }
         }
 
         
@@ -218,11 +229,7 @@ MonoBehaviour
             i_next_beginning = closest_beginning.index + 1;
         }
 
-        if (sequence_appeared_at_least_twice(signal_pair)) {
-            figure_storage.append_figure(signal_pair);
-        } else {
-            ((Figure)signal_pair).destroy();
-        }
+        
 
         bool same_sequences_exist_inside(
             IFigure sequence,

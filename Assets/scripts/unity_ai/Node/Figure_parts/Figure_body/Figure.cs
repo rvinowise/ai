@@ -95,7 +95,6 @@ ISelectable
     void Awake() {
         animator = GetComponent<Animator>();
         collider = GetComponent<Collider>();
-        //sprite_renderer  = GetComponent<SpriteRenderer>();
     }
 
     

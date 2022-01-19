@@ -116,8 +116,8 @@ IAction_history
         Figure_appearance appearance = figure_appearance_prefab
             .get_for_figure(figure);
         figure.add_appearance(appearance);
-        put_action_into_moment(appearance.start_appearance, start);
-        put_action_into_moment(appearance.end_appearance, end);
+        put_action_into_moment(appearance.appearance_start, start);
+        put_action_into_moment(appearance.appearance_end, end);
         appearance.create_curved_line();
         return appearance;
     }

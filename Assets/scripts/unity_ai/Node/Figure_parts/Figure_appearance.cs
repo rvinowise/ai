@@ -6,6 +6,8 @@ using rvinowise.unity;
 using rvinowise.unity.extensions;
 using rvinowise.unity.extensions.attributes;
 using rvinowise.unity.extensions.pooling;
+using rvinowise.unity.ui.input;
+using rvinowise.unity.ui.input.mouse;
 using UnityEngine;
 using Vector3 = UnityEngine.Vector3;
 
@@ -15,39 +17,41 @@ namespace rvinowise.ai.unity {
 public class Figure_appearance:
     MonoBehaviour,
     IFigure_appearance,
-    IHave_destructor
+    IHave_destructor,
+    ISelectable
 {
     
     
     #region IFigure_appearance
     public IFigure figure{get; protected set;}
     public BigInteger start_moment 
-        => start_appearance.action_group.moment;
+        => appearance_start.action_group.moment;
     public BigInteger end_moment 
-        => end_appearance.action_group.moment;
+        => appearance_end.action_group.moment;
 
     #endregion IFigure_appearance
 
     
-    public Appearance_start start_appearance;
-    public Appearance_end end_appearance;
+    public Appearance_start appearance_start;
+    public Appearance_end appearance_end;
 
 
 
     void Awake() {
         pooled_object = GetComponent<Pooled_object>();
-        start_appearance.figure_appearance = this;
-        end_appearance.figure_appearance = this;
+        appearance_start.figure_appearance = this;
+        appearance_end.figure_appearance = this;
+        bezier.enabled = false;
     }
 
     
     
 
     public virtual void destroy() {
-        store_action_as_child(start_appearance);
-        store_action_as_child(end_appearance);
-        start_appearance.transform.parent = transform;
-        end_appearance.transform.parent = transform;
+        store_action_as_child(appearance_start);
+        store_action_as_child(appearance_end);
+        appearance_start.transform.parent = transform;
+        appearance_end.transform.parent = transform;
         ((MonoBehaviour)this).destroy();
     }
 
@@ -66,8 +70,8 @@ public class Figure_appearance:
 
     public void create_curved_line() {
         bezier.init_between_points(
-            start_appearance.transform,
-            end_appearance.transform,
+            appearance_start.transform,
+            appearance_end.transform,
             new Vector3(0, 4f),
             new Vector3(0, 2f)
         );
@@ -87,9 +91,23 @@ public class Figure_appearance:
 
     private void init_for_figure(IFigure figure) {
         this.figure = figure;
-        start_appearance.set_label(figure.id);
-        end_appearance.set_label(figure.id);
+        appearance_start.set_label(figure.id);
+        appearance_end.set_label(figure.id);
     }
+    
+    #region ISelectable
+
+    public new Collider collider { get; }
+    public SpriteRenderer selection_sprite_renderer => null;
+    public void accept_selection(Selector selector) {
+        selector.select(this);
+    }
+
+    public void accept_deselection(Selector selector) {
+        selector.deselect(this);
+    }
+
+    #endregion
 
     #region debug
     IList<ISubfigure_appearance> subfigure_appearances 
