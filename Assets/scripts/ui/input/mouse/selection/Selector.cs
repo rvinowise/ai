@@ -7,7 +7,6 @@ using rvinowise;
 using rvinowise.rvi.contracts;
 using Input = rvinowise.unity.ui.input.Input;
 using rvinowise.ai.unity;
-using rvinowise.ai.unity;
 using Action = rvinowise.ai.unity.Action;
 using rvinowise.ai.general;
 using rvinowise.unity.geometry2d;
@@ -17,10 +16,6 @@ using rvinowise.ai.unity;
 using UnityEngine.EventSystems;
 
 namespace rvinowise.unity.ui.input {
-
-public class Selected {
-    
-}
 
 public class Selector : MonoBehaviour {
 
@@ -111,14 +106,14 @@ public class Selector : MonoBehaviour {
     public void select(Figure_appearance appearance) {
         select_generally(appearance);
         figure_appearances.Add(appearance);
-        appearance.bezier.enabled = true;
+        appearance.bezier.gameObject.SetActive(true);
         select(appearance.appearance_start);
         select(appearance.appearance_end);
     }
     public void deselect(Figure_appearance appearance) {
         deselect_generally(appearance);
         figure_appearances.Remove(appearance);
-        appearance.bezier.enabled = false;
+        appearance.bezier.gameObject.SetActive(false);
         deselect(appearance.appearance_start);
         deselect(appearance.appearance_end);
     }
@@ -155,7 +150,7 @@ public class Selector : MonoBehaviour {
         mark_object_as_selected(selectable);
     }
     private void deselect_generally(ISelectable selectable) {
-        selectables.Add(selectable);
+        selectables.Remove(selectable);
         mark_object_as_deselected(selectable);
     }
     
@@ -176,8 +171,8 @@ public class Selector : MonoBehaviour {
 
 
     public void deselect_all() {
-        foreach(ISelectable selectable in selectables) {
-            mark_object_as_deselected(selectable);
+        foreach(ISelectable selectable in selectables.ToArray<ISelectable>()) {
+            deselect(selectable);
         }
         action_groups.Clear();
         actions.Clear();
@@ -188,9 +183,8 @@ public class Selector : MonoBehaviour {
     }
 
     public void deselect_all_figures() {
-        foreach(var figure in figures) {
-            var selectable = (ISelectable) figure;
-            mark_object_as_deselected(selectable);
+        foreach(Figure figure in figures.ToArray<IFigure>()) {
+            deselect(figure);
         }
         figures.Clear();
     }

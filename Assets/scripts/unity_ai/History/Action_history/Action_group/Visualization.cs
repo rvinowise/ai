@@ -25,9 +25,8 @@ ISelectable
     Transform actions_attachment;
  
     private void place_next_action(Action in_action) {
-        //in_action.transform.parent = this.actions_attachment;
-        in_action.transform.position = 
-            actions_attachment.position + action_offset * (actions.Count-1);
+        in_action.transform.parent = this.actions_attachment;
+        in_action.transform.localPosition = action_offset * (actions.Count-1);
     }
 
     public void extend_to_accomodate_children() {

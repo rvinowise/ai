@@ -1581,7 +1581,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   persistence: {fileID: 843173800}
   action_history: {fileID: 735816290}
-  pattern_storage: {fileID: 0}
   figure_storage: {fileID: 1171707164805649098}
 --- !u!1 &615274802
 GameObject:
@@ -2591,7 +2590,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   saving_path: 
   action_history: {fileID: 735816290}
-  pattern_storage: {fileID: 0}
   figure_storage: {fileID: 1171707164805649098}
 --- !u!114 &843173801
 MonoBehaviour:
@@ -3234,7 +3232,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1047273409
 Transform:
   m_ObjectHideFlags: 0

@@ -66,6 +66,10 @@ ISelectable
             animator.SetTrigger("fire");
         }
         appearances.Add(appearance);
+        if (appearance is Figure_appearance unity_appearance) {
+            unity_appearance.transform.parent = this.transform;
+            unity_appearance.transform.localPosition = Vector3.zero;
+        }
     }
     #endregion IFigure
     

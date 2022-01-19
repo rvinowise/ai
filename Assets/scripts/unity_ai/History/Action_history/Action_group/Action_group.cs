@@ -60,7 +60,6 @@ ISelectable
         actions.Add(in_action);
         if (in_action is Action action) {
             place_next_action(action);
-            action.animator.SetTrigger("fire");
         }
     }
 

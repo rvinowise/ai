@@ -257,8 +257,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5719f0e9363f412885a40880b7d9075c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  start_appearance: {fileID: 342912836656444506}
-  end_appearance: {fileID: 9012642231624000564}
+  appearance_start: {fileID: 342912836656444506}
+  appearance_end: {fileID: 9012642231624000564}
   bezier: {fileID: 5028659124518550879}
 --- !u!114 &6416084840532676476
 MonoBehaviour:
@@ -452,7 +452,7 @@ PrefabInstance:
     - target: {fileID: 7265867109844156610, guid: 7af617ac1bfbb9549bbab588c4eb8d87,
         type: 3}
       propertyPath: m_Name
-      value: End_appearance
+      value: Appearance_end
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7af617ac1bfbb9549bbab588c4eb8d87, type: 3}
