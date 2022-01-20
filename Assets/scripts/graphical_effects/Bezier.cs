@@ -29,7 +29,7 @@ public class Bezier : MonoBehaviour
         Vector3 offset_from_start,
         Vector3 offset_from_end    
     ) {
-        Bezier bezier = pooled_object.get_from_pool<Bezier>();
+        Bezier bezier = pooled_object.provide_new<Bezier>();
         bezier.init_between_points(
              start,
              end,

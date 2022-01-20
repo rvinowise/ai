@@ -21,7 +21,7 @@ IHave_destructor  {
     }
     public void destroy() {
         this.item.transform.SetParent(null, false);
-        ((MonoBehaviour)this).destroy();
+        ((MonoBehaviour)this).destroy_object();
     }
 }
 }

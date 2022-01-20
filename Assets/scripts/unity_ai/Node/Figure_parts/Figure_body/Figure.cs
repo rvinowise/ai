@@ -23,7 +23,7 @@ ISelectable
     public List<IFigure_representation> representations 
         = new List<IFigure_representation>();
 
-    public List<IFigure_appearance> appearances 
+    public List<IFigure_appearance> _appearances 
         = new List<IFigure_appearance>();
     
     public Figure_appearance appearance_preafab;
@@ -36,7 +36,7 @@ ISelectable
     #region building
 
     public Figure_representation create_representation() {
-        Figure_representation representation = representation_prefab.get_from_pool<Figure_representation>();
+        Figure_representation representation = representation_prefab.provide_new<Figure_representation>();
         representations.Add(representation);
         representation.transform.parent = representations_folder;
         return representation;
@@ -50,11 +50,12 @@ ISelectable
         get { return label.text; }
         set { label.text = value; }
     }
+    public IReadOnlyList<IFigure_appearance> all_appearances => _appearances;
 
     public IReadOnlyList<IFigure_appearance> get_appearances_in_interval(
         BigInteger start, BigInteger end
     ) {
-        return appearances.Where(
+        return _appearances.Where(
             appearance => 
                 (appearance.start_moment >= start) &&
                 (appearance.end_moment <= end)
@@ -65,7 +66,7 @@ ISelectable
         if (animator != null) {
             animator.SetTrigger("fire");
         }
-        appearances.Add(appearance);
+        _appearances.Add(appearance);
         if (appearance is Figure_appearance unity_appearance) {
             unity_appearance.transform.parent = this.transform;
             unity_appearance.transform.localPosition = Vector3.zero;
@@ -112,7 +113,16 @@ ISelectable
 
     #endregion visualisation
 
+    #region IDestructable
 
+    public void destroy() {
+        //base.destroy();
+        foreach (Figure_appearance appearance in all_appearances) {
+            appearance.destroy_object();
+        }
+        this.destroy_object();
+    }
+    #endregion IDestructable
 
 }
 }

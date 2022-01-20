@@ -28,7 +28,7 @@ ISelectable
 
     [called_by_prefab]
     public Subfigure create_for_figure(IFigure figure) {
-        Subfigure subfigure = this.get_from_pool<Subfigure>();
+        Subfigure subfigure = this.provide_new<Subfigure>();
         subfigure.id = Id_assigner.get_next_id();
         subfigure.referenced_figure = figure;
         subfigure.set_appearance_for_figure(figure);

@@ -29,7 +29,7 @@ public class Table:MonoBehaviour {
     }
 
     private Table_cell create_cell() {
-        Table_cell cell = table_cell_prefab.get_from_pool<Table_cell>();
+        Table_cell cell = table_cell_prefab.provide_new<Table_cell>();
         /* cell.name = 
             String.Format("canvas {0}",in_item.name); */
         cell.transform.SetParent(canvas.transform, false);

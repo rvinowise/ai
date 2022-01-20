@@ -94,16 +94,23 @@ MonoBehaviour
                     appearances_of_ending
                 );
             }
+            if (signal_pair.id == "23") {
+                int test = 1;
+            }
+            if (signal_pair.id == "32") {
+                int test = 1;
+            }
             if (it_is_new_sequence(signal_pair)) {
                 if (sequence_appeared_at_least_twice(signal_pair)) {
                     figure_storage.append_figure(signal_pair);
                 } else {
+                    action_history.remove_all_appearances_of(signal_pair);
                     ((Figure)signal_pair).destroy();
                 }
             }
 
             bool it_is_new_sequence(IFigure signal_pair) {
-                return figure_storage.find_figure_with_id(signal_pair.id) != null;
+                return figure_storage.find_figure_with_id(signal_pair.id) == null;
             }
         }
 

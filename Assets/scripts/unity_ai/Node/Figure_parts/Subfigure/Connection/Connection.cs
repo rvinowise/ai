@@ -35,7 +35,7 @@ MonoBehaviour
         ICircle source,
         ICircle destination
     ) {
-        Connection connection = this.get_from_pool<Connection>();
+        Connection connection = this.provide_new<Connection>();
 
         connection.source = source;
         connection.destination = destination;

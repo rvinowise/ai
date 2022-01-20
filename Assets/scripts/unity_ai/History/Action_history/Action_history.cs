@@ -98,28 +98,7 @@ IAction_history
         foreach (var figure in figures) {
             create_figure_appearance(figure, start, end);
         }
-        get_action_group_at_moment(start).
-            extend_to_accomodate_children();
-        get_action_group_at_moment(end).
-            extend_to_accomodate_children();
-    }
 
-    public IFigure_appearance create_figure_appearance(
-        IFigure figure,
-        BigInteger start,
-        BigInteger end
-    ) {
-        Contract.Requires(
-            start < end,
-            "should have a positive time interval"
-        );
-        Figure_appearance appearance = figure_appearance_prefab
-            .get_for_figure(figure);
-        figure.add_appearance(appearance);
-        put_action_into_moment(appearance.appearance_start, start);
-        put_action_into_moment(appearance.appearance_end, end);
-        appearance.create_curved_line();
-        return appearance;
     }
 
     public IFigure_appearance create_figure_appearance(
@@ -141,6 +120,38 @@ IAction_history
         return appearance;
     }
 
+    public IFigure_appearance create_figure_appearance(
+    IFigure figure,
+    BigInteger start,
+    BigInteger end
+    ) {
+        Contract.Requires(
+            start < end,
+            "should have a positive time interval"
+        );
+        Figure_appearance appearance = figure_appearance_prefab
+            .get_for_figure(figure);
+        figure.add_appearance(appearance);
+        put_action_into_moment(appearance.appearance_start, start);
+        put_action_into_moment(appearance.appearance_end, end);
+        appearance.create_curved_line();
+        return appearance;
+    }
+
+    public void remove_all_appearances_of(IFigure figure) {
+        foreach (var appearance in figure.all_appearances) {
+            remove_figure_appearance(appearance);
+        }
+    }
+    public void remove_figure_appearance(IFigure_appearance appearance) {
+        //appearance.figure.remove_appearance(appearance);
+        if (appearance is Figure_appearance unity_appearance) {
+            unity_appearance.appearance_start.action_group.remove_action(unity_appearance.appearance_start);
+            unity_appearance.appearance_end.action_group.remove_action(unity_appearance.appearance_end);
+        }
+    }
+
+
     private void put_action_into_moment(
         Action action, 
         BigInteger moment
@@ -148,9 +159,11 @@ IAction_history
         Action_group group = get_action_group_at_moment(moment);
         Contract.Ensures(
             group != null,
-            "first action_group must be creared, then actions added to it"
+            "first action_group must be created, then actions added to it"
         );
         group.add_action(action);
+        
+        
         action.action_group = group;
     }
 

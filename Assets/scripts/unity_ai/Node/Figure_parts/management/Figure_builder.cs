@@ -52,7 +52,7 @@ public class Figure_builder: MonoBehaviour {
     }
     public Dictionary<string,int> last_ids = new Dictionary<string, int>();
     public IFigure create_new_figure(string prefix = "") {
-        Figure new_figure = figure_prefab.get_from_pool<Figure>();
+        Figure new_figure = figure_prefab.provide_new<Figure>();
         new_figure.id = get_next_id_for_prefix(prefix);
         return new_figure;
     }

@@ -19,8 +19,13 @@ ISelectable
 {
     #region IAction
     public IFigure figure => figure_appearance.figure;
-    public IFigure_appearance figure_appearance{get; internal set;}
-    
+    public IFigure_appearance figure_appearance {
+        get => figure_appearance_impl;
+        set {
+            figure_appearance_impl = value as Figure_appearance;
+        }
+    }
+
     #endregion IAction
     
     public IAction_group action_group{get;set;}
@@ -45,7 +50,7 @@ ISelectable
     public void destroy()
     {
         action_group.remove_action(this);
-        ((MonoBehaviour)this).destroy();
+        ((MonoBehaviour)this).destroy_object();
     }
     #endregion
 
@@ -62,6 +67,12 @@ ISelectable
     public new Collider collider{get;set;}
     #endregion ISelectable
     
+    #region debug
+
+    [SerializeField] public Figure_appearance figure_appearance_impl;
+
+    #endregion debug
+
     #endregion visualisation
 }
 }

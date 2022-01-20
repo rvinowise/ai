@@ -82,7 +82,7 @@ public class Selector : MonoBehaviour {
         }
         else {
             figures.Add(figure);
-            foreach (Figure_appearance appearance in figure.appearances) {
+            foreach (Figure_appearance appearance in figure._appearances) {
                 select(appearance);
             }
         }
@@ -97,7 +97,7 @@ public class Selector : MonoBehaviour {
         }
         else {
             figures.Remove(figure);
-            foreach (Figure_appearance appearance in figure.appearances) {
+            foreach (Figure_appearance appearance in figure._appearances) {
                 deselect(appearance);
             }
         }

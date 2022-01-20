@@ -14,7 +14,7 @@ public partial class Action_group:
 MonoBehaviour,
 ISelectable
 {
-    public Vector3 action_offset = new Vector3(0,2, 0);
+    public Vector3 action_offset = new Vector3(0,1, 0);
     //public GameObject body;
     public Mood_label mood_label;
     public TextMeshPro moment_label;
@@ -29,7 +29,7 @@ ISelectable
         in_action.transform.localPosition = action_offset * (actions.Count-1);
     }
 
-    public void extend_to_accomodate_children() {
+    public void update_shape_accomodating_children() {
         actions_sprite_renderer.size += (Vector2)action_offset * (actions.Count-1);
         
     }

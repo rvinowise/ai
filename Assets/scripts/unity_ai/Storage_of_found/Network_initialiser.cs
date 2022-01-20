@@ -36,7 +36,7 @@ public class Network_initialiser: MonoBehaviour {
     }
 
     private IFigure create_base_signal(string id) {
-        Figure signal = figure_storage.figure_prefab.get_from_pool<Figure>();
+        Figure signal = figure_storage.figure_prefab.provide_new<Figure>();
         signal.id = id;
         signal.name = string.Format("signal {0}", signal.id);
         return signal;

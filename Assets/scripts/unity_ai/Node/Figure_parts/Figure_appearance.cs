@@ -41,10 +41,12 @@ public class Figure_appearance:
         pooled_object = GetComponent<Pooled_object>();
         appearance_start.figure_appearance = this;
         appearance_end.figure_appearance = this;
-        bezier.enabled = false;
+        
     }
 
-    
+    void Start() {
+        bezier.gameObject.SetActive(false);
+    }
     
 
     public virtual void destroy() {
@@ -52,7 +54,7 @@ public class Figure_appearance:
         store_action_as_child(appearance_end);
         appearance_start.transform.parent = transform;
         appearance_end.transform.parent = transform;
-        ((MonoBehaviour)this).destroy();
+        ((MonoBehaviour)this).destroy_object();
     }
 
     private void store_action_as_child(Action in_action) {
@@ -82,7 +84,7 @@ public class Figure_appearance:
     [called_by_prefab]
     public Figure_appearance get_for_figure(IFigure figure) {
         Figure_appearance appearance = 
-            this.get_from_pool<Figure_appearance>();
+            this.provide_new<Figure_appearance>();
 
         appearance.init_for_figure(figure);
         
@@ -91,6 +93,9 @@ public class Figure_appearance:
 
     private void init_for_figure(IFigure figure) {
         this.figure = figure;
+        if (figure.id == "23") {
+            bool test = true;
+        }
         appearance_start.set_label(figure.id);
         appearance_end.set_label(figure.id);
     }

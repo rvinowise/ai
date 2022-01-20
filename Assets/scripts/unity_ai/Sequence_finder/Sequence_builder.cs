@@ -21,14 +21,13 @@ public class Sequence_builder: MonoBehaviour {
     private Figure create_figure_for_sequence_of_subfigures(
         IReadOnlyList<IFigure> subfigures
     ) {
-        Figure figure = figure_prefab.get_from_pool<Figure>();
+        Figure figure = figure_prefab.provide_new<Figure>();
         figure.id = get_id_for(subfigures);
 
         var representation = figure.create_representation();
         foreach (IFigure child_figure in subfigures) {
             representation.add_subfigure(child_figure);
         }
-        //pattern.subfigures = subfigures;
 
         return figure;
     }
