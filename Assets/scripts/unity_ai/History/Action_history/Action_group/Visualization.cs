@@ -30,8 +30,12 @@ ISelectable
     }
 
     public void update_shape_accomodating_children() {
-        actions_sprite_renderer.size += (Vector2)action_offset * (actions.Count-1);
-        
+        actions_sprite_renderer.size = 
+            new Vector2(
+                actions_sprite_renderer.size.x,
+                action_offset.y * (actions.Count) + 0.5f
+            );
+
     }
 
     #region ISelectable

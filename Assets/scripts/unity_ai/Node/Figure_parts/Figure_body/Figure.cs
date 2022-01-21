@@ -118,7 +118,7 @@ ISelectable
     public void destroy() {
         //base.destroy();
         foreach (Figure_appearance appearance in all_appearances) {
-            appearance.destroy_object();
+            appearance.destroy();
         }
         this.destroy_object();
     }

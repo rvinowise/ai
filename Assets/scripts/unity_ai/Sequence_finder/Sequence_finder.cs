@@ -65,7 +65,7 @@ MonoBehaviour
             if (!is_possible_sequence(beginning_figure, ending_figure)) {
                 continue;
             }
-
+  
             IFigure signal_pair = sequence_builder.provide_sequence_for_pair(
                 beginning_figure,
                 ending_figure
@@ -94,18 +94,14 @@ MonoBehaviour
                     appearances_of_ending
                 );
             }
-            if (signal_pair.id == "23") {
-                int test = 1;
-            }
-            if (signal_pair.id == "32") {
+            if (signal_pair.id == "10") {
                 int test = 1;
             }
             if (it_is_new_sequence(signal_pair)) {
                 if (sequence_appeared_at_least_twice(signal_pair)) {
                     figure_storage.append_figure(signal_pair);
                 } else {
-                    action_history.remove_all_appearances_of(signal_pair);
-                    ((Figure)signal_pair).destroy();
+                    signal_pair.destroy();
                 }
             }
 

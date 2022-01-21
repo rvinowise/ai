@@ -60,14 +60,14 @@ ISelectable
         if (in_action is Action action) {
             place_next_action(action);
         }
-        //update_shape_accomodating_children();
+        update_shape_accomodating_children();
     }
 
     
 
     public void remove_action(IAction in_action) {
         actions.Remove(in_action);
-        //update_shape_accomodating_children();
+        update_shape_accomodating_children();
     }
 
 

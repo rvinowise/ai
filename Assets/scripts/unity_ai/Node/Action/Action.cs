@@ -50,7 +50,7 @@ ISelectable
     public void destroy()
     {
         action_group.remove_action(this);
-        ((MonoBehaviour)this).destroy_object();
+        this.destroy_object();
     }
     #endregion
 

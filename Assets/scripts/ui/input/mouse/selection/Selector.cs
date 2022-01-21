@@ -39,13 +39,15 @@ public class Selector : MonoBehaviour {
     
     public HashSet<Subfigure> subfigures = new HashSet<Subfigure>();
     public HashSet<ISelectable> selectables = new HashSet<ISelectable>();
+    public HashSet<ISelectable> highlighted_objects = new HashSet<ISelectable>();
 
     #endregion selected elements
     
     public static Selector instance;
 
-    public Color selected_color = new Color(1,0,0);
+    public Color selected_color = new Color(0,1,0);
     public Color normal_color = new Color(1,1,1);
+    public Color highlighted_color = new Color(0.9f,1,0.9f);
     public Mover_of_selected mover_of_selected;
     private Vector3 get_mouse_position_from_top() {
         return new Vector3(
@@ -65,10 +67,15 @@ public class Selector : MonoBehaviour {
     }
 
     public static void select(ISelectable selectable) {
-        selectable.accept_selection(instance);
+        if (!instance.selected(selectable)) {
+            selectable.accept_selection(instance);
+        }
     }
     public static void deselect(ISelectable selectable) {
-        selectable.accept_deselection(instance);
+        if (instance.selected(selectable)) {
+            selectable.accept_deselection(instance);
+        }
+        
     }
 
 
@@ -83,10 +90,11 @@ public class Selector : MonoBehaviour {
         else {
             figures.Add(figure);
             foreach (Figure_appearance appearance in figure._appearances) {
-                select(appearance);
+                highlight(appearance);
             }
         }
     }
+    
     public void deselect(Figure figure) {
         deselect_generally(figure);
         
@@ -98,8 +106,23 @@ public class Selector : MonoBehaviour {
         else {
             figures.Remove(figure);
             foreach (Figure_appearance appearance in figure._appearances) {
-                deselect(appearance);
+                dehighlight(appearance);
             }
+        }
+    }
+    
+    public void highlight(Figure figure) {
+        highlight_generally(figure);
+        highlighted_objects.Add(figure);
+        foreach (IFigure_appearance appearance in figure.all_appearances) {
+            highlight(appearance as Figure_appearance);
+        }
+    }
+    public void dehighlight(Figure figure) {
+        dehighlight_generally(figure);
+        highlighted_objects.Remove(figure);
+        foreach (IFigure_appearance appearance in figure.all_appearances) {
+            dehighlight(appearance as Figure_appearance);
         }
     }
 
@@ -116,6 +139,20 @@ public class Selector : MonoBehaviour {
         appearance.bezier.gameObject.SetActive(false);
         deselect(appearance.appearance_start);
         deselect(appearance.appearance_end);
+    }
+    public void highlight(Figure_appearance appearance) {
+        highlight_generally(appearance);
+        highlighted_objects.Add(appearance);
+        appearance.bezier.gameObject.SetActive(true);
+        highlight(appearance.appearance_start);
+        highlight(appearance.appearance_end);
+    }
+    public void dehighlight(Figure_appearance appearance) {
+        dehighlight_generally(appearance);
+        highlighted_objects.Remove(appearance);
+        appearance.bezier.gameObject.SetActive(false);
+        dehighlight(appearance.appearance_start);
+        dehighlight(appearance.appearance_end);
     }
     
     public void select(Subfigure subfigure) {
@@ -138,11 +175,22 @@ public class Selector : MonoBehaviour {
     public void select(Action action) {
         select_generally(action);
         actions.Add(action);
+        highlight(action.figure_appearance_impl.figure as Figure);
     }
 
     public void deselect(Action action) {
         deselect_generally(action);
         actions.Remove(action);
+        dehighlight(action.figure_appearance_impl.figure as Figure);
+    }
+    public void highlight(Action action) {
+        highlight_generally(action);
+        highlighted_objects.Add(action);
+    }
+
+    public void dehighlight(Action action) {
+        dehighlight_generally(action);
+        highlighted_objects.Remove(action);
     }
     
     private void select_generally(ISelectable selectable) {
@@ -152,6 +200,23 @@ public class Selector : MonoBehaviour {
     private void deselect_generally(ISelectable selectable) {
         selectables.Remove(selectable);
         mark_object_as_deselected(selectable);
+    }
+
+    private void highlight_generally(ISelectable highlightable) {
+        if (selected(highlightable)) {
+            return;
+        }
+        if (highlightable.selection_sprite_renderer!=null) {
+            highlightable.selection_sprite_renderer.color = highlighted_color;
+        }
+    }
+    private void dehighlight_generally(ISelectable highlightable) {
+        if (selected(highlightable)) {
+            return;
+        }
+        if (highlightable.selection_sprite_renderer!=null) {
+            highlightable.selection_sprite_renderer.color = normal_color;
+        }
     }
     
     public bool selected(ISelectable selectable) {

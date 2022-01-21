@@ -1,10 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Numerics;
 using rvinowise.ai.general;
+using rvinowise.unity;
 
 namespace rvinowise.ai.general {
 
-public interface IFigure {
+public interface IFigure:
+IHave_destructor
+{
 
     string id { get; }
 

@@ -50,17 +50,12 @@ public class Figure_appearance:
     
 
     public virtual void destroy() {
-        store_action_as_child(appearance_start);
-        store_action_as_child(appearance_end);
-        appearance_start.transform.parent = transform;
-        appearance_end.transform.parent = transform;
-        ((MonoBehaviour)this).destroy_object();
+        appearance_start.destroy();
+        appearance_end.destroy();
+        this.destroy_object();
     }
 
-    private void store_action_as_child(Action in_action) {
-        in_action.action_group.remove_action(in_action);
-        in_action.transform.parent = transform;
-    }
+
 
     #region visualisation
     

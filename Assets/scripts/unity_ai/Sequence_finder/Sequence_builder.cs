@@ -28,6 +28,7 @@ public class Sequence_builder: MonoBehaviour {
         foreach (IFigure child_figure in subfigures) {
             representation.add_subfigure(child_figure);
         }
+        figure.sequence = subfigures.ToList();
 
         return figure;
     }

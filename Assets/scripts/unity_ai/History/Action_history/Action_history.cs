@@ -138,18 +138,6 @@ IAction_history
         return appearance;
     }
 
-    public void remove_all_appearances_of(IFigure figure) {
-        foreach (var appearance in figure.all_appearances) {
-            remove_figure_appearance(appearance);
-        }
-    }
-    public void remove_figure_appearance(IFigure_appearance appearance) {
-        //appearance.figure.remove_appearance(appearance);
-        if (appearance is Figure_appearance unity_appearance) {
-            unity_appearance.appearance_start.action_group.remove_action(unity_appearance.appearance_start);
-            unity_appearance.appearance_end.action_group.remove_action(unity_appearance.appearance_end);
-        }
-    }
 
 
     private void put_action_into_moment(

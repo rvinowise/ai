@@ -5154,6 +5154,7 @@ MonoBehaviour:
   mood: 0
   selected_color: {r: 0, g: 1, b: 0.059127808, a: 1}
   normal_color: {r: 1, g: 1, b: 1, a: 1}
+  highlighted_color: {r: 0.8, g: 1, b: 0.8, a: 1}
   mover_of_selected: {fileID: 2013752249}
 --- !u!1 &1719276588
 GameObject:
