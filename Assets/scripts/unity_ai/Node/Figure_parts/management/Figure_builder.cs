@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using rvinowise.ai.general;
-using rvinowise.ai.general;
 using rvinowise.rvi.contracts;
 using rvinowise.unity.extensions;
 using rvinowise.unity.ui.input;
@@ -85,7 +84,7 @@ public class Figure_builder: MonoBehaviour {
     private void add_next_subfigure(
         IFigure_appearance appended_figure
     ) {
-        Subfigure new_subfigure = representation.add_subfigure(appended_figure.figure);
+        ISubfigure new_subfigure = representation.add_subfigure(appended_figure.figure);
         new_subfigure.id = (last_subfigure_id++).ToString();
         appearance_to_subfigure.Add(appended_figure, new_subfigure);
         if (ended_subfigures.Any()) {
@@ -110,10 +109,6 @@ public class Figure_builder: MonoBehaviour {
         }
     }
 
-    // it's ok to have ALL links stored (even through the nodes)
-    // img: pruned vs unpruned connections in Figures
-    public static IFigure prune_exessive_links(IFigure figure) {
-        return figure;
-    }
+
 }
 }

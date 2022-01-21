@@ -9,8 +9,6 @@ using Action = rvinowise.ai.unity.Action;
 using rvinowise.rvi.contracts;
 using rvinowise.ai.general;
 using System.Numerics;
-using rvinowise.ai.general;
-using rvinowise.ai.unity;
 
 namespace rvinowise.ai.unity {
 

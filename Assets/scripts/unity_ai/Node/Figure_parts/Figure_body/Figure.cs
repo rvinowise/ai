@@ -72,6 +72,9 @@ ISelectable
             unity_appearance.transform.localPosition = Vector3.zero;
         }
     }
+
+    public IReadOnlyList<IFigure_representation> get_representations() 
+        => representations.AsReadOnly();
     #endregion IFigure
     
     

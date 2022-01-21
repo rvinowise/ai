@@ -15,14 +15,18 @@ public class Figure_representation:
 MonoBehaviour,
 IFigure_representation
 {
+    #region IFigure_representation
     public string id{get;set;}
+    public IReadOnlyList<ISubfigure> get_subfigures() => subfigures.AsReadOnly();
+
+    #endregion IFigure_representation
     public List<ISubfigure> first_subfigures = new List<ISubfigure>();
 
     public List<ISubfigure> subfigures = new List<ISubfigure>();
     
     
     #region building
-    public Subfigure add_subfigure(IFigure child_figure) {
+    public ISubfigure add_subfigure(IFigure child_figure) {
         Subfigure subfigure = subfigure_prefab.
             create_for_figure(child_figure);
         subfigure.transform.parent = subfigures_folder.transform;

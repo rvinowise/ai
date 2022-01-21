@@ -25,8 +25,12 @@ public class Sequence_builder: MonoBehaviour {
         figure.id = get_id_for(subfigures);
 
         var representation = figure.create_representation();
+        ISubfigure previous = null;
+        ISubfigure next;
         foreach (IFigure child_figure in subfigures) {
-            representation.add_subfigure(child_figure);
+            next = representation.add_subfigure(child_figure);
+            previous?.connext_to_next(next);
+            previous = next;
         }
         figure.sequence = subfigures.ToList();
 

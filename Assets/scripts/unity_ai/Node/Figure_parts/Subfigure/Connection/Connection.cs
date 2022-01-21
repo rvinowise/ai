@@ -20,8 +20,9 @@ MonoBehaviour
     public ICircle source;
     public ICircle destination;
 
-    public SpriteRenderer tail;
-    public SpriteRenderer head;
+    public Transform tail;
+    public Transform head;
+    public Transform line_end;
 
     private LineRenderer line_renderer;
 
@@ -54,18 +55,19 @@ MonoBehaviour
         Vector3 tail_attachment = source.transform.position.offset_in_direction(
             source.radius,
             source.transform.position.degrees_to(destination.transform.position)
-        )+shift_to_background;
+        );//+shift_to_background;
         Vector3 head_attachment = destination.transform.position.offset_in_direction(
             source.radius,
             destination.transform.position.degrees_to(source.transform.position)
-        )+shift_to_background;
+        );//+shift_to_background;
             
+        tail.position = tail_attachment;
+        head.position = head_attachment;
+        tail.direct_to(destination.transform.position);
+        head.direct_to(destination.transform.position);
+
         line_renderer.SetPosition(0, tail_attachment);
-        line_renderer.SetPosition(1, head_attachment);
-        tail.transform.position = tail_attachment;
-        head.transform.position = head_attachment;
-        tail.transform.direct_to(destination.transform.position);
-        head.transform.direct_to(destination.transform.position);
+        line_renderer.SetPosition(1, line_end.position);
     }
     
     #endregion

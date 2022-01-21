@@ -45,12 +45,8 @@ ISelectable
         return _previous.AsReadOnly();
     }}
 
-    private List<ISubfigure> _next = new List<ISubfigure>();
-    private List<ISubfigure> _previous = new List<ISubfigure>();
-
-
-    private LineRenderer lines_to_next;
-    
+    public List<ISubfigure> _next = new List<ISubfigure>();
+    public List<ISubfigure> _previous = new List<ISubfigure>();
 
     public String get_name() {
         return String.Format("{0}({1})", referenced_figure.id, id);
@@ -58,22 +54,39 @@ ISelectable
     
     #region building
     public void connext_to_next(ISubfigure next_subfigure) {
-        append_next(next_subfigure);
+        _next.Add(next_subfigure);
         next_subfigure.append_previous(this);
         if (next_subfigure is Subfigure unity_subfigure) {
             create_connection_arrow_to(unity_subfigure);
         }
     }
-    public void append_next(ISubfigure subfigure) {
-        _next.Add(subfigure);
-    }
     public void append_previous(ISubfigure subfigure) {
         _previous.Add(subfigure);
+    }
+    public void remove_previous(ISubfigure subfigure) {
+        _previous.Remove(subfigure);
+    }
+    public void disconnect_from_next(ISubfigure disconnectable) {
+        disconnectable.remove_previous(this);
+        _next.Remove(disconnectable);
+        if (disconnectable is Subfigure unity_subfigure) {
+            delete_connection_arrow_to(unity_subfigure);
+        }
     }
 
     private void create_connection_arrow_to(Subfigure next) {
         Connection new_connection = connection_prefab.create(this, next);
         new_connection.transform.parent = connections_attachment;
+    }
+    private void delete_connection_arrow_to(Subfigure next) {
+        foreach(
+            Connection connection in 
+            connections_attachment.GetComponentsInChildren<Connection>()
+        ) {
+            if (connection.destination == next) {
+                connection.destroy_object();
+            }
+        }
     }
 
     #endregion
@@ -81,8 +94,7 @@ ISelectable
     #region visualisation
     [SerializeField]
     private TextMeshPro lable;
-    [SerializeField]
-    private Transform connections_attachment;
+    [SerializeField] private Transform connections_attachment;
     [SerializeField]
     private Connection connection_prefab;
     
