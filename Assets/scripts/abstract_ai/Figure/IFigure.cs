@@ -12,6 +12,7 @@ IHave_destructor
     string id { get; }
 
     IReadOnlyList<IFigure_appearance> all_appearances { get; }
+    IReadOnlyList<IFigure_representation> get_representations();
     
     IReadOnlyList<IFigure_appearance> get_appearances_in_interval(
         BigInteger start, BigInteger end

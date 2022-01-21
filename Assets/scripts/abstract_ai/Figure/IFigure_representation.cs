@@ -7,8 +7,8 @@ namespace rvinowise.ai.general {
 public interface IFigure_representation {
 
     string id { get; }
-    
 
+    IReadOnlyList<ISubfigure> get_subfigures();
 }
 
 }
