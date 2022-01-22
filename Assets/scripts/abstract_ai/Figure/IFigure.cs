@@ -22,6 +22,8 @@ IHave_destructor
     void add_appearance(
         IFigure_appearance appearance
     );
+
+    IReadOnlyList<IFigure_representation> get_representations();
 }
 
 }

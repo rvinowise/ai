@@ -8,7 +8,9 @@ public interface IFigure_representation {
 
     string id { get; }
     
+    IReadOnlyList<ISubfigure> get_subfigures();
 
+    ISubfigure add_subfigure(IFigure child_figure);
 }
 
 }

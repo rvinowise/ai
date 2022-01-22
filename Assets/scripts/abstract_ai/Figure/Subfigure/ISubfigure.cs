@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace rvinowise.ai.general {
 
 public interface ISubfigure {
-    string id {get;}
+    string id {get;set;}
     IFigure_representation parent { get; }
     IFigure referenced_figure {get; }
     IReadOnlyList<ISubfigure> next { get; }
@@ -12,8 +12,9 @@ public interface ISubfigure {
 
     #region building
     public void connext_to_next(ISubfigure next_subfigure);
-    public void append_next(ISubfigure subfigure) ;
+    public void disconnect_from_next(ISubfigure next_subfigure);
     public void append_previous(ISubfigure subfigure);
+    public void remove_previous(ISubfigure subfigure);
     #endregion
 }
 
