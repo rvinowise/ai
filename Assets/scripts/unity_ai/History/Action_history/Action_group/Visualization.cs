@@ -49,7 +49,7 @@ ISelectable
   
 
     [SerializeField]
-    public SpriteRenderer selection_sprite_renderer => actions_sprite_renderer;
+    public Renderer selection_sprite_renderer => actions_sprite_renderer;
  
     #endregion
     

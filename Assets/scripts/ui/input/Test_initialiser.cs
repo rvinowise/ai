@@ -21,7 +21,7 @@ public class Test_initialiser : MonoBehaviour {
 
     public static Test_initialiser instance;
 
-    public Figure_builder figure_builder;
+    public Figure_builder_from_signals figure_builderFromSignals;
     public File_input file_input;
     public Figure_storage figure_storage;
     public Action_history action_history;

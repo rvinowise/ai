@@ -14,6 +14,8 @@ using UnityEngine.Assertions;
 using rvinowise.unity.ui.input.mouse;
 using rvinowise.ai.unity;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
+using Selectable = rvinowise.unity.ui.input.mouse.Selectable;
 
 namespace rvinowise.unity.ui.input {
 
@@ -23,6 +25,8 @@ public class Selector : MonoBehaviour {
 
     public Action_history action_history;
     public Figure_storage figure_storage;
+    [SerializeField] private Toggle toggle_pleasure;
+    [SerializeField] private Toggle toggle_pain;
     
     public HashSet<IAction_group> action_groups = new HashSet<IAction_group>();
     public HashSet<IAction> actions = new HashSet<IAction>();
@@ -79,21 +83,35 @@ public class Selector : MonoBehaviour {
     }
 
 
+    public void select(Selectable selectable) {
+        select_generally(selectable);
+    }
+    public void deselect(Selectable selectable) {
+        deselect_generally(selectable);
+    }
     public void select(Figure figure) {
         select_generally(figure);
         
-        if (figure == figure_storage.pleasure_signal) {
-            mood += 1;
-        } else if (figure ==  figure_storage.pain_signal) {
-            mood -= 1;
-        }
-        else {
-            figures.Add(figure);
-            foreach (Figure_appearance appearance in figure._appearances) {
-                highlight(appearance);
-            }
+        figures.Add(figure);
+        foreach (Figure_appearance appearance in figure._appearances) {
+            highlight(appearance);
         }
     }
+    
+    //inspector event
+    public void on_mood_changed() {
+        if (toggle_pleasure.isOn) {
+            mood = 1;
+        }
+        else if (toggle_pain.isOn) {
+            mood = -1;
+        }
+        else {
+            mood = 0;
+        }
+
+    }
+
     
     public void deselect(Figure figure) {
         deselect_generally(figure);
@@ -114,14 +132,14 @@ public class Selector : MonoBehaviour {
     public void highlight(Figure figure) {
         highlight_generally(figure);
         highlighted_objects.Add(figure);
-        foreach (IFigure_appearance appearance in figure.all_appearances) {
+        foreach (IFigure_appearance appearance in figure.get_appearances()) {
             highlight(appearance as Figure_appearance);
         }
     }
     public void dehighlight(Figure figure) {
         dehighlight_generally(figure);
         highlighted_objects.Remove(figure);
-        foreach (IFigure_appearance appearance in figure.all_appearances) {
+        foreach (IFigure_appearance appearance in figure.get_appearances()) {
             dehighlight(appearance as Figure_appearance);
         }
     }
@@ -207,7 +225,7 @@ public class Selector : MonoBehaviour {
             return;
         }
         if (highlightable.selection_sprite_renderer!=null) {
-            highlightable.selection_sprite_renderer.color = highlighted_color;
+            highlightable.selection_sprite_renderer.material.color = highlighted_color;
         }
     }
     private void dehighlight_generally(ISelectable highlightable) {
@@ -215,7 +233,7 @@ public class Selector : MonoBehaviour {
             return;
         }
         if (highlightable.selection_sprite_renderer!=null) {
-            highlightable.selection_sprite_renderer.color = normal_color;
+            highlightable.selection_sprite_renderer.material.color = normal_color;
         }
     }
     
@@ -225,12 +243,12 @@ public class Selector : MonoBehaviour {
     
     private void mark_object_as_selected(ISelectable selectable) {
         if (selectable.selection_sprite_renderer!=null) {
-            selectable.selection_sprite_renderer.color = selected_color;
+            selectable.selection_sprite_renderer.material.color = selected_color;
         }
     }
     private void mark_object_as_deselected(ISelectable selectable) {
         if (selectable.selection_sprite_renderer!=null) {
-            selectable.selection_sprite_renderer.color = normal_color;
+            selectable.selection_sprite_renderer.material.color = normal_color;
         }
     }
 

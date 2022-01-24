@@ -11,20 +11,22 @@ IHave_destructor
 
     string id { get; }
 
-    IReadOnlyList<IFigure_appearance> all_appearances { get; }
+    IReadOnlyList<IFigure_appearance> get_appearances();
+    
     IReadOnlyList<IFigure_representation> get_representations();
+    IFigure_representation create_representation();
     
     IReadOnlyList<IFigure_appearance> get_appearances_in_interval(
         BigInteger start, BigInteger end
     );
 
-    IReadOnlyList<IFigure> as_lowlevel_sequence();
-
     void add_appearance(
         IFigure_appearance appearance
     );
+    
+    IReadOnlyList<IFigure> as_lowlevel_sequence();
+    
 
-    IReadOnlyList<IFigure_representation> get_representations();
 }
 
 }

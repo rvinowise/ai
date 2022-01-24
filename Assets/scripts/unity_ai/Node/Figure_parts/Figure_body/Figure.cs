@@ -16,8 +16,7 @@ namespace rvinowise.ai.unity {
 public partial class Figure: 
 MonoBehaviour,
 IFigure,
-ICircle,
-ISelectable
+ICircle
 {
     
     public List<IFigure_representation> representations 
@@ -35,7 +34,7 @@ ISelectable
     
     #region building
 
-    public Figure_representation create_representation() {
+    public IFigure_representation create_representation() {
         Figure_representation representation = representation_prefab.provide_new<Figure_representation>();
         representations.Add(representation);
         representation.transform.parent = representations_folder;
@@ -47,10 +46,10 @@ ISelectable
     #region IFigure
 
     public string id {
-        get { return label.text; }
-        set { label.text = value; }
+        get { return lable.text; }
+        set { lable.text = value; }
     }
-    public IReadOnlyList<IFigure_appearance> all_appearances => _appearances;
+    public IReadOnlyList<IFigure_appearance> get_appearances() => _appearances;
 
     public IReadOnlyList<IFigure_appearance> get_appearances_in_interval(
         BigInteger start, BigInteger end
@@ -97,11 +96,10 @@ ISelectable
 
     #region visualisation
 
-    public TextMeshPro label;
+    public TMP_Text lable;
     [SerializeField] private Transform representations_folder;
 
     void Awake() {
-        animator = GetComponent<Animator>();
         collider = GetComponent<Collider>();
     }
 
@@ -120,7 +118,7 @@ ISelectable
 
     public void destroy() {
         //base.destroy();
-        foreach (Figure_appearance appearance in all_appearances) {
+        foreach (Figure_appearance appearance in get_appearances()) {
             appearance.destroy();
         }
         this.destroy_object();

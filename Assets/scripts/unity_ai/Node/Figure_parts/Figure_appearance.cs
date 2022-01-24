@@ -98,7 +98,7 @@ public class Figure_appearance:
     #region ISelectable
 
     public new Collider collider { get; }
-    public SpriteRenderer selection_sprite_renderer => null;
+    public Renderer selection_sprite_renderer => null;
     public void accept_selection(Selector selector) {
         selector.select(this);
     }

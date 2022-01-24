@@ -122,7 +122,7 @@ ISelectable
         get => _selected;
     }
     private bool _selected;
-    public SpriteRenderer selection_sprite_renderer => sprite_renderer;
+    public Renderer selection_sprite_renderer => sprite_renderer;
     [SerializeField]
     private SpriteRenderer sprite_renderer;
     

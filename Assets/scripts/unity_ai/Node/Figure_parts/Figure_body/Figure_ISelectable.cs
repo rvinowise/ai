@@ -26,7 +26,7 @@ public partial class Figure:
         selector.deselect(this);
     }
 
-    [SerializeField] public SpriteRenderer selection_sprite_renderer => sprite_renderer;
+    [SerializeField] public Renderer selection_sprite_renderer => sprite_renderer;
     [SerializeField] private SpriteRenderer sprite_renderer;
     public new Collider collider{get;private set;}
     #endregion ISelectable

@@ -10,14 +10,15 @@ using rvinowise.unity.ui.input;
 
 namespace rvinowise.ai.unity {
 
-public class Figure_builder: MonoBehaviour {
+public class Figure_builder_from_signals: MonoBehaviour {
 
+    [SerializeField] private Figure_builder builder;
     public Action_history action_history;
     public Figure_storage figure_storage;
     private Figure figure_prefab;
     
     private Figure figure; //which is being built by this builder
-    private Figure_representation representation; //which is being built by this builder
+    private IFigure_representation representation; //which is being built by this builder
     private List<ISubfigure> all_subfigures = new List<ISubfigure>();
     private List<ISubfigure> ended_subfigures = new List<ISubfigure>();
     
@@ -40,7 +41,7 @@ public class Figure_builder: MonoBehaviour {
         IReadOnlyList<IAction_group> action_groups
     ) {
         clear();
-        figure = create_new_figure("f") as Figure;
+        figure = builder.create_new_figure("f") as Figure;
         representation = figure.create_representation();
         
         foreach(IAction_group group in action_groups) {
@@ -49,19 +50,7 @@ public class Figure_builder: MonoBehaviour {
         figure_storage.append_figure(figure);
         return figure;
     }
-    public Dictionary<string,int> last_ids = new Dictionary<string, int>();
-    public IFigure create_new_figure(string prefix = "") {
-        Figure new_figure = figure_prefab.provide_new<Figure>();
-        new_figure.id = get_next_id_for_prefix(prefix);
-        return new_figure;
-    }
-
-    private string get_next_id_for_prefix(string prefix) {
-        int next_id = 0;
-        last_ids.TryGetValue(prefix, out next_id);
-        last_ids[prefix] = ++next_id;
-        return $"{prefix}{next_id}";
-    }
+    
 
     private void clear() {
         appearance_to_subfigure.Clear();
@@ -93,7 +82,7 @@ public class Figure_builder: MonoBehaviour {
             }
         }
         else {
-            representation.first_subfigures.Add(new_subfigure);
+            representation.add_first_subfigures(new_subfigure);
         }
     }
 

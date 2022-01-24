@@ -94,9 +94,7 @@ MonoBehaviour
                     appearances_of_ending
                 );
             }
-            if (signal_pair.id == "10") {
-                int test = 1;
-            }
+
             if (it_is_new_sequence(signal_pair)) {
                 if (sequence_appeared_at_least_twice(signal_pair)) {
                     figure_storage.append_figure(signal_pair);

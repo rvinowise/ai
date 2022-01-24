@@ -13,7 +13,7 @@ public interface ISelectable {
     Transform transform{get;}
     Collider collider {get;}
     //bool selected{get;set;}
-    SpriteRenderer selection_sprite_renderer {get;}
+    Renderer selection_sprite_renderer {get;}
 
     void accept_selection(Selector selector);
     void accept_deselection(Selector selector);

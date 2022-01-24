@@ -16,10 +16,14 @@ public class Table:MonoBehaviour {
     private List<Table_cell> cells = new List<Table_cell>();
     private GridLayoutGroup layout_group;
 
-    public void init(ICircle stored_object) {
+    public void init(Component stored_object) {
         canvas = GetComponent<Canvas>();
         layout_group = GetComponent<GridLayoutGroup>();
-        layout_group.cellSize = new Vector2(stored_object.radius, stored_object.radius);
+        //Renderer renderer = stored_object.GetComponentInChildren<Renderer>(); 
+        layout_group.cellSize = new Vector2(
+            1,
+            1
+        );
     }
     public void add_item(
         MonoBehaviour in_item

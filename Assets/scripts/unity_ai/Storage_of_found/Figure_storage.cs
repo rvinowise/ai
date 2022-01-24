@@ -9,14 +9,16 @@ using rvinowise.unity.ui.input;
 using rvinowise.unity.ui.table;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace rvinowise.ai.unity {
 public class Figure_storage: MonoBehaviour {
     public List<IFigure> known_figures = new List<IFigure>();
     public List<IFigure> known_sequential_figures = new List<IFigure>();
-    public Table figure_table;
+    public Table figure_button_table;
     public Figure pleasure_signal;
     public Figure pain_signal;
+    [SerializeField] private Transform figure_folder;
     
     public Dictionary<string, IFigure> name_to_figure = 
         new Dictionary<string, IFigure>();
@@ -24,21 +26,30 @@ public class Figure_storage: MonoBehaviour {
     
 
     public Figure figure_prefab;
+    public Figure_button figure_button_prefab;
     
 
     void Awake() {
-        figure_table.init(figure_prefab);
+        figure_button_table.init(figure_button_prefab);
     }
 
     
     
 
     public void append_figure(IFigure figure) { 
-        Figure unity_figure = figure as Figure;
 
         known_figures.Add(figure);
         name_to_figure.Add(figure.id, figure);
-        figure_table.add_item(unity_figure);
+
+        if (figure is Figure unity_figure) {
+            unity_figure.transform.parent = figure_folder;
+        }
+        create_button_for_figure(figure);
+    }
+
+    private void create_button_for_figure(IFigure figure) {
+        Figure_button figure_button = figure_button_prefab.create_for_figure(figure);
+        figure_button_table.add_item(figure_button);
     }
 
     
@@ -48,7 +59,7 @@ public class Figure_storage: MonoBehaviour {
         known_figures.Remove(figure);
         name_to_figure.Remove(figure.id);
         if (figure is MonoBehaviour unity_figure) {
-            figure_table.remove_item(unity_figure);
+            figure_button_table.remove_item(unity_figure);
         }
     }
     

@@ -54,6 +54,7 @@ IAction_history
     
     
     public override void input_selected_figures() {
+        var test0 = Selector.instance;
         var selected_figures = Selector.instance.figures;
         if (!selected_figures.Any()) {
             return;
@@ -121,9 +122,9 @@ IAction_history
     }
 
     public IFigure_appearance create_figure_appearance(
-    IFigure figure,
-    BigInteger start,
-    BigInteger end
+        IFigure figure,
+        BigInteger start,
+        BigInteger end
     ) {
         Contract.Requires(
             start < end,
@@ -155,62 +156,16 @@ IAction_history
         action.action_group = group;
     }
 
-    public Action_group get_action_group_at_moment(
+    private Action_group get_action_group_at_moment(
         BigInteger moment
     ) {
         Action_group result;
         moments_to_action_groups.TryGetValue(moment,out result);
         return result;
     }
-    
-    /* IHistory_interval interface */
-    public IReadOnlyList<IFigure_appearance> get_figure_appearances(
-        IFigure figure    
-    ) {
-        return figure_appearances[figure].AsReadOnly() 
-            as IReadOnlyList<IFigure_appearance>;
-    }
 
-    public IEnumerator<Action_group> GetEnumerator() {
-        return action_groups.GetEnumerator();
-    }
 
-        
 
-    public Action_group this[int i] {
-        get { return action_groups[i]; }
-    }
 
-    public int Count {
-        get => action_groups.Count;
-    }
-    
-    #region IFigure
-
-    public string id { get; }
-
-    public string as_dot_graph() {
-        throw new System.NotImplementedException();
-    }
-
-    public IReadOnlyList<IFigure_appearance> get_appearances(IFigure in_where) {
-        Contract.Assert(false, "Action history is retrieved via the 'instance' field");
-        return null;
-    }
-
-    public IReadOnlyList<IFigure_appearance> get_appearances_in_interval(BigInteger start, BigInteger end) {
-        throw new System.NotImplementedException();
-    }
-
-    #endregion
-
-    #region IFigure_appearance
-
-    public IFigure figure { get; }
-    public IFigure place { get; } = null;
-    public BigInteger start_moment { get; }
-    public BigInteger end_moment { get; }
-
-    #endregion
 }
 }

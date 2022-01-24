@@ -18,7 +18,8 @@ IFigure_representation
     #region IFigure_representation
     public string id{get;set;}
     public IReadOnlyList<ISubfigure> get_subfigures() => subfigures.AsReadOnly();
-
+    public IReadOnlyList<ISubfigure> get_first_subfigures() => first_subfigures.AsReadOnly();
+    public void add_first_subfigures(ISubfigure subfigure) => first_subfigures.Add(subfigure);
     #endregion IFigure_representation
     public List<ISubfigure> first_subfigures = new List<ISubfigure>();
 
@@ -53,9 +54,15 @@ IFigure_representation
 
     #region visualisation
     [SerializeField] public Subfigure subfigure_prefab;
-    public Transform subfigures_folder;
+    [SerializeField] private Transform subfigures_folder;
     private Vector3 subfigures_offset = new Vector3(2,0,0);
+    public void show() {
+        gameObject.SetActive(true);
+    }
 
+    public void toggle_showing_graph() {
+        subfigures_folder.gameObject.SetActive(subfigures_folder.gameObject.activeInHierarchy);
+    }
     #endregion visualisation
 }
 }

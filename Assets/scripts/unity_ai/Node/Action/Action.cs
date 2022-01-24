@@ -62,7 +62,7 @@ ISelectable
         selector.deselect(this);
     }
     
-    public SpriteRenderer selection_sprite_renderer => sprite_renderer;
+    public Renderer selection_sprite_renderer => sprite_renderer;
     [SerializeField] private SpriteRenderer sprite_renderer;
     public new Collider collider{get;set;}
     #endregion ISelectable
