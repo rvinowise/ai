@@ -41,12 +41,9 @@ public class Figure_appearance:
         pooled_object = GetComponent<Pooled_object>();
         appearance_start.figure_appearance = this;
         appearance_end.figure_appearance = this;
-        
-    }
-
-    void Start() {
         bezier.gameObject.SetActive(false);
     }
+    
     
 
     public virtual void destroy() {

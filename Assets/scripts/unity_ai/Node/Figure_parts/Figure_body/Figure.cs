@@ -15,8 +15,7 @@ namespace rvinowise.ai.unity {
 
 public partial class Figure: 
 MonoBehaviour,
-IFigure,
-ICircle
+IFigure
 {
     
     public List<IFigure_representation> representations 
@@ -37,7 +36,7 @@ ICircle
     public IFigure_representation create_representation() {
         Figure_representation representation = representation_prefab.provide_new<Figure_representation>();
         representations.Add(representation);
-        representation.transform.parent = representations_folder;
+        representation.transform.SetParent(representations_folder,false);
         return representation;
     }
 
@@ -98,19 +97,17 @@ ICircle
 
     public TMP_Text lable;
     [SerializeField] private Transform representations_folder;
-
+    public Figure_button button;
     void Awake() {
         collider = GetComponent<Collider>();
     }
 
-    
-    #region ICircle
-
-    public float radius => transform.localScale.x;
-
-    #endregion ICircle
-
-    
+    public void show_inside() {
+        gameObject.SetActive(true);
+    }
+    public void hide_inside() {
+        gameObject.SetActive(false);
+    }
 
     #endregion visualisation
 

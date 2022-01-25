@@ -43,12 +43,16 @@ public class Figure_storage: MonoBehaviour {
 
         if (figure is Figure unity_figure) {
             unity_figure.transform.parent = figure_folder;
+            unity_figure.transform.localPosition = Vector3.zero;
+            unity_figure.gameObject.SetActive(false);
+            create_button_for_figure(unity_figure);
         }
-        create_button_for_figure(figure);
+        
     }
 
-    private void create_button_for_figure(IFigure figure) {
+    private void create_button_for_figure(Figure figure) {
         Figure_button figure_button = figure_button_prefab.create_for_figure(figure);
+        figure.button = figure_button;
         figure_button_table.add_item(figure_button);
     }
 

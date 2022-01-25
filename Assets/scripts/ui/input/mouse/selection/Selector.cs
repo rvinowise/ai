@@ -91,42 +91,35 @@ public class Selector : MonoBehaviour {
     }
     public void select(Figure figure) {
         select_generally(figure);
-        
+        show_insides_of_one_figure(figure);
+        figure.button.highlight_as_selected();
         figures.Add(figure);
-        foreach (Figure_appearance appearance in figure._appearances) {
+        foreach (Figure_appearance appearance in figure.get_appearances()) {
             highlight(appearance);
         }
     }
-    
-    //inspector event
-    public void on_mood_changed() {
-        if (toggle_pleasure.isOn) {
-            mood = 1;
-        }
-        else if (toggle_pain.isOn) {
-            mood = -1;
-        }
-        else {
-            mood = 0;
-        }
 
+    private void show_insides_of_one_figure(Figure shown_figure) {
+        shown_figure.show_inside();
+        foreach (Figure figure in figures) {
+            if (shown_figure != figure) {
+                figure.hide_inside();
+            }
+        }
     }
+    
+    
 
     
     public void deselect(Figure figure) {
         deselect_generally(figure);
+        figure.hide_inside();
+        figure.button.dehighlight_as_selected();
+        figures.Remove(figure);
+        foreach (Figure_appearance appearance in figure._appearances) {
+            dehighlight(appearance);
+        }
         
-        if (figure == figure_storage.pleasure_signal) {
-            mood -= 1;
-        } else if (figure ==  figure_storage.pain_signal) {
-            mood += 1;
-        }
-        else {
-            figures.Remove(figure);
-            foreach (Figure_appearance appearance in figure._appearances) {
-                dehighlight(appearance);
-            }
-        }
     }
     
     public void highlight(Figure figure) {
@@ -235,6 +228,18 @@ public class Selector : MonoBehaviour {
         if (highlightable.selection_sprite_renderer!=null) {
             highlightable.selection_sprite_renderer.material.color = normal_color;
         }
+    }
+    
+    //inspector event
+    public void on_mood_changed() {
+        if (toggle_pleasure.isOn) {
+            mood = 1;
+        } else if (toggle_pain.isOn) {
+            mood = -1;
+        } else {
+            mood = 0;
+        }
+
     }
     
     public bool selected(ISelectable selectable) {

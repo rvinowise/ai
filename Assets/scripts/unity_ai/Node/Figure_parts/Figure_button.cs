@@ -10,6 +10,7 @@ using rvinowise.unity.ui.input;
 using rvinowise.unity.ui.input.mouse;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using Vector3 = UnityEngine.Vector3;
 
 
@@ -22,12 +23,13 @@ public class Figure_button:
 
     public Figure figure;
 
-    public bool is_active;
+    [SerializeField] private Image selectable_image;
     
     [called_by_prefab]
-    public Figure_button create_for_figure(IFigure figure) {
+    public Figure_button create_for_figure(Figure figure) {
         Figure_button figure_button = this.provide_new<Figure_button>();
         figure_button.lable.text = figure.id;
+        figure_button.figure = figure;
         return figure_button;
 
     }
@@ -37,22 +39,19 @@ public class Figure_button:
     }
 
     private void toggle_showing_figure() {
-        if (is_active) {
-            hide_figure();
+        if (Selector.instance.selected(figure)) {
+            Selector.deselect(figure);
+        } else {
+            Selector.select(figure);
         }
-        else {
-            show_figure();
-        }
-    }
-
-    private void show_figure() {
-        is_active = true; 
-        figure.gameObject.SetActive(true);
     }
     
-    private void hide_figure() {
-        is_active = false; 
-        figure.gameObject.SetActive(false);
+
+    public void highlight_as_selected() {
+        selectable_image.color = Selector.instance.selected_color;
+    }
+    public void dehighlight_as_selected() {
+        selectable_image.color = Selector.instance.normal_color;
     }
 }
 }
