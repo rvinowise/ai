@@ -278,6 +278,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4035209654722239882}
   - component: {fileID: 4683541298846961202}
+  - component: {fileID: 9185981537170999550}
   m_Layer: 0
   m_Name: figure_button
   m_TagString: Untagged
@@ -314,8 +315,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lable: {fileID: 7988423395829484196}
   figure: {fileID: 0}
-  is_active: 0
   selectable_image: {fileID: 7512208782080898975}
+--- !u!65 &9185981537170999550
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4035209654722239885}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7026848950250747807
 GameObject:
   m_ObjectHideFlags: 0

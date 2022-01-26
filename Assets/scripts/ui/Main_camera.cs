@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using rvinowise.rvi.contracts;
 using rvinowise.unity.ui.input;
 using UnityEngine;
-using Input = rvinowise.unity.ui.input.Input;
 
 public class Main_camera : MonoBehaviour {
     
@@ -36,9 +35,9 @@ public class Main_camera : MonoBehaviour {
     // }
 
     private void input_change_zoom() {
-        float wheel_movement = Input.instance.scroll_value;
+        float wheel_movement = Unity_input.instance.scroll_value;
         
-        if (Input.instance.zoom_held 
+        if (Unity_input.instance.zoom_held 
             &&
             wheel_movement != 0) 
         {
@@ -64,7 +63,7 @@ public class Main_camera : MonoBehaviour {
     private static float zoom_speed = 0.0016f;
     private void Zoom()
     {
-        float mouseScrollWheel = Input.instance.scroll_value;
+        float mouseScrollWheel = Unity_input.instance.scroll_value;
         
         float newZoomLevel = main_camera.orthographicSize - mouseScrollWheel;
 

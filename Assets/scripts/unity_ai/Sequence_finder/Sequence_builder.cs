@@ -28,7 +28,7 @@ public class Sequence_builder: MonoBehaviour {
         ISubfigure previous = null;
         ISubfigure next;
         foreach (IFigure child_figure in subfigures) {
-            next = representation.add_subfigure(child_figure);
+            next = representation.create_subfigure(child_figure);
             previous?.connext_to_next(next);
             previous = next;
         }

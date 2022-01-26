@@ -13,24 +13,19 @@ namespace rvinowise.ai.unity {
 public class Figure_builder_from_signals: MonoBehaviour {
 
     [SerializeField] private Figure_builder builder;
-    public Action_history action_history;
-    public Figure_storage figure_storage;
-    private Figure figure_prefab;
+    private Figure_storage figure_storage => builder.figure_storage;
     
     private Figure figure; //which is being built by this builder
     private IFigure_representation representation; //which is being built by this builder
     private List<ISubfigure> all_subfigures = new List<ISubfigure>();
     private List<ISubfigure> ended_subfigures = new List<ISubfigure>();
     
-    private Dictionary<IFigure_appearance, ISubfigure> 
-    appearance_to_subfigure 
+    private Dictionary<IFigure_appearance, ISubfigure> appearance_to_subfigure 
     = new Dictionary<IFigure_appearance, ISubfigure>();
 
     private int last_subfigure_id;
 
-    void Awake() {
-        figure_prefab = figure_storage.figure_prefab;
-    }
+ 
     
     public void on_create_figure_from_actions() {
         var selected_groups = Selector.instance.sorted_action_groups;
@@ -73,7 +68,7 @@ public class Figure_builder_from_signals: MonoBehaviour {
     private void add_next_subfigure(
         IFigure_appearance appended_figure
     ) {
-        ISubfigure new_subfigure = representation.add_subfigure(appended_figure.figure);
+        ISubfigure new_subfigure = representation.create_subfigure(appended_figure.figure);
         new_subfigure.id = (last_subfigure_id++).ToString();
         appearance_to_subfigure.Add(appended_figure, new_subfigure);
         if (ended_subfigures.Any()) {

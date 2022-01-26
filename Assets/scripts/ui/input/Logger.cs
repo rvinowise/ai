@@ -5,7 +5,6 @@ using System.Linq;
 using UnityEngine;
 using rvinowise;
 using rvinowise.rvi.contracts;
-using Input = rvinowise.unity.ui.input.Input;
 using rvinowise.ai.unity;
 using rvinowise.ai.unity;
 using Action = rvinowise.ai.unity.Action;

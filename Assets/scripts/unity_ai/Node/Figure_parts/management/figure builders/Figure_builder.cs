@@ -18,13 +18,7 @@ public class Figure_builder: MonoBehaviour {
     
     private Figure figure; //which is being built by this builder
     private Figure_representation representation; //which is being built by this builder
-    private List<ISubfigure> all_subfigures = new List<ISubfigure>();
-    private List<ISubfigure> ended_subfigures = new List<ISubfigure>();
     
-    private Dictionary<IFigure_appearance, ISubfigure> 
-    appearance_to_subfigure 
-    = new Dictionary<IFigure_appearance, ISubfigure>();
-
     private int last_subfigure_id;
 
     void Awake() {

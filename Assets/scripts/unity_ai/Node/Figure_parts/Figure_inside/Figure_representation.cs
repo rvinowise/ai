@@ -27,7 +27,7 @@ IFigure_representation
     
     
     #region building
-    public ISubfigure add_subfigure(IFigure child_figure) {
+    public ISubfigure create_subfigure(IFigure child_figure) {
         Subfigure subfigure = subfigure_prefab.
             create_for_figure(child_figure);
         subfigure.transform.parent = subfigures_folder.transform;

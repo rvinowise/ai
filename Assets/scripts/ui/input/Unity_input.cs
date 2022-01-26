@@ -4,13 +4,14 @@ using UnityEngine;
 
 
 namespace rvinowise.unity.ui.input {
-public class Input: MonoBehaviour {
+public class Unity_input: MonoBehaviour {
     
-    static public Input instance;
+    static public Unity_input instance;
 
     public UnityEngine.Input unity;
     
     public Vector2 mouse_world_position { get; private set; }
+    
     public Vector2 moving_vector { get; private set; }
     public float scroll_value { get; private set; }
     public int mouse_wheel_steps {
@@ -71,7 +72,27 @@ public class Input: MonoBehaviour {
         zoom_held = true;// UnityEngine.Input.GetButton("Zoom");
     }
 
+    public TComponent get_component_under_mouse<TComponent>() where TComponent: Component {
+        Ray ray = new Ray(get_mouse_position_from_top(), Vector3.forward);
+        RaycastHit hit;
 
+        if (Physics.Raycast(ray, out hit)) {
+            if(
+                hit.transform.GetComponent<TComponent>() 
+                    is TComponent component
+            ) { 
+                return component;
+            }
+        }
+        return null;
+    }
+    private Vector3 get_mouse_position_from_top() {
+        return new Vector3(
+            mouse_world_position.x,
+            mouse_world_position.y,
+            -100
+        );
+    }
     
 }
 

@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using rvinowise;
 using rvinowise.rvi.contracts;
-using Input = rvinowise.unity.ui.input.Input;
 
 
 namespace rvinowise.unity.ui.input.mouse {
@@ -20,16 +19,16 @@ public class Mover_of_selected: MonoBehaviour {
 
     private Vector3 get_mouse_position_from_top() {
         return new Vector3(
-            rvinowise.unity.ui.input.Input.instance.mouse_world_position.x,
-            rvinowise.unity.ui.input.Input.instance.mouse_world_position.y,
+            rvinowise.unity.ui.input.Unity_input.instance.mouse_world_position.x,
+            rvinowise.unity.ui.input.Unity_input.instance.mouse_world_position.y,
             -100
         );
     }
     private Vector3 mouse_world_position {
         get {
             return new Vector3(
-                rvinowise.unity.ui.input.Input.instance.mouse_world_position.x,
-                rvinowise.unity.ui.input.Input.instance.mouse_world_position.y,
+                rvinowise.unity.ui.input.Unity_input.instance.mouse_world_position.x,
+                rvinowise.unity.ui.input.Unity_input.instance.mouse_world_position.y,
                 0
             );
         }

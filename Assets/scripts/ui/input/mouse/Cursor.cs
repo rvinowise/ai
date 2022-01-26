@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using rvinowise;
 using rvinowise.rvi.contracts;
-using Input = rvinowise.unity.ui.input.Input;
 
 
 namespace rvinowise.unity.ui.input.mouse {
@@ -17,7 +16,7 @@ public class Cursor: MonoBehaviour {
     
 
     void Update() {
-        transform.position = Input.instance.mouse_world_position;
+        transform.position = Unity_input.instance.mouse_world_position;
     }
 
 }

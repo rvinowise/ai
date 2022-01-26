@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using rvinowise;
 using rvinowise.rvi.contracts;
-using Input = rvinowise.unity.ui.input.Input;
 using rvinowise.ai.unity;
 using Action = rvinowise.ai.unity.Action;
 using rvinowise.ai.general;
@@ -61,7 +60,7 @@ public class Box_selector: MonoBehaviour {
     }
 
     void Update() {
-        Vector2 mouse_position = Input.instance.mouse_world_position;
+        Vector2 mouse_position = Unity_input.instance.mouse_world_position;
         
         if (UnityEngine.Input.GetMouseButtonDown(0)) {
             if (EventSystem.current.IsPointerOverGameObject()) {
