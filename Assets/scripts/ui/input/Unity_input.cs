@@ -86,6 +86,15 @@ public class Unity_input: MonoBehaviour {
         }
         return null;
     }
+    public Transform get_object_under_mouse() {
+        Ray ray = new Ray(get_mouse_position_from_top(), Vector3.forward);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit)) {
+            return hit.transform;
+        }
+        return null;
+    }
     private Vector3 get_mouse_position_from_top() {
         return new Vector3(
             mouse_world_position.x,

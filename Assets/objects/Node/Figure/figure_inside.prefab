@@ -256,9 +256,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 522019860543652186}
         m_TargetAssemblyTypeName: rvinowise.ai.unity.Figure_header, Assembly-CSharp
-        m_MethodName: on_toggle_showing_representations
+        m_MethodName: on_finish_building
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -388,6 +388,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   representations_folder: {fileID: 6994657337934734099}
+  mode_selector: {fileID: 0}
+  btn_finish_building: {fileID: 5073641327523951404}
 --- !u!1 &3351087919356451451
 GameObject:
   m_ObjectHideFlags: 0
@@ -903,6 +905,7 @@ MonoBehaviour:
   lable: {fileID: 7897827370900560127}
   representations_folder: {fileID: 6994657337934734099}
   button: {fileID: 0}
+  header: {fileID: 522019860543652186}
   sprite_renderer: {fileID: 0}
 --- !u!1 &8849988385214807253
 GameObject:

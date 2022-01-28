@@ -134,5 +134,16 @@ ISelectable
     }
     #endregion ISelectable
     #endregion
+    
+    void OnCollisionEnter(Collision collision)
+    {
+        foreach (ContactPoint contact in collision.contacts)
+        {
+            Debug.DrawRay(contact.point, contact.normal, Color.white);
+        }
+        if (collision.transform.GetComponent<Subfigure>() is Subfigure other_subfigure) {
+            manual_figure_builder.subfigures_touched(this, other_subfigure);
+        }
+    }
 }
 }

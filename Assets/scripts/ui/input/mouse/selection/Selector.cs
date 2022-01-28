@@ -286,7 +286,7 @@ public class Selector : MonoBehaviour {
 
     public ISelectable last_click_target;
     bool last_click_selected;
-    void Update() {
+    void Update_() {
         
         if (UnityEngine.Input.GetMouseButtonDown (0)) {
             if (EventSystem.current.IsPointerOverGameObject()) {

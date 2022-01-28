@@ -35,7 +35,7 @@ public class Figure_button:
     }
     //inspector event
     public void on_click() {
-        toggle_showing_figure();
+        //toggle_showing_figure();
     }
 
     private void toggle_showing_figure() {

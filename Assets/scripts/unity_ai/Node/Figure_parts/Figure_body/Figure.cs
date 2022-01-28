@@ -109,6 +109,14 @@ IFigure
         gameObject.SetActive(false);
     }
 
+    [SerializeField] public Figure_header header; 
+    public void start_building() {
+        header.start_building();
+    }
+    public void finish_building() {
+        header.finish_building();
+    }
+
     #endregion visualisation
 
     #region IDestructable

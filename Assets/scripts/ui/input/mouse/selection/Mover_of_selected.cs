@@ -16,25 +16,17 @@ public class Mover_of_selected: MonoBehaviour {
 
     private bool is_moving;
     private Vector3 old_mouse_position;
+    public HashSet<Transform> moved_things = new HashSet<Transform>();
 
-    private Vector3 get_mouse_position_from_top() {
-        return new Vector3(
-            rvinowise.unity.ui.input.Unity_input.instance.mouse_world_position.x,
-            rvinowise.unity.ui.input.Unity_input.instance.mouse_world_position.y,
-            -100
-        );
-    }
-    private Vector3 mouse_world_position {
-        get {
-            return new Vector3(
-                rvinowise.unity.ui.input.Unity_input.instance.mouse_world_position.x,
-                rvinowise.unity.ui.input.Unity_input.instance.mouse_world_position.y,
-                0
-            );
-        }
+
+    public void add_moved_thing(Component thing) {
+        moved_things.Add(thing.transform);
     }
 
-    public void Awake() {
+    public void remove_all_moved_things() {
+        moved_things.Clear();
+    }
+    void Awake() {
         init_singleton();
     }
     private void init_singleton() {
@@ -47,25 +39,22 @@ public class Mover_of_selected: MonoBehaviour {
     public bool moved_since_last_click;
     public void update() {
        
-        if (UnityEngine.Input.GetMouseButtonDown (0)) {    
-            if (selector.last_click_target != null) {
-                start_moving();
-                Debug.Log("start_moving");           
-            }
+        if (Input.GetMouseButtonDown (0)) {    
+            start_moving();
         }
 
-        if (UnityEngine.Input.GetMouseButtonUp(0)) {
+        if (Input.GetMouseButtonUp(0)) {
             stop_moving();
-            Debug.Log("stop_moving");
         }
         
         if (is_moving) {
-            Vector3 difference = mouse_world_position - old_mouse_position;
+            Vector3 difference = (Vector3)Unity_input.instance.mouse_world_position - old_mouse_position;
             update_position(difference);
         }
-        old_mouse_position = mouse_world_position;
+        old_mouse_position = Unity_input.instance.mouse_world_position;
     }
-    public void start_moving() {
+
+    private void start_moving() {
         is_moving = true;
     }
     private void stop_moving() {
@@ -76,9 +65,8 @@ public class Mover_of_selected: MonoBehaviour {
     private void update_position(Vector3 difference) {
         if (difference.magnitude > float.Epsilon) {
             moved_since_last_click = true;
-            //Debug.Log("moved_since_last_click = true");
-            foreach(ISelectable selectable in selector.selectables) {
-                selectable.transform.position += difference;
+            foreach(Transform thing in moved_things) {
+                thing.position += difference;
             }
         }
         
