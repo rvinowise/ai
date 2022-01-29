@@ -22,8 +22,10 @@ public class Manual_figure_builder: MonoBehaviour {
     private Figure_header figure_header;
     private Figure_representation built_repr;
     public Mode_selector mode_selector;
+    [SerializeField] private Transform cursor;
 
     private HashSet<Subfigure> selected_subfigures = new HashSet<Subfigure>();
+    private HashSet<Connection> selected_connections = new HashSet<Connection>();
     public void on_create_empty_figure() {
         built_figure = builder.create_new_figure("f") as Figure;
         figure_header = built_figure.header;
@@ -95,29 +97,58 @@ public class Manual_figure_builder: MonoBehaviour {
     void Update() {
  
         if (UnityEngine.Input.GetMouseButtonDown(0)) {
-            Transform clicked_object = Unity_input.instance.get_object_under_mouse();
-            if (clicked_object == null) {
-                return;
-            }
-            if (
-                clicked_object.GetComponent<Figure_button>() is Figure_button figure_button
-            ) {
-                Subfigure subfigure = 
-                    built_repr.create_subfigure(figure_button.figure) as Subfigure;
-                subfigure.manual_figure_builder = this;
-                
-            } else
-            if (
-                Unity_input.instance.get_component_under_mouse<Subfigure>() 
-                    is Subfigure subfigure
-            ) {
-                deselect_all();
-                select(subfigure);
-                Mover_of_selected.instance.remove_all_moved_things();
-                Mover_of_selected.instance.add_moved_thing(subfigure);
-            }
+            deselect_all();
+            check_clicking_on_object();
+            check_clicking_on_connection();
         }
 
+        process_moving_selected_subfigures();
+    }
+
+    private void check_clicking_on_object() {
+        Transform clicked_object = Unity_input.instance.get_object_under_mouse();
+        if (clicked_object != null) {
+            process_clicking_on_object(clicked_object);
+        }
+    }
+    private void check_clicking_on_connection() {
+        cursor.transform.position = Unity_input.instance.mouse_world_position;
+        foreach(Subfigure origin_subfigure in built_repr.get_subfigures()) {
+            foreach(Subfigure next_subfigure in origin_subfigure.next) {
+                RaycastHit hit;
+                Physics.Linecast(
+                    origin_subfigure.transform.position,
+                    next_subfigure.transform.position,
+                    out hit
+                );
+                if (hit.transform == cursor) {
+                    select(origin_subfigure);
+                }
+            }
+        }
+    }
+    private void process_clicking_on_object(Transform thing) {
+        if (
+            thing.GetComponent<Figure_button>() 
+            is Figure_button figure_button
+        ) {
+            Subfigure subfigure = 
+                built_repr.create_subfigure(figure_button.figure) as Subfigure;
+            subfigure.manual_figure_builder = this;
+        } else if (
+            Unity_input.instance.get_component_under_mouse<Subfigure>() 
+            is Subfigure subfigure
+        ) {
+            
+            select(subfigure);
+            Mover_of_selected.instance.remove_all_moved_things();
+            Mover_of_selected.instance.add_moved_thing(subfigure);
+        }
+    }
+
+
+
+    private void process_moving_selected_subfigures() {
         if (selected_subfigures.Any()) {
             Mover_of_selected.instance.update();
             if (Mover_of_selected.instance.moved_since_last_click) {
@@ -125,17 +156,22 @@ public class Manual_figure_builder: MonoBehaviour {
             }
         }
     }
-
     
     private void mark_object_as_selected(Subfigure selectable) {
         if (selectable.selection_sprite_renderer!=null) {
             selectable.selection_sprite_renderer.material.color = Selector.instance.selected_color;
         }
     }
+    private void mark_object_as_selected(Connection connection) {
+        connection.set_color(Selector.instance.selected_color);
+    }
     private void mark_object_as_deselected(ISelectable selectable) {
         if (selectable.selection_sprite_renderer!=null) {
             selectable.selection_sprite_renderer.material.color = Selector.instance.normal_color;
         }
+    }
+    private void mark_object_as_deselected(Connection connection) {
+        connection.set_color(Selector.instance.normal_color);
     }
 
 
@@ -143,14 +179,21 @@ public class Manual_figure_builder: MonoBehaviour {
         foreach (ISelectable selectable in selected_subfigures.ToArray<ISelectable>()) {
             mark_object_as_deselected(selectable);
         }
+        foreach (Connection selectable in selected_connections.ToArray<Connection>()) {
+            mark_object_as_deselected(selectable);
+        }
         selected_subfigures.Clear();
+        selected_connections.Clear();
     }
 
     private void select(Subfigure subfigure) {
         mark_object_as_selected(subfigure);
         selected_subfigures.Add(subfigure);
     }
-    
+    private void select(Connection connection) {
+        mark_object_as_selected(connection);
+        selected_connections.Add(connection);
+    }
 
 
     public void subfigures_touched(Subfigure moved_subfigure, Subfigure other_subfigure) {
@@ -184,6 +227,7 @@ public class Manual_figure_builder: MonoBehaviour {
             ) {
                 subfigure.disconnect_from_next(next_subfigure);
                 next_subfigure.connext_to_next(subfigure);
+                Debug.Log("next_subfigure changes to prev");
             }
         }
         foreach (Subfigure prev_subfigure in subfigure.previous ) {
@@ -193,6 +237,7 @@ public class Manual_figure_builder: MonoBehaviour {
             ) {
                 prev_subfigure.disconnect_from_next(subfigure);
                 subfigure.connext_to_next(prev_subfigure);
+                Debug.Log("prev_subfigure changes to next");
             }
         }
     }

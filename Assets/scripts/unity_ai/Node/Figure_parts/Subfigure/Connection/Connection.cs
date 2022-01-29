@@ -21,10 +21,13 @@ MonoBehaviour
     public ICircle destination;
 
     public Transform tail;
+    
     public Transform head;
     public Transform line_end;
 
     private LineRenderer line_renderer;
+    public SpriteRenderer tail_sprite;
+    public SpriteRenderer head_sprite;
 
     void Awake() {
         line_renderer = GetComponent<LineRenderer>();
@@ -70,6 +73,11 @@ MonoBehaviour
         line_renderer.SetPosition(1, line_end.position);
     }
     
+    public void set_color(Color color) {
+        line_renderer.material.color = color;
+
+    }
+
     #endregion
 }
 }
