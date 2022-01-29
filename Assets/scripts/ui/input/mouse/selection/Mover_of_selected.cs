@@ -37,6 +37,7 @@ public class Mover_of_selected: MonoBehaviour {
     
 
     public bool moved_since_last_click;
+    public bool moved_in_this_frame;
     public void update() {
        
         if (Input.GetMouseButtonDown (0)) {    
@@ -65,11 +66,15 @@ public class Mover_of_selected: MonoBehaviour {
     private void update_position(Vector3 difference) {
         if (difference.magnitude > float.Epsilon) {
             moved_since_last_click = true;
+            moved_in_this_frame = true;
             foreach(Transform thing in moved_things) {
                 thing.position += difference;
             }
         }
-        
+        else {
+            moved_in_this_frame = false;
+        }
+
     }
 
 }

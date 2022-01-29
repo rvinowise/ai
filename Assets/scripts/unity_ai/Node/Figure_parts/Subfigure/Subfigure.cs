@@ -66,6 +66,11 @@ ISelectable
     public void remove_previous(ISubfigure subfigure) {
         _previous.Remove(subfigure);
     }
+
+    public bool is_connected(ISubfigure subfigure) {
+        return _previous.Contains(subfigure) || _next.Contains(subfigure);
+    }
+    
     public void disconnect_from_next(ISubfigure disconnectable) {
         disconnectable.remove_previous(this);
         _next.Remove(disconnectable);
@@ -73,6 +78,7 @@ ISelectable
             delete_connection_arrow_to(unity_subfigure);
         }
     }
+    
 
     private void create_connection_arrow_to(Subfigure next) {
         Connection new_connection = connection_prefab.create(this, next);
@@ -134,6 +140,8 @@ ISelectable
     }
     #endregion ISelectable
     #endregion
+
+    public Manual_figure_builder manual_figure_builder;
     
     void OnCollisionEnter(Collision collision)
     {

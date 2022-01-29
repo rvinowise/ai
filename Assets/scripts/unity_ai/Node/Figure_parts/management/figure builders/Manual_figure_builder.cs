@@ -104,7 +104,7 @@ public class Manual_figure_builder: MonoBehaviour {
             ) {
                 Subfigure subfigure = 
                     built_repr.create_subfigure(figure_button.figure) as Subfigure;
-                //Selector.select(subfigure);
+                subfigure.manual_figure_builder = this;
                 
             } else
             if (
@@ -118,7 +118,12 @@ public class Manual_figure_builder: MonoBehaviour {
             }
         }
 
-        Mover_of_selected.instance.update();
+        if (selected_subfigures.Any()) {
+            Mover_of_selected.instance.update();
+            if (Mover_of_selected.instance.moved_since_last_click) {
+                update_direction_of_connections();
+            }
+        }
     }
 
     
@@ -147,16 +152,49 @@ public class Manual_figure_builder: MonoBehaviour {
     }
     
 
-    private void move_subfigures(Vector3 difference) {
-        if (difference.magnitude > float.Epsilon) {
-            foreach(Subfigure selected_subfigure in selected_subfigures) {
-                selected_subfigure.transform.position += difference;
-            }
+
+    public void subfigures_touched(Subfigure moved_subfigure, Subfigure other_subfigure) {
+        if (moved_subfigure.is_connected(other_subfigure)) {
+            return;
         }
-        
+        Subfigure first_subfigure;
+        Subfigure second_subfigure;
+        if (moved_subfigure.transform.position.x < other_subfigure.transform.position.x) {
+            first_subfigure = moved_subfigure;
+            second_subfigure = other_subfigure;
+        }
+        else {
+            first_subfigure = other_subfigure;
+            second_subfigure = moved_subfigure;
+        }
+        first_subfigure.connext_to_next(second_subfigure);
     }
 
-    
-    
+    private void update_direction_of_connections() {
+        foreach (Subfigure subfigure in selected_subfigures) {
+            update_direction_of_connections(subfigure);
+        }
+    }
+
+    private void update_direction_of_connections(Subfigure subfigure) {
+        foreach (Subfigure next_subfigure in subfigure.next ) {
+            if (
+                subfigure.transform.position.x > 
+                next_subfigure.transform.position.x
+            ) {
+                subfigure.disconnect_from_next(next_subfigure);
+                next_subfigure.connext_to_next(subfigure);
+            }
+        }
+        foreach (Subfigure prev_subfigure in subfigure.previous ) {
+            if (
+                subfigure.transform.position.x <
+                prev_subfigure.transform.position.x
+            ) {
+                prev_subfigure.disconnect_from_next(subfigure);
+                subfigure.connext_to_next(prev_subfigure);
+            }
+        }
+    }
 }
 }
