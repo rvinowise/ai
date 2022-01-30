@@ -122,7 +122,7 @@ public class Manual_figure_builder: MonoBehaviour {
                     out hit
                 );
                 if (hit.transform == cursor) {
-                    select(origin_subfigure);
+                    select(origin_subfigure.get_get_connection_to_next(next_subfigure));
                 }
             }
         }
@@ -220,7 +220,7 @@ public class Manual_figure_builder: MonoBehaviour {
     }
 
     private void update_direction_of_connections(Subfigure subfigure) {
-        foreach (Subfigure next_subfigure in subfigure.next ) {
+        foreach (Subfigure next_subfigure in subfigure.next.ToArray() ) {
             if (
                 subfigure.transform.position.x > 
                 next_subfigure.transform.position.x
@@ -230,7 +230,7 @@ public class Manual_figure_builder: MonoBehaviour {
                 Debug.Log("next_subfigure changes to prev");
             }
         }
-        foreach (Subfigure prev_subfigure in subfigure.previous ) {
+        foreach (Subfigure prev_subfigure in subfigure.previous.ToArray() ) {
             if (
                 subfigure.transform.position.x <
                 prev_subfigure.transform.position.x

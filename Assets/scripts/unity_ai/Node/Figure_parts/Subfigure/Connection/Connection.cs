@@ -32,6 +32,8 @@ MonoBehaviour
     void Awake() {
         line_renderer = GetComponent<LineRenderer>();
         line_renderer.positionCount = segment_n;
+        tail_sprite = tail.GetComponent<SpriteRenderer>();
+        head_sprite = head.GetComponent<SpriteRenderer>();
     }
     
     [called_by_prefab]
@@ -74,8 +76,10 @@ MonoBehaviour
     }
     
     public void set_color(Color color) {
-        line_renderer.material.color = color;
-
+        line_renderer.startColor = color;
+        line_renderer.endColor = color;
+        head_sprite.color = color;
+        tail_sprite.color = color;
     }
 
     #endregion

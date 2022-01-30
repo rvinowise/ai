@@ -148,6 +148,8 @@ MonoBehaviour:
   tail: {fileID: 1708826361348267947}
   head: {fileID: 759160797584641675}
   line_end: {fileID: 1187986862938936119}
+  tail_sprite: {fileID: 5152484730250352738}
+  head_sprite: {fileID: 3158820776946980504}
 --- !u!114 &3703431128699377999
 MonoBehaviour:
   m_ObjectHideFlags: 0

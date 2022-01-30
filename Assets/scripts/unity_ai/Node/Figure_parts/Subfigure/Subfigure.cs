@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using rvinowise.ai.general;
 using rvinowise.ai.unity.visuals;
 using rvinowise.unity.extensions.attributes;
@@ -95,7 +96,7 @@ ISelectable
         }
     }
 
-    #endregion
+    #endregion building
 
     #region visualisation
     [SerializeField]
@@ -115,7 +116,16 @@ ISelectable
         
     }
 
+    public Connection get_get_connection_to_next(ISubfigure connected_subfigure) {
+        Connection connection = connections_attachment.transform.
+            GetComponentsInChildren<Connection>().
+            First(connection => connection.destination == connected_subfigure);
+        return connection;
+    }
+
     public float radius => 0.5f;
+    
+    
 
 
     #region ISelectable
@@ -139,7 +149,7 @@ ISelectable
         selector.deselect(this);
     }
     #endregion ISelectable
-    #endregion
+    #endregion visualisation
 
     public Manual_figure_builder manual_figure_builder;
     
