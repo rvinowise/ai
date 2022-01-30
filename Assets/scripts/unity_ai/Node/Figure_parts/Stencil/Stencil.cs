@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Numerics;
 using rvinowise.ai.general;
-using rvinowise.ai.general;
 using rvinowise.ai.unity;
 
 namespace rvinowise.ai.unity {

@@ -9,6 +9,7 @@ using rvinowise.unity.extensions;
 using rvinowise.unity.ui.input;
 using rvinowise.unity.ui.input.mouse;
 using UnityEngine.EventSystems;
+using rvinowise.unity.geometry2d;
 using Vector3 = UnityEngine.Vector3;
 
 namespace rvinowise.ai.unity {
@@ -111,18 +112,23 @@ public class Manual_figure_builder: MonoBehaviour {
             process_clicking_on_object(clicked_object);
         }
     }
+
+    const float connection_width = 0.1f;
     private void check_clicking_on_connection() {
-        cursor.transform.position = Unity_input.instance.mouse_world_position;
         foreach(Subfigure origin_subfigure in built_repr.get_subfigures()) {
             foreach(Subfigure next_subfigure in origin_subfigure.next) {
-                RaycastHit hit;
-                Physics.Linecast(
+                Vector3 closest_point;
+                float distance = Distance_from_point_to_line.get_distance(
+                    Unity_input.instance.mouse_world_position,
                     origin_subfigure.transform.position,
                     next_subfigure.transform.position,
-                    out hit
+                    out closest_point
                 );
-                if (hit.transform == cursor) {
-                    select(origin_subfigure.get_get_connection_to_next(next_subfigure));
+                
+                if (distance < connection_width) {
+                    select(
+                        origin_subfigure.get_get_connection_to_next(next_subfigure)
+                    );
                 }
             }
         }
@@ -139,7 +145,6 @@ public class Manual_figure_builder: MonoBehaviour {
             Unity_input.instance.get_component_under_mouse<Subfigure>() 
             is Subfigure subfigure
         ) {
-            
             select(subfigure);
             Mover_of_selected.instance.remove_all_moved_things();
             Mover_of_selected.instance.add_moved_thing(subfigure);
@@ -150,8 +155,8 @@ public class Manual_figure_builder: MonoBehaviour {
 
     private void process_moving_selected_subfigures() {
         if (selected_subfigures.Any()) {
-            Mover_of_selected.instance.update();
-            if (Mover_of_selected.instance.moved_since_last_click) {
+            //Mover_of_selected.instance.update();
+            if (Mover_of_selected.instance.moved_in_this_frame) {
                 update_direction_of_connections();
             }
         }

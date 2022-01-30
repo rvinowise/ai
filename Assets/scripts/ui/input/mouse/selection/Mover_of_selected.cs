@@ -49,8 +49,11 @@ public class Mover_of_selected: MonoBehaviour {
         }
         
         if (is_moving) {
-            Vector3 difference = (Vector3)Unity_input.instance.mouse_world_position - old_mouse_position;
+            Vector3 difference = 
+                (Vector3)Unity_input.instance.mouse_world_position - 
+                    old_mouse_position;
             update_position(difference);
+            
         }
         old_mouse_position = Unity_input.instance.mouse_world_position;
     }
