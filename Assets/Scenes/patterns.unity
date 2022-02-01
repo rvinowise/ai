@@ -280,6 +280,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: stencil output
       objectReference: {fileID: 0}
+    - target: {fileID: 4683541298846961202, guid: 9981862293c53cf46a82a9d24e78effb,
+        type: 3}
+      propertyPath: stencil_interface
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7988423395829484196, guid: 9981862293c53cf46a82a9d24e78effb,
         type: 3}
       propertyPath: m_text
@@ -1612,6 +1617,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 448400591}
   m_CullTransparentMesh: 1
+--- !u!114 &473825048 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4683541298846961202, guid: 9981862293c53cf46a82a9d24e78effb,
+    type: 3}
+  m_PrefabInstance: {fileID: 1177063061}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d675818fd725463aa7f49eb414f74679, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &488207161
 GameObject:
   m_ObjectHideFlags: 0
@@ -3607,14 +3624,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 915514670}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2, y: -2, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -5.3999996, y: -2.6900003, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 70044769}
   - {fileID: 1177063062}
-  m_Father: {fileID: 1705335949}
-  m_RootOrder: 1
+  m_Father: {fileID: 1171707164805649096}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &969989488
 GameObject:
@@ -4200,6 +4217,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1012917772}
   m_CullTransparentMesh: 1
+--- !u!114 &1019843416 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4683541298846961202, guid: 9981862293c53cf46a82a9d24e78effb,
+    type: 3}
+  m_PrefabInstance: {fileID: 70044768}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d675818fd725463aa7f49eb414f74679, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1029751918
 GameObject:
   m_ObjectHideFlags: 0
@@ -4276,6 +4305,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a73adcf257b4c718b857dffed7a91bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  figure_storage: {fileID: 1171707164805649098}
   selected_color: {r: 0, g: 1, b: 0, a: 1}
   normal_color: {r: 1, g: 1, b: 1, a: 1}
   highlighted_color: {r: 0.9, g: 1, b: 0.9, a: 1}
@@ -6242,6 +6272,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   action_history: {fileID: 735816290}
   figure_storage: {fileID: 1171707164805649098}
+  button_stencil_out: {fileID: 1019843416}
+  button_stencil_in: {fileID: 473825048}
 --- !u!850595691 &1532262751
 LightingSettings:
   m_ObjectHideFlags: 0
@@ -7025,7 +7057,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 36515328}
-  - {fileID: 915514671}
   m_Father: {fileID: 418992289}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -8960,6 +8991,7 @@ Transform:
   m_Children:
   - {fileID: 6291685689267066149}
   - {fileID: 520241883}
+  - {fileID: 915514671}
   m_Father: {fileID: 418992289}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -8993,9 +9025,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   figure_button_table: {fileID: 4562387987383399247}
-  pleasure_signal: {fileID: 0}
-  pain_signal: {fileID: 0}
   figure_folder: {fileID: 520241883}
+  button_stencil_out: {fileID: 1019843416}
+  button_stencil_in: {fileID: 473825048}
   figure_prefab: {fileID: 5107524747873855726, guid: 461d656251486954bb0495f37b8dc907,
     type: 3}
   figure_button_prefab: {fileID: 4683541298846961202, guid: 9981862293c53cf46a82a9d24e78effb,

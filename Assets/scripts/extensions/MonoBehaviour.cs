@@ -19,10 +19,13 @@ public static partial class Unity_extension {
         Pooled_object pooled_object = prefab_component.GetComponent<Pooled_object>();
         //Contract.Requires(pooled_object != null, "pooled prefabs must have the Pooled_object component");
         if (pooled_object != null) {
-            return pooled_object.instantiate().GetComponent<TComponent>();
+            var retrieved_object = pooled_object.instantiate();
+            var component = retrieved_object.GetComponent<TComponent>();
+            return component;
         }
+        var created_component = GameObject.Instantiate(prefab_component).GetComponent<TComponent>();
 
-        return GameObject.Instantiate(prefab_component).GetComponent<TComponent>();
+        return created_component;
     }
 
     public static void copy_physics_from(

@@ -11,10 +11,15 @@ using rvinowise.unity.ui.input.mouse;
 using UnityEngine.EventSystems;
 using rvinowise.unity.geometry2d;
 using Vector3 = UnityEngine.Vector3;
+using Input = UnityEngine.Input;
 
 namespace rvinowise.ai.unity {
 
-public class Manual_figure_builder: MonoBehaviour {
+public class Manual_figure_builder: 
+MonoBehaviour,
+IFigure_button_click_receiver,
+ISubfigure_click_receiver
+{
 
     [SerializeField] private Figure_builder builder;
     private Figure_storage figure_storage => builder.figure_storage;
@@ -85,6 +90,7 @@ public class Manual_figure_builder: MonoBehaviour {
     
     public void activate() {
         enabled = true;
+        figure_storage.receiver = this;
         on_create_empty_figure();
     }
     public void deactivate() {
@@ -98,20 +104,22 @@ public class Manual_figure_builder: MonoBehaviour {
     void Update() {
  
         if (UnityEngine.Input.GetMouseButtonDown(0)) {
-            deselect_all();
-            check_clicking_on_object();
+            if (is_clicked_on_emptyness()) {
+                deselect_all();
+                
+            }
             check_clicking_on_connection();
         }
 
-        process_moving_selected_subfigures();
+        update_moving_selected_subfigures();
+        check_keyboard_commands();
     }
 
-    private void check_clicking_on_object() {
-        Transform clicked_object = Unity_input.instance.get_object_under_mouse();
-        if (clicked_object != null) {
-            process_clicking_on_object(clicked_object);
-        }
+    private bool is_clicked_on_emptyness() {
+        return Unity_input.instance.get_object_under_mouse() == null;
     }
+
+
 
     const float connection_width = 0.1f;
     private void check_clicking_on_connection() {
@@ -127,40 +135,57 @@ public class Manual_figure_builder: MonoBehaviour {
                 
                 if (distance < connection_width) {
                     select(
-                        origin_subfigure.get_get_connection_to_next(next_subfigure)
+                        origin_subfigure.get_connection_to_next(next_subfigure)
                     );
                 }
             }
         }
     }
-    private void process_clicking_on_object(Transform thing) {
-        if (
-            thing.GetComponent<Figure_button>() 
-            is Figure_button figure_button
-        ) {
-            Subfigure subfigure = 
-                built_repr.create_subfigure(figure_button.figure) as Subfigure;
-            subfigure.manual_figure_builder = this;
-        } else if (
-            Unity_input.instance.get_component_under_mouse<Subfigure>() 
-            is Subfigure subfigure
-        ) {
-            select(subfigure);
-            Mover_of_selected.instance.remove_all_moved_things();
-            Mover_of_selected.instance.add_moved_thing(subfigure);
-        }
+
+    public void on_click(Figure_button figure_button) {
+        deselect_all();
+        Subfigure subfigure = 
+            built_repr.create_subfigure(figure_button.figure) as Subfigure;
+        subfigure.manual_figure_builder = this;
+        subfigure.receiver = this;
+    }
+
+    public void on_click_stencil_interface(Stencil_interface direction) {
+        deselect_all();
+        Subfigure subfigure = 
+            built_repr.create_subfigure(direction) as Subfigure;
+        subfigure.manual_figure_builder = this;
+        subfigure.receiver = this;
+    }
+    
+    public void on_click(Subfigure subfigure) {
+        deselect_all();
+        select(subfigure);
+        Mover_of_selected.instance.add_moved_thing(subfigure);
     }
 
 
 
-    private void process_moving_selected_subfigures() {
-        if (selected_subfigures.Any()) {
-            //Mover_of_selected.instance.update();
+    private void update_moving_selected_subfigures() {
+        //if (selected_subfigures.Any()) {
+            Mover_of_selected.instance.update();
             if (Mover_of_selected.instance.moved_in_this_frame) {
                 update_direction_of_connections();
             }
+        //}
+    }
+
+    private void check_keyboard_commands() {
+        if (UnityEngine.Input.GetButton("delete")) {
+            foreach (Connection connection in selected_connections) {
+                connection.delete();
+            }
+            foreach (Subfigure subfigure in selected_subfigures) {
+                built_repr.delete_subfigure(subfigure);
+            }
         }
     }
+    
     
     private void mark_object_as_selected(Subfigure selectable) {
         if (selectable.selection_sprite_renderer!=null) {
@@ -189,6 +214,7 @@ public class Manual_figure_builder: MonoBehaviour {
         }
         selected_subfigures.Clear();
         selected_connections.Clear();
+        Mover_of_selected.instance.remove_all_moved_things();
     }
 
     private void select(Subfigure subfigure) {

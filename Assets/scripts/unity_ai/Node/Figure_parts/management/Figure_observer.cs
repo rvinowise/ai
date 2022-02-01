@@ -18,9 +18,11 @@ using Selectable = rvinowise.unity.ui.input.mouse.Selectable;
 
 namespace rvinowise.unity.ui.input {
 
-public class Figure_observer : MonoBehaviour {
+public class Figure_observer : 
+MonoBehaviour,
+IFigure_button_click_receiver {
 
-
+    [SerializeField] private Figure_storage figure_storage;
     private Figure observed_figure;
     public Color selected_color = new Color(0,1,0);
     public Color normal_color = new Color(1,1,1);
@@ -40,6 +42,7 @@ public class Figure_observer : MonoBehaviour {
 
     public void activate() {
         enabled = true;
+        figure_storage.receiver = this;
     }
     public void deactivate() {
         finish_observing();
@@ -107,23 +110,15 @@ public class Figure_observer : MonoBehaviour {
     }
 
 
-    void Update() {
-        
-        if (UnityEngine.Input.GetMouseButtonDown (0)) {
-            if (
-                Unity_input.instance.get_component_under_mouse<Figure_button>() 
-                    is Figure_button figure_button
-            ) { 
-                Figure figure = figure_button.figure;
-                finish_observing();
-                observe(figure);
-            } else {
-                //deselect_all();
-            }
-        }
-        
+
+    public void on_click(Figure_button figure_button) {
+        finish_observing();
+        observe(figure_button.figure);
     }
 
-    
+    public void on_click_stencil_interface(Stencil_interface direction) {
+    }
+
+
 }
 }

@@ -30,11 +30,21 @@ IFigure_representation
     public ISubfigure create_subfigure(IFigure child_figure) {
         Subfigure subfigure = subfigure_prefab.
             create_for_figure(child_figure);
+        attach_subfigure(subfigure);
+        return subfigure;
+    }
+    public ISubfigure create_subfigure(Stencil_interface direction) {
+        Subfigure subfigure = subfigure_prefab.
+            create_for_stencil_interface(direction);
+        attach_subfigure(subfigure);
+        return subfigure;
+    }
+
+    private void attach_subfigure(Subfigure subfigure) {
         subfigure.transform.parent = subfigures_folder.transform;
         subfigure.parent = this;
         position_subfigure(subfigure);
         subfigures.Add(subfigure);
-        return subfigure;
     }
     private void position_subfigure(Subfigure subfigure) {
         
@@ -48,6 +58,26 @@ IFigure_representation
             return last_subfigue.transform.position;
         }
         return transform.position + new Vector3(0,-2,0);
+    }
+
+    public void delete_connection() {
+        
+    }
+    public void delete_subfigure(Subfigure subfigure) {
+        delete_all_connections_touching(subfigure);
+        subfigures.Remove(subfigure);
+        subfigure.destroy_object();
+    }
+
+    private void delete_all_connections_touching(Subfigure detached_subfigure) {
+        foreach (Subfigure subfigure in subfigures) {
+            if (detached_subfigure.next.Contains(subfigure)) {
+                detached_subfigure.disconnect_from_next(subfigure);
+            }
+            if (subfigure.next.Contains(detached_subfigure)) {
+                subfigure.disconnect_from_next(detached_subfigure);
+            }
+        }
     }
     
     #endregion building

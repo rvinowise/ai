@@ -14,6 +14,8 @@ public class Figure_builder: MonoBehaviour {
 
     public Action_history action_history;
     public Figure_storage figure_storage;
+    public Figure_button button_stencil_out;
+    public Figure_button button_stencil_in;
     private Figure figure_prefab;
     
     private Figure figure; //which is being built by this builder

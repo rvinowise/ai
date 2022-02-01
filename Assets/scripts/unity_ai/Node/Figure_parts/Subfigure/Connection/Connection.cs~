@@ -84,7 +84,7 @@ MonoBehaviour
         tail_sprite.color = color;
     }
 
-    public void delete() {
+    public void delete_object() {
         source.disconnect_from_next(destination);
     }
     
