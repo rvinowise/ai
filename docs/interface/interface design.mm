@@ -8,7 +8,7 @@
         <attribute_value VALUE="https://www.youtube.com/shorts/66t2mLXtj9E?&amp;ab_channel=THESTRAIGHTPATH"/>
     </attribute_name>
 </attribute_registry>
-<node TEXT="ai" LOCALIZED_STYLE_REF="AutomaticLayout.level.root" FOLDED="false" ID="ID_696401721" CREATED="1610381621824" MODIFIED="1641509948613"><hook NAME="MapStyle" zoom="1.146">
+<node TEXT="interface design" LOCALIZED_STYLE_REF="AutomaticLayout.level.root" FOLDED="false" ID="ID_696401721" CREATED="1610381621824" MODIFIED="1643857728154"><hook NAME="MapStyle" zoom="1.146">
     <properties show_icon_for_attributes="true" edgeColorConfiguration="#ff3333ff,#33ff00ff,#ffcc33ff" show_notes_in_map="false" show_note_icons="false" fit_to_viewport="false"/>
 
 <map_styles>
@@ -138,7 +138,7 @@
 </stylenode>
 </map_styles>
 </hook>
-<node TEXT="type: project" POSITION="left" ID="ID_683065071" CREATED="1631768151045" MODIFIED="1641509948610"/>
+<node TEXT="type: " POSITION="left" ID="ID_1723390509" CREATED="1643857728161" MODIFIED="1643857728163"/>
 <node TEXT="bookmarks: done" STYLE_REF="done" POSITION="left" ID="ID_1334217373" CREATED="1632064659870" MODIFIED="1632136937093"/>
 <node TEXT="legend" POSITION="left" ID="ID_49802336" CREATED="1632692624170" MODIFIED="1632692627877">
 <node TEXT="icons" ID="ID_143750967" CREATED="1632698164973" MODIFIED="1632698166792">
@@ -193,12 +193,20 @@
 <node TEXT="impl: implementation" ID="ID_425363286" CREATED="1632698181664" MODIFIED="1632698185978"/>
 </node>
 </node>
-<node TEXT="overview.mm" POSITION="right" ID="ID_963805880" CREATED="1641509947257" MODIFIED="1641509947259" LINK="overview.mm"/>
-<node TEXT="interface" POSITION="right" ID="ID_815172773" CREATED="1643857705088" MODIFIED="1643857711564" LINK="interface/">
-<node TEXT="interface design" ID="ID_464923108" CREATED="1643857714125" MODIFIED="1643857727856" LINK="file:/C:/prj/unity_ai/docs/interface/interface%20design.mm"/>
+<node TEXT="figure storage" POSITION="right" ID="ID_1455442010" CREATED="1643857728164" MODIFIED="1643857735419"/>
+<node TEXT="manual figure creator" POSITION="right" ID="ID_1774722910" CREATED="1643857735724" MODIFIED="1643857740197">
+<node TEXT="create from scratch" ID="ID_506398814" CREATED="1643857740705" MODIFIED="1643857753414">
+<icon BUILTIN="cog@b"/>
 </node>
-<node TEXT="persistence" POSITION="right" ID="ID_201293481" CREATED="1641509967643" MODIFIED="1641510505723" LINK="persistence/">
-<node TEXT="json format" ID="ID_423055997" CREATED="1641510507559" MODIFIED="1641510535009" LINK="file:/C:/prj/unity_ai/docs/persistence/json%20format.mm"/>
+<node TEXT="edit" ID="ID_1359015329" CREATED="1643857745029" MODIFIED="1643857752827">
+<icon BUILTIN="cog@b"/>
+</node>
+<node TEXT="header of currently built(edited)figure" ID="ID_266252653" CREATED="1643857755593" MODIFIED="1643857860167">
+<icon BUILTIN="puzzle_piece@b"/>
+</node>
+<node TEXT="figure storage" ID="ID_856302366" CREATED="1643857867696" MODIFIED="1643857870471">
+<icon BUILTIN="puzzle_piece@b"/>
+</node>
 </node>
 </node>
 </map>

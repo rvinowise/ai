@@ -6,6 +6,7 @@ using System.Numerics;
 using rvinowise.ai.general;
 using rvinowise.rvi.contracts;
 using rvinowise.unity.extensions;
+using rvinowise.unity.extensions.attributes;
 using rvinowise.unity.ui.input;
 using rvinowise.unity.ui.input.mouse;
 using UnityEngine.EventSystems;
@@ -23,6 +24,7 @@ ISubfigure_click_receiver
 
     [SerializeField] private Figure_builder builder;
     private Figure_storage figure_storage => builder.figure_storage;
+    public Figure_observer figure_observer;
     private Figure figure_prefab;
     private Figure built_figure;
     private Figure_header figure_header;
@@ -32,77 +34,43 @@ ISubfigure_click_receiver
 
     private HashSet<Subfigure> selected_subfigures = new HashSet<Subfigure>();
     private HashSet<Connection> selected_connections = new HashSet<Connection>();
+    
     public void on_create_empty_figure() {
         built_figure = builder.create_new_figure("f") as Figure;
-        figure_header = built_figure.header;
         figure_storage.append_figure(built_figure);
+        on_start_editing_figure(built_figure);
         built_repr = built_figure.create_representation() as Figure_representation;
-        figure_header.start_building();
         figure_header.mode_selector = mode_selector;
-        show_figure(built_figure);
+        figure_observer.observe(built_figure);
     }
 
-    private void show_figure(Figure figure) {
-        show_insides_of_one_figure(figure);
-        figure.button.highlight_as_selected();
-        foreach (Figure_appearance appearance in figure.get_appearances()) {
-            highlight(appearance);
-        }
+    public void on_start_editing_figure(Figure figure) {
+        activate();
+        built_figure = figure;
+        built_repr = figure.get_representations().FirstOrDefault() as Figure_representation;
+        figure_header = built_figure.header;
+        figure_header.start_building();
+        figure_observer.observe(built_figure);
     }
 
-    private void hide_figure(Figure figure) {
-        figure.hide_inside();
-        figure.button.dehighlight_as_selected();
-        foreach (Figure_appearance appearance in figure._appearances) {
-            dehighlight(appearance);
-        }
-    }
-    public void highlight(Figure_appearance appearance) {
-        appearance.bezier.gameObject.SetActive(true);
-        mark_as_highlighted(appearance.appearance_start);
-        mark_as_highlighted(appearance.appearance_end);
-    }
-    public void dehighlight(Figure_appearance appearance) {
-        appearance.bezier.gameObject.SetActive(false);
-        unmark_as_highlighted(appearance.appearance_start);
-        unmark_as_highlighted(appearance.appearance_end);
-    }
+
     
-    private void mark_as_highlighted(ISelectable highlightable) {
-        if (highlightable.selection_sprite_renderer!=null) {
-            highlightable.selection_sprite_renderer.material.color = Selector.instance.highlighted_color;
-        }
-    }
-    private void unmark_as_highlighted(ISelectable highlightable) {
-        if (highlightable.selection_sprite_renderer!=null) {
-            highlightable.selection_sprite_renderer.material.color = Selector.instance.normal_color;
-        }
-    }
-    
-    private void show_insides_of_one_figure(Figure shown_figure) {
-        shown_figure.show_inside();
-        foreach (Figure figure in figure_storage.known_figures) {
-            if (shown_figure != figure) {
-                figure.hide_inside();
-            }
-        }
-    }
-    
-    public void activate() {
+    private void activate() {
         enabled = true;
         figure_storage.receiver = this;
-        on_create_empty_figure();
+        
     }
     public void deactivate() {
         enabled = false;
         if (built_figure) {
             figure_header.finish_building();
-            hide_figure(built_figure);
         }
     }
 
     void Update() {
- 
+        if (built_repr == null) {
+            return;
+        }
         if (UnityEngine.Input.GetMouseButtonDown(0)) {
             if (is_clicked_on_emptyness()) {
                 deselect_all();
@@ -183,6 +151,7 @@ ISubfigure_click_receiver
             foreach (Subfigure subfigure in selected_subfigures) {
                 built_repr.delete_subfigure(subfigure);
             }
+            deselect_all();
         }
     }
     

@@ -49,7 +49,7 @@ public class Box_selector: MonoBehaviour {
     
     private Vector2 start_position;
     private Rectangle rect = new Rectangle();
-    private bool is_selecting = false;
+    private bool is_selecting;
 
     public LineRenderer line_renderer;
 
@@ -122,8 +122,8 @@ public class Box_selector: MonoBehaviour {
         = get_all_action_groups();
         foreach(IAction_group group in action_groups) {
             if (
-                (group is ISelectable selectable)&&
-                (is_inside_selection(selectable))
+                group is ISelectable selectable &&
+                is_inside_selection(selectable)
             ) {
                 Selector.select(selectable);
             }

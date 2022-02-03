@@ -23,7 +23,7 @@ MonoBehaviour,
 IFigure_button_click_receiver {
 
     [SerializeField] private Figure_storage figure_storage;
-    private Figure observed_figure;
+    public Figure observed_figure;
     public Color selected_color = new Color(0,1,0);
     public Color normal_color = new Color(1,1,1);
     public Color highlighted_color = new Color(0.9f,1,0.9f);
@@ -44,6 +44,8 @@ IFigure_button_click_receiver {
         enabled = true;
         figure_storage.receiver = this;
     }
+    
+    
     public void deactivate() {
         finish_observing();
         enabled = false;
@@ -59,6 +61,7 @@ IFigure_button_click_receiver {
         foreach (Figure_appearance appearance in observed_figure._appearances) {
             dehighlight(appearance);
         }
+        observed_figure = null;
         
     }
     

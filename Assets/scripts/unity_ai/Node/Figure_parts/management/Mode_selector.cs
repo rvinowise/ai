@@ -16,12 +16,20 @@ public class Mode_selector : MonoBehaviour {
         //figure_observer.mode_selector = this;
 
         manual_figure_builder.deactivate();
+        manual_figure_builder.figure_observer = figure_observer;
         figure_observer.activate();
     }
     
     public void on_start_building_figure() {
-        manual_figure_builder.activate();
         figure_observer.deactivate();
+        manual_figure_builder.on_create_empty_figure();
+    }
+    public void on_start_editing_figure() {
+        if (figure_observer.enabled) {
+            Figure observed_figure = figure_observer.observed_figure;
+            figure_observer.deactivate();
+            manual_figure_builder.on_start_editing_figure(observed_figure);
+        }
     }
     
     public void on_finish_building_figure() {

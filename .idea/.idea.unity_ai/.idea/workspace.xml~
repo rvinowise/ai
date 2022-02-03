@@ -1,0 +1,496 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="3e5e1540-d72a-4d58-9e84-d967b090504d" name="Default Changelist" comment="Patterns are a sub-type of Figures">
+      <change afterPath="$PROJECT_DIR$/Assets/scripts/extensions/attributes/called_by_unity.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/scripts/extensions/attributes/called_by_unity.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/scripts/unity_ai/scene_modes.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/patterns.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/patterns.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/scripts/extensions/object_pools/Object_pool.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/scripts/extensions/object_pools/Object_pool.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/scripts/extensions/object_pools/Pooled_object.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/scripts/extensions/object_pools/Pooled_object.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/scripts/ui/input/mouse/selection/Box_selector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/scripts/ui/input/mouse/selection/Box_selector.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/scripts/unity_ai/Node/Figure_parts/management/Figure_observer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/scripts/unity_ai/scene_modes/Figure_observer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/scripts/unity_ai/Node/Figure_parts/management/Figure_observer.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/scripts/unity_ai/scene_modes/Figure_observer.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/scripts/unity_ai/Node/Figure_parts/management/Mode_selector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/scripts/unity_ai/Node/Figure_parts/management/Mode_selector.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/scripts/unity_ai/Node/Figure_parts/management/figure builders/Manual_figure_builder.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/scripts/unity_ai/scene_modes/Manual_figure_builder.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/scripts/unity_ai/Node/Figure_parts/management/figure builders/Manual_figure_builder.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/scripts/unity_ai/scene_modes/Manual_figure_builder.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/scripts/unity_ai/Storage_of_found/Figure_storage.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/scripts/unity_ai/Storage_of_found/Figure_storage.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/ai_index.mm" beforeDir="false" afterPath="$PROJECT_DIR$/docs/ai_index.mm" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/BC3985D3-7B02-41B4-8FC2-1474B2DE25BD/6f/40a1fe9f/JsonSerializer.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/InputModules/BaseInput.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/BC3985D3-7B02-41B4-8FC2-1474B2DE25BD/45/1b0bd050/JsonConvert.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/0463B2EF-9575-45C0-A51B-42F372CD4FBB/60/e45eb063/Queue`1.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/0EE48075-9F3D-481D-82AD-A245DC74F9FD/87/17ebd203/Transform.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/FCB9DAC8-AE3A-4886-93B0-F4CD5B0DB0BE/3b/a9438201/File.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/FCB9DAC8-AE3A-4886-93B0-F4CD5B0DB0BE/b2/711d00c5/Guid.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/351E49E2-A5BF-4FD6-BEAB-B458CE2255F3/f2/a50ce978/Enumerable.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/695D1CC9-3CCA-4506-9C52-8C15C9FDD749/c2/ea818fe4/List`1.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.textmeshpro@3.0.6/Scripts/Runtime/TextMeshProUGUI.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/695D1CC9-3CCA-4506-9C52-8C15C9FDD749/86/2312b071/NullReferenceException.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/2B0D369F-4118-43A4-A3EF-F9B41254AD70/04/9648387f/BigInteger.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/0EE48075-9F3D-481D-82AD-A245DC74F9FD/14/6e654e6a/Debug.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.textmeshpro@3.0.6/Scripts/Runtime/TextMeshPro.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/scripts/extensions/geometry2d/distances/Distance_from_point_to_line.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/127E81E1-CB34-41CC-97D2-6B1910DAAE77/6b/56b133ff/GameObject.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/0EE48075-9F3D-481D-82AD-A245DC74F9FD/6a/8a23807f/Component.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/0EE48075-9F3D-481D-82AD-A245DC74F9FD/01/2be1063b/GameObject.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@1.0.0/Runtime/UI/Core/Button.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/0EE48075-9F3D-481D-82AD-A245DC74F9FD/23/021b4a7a/Object.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/0EE48075-9F3D-481D-82AD-A245DC74F9FD/53/ffea4011/Renderer.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/9577AC7A-62EF-4317-9789-031239BA8798/4e/855b54b0/Void.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/scripts/unity_ai/ui/Menu_bar.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/scripts/unity_ai/ui/Menu_panel.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.textmeshpro@3.0.6/Scripts/Runtime/TMP_Text.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/ExecuteEvents.cs" root0="SKIP_HIGHLIGHTING" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/Assets/scripts/persistence/json/Network_persistence.cs" />
+        <option value="$PROJECT_DIR$/Assets/scripts/persistence/json/Network_saver.cs" />
+        <option value="$PROJECT_DIR$/Assets/scripts/abstract_ai/Figure_finder/IPattern_finder.cs" />
+        <option value="$PROJECT_DIR$/Assets/scripts/abstract_ai/Figure_finder/ISequence_finder.cs" />
+        <option value="$PROJECT_DIR$/Assets/scripts/abstract_ai/History/History_interval/IHistory_interval.cs" />
+        <option value="$PROJECT_DIR$/Assets/scripts/persistence/json/serializable_representation/serializable.cs" />
+        <option value="$PROJECT_DIR$/Assets/scripts/unity_ai/Pattern_finder/Sequence_builder.cs" />
+        <option value="$PROJECT_DIR$/Assets/scripts/unity_ai/Node/Figure/Figure_representation.cs" />
+        <option value="$PROJECT_DIR$/Assets/scripts/unity_ai/Node/Figure/Visualisation/Figure_renderer.cs" />
+        <option value="$PROJECT_DIR$/Assets/scripts/unity_ai/ui/File_input.cs" />
+        <option value="$PROJECT_DIR$/Assets/scripts/unity_ai/Node/Figure/Figure.cs" />
+        <option value="$PROJECT_DIR$/Assets/scripts/unity_ai/History/Action_history/Action_group/Action_group.cs" />
+        <option value="$PROJECT_DIR$/Assets/scripts/unity_ai/Sequence_finder/Sequence_builder.cs" />
+        <option value="$PROJECT_DIR$/Assets/scripts/unity_ai/Node/Action/Action.cs" />
+        <option value="$PROJECT_DIR$/Assets/scripts/unity_ai/Node/Figure_parts/management/Manual_figure_builder.cs" />
+        <option value="$PROJECT_DIR$/Assets/scripts/unity_ai/Node/Figure_parts/management/Figure_builder_from_signals.cs" />
+        <option value="$PROJECT_DIR$/Assets/scripts/abstract_ai/Figure/IFigure_representation.cs" />
+        <option value="$PROJECT_DIR$/Assets/scripts/unity_ai/Node/Figure_parts/Figure_representation.cs" />
+        <option value="$PROJECT_DIR$/Assets/scripts/abstract_ai/Figure/IFigure.cs" />
+        <option value="$PROJECT_DIR$/Assets/scripts/unity_ai/Sequence_finder/Sequence_finder.cs" />
+        <option value="$PROJECT_DIR$/Assets/scripts/ui/input/mouse/selection/ISelectable.cs" />
+        <option value="$PROJECT_DIR$/Assets/scripts/ui/input/mouse/selection/Selectable.cs" />
+        <option value="$PROJECT_DIR$/Assets/scripts/unity_ai/History/Action_history/Action_group/Visualization.cs" />
+        <option value="$PROJECT_DIR$/Assets/scripts/extensions/Table/Table.cs" />
+        <option value="$PROJECT_DIR$/Assets/scripts/unity_ai/History/Action_history/Action_history.cs" />
+        <option value="$PROJECT_DIR$/Assets/scripts/unity_ai/Node/Figure_parts/Figure_appearance.cs" />
+        <option value="$PROJECT_DIR$/Assets/scripts/unity_ai/Node/Figure_parts/management/figure builders/Figure_builder_from_signals.cs" />
+        <option value="$PROJECT_DIR$/Assets/scripts/ui/input/Input.cs" />
+        <option value="$PROJECT_DIR$/Assets/scripts/ui/Figure_observer.cs" />
+        <option value="$PROJECT_DIR$/Assets/scripts/ui/input/mouse/selection/Selector.cs" />
+        <option value="$PROJECT_DIR$/Assets/scripts/ui/input/Unity_input.cs" />
+        <option value="$PROJECT_DIR$/Assets/scripts/unity_ai/Node/Figure_parts/Figure_body/Figure.cs" />
+        <option value="$PROJECT_DIR$/Assets/scripts/unity_ai/Node/Figure_parts/Figure_inside/Figure_header.cs" />
+        <option value="$PROJECT_DIR$/Assets/scripts/ui/input/mouse/selection/Mover_of_selected.cs" />
+        <option value="$PROJECT_DIR$/Assets/scripts/unity_ai/Node/Figure_parts/management/figure builders/Figure_builder.cs" />
+        <option value="$PROJECT_DIR$/Assets/scripts/unity_ai/Node/Figure_parts/Figure_button.cs" />
+        <option value="$PROJECT_DIR$/Assets/scripts/abstract_ai/Figure/Subfigure/ISubfigure.cs" />
+        <option value="$PROJECT_DIR$/Assets/scripts/unity_ai/Node/Figure_parts/Figure_inside/Figure_representation.cs" />
+        <option value="$PROJECT_DIR$/Assets/scripts/unity_ai/Node/Figure_parts/Subfigure/Subfigure.cs" />
+        <option value="$PROJECT_DIR$/Assets/scripts/unity_ai/Node/Figure_parts/Subfigure/Connection/Connection.cs" />
+        <option value="$PROJECT_DIR$/Assets/scripts/extensions/MonoBehaviour.cs" />
+        <option value="$PROJECT_DIR$/Assets/scripts/extensions/object_pools/Object_pool.cs" />
+        <option value="$PROJECT_DIR$/Assets/scripts/extensions/object_pools/Pooled_object.cs" />
+        <option value="$PROJECT_DIR$/Assets/scripts/unity_ai/Storage_of_found/Figure_storage.cs" />
+        <option value="$PROJECT_DIR$/Assets/scripts/extensions/attributes/called_by_unity.cs" />
+        <option value="$PROJECT_DIR$/Assets/scripts/ui/input/mouse/selection/Box_selector.cs" />
+        <option value="$PROJECT_DIR$/Assets/scripts/unity_ai/Node/Figure_parts/management/Figure_observer.cs" />
+        <option value="$PROJECT_DIR$/Assets/scripts/unity_ai/Node/Figure_parts/management/figure builders/Manual_figure_builder.cs" />
+        <option value="$PROJECT_DIR$/Assets/scripts/unity_ai/scene_modes/Figure_observer.cs" />
+        <option value="$PROJECT_DIR$/Assets/scripts/unity_ai/Node/Figure_parts/management/Mode_selector.cs" />
+        <option value="$PROJECT_DIR$/Assets/scripts/unity_ai/scene_modes/Manual_figure_builder.cs" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectId" id="1tgbE1nsgwb5yAH7QACw09kQ6Iq" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="autoscrollFromSource" value="true" />
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="Discover.Launch.Via.Unity" value="true" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="android.sdk.path" value="$PROJECT_DIR$/../../Android/sdk" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
+    <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
+    <configuration name="&lt;template&gt;" type="Applet" default="true" selected="false">
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+    </configuration>
+    <configuration name="&lt;template&gt;" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" default="true" selected="false">
+      <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
+    </configuration>
+    <configuration name="Attach to Unity Editor &amp; Play" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="UNITY_ATTACH_AND_PLAY" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+      <option name="allowRunningInParallel" value="false" />
+      <option name="listenPortForConnections" value="false" />
+      <option name="pid" />
+      <option name="selectedOptions">
+        <set />
+      </option>
+      <method v="2" />
+    </configuration>
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="26172">
+      <option name="allowRunningInParallel" value="false" />
+      <option name="listenPortForConnections" value="false" />
+      <option name="pid" value="26172" />
+      <option name="selectedOptions">
+        <set />
+      </option>
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="3e5e1540-d72a-4d58-9e84-d967b090504d" name="Default Changelist" comment="" />
+      <created>1623193570599</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1623193570599</updated>
+      <workItem from="1623193591287" duration="251000" />
+      <workItem from="1623193895611" duration="12515000" />
+      <workItem from="1623435065322" duration="2097000" />
+      <workItem from="1623504073185" duration="21318000" />
+      <workItem from="1626053598592" duration="11000" />
+      <workItem from="1626055602006" duration="37840000" />
+      <workItem from="1626659206732" duration="31010000" />
+      <workItem from="1629776227764" duration="1169000" />
+      <workItem from="1629778093601" duration="644000" />
+      <workItem from="1639283148579" duration="39852000" />
+      <workItem from="1640779863035" duration="469000" />
+      <workItem from="1640780722426" duration="14241000" />
+      <workItem from="1640877035065" duration="92807000" />
+      <workItem from="1642114977126" duration="12629000" />
+      <workItem from="1642214585186" duration="106887000" />
+      <workItem from="1642886445715" duration="41116000" />
+      <workItem from="1643060975141" duration="81535000" />
+      <workItem from="1643648226743" duration="32214000" />
+    </task>
+    <task id="LOCAL-00001" summary="Patterns are a sub-type of Figures">
+      <created>1626462549112</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1626462549113</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="UnityProjectConfiguration" hasMinimizedUI="true" />
+  <component name="UnityUnitTestConfiguration" currentTestLauncher="EditMode" />
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <ignored-roots>
+      <path value="$PROJECT_DIR$/Assets/scripts/extensions" />
+    </ignored-roots>
+    <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+    <MESSAGE value="Patterns are a sub-type of Figures" />
+    <option name="LAST_COMMIT_MESSAGE" value="Patterns are a sub-type of Figures" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state width="717" height="544" key="DebuggerActiveHint" timestamp="1643032790616">
+      <screen x="0" y="0" width="1707" height="879" />
+    </state>
+    <state width="717" height="544" key="DebuggerActiveHint/0.0.1707.879@0.0.1707.879" timestamp="1643032790616" />
+    <state x="581" y="136" key="FileChooserDialogImpl" timestamp="1641541385974">
+      <screen x="0" y="0" width="1707" height="879" />
+    </state>
+    <state x="581" y="136" key="FileChooserDialogImpl/0.0.1707.879@0.0.1707.879" timestamp="1641541385974" />
+    <state width="1655" height="229" key="GridCell.Tab.0.bottom" timestamp="1643872860827">
+      <screen x="0" y="0" width="1707" height="879" />
+    </state>
+    <state width="1655" height="229" key="GridCell.Tab.0.bottom/0.0.1707.879@0.0.1707.879" timestamp="1643872860827" />
+    <state width="1655" height="229" key="GridCell.Tab.0.center" timestamp="1643872860825">
+      <screen x="0" y="0" width="1707" height="879" />
+    </state>
+    <state width="1655" height="229" key="GridCell.Tab.0.center/0.0.1707.879@0.0.1707.879" timestamp="1643872860825" />
+    <state width="1655" height="229" key="GridCell.Tab.0.left" timestamp="1643872860824">
+      <screen x="0" y="0" width="1707" height="879" />
+    </state>
+    <state width="1655" height="229" key="GridCell.Tab.0.left/0.0.1707.879@0.0.1707.879" timestamp="1643872860824" />
+    <state width="1655" height="229" key="GridCell.Tab.0.right" timestamp="1643872860826">
+      <screen x="0" y="0" width="1707" height="879" />
+    </state>
+    <state width="1655" height="229" key="GridCell.Tab.0.right/0.0.1707.879@0.0.1707.879" timestamp="1643872860826" />
+    <state width="1655" height="229" key="GridCell.Tab.1.bottom" timestamp="1643872930371">
+      <screen x="0" y="0" width="1707" height="879" />
+    </state>
+    <state width="1655" height="229" key="GridCell.Tab.1.bottom/0.0.1707.879@0.0.1707.879" timestamp="1643872930371" />
+    <state width="1655" height="229" key="GridCell.Tab.1.center" timestamp="1643872930371">
+      <screen x="0" y="0" width="1707" height="879" />
+    </state>
+    <state width="1655" height="229" key="GridCell.Tab.1.center/0.0.1707.879@0.0.1707.879" timestamp="1643872930371" />
+    <state width="1655" height="229" key="GridCell.Tab.1.left" timestamp="1643872930370">
+      <screen x="0" y="0" width="1707" height="879" />
+    </state>
+    <state width="1655" height="229" key="GridCell.Tab.1.left/0.0.1707.879@0.0.1707.879" timestamp="1643872930370" />
+    <state width="1655" height="229" key="GridCell.Tab.1.right" timestamp="1643872930371">
+      <screen x="0" y="0" width="1707" height="879" />
+    </state>
+    <state width="1655" height="229" key="GridCell.Tab.1.right/0.0.1707.879@0.0.1707.879" timestamp="1643872930371" />
+    <state width="1655" height="229" key="GridCell.Tab.2.bottom" timestamp="1643872860483">
+      <screen x="0" y="0" width="1707" height="879" />
+    </state>
+    <state width="1655" height="229" key="GridCell.Tab.2.bottom/0.0.1707.879@0.0.1707.879" timestamp="1643872860483" />
+    <state width="1655" height="229" key="GridCell.Tab.2.center" timestamp="1643872860482">
+      <screen x="0" y="0" width="1707" height="879" />
+    </state>
+    <state width="1655" height="229" key="GridCell.Tab.2.center/0.0.1707.879@0.0.1707.879" timestamp="1643872860482" />
+    <state width="1655" height="229" key="GridCell.Tab.2.left" timestamp="1643872860481">
+      <screen x="0" y="0" width="1707" height="879" />
+    </state>
+    <state width="1655" height="229" key="GridCell.Tab.2.left/0.0.1707.879@0.0.1707.879" timestamp="1643872860481" />
+    <state width="1655" height="229" key="GridCell.Tab.2.right" timestamp="1643872860483">
+      <screen x="0" y="0" width="1707" height="879" />
+    </state>
+    <state width="1655" height="229" key="GridCell.Tab.2.right/0.0.1707.879@0.0.1707.879" timestamp="1643872860483" />
+    <state width="1655" height="229" key="GridCell.Tab.3.bottom" timestamp="1643872860485">
+      <screen x="0" y="0" width="1707" height="879" />
+    </state>
+    <state width="1655" height="229" key="GridCell.Tab.3.bottom/0.0.1707.879@0.0.1707.879" timestamp="1643872860485" />
+    <state width="1655" height="229" key="GridCell.Tab.3.center" timestamp="1643872860484">
+      <screen x="0" y="0" width="1707" height="879" />
+    </state>
+    <state width="1655" height="229" key="GridCell.Tab.3.center/0.0.1707.879@0.0.1707.879" timestamp="1643872860484" />
+    <state width="1655" height="229" key="GridCell.Tab.3.left" timestamp="1643872860484">
+      <screen x="0" y="0" width="1707" height="879" />
+    </state>
+    <state width="1655" height="229" key="GridCell.Tab.3.left/0.0.1707.879@0.0.1707.879" timestamp="1643872860484" />
+    <state width="1655" height="229" key="GridCell.Tab.3.right" timestamp="1643872860485">
+      <screen x="0" y="0" width="1707" height="879" />
+    </state>
+    <state width="1655" height="229" key="GridCell.Tab.3.right/0.0.1707.879@0.0.1707.879" timestamp="1643872860485" />
+    <state x="111" y="79" key="RiderGenerateDialog" timestamp="1642938888570">
+      <screen x="0" y="0" width="1707" height="879" />
+    </state>
+    <state x="111" y="79" key="RiderGenerateDialog/0.0.1707.879@0.0.1707.879" timestamp="1642938888570" />
+    <state x="268" y="0" key="SettingsEditor" timestamp="1643062251180">
+      <screen x="0" y="0" width="1707" height="879" />
+    </state>
+    <state x="268" y="0" key="SettingsEditor/0.0.1707.879@0.0.1707.879" timestamp="1643062251180" />
+    <state width="623" height="514" key="SwitcherDM" timestamp="1639365788395">
+      <screen x="0" y="0" width="1707" height="879" />
+    </state>
+    <state width="623" height="514" key="SwitcherDM/0.0.1707.879@0.0.1707.879" timestamp="1639365788395" />
+    <state x="93" y="93" width="1521" height="693" maximized="true" key="VCS.FileHistoryDialog" timestamp="1643419763422">
+      <screen x="0" y="0" width="1707" height="879" />
+    </state>
+    <state x="93" y="93" width="1521" height="693" maximized="true" key="VCS.FileHistoryDialog/0.0.1707.879@0.0.1707.879" timestamp="1643419763422" />
+    <state x="93" y="93" width="1521" height="693" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1641956907437">
+      <screen x="0" y="0" width="1707" height="879" />
+    </state>
+    <state x="93" y="93" width="1521" height="693" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1707.879@0.0.1707.879" timestamp="1641956907437" />
+    <state x="360" y="0" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1643873922671">
+      <screen x="0" y="0" width="1707" height="879" />
+    </state>
+    <state x="360" y="0" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1707.879@0.0.1707.879" timestamp="1643873922671" />
+    <state x="587" y="335" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1643590107420">
+      <screen x="0" y="0" width="1707" height="879" />
+    </state>
+    <state x="587" y="335" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1707.879@0.0.1707.879" timestamp="1643590107420" />
+    <state x="267" y="105" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1643786414487">
+      <screen x="0" y="0" width="1707" height="879" />
+    </state>
+    <state x="267" y="105" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.0.1707.879@0.0.1707.879" timestamp="1643786414487" />
+    <state x="367" y="28" width="973" height="822" key="find.popup" timestamp="1643794252323">
+      <screen x="0" y="0" width="1707" height="879" />
+    </state>
+    <state x="367" y="28" width="973" height="822" key="find.popup/0.0.1707.879@0.0.1707.879" timestamp="1643794252323" />
+    <state x="432" y="0" width="840" height="1034" key="search.everywhere.popup" timestamp="1643863372372">
+      <screen x="0" y="0" width="1707" height="879" />
+    </state>
+    <state x="432" y="0" width="840" height="1034" key="search.everywhere.popup/0.0.1707.879@0.0.1707.879" timestamp="1643863372372" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/scripts/extensions/object_pools/Object_pool.cs</url>
+          <line>31</line>
+          <properties documentPath="C:\prj\unity_ai\Assets\scripts\extensions\object_pools\Object_pool.cs" initialLine="28">
+            <startOffsets>
+              <option value="779" />
+            </startOffsets>
+            <endOffsets>
+              <option value="806" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/scripts/unity_ai/Node/Figure_parts/management/Mode_selector.cs</url>
+          <line>27</line>
+          <properties documentPath="C:\prj\unity_ai\Assets\scripts\unity_ai\Node\Figure_parts\management\Mode_selector.cs" initialLine="26">
+            <startOffsets>
+              <option value="844" />
+            </startOffsets>
+            <endOffsets>
+              <option value="872" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="14" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/scripts/unity_ai/scene_modes/Manual_figure_builder.cs</url>
+          <line>47</line>
+          <properties documentPath="C:\prj\unity_ai\Assets\scripts\unity_ai\scene_modes\Manual_figure_builder.cs" initialLine="49">
+            <startOffsets>
+              <option value="1622" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1633" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="18" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/scripts/unity_ai/scene_modes/Manual_figure_builder.cs</url>
+          <line>39</line>
+          <properties documentPath="C:\prj\unity_ai\Assets\scripts\unity_ai\scene_modes\Manual_figure_builder.cs" initialLine="41">
+            <startOffsets>
+              <option value="1275" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1318" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="20" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>

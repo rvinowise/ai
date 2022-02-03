@@ -91,7 +91,7 @@ public class Figure_storage: MonoBehaviour {
 
     public void show_insides_of_one_figure(Figure shown_figure) {
         shown_figure.show_inside();
-        foreach (Figure figure in known_figures) {
+        foreach (Figure figure in figure_storage.known_figures) {
             if (shown_figure != figure) {
                 figure.hide_inside();
             }

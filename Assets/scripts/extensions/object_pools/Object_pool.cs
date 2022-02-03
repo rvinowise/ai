@@ -14,6 +14,9 @@ public class Object_pool {
         prefab = in_prefab;
     }
 
+    public bool Contains(TObject thing) {
+        return objects.Contains(thing);
+    }
 
     public GameObject get() {
         if (objects.Count == 0) {
