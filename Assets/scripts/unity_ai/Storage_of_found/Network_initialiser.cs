@@ -14,7 +14,7 @@ public class Network_initialiser: MonoBehaviour {
     public Figure_storage figure_storage;
     [SerializeField] private Mode_selector mode_selector; 
     
-    private string[] symbol_figures = {",",";","=","+","-"};
+    private readonly string[] symbol_figures = {",",";","=","+","-"};
 
     void Start() {
         create_base_signals();
@@ -46,7 +46,7 @@ public class Network_initialiser: MonoBehaviour {
     }
     
     private string get_id_for_index(int in_index) {
-        return string.Format("{0}",in_index);
+        return $"{in_index}";
     }
     
 }

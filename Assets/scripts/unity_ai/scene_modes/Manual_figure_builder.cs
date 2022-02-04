@@ -19,17 +19,18 @@ namespace rvinowise.ai.unity {
 public class Manual_figure_builder: 
 MonoBehaviour,
 IFigure_button_click_receiver,
-ISubfigure_click_receiver
-{
-
+ISubfigure_click_receiver {
+    private bool change_connections;
+    
+    public Figure_observer figure_observer;
+    public Mode_selector mode_selector;
+    
     [SerializeField] private Figure_builder builder;
     private Figure_storage figure_storage => builder.figure_storage;
-    public Figure_observer figure_observer;
     private Figure figure_prefab;
     private Figure built_figure;
     private Figure_header figure_header;
     private Figure_representation built_repr;
-    public Mode_selector mode_selector;
     [SerializeField] private Transform cursor;
 
     private HashSet<Subfigure> selected_subfigures = new HashSet<Subfigure>();
@@ -38,13 +39,16 @@ ISubfigure_click_receiver
     public void on_create_empty_figure() {
         built_figure = builder.create_new_figure("f") as Figure;
         figure_storage.append_figure(built_figure);
-        on_start_editing_figure(built_figure);
+        on_start_editing_figure(built_figure, true);
         built_repr = built_figure.create_representation() as Figure_representation;
         figure_header.mode_selector = mode_selector;
         figure_observer.observe(built_figure);
     }
 
-    public void on_start_editing_figure(Figure figure) {
+    public void on_start_editing_figure(
+        Figure figure, bool change_connections = false
+    ) {
+        this.change_connections = change_connections;
         activate();
         built_figure = figure;
         built_repr = figure.get_representations().FirstOrDefault() as Figure_representation;
@@ -103,7 +107,9 @@ ISubfigure_click_receiver
                 deselect_all();
                 
             }
-            check_clicking_on_connection();
+            if (change_connections) {
+                check_clicking_on_connection();
+            }
         }
 
         update_moving_selected_subfigures();
@@ -177,14 +183,16 @@ ISubfigure_click_receiver
     }
 
     private void check_keyboard_commands() {
-        if (UnityEngine.Input.GetButton("delete")) {
-            foreach (Connection connection in selected_connections) {
-                connection.delete();
+        if (change_connections) {
+            if (UnityEngine.Input.GetButton("delete")) {
+                foreach (Connection connection in selected_connections) {
+                    connection.delete();
+                }
+                foreach (Subfigure subfigure in selected_subfigures) {
+                    built_repr.delete_subfigure(subfigure);
+                }
+                deselect_all();
             }
-            foreach (Subfigure subfigure in selected_subfigures) {
-                built_repr.delete_subfigure(subfigure);
-            }
-            deselect_all();
         }
     }
     
@@ -229,7 +237,10 @@ ISubfigure_click_receiver
     }
 
 
-    public void subfigures_touched(Subfigure moved_subfigure, Subfigure other_subfigure) {
+    public void on_subfigures_touched(Subfigure moved_subfigure, Subfigure other_subfigure) {
+        if (!change_connections) {
+            return;
+        }
         if (moved_subfigure.is_connected(other_subfigure)) {
             return;
         }

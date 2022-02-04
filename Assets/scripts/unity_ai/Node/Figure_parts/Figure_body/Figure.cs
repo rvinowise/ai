@@ -18,10 +18,10 @@ MonoBehaviour,
 IFigure
 {
     
-    public List<IFigure_representation> representations 
+    public readonly List<IFigure_representation> representations 
         = new List<IFigure_representation>();
 
-    public List<IFigure_appearance> _appearances 
+    public readonly List<IFigure_appearance> _appearances 
         = new List<IFigure_appearance>();
     
     public Figure_appearance appearance_preafab;

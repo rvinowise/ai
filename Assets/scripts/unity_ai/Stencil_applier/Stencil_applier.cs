@@ -17,25 +17,6 @@ public class Stencil_applier: MonoBehaviour {
     
     
     // public static IList<IFigure> apply_stencil(
-    //     IReadOnlyList<IAction_group> action_groups,
-    //     Stencil stencil
-    // ) {
-    //     Stencil applied_stencil = this;
-    //     IFigure stencil_subfigure = stencil.;
-    //     foreach(
-    //         IAction_group action_group in action_groups 
-    //     ) {
-    //         if (
-    //             action_group.has_action<Appearance_start>(
-    //                 stencil_subfigure
-    //             )
-    //         ) {
-
-    //         }
-    //     }
-    // }
-
-    // public static IList<IFigure> apply_stencil(
     //     Stencil stencil,
     //     IReadOnlyList<IAction_group> action_groups
         
@@ -48,34 +29,41 @@ public class Stencil_applier: MonoBehaviour {
 
     
 
-    // public IList<IFigure> apply_stencil(
-    //     Stencil stencil, 
-    //     IFigure target
-    // ) {
-    //     IList<Stencil_projection> projections 
-    //     = project_stencil_on_target(stencil, target);
+    public IList<IFigure> apply_stencil(
+        IStencil stencil, 
+        IFigure_representation target
+    ) {
+        IList<Stencil_mapping> mappings = 
+            map_stencil_onto_target(stencil, target);
 
-    //     foreach(Stencil_projection projection in projections) {
-    //         IList<Figure> out_figures
-    //         = extract_figures_out_of_projected_stencils(projection);
-    //     }
+        foreach(Stencil_mapping mapping in mappings) {
+            IReadOnlyList<IFigure> out_figures = 
+                extract_figures_out_of_projected_stencils(mapping);
+        }
         
     
-    // }
+    }
 
-    // private IList<Stencil_projection> project_stencil_on_target(
-    //     Stencil stencil, IFigure target
-    // ) {
-    //     IList<Stencil_projection> result = new List<Stencil_projection>();
+    private IList<Stencil_mapping> map_stencil_onto_target(
+        IStencil stencil, IFigure_representation target
+    ) {
+        IList<Stencil_mapping> mappings = new List<Stencil_mapping>();
 
-    //     return result;
-    // }
+        foreach (ISubfigure subfigure in stencil.get_subfigures()) {
+            IReadOnlyList<ISubfigure> 
+        }
+        
+        return mappings;
+    }
 
-    // IList<Figure> extract_figures_out_of_projected_stencils(
-    //     Stencil_projection projection
-    // ) {
+    IReadOnlyList<IFigure> extract_figures_out_of_projected_stencils(
+        Stencil_mapping mapping
+    ) {
+        List<Figure> extracted_figures = new List<Figure>();
 
-    // }
+
+        return extracted_figures.AsReadOnly();
+    }
 }
 
 

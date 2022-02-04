@@ -21,9 +21,10 @@ IFigure_representation
     public IReadOnlyList<ISubfigure> get_first_subfigures() => first_subfigures.AsReadOnly();
     public void add_first_subfigures(ISubfigure subfigure) => first_subfigures.Add(subfigure);
     #endregion IFigure_representation
-    public List<ISubfigure> first_subfigures = new List<ISubfigure>();
+    
+    public readonly List<ISubfigure> first_subfigures = new List<ISubfigure>();
 
-    public List<ISubfigure> subfigures = new List<ISubfigure>();
+    public readonly List<ISubfigure> subfigures = new List<ISubfigure>();
     
     
     #region building
@@ -60,9 +61,7 @@ IFigure_representation
         return transform.position + new Vector3(0,-2,0);
     }
 
-    public void delete_connection() {
-        
-    }
+   
     public void delete_subfigure(Subfigure subfigure) {
         delete_all_connections_touching(subfigure);
         subfigures.Remove(subfigure);
@@ -85,7 +84,7 @@ IFigure_representation
     #region visualisation
     [SerializeField] public Subfigure subfigure_prefab;
     [SerializeField] private Transform subfigures_folder;
-    private Vector3 subfigures_offset = new Vector3(2,0,0);
+    private readonly Vector3 subfigures_offset = new Vector3(1.3f,0,0);
     public void show() {
         gameObject.SetActive(true);
     }

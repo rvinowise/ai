@@ -172,7 +172,7 @@ ISelectable
         }
         if (collision.transform.GetComponent<Subfigure>() is Subfigure other_subfigure)
         {
-            manual_figure_builder.subfigures_touched(this, other_subfigure);
+            manual_figure_builder.on_subfigures_touched(this, other_subfigure);
         }
     }
 

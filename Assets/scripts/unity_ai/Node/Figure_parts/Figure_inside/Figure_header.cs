@@ -5,6 +5,7 @@ using UnityEngine;
 using Vector3 = UnityEngine.Vector3;
 using System.Linq;
 using rvinowise.ai.unity.visuals;
+using rvinowise.rvi.contracts;
 using rvinowise.unity.extensions;
 using rvinowise.unity.extensions.attributes;
 using rvinowise.unity.ui.input;
@@ -43,7 +44,7 @@ MonoBehaviour
 
 
     public void on_finish_building() {
-        mode_selector.on_finish_building_figure();
+        Mode_selector.instance.on_finish_building_figure();
     }
     #region ISelectable
 
