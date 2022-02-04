@@ -20,6 +20,8 @@ IHave_destructor
         BigInteger start, BigInteger end
     );
 
+    
+
     void add_appearance(
         IFigure_appearance appearance
     );

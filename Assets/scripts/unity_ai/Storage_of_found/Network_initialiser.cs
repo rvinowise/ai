@@ -7,10 +7,12 @@ using rvinowise.ai.unity;
 using rvinowise.unity.extensions;
 using rvinowise.unity.ui.table;
 using UnityEngine;
+using rvinowise.unity.ui.input;
 
 namespace rvinowise.ai.unity {
 public class Network_initialiser: MonoBehaviour {
     public Figure_storage figure_storage;
+    [SerializeField] private Mode_selector mode_selector; 
     
     private string[] symbol_figures = {",",";","=","+","-"};
 
@@ -39,6 +41,7 @@ public class Network_initialiser: MonoBehaviour {
         Figure signal = figure_storage.figure_prefab.provide_new<Figure>();
         signal.id = id;
         signal.name = string.Format("signal {0}", signal.id);
+        signal.header.mode_selector = mode_selector;
         return signal;
     }
     

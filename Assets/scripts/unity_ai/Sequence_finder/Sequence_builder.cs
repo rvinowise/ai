@@ -9,6 +9,7 @@ using rvinowise.ai.unity.persistence;
 using rvinowise.unity.ui.table;
 using UnityEngine;
 using UnityEngine.UI;
+using rvinowise.unity.ui.input;
 
 namespace rvinowise.ai.unity {
 public class Sequence_builder: MonoBehaviour {
@@ -17,11 +18,12 @@ public class Sequence_builder: MonoBehaviour {
 
     private IReadOnlyList<IFigure> known_figures => figure_storage.known_figures;
 
-
+    [SerializeField] private Mode_selector mode_selector;
     private Figure create_figure_for_sequence_of_subfigures(
         IReadOnlyList<IFigure> subfigures
     ) {
         Figure figure = figure_prefab.provide_new<Figure>();
+        figure.header.mode_selector = mode_selector;
         figure.id = get_id_for(subfigures);
 
         var representation = figure.create_representation();

@@ -51,9 +51,35 @@ ISubfigure_click_receiver
         figure_header = built_figure.header;
         figure_header.start_building();
         figure_observer.observe(built_figure);
+        if (built_repr) {
+            connect_subfigures_to_builder(built_figure);
+        }
     }
 
-
+    private void connect_subfigures_to_builder(IFigure figure) {
+        foreach(
+            Subfigure subfigure in 
+            figure.get_representations().First().get_subfigures()
+        ) {
+            connect_subnode_to_this_builder(subfigure);
+        }
+    }
+    private void disconnect_subfigures_from_builder(IFigure figure) {
+        foreach(
+            Subfigure subfigure in 
+            figure.get_representations().First().get_subfigures()
+        ) {
+            disconnect_subnode_from_this_builder(subfigure);
+        }
+    }
+    private void connect_subnode_to_this_builder(Subfigure subfigure) {
+        subfigure.manual_figure_builder = this;
+        subfigure.click_receiver = this;
+    }
+    private void disconnect_subnode_from_this_builder(Subfigure subfigure) {
+        subfigure.manual_figure_builder = null;
+        subfigure.click_receiver = null;
+    }
     
     private void activate() {
         enabled = true;
@@ -64,6 +90,7 @@ ISubfigure_click_receiver
         enabled = false;
         if (built_figure) {
             figure_header.finish_building();
+            disconnect_subfigures_from_builder(built_figure);
         }
     }
 
@@ -112,27 +139,33 @@ ISubfigure_click_receiver
 
     public void on_click(Figure_button figure_button) {
         deselect_all();
-        Subfigure subfigure = 
-            built_repr.create_subfigure(figure_button.figure) as Subfigure;
-        subfigure.manual_figure_builder = this;
-        subfigure.receiver = this;
+        create_subfigure(figure_button.figure);
     }
-
+    
     public void on_click_stencil_interface(Stencil_interface direction) {
         deselect_all();
+        create_node_for_stencil_interface(direction);
+    }
+
+    private void create_subfigure(Figure figure) {
+        Subfigure subfigure = 
+            built_repr.create_subfigure(figure) as Subfigure;
+        connect_subnode_to_this_builder(subfigure);
+    }
+    
+    private void create_node_for_stencil_interface(Stencil_interface direction) {
         Subfigure subfigure = 
             built_repr.create_subfigure(direction) as Subfigure;
-        subfigure.manual_figure_builder = this;
-        subfigure.receiver = this;
+        connect_subnode_to_this_builder(subfigure);
     }
+
+    
     
     public void on_click(Subfigure subfigure) {
         deselect_all();
         select(subfigure);
         Mover_of_selected.instance.add_moved_thing(subfigure);
     }
-
-
 
     private void update_moving_selected_subfigures() {
         //if (selected_subfigures.Any()) {

@@ -46,8 +46,7 @@ public class Figure_button:
     public void on_click() {
         if (figure) {
             receiver.on_click(this);
-        }
-        else {
+        } else {
             receiver.on_click_stencil_interface(stencil_interface);
         }
 

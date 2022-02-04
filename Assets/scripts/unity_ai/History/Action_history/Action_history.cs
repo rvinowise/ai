@@ -54,7 +54,6 @@ IAction_history
     
     
     public override void input_selected_figures() {
-        var test0 = Selector.instance;
         var selected_figures = Selector.instance.figures;
         if (!selected_figures.Any()) {
             return;

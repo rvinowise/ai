@@ -155,13 +155,13 @@ ISelectable
     }
 
     public float radius => 0.5f;
-    public ISubfigure_click_receiver receiver;
+    public ISubfigure_click_receiver click_receiver;
 
     
     public Manual_figure_builder manual_figure_builder;
 
     void OnMouseDown() {
-        receiver?.on_click(this);
+        click_receiver?.on_click(this);
     }
     
     void OnCollisionEnter(Collision collision)

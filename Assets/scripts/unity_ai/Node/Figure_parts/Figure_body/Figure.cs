@@ -90,9 +90,6 @@ IFigure
     }
     #endregion sequential figure
 
-    
-
-
     #region visualisation
 
     public TMP_Text lable;

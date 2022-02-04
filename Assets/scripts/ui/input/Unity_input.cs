@@ -72,7 +72,8 @@ public class Unity_input: MonoBehaviour {
         zoom_held = true;// UnityEngine.Input.GetButton("Zoom");
     }
 
-    public TComponent get_component_under_mouse<TComponent>() where TComponent: Component {
+    public TComponent get_component_under_mouse<TComponent>() 
+    where TComponent: Component {
         Ray ray = new Ray(get_mouse_position_from_top(), Vector3.forward);
         RaycastHit hit;
 
