@@ -47,13 +47,14 @@ public class Stencil_applier: MonoBehaviour {
     private IList<Stencil_mapping> map_stencil_onto_target(
         IStencil stencil, IFigure_representation target
     ) {
-        IList<Stencil_mapping> mappings = new List<Stencil_mapping>();
+        IList<Stencil_mapping> potential_mappings = map_first_node(stencil, target);
 
-        foreach (ISubfigure subfigure in stencil.get_subfigures()) {
-            IReadOnlyList<ISubfigure> 
+        for(int i_node = 1; i_node < stencil.get_subfigures().Count; i_node++) {
+            ISubfigure subfigure = stencil.get_subfigures()[i_node];
+            map_next_node(potential_mappings, subfigure, target);
         }
         
-        return mappings;
+        return potential_mappings;
     }
 
     IReadOnlyList<IFigure> extract_figures_out_of_projected_stencils(
