@@ -91,6 +91,20 @@ public class Stencil_applier: MonoBehaviour {
         
         
     }
+
+    class Subnode_occurances {
+        public IList<IList<ISubfigure>> subnodes;
+    }
+
+    struct Index_combination {
+        public List<int> indexes;
+    }
+
+    private void get_next_index_combination(Index_combination previous_combination) {
+        for (int i=0;i< previous_combination.indexes.Count; i++) {
+            previous_combination.indexes[i]++;
+        }
+    }
     
 
     private IList<ISubfigure> get_occurances_of_subnode_in_graph(
