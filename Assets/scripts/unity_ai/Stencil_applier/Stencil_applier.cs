@@ -105,6 +105,35 @@ public class Stencil_applier: MonoBehaviour {
             previous_combination.indexes[i]++;
         }
     }
+
+    struct Combination_for_figure {
+
+        public Combination_for_figure(
+            int occurences_in_target,
+            int needed_amount
+        ) {
+            this.occurences_in_target = occurences_in_target;
+            combined_indexes = new int[needed_amount];
+        }
+        
+        public int occurences_in_target;
+
+        public int get_needed_amount() {
+            return combined_indexes.Length;
+        }
+        public int[] combined_indexes;
+    }
+    
+    Combination_for_figure get_first_combination_of(
+        Combination_for_figure combination
+    ) {
+        
+    }
+    Combination_for_figure get_next_combination_of(
+        Combination_for_figure combination
+    ) {
+        
+    }
     
 
     private IList<ISubfigure> get_occurances_of_subnode_in_graph(
