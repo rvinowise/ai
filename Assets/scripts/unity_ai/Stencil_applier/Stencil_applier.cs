@@ -9,6 +9,7 @@ using Action = rvinowise.ai.unity.Action;
 using rvinowise.rvi.contracts;
 using rvinowise.ai.general;
 using System.Numerics;
+using rvinowise.ai.unity.mapping_stencils;
 
 namespace rvinowise.ai.unity {
 
@@ -60,6 +61,13 @@ public class Stencil_applier: MonoBehaviour {
     private IList<Stencil_mapping> map_first_nodes(
         IStencil stencil, IFigure_representation target
     ) {
+        Subnodes_combinator combinator = new Subnodes_combinator(
+            stencil, target
+        );
+
+        foreach (Subnodes_combination combination in combinator ) {
+            
+        }
         
         IList<IList<ISubfigure>> subnode_occurances = 
             get_all_subnodes_occurances(stencil, target);
@@ -91,49 +99,7 @@ public class Stencil_applier: MonoBehaviour {
         
         
     }
-
-    class Subnode_occurances {
-        public IList<IList<ISubfigure>> subnodes;
-    }
-
-    struct Index_combination {
-        public List<int> indexes;
-    }
-
-    private void get_next_index_combination(Index_combination previous_combination) {
-        for (int i=0;i< previous_combination.indexes.Count; i++) {
-            previous_combination.indexes[i]++;
-        }
-    }
-
-    struct Combination_for_figure {
-
-        public Combination_for_figure(
-            int occurences_in_target,
-            int needed_amount
-        ) {
-            this.occurences_in_target = occurences_in_target;
-            combined_indexes = new int[needed_amount];
-        }
-        
-        public int occurences_in_target;
-
-        public int get_needed_amount() {
-            return combined_indexes.Length;
-        }
-        public int[] combined_indexes;
-    }
     
-    Combination_for_figure get_first_combination_of(
-        Combination_for_figure combination
-    ) {
-        
-    }
-    Combination_for_figure get_next_combination_of(
-        Combination_for_figure combination
-    ) {
-        
-    }
     
 
     private IList<ISubfigure> get_occurances_of_subnode_in_graph(
