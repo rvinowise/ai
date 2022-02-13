@@ -9,6 +9,7 @@ using Action = rvinowise.ai.unity.Action;
 using rvinowise.rvi.contracts;
 using rvinowise.ai.general;
 using System.Numerics;
+using rvinowise.ai.unity.mapping_stencils;
 
 namespace rvinowise.ai.unity {
 
@@ -40,32 +41,83 @@ public class Stencil_applier: MonoBehaviour {
             IReadOnlyList<IFigure> out_figures = 
                 extract_figures_out_of_projected_stencils(mapping);
         }
-        
-    
+
+        return null;
     }
 
     private IList<Stencil_mapping> map_stencil_onto_target(
         IStencil stencil, IFigure_representation target
     ) {
-        IList<Stencil_mapping> potential_mappings = map_first_node(stencil, target);
+        IList<Stencil_mapping> potential_mappings = map_first_nodes(stencil, target);
 
         for(int i_node = 1; i_node < stencil.get_subfigures().Count; i_node++) {
             ISubfigure subfigure = stencil.get_subfigures()[i_node];
-            map_next_node(potential_mappings, subfigure, target);
+            //map_next_node(potential_mappings, subfigure, target);
         }
         
         return potential_mappings;
     }
 
-    private IList<Stencil_mapping> map_first_node(
+    private IList<Stencil_mapping> map_first_nodes(
         IStencil stencil, IFigure_representation target
+    ) {
+        Subnodes_combinator combinator = new Subnodes_combinator(
+            stencil, target
+        );
+        Subnodes_combination combination = new Subnodes_combination(
+            stencil, target
+        );
+
+        // while () {
+        //     
+        // }
+
+        // foreach (Subnodes_combination combination in combinator ) {
+        //     
+        // }
+        
+        IList<IList<ISubfigure>> subnode_occurances = 
+            get_all_subnodes_occurances(stencil, target);
+        
+
+        IList<Stencil_mapping> potential_mappings = 
+            recombine_subnodes_as_mappings(subnode_occurances);
+
+        return potential_mappings;
+    }
+
+    private IList<IList<ISubfigure>> get_all_subnodes_occurances(
+        IStencil stencil, IFigure_representation target
+    ) {
+        IList<IList<ISubfigure>> subnode_occurances = new List<IList<ISubfigure>>();
+        foreach (ISubfigure subfigure in stencil.get_first_subfigures()) {
+            IList<ISubfigure> occurances = get_occurances_of_subnode_in_graph(
+                subfigure.referenced_figure, target
+            );
+            subnode_occurances.Add(occurances);
+        }
+        return subnode_occurances;
+    }
+
+    private IList<Stencil_mapping> recombine_subnodes_as_mappings(
+        IList<IList<ISubfigure>> subnode_occurances
     ) {
         IList<Stencil_mapping> potential_mappings = new List<Stencil_mapping>();
 
-        foreach(ISubfigure subfigure in stencil.get_first_subfigures()) {
-            
-        }
         return potential_mappings;
+    }
+    
+    
+
+    private IList<ISubfigure> get_occurances_of_subnode_in_graph(
+        IFigure figure, IFigure_representation target
+    ) {
+        IList<ISubfigure> occurances =
+            target.get_subfigures().Where(subnode => 
+                subnode.referenced_figure == figure
+            ).ToList();
+        return occurances;
+
     }
 
     IReadOnlyList<IFigure> extract_figures_out_of_projected_stencils(

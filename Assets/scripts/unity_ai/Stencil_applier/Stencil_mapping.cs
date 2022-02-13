@@ -5,8 +5,8 @@ using rvinowise.ai.general;
 namespace rvinowise.ai.unity {
 
 public struct Mapped_node {
-    public Subfigure origin;
-    public Subfigure destination;
+    public ISubfigure origin;
+    public ISubfigure destination;
 }
 
 public class Stencil_mapping {
