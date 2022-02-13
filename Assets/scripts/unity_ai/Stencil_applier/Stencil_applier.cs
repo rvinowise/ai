@@ -57,6 +57,17 @@ public class Stencil_applier: MonoBehaviour {
         return potential_mappings;
     }
 
+    private IList<Stencil_mapping> map_first_node(
+        IStencil stencil, IFigure_representation target
+    ) {
+        IList<Stencil_mapping> potential_mappings = new List<Stencil_mapping>();
+
+        foreach(ISubfigure subfigure in stencil.get_first_subfigures()) {
+            
+        }
+        return potential_mappings;
+    }
+
     IReadOnlyList<IFigure> extract_figures_out_of_projected_stencils(
         Stencil_mapping mapping
     ) {
