@@ -41,8 +41,8 @@ public class Stencil_applier: MonoBehaviour {
             IReadOnlyList<IFigure> out_figures = 
                 extract_figures_out_of_projected_stencils(mapping);
         }
-        
-    
+
+        return null;
     }
 
     private IList<Stencil_mapping> map_stencil_onto_target(
@@ -52,7 +52,7 @@ public class Stencil_applier: MonoBehaviour {
 
         for(int i_node = 1; i_node < stencil.get_subfigures().Count; i_node++) {
             ISubfigure subfigure = stencil.get_subfigures()[i_node];
-            map_next_node(potential_mappings, subfigure, target);
+            //map_next_node(potential_mappings, subfigure, target);
         }
         
         return potential_mappings;
@@ -64,10 +64,17 @@ public class Stencil_applier: MonoBehaviour {
         Subnodes_combinator combinator = new Subnodes_combinator(
             stencil, target
         );
+        Subnodes_combination combination = new Subnodes_combination(
+            stencil, target
+        );
 
-        foreach (Subnodes_combination combination in combinator ) {
-            
-        }
+        // while () {
+        //     
+        // }
+
+        // foreach (Subnodes_combination combination in combinator ) {
+        //     
+        // }
         
         IList<IList<ISubfigure>> subnode_occurances = 
             get_all_subnodes_occurances(stencil, target);
@@ -96,8 +103,8 @@ public class Stencil_applier: MonoBehaviour {
         IList<IList<ISubfigure>> subnode_occurances
     ) {
         IList<Stencil_mapping> potential_mappings = new List<Stencil_mapping>();
-        
-        
+
+        return potential_mappings;
     }
     
     

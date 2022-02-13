@@ -10,10 +10,10 @@ using UnityEngine;
 namespace rvinowise.ai.unity.mapping_stencils {
 
 
-public struct Combination_for_figure {
-    public int[] indexes;
-}
-public class Combinator_for_figure {
+
+public class Combination_for_figure: 
+    IEnumerator
+{
 
     public int max_subnodes;
 
@@ -22,12 +22,13 @@ public class Combinator_for_figure {
     }
     public int[] combination;
     
-    public Combinator_for_figure(
-        int max_index,
+    public Combination_for_figure(
+        int max_subnodes,
         int needed_amount
     ) {
-        this.max_subnodes = max_index;
+        this.max_subnodes = max_subnodes;
         combination = new int[needed_amount];
+        Reset();
     }
 
     public void set_to_first() {
@@ -37,25 +38,6 @@ public class Combinator_for_figure {
         combination = Enumerable.Range(max_subnodes-get_needed_amount(), max_subnodes).ToArray();
     }
 
-    public Combinator_for_figure get_next() {
-        bool increment_next_order = true;
-        int i_order = 0;
-        while (increment_next_order) {
-            combination[i_order]++;
-            if (combination[i_order] == max_subnodes) {
-                combination[i_order] = 0;
-                i_order++;
-            }
-            else {
-                increment_next_order = false;
-            }
-        }
-        while (has_indexes_used_twice()) {
-            return get_next();
-        }
-
-        return this;
-    }
 
     private ISet<int> used_indexes = new HashSet<int>();
     private bool has_indexes_used_twice() {
@@ -77,17 +59,54 @@ public class Combinator_for_figure {
         }
         return true;
     }
+    
+    #region IEnumerator
+
+    public bool MoveNext() {
+        bool increment_next_order = true;
+        int i_order = 0;
+        while (increment_next_order) {
+            combination[i_order]++;
+            if (combination[i_order] == max_subnodes) {
+                combination[i_order] = 0;
+                i_order++;
+                if (i_order == get_needed_amount()) {
+                    return false;
+                }
+            }
+            else {
+                increment_next_order = false;
+            }
+        }
+        while (has_indexes_used_twice()) {
+            return MoveNext();
+        }
+
+        return true;
+    }
+
+    public void Reset() {
+        set_to_first();
+        combination[0]--;
+    }
+
+    public object Current {
+        get {
+            return this;
+        }
+    }
+
+    #endregion IEnumerator
 }
 
-public class Subnodes_combinator :
-    IEnumerable
+public class Subnodes_combinator 
 {
+    
     public Subnodes_combinator(IStencil stencil, IFigure_representation target) {
         foreach (ISubfigure subfigure in stencil.get_first_subfigures()) {
             IList<ISubfigure> occurances = get_occurances_of_subnode_in_graph(
                 subfigure.referenced_figure, target
             );
-            subnode_occurances.Add(occurances);
         }
     }
     
@@ -103,24 +122,48 @@ public class Subnodes_combinator :
     }
     
 }
+
+public struct Figure_combinator_figure_requirement {
+    public int needed_amount;
+    public int max_occurances;
+
+    public Figure_combinator_figure_requirement(
+        int needed_amount, int max_occurances
+    ) {
+        this.needed_amount = needed_amount;
+        this.max_occurances = max_occurances;
+    }
+        
+}
+
 public class Subnodes_combination:
     IEnumerable, 
     IEnumerator
 {
-    public Dictionary<IFigure, Combinator_for_figure> combinations_for_figures = 
-        new Dictionary<IFigure, Combinator_for_figure>();
+    public List<Combination_for_figure> combinations_for_figures = 
+        new List<Combination_for_figure>();
 
     private bool is_reset = true;
     
-    public Subnodes_combination() {
-            
+    public Subnodes_combination(
+        Figure_combinator_figure_requirement[] figure_requirements
+    ) {
+        for (int i_figure = 0; i_figure < figure_requirements.Length; i_figure++) {
+            combinations_for_figures.Add(
+                new Combination_for_figure(
+                    figure_requirements[i_figure].max_occurances,
+                    figure_requirements[i_figure].needed_amount
+                )
+            );
+        }
+
+        Reset();
     }
         
     public void add_mapping_of_figure(
-        IFigure figure,
-        Combinator_for_figure combinator
+        Combination_for_figure combinator
     ) {
-        combinations_for_figures[figure] = combinator;
+        combinations_for_figures[figure_index] = combinator;
     }
     
     public bool is_last() {
@@ -149,15 +192,12 @@ public class Subnodes_combination:
             return true;
         }
         bool last_order_overflows = true;
-        foreach (Combinator_for_figure combination in combinations_for_figures.Values) {
-            if (combination.is_last()) {
-                combination.set_to_first();
-            }
-            else {
-                combination.get_next();
+        foreach (Combination_for_figure combination in combinations_for_figures.Values) {
+            if (combination.MoveNext()) {
                 last_order_overflows = false;
                 break;
             }
+            combination.set_to_first();
         }
         if (last_order_overflows && !is_reset) {
             return false;
