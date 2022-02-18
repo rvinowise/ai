@@ -1,0 +1,100 @@
+using System.Collections;
+using System.Collections.Generic;
+using NUnit.Framework;
+using rvinowise.ai.unity.mapping_stencils;
+using UnityEngine;
+using UnityEngine.TestTools;
+
+namespace rvinowise.unit_tests.combinator_for_figure {
+
+
+public partial class regular_loop_over_combinations {
+
+    
+    
+    private int[][] result_combinations = {
+        new[] {2,1,0},
+        new[] {3,1,0},
+        new[] {4,1,0},
+        
+        new[] {1,2,0},
+        new[] {3,2,0},
+        new[] {4,2,0},
+        
+        new[] {1,3,0},
+        new[] {2,3,0},
+        new[] {4,3,0},
+        
+        new[] {1,4,0},
+        new[] {2,4,0},
+        new[] {3,4,0},
+        
+        new[] {2,0,1},
+        new[] {3,0,1},
+        new[] {4,0,1},
+        
+        new[] {0,2,1},
+        new[] {3,2,1},
+        new[] {4,2,1},
+        
+        new[] {0,3,1},
+        new[] {2,3,1},
+        new[] {4,3,1},
+        
+        new[] {0,4,1},
+        new[] {2,4,1},
+        new[] {3,4,1},
+        
+        new[] {1,0,2},
+        new[] {3,0,2},
+        new[] {4,0,2},
+        
+        new[] {0,1,2},
+        new[] {3,1,2},
+        new[] {4,1,2},
+        
+        new[] {0,3,2},
+        new[] {1,3,2},
+        new[] {4,3,2},
+        
+        new[] {0,4,2},
+        new[] {1,4,2},
+        new[] {3,4,2},
+        
+        new[] {1,0,3},
+        new[] {2,0,3},
+        new[] {4,0,3},
+        
+        new[] {0,1,3},
+        new[] {2,1,3},
+        new[] {4,1,3},
+        
+        new[] {0,2,3},
+        new[] {1,2,3},
+        new[] {4,2,3},
+        
+        new[] {0,4,3},
+        new[] {1,4,3},
+        new[] {2,4,3},
+        
+        new[] {1,0,4},
+        new[] {2,0,4},
+        new[] {3,0,4},
+        
+        new[] {0,1,4},
+        new[] {2,1,4},
+        new[] {3,1,4},
+        
+        new[] {0,2,4},
+        new[] {1,2,4},
+        new[] {3,2,4},
+        
+        new[] {0,3,4},
+        new[] {1,3,4},
+        new[] {2,3,4},
+        
+    };
+    
+}
+
+}

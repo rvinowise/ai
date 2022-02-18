@@ -61,12 +61,12 @@ public class Stencil_applier: MonoBehaviour {
     private IList<Stencil_mapping> map_first_nodes(
         IStencil stencil, IFigure_representation target
     ) {
-        Subnodes_combinator combinator = new Subnodes_combinator(
-            stencil, target
-        );
-        Subnodes_combination combination = new Subnodes_combination(
-            stencil, target
-        );
+        // Subnodes_combinator combinator = new Subnodes_combinator(
+        //     stencil, target
+        // );
+        // Subnodes_combinator combinator = new Subnodes_combinator(
+        //     stencil, target
+        // );
 
         // while () {
         //     
