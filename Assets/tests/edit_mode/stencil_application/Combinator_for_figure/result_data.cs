@@ -8,7 +8,7 @@ using UnityEngine.TestTools;
 namespace rvinowise.unit_tests.combinator_for_figure {
 
 
-public partial class regular_loop_over_combinations {
+public partial class regular_loop_over_combinations_can_be_done {
 
     
     

@@ -139,13 +139,13 @@ public class Combinator_for_figure:
     }
 
     private void settle_orders_at_the_beginning() {
-        foreach (int reset_order in unassigned_orders) {
+        foreach (int reset_order in unassigned_orders.Reverse()) {
             occupy_occurence_with_order(
                 reset_order, 
                 get_next_free_occurance(-1)
             );
+            unassigned_orders.Remove(reset_order);
         }
-        unassigned_orders.Clear();
     }
 
     private void occupy_occurence_with_order(int order, int occurance) {

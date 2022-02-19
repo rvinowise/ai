@@ -10,13 +10,12 @@ using UnityEngine.TestTools;
 namespace rvinowise.unit_tests.combinator_for_figure {
 
 [TestFixture]
-public partial class regular_loop_over_combinations {
+public partial class regular_loop_over_combinations_can_be_done {
     private const int max_subnodes = 5;
     private const int needed_amount = 3;
     
-    
     [Test]
-    public void loop_over_combinations_for_figure() {
+    public void all_combinations_are_provided_in_a_loop() {
         Combinator_for_figure combinator = new Combinator_for_figure(
             max_subnodes, needed_amount
         );
@@ -33,19 +32,15 @@ public partial class regular_loop_over_combinations {
 
         Assert.AreEqual(result_combinations.Length, i_combination);
     }
-
-
 }
 
 [TestFixture]
-public class not_enough_occurances {
+public class not_enough_occurances_of_figure {
     private const int max_subnodes = 5;
     private const int needed_amount = 6;
     
-    
-    
     [Test]
-    public void no_result_is_given() {
+    public void zero_iterations_are_possible() {
         Combinator_for_figure combinator = new Combinator_for_figure(
             max_subnodes, needed_amount
         );
