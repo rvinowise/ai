@@ -71,7 +71,7 @@ public class Combinator_for_figure:
 
     public bool MoveNext() {
         int i_order = 0;
-        if (combination == new int[]{ 2,3,4}) {
+        if (combination.SequenceEqual(new []{ 3,4,0})) {
             bool test = true;
         }
         while (!has_next_free_occurances(i_order)) {
@@ -120,7 +120,7 @@ public class Combinator_for_figure:
     }
 
     private bool its_last_order(int order) {
-        return order == get_needed_amount();
+        return order == get_needed_amount()-1;
     }
 
     private void prepare_order_for_resetting(int order) {

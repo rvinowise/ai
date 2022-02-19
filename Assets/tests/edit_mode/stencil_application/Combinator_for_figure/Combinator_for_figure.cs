@@ -25,10 +25,10 @@ public partial class regular_loop_over_combinations {
             Debug.Log(
                 string.Join(", ", combinator.combination)
             );
-            // CollectionAssert.AreEquivalent(
-            //     result_combinations[i_combination++],
-            //     combinator.combination
-            // );
+            CollectionAssert.AreEquivalent(
+                result_combinations[i_combination++],
+                combinator.combination
+            );
         }
 
         Assert.AreEqual(result_combinations.Length, i_combination);
