@@ -196,7 +196,8 @@ MonoBehaviour
             return appearance != null;
         }
     }
-    public void save_sequence_appearances(
+
+    private void save_sequence_appearances(
         IFigure signal_pair,
         IReadOnlyList<IFigure_appearance> beginnings,
         IReadOnlyList<IFigure_appearance> endings
