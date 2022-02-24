@@ -9,7 +9,7 @@ public interface IFigure:
 IHave_destructor
 {
 
-    string id { get; }
+    string id { get; set; }
 
     IReadOnlyList<IFigure_appearance> get_appearances();
     

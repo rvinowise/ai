@@ -15,27 +15,43 @@ namespace rvinowise.unit_tests.sequence_finder {
 public partial class sequences_can_be_found {
     
     private Mock<Action_history> action_history_mock;
-    private IReadOnlyList<Mock<IAction_group>> raw_action_groups;
-    
+    private IReadOnlyList<IAction_group> raw_action_groups;
+    private Figure_storage storage;
+    private Network_initialiser network_initialiser;
     [SetUp]
     public void prepare_raw_signals() {
-        raw_action_groups = prepare_action_groups();
+        network_initialiser = new GameObject().AddComponent<Network_initialiser>();
+        network_initialiser.figure_storage = storage;
+        network_initialiser.create_base_signals();
         
-        action_history_mock = new Mock<rvinowise.ai.unity.Action_history>();
-        action_history_mock.Setup(h => h.get_action_groups(0,10)).Returns(
-            raw_action_groups
-        );
-        
+        Action_history history = new GameObject().AddComponent<Action_history>();
+        for(int i=0;i<max_groups;i++) {
+            history.create_next_action_group(0);
+        }
+        history.create_figure_appearance()
+    }
+
+    private void prepare_figure_storage(Figure_storage storage) {
+        storage = new GameObject().AddComponent<Figure_storage>();
+        storage.append_figure();
     }
 
     const int max_groups = 10;
-    private IReadOnlyList<Mock<IAction_group>> prepare_action_groups() {
-        List<Mock<IAction_group>> groups = new List<Mock<IAction_group>>();
+    private IReadOnlyList<IAction_group> prepare_action_groups() {
+        List<IAction_group> groups = new List<IAction_group>();
         for (int i_group = 0;i_group < max_groups; i_group++) {
-            groups.Add(new Mock<IAction_group>());
+            var group = new GameObject().AddComponent<Action_group>();
+            groups.Add(group);
         }
-        groups[0].Object.add_action(new Mock<IAppearance_start>().Setup(a=>
-            a.figure.));
+        Mock<IAction> action_mock;
+        action_mock = new Mock<IAppearance_start>();
+        action_mock.Setup(a =>
+            a.figure.id).Returns("0");
+        groups[0].add_action(action_mock.Object);
+        action_mock = new Mock<IAppearance_end>();
+        action_mock.Setup(a =>
+            a.figure.id).Returns("0");
+        groups[1].add_action(action_mock.Object);
         
         return groups.AsReadOnly();
     }

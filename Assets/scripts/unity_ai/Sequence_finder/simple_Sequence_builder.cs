@@ -11,17 +11,15 @@ using UnityEngine;
 using UnityEngine.UI;
 using rvinowise.unity.ui.input;
 
-namespace rvinowise.ai.unity {
+namespace rvinowise.ai.simple {
 public class Sequence_builder: 
     MonoBehaviour,
     ISequence_builder
 {
-    public Figure figure_prefab;
-    public IFigure_storage figure_storage;
+    private IFigure_storage figure_storage;
 
     private IReadOnlyList<IFigure> known_figures => figure_storage.get_known_figures();
 
-    [SerializeField] private Mode_selector mode_selector;
     
     
     public IFigure provide_sequence_for_pair(
@@ -34,11 +32,10 @@ public class Sequence_builder:
         return provide_figure_having_sequence(subfigures);
     }
     
-    private Figure create_figure_for_sequence_of_subfigures(
+    private IFigure create_figure_for_sequence_of_subfigures(
         IReadOnlyList<IFigure> subfigures
     ) {
-        Figure figure = figure_prefab.provide_new<Figure>();
-        figure.header.mode_selector = mode_selector;
+        IFigure figure = new Figure();
         figure.id = get_id_for(subfigures);
 
         var representation = figure.create_representation();

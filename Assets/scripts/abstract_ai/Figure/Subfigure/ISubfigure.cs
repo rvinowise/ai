@@ -5,7 +5,7 @@ namespace rvinowise.ai.general {
 
 public interface ISubfigure {
     string id {get;set;}
-    IFigure_representation parent { get; }
+    IFigure_representation parent { get; set; }
     IFigure referenced_figure {get; }
     IReadOnlyList<ISubfigure> next { get; }
     IReadOnlyList<ISubfigure> previous { get; }

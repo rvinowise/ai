@@ -16,10 +16,16 @@ public class Sequence_finder:
 MonoBehaviour
 {
     
-    public Action_history action_history;
-    public Figure_storage figure_storage;
-    public Sequence_builder sequence_builder;
+    public IAction_history action_history;
+    public IFigure_storage figure_storage;
+    public ISequence_builder sequence_builder;
 
+    #region exposed to unity editor
+    [SerializeField] private Action_history _action_history;
+    [SerializeField] private Figure_storage _figure_storage;
+    [SerializeField] private Sequence_builder _sequence_builder;
+    #endregion exposed to unity editor
+    
     private IDictionary<string, IFigure> found_patterns = 
         new Dictionary<string, IFigure>();
 

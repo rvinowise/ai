@@ -20,7 +20,7 @@ public class Network_initialiser: MonoBehaviour {
         create_base_signals();
     }
     
-    private void create_base_signals() {
+    public void create_base_signals() {
         foreach(string pattern_id in symbol_figures) {
             IFigure figure = create_base_signal(
                 pattern_id

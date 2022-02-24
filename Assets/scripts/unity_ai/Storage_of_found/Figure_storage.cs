@@ -12,8 +12,11 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace rvinowise.ai.unity {
-public class Figure_storage: MonoBehaviour {
-    public readonly List<IFigure> known_figures = new List<IFigure>();
+public class Figure_storage: 
+    MonoBehaviour,
+    IFigure_storage
+{
+    private readonly List<IFigure> known_figures = new List<IFigure>();
     public readonly List<Figure_button> figure_buttons = new List<Figure_button>();
     public Figure shown_figure;
     public Table figure_button_table;
@@ -38,8 +41,8 @@ public class Figure_storage: MonoBehaviour {
         button_stencil_in.storage = this;
     }
 
-    
-    
+
+    public IReadOnlyList<IFigure> get_known_figures() => known_figures.AsReadOnly();
 
     public void append_figure(IFigure figure) { 
 
