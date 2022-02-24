@@ -34,7 +34,7 @@ public class Sequence_builder:
         return provide_figure_having_sequence(subfigures);
     }
     
-    private Figure create_figure_for_sequence_of_subfigures(
+    private IFigure create_figure_for_sequence_of_subfigures(
         IReadOnlyList<IFigure> subfigures
     ) {
         Figure figure = figure_prefab.provide_new<Figure>();
@@ -48,7 +48,7 @@ public class Sequence_builder:
             previous?.connext_to_next(next);
             previous = next;
         }
-        figure.sequence = subfigures.ToList();
+        figure.set_lowlevel_sequence(subfigures.ToList());
 
         return figure;
     }
@@ -68,7 +68,7 @@ public class Sequence_builder:
         if (find_figure_having_sequence(subfigures) is IFigure old_pattern) {
             return old_pattern;
         }
-        Figure new_figure = create_figure_for_sequence_of_subfigures(subfigures);
+        IFigure new_figure = create_figure_for_sequence_of_subfigures(subfigures);
         
         return new_figure;
     }

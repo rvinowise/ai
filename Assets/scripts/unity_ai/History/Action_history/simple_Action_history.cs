@@ -10,9 +10,8 @@ using System.Numerics;
 using rvinowise.rvi.contracts;
 using rvinowise.unity.ui.input;
 
-namespace rvinowise.ai.unity {
+namespace rvinowise.ai.simple {
 public partial class Action_history:
-Visual_input_receiver,
 IAction_history
 {
 
@@ -60,8 +59,8 @@ IAction_history
             start < end,
             "should have a positive time interval"
         );
-        Figure_appearance appearance = figure_appearance_prefab
-            .get_for_figure(figure);
+        IFigure_appearance appearance = 
+            Figure_appearance.get_for_figure(figure);
         figure.add_appearance(appearance);
         put_action_into_moment(appearance.appearance_start, start);
         put_action_into_moment(appearance.appearance_end, end);
@@ -70,8 +69,6 @@ IAction_history
     }
 
     #endregion
-
-    public static Action_history instance {get;private set;}
 
     private IList<Action_group> action_groups = 
         new List<Action_group>();

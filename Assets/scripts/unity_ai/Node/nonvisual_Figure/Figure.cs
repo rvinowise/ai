@@ -62,7 +62,13 @@ IFigure
     
     
     #region sequential figure
-    public List<IFigure> sequence = new List<IFigure>();
+    private List<IFigure> sequence = new List<IFigure>();
+
+    public void set_lowlevel_sequence(IEnumerable<IFigure> in_sequence) {
+        foreach(IFigure figure in in_sequence){
+            sequence.Add(figure); 
+        }
+    }
     public IReadOnlyList<IFigure> as_lowlevel_sequence() {
         if (sequence.Any()) {
             return sequence.AsReadOnly();
@@ -79,5 +85,7 @@ IFigure
     public void destroy() {
         throw new System.NotImplementedException();
     }
+
+        
 }
 }

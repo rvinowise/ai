@@ -13,6 +13,17 @@ public interface IAction_history
         BigInteger end
     );
 
+    public IFigure_appearance create_figure_appearance(
+        IFigure figure,
+        BigInteger start,
+        BigInteger end
+    );
+
+    public IFigure_appearance create_figure_appearance(
+        IFigure figure,
+        IFigure_appearance in_first_half,
+        IFigure_appearance in_second_half
+    );
 
 }
 }

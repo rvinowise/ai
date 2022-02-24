@@ -20,13 +20,15 @@ IHave_destructor
         BigInteger start, BigInteger end
     );
 
-    
-
     void add_appearance(
         IFigure_appearance appearance
     );
     
-    IReadOnlyList<IFigure> as_lowlevel_sequence();
+    #region sequential figure
+    public void set_lowlevel_sequence(IEnumerable<IFigure> in_sequence);
+    public IReadOnlyList<IFigure> as_lowlevel_sequence();
+    public bool is_sequential();
+    #endregion sequential figure;
     
 
 }
