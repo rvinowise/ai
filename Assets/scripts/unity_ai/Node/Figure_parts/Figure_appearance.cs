@@ -29,6 +29,9 @@ public class Figure_appearance:
     public BigInteger end_moment 
         => appearance_end.action_group.moment;
 
+    public IAction get_start() => appearance_start;
+    public IAction get_end() => appearance_end;
+
     #endregion IFigure_appearance
 
     
@@ -85,9 +88,7 @@ public class Figure_appearance:
 
     private void init_for_figure(IFigure figure) {
         this.figure = figure;
-        if (figure.id == "23") {
-            bool test = true;
-        }
+
         appearance_start.set_label(figure.id);
         appearance_end.set_label(figure.id);
     }

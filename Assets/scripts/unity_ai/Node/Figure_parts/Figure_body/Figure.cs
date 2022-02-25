@@ -4,18 +4,17 @@ using rvinowise.ai.general;
 using UnityEngine;
 using Vector3 = UnityEngine.Vector3;
 using System.Linq;
-using rvinowise.ai.unity.visuals;
 using rvinowise.unity.extensions;
-using rvinowise.unity.extensions.attributes;
-using rvinowise.unity.ui.input;
-using rvinowise.unity.ui.input.mouse;
 using TMPro;
+using rvinowise.unity;
 
-namespace rvinowise.ai.unity {
+namespace rvinowise.ai.unity
+{
 
 public partial class Figure: 
 MonoBehaviour,
-IFigure
+IFigure,
+IHave_destructor
 {
     
     public readonly List<IFigure_representation> representations 

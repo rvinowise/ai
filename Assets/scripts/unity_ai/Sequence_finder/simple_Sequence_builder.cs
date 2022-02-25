@@ -35,8 +35,7 @@ public class Sequence_builder:
     private IFigure create_figure_for_sequence_of_subfigures(
         IReadOnlyList<IFigure> subfigures
     ) {
-        IFigure figure = new Figure();
-        figure.id = get_id_for(subfigures);
+        IFigure figure = new Figure( get_id_for(subfigures));
 
         var representation = figure.create_representation();
         ISubfigure previous = null;

@@ -5,8 +5,7 @@ using rvinowise.unity;
 
 namespace rvinowise.ai.general {
 
-public interface IFigure:
-IHave_destructor
+public interface IFigure
 {
 
     string id { get; set; }

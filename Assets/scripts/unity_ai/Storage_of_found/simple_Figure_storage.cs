@@ -19,9 +19,10 @@ public class Figure_storage: IFigure_storage {
 
     private Dictionary<string, IFigure> name_to_figure = 
         new Dictionary<string, IFigure>();
-
     
-
+    public IReadOnlyList<IFigure> get_known_figures() {
+       return known_figures;
+    }
     public void append_figure(IFigure figure) { 
 
         known_figures.Add(figure);
@@ -41,5 +42,6 @@ public class Figure_storage: IFigure_storage {
         return figure;
     }
 
+    
 }
 }

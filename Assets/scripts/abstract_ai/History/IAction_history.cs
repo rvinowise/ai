@@ -15,8 +15,8 @@ public interface IAction_history
 
     public IFigure_appearance create_figure_appearance(
         IFigure figure,
-        BigInteger start,
-        BigInteger end
+        IAction_group start,
+        IAction_group end
     );
 
     public IFigure_appearance create_figure_appearance(

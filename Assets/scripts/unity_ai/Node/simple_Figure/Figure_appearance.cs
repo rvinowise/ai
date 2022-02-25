@@ -20,14 +20,28 @@ public class Figure_appearance:
     
     #region IFigure_appearance
     public IFigure figure{get; }
-    public BigInteger start_moment { get; set; }
-    public BigInteger end_moment { get; set; }
+    public BigInteger start_moment 
+        => appearance_start.action_group.moment;
+    public BigInteger end_moment 
+        => appearance_end.action_group.moment;
+
+    public IAction get_start() => appearance_start;
+    public IAction get_end() => appearance_end;
 
     #endregion IFigure_appearance
 
+    public Action appearance_start;
+    public Action appearance_end;
+
     
-    public Figure_appearance(IFigure in_figure) {
+    public Figure_appearance(
+        IFigure in_figure,
+        IAction_group start,
+        IAction_group end
+    ) {
         this.figure = in_figure;
+        appearance_start = new Action(Action_type.Start,this,start);
+        appearance_end = new Action(Action_type.End,this,end);
     }
 
     

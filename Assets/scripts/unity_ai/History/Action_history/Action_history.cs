@@ -44,27 +44,45 @@ IAction_history
         
         IFigure_appearance appearance = create_figure_appearance(
             figure,
-            in_first_half.start_moment,
-            in_second_half.end_moment
+            in_first_half.get_start().action_group,
+            in_second_half.get_end().action_group
         );
 
         return appearance;
     }
 
+    // public IFigure_appearance create_figure_appearance(
+    //     IFigure figure,
+    //     BigInteger start,
+    //     BigInteger end
+    // ) {
+    //     Contract.Requires(
+    //         start < end,
+    //         "should have a positive time interval"
+    //     );
+    //     Figure_appearance appearance = figure_appearance_prefab
+    //         .get_for_figure(figure);
+    //     figure.add_appearance(appearance);
+    //     put_action_into_moment(appearance.appearance_start, start);
+    //     put_action_into_moment(appearance.appearance_end, end);
+    //     appearance.create_curved_line();
+    //     return appearance;
+    // }
+
     public IFigure_appearance create_figure_appearance(
         IFigure figure,
-        BigInteger start,
-        BigInteger end
+        IAction_group start,
+        IAction_group end
     ) {
         Contract.Requires(
-            start < end,
+            start.moment < end.moment,
             "should have a positive time interval"
         );
         Figure_appearance appearance = figure_appearance_prefab
             .get_for_figure(figure);
         figure.add_appearance(appearance);
-        put_action_into_moment(appearance.appearance_start, start);
-        put_action_into_moment(appearance.appearance_end, end);
+        put_action_into_group(appearance.appearance_start, start);
+        put_action_into_group(appearance.appearance_end, end);
         appearance.create_curved_line();
         return appearance;
     }
@@ -103,8 +121,8 @@ IAction_history
 
         create_figure_appearances(
             selected_figures,
-            start_group.moment,
-            end_group.moment
+            start_group,
+            end_group
         );
     }
 
@@ -130,8 +148,8 @@ IAction_history
 
     private void create_figure_appearances(
         IEnumerable<IFigure> figures,
-        BigInteger start,
-        BigInteger end
+        IAction_group start,
+        IAction_group end
     ) {
         foreach (var figure in figures) {
             create_figure_appearance(figure, start, end);
@@ -139,26 +157,27 @@ IAction_history
 
     }
 
-    
-
-
 
     private void put_action_into_moment(
         Action action, 
         BigInteger moment
     ) {
         Action_group group = get_action_group_at_moment(moment);
+        put_action_into_group(action, group);
+    }
+    private void put_action_into_group(
+        Action action, 
+        IAction_group group
+    ) {
         Contract.Ensures(
             group != null,
             "first action_group must be created, then actions added to it"
         );
         group.add_action(action);
-        
-        
         action.action_group = group;
     }
 
-    private Action_group get_action_group_at_moment(
+    public Action_group get_action_group_at_moment(
         BigInteger moment
     ) {
         Action_group result;

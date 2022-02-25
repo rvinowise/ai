@@ -9,6 +9,7 @@ public interface IFigure_appearance {
     BigInteger start_moment { get; }
     BigInteger end_moment { get; }
 
-
+    public IAction get_start();
+    public IAction get_end();
 }
 }

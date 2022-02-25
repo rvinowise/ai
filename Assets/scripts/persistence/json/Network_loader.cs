@@ -108,8 +108,8 @@ public class Network_loader:
             );
             history.create_figure_appearance(
                 figure,
-                appearance.get_start_moment(),
-                appearance.get_end_moment()
+                history.get_action_group_at_moment(appearance.get_start_moment()),
+                history.get_action_group_at_moment(appearance.get_end_moment())
             );
         }
     }

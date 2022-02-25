@@ -26,9 +26,11 @@ ISelectable
         }
     }
 
+    public IAction_group action_group{get;set;}
+
     #endregion IAction
     
-    public IAction_group action_group{get;set;}
+    
 
     #region visualisation
     

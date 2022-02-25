@@ -9,6 +9,7 @@ using Action = rvinowise.ai.unity.Action;
 using rvinowise.rvi.contracts;
 using rvinowise.ai.general;
 using System.Numerics;
+using rvinowise.unity;
 
 namespace rvinowise.ai.unity {
 
@@ -105,7 +106,9 @@ MonoBehaviour
                 if (sequence_appeared_at_least_twice(signal_pair)) {
                     figure_storage.append_figure(signal_pair);
                 } else {
-                    signal_pair.destroy();
+                    if (signal_pair is IHave_destructor destructable_figure) {
+                        destructable_figure.destroy();
+                    }
                 }
             }
 

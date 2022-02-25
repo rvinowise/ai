@@ -25,6 +25,10 @@ IFigure
     
     #region building
 
+    public Figure(string id) {
+        this.id=id;
+    }
+
     public IFigure_representation create_representation() {
         IFigure_representation representation = new Figure_representation();
         representations.Add(representation);
@@ -82,9 +86,6 @@ IFigure
     #endregion sequential figure
 
 
-    public void destroy() {
-        throw new System.NotImplementedException();
-    }
 
         
 }

@@ -79,7 +79,7 @@ public class Network_saver:
     private void serialize_figures(serializable.Network out_network) {
         foreach(
             Figure figure in 
-            figure_storage.known_figures
+            figure_storage.get_known_figures()
         ) {
             out_network.figures.Add(
                 new serializable.Figure(figure)

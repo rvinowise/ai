@@ -43,8 +43,8 @@ IAction_history
         
         IFigure_appearance appearance = create_figure_appearance(
             figure,
-            in_first_half.start_moment,
-            in_second_half.end_moment
+            in_first_half.get_start().action_group,
+            in_second_half.get_end().action_group
         );
 
         return appearance;
@@ -52,28 +52,29 @@ IAction_history
 
     public IFigure_appearance create_figure_appearance(
         IFigure figure,
-        BigInteger start,
-        BigInteger end
+        IAction_group start,
+        IAction_group end
     ) {
         Contract.Requires(
-            start < end,
+            start.moment < end.moment,
             "should have a positive time interval"
         );
         IFigure_appearance appearance = 
-            new Figure_appearance(figure);
+            new Figure_appearance(
+                figure, start, end);
         figure.add_appearance(appearance);
-        put_action_into_moment(appearance.appearance_start, start);
-        put_action_into_moment(appearance.appearance_end, end);
+        put_action_into_group(appearance.get_start(), start);
+        put_action_into_group(appearance.get_end(), end);
         return appearance;
     }
 
     #endregion
 
-    private IList<Action_group> action_groups = 
-        new List<Action_group>();
+    private IList<IAction_group> action_groups = 
+        new List<IAction_group>();
     
-    private Dictionary<BigInteger, Action_group> moments_to_action_groups=
-        new Dictionary<BigInteger, Action_group>();
+    private Dictionary<BigInteger, IAction_group> moments_to_action_groups=
+        new Dictionary<BigInteger, IAction_group>();
 
     private Dictionary_of_lists<
         IFigure,
@@ -87,13 +88,12 @@ IAction_history
     private BigInteger current_moment;
     
     
-    public Action_group create_next_action_group(float in_mood = 0f) {
-        Action_group new_group =
-            action_group_prefab.get_for_moment(
-                current_moment
+    public IAction_group create_next_action_group(float in_mood = 0f) {
+        IAction_group new_group =
+            new Action_group(
+                current_moment,
+                in_mood
             );
-        new_group.init_mood(in_mood);
-        place_new_action_group(new_group);
         action_groups.Add(new_group);
         moments_to_action_groups.Add(current_moment, new_group);
         current_moment++;
@@ -107,26 +107,11 @@ IAction_history
         return 0f;
     }
 
-    private void create_figure_appearances(
-        IEnumerable<IFigure> figures,
-        BigInteger start,
-        BigInteger end
+
+    private void put_action_into_group(
+        IAction action, 
+        IAction_group group
     ) {
-        foreach (var figure in figures) {
-            create_figure_appearance(figure, start, end);
-        }
-
-    }
-
-    
-
-
-
-    private void put_action_into_moment(
-        Action action, 
-        BigInteger moment
-    ) {
-        Action_group group = get_action_group_at_moment(moment);
         Contract.Ensures(
             group != null,
             "first action_group must be created, then actions added to it"
@@ -135,10 +120,10 @@ IAction_history
         
     }
 
-    private Action_group get_action_group_at_moment(
+    private IAction_group get_action_group_at_moment(
         BigInteger moment
     ) {
-        Action_group result;
+        IAction_group result;
         moments_to_action_groups.TryGetValue(moment,out result);
         return result;
     }
