@@ -19,11 +19,9 @@ public class Figure_appearance:
 {
     
     #region IFigure_appearance
-    public IFigure figure{get; protected set;}
-    public BigInteger start_moment 
-        => appearance_start.action_group.moment;
-    public BigInteger end_moment 
-        => appearance_end.action_group.moment;
+    public IFigure figure{get; }
+    public BigInteger start_moment { get; set; }
+    public BigInteger end_moment { get; set; }
 
     #endregion IFigure_appearance
 
@@ -31,20 +29,8 @@ public class Figure_appearance:
     public Figure_appearance(IFigure in_figure) {
         this.figure = in_figure;
     }
+
     
-    public static Figure_appearance get_for_figure(IFigure figure) {
-        Figure_appearance appearance = 
-            new Figure_appearance(figure);
-
-        return appearance;
-    }
-    
-
-    #region debug
-    IList<ISubfigure_appearance> subfigure_appearances 
-        = new List<ISubfigure_appearance>();
-
-    #endregion
 
     
 }

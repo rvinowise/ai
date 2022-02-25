@@ -60,11 +60,10 @@ IAction_history
             "should have a positive time interval"
         );
         IFigure_appearance appearance = 
-            Figure_appearance.get_for_figure(figure);
+            new Figure_appearance(figure);
         figure.add_appearance(appearance);
         put_action_into_moment(appearance.appearance_start, start);
         put_action_into_moment(appearance.appearance_end, end);
-        appearance.create_curved_line();
         return appearance;
     }
 
@@ -88,23 +87,6 @@ IAction_history
     private BigInteger current_moment;
     
     
-    public override void input_selected_figures() {
-        var selected_figures = Selector.instance.figures;
-        if (!selected_figures.Any()) {
-            return;
-        }
-        float new_mood = get_last_mood()+Selector.instance.get_selected_mood();
-
-        Action_group start_group = create_next_action_group(new_mood);
-        Action_group end_group = create_next_action_group(new_mood);
-
-        create_figure_appearances(
-            selected_figures,
-            start_group.moment,
-            end_group.moment
-        );
-    }
-
     public Action_group create_next_action_group(float in_mood = 0f) {
         Action_group new_group =
             action_group_prefab.get_for_moment(
@@ -151,8 +133,6 @@ IAction_history
         );
         group.add_action(action);
         
-        
-        action.action_group = group;
     }
 
     private Action_group get_action_group_at_moment(

@@ -76,20 +76,20 @@ MonoBehaviour
                 beginning_figure,
                 ending_figure
             );
-            IReadOnlyList<IFigure_appearance> appearances_of_beginning 
-            = get_unused_in_beginning_appearances_in_interval(
-                action_groups.First().moment,
-                action_groups.Last().moment,
-                beginning_figure,
-                signal_pair
-            );
+            var appearances_of_beginning = 
+                get_unused_in_beginning_appearances_in_interval(
+                    action_groups.First().moment,
+                    action_groups.Last().moment,
+                    beginning_figure,
+                    signal_pair
+                );
             var appearances_of_ending = 
-            get_unused_in_ending_appearances_in_interval(
-                action_groups.First().moment,
-                action_groups.Last().moment,
-                ending_figure,
-                signal_pair
-            );
+                get_unused_in_ending_appearances_in_interval(
+                    action_groups.First().moment,
+                    action_groups.Last().moment,
+                    ending_figure,
+                    signal_pair
+                );
             if (
                 appearances_of_beginning.Any() && 
                 appearances_of_ending.Any()
