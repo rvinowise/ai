@@ -9,7 +9,8 @@ using UnityEngine;
 
 namespace rvinowise.ai.unity.persistence {
 public class Network_persistence: 
-    MonoBehaviour {
+    MonoBehaviour 
+{
 
     [HideInInspector] public string saving_path;
     [HideInInspector] public JsonSerializerSettings json_setting = new JsonSerializerSettings
@@ -19,10 +20,7 @@ public class Network_persistence:
     [SerializeField] public Action_history action_history;
     [SerializeField] public Figure_storage figure_storage;
     
-    public static Network_persistence instance;
     void Awake() {
-        Contract.Assert(instance == null);
-        instance = this;
         //saving_path = Application.dataPath+"/savings";
         saving_path = Application.dataPath + "/savings";
         Directory.CreateDirectory(saving_path);

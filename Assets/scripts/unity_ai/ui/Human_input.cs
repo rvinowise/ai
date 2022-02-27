@@ -38,7 +38,7 @@ public class Human_input : Input {
         if (UnityEngine.Input.GetKeyDown(
             key_submit
         )) {
-            receiver.input_selected_figures();
+            receiver.input_selected_signals();
         }
         foreach (
             KeyValuePair<string, IFigure> item in 
@@ -62,7 +62,7 @@ public class Human_input : Input {
         if (entering_control_command()) {
             input_control_commands(input_field.text);
         } else {
-            receiver.input_selected_figures();
+            receiver.input_selected_signals();
             Selector.instance.deselect_all_figures();
         }
 

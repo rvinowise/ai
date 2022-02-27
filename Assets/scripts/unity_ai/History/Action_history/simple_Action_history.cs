@@ -11,7 +11,7 @@ using rvinowise.rvi.contracts;
 using rvinowise.unity.ui.input;
 
 namespace rvinowise.ai.simple {
-public partial class Action_history:
+public class Action_history:
 IAction_history
 {
 
@@ -26,7 +26,7 @@ IAction_history
             action_group => 
             (action_group.moment >= begin) &&
             (action_group.moment <= end)
-        ).ToList<IAction_group>();
+        ).ToList();
 
         return result.AsReadOnly();
     }
@@ -61,14 +61,27 @@ IAction_history
         );
         IFigure_appearance appearance = 
             new Figure_appearance(
-                figure, start, end);
+                figure, start, end
+            );
         figure.add_appearance(appearance);
-        put_action_into_group(appearance.get_start(), start);
-        put_action_into_group(appearance.get_end(), end);
+        start.add_action(appearance.get_start());
+        end.add_action(appearance.get_end());
         return appearance;
     }
 
-    #endregion
+    public void input_signals(IEnumerable<IFigure> signals, int mood_change =0) {
+        float new_mood = get_last_mood() + mood_change;
+        IAction_group start_group = create_next_action_group(new_mood);
+        IAction_group end_group = create_next_action_group(new_mood);
+        create_figure_appearances(
+            signals,
+            start_group,
+            end_group
+        );
+    }
+    
+    
+    #endregion IAction_history
 
     private IList<IAction_group> action_groups = 
         new List<IAction_group>();
@@ -100,6 +113,16 @@ IAction_history
         return new_group;
     }
 
+    private void create_figure_appearances(
+        IEnumerable<IFigure> figures,
+        IAction_group start,
+        IAction_group end
+    ) {
+        foreach (var figure in figures) {
+            create_figure_appearance(figure, start, end);
+        }
+    }
+    
     private float get_last_mood() {
         if (action_groups.Any()) {
             return action_groups.Last().mood;
@@ -107,24 +130,11 @@ IAction_history
         return 0f;
     }
 
-
-    private void put_action_into_group(
-        IAction action, 
-        IAction_group group
-    ) {
-        Contract.Ensures(
-            group != null,
-            "first action_group must be created, then actions added to it"
-        );
-        group.add_action(action);
-        
-    }
-
-    private IAction_group get_action_group_at_moment(
+    
+    public IAction_group get_action_group_at_moment(
         BigInteger moment
     ) {
-        IAction_group result;
-        moments_to_action_groups.TryGetValue(moment,out result);
+        moments_to_action_groups.TryGetValue(moment,out var result);
         return result;
     }
 

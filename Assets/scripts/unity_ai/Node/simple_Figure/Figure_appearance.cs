@@ -30,8 +30,8 @@ public class Figure_appearance:
 
     #endregion IFigure_appearance
 
-    public Action appearance_start;
-    public Action appearance_end;
+    private readonly Action appearance_start;
+    private readonly Action appearance_end;
 
     
     public Figure_appearance(
@@ -39,7 +39,7 @@ public class Figure_appearance:
         IAction_group start,
         IAction_group end
     ) {
-        this.figure = in_figure;
+        figure = in_figure;
         appearance_start = new Action(Action_type.Start,this,start);
         appearance_end = new Action(Action_type.End,this,end);
     }

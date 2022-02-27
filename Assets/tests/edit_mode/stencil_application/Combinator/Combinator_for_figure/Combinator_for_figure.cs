@@ -7,7 +7,7 @@ using rvinowise.ai.unity.mapping_stencils;
 using UnityEngine;
 using UnityEngine.TestTools;
 
-namespace rvinowise.unit_tests.combinator_for_figure {
+namespace rvinowise.ai.unit_tests.combinator_for_figure {
 
 [TestFixture]
 public partial class regular_loop_over_combinations_can_be_done {

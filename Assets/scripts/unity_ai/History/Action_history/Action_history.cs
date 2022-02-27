@@ -51,23 +51,7 @@ IAction_history
         return appearance;
     }
 
-    // public IFigure_appearance create_figure_appearance(
-    //     IFigure figure,
-    //     BigInteger start,
-    //     BigInteger end
-    // ) {
-    //     Contract.Requires(
-    //         start < end,
-    //         "should have a positive time interval"
-    //     );
-    //     Figure_appearance appearance = figure_appearance_prefab
-    //         .get_for_figure(figure);
-    //     figure.add_appearance(appearance);
-    //     put_action_into_moment(appearance.appearance_start, start);
-    //     put_action_into_moment(appearance.appearance_end, end);
-    //     appearance.create_curved_line();
-    //     return appearance;
-    // }
+    
 
     public IFigure_appearance create_figure_appearance(
         IFigure figure,
@@ -86,15 +70,25 @@ IAction_history
         appearance.create_curved_line();
         return appearance;
     }
+    
+    public void input_signals(IEnumerable<IFigure> signals, int mood_change =0) {
+        float new_mood = get_last_mood() + mood_change;
+        Action_group start_group = create_next_action_group(new_mood);
+        Action_group end_group = create_next_action_group(new_mood);
+        create_figure_appearances(
+            signals,
+            start_group,
+            end_group
+        );
+    }
 
     #endregion
 
-    public static Action_history instance {get;private set;}
 
-    private IList<Action_group> action_groups = 
+    private readonly IList<Action_group> action_groups = 
         new List<Action_group>();
     
-    private Dictionary<BigInteger, Action_group> moments_to_action_groups=
+    private readonly Dictionary<BigInteger, Action_group> moments_to_action_groups=
         new Dictionary<BigInteger, Action_group>();
 
     private Dictionary_of_lists<
@@ -109,22 +103,15 @@ IAction_history
     private BigInteger current_moment;
     
     
-    public override void input_selected_figures() {
+    public override void input_selected_signals() {
         var selected_figures = Selector.instance.figures;
         if (!selected_figures.Any()) {
             return;
         }
-        float new_mood = get_last_mood()+Selector.instance.get_selected_mood();
-
-        Action_group start_group = create_next_action_group(new_mood);
-        Action_group end_group = create_next_action_group(new_mood);
-
-        create_figure_appearances(
-            selected_figures,
-            start_group,
-            end_group
-        );
+        input_signals(selected_figures);
     }
+
+    
 
     public Action_group create_next_action_group(float in_mood = 0f) {
         Action_group new_group =
@@ -154,17 +141,9 @@ IAction_history
         foreach (var figure in figures) {
             create_figure_appearance(figure, start, end);
         }
-
     }
 
-
-    private void put_action_into_moment(
-        Action action, 
-        BigInteger moment
-    ) {
-        Action_group group = get_action_group_at_moment(moment);
-        put_action_into_group(action, group);
-    }
+    
     private void put_action_into_group(
         Action action, 
         IAction_group group
@@ -180,8 +159,7 @@ IAction_history
     public Action_group get_action_group_at_moment(
         BigInteger moment
     ) {
-        Action_group result;
-        moments_to_action_groups.TryGetValue(moment,out result);
+        moments_to_action_groups.TryGetValue(moment,out var result);
         return result;
     }
 

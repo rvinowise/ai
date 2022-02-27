@@ -13,6 +13,8 @@ public interface IAction_history
         BigInteger end
     );
 
+    public void input_signals(IEnumerable<IFigure> signals, int mood_change = 0);
+
     public IFigure_appearance create_figure_appearance(
         IFigure figure,
         IAction_group start,

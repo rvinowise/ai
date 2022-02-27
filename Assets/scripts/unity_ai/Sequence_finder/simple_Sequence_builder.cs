@@ -13,13 +13,15 @@ using rvinowise.unity.ui.input;
 
 namespace rvinowise.ai.simple {
 public class Sequence_builder: 
-    MonoBehaviour,
     ISequence_builder
 {
     private IFigure_storage figure_storage;
 
     private IReadOnlyList<IFigure> known_figures => figure_storage.get_known_figures();
 
+    public Sequence_builder(IFigure_storage figure_storage) {
+        this.figure_storage = figure_storage;
+    }
     
     
     public IFigure provide_sequence_for_pair(

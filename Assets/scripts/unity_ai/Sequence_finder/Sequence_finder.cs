@@ -14,7 +14,8 @@ using rvinowise.unity;
 namespace rvinowise.ai.unity {
 
 public class Sequence_finder:
-MonoBehaviour
+MonoBehaviour,
+ISequence_finder
 {
     
     public IAction_history action_history;
@@ -32,6 +33,16 @@ MonoBehaviour
 
     private IReadOnlyList<IAction_group> action_groups;
 
+
+    public void init_unity_fields(
+        IAction_history action_history,
+        IFigure_storage figure_storage,
+        ISequence_builder sequence_builder
+    ) {
+        this.action_history = action_history;
+        this.figure_storage = figure_storage;
+        this.sequence_builder = sequence_builder;
+    }
     public void enrich_storage_with_sequences() {
         action_groups = action_history.get_action_groups(
             0,
@@ -120,7 +131,7 @@ MonoBehaviour
         
     }
 
-    IReadOnlyList<IFigure_appearance> 
+    private IReadOnlyList<IFigure_appearance> 
     get_unused_in_beginning_appearances_in_interval(
         BigInteger start, 
         BigInteger end,
@@ -150,7 +161,7 @@ MonoBehaviour
         
         return result;
     }
-    IReadOnlyList<IFigure_appearance> get_unused_in_ending_appearances_in_interval(
+    private IReadOnlyList<IFigure_appearance> get_unused_in_ending_appearances_in_interval(
         BigInteger start, 
         BigInteger end,
         IFigure figure_used_in_ending,
@@ -262,7 +273,7 @@ MonoBehaviour
 
     
 
-    Appearance_in_list find_appearance_closest_to_moment(
+    private Appearance_in_list find_appearance_closest_to_moment(
         IReadOnlyList<IFigure_appearance> appearances,
         int start_index,
         BigInteger moment

@@ -18,10 +18,7 @@ public partial class Action_history
     public Transform carret;
 
 
-    protected void Awake() {
-        Contract.Assert(instance==null, "singleton");
-        instance = this;
-    }
+
     private void place_new_action_group(Action_group in_group) {
         in_group.transform.parent = transform;
         in_group.transform.position = carret.position;
