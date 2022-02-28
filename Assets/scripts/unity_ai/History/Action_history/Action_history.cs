@@ -15,43 +15,25 @@ public partial class Action_history:
 Visual_input_receiver,
 IAction_history
 {
+    ai.simple.Action_history simple_history;
 
     #region IAction_history
-    public BigInteger last_moment => current_moment - 1;
+    public BigInteger last_moment => simple_history.last_moment;
 
     public IReadOnlyList<IAction_group> get_action_groups(
         BigInteger begin, 
         BigInteger end
-    ) {
-        List<IAction_group> result = action_groups.Where(
-            action_group => 
-            (action_group.moment >= begin) &&
-            (action_group.moment <= end)
-        ).ToList<IAction_group>();
-
-        return result.AsReadOnly();
-    }
+    ) => simple_history.get_action_groups(begin, end);
 
     public IFigure_appearance create_figure_appearance(
         IFigure figure,
         IFigure_appearance in_first_half,
         IFigure_appearance in_second_half
-    ) {
-        Contract.Assert(
-            figure.id.Length > 1, 
-            "Pattern consisting of subfigures should have a longer name"
-        );
-        
-        IFigure_appearance appearance = create_figure_appearance(
-            figure,
-            in_first_half.get_start().action_group,
-            in_second_half.get_end().action_group
-        );
-
-        return appearance;
-    }
-
-    
+    ) => simple_history.create_figure_appearance(
+        figure,
+        in_first_half,
+        in_second_half
+    );
 
     public IFigure_appearance create_figure_appearance(
         IFigure figure,
@@ -71,37 +53,16 @@ IAction_history
         return appearance;
     }
     
-    public void input_signals(IEnumerable<IFigure> signals, int mood_change =0) {
-        float new_mood = get_last_mood() + mood_change;
-        Action_group start_group = create_next_action_group(new_mood);
-        Action_group end_group = create_next_action_group(new_mood);
-        create_figure_appearances(
-            signals,
-            start_group,
-            end_group
-        );
+    public void input_signals(
+        IEnumerable<IFigure> signals, 
+        int mood_change =0
+    ) => simple_history.input_signals(signals, mood_change);
+
+    #endregion IAction_history
+    
+    void Awake() {
+        simple_history = new ai.simple.Action_history();
     }
-
-    #endregion
-
-
-    private readonly IList<Action_group> action_groups = 
-        new List<Action_group>();
-    
-    private readonly Dictionary<BigInteger, Action_group> moments_to_action_groups=
-        new Dictionary<BigInteger, Action_group>();
-
-    private Dictionary_of_lists<
-        IFigure,
-        IFigure_appearance
-    > figure_appearances =
-        new Dictionary_of_lists<
-            IFigure,
-            IFigure_appearance
-        >();
-
-    private BigInteger current_moment;
-    
     
     public override void input_selected_signals() {
         var selected_figures = Selector.instance.figures;
@@ -116,52 +77,28 @@ IAction_history
     public Action_group create_next_action_group(float in_mood = 0f) {
         Action_group new_group =
             action_group_prefab.get_for_moment(
-                current_moment
+                last_moment + 1
             );
         new_group.init_mood(in_mood);
         place_new_action_group(new_group);
-        action_groups.Add(new_group);
-        moments_to_action_groups.Add(current_moment, new_group);
-        current_moment++;
+        simple_history.add_next_action_group(new_group);
         return new_group;
     }
 
-    private float get_last_mood() {
-        if (action_groups.Any()) {
-            return action_groups.Last().mood;
-        }
-        return 0f;
-    }
 
-    private void create_figure_appearances(
-        IEnumerable<IFigure> figures,
-        IAction_group start,
-        IAction_group end
-    ) {
-        foreach (var figure in figures) {
-            create_figure_appearance(figure, start, end);
-        }
-    }
 
     
     private void put_action_into_group(
         Action action, 
         IAction_group group
     ) {
-        Contract.Ensures(
-            group != null,
-            "first action_group must be created, then actions added to it"
-        );
         group.add_action(action);
         action.action_group = group;
     }
 
-    public Action_group get_action_group_at_moment(
+    public IAction_group get_action_group_at_moment(
         BigInteger moment
-    ) {
-        moments_to_action_groups.TryGetValue(moment,out var result);
-        return result;
-    }
+    ) => simple_history.get_action_group_at_moment(moment);
 
 
 
