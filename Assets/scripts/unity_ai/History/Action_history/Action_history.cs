@@ -62,6 +62,7 @@ IAction_history
     
     void Awake() {
         simple_history = new ai.simple.Action_history();
+        simple_history.
     }
     
     public override void input_selected_signals() {
