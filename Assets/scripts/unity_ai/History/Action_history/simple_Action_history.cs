@@ -125,10 +125,10 @@ IAction_history
         return new_group;
     }
 
-    private delegate IFigure_appearance Create_figure_appearance(
+    public delegate IFigure_appearance Create_figure_appearance(
         IFigure figure, IAction_group start, IAction_group end
     );
-    Create_figure_appearance create_figure_appearance;
+    public Create_figure_appearance create_figure_appearance;
     private void create_figure_appearances(
         IEnumerable<IFigure> figures,
         IAction_group start,

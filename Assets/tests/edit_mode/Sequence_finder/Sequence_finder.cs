@@ -45,7 +45,9 @@ public partial class Sequences_can_be_found {
         action_history = new simple.Action_history();
         
         for(int i=0;i<max_groups;i++) {
-            action_history.create_next_action_group(0);
+            action_history.input_signals(
+                new[] {figure_storage.find_figure_with_id("0")}    
+            );
         }
         history.create_figure_appearance()
     }
