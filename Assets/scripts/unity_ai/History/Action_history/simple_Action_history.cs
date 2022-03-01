@@ -31,7 +31,9 @@ IAction_history
         return result.AsReadOnly();
     }
 
-    public IFigure_appearance create_simple_figure_appearance(
+    
+
+    public IFigure_appearance create_figure_appearance(
         IFigure figure,
         IFigure_appearance in_first_half,
         IFigure_appearance in_second_half
@@ -41,7 +43,7 @@ IAction_history
             "Pattern consisting of subfigures should have a longer name"
         );
         
-        IFigure_appearance appearance = create_simple_figure_appearance(
+        IFigure_appearance appearance = create_figure_appearance(
             figure,
             in_first_half.get_start().action_group,
             in_second_half.get_end().action_group
@@ -154,13 +156,8 @@ IAction_history
         return result;
     }
 
-    IFigure_appearance IAction_history.create_figure_appearance(
-        IFigure figure, IAction_group start, IAction_group end
-    ) => create_simple_figure_appearance(figure,start,end);
+    
 
-    IFigure_appearance IAction_history.create_figure_appearance(IFigure figure, IFigure_appearance in_first_half, IFigure_appearance in_second_half)
-    {
-        throw new System.NotImplementedException();
-    }
+
 }
 }

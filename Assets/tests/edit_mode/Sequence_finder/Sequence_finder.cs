@@ -16,13 +16,13 @@ namespace rvinowise.ai.unit_tests.sequence_finder {
 
 public class Network {
 
-    public ISequence_finder sequence_finder =
+    public readonly ISequence_finder sequence_finder =
         new GameObject().AddComponent<Sequence_finder>();
-    
-    public IAction_history action_history =
+
+    private readonly IAction_history action_history =
         new simple.Action_history();
     
-    public IFigure_storage figure_storage =
+    public readonly IFigure_storage figure_storage =
         new ai.simple.Figure_storage();
 
     public Network() {
@@ -63,16 +63,14 @@ public class Testing_sequence_finder {
 [TestFixture]
 public partial class two_signals_repeat_twice
 {
-    Network network;
+    private readonly Network network = new Network();
     public two_signals_repeat_twice() {
-        network = new Network();
         fill_action_history_with_inputs();
     }
 
     private void fill_action_history_with_inputs() {
-        
-        for(int i=0; i<raw_input.Length; i++) {
-            network.input_signal(raw_input[i]);
+        foreach (var signal in raw_input) {
+            network.input_signal(signal);
         }
     }
     
