@@ -21,11 +21,6 @@ public interface IAction_history
         IAction_group end
     );
 
-    public IFigure_appearance create_figure_appearance(
-        IFigure figure,
-        IFigure_appearance in_first_half,
-        IFigure_appearance in_second_half
-    );
 
 }
 }

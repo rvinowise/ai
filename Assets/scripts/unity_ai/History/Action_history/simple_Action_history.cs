@@ -9,6 +9,7 @@ using System.Linq;
 using System.Numerics;
 using rvinowise.rvi.contracts;
 using rvinowise.unity.ui.input;
+using System;
 
 namespace rvinowise.ai.simple {
 public class Action_history:
@@ -31,26 +32,9 @@ IAction_history
         return result.AsReadOnly();
     }
 
-    
-
-    public IFigure_appearance create_figure_appearance(
-        IFigure figure,
-        IFigure_appearance in_first_half,
-        IFigure_appearance in_second_half
-    ) {
-        Contract.Assert(
-            figure.id.Length > 1, 
-            "Pattern consisting of subfigures should have a longer name"
-        );
-        
-        IFigure_appearance appearance = create_figure_appearance(
-            figure,
-            in_first_half.get_start().action_group,
-            in_second_half.get_end().action_group
-        );
-
-        return appearance;
-    }
+    IFigure_appearance IAction_history.create_figure_appearance(
+        IFigure figure, IAction_group start, IAction_group end
+    ) => create_figure_appearance(figure, start, end);
 
     public IFigure_appearance create_simple_figure_appearance(
         IFigure figure,
@@ -127,10 +111,16 @@ IAction_history
         return new_group;
     }
 
-    public delegate IFigure_appearance Create_figure_appearance(
-        IFigure figure, IAction_group start, IAction_group end
-    );
-    public Create_figure_appearance create_figure_appearance;
+    // public delegate IFigure_appearance Create_figure_appearance(
+    //     IFigure figure, IAction_group start, IAction_group end
+    // );
+
+    public Func<
+        IFigure, IAction_group, IAction_group,
+        IFigure_appearance
+    > create_figure_appearance ;
+
+    //public Create_figure_appearance create_figure_appearance;
     private void create_figure_appearances(
         IEnumerable<IFigure> figures,
         IAction_group start,
@@ -156,8 +146,6 @@ IAction_history
         return result;
     }
 
-    
-
-
+        
 }
 }

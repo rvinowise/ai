@@ -27,25 +27,6 @@ IAction_history
 
     public IFigure_appearance create_figure_appearance(
         IFigure figure,
-        IFigure_appearance in_first_half,
-        IFigure_appearance in_second_half
-    ) {
-        Contract.Assert(
-            figure.id.Length > 1, 
-            "Pattern consisting of subfigures should have a longer name"
-        );
-        
-        IFigure_appearance appearance = create_figure_appearance(
-            figure,
-            in_first_half.get_start().action_group,
-            in_second_half.get_end().action_group
-        );
-
-        return appearance;
-    }
-
-    public IFigure_appearance create_figure_appearance(
-        IFigure figure,
         IAction_group start,
         IAction_group end
     ) {

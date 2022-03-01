@@ -243,10 +243,14 @@ ISequence_finder
             )) {
                 continue;
             }
+            Contract.Assert(
+                signal_pair.id.Length > 1, 
+                "Pattern consisting of subfigures should have a longer name"
+            );
             action_history.create_figure_appearance(
                 signal_pair,
-                closest_beginning.appearance,
-                potential_ending
+                closest_beginning.appearance.get_start().action_group,
+                potential_ending.get_end().action_group
             );
             i_next_beginning = closest_beginning.index + 1;
         }
