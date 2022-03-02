@@ -33,6 +33,9 @@ ISequence_finder
 
     private IReadOnlyList<IAction_group> action_groups;
 
+    void Awake() {
+        init_unity_fields(_action_history, _figure_storage, _sequence_builder);
+    }
 
     public void init_unity_fields(
         IAction_history action_history,

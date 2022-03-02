@@ -57,12 +57,13 @@ IAction_history
 
     public void input_signals(IEnumerable<IFigure> signals, int mood_change =0) {
         float new_mood = get_last_mood() + mood_change;
-        IAction_group start_group = create_next_action_group(new_mood);
-        IAction_group end_group = create_next_action_group(new_mood);
+        // IAction_group start_group = create_next_action_group(new_mood);
+        // IAction_group end_group = create_next_action_group(new_mood);
+        IAction_group action_group = create_next_action_group(new_mood);
         create_figure_appearances(
             signals,
-            start_group,
-            end_group
+            action_group,
+            action_group
         );
     }
     
@@ -78,10 +79,20 @@ IAction_history
         moments_to_action_groups.Add(last_moment, new_group);
     }
 
+    public Func<
+        IFigure, IAction_group, IAction_group,
+        IFigure_appearance
+    > create_figure_appearance;
+
+    public delegate IAction_group Create_next_action_group(float in_mood = 0f);
+
+    public Create_next_action_group create_next_action_group;
+    
     #endregion used by derived
 
     public Action_history() {
         create_figure_appearance = create_simple_figure_appearance;
+        create_next_action_group = create_next_simple_action_group;
     }
 
     private IList<IAction_group> action_groups = 
@@ -101,7 +112,7 @@ IAction_history
 
     
     
-    public IAction_group create_next_action_group(float in_mood = 0f) {
+    public IAction_group create_next_simple_action_group(float in_mood = 0f) {
         IAction_group new_group =
             new Action_group(
                 last_moment+1,
@@ -110,17 +121,10 @@ IAction_history
         add_next_action_group(new_group);
         return new_group;
     }
+    
 
-    // public delegate IFigure_appearance Create_figure_appearance(
-    //     IFigure figure, IAction_group start, IAction_group end
-    // );
-
-    public Func<
-        IFigure, IAction_group, IAction_group,
-        IFigure_appearance
-    > create_figure_appearance ;
-
-    //public Create_figure_appearance create_figure_appearance;
+    
+    
     private void create_figure_appearances(
         IEnumerable<IFigure> figures,
         IAction_group start,

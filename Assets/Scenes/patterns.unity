@@ -2611,9 +2611,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff30017a425623b41ad672ad2953e1fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  action_history: {fileID: 735816290}
-  figure_storage: {fileID: 1171707164805649098}
-  sequence_builder: {fileID: 1319031964}
+  _action_history: {fileID: 735816290}
+  _figure_storage: {fileID: 1171707164805649098}
+  _sequence_builder: {fileID: 1319031964}
 --- !u!1 &567648543
 GameObject:
   m_ObjectHideFlags: 0
@@ -6378,7 +6378,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   figure_prefab: {fileID: 5107524747873855726, guid: 461d656251486954bb0495f37b8dc907,
     type: 3}
-  figure_storage: {fileID: 1171707164805649098}
   mode_selector: {fileID: 583308729}
 --- !u!1 &1327598247
 GameObject:

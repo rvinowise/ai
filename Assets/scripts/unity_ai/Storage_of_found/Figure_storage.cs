@@ -14,12 +14,14 @@ using UnityEngine.UI;
 namespace rvinowise.ai.unity {
 public class Figure_storage: 
     MonoBehaviour,
-    IFigure_storage
-{
+    IFigure_storage {
+    
     private readonly List<IFigure> known_figures = new List<IFigure>();
     public readonly List<Figure_button> figure_buttons = new List<Figure_button>();
     public Figure shown_figure;
     public Table figure_button_table;
+    [SerializeField] private unity.Figure figure_prefab;
+    [SerializeField] private Figure_button figure_button_prefab;
     [SerializeField] private Transform figure_folder;
     [SerializeField] private Figure_button button_stencil_out;
     [SerializeField] private Figure_button button_stencil_in;
@@ -31,31 +33,38 @@ public class Figure_storage:
     
     
 
-    public Figure figure_prefab;
-    public Figure_button figure_button_prefab;
-    
-
     void Awake() {
         figure_button_table.init(figure_button_prefab);
         button_stencil_out.storage = this;
         button_stencil_in.storage = this;
     }
 
-
     public IReadOnlyList<IFigure> get_known_figures() => known_figures.AsReadOnly();
 
-    public void append_figure(IFigure figure) { 
-
+    public IFigure provide_new_figure(string id) {
+        Figure figure = figure_prefab.provide_new<Figure>();
+        figure.id = id;
+        append_figure(figure);
+        return figure;
+    }
+    public void append_figure(unity.Figure figure) { 
         known_figures.Add(figure);
         name_to_figure.Add(figure.id, figure);
 
-        if (figure is Figure unity_figure) {
-            unity_figure.transform.parent = figure_folder;
-            unity_figure.transform.localPosition = Vector3.zero;
-            unity_figure.gameObject.SetActive(false);
-            create_button_for_figure(unity_figure);
-        }
+        figure.transform.parent = figure_folder;
+        figure.transform.localPosition = Vector3.zero;
+        figure.gameObject.SetActive(false);
+        create_button_for_figure(figure);
         
+    }
+    
+    public void remove_figure(IFigure figure) {
+        known_figures.Remove(figure);
+        name_to_figure.Remove(figure.id);
+        if (figure is Figure unity_figure) {
+            remove_button_for_figure(unity_figure);
+            
+        }
     }
 
     private void create_button_for_figure(Figure figure) {
@@ -67,17 +76,8 @@ public class Figure_storage:
     }
 
 
-        
 
-
-    public void remove_figure(IFigure figure) {
-        known_figures.Remove(figure);
-        name_to_figure.Remove(figure.id);
-        if (figure is Figure unity_figure) {
-            remove_button_for_figure(unity_figure);
-            
-        }
-    }
+    
 
     private void remove_button_for_figure(Figure figure) {
         Figure_button button = figure_buttons.First(button => button.figure == figure);

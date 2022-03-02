@@ -14,6 +14,7 @@ using UnityEngine.UI;
 namespace rvinowise.ai.general {
 public interface IFigure_storage {
 
+    public IFigure provide_new_figure(string id);
     public void append_figure(IFigure figure);
 
     public void remove_figure(IFigure figure);

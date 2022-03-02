@@ -23,6 +23,11 @@ public class Figure_storage: IFigure_storage {
     public IReadOnlyList<IFigure> get_known_figures() {
        return known_figures;
     }
+
+    public IFigure provide_new_figure(string id) {
+        return new simple.Figure(id);
+    }
+    
     public void append_figure(IFigure figure) { 
 
         known_figures.Add(figure);

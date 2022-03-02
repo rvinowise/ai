@@ -30,10 +30,6 @@ IAction_history
         IAction_group start,
         IAction_group end
     ) {
-        Contract.Requires(
-            start.moment < end.moment,
-            "should have a positive time interval"
-        );
         Figure_appearance appearance = figure_appearance_prefab
             .get_for_figure(figure);
         figure.add_appearance(appearance);
@@ -53,6 +49,7 @@ IAction_history
     void Awake() {
         simple_history = new ai.simple.Action_history();
         simple_history.create_figure_appearance = create_figure_appearance;
+        simple_history.create_next_action_group = create_next_action_group;
     }
     
     public override void input_selected_signals() {
