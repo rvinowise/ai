@@ -14,7 +14,8 @@ using UnityEngine.UI;
 namespace rvinowise.ai.unity {
 public class Figure_storage: 
     MonoBehaviour,
-    IFigure_storage {
+    IFigure_storage 
+{
     
     private readonly List<IFigure> known_figures = new List<IFigure>();
     public readonly List<Figure_button> figure_buttons = new List<Figure_button>();

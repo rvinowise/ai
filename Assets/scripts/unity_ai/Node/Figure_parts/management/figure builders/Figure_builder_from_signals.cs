@@ -10,10 +10,11 @@ using rvinowise.unity.ui.input;
 
 namespace rvinowise.ai.unity {
 
-public class Figure_builder_from_signals: MonoBehaviour {
+public class Figure_builder_from_signals
+{
 
-    [SerializeField] private Figure_builder builder;
-    private Figure_storage figure_storage => builder.figure_storage;
+    private Figure_provider figure_provider;
+    private IFigure_storage figure_storage;
     
     private Figure figure; //which is being built by this builder
     private IFigure_representation representation; //which is being built by this builder
@@ -25,7 +26,13 @@ public class Figure_builder_from_signals: MonoBehaviour {
 
     private int last_subfigure_id;
 
- 
+    public Figure_builder_from_signals(
+        Figure_provider figure_provider,
+        IFigure_storage figure_storage
+    ) {
+        this.figure_provider = figure_provider;
+        this.figure_storage = figure_storage;
+    }
     
     public void on_create_figure_from_actions() {
         var selected_groups = Selector.instance.sorted_action_groups;
@@ -36,7 +43,7 @@ public class Figure_builder_from_signals: MonoBehaviour {
         IReadOnlyList<IAction_group> action_groups
     ) {
         clear();
-        figure = builder.create_new_figure("f") as Figure;
+        figure = figure_provider.create_new_figure("f") as Figure;
         representation = figure.create_representation();
         
         foreach(IAction_group group in action_groups) {

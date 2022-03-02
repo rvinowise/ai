@@ -16,7 +16,7 @@ public class Sequence_builder:
     ISequence_builder
 {
     private IFigure_storage figure_storage;
-
+    private Figure_provider figure_provider;
     private IReadOnlyList<IFigure> known_figures => figure_storage.get_known_figures();
 
     [SerializeField] private Mode_selector mode_selector;
@@ -39,10 +39,10 @@ public class Sequence_builder:
     private IFigure create_figure_for_sequence_of_subfigures(
         IReadOnlyList<IFigure> subfigures
     ) {
-        IFigure figure = figure_storage.provide_new_figure();
-        figure.header.mode_selector = mode_selector;
-        figure.id = get_id_for(subfigures);
-
+        IFigure figure = figure_provider.create_new_figure(
+            get_id_for(subfigures)
+        );
+        
         var representation = figure.create_representation();
         ISubfigure previous = null;
         foreach (IFigure child_figure in subfigures) {

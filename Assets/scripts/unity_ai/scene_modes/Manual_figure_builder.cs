@@ -25,7 +25,7 @@ ISubfigure_click_receiver {
     public Figure_observer figure_observer;
     public Mode_selector mode_selector;
     
-    [SerializeField] private Figure_builder builder;
+    [SerializeField] private Figure_provider builder;
     private Figure_storage figure_storage => builder.figure_storage;
     private Figure figure_prefab;
     private Figure built_figure;

@@ -122,8 +122,6 @@ IAction_history
         return new_group;
     }
     
-
-    
     
     private void create_figure_appearances(
         IEnumerable<IFigure> figures,

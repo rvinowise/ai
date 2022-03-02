@@ -17,6 +17,7 @@ public class Network_initialiser:
     private ai.simple.Network_initialiser simple_initialiser;
     
     public Figure_storage figure_storage;
+    public Figure_provider figure_provider;
     [SerializeField] private Mode_selector mode_selector; 
     
     void Awake() {
@@ -34,8 +35,7 @@ public class Network_initialiser:
     }
 
     private IFigure create_base_signal(string id) {
-        Figure signal = figure_storage.figure_prefab.provide_new<Figure>();
-        signal.id = id;
+        Figure signal = figure_provider.create_new_figure(id);
         signal.name = $"signal {signal.id}";
         signal.header.mode_selector = mode_selector;
         return signal;
