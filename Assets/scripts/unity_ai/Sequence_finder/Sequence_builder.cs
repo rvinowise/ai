@@ -16,7 +16,7 @@ public class Sequence_builder:
     ISequence_builder
 {
     private IFigure_storage figure_storage;
-    private Figure_provider figure_provider;
+    private IFigure_provider figure_provider;
     private IReadOnlyList<IFigure> known_figures => figure_storage.get_known_figures();
 
     [SerializeField] private Mode_selector mode_selector;

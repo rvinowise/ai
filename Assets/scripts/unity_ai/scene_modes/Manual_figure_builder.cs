@@ -19,19 +19,18 @@ namespace rvinowise.ai.unity {
 public class Manual_figure_builder: 
 MonoBehaviour,
 IFigure_button_click_receiver,
-ISubfigure_click_receiver {
+ISubfigure_click_receiver 
+{
     private bool change_connections;
     
     public Figure_observer figure_observer;
     public Mode_selector mode_selector;
     
     [SerializeField] private Figure_provider builder;
-    private Figure_storage figure_storage => builder.figure_storage;
-    private Figure figure_prefab;
+    [SerializeField] private Figure_storage figure_storage;
     private Figure built_figure;
     private Figure_header figure_header;
     private Figure_representation built_repr;
-    [SerializeField] private Transform cursor;
 
     private HashSet<Subfigure> selected_subfigures = new HashSet<Subfigure>();
     private HashSet<Connection> selected_connections = new HashSet<Connection>();

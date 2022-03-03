@@ -10,7 +10,9 @@ using rvinowise.unity.ui.input;
 
 namespace rvinowise.ai.unity {
 
-public class Figure_provider {
+public class Figure_provider:
+    IFigure_provider
+{
 
     private Figure_storage figure_storage;
     private Figure figure_prefab;

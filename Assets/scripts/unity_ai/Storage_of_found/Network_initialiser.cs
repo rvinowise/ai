@@ -16,7 +16,7 @@ public class Network_initialiser:
 {
     private ai.simple.Network_initialiser simple_initialiser;
     
-    public Figure_storage figure_storage;
+    public IFigure_storage figure_storage;
     public Figure_provider figure_provider;
     [SerializeField] private Mode_selector mode_selector; 
     
