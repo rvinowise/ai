@@ -16,6 +16,7 @@ Visual_input_receiver,
 IAction_history
 {
     ai.simple.Action_history simple_history;
+    
 
     #region IAction_history
     public BigInteger last_moment => simple_history.last_moment;
@@ -74,6 +75,30 @@ IAction_history
     }
 
 
+    public IAction_group get_action_group_at_moment(
+        BigInteger moment
+    ) => simple_history.get_action_group_at_moment(moment);
+
+    
+    private IFigure provide_figure_having_sequence(
+        IReadOnlyList<IFigure> subfigures
+    ) {
+        if (find_figure_having_sequence(subfigures) is IFigure old_pattern) {
+            return old_pattern;
+        }
+        IFigure new_figure =  create_figure_for_sequence_of_subfigures(subfigures);
+        
+        return new_figure;
+    }
+
+    public IFigure find_figure_having_sequence(
+        IReadOnlyList<IFigure> subfigures
+    ) => simple_history.find_figure_having_sequence(subfigures);
+    
+    public IFigure provide_sequence_for_pair(
+        IFigure beginning,
+        IFigure ending
+    )=> simple_history.provide_sequence_for_pair(beginning, ending);
 
     
     private void put_action_into_group(
@@ -83,13 +108,5 @@ IAction_history
         group.add_action(action);
         action.action_group = group;
     }
-
-    public IAction_group get_action_group_at_moment(
-        BigInteger moment
-    ) => simple_history.get_action_group_at_moment(moment);
-
-
-
-
 }
 }

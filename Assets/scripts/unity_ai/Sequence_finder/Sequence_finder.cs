@@ -21,11 +21,13 @@ ISequence_finder
     public IAction_history action_history;
     public IFigure_storage figure_storage;
     public ISequence_builder sequence_builder;
-
+    private Sequence_builder _sequence_builder;
+    private IFigure_provider figure_provider;
+    
     #region exposed to unity editor
     [SerializeField] private Action_history _action_history;
     [SerializeField] private Figure_storage _figure_storage;
-    [SerializeField] private Sequence_builder _sequence_builder;
+    [SerializeField] private Figure figure_prefab;
     #endregion exposed to unity editor
     
     private IDictionary<string, IFigure> found_patterns = 
@@ -35,6 +37,7 @@ ISequence_finder
 
     void Awake() {
         init_unity_fields(_action_history, _figure_storage, _sequence_builder);
+        construct();
     }
 
     public void init_unity_fields(
@@ -45,6 +48,13 @@ ISequence_finder
         this.action_history = action_history;
         this.figure_storage = figure_storage;
         this.sequence_builder = sequence_builder;
+    }
+
+    public void construct() {
+        figure_provider = new Figure_provider(
+            figure_prefab,
+            action_history
+        );
     }
     public void enrich_storage_with_sequences() {
         action_groups = action_history.get_action_groups(
@@ -116,22 +126,21 @@ ISequence_finder
                 );
             }
 
-            if (it_is_new_sequence(signal_pair)) {
-                if (sequence_appeared_at_least_twice(signal_pair)) {
-                    figure_storage.append_figure(signal_pair);
-                } else {
-                    if (signal_pair is IHave_destructor destructable_figure) {
-                        destructable_figure.destroy();
-                    }
-                }
+            if (!sequence_appeared_at_least_twice(signal_pair)) {
+                delete_figure(signal_pair);
             }
 
-            bool it_is_new_sequence(IFigure signal_pair) {
-                return figure_storage.find_figure_with_id(signal_pair.id) == null;
-            }
         }
 
         
+    }
+
+    private void delete_figure(IFigure figure) {
+        action_history.remove_appearances_of(figure);
+        figure_storage.remove_figure(figure);
+        if (figure is IHave_destructor destructable_figure) {
+            destructable_figure.destroy();
+        }
     }
 
     private IReadOnlyList<IFigure_appearance> 

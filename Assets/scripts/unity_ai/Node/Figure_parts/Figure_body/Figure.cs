@@ -124,8 +124,10 @@ IHave_destructor
 
     public void destroy() {
         //base.destroy();
-        foreach (Figure_appearance appearance in get_appearances()) {
-            appearance.destroy();
+        foreach (IFigure_appearance appearance in get_appearances()) {
+            if (appearance is IHave_destructor destructable_appearance) {
+                destructable_appearance.destroy();
+            }
         }
         this.destroy_object();
     }

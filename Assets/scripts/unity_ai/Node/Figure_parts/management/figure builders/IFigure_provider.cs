@@ -14,6 +14,9 @@ public interface IFigure_provider {
   
      IFigure create_new_figure(string prefix = "");
 
-
+     IFigure provide_sequence_for_pair(
+          IFigure beginning_figure,
+          IFigure ending_figure
+     );
 }
 }

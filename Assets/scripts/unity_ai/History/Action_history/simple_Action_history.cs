@@ -13,9 +13,11 @@ using System;
 
 namespace rvinowise.ai.simple {
 public class Action_history:
-IAction_history
-{
+IAction_history {
 
+    private Sequence_builder sequence_builder;
+    private readonly ISet<IFigure> known_figures = new HashSet<IFigure>();
+    
     #region IAction_history
     public BigInteger last_moment {get; private set;}
 
@@ -36,7 +38,7 @@ IAction_history
         IFigure figure, IAction_group start, IAction_group end
     ) => create_figure_appearance(figure, start, end);
 
-    public IFigure_appearance create_simple_figure_appearance(
+    private IFigure_appearance create_simple_figure_appearance(
         IFigure figure,
         IAction_group start,
         IAction_group end
@@ -67,6 +69,28 @@ IAction_history
         );
     }
     
+    public IFigure find_figure_having_sequence(
+        IReadOnlyList<IFigure> subfigures
+    ) {
+        foreach(var figure in known_figures) {
+            if (
+                figure.as_lowlevel_sequence().SequenceEqual(subfigures)
+            ) {
+                return figure;
+            }
+        }
+        return null;
+    }
+    public IFigure provide_sequence_for_pair(
+        IFigure beginning,
+        IFigure ending
+    ) {
+        var subfigures = sequence_builder.get_sequence_of_subfigures_from(
+            beginning, ending
+        );
+        return provide_figure_having_sequence(subfigures);
+    }
+    
     #endregion IAction_history
 
     #region used by derived
@@ -93,6 +117,7 @@ IAction_history
     public Action_history() {
         create_figure_appearance = create_simple_figure_appearance;
         create_next_action_group = create_next_simple_action_group;
+        sequence_builder = new Sequence_builder();
     }
 
     private IList<IAction_group> action_groups = 
@@ -148,6 +173,22 @@ IAction_history
         return result;
     }
 
+    private IFigure provide_figure_having_sequence(
+        IReadOnlyList<IFigure> subfigures
+    ) {
+        if (find_figure_having_sequence(subfigures) is IFigure old_pattern) {
+            return old_pattern;
+        }
+        IFigure new_figure =  sequence_builder.create_figure_for_sequence_of_subfigures(subfigures);
         
+        return new_figure;
+    }
+
+    public void remove_appearances_of(IFigure figure) {
+        foreach (IFigure_appearance appearance in figure.get_appearances()) {
+            appearance.get_start().action_group.remove_action(appearance.get_start());
+            appearance.get_end().action_group.remove_action(appearance.get_end());
+        }
+    }
 }
 }

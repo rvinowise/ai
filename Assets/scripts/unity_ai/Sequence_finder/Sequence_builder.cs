@@ -14,29 +14,25 @@ using rvinowise.unity.ui.input;
 namespace rvinowise.ai.unity {
 public class Sequence_builder: 
     ISequence_builder
+   //,IFigure_provider
 {
-    private IFigure_storage figure_storage;
-    private IFigure_provider figure_provider;
-    private IReadOnlyList<IFigure> known_figures => figure_storage.get_known_figures();
+    private readonly IFigure_provider figure_provider;
 
-    [SerializeField] private Mode_selector mode_selector;
-
-    public Sequence_builder(IFigure_storage in_storage) {
-        figure_storage = in_storage;
+    public Sequence_builder(IFigure_provider figure_provider) {
+        this.figure_provider = figure_provider;
     }
     
     
-    public IFigure provide_sequence_for_pair(
+    public IFigure create_sequence_for_pair(
         IFigure beginning,
         IFigure ending
     ) {
         var subfigures = get_sequence_of_subfigures_from(
             beginning, ending
         );
-        return provide_figure_having_sequence(subfigures);
+        return create_figure_for_sequence_of_subfigures(subfigures);
     }
-    
-    private IFigure create_figure_for_sequence_of_subfigures(
+    public IFigure create_figure_for_sequence_of_subfigures(
         IReadOnlyList<IFigure> subfigures
     ) {
         IFigure figure = figure_provider.create_new_figure(
@@ -64,33 +60,7 @@ public class Sequence_builder:
         return res.ToString();
     }
 
-    private IFigure provide_figure_having_sequence(
-        IReadOnlyList<IFigure> subfigures
-    ) {
-        if (find_figure_having_sequence(subfigures) is IFigure old_pattern) {
-            return old_pattern;
-        }
-        IFigure new_figure = create_figure_for_sequence_of_subfigures(subfigures);
-        
-        return new_figure;
-    }
-
-    private IFigure find_figure_having_sequence(
-        IReadOnlyList<IFigure> subfigures
-    ) {
-        foreach(var figure in known_figures) {
-            if (
-                figure.as_lowlevel_sequence().SequenceEqual(subfigures)
-            ) {
-                return figure;
-            }
-        }
-        return null;
-    }
-
-    
-
-    private IReadOnlyList<IFigure> get_sequence_of_subfigures_from(
+    public IReadOnlyList<IFigure> get_sequence_of_subfigures_from(
         IFigure beginning, IFigure ending
     ) {
         return beginning.as_lowlevel_sequence().Concat(
@@ -98,6 +68,16 @@ public class Sequence_builder:
         ).ToList();
     }
     
+    
+    // #region IFigure_provider
+    //
+    // [SerializeField] private Figure figure_prefab;
+    // public IFigure create_new_figure(string prefix = "") {
+    //     IFigure figure = figure_prefab.provide_new<Figure>();
+    //     
+    // }
+    //
+    // #endregion IFigure_provider
 
 }
 }
