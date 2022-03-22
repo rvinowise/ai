@@ -15,10 +15,9 @@ using rvinowise.ai.unity;
 namespace rvinowise.unity.ui.input {
 
 
-public class Test_initialiser : MonoBehaviour {
-
-
-    public static Test_initialiser instance;
+public class Test_initialiser : MonoBehaviour 
+{
+    private static Test_initialiser instance;
 
     public Figure_builder_from_signals figure_builderFromSignals;
     public File_input file_input;

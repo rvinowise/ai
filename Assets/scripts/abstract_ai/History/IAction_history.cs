@@ -21,15 +21,6 @@ public interface IAction_history
         IAction_group end
     );
 
-    IFigure find_figure_having_sequence(IReadOnlyList<IFigure> subfigures);
-
-    IFigure provide_sequence_for_pair(
-        IFigure beginning,
-        IFigure ending
-    );
-
-    void remove_appearances_of(IFigure figure) {
-        
-    }
+    void remove_appearances_of(IFigure figure);
 }
 }

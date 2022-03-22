@@ -18,5 +18,7 @@ public interface IFigure_provider {
           IFigure beginning_figure,
           IFigure ending_figure
      );
+
+     void remove_figure(IFigure figure);
 }
 }

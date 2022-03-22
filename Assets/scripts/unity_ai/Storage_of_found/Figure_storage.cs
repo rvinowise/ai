@@ -48,15 +48,20 @@ public class Figure_storage:
         append_figure(figure);
         return figure;
     }
-    public void append_figure(unity.Figure figure) { 
+    public void append_figure(IFigure figure) { 
         known_figures.Add(figure);
         name_to_figure.Add(figure.id, figure);
 
+        if (figure is unity.Figure unity_figure) {
+            append_unity_figure(unity_figure);
+        }
+    }
+
+    private void append_unity_figure(unity.Figure figure) {
         figure.transform.parent = figure_folder;
         figure.transform.localPosition = Vector3.zero;
         figure.gameObject.SetActive(false);
         create_button_for_figure(figure);
-        
     }
     
     public void remove_figure(IFigure figure) {

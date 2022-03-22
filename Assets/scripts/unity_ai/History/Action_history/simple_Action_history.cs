@@ -15,8 +15,6 @@ namespace rvinowise.ai.simple {
 public class Action_history:
 IAction_history {
 
-    private Sequence_builder sequence_builder;
-    private readonly ISet<IFigure> known_figures = new HashSet<IFigure>();
     
     #region IAction_history
     public BigInteger last_moment {get; private set;}
@@ -38,24 +36,7 @@ IAction_history {
         IFigure figure, IAction_group start, IAction_group end
     ) => create_figure_appearance(figure, start, end);
 
-    private IFigure_appearance create_simple_figure_appearance(
-        IFigure figure,
-        IAction_group start,
-        IAction_group end
-    ) {
-        Contract.Requires(
-            start.moment < end.moment,
-            "should have a positive time interval"
-        );
-        IFigure_appearance appearance = 
-            new Figure_appearance(
-                figure, start, end
-            );
-        figure.add_appearance(appearance);
-        start.add_action(appearance.get_start());
-        end.add_action(appearance.get_end());
-        return appearance;
-    }
+    
 
     public void input_signals(IEnumerable<IFigure> signals, int mood_change =0) {
         float new_mood = get_last_mood() + mood_change;
@@ -68,28 +49,7 @@ IAction_history {
             action_group
         );
     }
-    
-    public IFigure find_figure_having_sequence(
-        IReadOnlyList<IFigure> subfigures
-    ) {
-        foreach(var figure in known_figures) {
-            if (
-                figure.as_lowlevel_sequence().SequenceEqual(subfigures)
-            ) {
-                return figure;
-            }
-        }
-        return null;
-    }
-    public IFigure provide_sequence_for_pair(
-        IFigure beginning,
-        IFigure ending
-    ) {
-        var subfigures = sequence_builder.get_sequence_of_subfigures_from(
-            beginning, ending
-        );
-        return provide_figure_having_sequence(subfigures);
-    }
+
     
     #endregion IAction_history
 
@@ -117,27 +77,36 @@ IAction_history {
     public Action_history() {
         create_figure_appearance = create_simple_figure_appearance;
         create_next_action_group = create_next_simple_action_group;
-        sequence_builder = new Sequence_builder();
     }
 
-    private IList<IAction_group> action_groups = 
+    private readonly IList<IAction_group> action_groups = 
         new List<IAction_group>();
     
-    private Dictionary<BigInteger, IAction_group> moments_to_action_groups=
+    private readonly Dictionary<BigInteger, IAction_group> moments_to_action_groups=
         new Dictionary<BigInteger, IAction_group>();
 
-    private Dictionary_of_lists<
-        IFigure,
-        IFigure_appearance
-    > figure_appearances =
-        new Dictionary_of_lists<
-            IFigure,
-            IFigure_appearance
-        >();
 
+
+    private IFigure_appearance create_simple_figure_appearance(
+        IFigure figure,
+        IAction_group start,
+        IAction_group end
+    ) {
+        Contract.Requires(
+            start.moment < end.moment,
+            "should have a positive time interval"
+        );
+        IFigure_appearance appearance = 
+            new Figure_appearance(
+                figure, start, end
+            );
+        figure.add_appearance(appearance);
+        start.add_action(appearance.get_start());
+        end.add_action(appearance.get_end());
+        return appearance;
+    }
     
-    
-    public IAction_group create_next_simple_action_group(float in_mood = 0f) {
+    private IAction_group create_next_simple_action_group(float in_mood = 0f) {
         IAction_group new_group =
             new Action_group(
                 last_moment+1,
@@ -173,16 +142,6 @@ IAction_history {
         return result;
     }
 
-    private IFigure provide_figure_having_sequence(
-        IReadOnlyList<IFigure> subfigures
-    ) {
-        if (find_figure_having_sequence(subfigures) is IFigure old_pattern) {
-            return old_pattern;
-        }
-        IFigure new_figure =  sequence_builder.create_figure_for_sequence_of_subfigures(subfigures);
-        
-        return new_figure;
-    }
 
     public void remove_appearances_of(IFigure figure) {
         foreach (IFigure_appearance appearance in figure.get_appearances()) {

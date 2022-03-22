@@ -14,20 +14,15 @@ using rvinowise.unity;
 namespace rvinowise.ai.unity {
 
 public class Sequence_finder:
-MonoBehaviour,
 ISequence_finder
 {
     
-    public IAction_history action_history;
-    public IFigure_storage figure_storage;
-    public ISequence_builder sequence_builder;
-    private Sequence_builder _sequence_builder;
+    private IAction_history action_history;
     private IFigure_provider figure_provider;
     
     #region exposed to unity editor
     [SerializeField] private Action_history _action_history;
-    [SerializeField] private Figure_storage _figure_storage;
-    [SerializeField] private Figure figure_prefab;
+    [SerializeField] private Figure_provider _figure_provider;
     #endregion exposed to unity editor
     
     private IDictionary<string, IFigure> found_patterns = 
@@ -35,27 +30,17 @@ ISequence_finder
 
     private IReadOnlyList<IAction_group> action_groups;
 
-    void Awake() {
-        init_unity_fields(_action_history, _figure_storage, _sequence_builder);
-        construct();
-    }
+ 
 
-    public void init_unity_fields(
+    public Sequence_finder(
         IAction_history action_history,
-        IFigure_storage figure_storage,
-        ISequence_builder sequence_builder
+        IFigure_provider figure_provider
     ) {
         this.action_history = action_history;
-        this.figure_storage = figure_storage;
-        this.sequence_builder = sequence_builder;
+        this.figure_provider = figure_provider;
     }
 
-    public void construct() {
-        figure_provider = new Figure_provider(
-            figure_prefab,
-            action_history
-        );
-    }
+
     public void enrich_storage_with_sequences() {
         action_groups = action_history.get_action_groups(
             0,
@@ -97,7 +82,7 @@ ISequence_finder
                 continue;
             }
   
-            IFigure signal_pair = sequence_builder.provide_sequence_for_pair(
+            IFigure signal_pair = figure_provider.provide_sequence_for_pair(
                 beginning_figure,
                 ending_figure
             );
@@ -137,7 +122,7 @@ ISequence_finder
 
     private void delete_figure(IFigure figure) {
         action_history.remove_appearances_of(figure);
-        figure_storage.remove_figure(figure);
+        figure_provider.remove_figure(figure);
         if (figure is IHave_destructor destructable_figure) {
             destructable_figure.destroy();
         }

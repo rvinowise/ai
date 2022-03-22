@@ -45,6 +45,9 @@ IAction_history
         int mood_change =0
     ) => simple_history.input_signals(signals, mood_change);
 
+
+    public void remove_appearances_of(IFigure figure) => simple_history.remove_appearances_of(figure);
+
     #endregion IAction_history
     
     void Awake() {
@@ -80,27 +83,7 @@ IAction_history
     ) => simple_history.get_action_group_at_moment(moment);
 
     
-    private IFigure provide_figure_having_sequence(
-        IReadOnlyList<IFigure> subfigures
-    ) {
-        if (find_figure_having_sequence(subfigures) is IFigure old_pattern) {
-            return old_pattern;
-        }
-        IFigure new_figure =  create_figure_for_sequence_of_subfigures(subfigures);
-        
-        return new_figure;
-    }
 
-    public IFigure find_figure_having_sequence(
-        IReadOnlyList<IFigure> subfigures
-    ) => simple_history.find_figure_having_sequence(subfigures);
-    
-    public IFigure provide_sequence_for_pair(
-        IFigure beginning,
-        IFigure ending
-    )=> simple_history.provide_sequence_for_pair(beginning, ending);
-
-    
     private void put_action_into_group(
         Action action, 
         IAction_group group

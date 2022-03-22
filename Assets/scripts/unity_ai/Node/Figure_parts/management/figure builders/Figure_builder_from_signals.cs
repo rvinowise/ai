@@ -13,7 +13,7 @@ namespace rvinowise.ai.unity {
 public class Figure_builder_from_signals
 {
 
-    private Figure_provider figure_provider;
+    private IFigure_provider figure_provider;
     private IFigure_storage figure_storage;
     
     private Figure figure; //which is being built by this builder
@@ -27,7 +27,7 @@ public class Figure_builder_from_signals
     private int last_subfigure_id;
 
     public Figure_builder_from_signals(
-        Figure_provider figure_provider,
+        IFigure_provider figure_provider,
         IFigure_storage figure_storage
     ) {
         this.figure_provider = figure_provider;

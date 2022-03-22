@@ -8,16 +8,22 @@ namespace rvinowise.ai.unit_tests.sequence_finder {
 
 public class Network {
 
-    public readonly ISequence_finder sequence_finder =
-        new GameObject().AddComponent<Sequence_finder>();
+    public readonly ISequence_finder sequence_finder;
 
     private readonly IAction_history action_history =
         new simple.Action_history();
     
     public readonly IFigure_storage figure_storage =
         new ai.simple.Figure_storage();
+    
+    public readonly IFigure_provider figure_provider =
+        new ai.simple.Figure_provider();
 
     public Network() {
+        sequence_finder = new Sequence_finder(
+            action_history,
+            figure_provider
+        );
         fill_figure_storage_with_base_signals();
         init_sequence_finder();
     }
@@ -35,13 +41,9 @@ public class Network {
     }
 
     private void init_sequence_finder() {
-        ISequence_builder sequence_builder = new ai.simple.Sequence_builder(
-            figure_storage
-        );
         sequence_finder.init_unity_fields(
             action_history,
-            figure_storage,
-            sequence_builder
+            figure_provider
         );
     }
 

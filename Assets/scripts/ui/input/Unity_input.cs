@@ -4,15 +4,16 @@ using UnityEngine;
 
 
 namespace rvinowise.unity.ui.input {
-public class Unity_input: MonoBehaviour {
+public class Unity_input: MonoBehaviour 
+{
     
-    static public Unity_input instance;
+    public static Unity_input instance;
 
     public UnityEngine.Input unity;
     
     public Vector2 mouse_world_position { get; private set; }
-    
-    public Vector2 moving_vector { get; private set; }
+
+    private Vector2 moving_vector { get; set; }
     public float scroll_value { get; private set; }
     public int mouse_wheel_steps {
         get {

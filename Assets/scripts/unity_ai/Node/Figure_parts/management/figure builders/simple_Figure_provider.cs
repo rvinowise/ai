@@ -8,15 +8,13 @@ using rvinowise.rvi.contracts;
 using rvinowise.unity.extensions;
 using rvinowise.unity.ui.input;
 
-namespace rvinowise.ai.unity {
+namespace rvinowise.ai.simple {
 
 public class Figure_provider:
     IFigure_provider
 {
 
-    private readonly Figure figure_prefab;
     private readonly ISequence_builder sequence_builder;
-    private readonly Mode_selector mode_selector;
 
     private readonly ISet<IFigure> known_figures = new HashSet<IFigure>();
 
@@ -25,25 +23,17 @@ public class Figure_provider:
     }
     
     
-    public Figure_provider(
-        Figure figure_prefab
-    ) {
-        this.figure_prefab = figure_prefab;
-        this.sequence_builder = new ai.simple.Sequence_builder(create_new_figure);
+    public Figure_provider() {
+        this.sequence_builder = new Sequence_builder();
     }
-    
     public Figure_provider(
-        Figure figure_prefab,
-        ISequence_builder sequence_builder,
-        Mode_selector mode_selector
+        ISequence_builder sequence_builder
     ) {
-        this.figure_prefab = figure_prefab;
         this.sequence_builder = sequence_builder;
-        this.mode_selector = mode_selector;
     }
     
   
-    
+    private Dictionary<string,int> last_ids = new Dictionary<string, int>();
 
     #region IFigure_provider
 
@@ -58,9 +48,9 @@ public class Figure_provider:
     }
     
     public IFigure create_new_figure(string prefix = "") {
-        Figure new_figure = figure_prefab.provide_new<Figure>();
-        new_figure.id = get_next_id_for_prefix(prefix);
-        new_figure.header.mode_selector = mode_selector;
+        Figure new_figure = new simple.Figure(
+            get_next_id_for_prefix(prefix)
+        );
         return new_figure;
     }
 
@@ -71,8 +61,6 @@ public class Figure_provider:
 
     #endregion IFigure_provider
     
-    
-    private Dictionary<string,int> last_ids = new Dictionary<string, int>();
     
     private IFigure provide_figure_having_sequence(
         IReadOnlyList<IFigure> subfigures
