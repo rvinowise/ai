@@ -11,34 +11,24 @@ using rvinowise.unity.ui.input;
 namespace rvinowise.ai.unity {
 
 public class Figure_provider:
-    IFigure_provider
+    IFigure_provider 
 {
-
+    
+    private readonly ai.simple.Figure_provider figure_provider = new ai.simple.Figure_provider();
     private readonly Figure figure_prefab;
-    private readonly ISequence_builder sequence_builder;
     private readonly Mode_selector mode_selector;
 
-    private readonly ISet<IFigure> known_figures = new HashSet<IFigure>();
-
-    private IReadOnlyList<IFigure> get_known_figures() {
-        return known_figures.ToList().AsReadOnly();
-    }
-    
-    
     public Figure_provider(
         Figure figure_prefab
     ) {
         this.figure_prefab = figure_prefab;
-        this.sequence_builder = new ai.simple.Sequence_builder(create_new_figure);
     }
     
     public Figure_provider(
         Figure figure_prefab,
-        ISequence_builder sequence_builder,
         Mode_selector mode_selector
     ) {
         this.figure_prefab = figure_prefab;
-        this.sequence_builder = sequence_builder;
         this.mode_selector = mode_selector;
     }
     
@@ -47,74 +37,33 @@ public class Figure_provider:
 
     #region IFigure_provider
 
+    public IReadOnlyList<IFigure> get_known_figures() => figure_provider.get_known_figures();
+    
     public IFigure provide_sequence_for_pair(
         IFigure beginning_figure,
-        IFigure ending_figure    
-    ) {
-        var subfigures = sequence_builder.get_sequence_of_subfigures_from(
-            beginning_figure, ending_figure
-        );
-        return provide_figure_having_sequence(subfigures);
-    }
+        IFigure ending_figure
+    ) => figure_provider.provide_sequence_for_pair(beginning_figure, ending_figure);
     
-    public IFigure create_new_figure(string prefix = "") {
+    public IFigure create_figure(string prefix = "") {
         Figure new_figure = figure_prefab.provide_new<Figure>();
-        new_figure.id = get_next_id_for_prefix(prefix);
+        new_figure.id = figure_provider.get_next_id_for_prefix(prefix);
         new_figure.header.mode_selector = mode_selector;
         return new_figure;
     }
-
-
-    public void remove_figure(IFigure figure) {
-        known_figures.Remove(figure);
+    
+    public IFigure create_base_signal(string id = "") {
+        Figure signal = create_figure("signal") as Figure;
+        signal.name = $"signal {signal.id}";
+        return signal;
     }
+    
+    public IFigure find_figure_with_id(string id) =>
+        figure_provider.find_figure_with_id(id);
+
+    public void remove_figure(IFigure figure) => figure_provider.remove_figure(figure);
 
     #endregion IFigure_provider
-    
-    
-    private Dictionary<string,int> last_ids = new Dictionary<string, int>();
-    
-    private IFigure provide_figure_having_sequence(
-        IReadOnlyList<IFigure> subfigures
-    ) {
-        if (find_figure_having_sequence(subfigures) is IFigure old_pattern) {
-            return old_pattern;
-        }
-        IFigure new_figure =  sequence_builder.create_figure_for_sequence_of_subfigures(subfigures);
-        add_known_figure(new_figure);
-        return new_figure;
-    }
-    
-    private void add_known_figure(IFigure figure) {
-        known_figures.Add(figure);
-    }
-    private IFigure find_figure_having_sequence(
-        IReadOnlyList<IFigure> subfigures
-    ) {
 
-        foreach(var figure in get_known_figures()) {
-            if (
-                figure.as_lowlevel_sequence().SequenceEqual(subfigures)
-            ) {
-                return figure;
-            }
-        }
-        return null;
-    }
-    
-
-    
-    
-
-    private string get_next_id_for_prefix(string prefix) {
-        last_ids.TryGetValue(prefix, out var next_id);
-        last_ids[prefix] = ++next_id;
-        return $"{prefix}{next_id}";
-    }
-
-
-
-  
 
 
 }

@@ -6,6 +6,7 @@ using System.Numerics;
 using rvinowise.ai.general;
 using rvinowise.rvi.contracts;
 using rvinowise.unity.extensions;
+using rvinowise.unity.extensions.attributes;
 using rvinowise.unity.ui.input;
 
 namespace rvinowise.ai.unity {
@@ -13,43 +14,36 @@ namespace rvinowise.ai.unity {
 public class Figure_builder_from_signals
 {
 
-    private IFigure_provider figure_provider;
-    private IFigure_storage figure_storage;
+    private readonly IFigure_provider figure_provider;
     
-    private Figure figure; //which is being built by this builder
+    private IFigure figure; //which is being built by this builder
     private IFigure_representation representation; //which is being built by this builder
-    private List<ISubfigure> all_subfigures = new List<ISubfigure>();
-    private List<ISubfigure> ended_subfigures = new List<ISubfigure>();
+    private readonly List<ISubfigure> all_subfigures = new List<ISubfigure>();
+    private readonly List<ISubfigure> ended_subfigures = new List<ISubfigure>();
     
-    private Dictionary<IFigure_appearance, ISubfigure> appearance_to_subfigure 
+    private readonly Dictionary<IFigure_appearance, ISubfigure> appearance_to_subfigure 
     = new Dictionary<IFigure_appearance, ISubfigure>();
 
     private int last_subfigure_id;
 
     public Figure_builder_from_signals(
-        IFigure_provider figure_provider,
-        IFigure_storage figure_storage
+        IFigure_provider figure_provider
     ) {
         this.figure_provider = figure_provider;
-        this.figure_storage = figure_storage;
     }
     
-    public void on_create_figure_from_actions() {
-        var selected_groups = Selector.instance.sorted_action_groups;
-        create_figure_from_action_history(selected_groups);
-    }
+    
 
     public IFigure create_figure_from_action_history(
         IReadOnlyList<IAction_group> action_groups
     ) {
         clear();
-        figure = figure_provider.create_new_figure("f") as Figure;
+        figure = figure_provider.create_figure("f") as Figure;
         representation = figure.create_representation();
         
         foreach(IAction_group group in action_groups) {
             parce_actions_of(group);
         }
-        figure_storage.append_figure(figure);
         return figure;
     }
     
@@ -91,9 +85,8 @@ public class Figure_builder_from_signals
     private void remember_finished_subfigure(
         IFigure_appearance finished_appearance
     ) {
-        ISubfigure started_subfigure = null;
         appearance_to_subfigure.TryGetValue(
-            finished_appearance, out started_subfigure
+            finished_appearance, out var started_subfigure
         );
         if (started_subfigure != null) {
             ended_subfigures.Add(started_subfigure);

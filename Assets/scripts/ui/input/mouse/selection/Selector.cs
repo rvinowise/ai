@@ -23,7 +23,7 @@ public class Selector : MonoBehaviour {
     #region selected elements
 
     public Action_history action_history;
-    public Figure_storage figure_storage;
+    public IFigure_provider figure_provider;
     [SerializeField] private Toggle toggle_pleasure;
     [SerializeField] private Toggle toggle_pain;
     
@@ -357,7 +357,7 @@ public class Selector : MonoBehaviour {
         string[] ids = in_string.Split(' ')
             .Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
         foreach (string id in ids) {
-            IFigure figure = figure_storage.find_figure_with_id(id);
+            IFigure figure = figure_provider.find_figure_with_id(id);
             if (figure != null) {
                 select((Figure)figure);
             } else {

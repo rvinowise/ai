@@ -22,7 +22,7 @@ public class Figure_observer :
 MonoBehaviour,
 IFigure_button_click_receiver {
 
-    [SerializeField] private Figure_storage figure_storage;
+    [SerializeField] private Figure_showcase figure_showcase;
     public Figure observed_figure;
     public Color selected_color = new Color(0,1,0);
     public Color normal_color = new Color(1,1,1);
@@ -42,7 +42,7 @@ IFigure_button_click_receiver {
 
     public void activate() {
         enabled = true;
-        figure_storage.receiver = this;
+        figure_showcase.receiver = this;
     }
     
     

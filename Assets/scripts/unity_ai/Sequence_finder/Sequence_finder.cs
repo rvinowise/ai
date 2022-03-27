@@ -11,22 +11,14 @@ using rvinowise.ai.general;
 using System.Numerics;
 using rvinowise.unity;
 
-namespace rvinowise.ai.unity {
+namespace rvinowise.ai.simple {
 
 public class Sequence_finder:
-ISequence_finder
+    ISequence_finder
 {
     
-    private IAction_history action_history;
-    private IFigure_provider figure_provider;
-    
-    #region exposed to unity editor
-    [SerializeField] private Action_history _action_history;
-    [SerializeField] private Figure_provider _figure_provider;
-    #endregion exposed to unity editor
-    
-    private IDictionary<string, IFigure> found_patterns = 
-        new Dictionary<string, IFigure>();
+    private readonly IAction_history action_history;
+    private readonly IFigure_provider figure_provider;
 
     private IReadOnlyList<IAction_group> action_groups;
 
@@ -199,8 +191,8 @@ ISequence_finder
     }
 
     private struct Appearance_in_list {
-        public int index;
-        public IFigure_appearance appearance;
+        public readonly int index;
+        public readonly IFigure_appearance appearance;
 
         public Appearance_in_list(
             IFigure_appearance in_appearance,

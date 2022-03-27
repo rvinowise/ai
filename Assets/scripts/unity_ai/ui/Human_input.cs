@@ -33,28 +33,28 @@ public class Human_input : Input {
     
 
 
-    private static readonly KeyCode key_submit = KeyCode.Return;
-    private void read_input_as_several_one_letter_signals() {
-        if (UnityEngine.Input.GetKeyDown(
-            key_submit
-        )) {
-            receiver.input_selected_signals();
-        }
-        foreach (
-            KeyValuePair<string, IFigure> item in 
-            figure_storage.name_to_figure
-        ) {
-            if (UnityEngine.Input.GetKeyDown(
-                item.Key
-            )) {
-                Contract.Requires(
-                    item.Value is Figure, 
-                    "can't input other implementations"
-                );
-                Selector.instance.select((Figure)item.Value); //it was "toggle"
-            }
-        }
-    }
+    // private static readonly KeyCode key_submit = KeyCode.Return;
+    // private void read_input_as_several_one_letter_signals() {
+    //     if (UnityEngine.Input.GetKeyDown(
+    //         key_submit
+    //     )) {
+    //         receiver.input_selected_signals();
+    //     }
+    //     foreach (
+    //         KeyValuePair<string, IFigure> item in 
+    //         figure_provider.name_to_figure
+    //     ) {
+    //         if (UnityEngine.Input.GetKeyDown(
+    //             item.Key
+    //         )) {
+    //             Contract.Requires(
+    //                 item.Value is Figure, 
+    //                 "can't input other implementations"
+    //             );
+    //             Selector.instance.select((Figure)item.Value); //it was "toggle"
+    //         }
+    //     }
+    // }
 
 
 

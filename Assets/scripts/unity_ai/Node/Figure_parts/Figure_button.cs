@@ -23,8 +23,8 @@ public class Figure_button:
 
     [SerializeField] private Image selectable_image;
 
-    public Figure_storage storage;
-    public IFigure_button_click_receiver receiver => storage.receiver;
+    public Figure_showcase showcase;
+    public IFigure_button_click_receiver receiver => showcase.receiver;
     
     [called_by_prefab]
     public Figure_button create_for_figure(Figure figure) {

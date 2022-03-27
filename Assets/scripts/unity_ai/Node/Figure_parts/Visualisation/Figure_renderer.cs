@@ -16,7 +16,7 @@ namespace rvinowise.ai.unity {
 public class Figure_renderer: MonoBehaviour {
     
     
-    public Figure_storage figure_storage;
+    public Figure_showcase figure_showcase;
     private Figure figure;
     private String dot_file_template = 
 @"digraph {0} {{

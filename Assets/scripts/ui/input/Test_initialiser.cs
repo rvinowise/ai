@@ -21,7 +21,7 @@ public class Test_initialiser : MonoBehaviour
 
     public Figure_builder_from_signals figure_builderFromSignals;
     public File_input file_input;
-    public Figure_storage figure_storage;
+    public Figure_showcase figure_showcase;
     public Action_history action_history;
     void Awake() {
         Contract.Assert(instance == null, "singleton");

@@ -15,7 +15,7 @@ public class Network_loader:
     MonoBehaviour
 {
     public Network_persistence persistence;
-    [SerializeField] private Figure_storage figure_storage;
+    [SerializeField] private Figure_showcase figure_showcase;
     //[SerializeField] private 
 
     public static Network_loader instance;
@@ -97,9 +97,9 @@ public class Network_loader:
 
     private void load_figure_appearances(IList<serializable.Figure_appearance> appearances) {
         Action_history history = persistence.action_history;
-        Figure_storage storage = persistence.figure_storage;
+        Figure_showcase showcase = persistence.figure_showcase;
         foreach (serializable.Figure_appearance appearance in appearances) {
-            IFigure figure = storage.find_figure_with_id(
+            IFigure figure = showcase.find_figure_with_id(
                 appearance.appeared_figure
             );
             Contract.Ensures(

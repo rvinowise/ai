@@ -17,10 +17,9 @@ public class Figure_provider:
     private readonly ISequence_builder sequence_builder;
 
     private readonly ISet<IFigure> known_figures = new HashSet<IFigure>();
-
-    private IReadOnlyList<IFigure> get_known_figures() {
-        return known_figures.ToList().AsReadOnly();
-    }
+    private Dictionary<string, IFigure> name_to_figure = 
+        new Dictionary<string, IFigure>();
+    
     
     
     public Figure_provider() {
@@ -36,6 +35,10 @@ public class Figure_provider:
     private Dictionary<string,int> last_ids = new Dictionary<string, int>();
 
     #region IFigure_provider
+    
+    public IReadOnlyList<IFigure> get_known_figures() {
+        return known_figures.ToList().AsReadOnly();
+    }
 
     public IFigure provide_sequence_for_pair(
         IFigure beginning_figure,
@@ -46,21 +49,39 @@ public class Figure_provider:
         );
         return provide_figure_having_sequence(subfigures);
     }
-    
-    public IFigure create_new_figure(string prefix = "") {
+
+    public IFigure create_figure(string prefix = "") {
         Figure new_figure = new simple.Figure(
             get_next_id_for_prefix(prefix)
         );
         return new_figure;
     }
 
+    public IFigure create_base_signal(string id = "") {
+        IFigure signal = create_figure("signal");
+
+        return signal;
+    }
+
+    public IFigure find_figure_with_id(string id) {
+        name_to_figure.TryGetValue(id, out IFigure figure);
+        return figure;
+    }
 
     public void remove_figure(IFigure figure) {
         known_figures.Remove(figure);
+        name_to_figure.Remove(figure.id);
     }
 
     #endregion IFigure_provider
     
+    #region used by derived
+    public string get_next_id_for_prefix(string prefix) {
+        last_ids.TryGetValue(prefix, out var next_id);
+        last_ids[prefix] = ++next_id;
+        return $"{prefix}{next_id}";
+    }
+    #endregion used by derived
     
     private IFigure provide_figure_having_sequence(
         IReadOnlyList<IFigure> subfigures
@@ -75,6 +96,7 @@ public class Figure_provider:
     
     private void add_known_figure(IFigure figure) {
         known_figures.Add(figure);
+        name_to_figure[figure.id] = figure;
     }
     private IFigure find_figure_having_sequence(
         IReadOnlyList<IFigure> subfigures
@@ -94,11 +116,7 @@ public class Figure_provider:
     
     
 
-    private string get_next_id_for_prefix(string prefix) {
-        last_ids.TryGetValue(prefix, out var next_id);
-        last_ids[prefix] = ++next_id;
-        return $"{prefix}{next_id}";
-    }
+    
 
 
 

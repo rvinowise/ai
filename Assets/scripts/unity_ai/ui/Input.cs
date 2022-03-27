@@ -7,12 +7,12 @@ namespace rvinowise.ai.unity {
 public abstract class Input: MonoBehaviour {
 
     public Visual_input_receiver receiver;
-    public Figure_storage figure_storage;
+    public Figure_showcase figure_showcase;
 
     
 
-    virtual protected void Awake() {
-        figure_storage = receiver.figure_storage;
+    protected virtual void Awake() {
+        figure_showcase = receiver.figure_showcase;
     }
     
  

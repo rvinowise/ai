@@ -8,7 +8,7 @@ MonoBehaviour
 ,IInput_receiver
 {
     
-    public Figure_storage figure_storage;
+    public Figure_showcase figure_showcase;
     public abstract void input_selected_signals();
     public abstract void start_new_line(); 
 }

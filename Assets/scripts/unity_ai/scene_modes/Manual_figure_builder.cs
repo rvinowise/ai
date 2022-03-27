@@ -21,23 +21,32 @@ MonoBehaviour,
 IFigure_button_click_receiver,
 ISubfigure_click_receiver 
 {
-    private bool change_connections;
+    #region members given from outside
+    [SerializeField] private bool change_connections;
     
-    public Figure_observer figure_observer;
-    public Mode_selector mode_selector;
+    [SerializeField] public Figure_observer figure_observer;
+    [SerializeField] public Mode_selector mode_selector;
+
+    [SerializeField] private Figure_showcase figure_showcase;
+    private IFigure_provider figure_provider;
+
+    #endregion members given from outside
     
-    [SerializeField] private Figure_provider builder;
-    [SerializeField] private Figure_storage figure_storage;
     private Figure built_figure;
     private Figure_header figure_header;
     private Figure_representation built_repr;
 
-    private HashSet<Subfigure> selected_subfigures = new HashSet<Subfigure>();
-    private HashSet<Connection> selected_connections = new HashSet<Connection>();
+    private readonly HashSet<Subfigure> selected_subfigures = new HashSet<Subfigure>();
+    private readonly HashSet<Connection> selected_connections = new HashSet<Connection>();
+
+    public void init(
+        IFigure_provider figure_provider
+    ) {
+        this.figure_provider = figure_provider;
+    }
     
     public void on_create_empty_figure() {
-        built_figure = builder.create_new_figure("f") as Figure;
-        figure_storage.append_figure(built_figure);
+        built_figure = figure_provider.create_figure("f") as Figure;
         on_start_editing_figure(built_figure, true);
         built_repr = built_figure.create_representation() as Figure_representation;
         figure_header.mode_selector = mode_selector;
@@ -86,7 +95,7 @@ ISubfigure_click_receiver
     
     private void activate() {
         enabled = true;
-        figure_storage.receiver = this;
+        figure_showcase.receiver = this;
         
     }
     public void deactivate() {
