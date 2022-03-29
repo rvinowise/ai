@@ -91,7 +91,7 @@ public class Selector : MonoBehaviour {
     public void select(Figure figure) {
         select_generally(figure);
         show_insides_of_one_figure(figure);
-        figure.button.highlight_as_selected();
+        figure.button?.highlight_as_selected();
         figures.Add(figure);
         foreach (Figure_appearance appearance in figure.get_appearances()) {
             highlight(appearance);
@@ -113,7 +113,7 @@ public class Selector : MonoBehaviour {
     public void deselect(Figure figure) {
         deselect_generally(figure);
         figure.hide_inside();
-        figure.button.dehighlight_as_selected();
+        figure.button?.dehighlight_as_selected();
         figures.Remove(figure);
         foreach (Figure_appearance appearance in figure._appearances) {
             dehighlight(appearance);
@@ -361,7 +361,7 @@ public class Selector : MonoBehaviour {
             if (figure != null) {
                 select((Figure)figure);
             } else {
-                Debug.Log($"trying to select non-existing figure \"{name}\"");
+                Debug.Log($"trying to select non-existing figure \"{id}\"");
             }
         }
     }

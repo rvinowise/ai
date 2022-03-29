@@ -97,9 +97,9 @@ public class Network_loader:
 
     private void load_figure_appearances(IList<serializable.Figure_appearance> appearances) {
         Action_history history = persistence.action_history;
-        Figure_showcase showcase = persistence.figure_showcase;
+        Figure_provider figure_provider = persistence.figure_provider;
         foreach (serializable.Figure_appearance appearance in appearances) {
-            IFigure figure = showcase.find_figure_with_id(
+            IFigure figure = figure_provider.find_figure_with_id(
                 appearance.appeared_figure
             );
             Contract.Ensures(

@@ -18,7 +18,7 @@ public class Network_persistence:
 
     
     [SerializeField] public Action_history action_history;
-    [SerializeField] public Figure_showcase figure_showcase;
+    public Figure_provider figure_provider;
     
     void Awake() {
         //saving_path = Application.dataPath+"/savings";

@@ -5,7 +5,7 @@ using rvinowise.ai.general;
 namespace rvinowise.ai.simple {
 
 
-/* used for assigning prefabs to the modules of the network */
+
 public class Network
 {
     private IAction_history action_history;

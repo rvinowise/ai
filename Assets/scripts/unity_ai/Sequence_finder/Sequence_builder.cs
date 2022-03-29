@@ -24,10 +24,7 @@ public class Sequence_builder:
     public Create_new_figure create_new_figure;
     
     #endregion used by derived
-
-    public Sequence_builder() {
-        create_new_figure = create_new_simple_figure;
-    }
+    
     public Sequence_builder(Create_new_figure create_new_figure_delegate) {
         create_new_figure = create_new_figure_delegate;
     }
@@ -85,9 +82,7 @@ public class Sequence_builder:
 
     
 
-    private IFigure create_new_simple_figure(string id) {
-        return new simple.Figure(id);
-    }
+    
     
 
 }

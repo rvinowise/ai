@@ -21,9 +21,18 @@ public class Human_input : Input {
     public Input_mode input_mode;
     [SerializeField]
     private TMP_InputField input_field;
-    
-    
 
+    [SerializeField] private Network network;
+    #region network modules
+
+    ISequence_finder sequence_finder => network.sequence_finder;
+    
+    #endregion network modules
+
+
+
+    protected void Awake() {
+    }
      protected void Start() {
 
         input_field.Select();
@@ -85,6 +94,10 @@ public class Human_input : Input {
         }
     }
 
+    public void on_find_sequences_clicked() {
+        sequence_finder.enrich_storage_with_sequences();
+    }
+    
     private bool entering_control_command() {
         if (input_field.text.Length == 0) {
             return false;

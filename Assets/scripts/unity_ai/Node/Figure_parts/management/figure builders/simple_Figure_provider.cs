@@ -17,13 +17,13 @@ public class Figure_provider:
     private readonly ISequence_builder sequence_builder;
 
     private readonly ISet<IFigure> known_figures = new HashSet<IFigure>();
-    private Dictionary<string, IFigure> name_to_figure = 
+    private readonly Dictionary<string, IFigure> name_to_figure = 
         new Dictionary<string, IFigure>();
     
     
     
     public Figure_provider() {
-        this.sequence_builder = new Sequence_builder();
+        sequence_builder = new Sequence_builder(create_new_simple_figure);
     }
     public Figure_provider(
         ISequence_builder sequence_builder
@@ -50,17 +50,22 @@ public class Figure_provider:
         return provide_figure_having_sequence(subfigures);
     }
 
-    public IFigure create_figure(string prefix = "") {
-        Figure new_figure = new simple.Figure(
+    public IFigure create_next_figure(string prefix = "") {
+        Figure figure = create_new_simple_figure(
             get_next_id_for_prefix(prefix)
         );
-        return new_figure;
+        add_known_figure(figure);
+        return figure;
     }
 
     public IFigure create_base_signal(string id = "") {
-        IFigure signal = create_figure("signal");
-
+        IFigure signal = create_new_simple_figure(id);
+        add_known_figure(signal);
         return signal;
+    }
+    
+    public Figure create_new_simple_figure(string id) {
+        return new simple.Figure(id);
     }
 
     public IFigure find_figure_with_id(string id) {
@@ -93,8 +98,8 @@ public class Figure_provider:
         add_known_figure(new_figure);
         return new_figure;
     }
-    
-    private void add_known_figure(IFigure figure) {
+
+    internal void add_known_figure(IFigure figure) {
         known_figures.Add(figure);
         name_to_figure[figure.id] = figure;
     }

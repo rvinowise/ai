@@ -11,13 +11,11 @@ namespace rvinowise.ai.unity {
 /* used for assigning prefabs to the modules of the network */
 public class Network:
 MonoBehaviour {
-    [SerializeField] private Figure figure_preafab;
     [SerializeField] private ai.unity.Action_history action_history;
-    [SerializeField] private ai.unity.Figure_showcase figure_table;
+    [SerializeField] private Figure_showcase figure_showcase;
     [SerializeField] private Selector selector;
     
-    private ISequence_finder sequence_finder;
-    private IFigure_provider figure_provider;
+    internal ISequence_finder sequence_finder;
     private Figure_builder_from_signals figure_builder_from_signals;
     
     private ai.simple.Network network;
@@ -29,24 +27,28 @@ MonoBehaviour {
         );
         init_modules();
         init_network();
+        init_interface();
     }
 
     private void init_modules() {
-        figure_provider = new Figure_provider(figure_preafab);
+        figure_showcase.init();
         sequence_finder = new Sequence_finder(
             action_history,
-            figure_provider
+            figure_showcase
         );
-        figure_builder_from_signals = new Figure_builder_from_signals(figure_provider);
+        figure_builder_from_signals = new Figure_builder_from_signals(figure_showcase);
     }
 
     private void init_network() {
         Network_initialiser network_initialiser = new Network_initialiser(
-            figure_provider
+            figure_showcase
         );
         network_initialiser.create_base_signals();
     }
 
+    private void init_interface() {
+        selector.figure_provider = figure_showcase;
+    }
 
     [called_by_unity]
     public void on_create_figure_from_actions() {

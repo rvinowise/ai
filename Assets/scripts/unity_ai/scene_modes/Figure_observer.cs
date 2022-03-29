@@ -20,7 +20,8 @@ namespace rvinowise.unity.ui.input {
 
 public class Figure_observer : 
 MonoBehaviour,
-IFigure_button_click_receiver {
+IFigure_button_click_receiver 
+{
 
     [SerializeField] private Figure_showcase figure_showcase;
     public Figure observed_figure;

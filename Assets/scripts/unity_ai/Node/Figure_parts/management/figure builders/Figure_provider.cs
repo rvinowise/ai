@@ -14,7 +14,8 @@ public class Figure_provider:
     IFigure_provider 
 {
     
-    private readonly ai.simple.Figure_provider figure_provider = new ai.simple.Figure_provider();
+    private readonly ai.simple.Figure_provider simple_figure_provider = 
+        new ai.simple.Figure_provider();
     private readonly Figure figure_prefab;
     private readonly Mode_selector mode_selector;
 
@@ -32,35 +33,42 @@ public class Figure_provider:
         this.mode_selector = mode_selector;
     }
     
-  
-    
 
     #region IFigure_provider
 
-    public IReadOnlyList<IFigure> get_known_figures() => figure_provider.get_known_figures();
+    public IReadOnlyList<IFigure> get_known_figures() => simple_figure_provider.get_known_figures();
     
     public IFigure provide_sequence_for_pair(
         IFigure beginning_figure,
         IFigure ending_figure
-    ) => figure_provider.provide_sequence_for_pair(beginning_figure, ending_figure);
+    ) => simple_figure_provider.provide_sequence_for_pair(beginning_figure, ending_figure);
     
-    public IFigure create_figure(string prefix = "") {
-        Figure new_figure = figure_prefab.provide_new<Figure>();
-        new_figure.id = figure_provider.get_next_id_for_prefix(prefix);
+    public IFigure create_next_figure(string prefix = "") {
+        Figure new_figure = create_figure(
+            simple_figure_provider.get_next_id_for_prefix(prefix)
+        );
         new_figure.header.mode_selector = mode_selector;
         return new_figure;
     }
     
     public IFigure create_base_signal(string id = "") {
-        Figure signal = create_figure("signal") as Figure;
+        Figure signal = create_figure(id);
         signal.name = $"signal {signal.id}";
         return signal;
     }
+
+    private Figure create_figure(string id = "figure") {
+        Figure new_figure = figure_prefab.provide_new<Figure>();
+        new_figure.id = id;
+        new_figure.header.mode_selector = mode_selector;
+        simple_figure_provider.add_known_figure(new_figure);
+        return new_figure;
+    }
     
     public IFigure find_figure_with_id(string id) =>
-        figure_provider.find_figure_with_id(id);
+        simple_figure_provider.find_figure_with_id(id);
 
-    public void remove_figure(IFigure figure) => figure_provider.remove_figure(figure);
+    public void remove_figure(IFigure figure) => simple_figure_provider.remove_figure(figure);
 
     #endregion IFigure_provider
 
