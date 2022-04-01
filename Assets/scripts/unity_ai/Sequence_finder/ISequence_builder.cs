@@ -4,12 +4,14 @@ using System.Collections.Generic;
 namespace rvinowise.ai.general {
 public interface ISequence_builder {
 
-    public IFigure create_sequence_for_pair(
-        IFigure beginning,
-        IFigure ending
-    );
+    // public IFigure add_sequential_representation_for_pair(
+    //     IFigure figure,
+    //     IFigure beginning,
+    //     IFigure ending
+    // );
 
-    public IFigure create_figure_for_sequence_of_subfigures(
+    public IFigure add_sequential_representation(
+        IFigure figure,
         IReadOnlyList<IFigure> subfigures
     );
 

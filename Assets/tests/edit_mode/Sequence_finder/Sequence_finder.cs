@@ -14,15 +14,19 @@ public class Network {
     private readonly IAction_history action_history =
         new simple.Action_history();
     
-    public readonly IFigure_provider figure_provider =
-        new ai.simple.Figure_provider();
+    public readonly IFigure_provider figure_provider;
 
     public Network() {
+        figure_provider = new Figure_provider(create_simple_figure);
         sequence_finder = new Sequence_finder(
             action_history,
             figure_provider
         );
         fill_figure_storage_with_base_signals();
+    }
+
+    public IFigure create_simple_figure(string id) {
+        return new ai.simple.Figure(id);
     }
 
     public void input_signal(string id) {

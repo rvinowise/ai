@@ -30,42 +30,11 @@ public class Human_input : Input {
     #endregion network modules
 
 
-
-    protected void Awake() {
-    }
-     protected void Start() {
+    protected void Start() {
 
         input_field.Select();
         input_field.ActivateInputField();
     }
-
-    
-
-
-    // private static readonly KeyCode key_submit = KeyCode.Return;
-    // private void read_input_as_several_one_letter_signals() {
-    //     if (UnityEngine.Input.GetKeyDown(
-    //         key_submit
-    //     )) {
-    //         receiver.input_selected_signals();
-    //     }
-    //     foreach (
-    //         KeyValuePair<string, IFigure> item in 
-    //         figure_provider.name_to_figure
-    //     ) {
-    //         if (UnityEngine.Input.GetKeyDown(
-    //             item.Key
-    //         )) {
-    //             Contract.Requires(
-    //                 item.Value is Figure, 
-    //                 "can't input other implementations"
-    //             );
-    //             Selector.instance.select((Figure)item.Value); //it was "toggle"
-    //         }
-    //     }
-    // }
-
-
 
     public void on_enter_clicked() {
         if (entering_control_command()) {
@@ -79,14 +48,7 @@ public class Human_input : Input {
         input_field.ActivateInputField();
     }
 
-    private void input_control_commands(string commands) {
-        if (commands.IndexOf("\\n") >= 0) {
-            receiver.start_new_line();
-        }
-    }
-
     public void on_text_field_edited() {
-        
         if (!entering_control_command()) {
             Selector.instance.select_figures_from_string(
                 input_field.text
@@ -97,6 +59,14 @@ public class Human_input : Input {
     public void on_find_sequences_clicked() {
         sequence_finder.enrich_storage_with_sequences();
     }
+    
+    private void input_control_commands(string commands) {
+        if (commands.IndexOf("\\n") >= 0) {
+            receiver.start_new_line();
+        }
+    }
+
+    
     
     private bool entering_control_command() {
         if (input_field.text.Length == 0) {

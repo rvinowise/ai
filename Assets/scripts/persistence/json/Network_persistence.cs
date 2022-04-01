@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using rvinowise.ai.simple;
 using rvinowise.rvi.contracts;
 using SimpleFileBrowser;
 using UnityEngine;

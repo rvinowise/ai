@@ -5,6 +5,7 @@ using System.IO;
 using rvinowise.rvi.contracts;
 using UnityEngine;
 using rvinowise.ai.general;
+using rvinowise.ai.simple;
 using rvinowise.ai.unity;
 using rvinowise.ai.unity.persistence.serializable;
 using SimpleFileBrowser;

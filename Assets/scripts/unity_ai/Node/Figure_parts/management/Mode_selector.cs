@@ -8,7 +8,9 @@ using rvinowise.rvi.contracts;
 
 namespace rvinowise.unity.ui.input {
 
-public class Mode_selector : MonoBehaviour {
+public class Mode_selector:
+    MonoBehaviour 
+{
     [SerializeField] private Manual_figure_builder manual_figure_builder;
     [SerializeField] private Figure_observer figure_observer;
     public static Mode_selector instance;

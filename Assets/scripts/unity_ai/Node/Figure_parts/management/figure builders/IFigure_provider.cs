@@ -22,6 +22,8 @@ public interface IFigure_provider {
      );
 
      IFigure find_figure_with_id(string id);
+
+    
      void remove_figure(IFigure figure);
 }
 }

@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Numerics;
 using rvinowise.ai.general;
+using rvinowise.ai.simple;
 using rvinowise.rvi.contracts;
 using SimpleFileBrowser;
 using UnityEngine;

@@ -24,11 +24,11 @@ IFigure_button_click_receiver
 {
 
     [SerializeField] private Figure_showcase figure_showcase;
+    [SerializeField] private Selector selector; 
     public Figure observed_figure;
     public Color selected_color = new Color(0,1,0);
     public Color normal_color = new Color(1,1,1);
     public Color highlighted_color = new Color(0.9f,1,0.9f);
-
 
 
     public void observe(Figure figure) {
@@ -117,7 +117,11 @@ IFigure_button_click_receiver
 
     public void on_click(Figure_button figure_button) {
         finish_observing();
-        observe(figure_button.figure);
+        selector.deselect_all_figures();
+        if (figure_button.figure is Figure figure) {
+            observe(figure);
+            selector.select(figure);
+        }
     }
 
     public void on_click_stencil_interface(Stencil_interface direction) {
