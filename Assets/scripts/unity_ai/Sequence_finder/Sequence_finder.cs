@@ -70,6 +70,9 @@ public class Sequence_finder:
     ) {
         foreach (IFigure ending_figure in familiar_figures)
         {
+            if ((beginning_figure.id == "3")&&(ending_figure.id == "0")) {
+                int test = 1;
+            }
             if (!is_possible_sequence(beginning_figure, ending_figure)) {
                 continue;
             }
@@ -78,6 +81,7 @@ public class Sequence_finder:
                 beginning_figure,
                 ending_figure
             );
+
             var appearances_of_beginning = 
                 get_unused_in_beginning_appearances_in_interval(
                     action_groups.First().moment,

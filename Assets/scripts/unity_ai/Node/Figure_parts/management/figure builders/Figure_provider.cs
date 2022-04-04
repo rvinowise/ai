@@ -1,4 +1,5 @@
 ﻿
+using System;
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
@@ -104,20 +105,26 @@ public class Figure_provider:
         return new_figure;
     }
 
-    internal void add_known_figure(IFigure figure) {
+    private void add_known_figure(IFigure figure) {
         known_figures.Add(figure);
         name_to_figure[figure.id] = figure;
     }
     public IFigure find_figure_having_sequence(
         IReadOnlyList<IFigure> subfigures
     ) {
-
-        foreach(var figure in get_known_figures()) {
+        var test0 = get_known_figures();
+        int index = 0; //23
+        foreach(var figure in test0) {
+            var sequence = figure.as_lowlevel_sequence();
             if (
-                figure.as_lowlevel_sequence().SequenceEqual(subfigures)
+                sequence.SequenceEqual(subfigures)
             ) {
                 return figure;
             }
+            if (has_deleted_figures()) {
+                int test = 1;
+            }
+            index++;
         }
         return null;
     }
@@ -128,12 +135,14 @@ public class Figure_provider:
         return new simple.Figure(id);
     }
 
-    
 
-
-
-  
-
-
+    public bool has_deleted_figures() {
+        foreach (var figure in known_figures) {
+            if (figure == null) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
 }

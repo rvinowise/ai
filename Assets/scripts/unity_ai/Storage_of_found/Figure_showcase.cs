@@ -20,7 +20,6 @@ public class Figure_showcase:
 
     private IFigure_provider figure_provider;
     
-    private readonly List<IFigure> known_figures = new List<IFigure>();
     private readonly List<Figure_button> figure_buttons = new List<Figure_button>();
     public Figure shown_figure;
     public Table figure_button_table;
@@ -43,29 +42,24 @@ public class Figure_showcase:
 
     #region IFigure_provider
 
-    public IReadOnlyList<IFigure> get_known_figures() => known_figures.AsReadOnly();
+    public IReadOnlyList<IFigure> get_known_figures() => figure_provider.get_known_figures();
 
     public IFigure create_next_figure(string prefix = "") {
         Figure figure = figure_provider.create_next_figure(prefix) as Figure;
-        append_figure(figure);
+        
         return figure;
     }
 
     public IFigure create_base_signal(string id = "") {
         Figure figure = figure_provider.create_base_signal(id)  as Figure;
-        append_figure(figure);
             
         return figure;
     }
 
     public IFigure provide_sequence_for_pair(IFigure beginning_figure, IFigure ending_figure) {
-        if ((beginning_figure.id == "2")&&(ending_figure.id == "3")) {
-            bool test = true;
-        }
         Figure figure = figure_provider.provide_sequence_for_pair(
             beginning_figure,ending_figure
         ) as Figure;
-        append_figure(figure);
             
         return figure;
     }
@@ -78,17 +72,15 @@ public class Figure_showcase:
     #endregion IFigure_provider
     
     private Figure create_figure(string id = "figure") {
-        Figure new_figure = figure_prefab.provide_new<Figure>();
-        new_figure.id = id;
-        new_figure.header.mode_selector = mode_selector;
-        return new_figure;
+        Figure figure = figure_prefab.provide_new<Figure>();
+        figure.id = id;
+        figure.header.mode_selector = mode_selector;
+        append_figure_visuals(figure);
+
+        return figure;
     }
 
-    private void append_figure(unity.Figure figure) {
-        if (figure == null) {
-            bool test = true;
-        }
-        known_figures.Add(figure);
+    private void append_figure_visuals(unity.Figure figure) {
         figure.transform.parent = figure_folder;
         figure.transform.localPosition = Vector3.zero;
         figure.gameObject.SetActive(false);
@@ -96,10 +88,9 @@ public class Figure_showcase:
     }
     
     public void remove_figure(IFigure figure) {
-        known_figures.Remove(figure);
+        figure_provider.remove_figure(figure);
         if (figure is Figure unity_figure) {
             remove_button_for_figure(unity_figure);
-            
         }
     }
 
@@ -119,13 +110,11 @@ public class Figure_showcase:
     }
     
     
-    public void show_insides_of_one_figure(Figure shown_figure) {
-        shown_figure.show_inside();
-        foreach (Figure figure in known_figures) {
-            if (shown_figure != figure) {
-                figure.hide_inside();
-            }
-        }
+    public void show_insides_of_one_figure(Figure new_shown_figure) {
+        new_shown_figure.show_inside();
+        shown_figure.hide_inside();
     }
+
+
 }
 }
