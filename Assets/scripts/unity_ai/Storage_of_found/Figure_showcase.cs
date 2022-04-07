@@ -43,35 +43,8 @@ public class Figure_showcase:
     #region IFigure_provider
 
     public IReadOnlyList<IFigure> get_known_figures() => figure_provider.get_known_figures();
-
-    public IFigure create_next_figure(string prefix = "") {
-        Figure figure = figure_provider.create_next_figure(prefix) as Figure;
-        
-        return figure;
-    }
-
-    public IFigure create_base_signal(string id = "") {
-        Figure figure = figure_provider.create_base_signal(id)  as Figure;
-            
-        return figure;
-    }
-
-    public IFigure provide_sequence_for_pair(IFigure beginning_figure, IFigure ending_figure) {
-        Figure figure = figure_provider.provide_sequence_for_pair(
-            beginning_figure,ending_figure
-        ) as Figure;
-            
-        return figure;
-    }
-
-
-    public IFigure find_figure_with_id(string id) =>
-        figure_provider.find_figure_with_id(id);
     
-
-    #endregion IFigure_provider
-    
-    private Figure create_figure(string id = "figure") {
+    public IFigure create_figure(string id = "figure") {
         Figure figure = figure_prefab.provide_new<Figure>();
         figure.id = id;
         figure.header.mode_selector = mode_selector;
@@ -79,6 +52,21 @@ public class Figure_showcase:
 
         return figure;
     }
+
+    public IFigure provide_sequence_for_pair(IFigure beginning_figure, IFigure ending_figure) =>
+        figure_provider.provide_sequence_for_pair(
+            beginning_figure,ending_figure
+        ) as Figure;
+
+
+    public IFigure find_figure_with_id(string id) =>
+        figure_provider.find_figure_with_id(id);
+
+    public string get_next_id_for_prefix(string prefix) => 
+        figure_provider.get_next_id_for_prefix(prefix);
+
+    #endregion IFigure_provider
+    
 
     private void append_figure_visuals(unity.Figure figure) {
         figure.transform.parent = figure_folder;

@@ -18,5 +18,7 @@ public interface ISequence_builder {
     public IReadOnlyList<IFigure> get_sequence_of_subfigures_from(
         IFigure beginning, IFigure ending
     );
+
+    public string get_id_for(IReadOnlyList<IFigure> subfigures);
 }
 }

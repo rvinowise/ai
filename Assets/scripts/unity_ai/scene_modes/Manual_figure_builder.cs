@@ -46,7 +46,7 @@ ISubfigure_click_receiver
     }
     
     public void on_create_empty_figure() {
-        built_figure = figure_provider.create_next_figure("f") as Figure;
+        built_figure = figure_provider.create_figure("f") as Figure;
         on_start_editing_figure(built_figure, true);
         built_repr = built_figure.create_representation() as Figure_representation;
         figure_header.mode_selector = mode_selector;

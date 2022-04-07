@@ -22,13 +22,13 @@ public class Network_initialiser:
 
     public void create_base_signals() {
         foreach(string pattern_id in symbol_figures) {
-            IFigure figure = figure_provider.create_base_signal(
+            IFigure figure = figure_provider.create_figure(
                 pattern_id
             );
             Contract.Ensures(figure != null);
         }
         for (int i=0;i<=9;i++) {
-            IFigure figure = figure_provider.create_base_signal(
+            IFigure figure = figure_provider.create_figure(
                 get_id_for_index(i)
             );
             Contract.Ensures(figure != null);

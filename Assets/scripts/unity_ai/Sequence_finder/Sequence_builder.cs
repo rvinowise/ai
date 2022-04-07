@@ -36,7 +36,7 @@ public class Sequence_builder:
         IFigure figure,
         IReadOnlyList<IFigure> subfigures
     ) {
-        figure.id = get_id_for(subfigures);
+        
         var representation = figure.create_representation();
         ISubfigure previous = null;
         foreach (IFigure child_figure in subfigures) {
@@ -57,9 +57,7 @@ public class Sequence_builder:
         ).ToList();
     }
 
-    #endregion ISequence_builder
-
-    private static string get_id_for(IReadOnlyList<IFigure> subfigures) {
+    public string get_id_for(IReadOnlyList<IFigure> subfigures) {
         StringBuilder res = new StringBuilder();
         foreach (var subfigure in subfigures) {
             res.Append(subfigure.id);
@@ -67,5 +65,7 @@ public class Sequence_builder:
 
         return res.ToString();
     }
+
+    #endregion ISequence_builder
 }
 }
