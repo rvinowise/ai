@@ -38,7 +38,7 @@ public class Figure_builder_from_signals
         IReadOnlyList<IAction_group> action_groups
     ) {
         clear();
-        figure = figure_provider.create_figure(figure_provider.get_next_id_for_prefix("f")) as Figure;
+        figure = figure_provider.provide_figure(figure_provider.get_next_id_for_prefix("f")) as Figure;
         representation = figure.create_representation();
         
         foreach(IAction_group group in action_groups) {

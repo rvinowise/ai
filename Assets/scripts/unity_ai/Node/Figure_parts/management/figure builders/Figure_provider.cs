@@ -22,20 +22,20 @@ public class Figure_provider:
         new Dictionary<string, IFigure>();
     
     public delegate IFigure Create_figure(string id);
-    public Create_figure create_figure;
+    public Create_figure create_figure_delegate;
     
     public Figure_provider(
         Create_figure create_figure
     ) {
         sequence_builder = new Sequence_builder();
-        this.create_figure = create_figure;
+        this.create_figure_delegate = create_figure;
     }
     public Figure_provider(
         Create_figure create_figure,
         ISequence_builder sequence_builder
     ) {
         this.sequence_builder = sequence_builder;
-        this.create_figure = create_figure;
+        this.create_figure_delegate = create_figure;
     }
     
   
@@ -71,8 +71,10 @@ public class Figure_provider:
         name_to_figure.Remove(figure.id);
     }
 
-    public IFigure create_figure(string id) {
-        return new ai.simple.Figure(id);
+    public IFigure provide_figure(string id) {
+        IFigure figure = create_figure_delegate(id);
+        add_known_figure(figure);
+        return figure;
     }
 
     #endregion IFigure_provider
@@ -89,7 +91,7 @@ public class Figure_provider:
         if (find_figure_having_sequence(subfigures) is IFigure old_pattern) {
             return old_pattern;
         }
-        IFigure new_figure = create_figure(sequence_builder.get_id_for(subfigures));
+        IFigure new_figure = provide_figure(sequence_builder.get_id_for(subfigures));
         sequence_builder.add_sequential_representation(new_figure, subfigures);
         add_known_figure(new_figure);
         return new_figure;
@@ -113,14 +115,5 @@ public class Figure_provider:
         return null;
     }
 
-
-    public bool has_deleted_figures() {
-        foreach (var figure in known_figures) {
-            if (figure == null) {
-                return true;
-            }
-        }
-        return false;
-    }
 }
 }

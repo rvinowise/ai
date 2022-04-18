@@ -9,7 +9,6 @@ using rvinowise.ai.unity.mapping_stencils;
 using UnityEngine;
 using UnityEngine.TestTools;
 using Action_history = rvinowise.ai.unity.Action_history;
-using Network_initialiser = rvinowise.ai.simple.Network_initialiser;
 
 namespace rvinowise.ai.unit_tests.sequence_finder {
 

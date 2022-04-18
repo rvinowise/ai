@@ -40,10 +40,10 @@ MonoBehaviour {
     }
 
     private void init_network() {
-        Network_initialiser network_initialiser = new Network_initialiser(
+        Figure_provider_initialiser figure_provider_initialiser = new Figure_provider_initialiser(
             figure_showcase
         );
-        network_initialiser.create_base_signals();
+        figure_provider_initialiser.create_base_signals();
     }
 
     private void init_interface() {

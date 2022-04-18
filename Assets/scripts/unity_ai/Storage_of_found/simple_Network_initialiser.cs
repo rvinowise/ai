@@ -4,15 +4,15 @@ using rvinowise.rvi.contracts;
 
 
 namespace rvinowise.ai.simple {
-public class Network_initialiser:
-    INetwork_initialiser
+public class Figure_provider_initialiser:
+    IFigure_provider_initialiser
 {
     private readonly IFigure_provider figure_provider;
     
     private readonly string[] symbol_figures = {",",";","=","+","-"};
 
 
-    public Network_initialiser(
+    public Figure_provider_initialiser(
         IFigure_provider in_figure_provider
     ) {
         figure_provider = in_figure_provider;
@@ -22,13 +22,13 @@ public class Network_initialiser:
 
     public void create_base_signals() {
         foreach(string pattern_id in symbol_figures) {
-            IFigure figure = figure_provider.create_figure(
+            IFigure figure = figure_provider.provide_figure(
                 pattern_id
             );
             Contract.Ensures(figure != null);
         }
         for (int i=0;i<=9;i++) {
-            IFigure figure = figure_provider.create_figure(
+            IFigure figure = figure_provider.provide_figure(
                 get_id_for_index(i)
             );
             Contract.Ensures(figure != null);

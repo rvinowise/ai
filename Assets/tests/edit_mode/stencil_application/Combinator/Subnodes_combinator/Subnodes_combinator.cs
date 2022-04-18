@@ -25,10 +25,16 @@ public partial class regular_loop_over_combinations {
 
         int i_combination = 0;
         while (combinator.MoveNext()) {
+            if (i_combination == 12) {
+                int test = 1;
+            }
+            var actual_combination = combinator.get_combination_as_indexes();
             Assert.AreEqual(
-                result_total_combinations[i_combination++],
-                combinator.get_combination_as_indexes()
+                result_total_combinations[i_combination],
+                actual_combination,
+                $"combination # {i_combination}"
             );
+            i_combination++;
         }
         
     }

@@ -13,7 +13,7 @@ namespace rvinowise.ai.general {
 public interface IFigure_provider {
 
      IReadOnlyList<IFigure> get_known_figures();
-     public IFigure create_figure(string id);
+     public IFigure provide_figure(string id);
 
      IFigure provide_sequence_for_pair(
           IFigure beginning_figure,

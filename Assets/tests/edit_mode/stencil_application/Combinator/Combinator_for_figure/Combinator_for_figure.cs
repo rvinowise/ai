@@ -36,7 +36,7 @@ public partial class regular_loop_over_combinations_can_be_done {
 
 [TestFixture]
 public class not_enough_occurances_of_figure {
-    private const int max_subnodes = 5;
+    private const int max_subnodes = 2;
     private const int needed_amount = 6;
     
     [Test]

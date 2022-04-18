@@ -33,7 +33,7 @@ public class Figure_showcase:
     public IFigure_button_click_receiver receiver;
 
     public void init() {
-        figure_provider = new Figure_provider(create_figure);
+        figure_provider = new Figure_provider(provide_figure);
         figure_button_table.init(figure_button_prefab);
         button_stencil_out.showcase = this;
         button_stencil_in.showcase = this;
@@ -44,11 +44,14 @@ public class Figure_showcase:
 
     public IReadOnlyList<IFigure> get_known_figures() => figure_provider.get_known_figures();
     
-    public IFigure create_figure(string id = "figure") {
+    public IFigure provide_figure(string id = "figure") {
         Figure figure = figure_prefab.provide_new<Figure>();
         figure.id = id;
         figure.header.mode_selector = mode_selector;
-        append_figure_visuals(figure);
+        figure.transform.parent = figure_folder;
+        figure.transform.localPosition = Vector3.zero;
+        figure.gameObject.SetActive(false);
+        create_button_for_figure(figure);
 
         return figure;
     }
@@ -68,12 +71,7 @@ public class Figure_showcase:
     #endregion IFigure_provider
     
 
-    private void append_figure_visuals(unity.Figure figure) {
-        figure.transform.parent = figure_folder;
-        figure.transform.localPosition = Vector3.zero;
-        figure.gameObject.SetActive(false);
-        create_button_for_figure(figure);
-    }
+
     
     public void remove_figure(IFigure figure) {
         figure_provider.remove_figure(figure);

@@ -17,7 +17,8 @@ IAction_history {
 
     
     #region IAction_history
-    public BigInteger last_moment {get; private set;}
+
+    public BigInteger last_moment { get; private set; } = -1;
 
     public IReadOnlyList<IAction_group> get_action_groups(
         BigInteger begin, 
@@ -40,8 +41,6 @@ IAction_history {
 
     public void input_signals(IEnumerable<IFigure> signals, int mood_change =0) {
         float new_mood = get_last_mood() + mood_change;
-        // IAction_group start_group = create_next_action_group(new_mood);
-        // IAction_group end_group = create_next_action_group(new_mood);
         IAction_group action_group = create_next_action_group(new_mood);
         create_figure_appearances(
             signals,
@@ -92,10 +91,6 @@ IAction_history {
         IAction_group start,
         IAction_group end
     ) {
-        Contract.Requires(
-            start.moment < end.moment,
-            "should have a positive time interval"
-        );
         IFigure_appearance appearance = 
             new Figure_appearance(
                 figure, start, end
