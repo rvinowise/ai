@@ -12,30 +12,32 @@ using UnityEngine.Assertions;
 namespace rvinowise.ai.unity.mapping_stencils {
 
 
-
-public class Subnodes_combinator:
+/*
+ iterates in the numerical order, with each Order being another iterator
+ (with Reset and MoveNext methods) 
+ */
+public class Iterator_over_orders:
     IEnumerable, 
     IEnumerator
 {
     private readonly List<Combinator_for_figure> combinations_for_figures = 
         new List<Combinator_for_figure>();
 
-    public bool is_valid = true;
+    private readonly bool is_valid = true;
     
-    public Subnodes_combinator(
-        Figure_combinator_figure_requirement[] figure_requirements
+    public Iterator_over_orders(
+        IList<Figure_combinator_figure_requirement> figure_requirements
     ) {
-        for (int i_figure = 0; i_figure < figure_requirements.Length; i_figure++) {
+        for (int i_figure = 0; i_figure < figure_requirements.Count; i_figure++) {
             combinations_for_figures.Add(
                 new Combinator_for_figure(
                     figure_requirements[i_figure].max_occurances,
                     figure_requirements[i_figure].needed_amount
                 )
             );
-            if (!combinations_for_figures.Last().is_valid) {
-                is_valid = false;
-                break;
-            }
+            if (combinations_for_figures.Last().is_valid) continue;
+            is_valid = false;
+            break;
         }
 
         Reset();

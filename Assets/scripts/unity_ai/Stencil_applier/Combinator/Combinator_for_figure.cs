@@ -15,7 +15,8 @@ namespace rvinowise.ai.unity.mapping_stencils {
 /* a part of the Subnodes_combinator, providing combinations for One subfigure.
  the Subnodes_combinator has several of them, for each subfigure */
 public class Combinator_for_figure :
-    IEnumerator {
+    IEnumerator 
+{
     private readonly int max_subnodes;
 
     private readonly ISet<int> unassigned_orders = new SortedSet<int>();
@@ -32,7 +33,7 @@ public class Combinator_for_figure :
         }
     }
 
-public Combinator_for_figure(
+    public Combinator_for_figure(
         int max_subnodes,
         int needed_amount
     ) {
