@@ -19,7 +19,7 @@ public partial class regular_loop_over_combinations {
     
     [Test]
     public void loop_over_subnodes_combinations() {
-        Iterator_over_orders combinator = new Iterator_over_orders(
+        Enumerator_of_orders combinator = new Enumerator_of_orders(
             combinator_figure_requirements
         );
 
@@ -50,7 +50,7 @@ public class not_enough_occurances_of_first_figure {
     
     [Test]
     public void zero_cycle_interations_are_possible() {
-        Iterator_over_orders combinator = new Iterator_over_orders(
+        Enumerator_of_orders combinator = new Enumerator_of_orders(
             combinator_figure_requirements
         );
 
@@ -69,7 +69,7 @@ public class not_enough_occurances_of_second_figure {
     
     [Test]
     public void zero_cycle_interations_are_possible() {
-        Iterator_over_orders combinator = new Iterator_over_orders(
+        Enumerator_of_orders combinator = new Enumerator_of_orders(
             combinator_figure_requirements
         );
 
