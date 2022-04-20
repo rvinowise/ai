@@ -124,7 +124,7 @@ public class Mapping_enumerator :
 
     public object Current {
         get {
-            return this;
+            return combination;
         }
     }
     
@@ -206,6 +206,10 @@ public readonly struct Mapping_enumerator_requirement {
     ) {
         this.amount_in_target = amount_in_target;
         this.amount_in_source = amount_in_source;
+    }
+
+    public bool is_valid() {
+        return amount_in_source >= amount_in_target;
     }
 }
 

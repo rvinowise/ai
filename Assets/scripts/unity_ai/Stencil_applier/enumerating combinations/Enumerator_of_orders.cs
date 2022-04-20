@@ -29,6 +29,7 @@ public class Enumerator_of_orders:
         IList<Mapping_enumerator_requirement> figure_requirements
     ) {
         for (int i_figure = 0; i_figure < figure_requirements.Count; i_figure++) {
+            if (figure_requirements[i_figure])
             orders.Add(
                 new Mapping_enumerator(
                     figure_requirements[i_figure].amount_in_source,
@@ -80,32 +81,9 @@ public class Enumerator_of_orders:
     public void Reset() {
         orders.First().Reset();
         for(int i_combination = 1; i_combination < orders.Count; i_combination++) {
-            orders[i_combination].set_to_first();
+            orders[i_combination].Reset();
+            orders[i_combination].MoveNext();
         }
-    }
-
-    private bool set_to_first() {
-        foreach (
-            var combination_for_figure 
-            in orders
-        ) {
-            if (!combination_for_figure.set_to_first()) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private bool set_to_last() {
-        foreach (
-            var combination_for_figure 
-            in orders
-        ) {
-            if (!combination_for_figure.set_to_last()) {
-                return false;
-            }
-        }
-        return true;
     }
 
 
