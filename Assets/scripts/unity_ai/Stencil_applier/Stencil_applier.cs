@@ -14,7 +14,7 @@ using rvinowise.ai.unity.mapping_stencils;
 namespace rvinowise.ai.unity {
 
 
-public class Stencil_applier: MonoBehaviour {
+public class Stencil_applier {
     
     
     // public static IList<IFigure> apply_stencil(
@@ -104,6 +104,10 @@ public class Stencil_applier: MonoBehaviour {
     ) {
         IList<Stencil_mapping> potential_mappings = new List<Stencil_mapping>();
 
+        Enumerator_of_orders enumerator = new Enumerator_of_orders(
+            
+        );
+        
         return potential_mappings;
     }
     
