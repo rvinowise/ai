@@ -46,7 +46,7 @@ rankdir=LR;
     }
     private String get_nodes_connections(Figure_representation representation) {
         StringBuilder result = new StringBuilder();
-        foreach (Subfigure subfigure in representation.subfigures) {
+        foreach (Subfigure subfigure in representation.get_subfigures()) {
             write_next_nodes_for(subfigure, result);
         }
         return result.ToString();

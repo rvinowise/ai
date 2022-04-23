@@ -78,7 +78,7 @@ public class Figure_representation {
 
     public Figure_representation(unity.Figure_representation representation) {
         //id = representation.id;
-        foreach(ISubfigure ai_subfigure in representation.subfigures) {
+        foreach(ISubfigure ai_subfigure in representation.get_subfigures()) {
             subfigures.Add(
                 new Subfigure(ai_subfigure)
             );

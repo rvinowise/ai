@@ -18,13 +18,16 @@ IFigure_representation
     #region IFigure_representation
     public string id{get;set;}
     public IReadOnlyList<ISubfigure> get_subfigures() => subfigures.AsReadOnly();
-    public IReadOnlyList<ISubfigure> get_first_subfigures() => first_subfigures.AsReadOnly();
-    public void add_first_subfigures(ISubfigure subfigure) => first_subfigures.Add(subfigure);
+    public IReadOnlyList<ISubfigure> get_first_subfigures() => 
+        first_subfigures.AsReadOnly();
+    public void add_first_subfigures(ISubfigure subfigure) => 
+        first_subfigures.Add(subfigure);
+    
     #endregion IFigure_representation
     
-    public readonly List<ISubfigure> first_subfigures = new List<ISubfigure>();
+    private readonly List<ISubfigure> first_subfigures = new List<ISubfigure>();
 
-    public readonly List<ISubfigure> subfigures = new List<ISubfigure>();
+    private readonly List<ISubfigure> subfigures = new List<ISubfigure>();
     
     
     #region building
