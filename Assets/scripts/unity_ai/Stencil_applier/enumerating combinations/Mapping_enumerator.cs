@@ -198,14 +198,14 @@ public class Mapping_enumerator :
 
 
 public readonly struct Mapping_enumerator_requirement {
-    public readonly int amount_in_target;
     public readonly int amount_in_source;
+    public readonly int amount_in_target;
 
     public Mapping_enumerator_requirement(
-        int amount_in_target, int amount_in_source
+        int amount_in_source, int amount_in_target
     ) {
-        this.amount_in_target = amount_in_target;
         this.amount_in_source = amount_in_source;
+        this.amount_in_target = amount_in_target;
     }
 
     public bool is_valid() {

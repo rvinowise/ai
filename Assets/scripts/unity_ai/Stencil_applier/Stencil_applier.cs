@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using UnityEngine;
 using rvinowise.ai.unity;
@@ -58,23 +59,49 @@ public class Stencil_applier {
         return potential_mappings;
     }
 
+    class First_subfigures_for_combination {
+        
+        // index = figure;
+        // value = appearances of its subfigures in the beginning of the stencil
+
+        public IList<IList<ISubfigure>> appearances_of_figures;
+    }
+    
     private IList<Stencil_mapping> map_first_nodes(
         IStencil stencil, IFigure_representation target
     ) {
-        // Subnodes_combinator combinator = new Subnodes_combinator(
-        //     stencil, target
-        // );
-        // Subnodes_combinator combinator = new Subnodes_combinator(
-        //     stencil, target
-        // );
-
-        // while () {
-        //     
-        // }
-
-        // foreach (Subnodes_combination combination in combinator ) {
-        //     
-        // }
+        //get arrays of stencil's subnodes
+        // index = figure;
+        // value = appearances of its subfigures in the beginning of the stencil
+        IList<IList<ISubfigure>> appearances_in_stencil = new List<IList<ISubfigure>>();
+ 
+        //get array of target's subnodes
+        IList<IList<ISubfigure>> appearances_in_target = new List<IList<ISubfigure>>();
+        
+        //initialise combinator
+        int figures_qty = appearances_in_stencil.Count;
+        
+        // array of figures ->
+        // array of their appearances in the stencil ->
+        // target's subfigure onto which it's mapped 
+        var combinator_input = new List<Mapping_enumerator_requirement>();
+        foreach(var appearances_in_source in appearances_in_stencil) {
+            IFigure mapped_figure = appearances_in_source.First().referenced_figure;
+            IReadOnlyList<ISubfigure> appearances_int_target = 
+                get_appearances_of_figure_in_graph(mapped_figure, target);
+            combinator_input.Add(
+                //array of stencil's subfigures which need mapping    
+                Mapping_enumerator_requirement(
+                        mapped_figure.Count, appearances_int_target.Count
+                        
+                    ) 
+            );
+        }
+        
+        
+        
+        
+        //transform iterations of combinator into potential mappings
         
         IList<IList<ISubfigure>> subnode_occurances = 
             get_all_subnodes_occurances(stencil, target);
@@ -86,6 +113,21 @@ public class Stencil_applier {
         return potential_mappings;
     }
 
+    private IReadOnlyList<ISubfigure> get_appearances_of_figure_in_graph(IFigure figure, IFigure_representation graph) {
+        List<ISubfigure> result = new List<ISubfigure>();
+        
+        foreach (ISubfigure subfigure in graph.get_subfigures()) {
+            if (subfigure.referenced_figure == figure) {
+                result.Add(subfigure);
+            }
+        }
+        
+        return result.AsReadOnly();
+
+        
+        //return graph.get_subfigures().(ISubfigure subfigure -> subfigure.refe)
+    }
+    
     private IList<IList<ISubfigure>> get_all_subnodes_occurances(
         IStencil stencil, IFigure_representation target
     ) {
