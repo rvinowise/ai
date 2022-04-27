@@ -91,17 +91,21 @@ public class Stencil_applier {
                 get_appearances_of_figure_in_graph(mapped_figure, target);
             combinator_input.Add(
                 //array of stencil's subfigures which need mapping    
-                Mapping_enumerator_requirement(
-                        mapped_figure.Count, appearances_int_target.Count
-                        
-                    ) 
+                new Mapping_enumerator_requirement(
+                    appearances_in_source.Count, appearances_int_target.Count
+                ) 
             );
         }
         
-        
+        Enumerator_of_orders enumerator_of_orders = new Enumerator_of_orders(
+            combinator_input    
+        );
         
         
         //transform iterations of combinator into potential mappings
+        foreach (var combination in enumerator_of_orders) {
+            var test = combination;
+        }
         
         IList<IList<ISubfigure>> subnode_occurances = 
             get_all_subnodes_occurances(stencil, target);
