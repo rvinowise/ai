@@ -3,16 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
-using UnityEngine;
-using rvinowise.ai.unity;
-using rvinowise.unity.extensions;
 using Action = rvinowise.ai.unity.Action;
 using rvinowise.rvi.contracts;
 using rvinowise.ai.general;
 using System.Numerics;
-using rvinowise.ai.unity.mapping_stencils;
+using rvinowise.ai.simple.mapping_stencils;
 
-namespace rvinowise.ai.unity {
+namespace rvinowise.ai.simple {
 
 
 public class Stencil_applier {
@@ -75,32 +72,22 @@ public class Stencil_applier {
         // value = appearances of its subfigures in the beginning of the stencil
         IList<IList<ISubfigure>> appearances_in_stencil = new List<IList<ISubfigure>>();
  
-        //get array of target's subnodes
-        IList<IList<ISubfigure>> appearances_in_target = new List<IList<ISubfigure>>();
-        
-        //initialise combinator
-        int figures_qty = appearances_in_stencil.Count;
-        
         // array of figures ->
         // array of their appearances in the stencil ->
         // target's subfigure onto which it's mapped 
-        var combinator_input = new List<Mapping_enumerator_requirement>();
+        Generator_of_order_sequences<int[]> enumerator_of_orders = 
+            new Generator_of_order_sequences<int[]>();
         foreach(var appearances_in_source in appearances_in_stencil) {
-            IFigure mapped_figure = appearances_in_source.First().referenced_figure;
-            IReadOnlyList<ISubfigure> appearances_int_target = 
+            IFigure mapped_figure = 
+                appearances_in_source.First().referenced_figure;
+            IReadOnlyList<ISubfigure> appearances_in_target = 
                 get_appearances_of_figure_in_graph(mapped_figure, target);
-            combinator_input.Add(
-                //array of stencil's subfigures which need mapping    
-                new Mapping_enumerator_requirement(
-                    appearances_in_source.Count, appearances_int_target.Count
+            enumerator_of_orders.add_order(
+                new Generator_of_mappings(
+                    appearances_in_source.Count, appearances_in_target.Count
                 ) 
             );
         }
-        
-        Enumerator_of_orders enumerator_of_orders = new Enumerator_of_orders(
-            combinator_input    
-        );
-        
         
         //transform iterations of combinator into potential mappings
         foreach (var combination in enumerator_of_orders) {
@@ -150,9 +137,6 @@ public class Stencil_applier {
     ) {
         IList<Stencil_mapping> potential_mappings = new List<Stencil_mapping>();
 
-        Enumerator_of_orders enumerator = new Enumerator_of_orders(
-            
-        );
         
         return potential_mappings;
     }

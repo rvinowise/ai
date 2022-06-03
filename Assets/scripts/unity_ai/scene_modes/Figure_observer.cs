@@ -1,22 +1,10 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
-using rvinowise;
-using rvinowise.rvi.contracts;
+﻿using UnityEngine;
 using rvinowise.ai.unity;
 using Action = rvinowise.ai.unity.Action;
-using rvinowise.ai.general;
-using rvinowise.unity.geometry2d;
-using UnityEngine.Assertions;
 using rvinowise.unity.ui.input.mouse;
-using rvinowise.ai.unity;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
-using Selectable = rvinowise.unity.ui.input.mouse.Selectable;
 
-namespace rvinowise.unity.ui.input {
+namespace rvinowise.unity.ui.input
+{
 
 public class Figure_observer : 
 MonoBehaviour,

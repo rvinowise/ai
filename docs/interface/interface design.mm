@@ -9,7 +9,7 @@
     </attribute_name>
 </attribute_registry>
 <node TEXT="interface design" LOCALIZED_STYLE_REF="AutomaticLayout.level.root" FOLDED="false" ID="ID_696401721" CREATED="1610381621824" MODIFIED="1643857728154"><hook NAME="MapStyle" zoom="1.146">
-    <properties show_icon_for_attributes="true" edgeColorConfiguration="#ff3333ff,#33ff00ff,#ffcc33ff" show_notes_in_map="false" show_note_icons="false" fit_to_viewport="false"/>
+    <properties fit_to_viewport="false" show_icon_for_attributes="true" show_note_icons="false" show_notes_in_map="false" edgeColorConfiguration="#ff3333ff,#33ff00ff,#ffcc33ff"/>
 
 <map_styles>
 <stylenode LOCALIZED_TEXT="styles.root_node" STYLE="oval" UNIFORM_SHAPE="true" VGAP_QUANTITY="24 pt">
@@ -155,7 +155,7 @@
 <icon BUILTIN="present@b"/>
 </node>
 <node TEXT="interface" ID="ID_458974352" CREATED="1633025618126" MODIFIED="1633025653417">
-<icon BUILTIN="interface_arrows_b"/>
+<icon BUILTIN="programming/interface_arrows"/>
 </node>
 <node ID="ID_1543775213" CREATED="1633009004917" MODIFIED="1633009190187">
 <icon BUILTIN="puzzle_piece@b"/>

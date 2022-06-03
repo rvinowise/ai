@@ -19,7 +19,16 @@ public class Contract {
             }
             #endregion
             UnityEngine.Debug.Assert(condition, message);
-        //UnityEngine.Assertions.Assert.IsTrue(condition);
+#endif
+    }
+
+    public static void Requires<TException>( bool condition, string message="") 
+    where TException: Exception, new()
+    {
+#if RVI_CONTRACTS
+            if (!condition) {
+                throw new TException();
+            }
 #endif
     }
     

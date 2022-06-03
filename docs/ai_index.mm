@@ -9,7 +9,7 @@
     </attribute_name>
 </attribute_registry>
 <node TEXT="ai" LOCALIZED_STYLE_REF="AutomaticLayout.level.root" FOLDED="false" ID="ID_696401721" CREATED="1610381621824" MODIFIED="1641509948613"><hook NAME="MapStyle" zoom="1.146">
-    <properties show_icon_for_attributes="true" edgeColorConfiguration="#ff3333ff,#33ff00ff,#ffcc33ff" show_notes_in_map="false" show_note_icons="false" fit_to_viewport="false"/>
+    <properties fit_to_viewport="false" show_icon_for_attributes="true" show_note_icons="false" show_notes_in_map="false" edgeColorConfiguration="#ff3333ff,#33ff00ff,#ffcc33ff"/>
 
 <map_styles>
 <stylenode LOCALIZED_TEXT="styles.root_node" STYLE="oval" UNIFORM_SHAPE="true" VGAP_QUANTITY="24 pt">
@@ -155,7 +155,7 @@
 <icon BUILTIN="present@b"/>
 </node>
 <node TEXT="interface" ID="ID_458974352" CREATED="1633025618126" MODIFIED="1633025653417">
-<icon BUILTIN="interface_arrows_b"/>
+<icon BUILTIN="programming/interface_arrows"/>
 </node>
 <node ID="ID_1543775213" CREATED="1633009004917" MODIFIED="1633009190187">
 <icon BUILTIN="puzzle_piece@b"/>
@@ -195,10 +195,10 @@
 </node>
 <node TEXT="overview.mm" POSITION="right" ID="ID_963805880" CREATED="1641509947257" MODIFIED="1641509947259" LINK="overview.mm"/>
 <node TEXT="interface" POSITION="right" ID="ID_815172773" CREATED="1643857705088" MODIFIED="1643857711564" LINK="interface/">
-<node TEXT="interface design" ID="ID_464923108" CREATED="1643857714125" MODIFIED="1643857727856" LINK="file:/C:/prj/unity_ai/docs/interface/interface%20design.mm"/>
+<node TEXT="interface design" ID="ID_464923108" CREATED="1643857714125" MODIFIED="1652303028614" LINK="interface/interface%20design.mm"/>
 </node>
 <node TEXT="persistence" POSITION="right" ID="ID_201293481" CREATED="1641509967643" MODIFIED="1641510505723" LINK="persistence/">
-<node TEXT="json format" ID="ID_423055997" CREATED="1641510507559" MODIFIED="1641510535009" LINK="file:/C:/prj/unity_ai/docs/persistence/json%20format.mm"/>
+<node TEXT="json format" ID="ID_423055997" CREATED="1641510507559" MODIFIED="1652303036730" LINK="persistence/json%20format.mm"/>
 </node>
 </node>
 </map>

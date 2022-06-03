@@ -40,7 +40,7 @@ MonoBehaviour {
     }
 
     private void init_network() {
-        Figure_provider_initialiser figure_provider_initialiser = new Figure_provider_initialiser(
+        Base_signals_initializer figure_provider_initialiser = new Base_signals_initializer(
             figure_showcase
         );
         figure_provider_initialiser.create_base_signals();

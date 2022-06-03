@@ -11,7 +11,7 @@ public class network_needs_to_be_initialised
     private readonly INetwork network = simple.Network.get_empty_network();
 
     private readonly IFigure_provider figure_provider;
-    private readonly IFigure_provider_initialiser figure_provider_initialiser;
+    private readonly IBase_signals_initializer figure_provider_initialiser;
 
 
     private ISet<string> expected_base_signals = new HashSet<string> {
@@ -22,7 +22,7 @@ public class network_needs_to_be_initialised
     [Test]
     public void base_signals_are_created_in_network() {
         IFigure_provider figure_provider = new Figure_provider(create_figure);
-        IFigure_provider_initialiser figure_provider_initialiser = new Figure_provider_initialiser(figure_provider);
+        IBase_signals_initializer figure_provider_initialiser = new Base_signals_initializer(figure_provider);
         figure_provider_initialiser.create_base_signals();
         Assert.AreEqual(
             expected_base_signals.Count,

@@ -155,7 +155,7 @@
 <icon BUILTIN="present@b"/>
 </node>
 <node TEXT="interface" ID="ID_458974352" CREATED="1633025618126" MODIFIED="1633025653417">
-<icon BUILTIN="interface_arrows_b"/>
+<icon BUILTIN="programming/interface_arrows"/>
 </node>
 <node ID="ID_1543775213" CREATED="1633009004917" MODIFIED="1633009190187">
 <icon BUILTIN="puzzle_piece@b"/>

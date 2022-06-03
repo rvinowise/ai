@@ -1,14 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using NUnit.Framework;
-using rvinowise.ai.unity.mapping_stencils;
+using rvinowise.ai.simple.mapping_stencils;
 using UnityEngine;
 using UnityEngine.TestTools;
 
-namespace rvinowise.ai.unit_tests.subnodes_combinator {
+namespace rvinowise.ai.unit_tests.generator_of_order_sequences {
 
 
-public partial class regular_loop_over_combinations {
+public partial class initialised_correctly_for_generation {
 
 
     /* outer array - combinations;

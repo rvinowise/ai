@@ -5,7 +5,7 @@ using NUnit.Framework;
 using NUnit.Framework.Internal;
 using rvinowise.ai.general;
 using rvinowise.ai.unity;
-using rvinowise.ai.unity.mapping_stencils;
+using rvinowise.ai.simple.mapping_stencils;
 using UnityEngine;
 using UnityEngine.TestTools;
 using Action_history = rvinowise.ai.unity.Action_history;

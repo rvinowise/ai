@@ -2,7 +2,7 @@
 using System.Numerics;
 using rvinowise.ai.general;
 
-namespace rvinowise.ai.unity {
+namespace rvinowise.ai.simple.mapping_stencils {
 
 public class Mapped_node {
     public ISubfigure source;
