@@ -3,12 +3,18 @@ using UnityEngine;
 using rvinowise.unity.extensions;
 using System.Collections.Generic;
 using rvinowise.ai.unity.visuals;
+using rvinowise.ui.table;
 using UnityEngine.UI;
+
+using TItem = UnityEngine.MonoBehaviour; 
 
 namespace rvinowise.unity.ui.table {
 
 [RequireComponent(typeof(Canvas))]
-public class Table:MonoBehaviour {
+public class Table:
+    MonoBehaviour,
+    ITable<TItem>
+{
 
     public Table_cell table_cell_prefab;
     private Canvas canvas;
@@ -16,7 +22,7 @@ public class Table:MonoBehaviour {
     private List<Table_cell> cells = new List<Table_cell>();
     private GridLayoutGroup layout_group;
 
-    public void init(Component stored_object) {
+    public void Awake() {
         canvas = GetComponent<Canvas>();
         layout_group = GetComponent<GridLayoutGroup>();
         //Renderer renderer = stored_object.GetComponentInChildren<Renderer>(); 
@@ -26,7 +32,7 @@ public class Table:MonoBehaviour {
         );
     }
     public void add_item(
-        MonoBehaviour in_item
+        TItem in_item
     ) {
         Table_cell cell = create_cell();
         cell.put_item(in_item);
@@ -42,7 +48,7 @@ public class Table:MonoBehaviour {
     }
 
     public void remove_item(
-        MonoBehaviour in_item
+        TItem in_item
     ) {
         Table_cell removed_cell = null;
         foreach(Table_cell cell in cells) {

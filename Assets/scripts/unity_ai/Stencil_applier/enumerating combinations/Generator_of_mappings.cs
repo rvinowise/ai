@@ -12,55 +12,28 @@ namespace rvinowise.ai.simple.mapping_stencils {
 
 
 public class Generator_of_mappings:
-    IEnumerable<int[]>
-{
-    private readonly int amount_in_source;
-    private int get_needed_amount() {
-        return combination.Length;
-    }
-    public readonly int[] combination;
-    private readonly ISet<int> unassigned_orders = new SortedSet<int>();
-
-    public bool is_valid {
-        get {
-            return has_enough_subfigures();
-        }
-    }
+    IEnumerable<int[]> {
+    
+    public readonly int amount_in_source;
+    public readonly int amount_in_target;
 
     public Generator_of_mappings(
-        int amount_in_target,
-        int amount_in_source
+        int amount_in_source,
+        int amount_in_target
     ) {
         rvi.contracts.Contract.Requires<ArgumentException>(
             amount_in_source >= amount_in_target,
             "impossible to provide any combinations with so few figure occurences"
         );
         this.amount_in_source = amount_in_source;
-        combination = new int[amount_in_target];
-        Reset();
+        this.amount_in_target = amount_in_target;
+
     }
 
     #region IEnumerable
 
     public IEnumerator<int[]> GetEnumerator() {
-        while(true) {
-            int i_order = 0;
-            while (!has_next_free_occurances(i_order)) 
-            {
-                if (its_last_order(i_order)) {
-                    yield break;
-                }
-                prepare_order_for_resetting(i_order++);
-            }
-            
-            move_one_step_forward(i_order);
-
-            if (some_orders_are_resetting()) {
-                settle_orders_at_the_beginning();
-            }
-
-            yield return combination;
-        }
+        return new Generator_of_mappings_enumerator(this);
     }
 
     IEnumerator IEnumerable.GetEnumerator() {
@@ -68,28 +41,86 @@ public class Generator_of_mappings:
     }
 
     #endregion IEnumerable
-    public bool set_to_first() {
+    
 
-        if (!is_valid) {
-            return false;
-        }
+   
+
         
+}
+
+
+public class Generator_of_mappings_enumerator : IEnumerator<int[]>
+{
+
+    private readonly int[] combination;
+    private readonly ISet<int> unassigned_orders = new SortedSet<int>();
+
+    private readonly Generator_of_mappings generator;
+    private int amount_in_source => generator.amount_in_source;
+
+    private int get_needed_amount() {
+        return combination.Length;
+    }
+    
+
+    
+
+    public Generator_of_mappings_enumerator(Generator_of_mappings generator) {
+        this.generator = generator;
+        combination = new int[generator.amount_in_target];
+        Reset();
+    }
+
+    
+    #region IEnumerator
+    public bool MoveNext()
+    {
+        int i_order = 0;
+        while (!has_next_free_occurances(i_order)) 
+        {
+            if (its_last_order(i_order)) {
+                return false;
+            }
+            prepare_order_for_resetting(i_order++);
+        }
+            
+        move_one_step_forward(i_order);
+
+        if (some_orders_are_resetting()) {
+            settle_orders_at_the_beginning();
+        }
+        return true;
+    }
+
+    public void Reset()
+    {
+        set_to_first();
+        combination[0]--;
+    }
+
+    int[] IEnumerator<int[]>.Current {
+        get { return combination; }
+    }
+
+    object IEnumerator.Current {
+        get { return combination; }
+    }
+    
+    public void Dispose() {
+    }
+    
+    #endregion IEnumerator
+
+    private void set_to_first() {
         var occurences = Enumerable.Range(
             0, get_needed_amount()
         ).Reverse().ToArray();
         occupy_occurences_with_all_orders(occurences);
-
-        return true;
     }
-
-    private bool has_enough_subfigures() {
-        return get_needed_amount() <= amount_in_source;
-    }
-    
 
 
     private void occupy_occurences_with_all_orders(int[] occurences) {
-        Contract.Requires(occurences.Length == get_needed_amount());
+        rvi.contracts.Contract.Requires(occurences.Length == get_needed_amount());
         for (int order=0; order<get_needed_amount(); order++) {
             occupy_occurence_with_order(order, occurences[order]);
         }
@@ -104,13 +135,7 @@ public class Generator_of_mappings:
         }
         return true;
     }
-
-    public void Reset() {
-        set_to_first();
-        combination[0]--;
-    }
     
-
     private bool has_next_free_occurances(int order) {
         int current_occurance_occupied_by_order = combination[order];
         int next_free_occurance = get_next_free_occurance(
@@ -144,7 +169,6 @@ public class Generator_of_mappings:
     }
 
     private void prepare_order_for_resetting(int order) {
-        int current_occurance_occupied_by_order = combination[order];
         unassigned_orders.Add(order);
     }
 
@@ -172,35 +196,7 @@ public class Generator_of_mappings:
         combination[order] = occurance;
     }
 
-        
-}
-
-
-public class Mappings_enumerator : IEnumerator<int[]>
-{
-    public int[] Current => throw new NotImplementedException();
-
-    object IEnumerator.Current => throw new NotImplementedException();
-
-    private Generator_of_mappings generator;
-    public Mappings_enumerator(Generator_of_mappings generator) {
-        this.generator = generator;
-    }
-
-    public void Dispose()
-    {
-        throw new NotImplementedException();
-    }
-
-    public bool MoveNext()
-    {
-        throw new NotImplementedException();
-    }
-
-    public void Reset()
-    {
-        throw new NotImplementedException();
-    }
+    
 }
 
 }

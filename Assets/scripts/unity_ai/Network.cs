@@ -5,26 +5,28 @@ using rvinowise.ai.simple;
 using rvinowise.unity.extensions.attributes;
 using rvinowise.unity.ui.input;
 
+
+
 namespace rvinowise.ai.unity {
 
 
 /* used for assigning prefabs to the modules of the network */
 public class Network:
 MonoBehaviour {
-    [SerializeField] private ai.unity.Action_history action_history;
-    [SerializeField] private Figure_showcase figure_showcase;
-    [SerializeField] private Selector selector;
+    [SerializeField] public ai.unity.Action_history action_history;
+    [SerializeField] public Figure_showcase figure_showcase;
+    [SerializeField] public Selector selector;
     
-    internal ISequence_finder sequence_finder;
+    internal ISequence_finder<Figure> sequence_finder;
     private Figure_builder_from_signals figure_builder_from_signals;
     
-    private ai.simple.Network network;
+    //private ai.simple.Network network;
 
     void Awake() {
-        network = new ai.simple.Network(
-            action_history,
-            sequence_finder
-        );
+        // network = new ai.simple.Network(
+        //     action_history,
+        //     sequence_finder
+        // );
         init_modules();
         init_network();
         init_interface();
@@ -32,7 +34,7 @@ MonoBehaviour {
 
     private void init_modules() {
         figure_showcase.init();
-        sequence_finder = new Sequence_finder(
+        sequence_finder = new Sequence_finder<Figure>(
             action_history,
             figure_showcase
         );
@@ -40,7 +42,7 @@ MonoBehaviour {
     }
 
     private void init_network() {
-        Base_signals_initializer figure_provider_initialiser = new Base_signals_initializer(
+        Base_signals_initializer<Figure> figure_provider_initialiser = new Base_signals_initializer<Figure>(
             figure_showcase
         );
         figure_provider_initialiser.create_base_signals();

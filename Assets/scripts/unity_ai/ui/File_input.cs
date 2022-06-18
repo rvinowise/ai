@@ -11,12 +11,20 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
 using SimpleFileBrowser;
+using rvinowise.ai;
 
 namespace rvinowise.ai.unity {
 
 
 public class File_input : Input {
     
+    
+    private rvinowise.ai.simple.File_input<Figure> file_input;
+
+    protected virtual void Awake() {
+        base.Awake();
+        file_input = new ai.simple.File_input<Figure>(receiver,figure_provider);
+    }
     
     private void init_file_dialog() {
 		FileBrowser.SetFilters( 
@@ -37,22 +45,11 @@ public class File_input : Input {
         );
     }
 
-    public void on_file_selected(string[] paths) {
-        read_file(paths[0]);
+    private void on_file_selected(string[] paths) {
+        file_input.read_file(paths[0]);
     }
 
-    public void read_file(string file_path) {
-        string input_string = File.ReadAllText(file_path);
-        foreach(char symbol in input_string.ToCharArray()) {
-            if (symbol == '\n') {
-                receiver.start_new_line();
-            } else {
-                Selector.instance.select_figures_from_string(symbol.ToString());
-                receiver.input_selected_signals();
-                Selector.instance.deselect_all_figures();
-            }
-        }  
-    }
+   
 
 }
 }

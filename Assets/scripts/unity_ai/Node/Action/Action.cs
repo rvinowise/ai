@@ -18,6 +18,9 @@ IHave_destructor,
 ISelectable
 {
     #region IAction
+
+    public Action_type type => _type;
+    [SerializeField] private Action_type _type;
     public IFigure figure => figure_appearance.figure;
     public IFigure_appearance figure_appearance {
         get => figure_appearance_impl;

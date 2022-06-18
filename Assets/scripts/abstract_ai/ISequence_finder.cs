@@ -3,10 +3,14 @@
 using System.Collections.Generic;
 
 namespace rvinowise.ai.general {
-public interface INetwork {
+public interface INetwork<TFigure>
+where TFigure: class?, IFigure
+{
 
-    ISequence_finder get_sequence_finder();
-    IFigure_provider get_figure_provider();
+    public IAction_history action_history { get; }
+    public ISequence_finder<TFigure> sequence_finder { get; }
+
+    public IFigure_provider<TFigure> figure_provider { get; }
 
     public void fill_figure_storage_with_base_signals();
 

@@ -25,33 +25,33 @@ public class Figure_appearance:
     #region IFigure_appearance
     public IFigure figure{get; protected set;}
     public BigInteger start_moment 
-        => appearance_start.action_group.moment;
+        => start_action.action_group.moment;
     public BigInteger end_moment 
-        => appearance_end.action_group.moment;
+        => end_action.action_group.moment;
 
-    public IAction get_start() => appearance_start;
-    public IAction get_end() => appearance_end;
+    public IAction get_start() => start_action;
+    public IAction get_end() => end_action;
 
     #endregion IFigure_appearance
 
     
-    public Appearance_start appearance_start;
-    public Appearance_end appearance_end;
+    public Action start_action;
+    public Action end_action;
 
 
 
     void Awake() {
         pooled_object = GetComponent<Pooled_object>();
-        appearance_start.figure_appearance = this;
-        appearance_end.figure_appearance = this;
+        start_action.figure_appearance = this;
+        end_action.figure_appearance = this;
         //bezier.gameObject.SetActive(true); //test
     }
     
     
 
     public virtual void destroy() {
-        appearance_start.destroy();
-        appearance_end.destroy();
+        start_action.destroy();
+        end_action.destroy();
         this.destroy_object();
     }
 
@@ -67,8 +67,8 @@ public class Figure_appearance:
 
     public void create_curved_line() {
         bezier.init_between_points(
-            appearance_start.transform,
-            appearance_end.transform,
+            start_action.transform,
+            end_action.transform,
             new Vector3(0, 4f),
             new Vector3(0, 2f)
         );
@@ -89,8 +89,8 @@ public class Figure_appearance:
     private void init_for_figure(IFigure figure) {
         this.figure = figure;
 
-        appearance_start.set_label(figure.id);
-        appearance_end.set_label(figure.id);
+        start_action.set_label(figure.id);
+        end_action.set_label(figure.id);
     }
     
     #region ISelectable

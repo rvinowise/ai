@@ -256,8 +256,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5719f0e9363f412885a40880b7d9075c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  appearance_start: {fileID: 342912836656444506}
-  appearance_end: {fileID: 9012642231624000564}
+  start_action: {fileID: 342912836656444506}
+  end_action: {fileID: 3501600056130847266}
   bezier: {fileID: 5028659124518550879}
 --- !u!114 &4068091968182110870
 MonoBehaviour:
@@ -294,6 +294,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5028659124600057118}
     m_Modifications:
+    - target: {fileID: -7210517488555364797, guid: 09c28a2e5e0c0a345850548b6f7b3fcf,
+        type: 3}
+      propertyPath: figure_appearance_impl
+      value: 
+      objectReference: {fileID: 839373312325208352}
     - target: {fileID: 538994188880642865, guid: 09c28a2e5e0c0a345850548b6f7b3fcf,
         type: 3}
       propertyPath: m_RootOrder
@@ -352,7 +357,7 @@ PrefabInstance:
     - target: {fileID: 7265867109844156610, guid: 09c28a2e5e0c0a345850548b6f7b3fcf,
         type: 3}
       propertyPath: m_Name
-      value: Appearance_start
+      value: start_action
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 09c28a2e5e0c0a345850548b6f7b3fcf, type: 3}
@@ -371,7 +376,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59b2c33d1332c1d4781de938af9da4aa, type: 3}
+  m_Script: {fileID: 11500000, guid: 20ed941e2362eed4fb3e6153d35e3f80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &4069884523485955728
@@ -439,25 +444,55 @@ PrefabInstance:
     - target: {fileID: 7265867109844156610, guid: 7af617ac1bfbb9549bbab588c4eb8d87,
         type: 3}
       propertyPath: m_Name
-      value: Appearance_end
+      value: end_action
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: -4221996888324545884, guid: 7af617ac1bfbb9549bbab588c4eb8d87, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 7af617ac1bfbb9549bbab588c4eb8d87, type: 3}
+--- !u!1 &6678461985979958866 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7265867109844156610, guid: 7af617ac1bfbb9549bbab588c4eb8d87,
+    type: 3}
+  m_PrefabInstance: {fileID: 4069884523485955728}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4540127821158581665 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 538994188880642865, guid: 7af617ac1bfbb9549bbab588c4eb8d87,
     type: 3}
   m_PrefabInstance: {fileID: 4069884523485955728}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &9012642231624000564 stripped
+--- !u!114 &8839032547743191954 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: -4221996888324545884, guid: 7af617ac1bfbb9549bbab588c4eb8d87,
+  m_CorrespondingSourceObject: {fileID: 4814822081984517378, guid: 7af617ac1bfbb9549bbab588c4eb8d87,
     type: 3}
   m_PrefabInstance: {fileID: 4069884523485955728}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fa6e56d67bc77684aade3e1421cc6f4f, type: 3}
+  m_Script: {fileID: 11500000, guid: 9541d86e2fd84c1d9990edf0852d74ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!212 &3730832083191468069 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 846032873419937461, guid: 7af617ac1bfbb9549bbab588c4eb8d87,
+    type: 3}
+  m_PrefabInstance: {fileID: 4069884523485955728}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3501600056130847266
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6678461985979958866}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20ed941e2362eed4fb3e6153d35e3f80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _type: 1
+  lable: {fileID: 8839032547743191954}
+  animator: {fileID: 0}
+  sprite_renderer: {fileID: 3730832083191468069}
+  figure_appearance_impl: {fileID: 839373312325208352}

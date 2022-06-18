@@ -9,6 +9,7 @@ using System.Linq;
 using System.Numerics;
 using rvinowise.rvi.contracts;
 using rvinowise.unity.ui.input;
+using Vector2 = UnityEngine.Vector2;
 
 namespace rvinowise.ai.unity {
 public partial class Action_history:
@@ -16,6 +17,14 @@ Visual_input_receiver,
 IAction_history
 {
     ai.simple.Action_history simple_history;
+ 
+    public Action_group action_group_prefab;
+    public Figure_appearance figure_appearance_prefab;
+    [SerializeField] private Figure figure_prefab;
+    public Vector2 action_group_offset = new Vector2(2f,0f);
+    public float lines_offset = -4f;
+    
+    public Transform carret;
     
 
     #region IAction_history
@@ -34,13 +43,13 @@ IAction_history
         Figure_appearance appearance = figure_appearance_prefab
             .get_for_figure(figure);
         figure.add_appearance(appearance);
-        put_action_into_group(appearance.appearance_start, start);
-        put_action_into_group(appearance.appearance_end, end);
+        put_action_into_group(appearance.start_action, start);
+        put_action_into_group(appearance.end_action, end);
         appearance.create_curved_line();
         return appearance;
     }
     
-    public void input_signals(
+    public override void input_signals(
         IEnumerable<IFigure> signals, 
         int mood_change =0
     ) => simple_history.input_signals(signals, mood_change);
@@ -51,9 +60,10 @@ IAction_history
     #endregion IAction_history
     
     void Awake() {
-        simple_history = new ai.simple.Action_history();
-        simple_history.create_figure_appearance = create_figure_appearance;
-        simple_history.create_next_action_group = create_next_action_group;
+        simple_history = new ai.simple.Action_history {
+            create_figure_appearance = create_figure_appearance, 
+            create_next_action_group = create_next_action_group
+        };
     }
     
     public override void input_selected_signals() {
@@ -90,6 +100,23 @@ IAction_history
     ) {
         group.add_action(action);
         action.action_group = group;
+    }
+    
+    
+
+
+
+    private void place_new_action_group(Action_group in_group) {
+        in_group.transform.parent = transform;
+        in_group.transform.position = carret.position;
+        carret.Translate(action_group_offset);
+    }
+
+    public override void start_new_line() {
+        carret.position = new Vector2(
+            0,
+            carret.position.y+lines_offset
+        );
     }
 }
 }

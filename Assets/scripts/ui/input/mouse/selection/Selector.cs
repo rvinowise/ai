@@ -23,7 +23,7 @@ public class Selector : MonoBehaviour {
     #region selected elements
 
     public Action_history action_history;
-    public IFigure_provider figure_provider;
+    public IFigure_provider<Figure> figure_provider;
     [SerializeField] private Toggle toggle_pleasure;
     [SerializeField] private Toggle toggle_pain;
     
@@ -99,10 +99,10 @@ public class Selector : MonoBehaviour {
     }
 
     private void show_insides_of_one_figure(Figure shown_figure) {
-        shown_figure.show_inside();
+        shown_figure.show();
         foreach (Figure figure in figures) {
             if (shown_figure != figure) {
-                figure.hide_inside();
+                figure.hide();
             }
         }
     }
@@ -112,7 +112,7 @@ public class Selector : MonoBehaviour {
     
     public void deselect(Figure figure) {
         deselect_generally(figure);
-        figure.hide_inside();
+        figure.hide();
         figure.button?.dehighlight_as_selected();
         figures.Remove(figure);
         foreach (Figure_appearance appearance in figure._appearances) {
@@ -140,29 +140,29 @@ public class Selector : MonoBehaviour {
         select_generally(appearance);
         figure_appearances.Add(appearance);
         appearance.bezier.gameObject.SetActive(true);
-        select(appearance.appearance_start);
-        select(appearance.appearance_end);
+        select(appearance.start_action);
+        select(appearance.end_action);
     }
     public void deselect(Figure_appearance appearance) {
         deselect_generally(appearance);
         figure_appearances.Remove(appearance);
         appearance.bezier.gameObject.SetActive(false);
-        deselect(appearance.appearance_start);
-        deselect(appearance.appearance_end);
+        deselect(appearance.start_action);
+        deselect(appearance.end_action);
     }
     public void highlight(Figure_appearance appearance) {
         highlight_generally(appearance);
         highlighted_objects.Add(appearance);
         appearance.bezier.gameObject.SetActive(true);
-        highlight(appearance.appearance_start);
-        highlight(appearance.appearance_end);
+        highlight(appearance.start_action);
+        highlight(appearance.end_action);
     }
     public void dehighlight(Figure_appearance appearance) {
         dehighlight_generally(appearance);
         highlighted_objects.Remove(appearance);
         appearance.bezier.gameObject.SetActive(false);
-        dehighlight(appearance.appearance_start);
-        dehighlight(appearance.appearance_end);
+        dehighlight(appearance.start_action);
+        dehighlight(appearance.end_action);
     }
     
     public void select(Subfigure subfigure) {

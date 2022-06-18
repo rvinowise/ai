@@ -20,24 +20,7 @@ public class Generator_of_order_sequences<T>:
     public List<IEnumerable<T>> orders = 
         new List<IEnumerable<T>>();
 
-    private readonly bool is_valid = true;
     
-    // public Generator_of_order_sequences(
-    //     IList<Mapping_enumerator_requirement> figure_requirements
-    // ) {
-    //     for (int i_figure = 0; i_figure < figure_requirements.Count; i_figure++) {
-    //         orders.Add(
-    //             new Generator_of_mappings(
-    //                 figure_requirements[i_figure].amount_in_source,
-    //                 figure_requirements[i_figure].amount_in_target
-    //             )
-    //         );
-    //     }
-    // }
-
-    public Generator_of_order_sequences() {
-
-    }
 
     public void add_order(IEnumerable<T> in_order) {
         orders.Add(in_order);
@@ -59,15 +42,13 @@ public class Generator_of_order_sequences<T>:
     #region IEnumerable
 
     public IEnumerator<T[]> GetEnumerator() {
-        if (!is_valid) {
-            yield break;
-        }
         IList<IEnumerator<T>> order_enumerators = orders.Select(
             order => order.GetEnumerator()
         ).ToList();
         foreach(var enumerator in order_enumerators) {
             enumerator.SetToFirst();
         }
+        yield return get_combination_as_indexes(order_enumerators);
         while (set_next_iteration(order_enumerators)) {
             yield return get_combination_as_indexes(order_enumerators);
         }

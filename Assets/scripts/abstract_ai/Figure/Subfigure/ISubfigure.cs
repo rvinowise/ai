@@ -3,6 +3,11 @@ using System.Collections.Generic;
 
 namespace rvinowise.ai.general {
 
+
+public interface ISubfigure_click_receiver {
+    void on_click(ISubfigure subfigure);
+}
+
 public interface ISubfigure {
     string id {get;set;}
     IFigure_representation parent { get; set; }

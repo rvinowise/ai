@@ -4,7 +4,7 @@ using System.Numerics;
 
 namespace rvinowise.ai.general {
 
-public interface IAction_group {
+public interface IAction_group: IEnumerable<IAction> {
 
     IEnumerator<IAction> GetEnumerator();
 

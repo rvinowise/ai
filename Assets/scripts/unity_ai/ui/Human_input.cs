@@ -22,10 +22,9 @@ public class Human_input : Input {
     [SerializeField]
     private TMP_InputField input_field;
 
-    [SerializeField] private Network network;
     #region network modules
 
-    ISequence_finder sequence_finder => network.sequence_finder;
+    ISequence_finder<Figure> sequence_finder => network.sequence_finder;
     
     #endregion network modules
 

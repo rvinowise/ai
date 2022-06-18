@@ -4,16 +4,17 @@ using rvinowise.rvi.contracts;
 
 
 namespace rvinowise.ai.simple {
-public class Base_signals_initializer:
+public class Base_signals_initializer<TFigure>:
     IBase_signals_initializer
+where TFigure: class?, IFigure
 {
-    private readonly IFigure_provider figure_provider;
+    private readonly IFigure_provider<TFigure> figure_provider;
     
     private readonly string[] symbol_figures = {",",";","=","+","-"};
 
 
     public Base_signals_initializer(
-        IFigure_provider in_figure_provider
+        IFigure_provider<TFigure> in_figure_provider
     ) {
         figure_provider = in_figure_provider;
     }

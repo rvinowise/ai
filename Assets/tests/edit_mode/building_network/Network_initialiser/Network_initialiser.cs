@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using NUnit.Framework;
 using rvinowise.ai.general;
+
 using rvinowise.ai.simple;
 
 namespace rvinowise.ai.unit_tests.network_initialiser {
@@ -8,9 +9,9 @@ namespace rvinowise.ai.unit_tests.network_initialiser {
 [TestFixture]
 public class network_needs_to_be_initialised
 {
-    private readonly INetwork network = simple.Network.get_empty_network();
+    private readonly INetwork<Figure> network = simple.Network.get_empty_network();
 
-    private readonly IFigure_provider figure_provider;
+    private readonly IFigure_provider<Figure> figure_provider;
     private readonly IBase_signals_initializer figure_provider_initialiser;
 
 
@@ -21,8 +22,8 @@ public class network_needs_to_be_initialised
     
     [Test]
     public void base_signals_are_created_in_network() {
-        IFigure_provider figure_provider = new Figure_provider(create_figure);
-        IBase_signals_initializer figure_provider_initialiser = new Base_signals_initializer(figure_provider);
+        IFigure_provider<Figure> figure_provider = new Figure_provider<Figure>(create_figure);
+        IBase_signals_initializer figure_provider_initialiser = new Base_signals_initializer<Figure>(figure_provider);
         figure_provider_initialiser.create_base_signals();
         Assert.AreEqual(
             expected_base_signals.Count,
@@ -40,7 +41,7 @@ public class network_needs_to_be_initialised
         }
     }
 
-    private IFigure create_figure(string id) {
+    private Figure create_figure(string id) {
         return new simple.Figure(id);
     }
 }

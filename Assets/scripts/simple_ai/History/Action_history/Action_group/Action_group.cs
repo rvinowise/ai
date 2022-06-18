@@ -17,6 +17,9 @@ IAction_group
   
     public IEnumerator<IAction> GetEnumerator() => 
         actions.GetEnumerator();
+    IEnumerator IEnumerable.GetEnumerator() {
+        return GetEnumerator();
+    }
 
     public BigInteger moment{
         get {
@@ -71,8 +74,7 @@ IAction_group
         return false;
     }
 
-  
 
- 
-}
+    
+ }
 }

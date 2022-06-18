@@ -17,7 +17,9 @@
         "Moq.dll",
         "Castle.Core.dll",
         "System.Runtime.CompilerServices.Unsafe.dll",
-        "System.Threading.Tasks.Extensions.dll"
+        "System.Threading.Tasks.Extensions.dll",
+        "System.IO.Abstractions.dll",
+        "System.IO.FileSystem.AccessControl.dll"
     ],
     "autoReferenced": false,
     "defineConstraints": [

@@ -6,13 +6,13 @@ namespace rvinowise.ai.unity {
 
 public abstract class Input: MonoBehaviour {
 
+    [SerializeField] protected Network network;
     public Visual_input_receiver receiver;
-    public Figure_showcase figure_showcase;
-
+    protected IFigure_provider<Figure> figure_provider;
     
 
     protected virtual void Awake() {
-        figure_showcase = receiver.figure_showcase;
+        figure_provider = network.figure_showcase;
     }
     
  

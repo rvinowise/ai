@@ -3,7 +3,9 @@
 using System.Collections.Generic;
 
 namespace rvinowise.ai.general {
-public interface ISequence_finder {
+public interface ISequence_finder<TFigure>
+where TFigure: class?, IFigure
+{
 
 
   

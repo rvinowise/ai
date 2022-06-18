@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using NUnit.Framework;
@@ -14,7 +15,7 @@ public partial class initialised_correctly_for_generation {
         Generator_of_order_sequences<int[]> generator = 
             new Generator_of_order_sequences<int[]>();
 
-        generator.add_order(new Generator_of_mappings(2, 4));
+        generator.add_order(new Generator_of_mappings(4, 2));
         generator.add_order(new Generator_of_mappings(3, 3));
 
         return generator;
@@ -38,51 +39,6 @@ public partial class initialised_correctly_for_generation {
     }
 }
 
-[TestFixture]
-public class not_enough_occurances_of_first_figure {
 
-    private Generator_of_order_sequences<int[]> init_generator() {
-        Generator_of_order_sequences<int[]> generator = 
-            new Generator_of_order_sequences<int[]>();
-
-        generator.add_order(new Generator_of_mappings(5, 4));
-        generator.add_order(new Generator_of_mappings(3, 3));
-
-        return generator;
-    }
-    
-    [Test]
-    public void zero_cycle_interations_are_possible() {
-        Generator_of_order_sequences<int[]> generator = 
-            init_generator();
-
-        Assert.IsEmpty(generator);
-    }
-}
-
-[TestFixture]
-public class not_enough_occurances_of_second_figure {
-    private Generator_of_order_sequences<int[]> init_generator() {
-        Generator_of_order_sequences<int[]> generator = 
-            new Generator_of_order_sequences<int[]>();
-
-        generator.add_order(new Generator_of_mappings(3, 4));
-        generator.add_order(new Generator_of_mappings(5, 3));
-
-        return generator;
-    }
-    
-    [Test]
-    public void zero_cycle_interations_are_possible() {
-        Generator_of_order_sequences<int[]> generator = 
-           init_generator();
-
-        Assert.That(
-            generator,
-            Is.Empty
-        );
-
-    }
-}
 
 }

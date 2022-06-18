@@ -10,9 +10,16 @@
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
-    "overrideReferences": false,
-    "precompiledReferences": [],
-    "autoReferenced": true,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "System.IO.Abstractions.dll",
+        "System.IO.FileSystem.AccessControl.dll",
+        "System.Buffers.dll",
+        "System.Memory.dll",
+        "System.Security.AccessControl.dll",
+        "System.Security.Principal.Windows.dll"
+    ],
+    "autoReferenced": false,
     "defineConstraints": [],
     "versionDefines": [],
     "noEngineReferences": false

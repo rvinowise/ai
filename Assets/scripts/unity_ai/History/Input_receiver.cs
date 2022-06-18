@@ -8,8 +8,8 @@ MonoBehaviour
 ,IInput_receiver
 {
     
-    public Figure_showcase figure_showcase;
     public abstract void input_selected_signals();
+    public abstract void input_signals(IEnumerable<IFigure> signals, int mood_change = 0);
     public abstract void start_new_line(); 
 }
 }

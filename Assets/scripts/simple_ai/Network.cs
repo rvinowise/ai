@@ -2,55 +2,55 @@
 using System;
 using rvinowise.ai.general;
 
+using TFigure = rvinowise.ai.simple.Figure;
+
 namespace rvinowise.ai.simple {
 
 public class Network: 
-    INetwork 
+    INetwork<TFigure> // where TFigure: class?, IFigure
 {
-    
-    private readonly IAction_history action_history;
-    public readonly ISequence_finder sequence_finder;
 
-    public readonly IFigure_provider figure_provider;
+    public IAction_history action_history { get; }
+    public ISequence_finder<TFigure> sequence_finder { get; }
+
+    public IFigure_provider<TFigure> figure_provider { get; }
 
     public Network() {
         action_history = new simple.Action_history();
-        figure_provider = new Figure_provider(create_simple_figure);
-        sequence_finder = new Sequence_finder(
+        figure_provider = new Figure_provider<TFigure>(create_simple_figure);
+        sequence_finder = new Sequence_finder<TFigure>(
             action_history,
             figure_provider
         );
-        fill_figure_storage_with_base_signals();
     }
     
     public Network(
         IAction_history action_history,
-        ISequence_finder sequence_finder
+        ISequence_finder<TFigure> sequence_finder
     ) {
         this.action_history = action_history;
         this.sequence_finder = sequence_finder;
     }
 
-    public static INetwork get_empty_network() {
+    public static INetwork<TFigure> get_empty_network() {
         return new Network();
     }
     
-    public static INetwork get_network_with_base_signals() {
-        INetwork network = new Network();
+    public static INetwork<TFigure> get_network_with_base_signals() {
+        INetwork<TFigure> network = new Network();
         network.fill_figure_storage_with_base_signals();
         return network;
     }
 
     #region INetwork
 
-    public ISequence_finder get_sequence_finder() => sequence_finder;
-    public IFigure_provider get_figure_provider() => figure_provider;
+
     
     #endregion INetwork
     
     
     
-    public IFigure create_simple_figure(string id) {
+    public Figure create_simple_figure(string id) {
         return new simple.Figure(id);
     }
 
@@ -62,7 +62,7 @@ public class Network:
 
     public void fill_figure_storage_with_base_signals() {
         IBase_signals_initializer figure_provider_initialiser = 
-            new Base_signals_initializer(figure_provider);
+            new Base_signals_initializer<TFigure>(figure_provider);
         figure_provider_initialiser.create_base_signals();
     }
 

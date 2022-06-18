@@ -143,24 +143,24 @@
 <node TEXT="legend" POSITION="left" ID="ID_49802336" CREATED="1632692624170" MODIFIED="1632692627877">
 <node TEXT="icons" ID="ID_143750967" CREATED="1632698164973" MODIFIED="1632698166792">
 <node TEXT="what it is" ID="ID_643462232" CREATED="1632844495015" MODIFIED="1633006313614">
-<icon BUILTIN="box_inscribed@b"/>
+<icon BUILTIN="box_inscribed"/>
 </node>
 <node TEXT="performed actions" ID="ID_1227376260" CREATED="1632692808705" MODIFIED="1632844518681" ICON_SIZE="12 pt">
-<icon BUILTIN="cog@b"/>
+<icon BUILTIN="cog"/>
 </node>
 <node TEXT="part of its parent" ID="ID_1359020773" CREATED="1633009100181" MODIFIED="1633009170130">
-<icon BUILTIN="puzzle_piece@b"/>
+<icon BUILTIN="puzzle_piece"/>
 </node>
 <node TEXT="implemented as a class" ID="ID_824684101" CREATED="1632692658197" MODIFIED="1633006306693" ICON_SIZE="12 pt">
-<icon BUILTIN="present@b"/>
+<icon BUILTIN="present"/>
 </node>
 <node TEXT="interface" ID="ID_458974352" CREATED="1633025618126" MODIFIED="1633025653417">
 <icon BUILTIN="programming/interface_arrows"/>
 </node>
 <node ID="ID_1543775213" CREATED="1633009004917" MODIFIED="1633009190187">
-<icon BUILTIN="puzzle_piece@b"/>
-<icon BUILTIN="cog@b"/>
-<icon BUILTIN="present@b"/>
+<icon BUILTIN="puzzle_piece"/>
+<icon BUILTIN="cog"/>
+<icon BUILTIN="present"/>
 <richcontent TYPE="NODE">
 
 <html>
@@ -177,13 +177,13 @@
 </node>
 <node TEXT="parent" ID="ID_1260762948" CREATED="1633025370106" MODIFIED="1633025372725">
 <node TEXT="a part" ID="ID_1132425494" CREATED="1633024491557" MODIFIED="1633025537405">
-<icon BUILTIN="puzzle_piece@b"/>
-<icon BUILTIN="cog@b"/>
+<icon BUILTIN="puzzle_piece"/>
+<icon BUILTIN="cog"/>
 <node TEXT="action of parent, using the part" ID="ID_1865617723" CREATED="1633025389610" MODIFIED="1633025557880"/>
 </node>
 <node TEXT="an external object" ID="ID_914719038" CREATED="1633024823886" MODIFIED="1633025584290">
-<icon BUILTIN="cog@b"/>
-<icon BUILTIN="puzzle_piece@b"/>
+<icon BUILTIN="cog"/>
+<icon BUILTIN="puzzle_piece"/>
 <node TEXT="action of parent, using the object" ID="ID_329143368" CREATED="1633025415670" MODIFIED="1633025570749"/>
 </node>
 </node>
@@ -196,16 +196,16 @@
 <node TEXT="figure storage" POSITION="right" ID="ID_1455442010" CREATED="1643857728164" MODIFIED="1643857735419"/>
 <node TEXT="manual figure builder" POSITION="right" ID="ID_1774722910" CREATED="1643857735724" MODIFIED="1643948536878">
 <node TEXT="create from scratch" ID="ID_506398814" CREATED="1643857740705" MODIFIED="1643857753414">
-<icon BUILTIN="cog@b"/>
+<icon BUILTIN="cog"/>
 </node>
 <node TEXT="edit" ID="ID_1359015329" CREATED="1643857745029" MODIFIED="1643857752827">
-<icon BUILTIN="cog@b"/>
+<icon BUILTIN="cog"/>
 </node>
 <node TEXT="header of currently built(edited)figure" ID="ID_266252653" CREATED="1643857755593" MODIFIED="1643857860167">
-<icon BUILTIN="puzzle_piece@b"/>
+<icon BUILTIN="puzzle_piece"/>
 </node>
 <node TEXT="figure storage" ID="ID_856302366" CREATED="1643857867696" MODIFIED="1643857870471">
-<icon BUILTIN="puzzle_piece@b"/>
+<icon BUILTIN="puzzle_piece"/>
 </node>
 </node>
 </node>

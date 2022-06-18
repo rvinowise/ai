@@ -13,8 +13,16 @@ using System;
 
 namespace rvinowise.ai.simple {
 public class Action_history:
-IAction_history {
+IAction_history 
+{
 
+    
+    private readonly IList<IAction_group> action_groups = 
+        new List<IAction_group>();
+    
+    private readonly Dictionary<BigInteger, IAction_group> moments_to_action_groups=
+        new Dictionary<BigInteger, IAction_group>();
+    
     
     #region IAction_history
 
@@ -78,11 +86,7 @@ IAction_history {
         create_next_action_group = create_next_simple_action_group;
     }
 
-    private readonly IList<IAction_group> action_groups = 
-        new List<IAction_group>();
     
-    private readonly Dictionary<BigInteger, IAction_group> moments_to_action_groups=
-        new Dictionary<BigInteger, IAction_group>();
 
 
 

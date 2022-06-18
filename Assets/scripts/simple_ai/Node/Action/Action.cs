@@ -10,14 +10,11 @@ using UnityEngine;
 
 namespace rvinowise.ai.simple {
 
-public enum Action_type {
-    Start,
-    End
-}
-public readonly struct Action: 
+
+public class Action: 
 IAction
 {
-    private readonly Action_type type{get;}
+    public Action_type type{get;}
 
     public Action(
         Action_type in_type,

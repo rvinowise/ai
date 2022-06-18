@@ -5,8 +5,9 @@ using rvinowise.unity.extensions;
 
 namespace rvinowise.unity.ui.table {
 public class Table_cell:
-MonoBehaviour,
-IHave_destructor  {
+    MonoBehaviour,
+    IHave_destructor  
+{
 
     public MonoBehaviour item;
     private Canvas canvas;

@@ -1,9 +1,10 @@
 
+using System.Collections.Generic;
+
 namespace rvinowise.ai.general {
 public interface IInput_receiver {
     
-    //IPattern_storage pattern_storage;
     
-    void input_selected_signals();
+    void input_signals(IEnumerable<IFigure> signals, int mood_change = 0);
 }
 }
