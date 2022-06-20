@@ -17,13 +17,14 @@ using UnityEngine.UI;
 
 namespace rvinowise.ai.unity {
 public class Figure_showcase: 
+    MonoBehaviour,
     IFigure_showcase,
     IFigure_provider<Figure>,
     IFigure_button_click_receiver
 {
 
     
-    public IVisual_figure shown_figure;
+    public IVisual_figure shown_figure { get; private set; }
     public IFigure_button_click_receiver receiver;
     
     #region unity inspector
@@ -51,13 +52,16 @@ public class Figure_showcase:
 
 
     #region IFigure_showcase
+
+
     public void show_insides_of_one_figure(IVisual_figure new_shown_figure) {
         new_shown_figure.show();
-        shown_figure.hide_inside();
+        shown_figure.hide();
     }
 
     public IFigure_button get_button_for_figure(IVisual_figure figure) {
-       
+        figure_buttons.TryGetValue(figure, out var out_button);
+        return out_button;
     }
     #endregion
     
@@ -83,7 +87,6 @@ public class Figure_showcase:
     private Figure create_figure(string id = "figure") {
         Figure figure = figure_prefab.provide_new<Figure>();
         figure.id = id;
-        figure.header.mode_selector = mode_selector;
         figure.transform.parent = figure_folder;
         figure.transform.localPosition = Vector3.zero;
         figure.gameObject.SetActive(false);
@@ -115,9 +118,11 @@ public class Figure_showcase:
 
 
     private void remove_button_for_figure(Figure figure) {
-        IFigure_button button = figure_buttons.First(button => button.figure == figure);
-        figure_button_table.remove_item(button);
-        figure_buttons.Remove(button);
+        var button_key = figure_buttons.First(
+            button => button.Value.figure == figure
+        );
+        figure_button_table.remove_item(button_key.Value as MonoBehaviour);
+        figure_buttons.Remove(button_key);
     }
     
  

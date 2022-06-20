@@ -13,67 +13,64 @@ using Network = rvinowise.ai.simple.Network;
 
 namespace rvinowise.ai.unit_tests.ui.figure_observer {
 
-
 [TestFixture]
-public class a_figure_button_is_pressed {
-
-    private IMode_selector mode_selector;
-    private IManual_figure_builder manual_figure_builder;
-    private IFigure_observer figure_observer;
-    private IFigure_provider<IVisual_figure> figure_provider;
+public class figure_showcase_is_populated_with_figures {
     
+    private IVisual_figure figure1;
+    private IVisual_figure figure2;
+    private Figure_showcase figure_showcase;
+
     [SetUp]
-    public void create_ui_controller() {
-        mode_selector = new GameObject().AddComponent<Mode_selector>();
-        manual_figure_builder = new GameObject().AddComponent<Manual_figure_builder>();
-        figure_observer = new GameObject().AddComponent<Figure_observer>();
-        figure_provider = new Figure_provider<IVisual_figure>(create_figure);
+    public void prepare() {
+        figure_showcase = new GameObject().AddComponent<Figure_showcase>();
+        figure1 = figure_showcase.provide_figure("figure1");
+        figure2 = figure_showcase.provide_figure("figure2");
+        
     }
 
-    private IVisual_figure create_figure(string id) {
-        var mock_figure_header = new Mock<IFigure_header>();
-        mock_figure_header.Setup(
-            header => header.on_finish_building()
-        );
-        
-        var mock_figure = new Mock<IVisual_figure>();
-        mock_figure.Setup(
-            figure => figure.header
-        ).Returns(mock_figure_header.Object);
-        
-        return new 
-    }
-    
     [Test]
-    public void shows_the_structure_of_the_figure(
-        
-    ) {
-
-        IVisual_figure figure = figure_provider.provide_figure("tested_figure");
-        IFigure_button figure_button = ;
-        
-        figure_button.on_click();
-        
-        mode_selector.on_start_editing_figure();
-        figure_observer.observe(figure);
-        
-        
-        Assert.Thatfigure.is_shown
-
-        manual_figure_builder.
+    public void buttons_can_be_received_for_the_created_figures() {
+        Assert.That(
+            figure_showcase.get_button_for_figure(figure1),
+            Is.Not.Null
+        );
+        Assert.That(
+            figure_showcase.get_button_for_figure(figure2),
+            Is.Not.Null
+        );
     }
 
-
-}
 
 [TestFixture]
-public class connections_of_an_existing_figure_are_edited {
-    private Manual_figure_builder ui_builder;
+public class several_figure_buttons_in_a_showcase_are_switched {
     
+    private IVisual_figure figure1;
+    private IVisual_figure figure2;
+    private IFigure_button button1;
+    private IFigure_button button2;
+    private Figure_showcase figure_showcase;
+
     [SetUp]
-    public void create_ui_controller() {
-        ui_builder = new GameObject().AddComponent<Manual_figure_builder>();
+    public void prepare() {
+        figure_showcase = new GameObject().AddComponent<Figure_showcase>();
+        figure1 = figure_showcase.provide_figure("figure1");
+        figure2 = figure_showcase.provide_figure("figure2");
+        button1 = figure_showcase.get_button_for_figure(figure1);
+        button2 = figure_showcase.get_button_for_figure(figure2);
     }
+
+
+    [Test]
+    public void different_figure_details_are_shown_after_each_other() {
+        button1.on_click();
+        Assert.That(figure1.is_shown, Is.True);
+        Assert.That(figure2.is_shown, Is.False);
+        button2.on_click();
+        Assert.That(figure2.is_shown, Is.True);
+        Assert.That(figure1.is_shown, Is.False);
+    }
+
+
 }
 
 }
