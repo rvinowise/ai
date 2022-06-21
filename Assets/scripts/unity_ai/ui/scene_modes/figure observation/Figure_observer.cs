@@ -26,7 +26,9 @@ IFigure_button_click_receiver
     
     public IVisual_figure observed_figure { get; private set; }
 
-
+    
+    #region IFigure_observer
+    
     public void observe(IVisual_figure figure) {
         observed_figure = figure;
         mark_object_as_selected(figure);
@@ -36,6 +38,26 @@ IFigure_button_click_receiver
             highlight(appearance);
         }
     }
+    
+    public void finish_observing() {
+        rvi.contracts.Contract.Requires(observed_figure != null);
+        mark_object_as_deselected(observed_figure);
+        observed_figure.hide();
+        observed_figure.button.dehighlight_as_selected();
+        foreach (Figure_appearance appearance in observed_figure.get_appearances()) {
+            dehighlight(appearance);
+        }
+        observed_figure = null;
+    }
+    
+    public void on_click(IFigure_button figure_button) {
+        finish_observing();
+        selector.deselect_all_figures();
+        observe(figure_button.figure);
+        //selector.select(figure_button.figure);
+    }
+    
+    #endregion IFigure_observer
 
     public void activate() {
         enabled = true;
@@ -48,19 +70,6 @@ IFigure_button_click_receiver
         enabled = false;
     }
     
-    public void finish_observing() {
-        rvi.contracts.Contract.Requires(observed_figure != null);
-        mark_object_as_deselected(observed_figure);
-        observed_figure.hide();
-        observed_figure.button.dehighlight_as_selected();
-        foreach (Figure_appearance appearance in observed_figure._appearances) {
-            dehighlight(appearance);
-        }
-        observed_figure = null;
-        
-    }
-    
-
     
     public void highlight(Figure_appearance appearance) {
         highlight_generally(appearance);
@@ -107,14 +116,6 @@ IFigure_button_click_receiver
         }
     }
 
-
-
-    public void on_click(IFigure_button figure_button) {
-        finish_observing();
-        selector.deselect_all_figures();
-        observe(figure_button.figure);
-        //selector.select(figure_button.figure);
-    }
 
 
     public void on_click_stencil_interface(Stencil_interface direction) {

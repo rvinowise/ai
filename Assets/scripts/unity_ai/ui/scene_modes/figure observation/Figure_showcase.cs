@@ -13,26 +13,23 @@ using rvinowise.unity.ui.input;
 using rvinowise.unity.ui.table;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace rvinowise.ai.unity {
 public class Figure_showcase: 
     MonoBehaviour,
-    IFigure_showcase,
-    IFigure_provider<Figure>,
+    IFigure_showcase<Figure>,
     IFigure_button_click_receiver
 {
-
     
     public IVisual_figure shown_figure { get; private set; }
-    public IFigure_button_click_receiver receiver;
     
     #region unity inspector
     public Table figure_button_table;
-    //unity
     [SerializeField] private Figure figure_prefab;
     [SerializeField] private Figure_button figure_button_prefab;
-    [SerializeField] private Transform figure_folder;
+    [SerializeField] private Transform shown_figure_folder;
     [SerializeField] private Figure_button button_stencil_out;
     [SerializeField] private Figure_button button_stencil_in;
 
@@ -87,9 +84,9 @@ public class Figure_showcase:
     private Figure create_figure(string id = "figure") {
         Figure figure = figure_prefab.provide_new<Figure>();
         figure.id = id;
-        figure.transform.parent = figure_folder;
+        figure.transform.parent = shown_figure_folder;
         figure.transform.localPosition = Vector3.zero;
-        figure.gameObject.SetActive(false);
+        figure.hide();
         create_button_for_figure(figure);
 
         return figure;
