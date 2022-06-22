@@ -41,7 +41,7 @@ public class Figure_showcase:
     private IMode_selector mode_selector;
 
 
-    public void init() {
+    public void Awake() {
         figure_provider = new Figure_provider<Figure>(create_figure);
         button_stencil_out.click_receiver = this;
         button_stencil_in.click_receiver = this;

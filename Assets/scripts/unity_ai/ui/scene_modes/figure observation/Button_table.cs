@@ -18,18 +18,16 @@ using UnityEngine.UI;
 
 namespace rvinowise.ai.unity {
 public class Button_table: 
-    MonoBehaviour,
+    Table,
     IButton_table<Figure_button>, 
     IFigure_button_click_receiver
 {
     
     public IVisual_figure shown_figure { get; private set; }
+    public IFigure_button_click_receiver higher_click_receiver { get; set; }
     
     #region unity inspector
-    public Table figure_button_table;
-    [SerializeField] private Figure figure_prefab;
     [SerializeField] private Figure_button figure_button_prefab;
-    [SerializeField] private Transform shown_figure_folder;
     [SerializeField] private Figure_button button_stencil_out;
     [SerializeField] private Figure_button button_stencil_in;
 
@@ -54,7 +52,7 @@ public class Button_table:
         Figure_button figure_button = figure_button_prefab.create_for_figure(figure);
         figure.button = figure_button;
         figure_button.click_receiver = this;
-        figure_button_table.add_item(figure_button);
+        add_item(figure_button);
         figure_buttons.Add(figure, figure_button);
     }
 
@@ -62,18 +60,18 @@ public class Button_table:
         var button_key = figure_buttons.First(
             button => button.Value.figure == figure
         );
-        figure_button_table.remove_item(button_key.Value as MonoBehaviour);
+        remove_item(button_key.Value as MonoBehaviour);
         figure_buttons.Remove(button_key);
     }
     
  
     #region IFigure_button_click_receiver
     
-    public void on_click(IFigure_button figure_button) {
-    }
+    public void on_click(IFigure_button figure_button) =>
+        higher_click_receiver.on_click(figure_button);
 
-    public void on_click_stencil_interface(Stencil_interface direction) {
-    }
+    public void on_click_stencil_interface(Stencil_interface direction) =>
+        higher_click_receiver.on_click_stencil_interface(direction);
     
     #endregion
     

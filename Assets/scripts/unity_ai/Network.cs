@@ -33,7 +33,6 @@ MonoBehaviour {
     }
 
     private void init_modules() {
-        figure_showcase.init();
         sequence_finder = new Sequence_finder<Figure>(
             action_history,
             figure_showcase

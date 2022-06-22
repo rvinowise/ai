@@ -22,7 +22,8 @@ public class figure_showcase_is_populated_with_figures {
 
     [SetUp]
     public void prepare() {
-        figure_showcase = new GameObject().AddComponent<Figure_showcase>();
+        figure_showcase = new GameObject().add_component<Figure_showcase>();
+        figure_showcase.Awake();
         figure1 = figure_showcase.provide_figure("figure1");
         figure2 = figure_showcase.provide_figure("figure2");
         
@@ -39,20 +40,20 @@ public class figure_showcase_is_populated_with_figures {
             Is.Not.Null
         );
     }
-
+}
 
 [TestFixture]
-public class several_figure_buttons_in_a_showcase_are_switched {
+public class several_figure_buttons_in_a_showcase_are_clicked_after_each_other {
     
     private IVisual_figure figure1;
     private IVisual_figure figure2;
     private IFigure_button button1;
     private IFigure_button button2;
-    private Figure_showcase figure_showcase;
+    private IFigure_showcase<unity.Figure> figure_showcase;
 
     [SetUp]
     public void prepare() {
-        figure_showcase = new GameObject().AddComponent<Figure_showcase>();
+        figure_showcase = new GameObject().add_component<Figure_showcase>();
         figure1 = figure_showcase.provide_figure("figure1");
         figure2 = figure_showcase.provide_figure("figure2");
         button1 = figure_showcase.get_button_for_figure(figure1);
