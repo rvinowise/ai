@@ -24,7 +24,7 @@ public class Button_table:
 {
     
     public IVisual_figure shown_figure { get; private set; }
-    public IFigure_button_click_receiver higher_click_receiver { get; set; }
+    
     
     #region unity inspector
     [SerializeField] private Figure_button figure_button_prefab;
@@ -33,30 +33,42 @@ public class Button_table:
 
     #endregion unity inspector
 
-    private IFigure_provider<Figure> figure_provider;
     private readonly IDictionary<IVisual_figure, IFigure_button> figure_buttons = 
         new Dictionary<IVisual_figure, IFigure_button>();
-    private IMode_selector mode_selector;
 
 
-    public void init() {
+    public void Awake() {
         button_stencil_out.click_receiver = this;
         button_stencil_in.click_receiver = this;
     }
 
 
-
-
+    #region IButton_table
     
-    private void create_button_for_figure(IVisual_figure figure) {
+    public IFigure_button_click_receiver higher_click_receiver { get; set; }
+
+
+    public IFigure_button provide_button_for_figure(IVisual_figure figure) {
+        IFigure_button button = get_button_for_figure(figure);
+        if (button == null) {
+            button = create_button_for_figure(figure);
+        }
+        return button;
+    }
+    public IFigure_button create_button_for_figure(IVisual_figure figure) {
         Figure_button figure_button = figure_button_prefab.create_for_figure(figure);
         figure.button = figure_button;
         figure_button.click_receiver = this;
         add_item(figure_button);
         figure_buttons.Add(figure, figure_button);
+        return figure_button;
     }
-
-    private void remove_button_for_figure(Figure figure) {
+    public IFigure_button get_button_for_figure(IVisual_figure figure) {
+        figure_buttons.TryGetValue(figure, out var out_button);
+        return out_button;
+    }
+    
+    public void remove_button_for_figure(IVisual_figure figure) {
         var button_key = figure_buttons.First(
             button => button.Value.figure == figure
         );
@@ -64,7 +76,9 @@ public class Button_table:
         figure_buttons.Remove(button_key);
     }
     
- 
+    #endregion IButton_table
+
+    
     #region IFigure_button_click_receiver
     
     public void on_click(IFigure_button figure_button) =>
@@ -75,16 +89,5 @@ public class Button_table:
     
     #endregion
     
-
-    #region IButton_table
-    
-    public IFigure_button_click_receiver click_receiver { get; private set; }
-    
-    public IFigure_button get_button_for_figure(IVisual_figure figure) {
-        figure_buttons.TryGetValue(figure, out var out_button);
-        return out_button;
-    }
-    
-    #endregion IButton_table
 }
 }

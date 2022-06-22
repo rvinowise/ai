@@ -26,40 +26,42 @@ public class Figure_showcase:
     public IVisual_figure shown_figure { get; private set; }
     
     #region unity inspector
-    public Table figure_button_table;
+    public Button_table _button_table;
     [SerializeField] private Figure figure_prefab;
-    [SerializeField] private Figure_button figure_button_prefab;
     [SerializeField] private Transform shown_figure_folder;
-    [SerializeField] private Figure_button button_stencil_out;
-    [SerializeField] private Figure_button button_stencil_in;
+    //[SerializeField] private Figure_button button_stencil_out;
+    //[SerializeField] private Figure_button button_stencil_in;
 
     #endregion unity inspector
 
     private IFigure_provider<Figure> figure_provider;
-    private readonly IDictionary<IVisual_figure, IFigure_button> figure_buttons = 
-        new Dictionary<IVisual_figure, IFigure_button>();
-    private IMode_selector mode_selector;
+    public IButton_table<Figure_button> button_table;
 
 
     public void Awake() {
+        init(_button_table);
+        //button_stencil_out.click_receiver = this;
+        //button_stencil_in.click_receiver = this;
+    }
+
+    public void init(
+        IButton_table<Figure_button> button_table        
+    ) {
+        this.button_table = button_table;
         figure_provider = new Figure_provider<Figure>(create_figure);
-        button_stencil_out.click_receiver = this;
-        button_stencil_in.click_receiver = this;
     }
 
 
     #region IFigure_showcase
-
 
     public void show_insides_of_one_figure(IVisual_figure new_shown_figure) {
         new_shown_figure.show();
         shown_figure.hide();
     }
 
-    public IFigure_button get_button_for_figure(IVisual_figure figure) {
-        figure_buttons.TryGetValue(figure, out var out_button);
-        return out_button;
-    }
+    public IFigure_button get_button_for_figure(IVisual_figure figure) =>
+        button_table.get_button_for_figure(figure);
+    
     #endregion
     
     #region IFigure_provider
@@ -87,19 +89,12 @@ public class Figure_showcase:
         figure.transform.parent = shown_figure_folder;
         figure.transform.localPosition = Vector3.zero;
         figure.hide();
-        create_button_for_figure(figure);
+        button_table.create_button_for_figure(figure);
 
         return figure;
     }
     
-    //unity
-    private void create_button_for_figure(IVisual_figure figure) {
-        Figure_button figure_button = figure_button_prefab.create_for_figure(figure);
-        figure.button = figure_button;
-        figure_button.click_receiver = this;
-        figure_button_table.add_item(figure_button);
-        figure_buttons.Add(figure, figure_button);
-    }
+
     public string get_next_id_for_prefix(string prefix) => 
         figure_provider.get_next_id_for_prefix(prefix);
 
@@ -107,20 +102,10 @@ public class Figure_showcase:
     public void remove_figure(IFigure figure) {
         figure_provider.remove_figure(figure);
         if (figure is Figure unity_figure) {
-            remove_button_for_figure(unity_figure);
+            button_table.remove_button_for_figure(unity_figure);
         }
     }
 
-    
-
-
-    private void remove_button_for_figure(Figure figure) {
-        var button_key = figure_buttons.First(
-            button => button.Value.figure == figure
-        );
-        figure_button_table.remove_item(button_key.Value as MonoBehaviour);
-        figure_buttons.Remove(button_key);
-    }
     
  
     #region IFigure_button_click_receiver

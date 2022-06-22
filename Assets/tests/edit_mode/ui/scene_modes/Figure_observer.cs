@@ -19,11 +19,13 @@ public class figure_showcase_is_populated_with_figures {
     private IVisual_figure figure1;
     private IVisual_figure figure2;
     private Figure_showcase figure_showcase;
+    private IButton_table<Figure_button> button_table;
 
     [SetUp]
     public void prepare() {
+        button_table = new GameObject().add_component<Button_table>();
         figure_showcase = new GameObject().add_component<Figure_showcase>();
-        figure_showcase.Awake();
+        figure_showcase.init(button_table);
         figure1 = figure_showcase.provide_figure("figure1");
         figure2 = figure_showcase.provide_figure("figure2");
         
