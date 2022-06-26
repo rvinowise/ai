@@ -16,7 +16,10 @@ public class Table:
     ITable<TItem>
 {
 
+    #region unity inspector
     public Table_cell table_cell_prefab;
+    #endregion unity inspector
+    
     private Canvas canvas;
 
     private List<Table_cell> cells = new List<Table_cell>();

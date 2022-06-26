@@ -388,7 +388,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   representations_folder: {fileID: 6994657337934734099}
-  mode_selector: {fileID: 0}
   btn_finish_building: {fileID: 5073641327523951404}
 --- !u!1 &3351087919356451451
 GameObject:
@@ -835,7 +834,7 @@ GameObject:
   - component: {fileID: 3182813892524673936}
   - component: {fileID: 5107524747873855726}
   m_Layer: 0
-  m_Name: figure_inside
+  m_Name: figure
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -901,11 +900,10 @@ MonoBehaviour:
     type: 3}
   representation_prefab: {fileID: 6715416403932580886, guid: 422e6d8c5fa304840b332deb2bc13c2c,
     type: 3}
+  _header: {fileID: 0}
   animator: {fileID: 0}
   lable: {fileID: 7897827370900560127}
   representations_folder: {fileID: 6994657337934734099}
-  button: {fileID: 0}
-  header: {fileID: 522019860543652186}
   sprite_renderer: {fileID: 0}
 --- !u!1 &8849988385214807253
 GameObject:

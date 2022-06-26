@@ -24,15 +24,16 @@ public partial class Figure:
     public readonly List<IFigure_appearance> _appearances 
         = new List<IFigure_appearance>();
     
+    #region unity inspector
+    
     public Figure_appearance appearance_preafab;
     public Figure_representation representation_prefab;
-    [SerializeField] public Figure_header _header;
-    
-    [HideInInspector]
-    public Animator animator;
+    public Figure_header _header;
     
     public TMP_Text lable;
     [SerializeField] private Transform representations_folder;
+    
+    #endregion unity inspector
     
     #region building
 
@@ -64,9 +65,7 @@ public partial class Figure:
     }
 
     public void add_appearance(IFigure_appearance appearance) {
-        if (animator != null) {
-            animator.SetTrigger("fire");
-        }
+
         _appearances.Add(appearance);
         if (appearance is Figure_appearance unity_appearance) {
             unity_appearance.transform.parent = this.transform;
@@ -122,14 +121,6 @@ public partial class Figure:
     void Awake() {
         collider = GetComponent<Collider>();
     }
-
-    // public void start_building() {
-    //     header.start_building();
-    // }
-    // public void finish_building() {
-    //     header.finish_building();
-    // }
-
 
     #region IDestructable
 

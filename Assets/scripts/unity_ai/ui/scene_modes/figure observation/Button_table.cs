@@ -27,7 +27,7 @@ public class Button_table:
     
     
     #region unity inspector
-    [SerializeField] private Figure_button figure_button_prefab;
+    [SerializeField] public Figure_button figure_button_prefab;
     [SerializeField] private Figure_button button_stencil_out;
     [SerializeField] private Figure_button button_stencil_in;
 
