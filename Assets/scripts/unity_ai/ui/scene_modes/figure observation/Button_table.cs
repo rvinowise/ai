@@ -38,8 +38,9 @@ public class Button_table:
 
 
     public void Awake() {
-        button_stencil_out.click_receiver = this;
-        button_stencil_in.click_receiver = this;
+        base.Awake();
+        //button_stencil_out.click_receiver = this;
+        //button_stencil_in.click_receiver = this;
     }
 
 

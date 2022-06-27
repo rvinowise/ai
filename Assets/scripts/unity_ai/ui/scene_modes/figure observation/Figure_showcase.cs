@@ -26,8 +26,8 @@ public class Figure_showcase:
     public IVisual_figure shown_figure { get; private set; }
     
     #region unity inspector
-    public Button_table _button_table;
-    [SerializeField] private Figure _figure_prefab;
+    public Button_table button_table;
+    [SerializeField] public Figure figure_prefab;
     [SerializeField] private Transform shown_figure_folder;
     //[SerializeField] private Figure_button button_stencil_out;
     //[SerializeField] private Figure_button button_stencil_in;
@@ -35,28 +35,12 @@ public class Figure_showcase:
     #endregion unity inspector
 
     private IFigure_provider<Figure> figure_provider;
-    private IButton_table<Figure_button> button_table;
-    private Figure figure_prefab;
+
 
     public void Awake() {
-        init(
-            _button_table,
-            _figure_prefab
-        );
-        //button_stencil_out.click_receiver = this;
-        //button_stencil_in.click_receiver = this;
-    }
-
-    
-    public void init(
-        IButton_table<Figure_button> button_table,
-        Figure figure_prefab
-    ) {
-        this.button_table = button_table;
-        this.figure_prefab = figure_prefab;
         figure_provider = new Figure_provider<Figure>(create_figure);
+        
     }
-
 
 
     #region IFigure_showcase

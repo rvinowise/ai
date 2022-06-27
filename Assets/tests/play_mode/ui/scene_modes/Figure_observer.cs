@@ -7,6 +7,7 @@ using rvinowise.ai.simple;
 using rvinowise.ai.ui.general;
 using rvinowise.ai.ui.unity;
 using rvinowise.ai.unity;
+using rvinowise.unity.extensions;
 using rvinowise.unity.ui.input;
 using UnityEditor;
 using Figure = rvinowise.ai.unity.Figure;
@@ -23,30 +24,26 @@ public class figure_showcase_is_populated_with_figures {
     private Figure_showcase figure_showcase;
 
     private unity.Figure figure_prefab = AssetDatabase.LoadAssetAtPath<unity.Figure>("Assets/objects/Node/Figure/figure.prefab");
-    private Figure_button button_prefab = AssetDatabase.LoadAssetAtPath<Figure_button>("Assets/objects/Node/Figure/figure_button.prefab");
-    private Figure_button table_prefab = AssetDatabase.LoadAssetAtPath<Figure_button>("Assets/ui/table.prefab");
+    private Button_table button_table_prefab = AssetDatabase.LoadAssetAtPath<Button_table>("Assets/objects/ui/table/button_table.prefab");
     
     [SetUp]
     public void prepare() {
-        Button_table button_table = new GameObject().add_component<Button_table>();
-        button_table.figure_button_prefab = button_prefab;
         figure_showcase = new GameObject().add_component<Figure_showcase>();
-        figure_showcase.init(
-            button_table,
-            figure_prefab
-        );
+        Button_table button_table = button_table_prefab.provide_new<Button_table>();
+        figure_showcase.button_table = button_table;
+        figure_showcase.figure_prefab = figure_prefab;
         figure1 = figure_showcase.provide_figure("figure1");
         figure2 = figure_showcase.provide_figure("figure2");
         
     }
     
-
-
+    [Test]
     public void check_figure_buttons() {
-        
+        buttons_can_be_received_for_the_created_figures();
+        buttons_are_different_for_different_figures();
     }
     
-    [Test]
+    
     public void buttons_can_be_received_for_the_created_figures() {
         Assert.That(
             figure_showcase.get_button_for_figure(figure1),
@@ -57,7 +54,6 @@ public class figure_showcase_is_populated_with_figures {
             Is.Not.Null
         );
     }
-    [Test]
     public void buttons_are_different_for_different_figures() {
         Assert.That(
             figure_showcase.get_button_for_figure(figure1),
@@ -77,16 +73,18 @@ public class several_figure_buttons_in_a_showcase_are_clicked_after_each_other {
     private IFigure_button button1;
     private IFigure_button button2;
     private Figure_showcase figure_showcase;
+    
     private unity.Figure figure_prefab = AssetDatabase.LoadAssetAtPath<unity.Figure>("Assets/objects/Node/Figure/figure.prefab");
-    private Figure_button button_prefab = AssetDatabase.LoadAssetAtPath<Figure_button>("Assets/objects/Node/Figure/figure_button.prefab");
+    private Button_table button_table_prefab = AssetDatabase.LoadAssetAtPath<Button_table>("Assets/objects/ui/table/button_table.prefab");  
     
     [SetUp]
     public void prepare() {
-        Button_table button_table = new GameObject().add_component<Button_table>();
-        button_table.figure_button_prefab = button_prefab;
         
         figure_showcase = new GameObject().add_component<Figure_showcase>();
-        figure_showcase.init(button_table, figure_prefab);
+        Button_table button_table = button_table_prefab.provide_new<Button_table>();
+        button_table.higher_click_receiver = figure_showcase; // who should link them?
+        figure_showcase.button_table = button_table;
+        figure_showcase.figure_prefab = figure_prefab;
         figure1 = figure_showcase.provide_figure("figure1");
         figure2 = figure_showcase.provide_figure("figure2");
         button1 = figure_showcase.get_button_for_figure(figure1);
