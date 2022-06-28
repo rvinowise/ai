@@ -47,7 +47,8 @@ public class Figure_showcase:
 
     public void show_insides_of_one_figure(IVisual_figure new_shown_figure) {
         new_shown_figure.show();
-        shown_figure.hide();
+        shown_figure?.hide();
+        shown_figure = new_shown_figure;
     }
 
     public IFigure_button get_button_for_figure(IVisual_figure figure) =>
@@ -101,6 +102,7 @@ public class Figure_showcase:
  
     #region IFigure_button_click_receiver
     public void on_click(IFigure_button figure_button) {
+        show_insides_of_one_figure(figure_button.figure);
     }
 
     public void on_click_stencil_interface(Stencil_interface direction) {
