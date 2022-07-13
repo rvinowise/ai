@@ -1,0 +1,1849 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &1
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 1
+  m_Script: {fileID: 12004, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PixelRect:
+    serializedVersion: 2
+    x: 0
+    y: 43
+    width: 1920
+    height: 989
+  m_ShowMode: 4
+  m_Title: Project
+  m_RootView: {fileID: 6}
+  m_MinSize: {x: 875, y: 300}
+  m_MaxSize: {x: 10000, y: 10000}
+  m_Maximized: 1
+--- !u!114 &2
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 1
+  m_Script: {fileID: 12010, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Children:
+  - {fileID: 9}
+  - {fileID: 3}
+  m_Position:
+    serializedVersion: 2
+    x: 0
+    y: 30
+    width: 1920
+    height: 939
+  m_MinSize: {x: 300, y: 200}
+  m_MaxSize: {x: 24288, y: 16192}
+  vertical: 0
+  controlID: 99
+--- !u!114 &3
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 1
+  m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Children: []
+  m_Position:
+    serializedVersion: 2
+    x: 1466
+    y: 0
+    width: 454
+    height: 939
+  m_MinSize: {x: 275, y: 50}
+  m_MaxSize: {x: 4000, y: 4000}
+  m_ActualView: {fileID: 14}
+  m_Panes:
+  - {fileID: 14}
+  m_Selected: 0
+  m_LastSelected: 0
+--- !u!114 &4
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 1
+  m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Children: []
+  m_Position:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 363
+    height: 556
+  m_MinSize: {x: 201, y: 221}
+  m_MaxSize: {x: 4001, y: 4021}
+  m_ActualView: {fileID: 15}
+  m_Panes:
+  - {fileID: 15}
+  m_Selected: 0
+  m_LastSelected: 0
+--- !u!114 &5
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 1
+  m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: ProjectBrowser
+  m_EditorClassIdentifier: 
+  m_Children: []
+  m_Position:
+    serializedVersion: 2
+    x: 0
+    y: 556
+    width: 1466
+    height: 383
+  m_MinSize: {x: 231, y: 271}
+  m_MaxSize: {x: 10001, y: 10021}
+  m_ActualView: {fileID: 13}
+  m_Panes:
+  - {fileID: 13}
+  - {fileID: 18}
+  - {fileID: 12}
+  m_Selected: 0
+  m_LastSelected: 2
+--- !u!114 &6
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 1
+  m_Script: {fileID: 12008, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Children:
+  - {fileID: 7}
+  - {fileID: 2}
+  - {fileID: 8}
+  m_Position:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1920
+    height: 989
+  m_MinSize: {x: 875, y: 300}
+  m_MaxSize: {x: 10000, y: 10000}
+  m_UseTopView: 1
+  m_TopViewHeight: 30
+  m_UseBottomView: 1
+  m_BottomViewHeight: 20
+--- !u!114 &7
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 1
+  m_Script: {fileID: 12011, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Children: []
+  m_Position:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1920
+    height: 30
+  m_MinSize: {x: 0, y: 0}
+  m_MaxSize: {x: 0, y: 0}
+  m_LastLoadedLayoutName: 
+--- !u!114 &8
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 1
+  m_Script: {fileID: 12042, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Children: []
+  m_Position:
+    serializedVersion: 2
+    x: 0
+    y: 969
+    width: 1920
+    height: 20
+  m_MinSize: {x: 0, y: 0}
+  m_MaxSize: {x: 0, y: 0}
+--- !u!114 &9
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 1
+  m_Script: {fileID: 12010, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Children:
+  - {fileID: 10}
+  - {fileID: 5}
+  m_Position:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1466
+    height: 939
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 16192, y: 16192}
+  vertical: 1
+  controlID: 100
+--- !u!114 &10
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 1
+  m_Script: {fileID: 12010, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Children:
+  - {fileID: 4}
+  - {fileID: 11}
+  m_Position:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1466
+    height: 556
+  m_MinSize: {x: 200, y: 100}
+  m_MaxSize: {x: 16192, y: 8096}
+  vertical: 0
+  controlID: 101
+--- !u!114 &11
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 1
+  m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: SceneView
+  m_EditorClassIdentifier: 
+  m_Children: []
+  m_Position:
+    serializedVersion: 2
+    x: 363
+    y: 0
+    width: 1103
+    height: 556
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
+  m_ActualView: {fileID: 16}
+  m_Panes:
+  - {fileID: 16}
+  - {fileID: 17}
+  m_Selected: 0
+  m_LastSelected: 1
+--- !u!114 &12
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 13401, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_MinSize: {x: 100, y: 100}
+  m_MaxSize: {x: 4000, y: 4000}
+  m_TitleContent:
+    m_Text: Test Runner
+    m_Image: {fileID: 0}
+    m_Tooltip: 
+  m_Pos:
+    serializedVersion: 2
+    x: 0
+    y: 629
+    width: 1465
+    height: 362
+  m_ViewDataDictionary: {fileID: 0}
+  m_OverlayCanvas:
+    m_LastAppliedPresetName: Default
+    m_SaveData: []
+  m_Spl:
+    ID: 344
+    splitterInitialOffset: 0
+    currentActiveSplitter: -1
+    realSizes:
+    - 219
+    - 73
+    relativeSizes:
+    - 0.75
+    - 0.25
+    minSizes:
+    - 32
+    - 32
+    maxSizes:
+    - 0
+    - 0
+    lastTotalSize: 292
+    splitSize: 6
+    xOffset: 0
+    m_Version: 1
+    oldRealSizes: 
+    oldMinSizes: 
+    oldMaxSizes: 
+    oldSplitSize: 0
+  m_TestTypeToolbarIndex: 0
+  m_PlayModeTestListGUI:
+    m_Window: {fileID: 12}
+    m_NewResultList:
+    - id: 1027
+      uniqueId: '[unity_ai][suite]'
+      name: unity_ai
+      fullName: unity_ai
+      resultStatus: 1
+      duration: 0.6748325
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 
+      parentUniqueId: 
+    - id: 1034
+      uniqueId: '[play_mode.dll][suite]'
+      name: play_mode.dll
+      fullName: C:/prj/unity_ai/Library/ScriptAssemblies/play_mode.dll
+      resultStatus: 1
+      duration: 0.4846977
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1027
+      parentUniqueId: '[unity_ai][suite]'
+    - id: 1035
+      uniqueId: play_mode.dll/[rvinowise][suite]
+      name: rvinowise
+      fullName: rvinowise
+      resultStatus: 1
+      duration: 0.469029
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1034
+      parentUniqueId: '[play_mode.dll][suite]'
+    - id: 1036
+      uniqueId: play_mode.dll/rvinowise/[ai][suite]
+      name: ai
+      fullName: rvinowise.ai
+      resultStatus: 1
+      duration: 0.4618571
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1035
+      parentUniqueId: play_mode.dll/[rvinowise][suite]
+    - id: 1037
+      uniqueId: play_mode.dll/rvinowise/ai/[unit_tests][suite]
+      name: unit_tests
+      fullName: rvinowise.ai.unit_tests
+      resultStatus: 1
+      duration: 0.4530951
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1036
+      parentUniqueId: play_mode.dll/rvinowise/[ai][suite]
+    - id: 1038
+      uniqueId: play_mode.dll/rvinowise/ai/unit_tests/[ui][suite]
+      name: ui
+      fullName: rvinowise.ai.unit_tests.ui
+      resultStatus: 1
+      duration: 0.4451547
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1037
+      parentUniqueId: play_mode.dll/rvinowise/ai/[unit_tests][suite]
+    - id: 1039
+      uniqueId: play_mode.dll/rvinowise/ai/unit_tests/ui/[play_mode][rvinowise.ai.unit_tests.ui.figure_observer][suite]
+      name: figure_observer
+      fullName: rvinowise.ai.unit_tests.ui.figure_observer
+      resultStatus: 1
+      duration: 0.4052443
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1038
+      parentUniqueId: play_mode.dll/rvinowise/ai/unit_tests/[ui][suite]
+    - id: 1028
+      uniqueId: play_mode.dll/rvinowise/ai/unit_tests/ui/figure_observer/[play_mode][rvinowise.ai.unit_tests.ui.figure_observer.figure_showcase_is_populated_with_figures][suite]
+      name: figure_showcase_is_populated_with_figures
+      fullName: rvinowise.ai.unit_tests.ui.figure_observer.figure_showcase_is_populated_with_figures
+      resultStatus: 1
+      duration: 0.2011236
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1039
+      parentUniqueId: play_mode.dll/rvinowise/ai/unit_tests/ui/[play_mode][rvinowise.ai.unit_tests.ui.figure_observer][suite]
+    - id: 1029
+      uniqueId: play_mode.dll/rvinowise/ai/unit_tests/ui/figure_observer/figure_showcase_is_populated_with_figures/[play_mode][rvinowise.ai.unit_tests.ui.figure_observer.figure_showcase_is_populated_with_figures.check_figure_buttons]
+      name: check_figure_buttons
+      fullName: rvinowise.ai.unit_tests.ui.figure_observer.figure_showcase_is_populated_with_figures.check_figure_buttons
+      resultStatus: 1
+      duration: 0.097747
+      messages: 
+      output: 'amount of prefabs with pooled Component ''Table_cell (rvinowise.unity.extensions.pooling.Pooled_object)''
+        = 1
+
+'
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1028
+      parentUniqueId: play_mode.dll/rvinowise/ai/unit_tests/ui/figure_observer/[play_mode][rvinowise.ai.unit_tests.ui.figure_observer.figure_showcase_is_populated_with_figures][suite]
+    - id: 1030
+      uniqueId: play_mode.dll/rvinowise/ai/unit_tests/ui/figure_observer/[play_mode][rvinowise.ai.unit_tests.ui.figure_observer.several_figure_buttons_in_a_showcase_are_clicked_after_each_other][suite]
+      name: several_figure_buttons_in_a_showcase_are_clicked_after_each_other
+      fullName: rvinowise.ai.unit_tests.ui.figure_observer.several_figure_buttons_in_a_showcase_are_clicked_after_each_other
+      resultStatus: 1
+      duration: 0.1970235
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1039
+      parentUniqueId: play_mode.dll/rvinowise/ai/unit_tests/ui/[play_mode][rvinowise.ai.unit_tests.ui.figure_observer][suite]
+    - id: 1031
+      uniqueId: play_mode.dll/rvinowise/ai/unit_tests/ui/figure_observer/several_figure_buttons_in_a_showcase_are_clicked_after_each_other/[play_mode][rvinowise.ai.unit_tests.ui.figure_observer.several_figure_buttons_in_a_showcase_are_clicked_after_each_other.different_figure_details_are_shown_after_each_other]
+      name: different_figure_details_are_shown_after_each_other
+      fullName: rvinowise.ai.unit_tests.ui.figure_observer.several_figure_buttons_in_a_showcase_are_clicked_after_each_other.different_figure_details_are_shown_after_each_other
+      resultStatus: 1
+      duration: 0.0104149
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1030
+      parentUniqueId: play_mode.dll/rvinowise/ai/unit_tests/ui/figure_observer/[play_mode][rvinowise.ai.unit_tests.ui.figure_observer.several_figure_buttons_in_a_showcase_are_clicked_after_each_other][suite]
+    - id: 1040
+      uniqueId: play_mode.dll/rvinowise/ai/unit_tests/ui/[play_mode][rvinowise.ai.unit_tests.ui.mode_selector][suite]
+      name: mode_selector
+      fullName: rvinowise.ai.unit_tests.ui.mode_selector
+      resultStatus: 1
+      duration: 0.0366251
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1038
+      parentUniqueId: play_mode.dll/rvinowise/ai/unit_tests/[ui][suite]
+    - id: 1032
+      uniqueId: play_mode.dll/rvinowise/ai/unit_tests/ui/mode_selector/[play_mode][rvinowise.ai.unit_tests.ui.mode_selector.new_figure_is_created][suite]
+      name: new_figure_is_created
+      fullName: rvinowise.ai.unit_tests.ui.mode_selector.new_figure_is_created
+      resultStatus: 1
+      duration: 0.0166025
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1040
+      parentUniqueId: play_mode.dll/rvinowise/ai/unit_tests/ui/[play_mode][rvinowise.ai.unit_tests.ui.mode_selector][suite]
+    - id: 1033
+      uniqueId: play_mode.dll/rvinowise/ai/unit_tests/ui/mode_selector/new_figure_is_created/[play_mode][rvinowise.ai.unit_tests.ui.mode_selector.new_figure_is_created.shows_figure_graph]
+      name: shows_figure_graph
+      fullName: rvinowise.ai.unit_tests.ui.mode_selector.new_figure_is_created.shows_figure_graph
+      resultStatus: 1
+      duration: 0.0007736
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1032
+      parentUniqueId: play_mode.dll/rvinowise/ai/unit_tests/ui/mode_selector/[play_mode][rvinowise.ai.unit_tests.ui.mode_selector.new_figure_is_created][suite]
+    m_ResultText: different_figure_details_are_shown_after_each_other (0.010s)
+    m_ResultStacktrace: 
+    m_TestListState:
+      scrollPos: {x: 0, y: 9}
+      m_SelectedIDs: 23022573
+      m_LastClickedID: 1931805219
+      m_ExpandedIDs: 24783d985f6435a0181b45b5ad054ac8e84679fe56f0350c83ec5111eae8e2256cb3d33c3b281341f8021943ffffff7f
+      m_RenameOverlay:
+        m_UserAcceptedRename: 0
+        m_Name: 
+        m_OriginalName: 
+        m_EditFieldRect:
+          serializedVersion: 2
+          x: 0
+          y: 0
+          width: 0
+          height: 0
+        m_UserData: 0
+        m_IsWaitingForDelay: 0
+        m_IsRenaming: 0
+        m_OriginalEventType: 11
+        m_IsRenamingFilename: 0
+        m_ClientGUIView: {fileID: 0}
+      m_SearchString: 
+    m_TestRunnerUIFilter:
+      PassedHidden: 0
+      FailedHidden: 0
+      NotRunHidden: 0
+      m_SearchString: 
+      selectedCategoryMask: 0
+      availableCategories:
+      - Uncategorized
+    m_SelectedOption: 0
+  m_EditModeTestListGUI:
+    m_Window: {fileID: 12}
+    m_NewResultList:
+    - id: 1000
+      uniqueId: '[unity_ai][suite]'
+      name: unity_ai
+      fullName: unity_ai
+      resultStatus: 1
+      duration: 0.7647845
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 
+      parentUniqueId: 
+    - id: 1015
+      uniqueId: '[edit_mode.dll][suite]'
+      name: edit_mode.dll
+      fullName: C:/prj/unity_ai/Library/ScriptAssemblies/edit_mode.dll
+      resultStatus: 1
+      duration: 0.7010987
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1000
+      parentUniqueId: '[unity_ai][suite]'
+    - id: 1016
+      uniqueId: edit_mode.dll/[rvinowise][suite]
+      name: rvinowise
+      fullName: rvinowise
+      resultStatus: 1
+      duration: 0.70043
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1015
+      parentUniqueId: '[edit_mode.dll][suite]'
+    - id: 1017
+      uniqueId: edit_mode.dll/rvinowise/[ai][suite]
+      name: ai
+      fullName: rvinowise.ai
+      resultStatus: 1
+      duration: 0.7000663
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1016
+      parentUniqueId: edit_mode.dll/[rvinowise][suite]
+    - id: 1018
+      uniqueId: edit_mode.dll/rvinowise/ai/[unit_tests][suite]
+      name: unit_tests
+      fullName: rvinowise.ai.unit_tests
+      resultStatus: 1
+      duration: 0.6956574
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1017
+      parentUniqueId: edit_mode.dll/rvinowise/[ai][suite]
+    - id: 1023
+      uniqueId: edit_mode.dll/rvinowise/ai/unit_tests/[edit_mode][rvinowise.ai.unit_tests.file_input][suite]
+      name: file_input
+      fullName: rvinowise.ai.unit_tests.file_input
+      resultStatus: 1
+      duration: 0.5020934
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1018
+      parentUniqueId: edit_mode.dll/rvinowise/ai/[unit_tests][suite]
+    - id: 1013
+      uniqueId: edit_mode.dll/rvinowise/ai/unit_tests/file_input/[edit_mode][rvinowise.ai.unit_tests.file_input.text_file_is_loaded][suite]
+      name: text_file_is_loaded
+      fullName: rvinowise.ai.unit_tests.file_input.text_file_is_loaded
+      resultStatus: 1
+      duration: 0.4961241
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1023
+      parentUniqueId: edit_mode.dll/rvinowise/ai/unit_tests/[edit_mode][rvinowise.ai.unit_tests.file_input][suite]
+    - id: 1014
+      uniqueId: edit_mode.dll/rvinowise/ai/unit_tests/file_input/text_file_is_loaded/[edit_mode][rvinowise.ai.unit_tests.file_input.text_file_is_loaded.history_is_loaded_to_network]
+      name: history_is_loaded_to_network
+      fullName: rvinowise.ai.unit_tests.file_input.text_file_is_loaded.history_is_loaded_to_network
+      resultStatus: 1
+      duration: 0.4548145
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1013
+      parentUniqueId: edit_mode.dll/rvinowise/ai/unit_tests/file_input/[edit_mode][rvinowise.ai.unit_tests.file_input.text_file_is_loaded][suite]
+    - id: 1020
+      uniqueId: edit_mode.dll/rvinowise/ai/unit_tests/[edit_mode][rvinowise.ai.unit_tests.generator_of_mappings][suite]
+      name: generator_of_mappings
+      fullName: rvinowise.ai.unit_tests.generator_of_mappings
+      resultStatus: 1
+      duration: 0.102362
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1018
+      parentUniqueId: edit_mode.dll/rvinowise/ai/[unit_tests][suite]
+    - id: 1005
+      uniqueId: edit_mode.dll/rvinowise/ai/unit_tests/generator_of_mappings/[edit_mode][rvinowise.ai.unit_tests.generator_of_mappings.not_enough_occurances_of_figure][suite]
+      name: not_enough_occurances_of_figure
+      fullName: rvinowise.ai.unit_tests.generator_of_mappings.not_enough_occurances_of_figure
+      resultStatus: 1
+      duration: 0.0061038
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1020
+      parentUniqueId: edit_mode.dll/rvinowise/ai/unit_tests/[edit_mode][rvinowise.ai.unit_tests.generator_of_mappings][suite]
+    - id: 1006
+      uniqueId: edit_mode.dll/rvinowise/ai/unit_tests/generator_of_mappings/not_enough_occurances_of_figure/[edit_mode][rvinowise.ai.unit_tests.generator_of_mappings.not_enough_occurances_of_figure.zero_iterations_are_possible]
+      name: zero_iterations_are_possible
+      fullName: rvinowise.ai.unit_tests.generator_of_mappings.not_enough_occurances_of_figure.zero_iterations_are_possible
+      resultStatus: 1
+      duration: 0.0044102
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1005
+      parentUniqueId: edit_mode.dll/rvinowise/ai/unit_tests/generator_of_mappings/[edit_mode][rvinowise.ai.unit_tests.generator_of_mappings.not_enough_occurances_of_figure][suite]
+    - id: 1003
+      uniqueId: edit_mode.dll/rvinowise/ai/unit_tests/generator_of_mappings/[edit_mode][rvinowise.ai.unit_tests.generator_of_mappings.regular_loop_over_combinations_can_be_done][suite]
+      name: regular_loop_over_combinations_can_be_done
+      fullName: rvinowise.ai.unit_tests.generator_of_mappings.regular_loop_over_combinations_can_be_done
+      resultStatus: 1
+      duration: 0.0843794
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1020
+      parentUniqueId: edit_mode.dll/rvinowise/ai/unit_tests/[edit_mode][rvinowise.ai.unit_tests.generator_of_mappings][suite]
+    - id: 1004
+      uniqueId: edit_mode.dll/rvinowise/ai/unit_tests/generator_of_mappings/regular_loop_over_combinations_can_be_done/[edit_mode][rvinowise.ai.unit_tests.generator_of_mappings.regular_loop_over_combinations_can_be_done.all_combinations_are_provided_in_a_loop]
+      name: all_combinations_are_provided_in_a_loop
+      fullName: rvinowise.ai.unit_tests.generator_of_mappings.regular_loop_over_combinations_can_be_done.all_combinations_are_provided_in_a_loop
+      resultStatus: 1
+      duration: 0.0688358
+      messages: 
+      output: '2, 1, 0
+
+        3, 1, 0
+
+        4, 1, 0
+
+        1, 2, 0
+
+        3,
+        2, 0
+
+        4, 2, 0
+
+        1, 3, 0
+
+        2, 3, 0
+
+        4, 3,
+        0
+
+        1, 4, 0
+
+        2, 4, 0
+
+        3, 4, 0
+
+        2, 0, 1
+
+        3,
+        0, 1
+
+        4, 0, 1
+
+        0, 2, 1
+
+        3, 2, 1
+
+        4, 2,
+        1
+
+        0, 3, 1
+
+        2, 3, 1
+
+        4, 3, 1
+
+        0, 4, 1
+
+        2,
+        4, 1
+
+        3, 4, 1
+
+        1, 0, 2
+
+        3, 0, 2
+
+        4, 0,
+        2
+
+        0, 1, 2
+
+        3, 1, 2
+
+        4, 1, 2
+
+        0, 3, 2
+
+        1,
+        3, 2
+
+        4, 3, 2
+
+        0, 4, 2
+
+        1, 4, 2
+
+        3, 4,
+        2
+
+        1, 0, 3
+
+        2, 0, 3
+
+        4, 0, 3
+
+        0, 1, 3
+
+        2,
+        1, 3
+
+        4, 1, 3
+
+        0, 2, 3
+
+        1, 2, 3
+
+        4, 2,
+        3
+
+        0, 4, 3
+
+        1, 4, 3
+
+        2, 4, 3
+
+        1, 0, 4
+
+        2,
+        0, 4
+
+        3, 0, 4
+
+        0, 1, 4
+
+        2, 1, 4
+
+        3, 1,
+        4
+
+        0, 2, 4
+
+        1, 2, 4
+
+        3, 2, 4
+
+        0, 3, 4
+
+        1,
+        3, 4
+
+        2, 3, 4
+
+'
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1003
+      parentUniqueId: edit_mode.dll/rvinowise/ai/unit_tests/generator_of_mappings/[edit_mode][rvinowise.ai.unit_tests.generator_of_mappings.regular_loop_over_combinations_can_be_done][suite]
+    - id: 1019
+      uniqueId: edit_mode.dll/rvinowise/ai/unit_tests/[edit_mode][rvinowise.ai.unit_tests.generator_of_order_sequences][suite]
+      name: generator_of_order_sequences
+      fullName: rvinowise.ai.unit_tests.generator_of_order_sequences
+      resultStatus: 1
+      duration: 0.0261909
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1018
+      parentUniqueId: edit_mode.dll/rvinowise/ai/[unit_tests][suite]
+    - id: 1001
+      uniqueId: edit_mode.dll/rvinowise/ai/unit_tests/generator_of_order_sequences/[edit_mode][rvinowise.ai.unit_tests.generator_of_order_sequences.initialised_correctly_for_generation][suite]
+      name: initialised_correctly_for_generation
+      fullName: rvinowise.ai.unit_tests.generator_of_order_sequences.initialised_correctly_for_generation
+      resultStatus: 1
+      duration: 0.0188685
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1019
+      parentUniqueId: edit_mode.dll/rvinowise/ai/unit_tests/[edit_mode][rvinowise.ai.unit_tests.generator_of_order_sequences][suite]
+    - id: 1002
+      uniqueId: edit_mode.dll/rvinowise/ai/unit_tests/generator_of_order_sequences/initialised_correctly_for_generation/[edit_mode][rvinowise.ai.unit_tests.generator_of_order_sequences.initialised_correctly_for_generation.all_combinations_are_provided_in_a_loop]
+      name: all_combinations_are_provided_in_a_loop
+      fullName: rvinowise.ai.unit_tests.generator_of_order_sequences.initialised_correctly_for_generation.all_combinations_are_provided_in_a_loop
+      resultStatus: 1
+      duration: 0.010354
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: edit_mode.dll/rvinowise/ai/unit_tests/generator_of_order_sequences/[edit_mode][rvinowise.ai.unit_tests.generator_of_order_sequences.initialised_correctly_for_generation][suite]
+    - id: 1022
+      uniqueId: edit_mode.dll/rvinowise/ai/unit_tests/[edit_mode][rvinowise.ai.unit_tests.network_initialiser][suite]
+      name: network_initialiser
+      fullName: rvinowise.ai.unit_tests.network_initialiser
+      resultStatus: 1
+      duration: 0.0228136
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1018
+      parentUniqueId: edit_mode.dll/rvinowise/ai/[unit_tests][suite]
+    - id: 1011
+      uniqueId: edit_mode.dll/rvinowise/ai/unit_tests/network_initialiser/[edit_mode][rvinowise.ai.unit_tests.network_initialiser.network_needs_to_be_initialised][suite]
+      name: network_needs_to_be_initialised
+      fullName: rvinowise.ai.unit_tests.network_initialiser.network_needs_to_be_initialised
+      resultStatus: 1
+      duration: 0.0108947
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1022
+      parentUniqueId: edit_mode.dll/rvinowise/ai/unit_tests/[edit_mode][rvinowise.ai.unit_tests.network_initialiser][suite]
+    - id: 1012
+      uniqueId: edit_mode.dll/rvinowise/ai/unit_tests/network_initialiser/network_needs_to_be_initialised/[edit_mode][rvinowise.ai.unit_tests.network_initialiser.network_needs_to_be_initialised.base_signals_are_created_in_network]
+      name: base_signals_are_created_in_network
+      fullName: rvinowise.ai.unit_tests.network_initialiser.network_needs_to_be_initialised.base_signals_are_created_in_network
+      resultStatus: 1
+      duration: 0.0021395
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1011
+      parentUniqueId: edit_mode.dll/rvinowise/ai/unit_tests/network_initialiser/[edit_mode][rvinowise.ai.unit_tests.network_initialiser.network_needs_to_be_initialised][suite]
+    - id: 1021
+      uniqueId: edit_mode.dll/rvinowise/ai/unit_tests/[edit_mode][rvinowise.ai.unit_tests.sequence_finder][suite]
+      name: sequence_finder
+      fullName: rvinowise.ai.unit_tests.sequence_finder
+      resultStatus: 1
+      duration: 0.0373163
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1018
+      parentUniqueId: edit_mode.dll/rvinowise/ai/[unit_tests][suite]
+    - id: 1007
+      uniqueId: edit_mode.dll/rvinowise/ai/unit_tests/sequence_finder/[edit_mode][rvinowise.ai.unit_tests.sequence_finder.two_signals_repeat_twice][suite]
+      name: two_signals_repeat_twice
+      fullName: rvinowise.ai.unit_tests.sequence_finder.two_signals_repeat_twice
+      resultStatus: 1
+      duration: 0.0258257
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1021
+      parentUniqueId: edit_mode.dll/rvinowise/ai/unit_tests/[edit_mode][rvinowise.ai.unit_tests.sequence_finder][suite]
+    - id: 1010
+      uniqueId: edit_mode.dll/rvinowise/ai/unit_tests/sequence_finder/two_signals_repeat_twice/[edit_mode][rvinowise.ai.unit_tests.sequence_finder.two_signals_repeat_twice.repeated_sequences_are_found][suite]
+      name: repeated_sequences_are_found
+      fullName: rvinowise.ai.unit_tests.sequence_finder.two_signals_repeat_twice.repeated_sequences_are_found
+      resultStatus: 1
+      duration: 0.0244733
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1007
+      parentUniqueId: edit_mode.dll/rvinowise/ai/unit_tests/sequence_finder/[edit_mode][rvinowise.ai.unit_tests.sequence_finder.two_signals_repeat_twice][suite]
+    - id: 1008
+      uniqueId: edit_mode.dll/rvinowise/ai/unit_tests/sequence_finder/two_signals_repeat_twice/repeated_sequences_are_found/[edit_mode][rvinowise.ai.unit_tests.sequence_finder.two_signals_repeat_twice.repeated_sequences_are_found(System.String[],System.Int32[][])]
+      name: repeated_sequences_are_found(System.String[],System.Int32[][])
+      fullName: rvinowise.ai.unit_tests.sequence_finder.two_signals_repeat_twice.repeated_sequences_are_found(System.String[],System.Int32[][])
+      resultStatus: 1
+      duration: 0.0199618
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1010
+      parentUniqueId: edit_mode.dll/rvinowise/ai/unit_tests/sequence_finder/two_signals_repeat_twice/[edit_mode][rvinowise.ai.unit_tests.sequence_finder.two_signals_repeat_twice.repeated_sequences_are_found][suite]
+    - id: 1009
+      uniqueId: edit_mode.dll/rvinowise/ai/unit_tests/sequence_finder/two_signals_repeat_twice/repeated_sequences_are_found/[edit_mode][rvinowise.ai.unit_tests.sequence_finder.two_signals_repeat_twice.repeated_sequences_are_found(System.String[],System.Int32[][])]2
+      name: repeated_sequences_are_found(System.String[],System.Int32[][])
+      fullName: rvinowise.ai.unit_tests.sequence_finder.two_signals_repeat_twice.repeated_sequences_are_found(System.String[],System.Int32[][]
+        GeneratedTestCase2)
+      resultStatus: 1
+      duration: 0.0011367
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1010
+      parentUniqueId: edit_mode.dll/rvinowise/ai/unit_tests/sequence_finder/two_signals_repeat_twice/[edit_mode][rvinowise.ai.unit_tests.sequence_finder.two_signals_repeat_twice.repeated_sequences_are_found][suite]
+    m_ResultText: unity_ai (0.765s)
+    m_ResultStacktrace: 
+    m_TestListState:
+      scrollPos: {x: 0, y: 169}
+      m_SelectedIDs: 24783d98
+      m_LastClickedID: -1740802012
+      m_ExpandedIDs: 946b919024783d98db14ff9b0f8cf9a1570bbfb395cfe6c896d6eae4ac7456e8be93c7ec779189fe279a4004358b042966f540531d520b56ef590a5c2403cc70d42f0675ffffff7f
+      m_RenameOverlay:
+        m_UserAcceptedRename: 0
+        m_Name: 
+        m_OriginalName: 
+        m_EditFieldRect:
+          serializedVersion: 2
+          x: 0
+          y: 0
+          width: 0
+          height: 0
+        m_UserData: 0
+        m_IsWaitingForDelay: 0
+        m_IsRenaming: 0
+        m_OriginalEventType: 11
+        m_IsRenamingFilename: 0
+        m_ClientGUIView: {fileID: 0}
+      m_SearchString: 
+    m_TestRunnerUIFilter:
+      PassedHidden: 0
+      FailedHidden: 0
+      NotRunHidden: 0
+      m_SearchString: 
+      selectedCategoryMask: 0
+      availableCategories:
+      - Uncategorized
+--- !u!114 &13
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 1
+  m_Script: {fileID: 12014, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_MinSize: {x: 230, y: 250}
+  m_MaxSize: {x: 10000, y: 10000}
+  m_TitleContent:
+    m_Text: Project
+    m_Image: {fileID: -5467254957812901981, guid: 0000000000000000d000000000000000,
+      type: 0}
+    m_Tooltip: 
+  m_Pos:
+    serializedVersion: 2
+    x: 0
+    y: 629
+    width: 1465
+    height: 362
+  m_ViewDataDictionary: {fileID: 0}
+  m_OverlayCanvas:
+    m_LastAppliedPresetName: Default
+    m_SaveData: []
+  m_SearchFilter:
+    m_NameFilter: 
+    m_ClassNames: []
+    m_AssetLabels: []
+    m_AssetBundleNames: []
+    m_VersionControlStates: []
+    m_SoftLockControlStates: []
+    m_ReferencingInstanceIDs: 
+    m_SceneHandles: 
+    m_ShowAllHits: 0
+    m_SkipHidden: 0
+    m_SearchArea: 1
+    m_Folders:
+    - Assets/Scenes
+    m_Globs: []
+    m_OriginalText: 
+  m_ViewMode: 1
+  m_StartGridSize: 64
+  m_LastFolders:
+  - Assets/Scenes
+  m_LastFoldersGridSize: -1
+  m_LastProjectPath: C:\prj\unity_ai
+  m_LockTracker:
+    m_IsLocked: 0
+  m_FolderTreeState:
+    scrollPos: {x: 0, y: 0}
+    m_SelectedIDs: 94830000
+    m_LastClickedID: 33684
+    m_ExpandedIDs: 000000008a83000000ca9a3bffffff7f
+    m_RenameOverlay:
+      m_UserAcceptedRename: 0
+      m_Name: 
+      m_OriginalName: 
+      m_EditFieldRect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 0
+        height: 0
+      m_UserData: 0
+      m_IsWaitingForDelay: 0
+      m_IsRenaming: 0
+      m_OriginalEventType: 11
+      m_IsRenamingFilename: 1
+      m_ClientGUIView: {fileID: 0}
+    m_SearchString: 
+    m_CreateAssetUtility:
+      m_EndAction: {fileID: 0}
+      m_InstanceID: 0
+      m_Path: 
+      m_Icon: {fileID: 0}
+      m_ResourceFile: 
+  m_AssetTreeState:
+    scrollPos: {x: 0, y: 0}
+    m_SelectedIDs: 
+    m_LastClickedID: 0
+    m_ExpandedIDs: 
+    m_RenameOverlay:
+      m_UserAcceptedRename: 0
+      m_Name: 
+      m_OriginalName: 
+      m_EditFieldRect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 0
+        height: 0
+      m_UserData: 0
+      m_IsWaitingForDelay: 0
+      m_IsRenaming: 0
+      m_OriginalEventType: 11
+      m_IsRenamingFilename: 1
+      m_ClientGUIView: {fileID: 0}
+    m_SearchString: 
+    m_CreateAssetUtility:
+      m_EndAction: {fileID: 0}
+      m_InstanceID: 0
+      m_Path: 
+      m_Icon: {fileID: 0}
+      m_ResourceFile: 
+  m_ListAreaState:
+    m_SelectedInstanceIDs: 
+    m_LastClickedInstanceID: 0
+    m_HadKeyboardFocusLastEvent: 1
+    m_ExpandedInstanceIDs: c6230000
+    m_RenameOverlay:
+      m_UserAcceptedRename: 0
+      m_Name: 
+      m_OriginalName: 
+      m_EditFieldRect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 0
+        height: 0
+      m_UserData: 0
+      m_IsWaitingForDelay: 0
+      m_IsRenaming: 0
+      m_OriginalEventType: 11
+      m_IsRenamingFilename: 1
+      m_ClientGUIView: {fileID: 0}
+    m_CreateAssetUtility:
+      m_EndAction: {fileID: 0}
+      m_InstanceID: 0
+      m_Path: 
+      m_Icon: {fileID: 0}
+      m_ResourceFile: 
+    m_NewAssetIndexInList: -1
+    m_ScrollPosition: {x: 0, y: 0}
+    m_GridSize: 64
+  m_SkipHiddenPackages: 0
+  m_DirectoriesAreaWidth: 207
+--- !u!114 &14
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 1
+  m_Script: {fileID: 12019, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_MinSize: {x: 275, y: 50}
+  m_MaxSize: {x: 4000, y: 4000}
+  m_TitleContent:
+    m_Text: Inspector
+    m_Image: {fileID: -2667387946076563598, guid: 0000000000000000d000000000000000,
+      type: 0}
+    m_Tooltip: 
+  m_Pos:
+    serializedVersion: 2
+    x: 1466
+    y: 73
+    width: 453
+    height: 918
+  m_ViewDataDictionary: {fileID: 0}
+  m_OverlayCanvas:
+    m_LastAppliedPresetName: Default
+    m_SaveData: []
+  m_ObjectsLockedBeforeSerialization: []
+  m_InstanceIDsLockedBeforeSerialization: 
+  m_PreviewResizer:
+    m_CachedPref: 160
+    m_ControlHash: -371814159
+    m_PrefName: Preview_InspectorPreview
+  m_LastInspectedObjectInstanceID: -1
+  m_LastVerticalScrollValue: 0
+  m_GlobalObjectId: 
+  m_InspectorMode: 0
+  m_LockTracker:
+    m_IsLocked: 0
+  m_PreviewWindow: {fileID: 0}
+--- !u!114 &15
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 1
+  m_Script: {fileID: 12061, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
+  m_TitleContent:
+    m_Text: Hierarchy
+    m_Image: {fileID: 7966133145522015247, guid: 0000000000000000d000000000000000,
+      type: 0}
+    m_Tooltip: 
+  m_Pos:
+    serializedVersion: 2
+    x: 0
+    y: 73
+    width: 362
+    height: 535
+  m_ViewDataDictionary: {fileID: 0}
+  m_OverlayCanvas:
+    m_LastAppliedPresetName: Default
+    m_SaveData: []
+  m_SceneHierarchy:
+    m_TreeViewState:
+      scrollPos: {x: 0, y: 0}
+      m_SelectedIDs: 94830000
+      m_LastClickedID: 0
+      m_ExpandedIDs: ecc7ffff34c8ffffdccbffffeeccffff00ceffff22cfffff
+      m_RenameOverlay:
+        m_UserAcceptedRename: 0
+        m_Name: 
+        m_OriginalName: 
+        m_EditFieldRect:
+          serializedVersion: 2
+          x: 0
+          y: 0
+          width: 0
+          height: 0
+        m_UserData: 0
+        m_IsWaitingForDelay: 0
+        m_IsRenaming: 0
+        m_OriginalEventType: 11
+        m_IsRenamingFilename: 0
+        m_ClientGUIView: {fileID: 0}
+      m_SearchString: 
+    m_ExpandedScenes: []
+    m_CurrenRootInstanceID: 0
+    m_LockTracker:
+      m_IsLocked: 0
+    m_CurrentSortingName: TransformSorting
+  m_WindowGUID: 4c969a2b90040154d917609493e03593
+--- !u!114 &16
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 1
+  m_Script: {fileID: 12013, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
+  m_TitleContent:
+    m_Text: Scene
+    m_Image: {fileID: 2593428753322112591, guid: 0000000000000000d000000000000000,
+      type: 0}
+    m_Tooltip: 
+  m_Pos:
+    serializedVersion: 2
+    x: 363
+    y: 73
+    width: 1101
+    height: 535
+  m_ViewDataDictionary: {fileID: 0}
+  m_OverlayCanvas:
+    m_LastAppliedPresetName: Default
+    m_SaveData:
+    - dockPosition: 0
+      containerId: overlay-toolbar__top
+      floating: 0
+      collapsed: 0
+      displayed: 1
+      snapOffset: {x: 0, y: 0}
+      snapOffsetDelta: {x: -101, y: -26}
+      snapCorner: 3
+      id: Tool Settings
+      index: 0
+      layout: 1
+    - dockPosition: 0
+      containerId: overlay-toolbar__top
+      floating: 0
+      collapsed: 0
+      displayed: 1
+      snapOffset: {x: -141, y: 149}
+      snapOffsetDelta: {x: 0, y: 0}
+      snapCorner: 1
+      id: unity-grid-and-snap-toolbar
+      index: 1
+      layout: 1
+    - dockPosition: 0
+      containerId: overlay-toolbar__top
+      floating: 0
+      collapsed: 0
+      displayed: 1
+      snapOffset: {x: 0, y: 26}
+      snapOffsetDelta: {x: 0, y: 0}
+      snapCorner: 0
+      id: unity-transform-toolbar
+      index: 2
+      layout: 2
+    - dockPosition: 1
+      containerId: overlay-toolbar__top
+      floating: 0
+      collapsed: 0
+      displayed: 1
+      snapOffset: {x: 0, y: 0}
+      snapOffsetDelta: {x: 0, y: 0}
+      snapCorner: 0
+      id: unity-scene-view-toolbar
+      index: 0
+      layout: 1
+    - dockPosition: 1
+      containerId: overlay-toolbar__top
+      floating: 0
+      collapsed: 0
+      displayed: 0
+      snapOffset: {x: 0, y: 0}
+      snapOffsetDelta: {x: 0, y: 0}
+      snapCorner: 1
+      id: unity-search-toolbar
+      index: 1
+      layout: 1
+    - dockPosition: 1
+      containerId: overlay-toolbar__top
+      floating: 0
+      collapsed: 0
+      displayed: 0
+      snapOffset: {x: 0, y: 0}
+      snapOffsetDelta: {x: 0, y: 0}
+      snapCorner: 0
+      id: Scene View/Open Tile Palette
+      index: 2
+      layout: 4
+    - dockPosition: 1
+      containerId: overlay-toolbar__top
+      floating: 0
+      collapsed: 0
+      displayed: 0
+      snapOffset: {x: 0, y: 0}
+      snapOffsetDelta: {x: 0, y: 0}
+      snapCorner: 0
+      id: Scene View/Tilemap Focus
+      index: 3
+      layout: 4
+    - dockPosition: 0
+      containerId: overlay-container--right
+      floating: 0
+      collapsed: 0
+      displayed: 1
+      snapOffset: {x: 67.5, y: 86}
+      snapOffsetDelta: {x: 0, y: 0}
+      snapCorner: 0
+      id: Orientation
+      index: 0
+      layout: 4
+    - dockPosition: 1
+      containerId: overlay-container--right
+      floating: 0
+      collapsed: 0
+      displayed: 0
+      snapOffset: {x: 0, y: 0}
+      snapOffsetDelta: {x: 0, y: 0}
+      snapCorner: 0
+      id: Scene View/Light Settings
+      index: 0
+      layout: 4
+    - dockPosition: 1
+      containerId: overlay-container--right
+      floating: 0
+      collapsed: 0
+      displayed: 0
+      snapOffset: {x: 0, y: 0}
+      snapOffsetDelta: {x: 0, y: 0}
+      snapCorner: 0
+      id: Scene View/Camera
+      index: 1
+      layout: 4
+    - dockPosition: 1
+      containerId: overlay-container--right
+      floating: 0
+      collapsed: 0
+      displayed: 0
+      snapOffset: {x: 0, y: 0}
+      snapOffsetDelta: {x: 0, y: 0}
+      snapCorner: 0
+      id: Scene View/Cloth Constraints
+      index: 2
+      layout: 4
+    - dockPosition: 1
+      containerId: overlay-container--right
+      floating: 0
+      collapsed: 0
+      displayed: 0
+      snapOffset: {x: 0, y: 0}
+      snapOffsetDelta: {x: 0, y: 0}
+      snapCorner: 0
+      id: Scene View/Cloth Collisions
+      index: 3
+      layout: 4
+    - dockPosition: 1
+      containerId: overlay-container--right
+      floating: 0
+      collapsed: 0
+      displayed: 0
+      snapOffset: {x: 0, y: 0}
+      snapOffsetDelta: {x: 0, y: 0}
+      snapCorner: 0
+      id: Scene View/Navmesh Display
+      index: 4
+      layout: 4
+    - dockPosition: 1
+      containerId: overlay-container--right
+      floating: 0
+      collapsed: 0
+      displayed: 0
+      snapOffset: {x: 0, y: 0}
+      snapOffsetDelta: {x: 0, y: 0}
+      snapCorner: 0
+      id: Scene View/Agent Display
+      index: 5
+      layout: 4
+    - dockPosition: 1
+      containerId: overlay-container--right
+      floating: 0
+      collapsed: 0
+      displayed: 0
+      snapOffset: {x: 0, y: 0}
+      snapOffsetDelta: {x: 0, y: 0}
+      snapCorner: 0
+      id: Scene View/Obstacle Display
+      index: 6
+      layout: 4
+    - dockPosition: 1
+      containerId: overlay-container--right
+      floating: 0
+      collapsed: 0
+      displayed: 0
+      snapOffset: {x: 0, y: 0}
+      snapOffsetDelta: {x: 0, y: 0}
+      snapCorner: 0
+      id: Scene View/Occlusion Culling
+      index: 7
+      layout: 4
+    - dockPosition: 1
+      containerId: overlay-container--right
+      floating: 0
+      collapsed: 0
+      displayed: 0
+      snapOffset: {x: 0, y: 0}
+      snapOffsetDelta: {x: 0, y: 0}
+      snapCorner: 0
+      id: Scene View/Physics Debugger
+      index: 8
+      layout: 4
+    - dockPosition: 1
+      containerId: overlay-container--right
+      floating: 0
+      collapsed: 0
+      displayed: 0
+      snapOffset: {x: 0, y: 0}
+      snapOffsetDelta: {x: 0, y: 0}
+      snapCorner: 0
+      id: Scene View/Scene Visibility
+      index: 9
+      layout: 4
+    - dockPosition: 1
+      containerId: overlay-container--right
+      floating: 0
+      collapsed: 0
+      displayed: 0
+      snapOffset: {x: 0, y: 0}
+      snapOffsetDelta: {x: 0, y: 0}
+      snapCorner: 0
+      id: Scene View/Particles
+      index: 10
+      layout: 4
+  m_WindowGUID: cc27987af1a868c49b0894db9c0f5429
+  m_Gizmos: 1
+  m_OverrideSceneCullingMask: 6917529027641081856
+  m_SceneIsLit: 1
+  m_SceneLighting: 1
+  m_2DMode: 1
+  m_isRotationLocked: 0
+  m_PlayAudio: 0
+  m_AudioPlay: 0
+  m_Position:
+    m_Target: {x: -1.8503991, y: -0.65879965, z: -0.00900003}
+    speed: 2
+    m_Value: {x: -1.8503991, y: -0.65879965, z: -0.00900003}
+  m_RenderMode: 0
+  m_CameraMode:
+    drawMode: 0
+    name: Shaded
+    section: Shading Mode
+  m_ValidateTrueMetals: 0
+  m_DoValidateTrueMetals: 0
+  m_ExposureSliderValue: 0
+  m_SceneViewState:
+    m_AlwaysRefresh: 0
+    showFog: 1
+    showSkybox: 1
+    showFlares: 1
+    showImageEffects: 1
+    showParticleSystems: 1
+    showVisualEffectGraphs: 1
+    m_FxEnabled: 1
+  m_Grid:
+    xGrid:
+      m_Fade:
+        m_Target: 0
+        speed: 2
+        m_Value: 0
+      m_Color: {r: 0.5, g: 0.5, b: 0.5, a: 0.4}
+      m_Pivot: {x: 0, y: 0, z: 0}
+      m_Size: {x: 0, y: 0}
+    yGrid:
+      m_Fade:
+        m_Target: 0
+        speed: 2
+        m_Value: 0
+      m_Color: {r: 0.5, g: 0.5, b: 0.5, a: 0.4}
+      m_Pivot: {x: 0, y: 0, z: 0}
+      m_Size: {x: 1, y: 1}
+    zGrid:
+      m_Fade:
+        m_Target: 1
+        speed: 2
+        m_Value: 1
+      m_Color: {r: 0.5, g: 0.5, b: 0.5, a: 0.4}
+      m_Pivot: {x: 0, y: 0, z: 0}
+      m_Size: {x: 1, y: 1}
+    m_ShowGrid: 1
+    m_GridAxis: 1
+    m_gridOpacity: 0.5
+  m_Rotation:
+    m_Target: {x: 0, y: 0, z: 0, w: 1}
+    speed: 2
+    m_Value: {x: 0, y: 0, z: 0, w: 1}
+  m_Size:
+    m_Target: 10.9
+    speed: 2
+    m_Value: 10.9
+  m_Ortho:
+    m_Target: 1
+    speed: 2
+    m_Value: 1
+  m_CameraSettings:
+    m_Speed: 1
+    m_SpeedNormalized: 0.5
+    m_SpeedMin: 0.001
+    m_SpeedMax: 2
+    m_EasingEnabled: 1
+    m_EasingDuration: 0.4
+    m_AccelerationEnabled: 1
+    m_FieldOfViewHorizontalOrVertical: 60
+    m_NearClip: 0.03
+    m_FarClip: 10000
+    m_DynamicClip: 1
+    m_OcclusionCulling: 0
+  m_LastSceneViewRotation: {x: -0.08717229, y: 0.89959055, z: -0.21045254, w: -0.3726226}
+  m_LastSceneViewOrtho: 0
+  m_ReplacementShader: {fileID: 0}
+  m_ReplacementString: 
+  m_SceneVisActive: 1
+  m_LastLockedObject: {fileID: 0}
+  m_ViewIsLockedToObject: 0
+--- !u!114 &17
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 1
+  m_Script: {fileID: 12015, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
+  m_TitleContent:
+    m_Text: Game
+    m_Image: {fileID: -6423792434712278376, guid: 0000000000000000d000000000000000,
+      type: 0}
+    m_Tooltip: 
+  m_Pos:
+    serializedVersion: 2
+    x: 363
+    y: 73
+    width: 1101
+    height: 535
+  m_ViewDataDictionary: {fileID: 0}
+  m_OverlayCanvas:
+    m_LastAppliedPresetName: Default
+    m_SaveData: []
+  m_SerializedViewNames: []
+  m_SerializedViewValues: []
+  m_PlayModeViewName: GameView
+  m_ShowGizmos: 0
+  m_TargetDisplay: 0
+  m_ClearColor: {r: 0, g: 0, b: 0, a: 0}
+  m_TargetSize: {x: 1101, y: 514}
+  m_TextureFilterMode: 0
+  m_TextureHideFlags: 61
+  m_RenderIMGUI: 1
+  m_EnterPlayModeBehavior: 0
+  m_UseMipMap: 0
+  m_VSyncEnabled: 0
+  m_Gizmos: 0
+  m_Stats: 0
+  m_SelectedSizes: 00000000000000000000000000000000000000000000000000000000000000000000000000000000
+  m_ZoomArea:
+    m_HRangeLocked: 0
+    m_VRangeLocked: 0
+    hZoomLockedByDefault: 0
+    vZoomLockedByDefault: 0
+    m_HBaseRangeMin: -550.5
+    m_HBaseRangeMax: 550.5
+    m_VBaseRangeMin: -257
+    m_VBaseRangeMax: 257
+    m_HAllowExceedBaseRangeMin: 1
+    m_HAllowExceedBaseRangeMax: 1
+    m_VAllowExceedBaseRangeMin: 1
+    m_VAllowExceedBaseRangeMax: 1
+    m_ScaleWithWindow: 0
+    m_HSlider: 0
+    m_VSlider: 0
+    m_IgnoreScrollWheelUntilClicked: 0
+    m_EnableMouseInput: 0
+    m_EnableSliderZoomHorizontal: 0
+    m_EnableSliderZoomVertical: 0
+    m_UniformScale: 1
+    m_UpDirection: 1
+    m_DrawArea:
+      serializedVersion: 2
+      x: 0
+      y: 21
+      width: 1101
+      height: 514
+    m_Scale: {x: 1, y: 1}
+    m_Translation: {x: 550.5, y: 257}
+    m_MarginLeft: 0
+    m_MarginRight: 0
+    m_MarginTop: 0
+    m_MarginBottom: 0
+    m_LastShownAreaInsideMargins:
+      serializedVersion: 2
+      x: -550.5
+      y: -257
+      width: 1101
+      height: 514
+    m_MinimalGUI: 1
+  m_defaultScale: 1
+  m_LastWindowPixelSize: {x: 1101, y: 535}
+  m_ClearInEditMode: 1
+  m_NoCameraWarning: 1
+  m_LowResolutionForAspectRatios: 01000000000000000000
+  m_XRRenderMode: 0
+  m_RenderTexture: {fileID: 0}
+--- !u!114 &18
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 1
+  m_Script: {fileID: 12003, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_MinSize: {x: 100, y: 100}
+  m_MaxSize: {x: 4000, y: 4000}
+  m_TitleContent:
+    m_Text: Console
+    m_Image: {fileID: -4327648978806127646, guid: 0000000000000000d000000000000000,
+      type: 0}
+    m_Tooltip: 
+  m_Pos:
+    serializedVersion: 2
+    x: 2249
+    y: 726.5
+    width: 920
+    height: 250
+  m_ViewDataDictionary: {fileID: 0}
+  m_OverlayCanvas:
+    m_LastAppliedPresetName: Default
+    m_SaveData: []
