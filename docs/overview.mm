@@ -1,4 +1,4 @@
-<map version="freeplane 1.9.8">
+<map version="freeplane 1.9.13">
 <!--To view this file, download free mind mapping software Freeplane from https://www.freeplane.org -->
 <attribute_registry SHOW_ATTRIBUTES="selected">
     <attribute_name MANUAL="true" NAME="src">
@@ -296,7 +296,7 @@
 </node>
 <node TEXT="create sequential figures" STYLE_REF="list item" ID="ID_1284569597" CREATED="1633211641146" MODIFIED="1652325991742" COLOR="#000000" BACKGROUND_COLOR="#ffffff">
 <node TEXT="performance: Sequences are easy to find" ID="ID_635659040" CREATED="1633212111010" MODIFIED="1652326181045">
-<icon BUILTIN="goodleak"/>
+<icon BUILTIN="good"/>
 </node>
 <node TEXT="Sequence_finder" ID="ID_1279391488" CREATED="1633213198538" MODIFIED="1652325962043">
 <icon BUILTIN="puzzle_piece"/>
@@ -329,11 +329,11 @@
 <icon BUILTIN="cog"/>
 </node>
 <node TEXT="covers the biggest intervals" ID="ID_926920004" CREATED="1633319116358" MODIFIED="1633319128617">
-<icon BUILTIN="goodleak"/>
+<icon BUILTIN="good"/>
 <node TEXT="operate on multiple figures" ID="ID_965272281" CREATED="1633319133116" MODIFIED="1633319158777"/>
 </node>
 <node TEXT="the most difficult to find" ID="ID_1411877018" CREATED="1633319191061" MODIFIED="1633319201356">
-<icon BUILTIN="badleak"/>
+<icon BUILTIN="bad"/>
 <node TEXT="many possible combinations of moving subfigures" ID="ID_467703432" CREATED="1633319203293" MODIFIED="1633319232575"/>
 </node>
 </node>
@@ -463,6 +463,9 @@
 <node TEXT="unity" ID="ID_550676609" CREATED="1632698228404" MODIFIED="1652327055247" LINK="../Assets/scripts/unity_ai/Sequence_finder/">
 <icon BUILTIN="present"/>
 </node>
+<node TEXT="find sequences" ID="ID_381909901" CREATED="1658182054809" MODIFIED="1658182064203" LINK="modules/find%20sequences/">
+<icon BUILTIN="book_open"/>
+</node>
 </node>
 <node TEXT="figure finder" LOCALIZED_STYLE_REF="default" ID="ID_1255975763" CREATED="1633110650941" MODIFIED="1633180939221" COLOR="#000000" BACKGROUND_COLOR="#ffffff">
 <node TEXT="finds figures in raw input signls" ID="ID_1576747888" CREATED="1652701563929" MODIFIED="1652701583905">
@@ -470,10 +473,10 @@
 </node>
 <node TEXT="History interval" ID="ID_439769439" CREATED="1633143501594" MODIFIED="1633177934841">
 <icon BUILTIN="programming/input"/>
-<icon BUILTIN="badleak"/>
+<icon BUILTIN="bad"/>
 <icon BUILTIN="question"/>
 <node TEXT="finding all possible Figures is too expensive" LOCALIZED_STYLE_REF="default" ID="ID_1121040787" CREATED="1633142919822" MODIFIED="1633143553724" COLOR="#000000" BACKGROUND_COLOR="#ffffff">
-<icon BUILTIN="badleak"/>
+<icon BUILTIN="bad"/>
 <node TEXT="Sequence_finder is doing that with Sequences, which are less numerous" ID="ID_1739474341" CREATED="1633143415209" MODIFIED="1652327297194"/>
 </node>
 </node>
@@ -495,7 +498,7 @@
 </richcontent>
 <node TEXT="finding what&apos;s common between two given intervals" LOCALIZED_STYLE_REF="default" ID="ID_749870449" CREATED="1633143062613" MODIFIED="1633143315656" COLOR="#000000" BACKGROUND_COLOR="#ffffff">
 <icon BUILTIN="cog"/>
-<icon BUILTIN="goodleak"/>
+<icon BUILTIN="good"/>
 </node>
 </node>
 <node TEXT="figures" ID="ID_1662133757" CREATED="1633142378625" MODIFIED="1633142452929">
@@ -695,7 +698,7 @@
 <font ITALIC="true"/>
 </node>
 <node TEXT="not used by figures/patterns" LOCALIZED_STYLE_REF="default" ID="ID_1510788628" CREATED="1633010049846" MODIFIED="1633026941772" COLOR="#000000" BACKGROUND_COLOR="#ffffff">
-<icon BUILTIN="badleak"/>
+<icon BUILTIN="bad"/>
 <node TEXT="they use moment (integer) instead" ID="ID_1305059511" CREATED="1633010759465" MODIFIED="1633025719124"/>
 </node>
 <node TEXT="unity" ID="ID_519322222" CREATED="1632858035279" MODIFIED="1633021775973" LINK="../../../../prj/unity_ai/Assets/scripts/unity_ai/Action/">
