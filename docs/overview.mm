@@ -8,7 +8,7 @@
         <attribute_value VALUE="https://www.youtube.com/shorts/66t2mLXtj9E?&amp;ab_channel=THESTRAIGHTPATH"/>
     </attribute_name>
 </attribute_registry>
-<node TEXT="ai" LOCALIZED_STYLE_REF="AutomaticLayout.level.root" FOLDED="false" ID="ID_696401721" CREATED="1610381621824" MODIFIED="1632652331747"><hook NAME="MapStyle" zoom="1.129">
+<node TEXT="ai" LOCALIZED_STYLE_REF="AutomaticLayout.level.root" FOLDED="false" ID="ID_696401721" CREATED="1610381621824" MODIFIED="1632652331747"><hook NAME="MapStyle" zoom="1.5">
     <properties show_icon_for_attributes="true" edgeColorConfiguration="#ff3333ff,#33ff00ff,#ffcc33ff" show_notes_in_map="false" show_note_icons="false" fit_to_viewport="false"/>
 
 <map_styles>
@@ -463,7 +463,7 @@
 <node TEXT="unity" ID="ID_550676609" CREATED="1632698228404" MODIFIED="1652327055247" LINK="../Assets/scripts/unity_ai/Sequence_finder/">
 <icon BUILTIN="present"/>
 </node>
-<node TEXT="find sequences" ID="ID_381909901" CREATED="1658182054809" MODIFIED="1658182064203" LINK="modules/find%20sequences/">
+<node TEXT="animated explanations" ID="ID_381909901" CREATED="1658182054809" MODIFIED="1658188337705" LINK="modules/find%20sequences/">
 <icon BUILTIN="book_open"/>
 </node>
 </node>
@@ -510,29 +510,16 @@
 <icon BUILTIN="present"/>
 <node TEXT="" LOCALIZED_STYLE_REF="default" ID="ID_1998039277" CREATED="1632856746923" MODIFIED="1633105453219" COLOR="#000000" BACKGROUND_COLOR="#ffffff">
 <icon BUILTIN="programming/input"/>
-<node ID="ID_1933989897" CREATED="1632856833384" MODIFIED="1632856833384"><richcontent TYPE="NODE">
-
-<html>
-  <head>
-    
-  </head>
-  <body>
-    <p>
-      figure (target)
-    </p>
-  </body>
-</html>
-</richcontent>
-</node>
+<node TEXT="target figure" ID="ID_1933989897" CREATED="1632856833384" MODIFIED="1658192433710"/>
 <node TEXT="stencil" ID="ID_1641972621" CREATED="1632856846853" MODIFIED="1632856851266"/>
 </node>
 <node TEXT="figures" LOCALIZED_STYLE_REF="default" ID="ID_1517811998" CREATED="1632856854905" MODIFIED="1633179278132" COLOR="#000000" BACKGROUND_COLOR="#ffffff">
 <icon BUILTIN="programming/output"/>
-<node TEXT="parts of the target" ID="ID_1716619650" CREATED="1633179279007" MODIFIED="1633179286725">
+<node TEXT="parts of the target figure" ID="ID_1716619650" CREATED="1633179279007" MODIFIED="1658192439124">
 <icon BUILTIN="box"/>
 </node>
 </node>
-<node TEXT="unity" ID="ID_446955811" CREATED="1632698088413" MODIFIED="1652327416760" LINK="../Assets/scripts/unity_ai/Stencil_applier/applying_stencils.bmp">
+<node TEXT="algorithm of stencil application" LOCALIZED_STYLE_REF="default" ID="ID_1267499080" CREATED="1632698228404" MODIFIED="1658248717024" LINK="../Assets/scripts/unity_ai/Stencil_applier/algorithm%20of%20stencil%20application.png" COLOR="#000000" BACKGROUND_COLOR="#ffffff">
 <icon BUILTIN="book_open"/>
 </node>
 <node TEXT="unity" ID="ID_121660820" CREATED="1632698228404" MODIFIED="1652327397658" LINK="../Assets/scripts/unity_ai/Stencil_applier/">
