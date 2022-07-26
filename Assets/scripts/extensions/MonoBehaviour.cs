@@ -12,20 +12,14 @@ namespace rvinowise.unity.extensions {
 public static partial class Unity_extension {
 
 
-    public static TComponent provide_new<TComponent>(
+    public static TComponent get_from_pool<TComponent>(
         this MonoBehaviour prefab_component
     )
         where TComponent : MonoBehaviour {
         Pooled_object pooled_object = prefab_component.GetComponent<Pooled_object>();
-        //Contract.Requires(pooled_object != null, "pooled prefabs must have the Pooled_object component");
-        if (pooled_object != null) {
-            var retrieved_object = pooled_object.instantiate();
-            var component = retrieved_object.GetComponent<TComponent>();
-            return component;
-        }
-        var created_component = GameObject.Instantiate(prefab_component).GetComponent<TComponent>();
-
-        return created_component;
+        Contract.Requires(pooled_object != null, "pooled prefabs must have the Pooled_object component");
+        TComponent returned_component = pooled_object.instantiate().GetComponent<TComponent>();
+        return returned_component;
     }
 
     public static void copy_physics_from(
@@ -40,7 +34,7 @@ public static partial class Unity_extension {
 
     }
 
-    public static void destroy_object(
+    public static void destroy(
         this MonoBehaviour in_component
     ) {
         if (in_component.GetComponent<Pooled_object>() is Pooled_object pooled_object) {

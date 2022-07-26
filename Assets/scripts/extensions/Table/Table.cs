@@ -2,46 +2,34 @@ using System;
 using UnityEngine;
 using rvinowise.unity.extensions;
 using System.Collections.Generic;
-using rvinowise.ui.table;
+using rvinowise.unity.ai.visuals;
 using UnityEngine.UI;
-
-using TItem = UnityEngine.MonoBehaviour; 
 
 namespace rvinowise.unity.ui.table {
 
 [RequireComponent(typeof(Canvas))]
-public class Table:
-    MonoBehaviour,
-    ITable<TItem>
-{
+public class Table:MonoBehaviour {
 
-    #region unity inspector
     public Table_cell table_cell_prefab;
-    #endregion unity inspector
-    
     private Canvas canvas;
 
     private List<Table_cell> cells = new List<Table_cell>();
     private GridLayoutGroup layout_group;
 
-    public void Awake() {
+    public void init(ICircle stored_object) {
         canvas = GetComponent<Canvas>();
         layout_group = GetComponent<GridLayoutGroup>();
-        //Renderer renderer = stored_object.GetComponentInChildren<Renderer>(); 
-        layout_group.cellSize = new Vector2(
-            1,
-            1
-        );
+        layout_group.cellSize = new Vector2(stored_object.radius, stored_object.radius);
     }
     public void add_item(
-        TItem in_item
+        MonoBehaviour in_item
     ) {
         Table_cell cell = create_cell();
         cell.put_item(in_item);
     }
 
     private Table_cell create_cell() {
-        Table_cell cell = table_cell_prefab.provide_new<Table_cell>();
+        Table_cell cell = table_cell_prefab.get_from_pool<Table_cell>();
         /* cell.name = 
             String.Format("canvas {0}",in_item.name); */
         cell.transform.SetParent(canvas.transform, false);
@@ -50,7 +38,7 @@ public class Table:
     }
 
     public void remove_item(
-        TItem in_item
+        MonoBehaviour in_item
     ) {
         Table_cell removed_cell = null;
         foreach(Table_cell cell in cells) {

@@ -5,7 +5,6 @@ using UnityEngine;
 using rvinowise;
 using rvinowise.unity.geometry2d;
 using rvinowise.rvi.contracts;
-using UnityEngine.Assertions;
 
 
 namespace rvinowise.unity.extensions.pooling {
@@ -65,14 +64,14 @@ public class Pooled_object: MonoBehaviour {
     }
 
     public void destroy() {
-        Contract.Requires(
-            !pool.Contains(this.gameObject), 
-            "an object can't be returned to pool twice"
-        );
-        gameObject.SetActive(false);
-        pool.return_to_pool(gameObject);
+        if (pool != null) {
+            gameObject.SetActive(false);
+            pool.return_to_pool(gameObject);
+        }
+        else {
+            Destroy(gameObject);
+        }
     }
-    
     
 }
 

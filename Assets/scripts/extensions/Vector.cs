@@ -105,5 +105,15 @@ public static partial class Unity_extension
         return vector + direction.to_quaternion() * Vector3.right * length;
     }
     
+    public static Vector3 rotate(this Vector3 v, float degrees)
+    {
+        return Quaternion.Euler(0, 0, degrees) * v;
+    }
+    
+    public static Vector3 rotate(this Vector3 v, Quaternion rotation)
+    {
+        return rotation * v;
+    }
+    
 }
 
