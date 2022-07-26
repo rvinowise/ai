@@ -2,7 +2,6 @@ using System;
 using UnityEngine;
 using rvinowise.unity.extensions;
 using System.Collections.Generic;
-using rvinowise.ai.unity.visuals;
 using rvinowise.ui.table;
 using UnityEngine.UI;
 
