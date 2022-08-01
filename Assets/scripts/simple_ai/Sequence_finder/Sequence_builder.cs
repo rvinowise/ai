@@ -11,26 +11,15 @@ using UnityEngine;
 using UnityEngine.UI;
 using rvinowise.unity.ui.input;
 
+
 namespace rvinowise.ai.simple {
+	
 public class Sequence_builder: 
     ISequence_builder
 {
 
-    
-
     #region ISequence_builder
-    
-    // public IFigure add_sequential_representation_for_pair(
-    //     IFigure figure,
-    //     IFigure beginning,
-    //     IFigure ending
-    // ) {
-    //     var subfigures = get_sequence_of_subfigures_from(
-    //         beginning, ending
-    //     );
-    //     return add_sequential_representation(figure, subfigures);
-    // }
-    
+  
 
     public IFigure add_sequential_representation(
         IFigure figure,

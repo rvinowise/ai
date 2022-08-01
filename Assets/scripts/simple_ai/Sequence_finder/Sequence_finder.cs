@@ -73,9 +73,6 @@ public class Sequence_finder<TFigure>:
     ) {
         foreach (IFigure ending_figure in familiar_figures)
         {
-            if ((beginning_figure.id == "3")&&(ending_figure.id == "0")) {
-                int test = 1;
-            }
             if (!is_possible_sequence(beginning_figure, ending_figure)) {
                 continue;
             }
@@ -153,10 +150,10 @@ public class Sequence_finder<TFigure>:
                     user_appearance.start_moment != child_appearance.start_moment
             )
         ).ToList();
-
         
         return result;
     }
+	
     private IReadOnlyList<IFigure_appearance> get_unused_in_ending_appearances_in_interval(
         BigInteger start, 
         BigInteger end,
@@ -181,7 +178,6 @@ public class Sequence_finder<TFigure>:
             )
         ).ToList();
 
-        
         return result;
     } 
 
