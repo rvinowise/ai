@@ -8,7 +8,7 @@
         <attribute_value VALUE="https://www.youtube.com/shorts/66t2mLXtj9E?&amp;ab_channel=THESTRAIGHTPATH"/>
     </attribute_name>
 </attribute_registry>
-<node TEXT="ai" LOCALIZED_STYLE_REF="AutomaticLayout.level.root" FOLDED="false" ID="ID_696401721" CREATED="1610381621824" MODIFIED="1641509948613"><hook NAME="MapStyle" zoom="1.145">
+<node TEXT="postgres_database" LOCALIZED_STYLE_REF="AutomaticLayout.level.root" FOLDED="false" ID="ID_696401721" CREATED="1610381621824" MODIFIED="1659208597203"><hook NAME="MapStyle" zoom="1.146">
     <properties show_icon_for_attributes="true" edgeColorConfiguration="#ff3333ff,#33ff00ff,#ffcc33ff" show_notes_in_map="false" show_note_icons="false" fit_to_viewport="false"/>
 
 <map_styles>
@@ -138,7 +138,7 @@
 </stylenode>
 </map_styles>
 </hook>
-<node TEXT="type: project" POSITION="left" ID="ID_683065071" CREATED="1631768151045" MODIFIED="1641509948610"/>
+<node TEXT="type: " POSITION="left" ID="ID_486810897" CREATED="1641510535250" MODIFIED="1641510535298"/>
 <node TEXT="bookmarks: done" STYLE_REF="done" POSITION="left" ID="ID_1334217373" CREATED="1632064659870" MODIFIED="1632136937093"/>
 <node TEXT="legend" POSITION="left" ID="ID_49802336" CREATED="1632692624170" MODIFIED="1632692627877">
 <node TEXT="icons" ID="ID_143750967" CREATED="1632698164973" MODIFIED="1632698166792">
@@ -175,6 +175,9 @@
 </html>
 </richcontent>
 </node>
+<node TEXT="for visualisation" ID="ID_1915523405" CREATED="1641518036503" MODIFIED="1641518041941">
+<icon BUILTIN="emoji-1F441"/>
+</node>
 <node TEXT="parent" ID="ID_1260762948" CREATED="1633025370106" MODIFIED="1633025372725">
 <node TEXT="a part" ID="ID_1132425494" CREATED="1633024491557" MODIFIED="1633025537405">
 <icon BUILTIN="puzzle_piece"/>
@@ -193,21 +196,42 @@
 <node TEXT="impl: implementation" ID="ID_425363286" CREATED="1632698181664" MODIFIED="1632698185978"/>
 </node>
 </node>
-<node TEXT="overview.mm" POSITION="right" ID="ID_963805880" CREATED="1641509947257" MODIFIED="1641509947259" LINK="overview.mm"/>
-<node TEXT="interface" POSITION="right" ID="ID_815172773" CREATED="1643857705088" MODIFIED="1643857711564" LINK="interface/">
-<node TEXT="interface design" ID="ID_464923108" CREATED="1643857714125" MODIFIED="1652303028614" LINK="interface/interface%20design.mm"/>
-</node>
-<node TEXT="persistence" POSITION="right" ID="ID_201293481" CREATED="1641509967643" MODIFIED="1641510505723" LINK="persistence/">
-<node TEXT="json format" ID="ID_423055997" CREATED="1641510507559" MODIFIED="1652303036730" LINK="persistence/json%20format.mm"/>
-<node TEXT="postgres_database" ID="ID_9368401" CREATED="1659208541268" MODIFIED="1659208546775" LINK="persistence/postgres_database.mm"/>
-</node>
-<node TEXT="presenting documentation" POSITION="right" ID="ID_1134278367" CREATED="1659347819677" MODIFIED="1659355988423">
-<node TEXT="videos" ID="ID_1109093235" CREATED="1659347825149" MODIFIED="1659347920830" LINK="videos/">
-<node TEXT="making videos" ID="ID_1217371651" CREATED="1659347959934" MODIFIED="1659355722926" LINK="videos/making%20videos.mm"/>
+<node TEXT="&quot;libre office base&quot; can be used for editing database" POSITION="right" ID="ID_540966898" CREATED="1659208590714" MODIFIED="1659208626904">
+<node TEXT="connection string is needed" ID="ID_841295462" CREATED="1659208630507" MODIFIED="1659208647672" LINK="https://stackoverflow.com/questions/3582552/what-is-the-format-for-the-postgresql-connection-string-url">
+<node TEXT="postgres://postgres: @127.0.0.1:5432/ai" ID="ID_24512660" CREATED="1659208648921" MODIFIED="1659208703445">
+<icon BUILTIN="quote"/>
+<icon BUILTIN="good"/>
+<font NAME="fira code" SIZE="9"/>
 </node>
 </node>
-<node TEXT="programming tools" POSITION="right" ID="ID_811290730" CREATED="1659355936361" MODIFIED="1659355995816" LINK="programming%20tools/">
-<node TEXT="c-sharp" ID="ID_1340315914" CREATED="1659355996364" MODIFIED="1659356007781"/>
+</node>
+<node TEXT="moving databases to another pc" POSITION="right" ID="ID_1611583188" CREATED="1659211404298" MODIFIED="1659211417644">
+<node TEXT="saving to a file" ID="ID_1753941937" CREATED="1659211542081" MODIFIED="1659211551691">
+<node TEXT="pg_dump -U postgres ai &gt; dbexport.pgsql" ID="ID_1709689094" CREATED="1659211850767" MODIFIED="1659211854492">
+<icon BUILTIN="quote"/>
+<font NAME="fira code" SIZE="9"/>
+<node TEXT="path &quot;C:\Program Files\PostgreSQL\14\bin&quot; should exist in windows &quot;environmental variables&quot;" ID="ID_1786284221" CREATED="1659211858904" MODIFIED="1659211907685">
+<icon BUILTIN="grammar/syntax/precedes_previous"/>
+</node>
+</node>
+</node>
+<node TEXT="restoring" ID="ID_1744777976" CREATED="1659211418375" MODIFIED="1659211536150" LINK="https://dba.stackexchange.com/questions/82161/why-pg-restore-ignores-create-error-failed-fatal-database-new-db-does-n">
+<node TEXT="psql -U postgres ai_2 &lt; dbexport.pgsql" ID="ID_467327823" CREATED="1659211747563" MODIFIED="1659211750802">
+<icon BUILTIN="quote"/>
+<font NAME="fira code" SIZE="9"/>
+<node TEXT="after creating the destination db" ID="ID_942670384" CREATED="1659211759034" MODIFIED="1659212227869">
+<icon BUILTIN="grammar/syntax/precedes_previous"/>
+<node TEXT="createdb -U postgres ai_3" ID="ID_629900227" CREATED="1659212213741" MODIFIED="1659213443052">
+<icon BUILTIN="control/type_of_parent"/>
+<icon BUILTIN="quote"/>
+<font NAME="fira code" SIZE="9"/>
+</node>
+<node TEXT="via pgadmin" ID="ID_506187682" CREATED="1659212236842" MODIFIED="1659212256209">
+<icon BUILTIN="control/type_of_parent"/>
+</node>
+</node>
+</node>
+</node>
 </node>
 </node>
 </map>

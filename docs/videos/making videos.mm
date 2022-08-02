@@ -8,7 +8,7 @@
         <attribute_value VALUE="https://www.youtube.com/shorts/66t2mLXtj9E?&amp;ab_channel=THESTRAIGHTPATH"/>
     </attribute_name>
 </attribute_registry>
-<node TEXT="ai" LOCALIZED_STYLE_REF="AutomaticLayout.level.root" FOLDED="false" ID="ID_696401721" CREATED="1610381621824" MODIFIED="1641509948613"><hook NAME="MapStyle" zoom="1.145">
+<node TEXT="making videos" LOCALIZED_STYLE_REF="AutomaticLayout.level.root" FOLDED="false" ID="ID_696401721" CREATED="1610381621824" MODIFIED="1659347977343"><hook NAME="MapStyle" zoom="1.145">
     <properties show_icon_for_attributes="true" edgeColorConfiguration="#ff3333ff,#33ff00ff,#ffcc33ff" show_notes_in_map="false" show_note_icons="false" fit_to_viewport="false"/>
 
 <map_styles>
@@ -138,7 +138,7 @@
 </stylenode>
 </map_styles>
 </hook>
-<node TEXT="type: project" POSITION="left" ID="ID_683065071" CREATED="1631768151045" MODIFIED="1641509948610"/>
+<node TEXT="type: " POSITION="left" ID="ID_1393985454" CREATED="1659347977359" MODIFIED="1659347977364"/>
 <node TEXT="bookmarks: done" STYLE_REF="done" POSITION="left" ID="ID_1334217373" CREATED="1632064659870" MODIFIED="1632136937093"/>
 <node TEXT="legend" POSITION="left" ID="ID_49802336" CREATED="1632692624170" MODIFIED="1632692627877">
 <node TEXT="icons" ID="ID_143750967" CREATED="1632698164973" MODIFIED="1632698166792">
@@ -193,21 +193,68 @@
 <node TEXT="impl: implementation" ID="ID_425363286" CREATED="1632698181664" MODIFIED="1632698185978"/>
 </node>
 </node>
-<node TEXT="overview.mm" POSITION="right" ID="ID_963805880" CREATED="1641509947257" MODIFIED="1641509947259" LINK="overview.mm"/>
-<node TEXT="interface" POSITION="right" ID="ID_815172773" CREATED="1643857705088" MODIFIED="1643857711564" LINK="interface/">
-<node TEXT="interface design" ID="ID_464923108" CREATED="1643857714125" MODIFIED="1652303028614" LINK="interface/interface%20design.mm"/>
+<node TEXT="make an animation in adobe animate" STYLE_REF="list item" POSITION="right" ID="ID_491046293" CREATED="1659347977366" MODIFIED="1659348004078"/>
+<node TEXT="play it in a browser" STYLE_REF="list item" POSITION="right" ID="ID_304720144" CREATED="1659348004515" MODIFIED="1659348028049">
+<node TEXT="control the play by the keyboard" ID="ID_580249839" CREATED="1659348028622" MODIFIED="1659348075376">
+<node TEXT="to synchronise it with the voice recording" ID="ID_1228405520" CREATED="1659348050915" MODIFIED="1659348064421"/>
 </node>
-<node TEXT="persistence" POSITION="right" ID="ID_201293481" CREATED="1641509967643" MODIFIED="1641510505723" LINK="persistence/">
-<node TEXT="json format" ID="ID_423055997" CREATED="1641510507559" MODIFIED="1652303036730" LINK="persistence/json%20format.mm"/>
-<node TEXT="postgres_database" ID="ID_9368401" CREATED="1659208541268" MODIFIED="1659208546775" LINK="persistence/postgres_database.mm"/>
+<node TEXT="record the played animation with a screen recorder" ID="ID_1204395415" CREATED="1659348084658" MODIFIED="1659348101564">
+<node TEXT="freeCam" ID="ID_57476719" CREATED="1659348101780" MODIFIED="1659348131886">
+<icon BUILTIN="quote"/>
+<font ITALIC="true"/>
+<node TEXT="fast setup" ID="ID_200075572" CREATED="1659348133888" MODIFIED="1659348182770">
+<icon BUILTIN="good"/>
 </node>
-<node TEXT="presenting documentation" POSITION="right" ID="ID_1134278367" CREATED="1659347819677" MODIFIED="1659355988423">
-<node TEXT="videos" ID="ID_1109093235" CREATED="1659347825149" MODIFIED="1659347920830" LINK="videos/">
-<node TEXT="making videos" ID="ID_1217371651" CREATED="1659347959934" MODIFIED="1659355722926" LINK="videos/making%20videos.mm"/>
+<node TEXT="adds noise to microphone recording" ID="ID_544549027" CREATED="1659348138826" MODIFIED="1659348161315">
+<icon BUILTIN="bad"/>
+<node ID="ID_352685594" CREATED="1659348225912" MODIFIED="1659348291420"><richcontent TYPE="NODE">
+
+<html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      need to use <i>audacity </i>for voice recording and combine it in <i>adobe_premiere </i>with video
+    </p>
+  </body>
+</html>
+
+</richcontent>
 </node>
 </node>
-<node TEXT="programming tools" POSITION="right" ID="ID_811290730" CREATED="1659355936361" MODIFIED="1659355995816" LINK="programming%20tools/">
-<node TEXT="c-sharp" ID="ID_1340315914" CREATED="1659355996364" MODIFIED="1659356007781"/>
+</node>
+<node TEXT="OBS" ID="ID_151462782" CREATED="1659348163077" MODIFIED="1659348189117">
+<icon BUILTIN="quote"/>
+<font ITALIC="true"/>
+<node TEXT="complicated setup" ID="ID_1858983332" CREATED="1659348202795" MODIFIED="1659348213684">
+<icon BUILTIN="bad"/>
+<node TEXT="but it can only be done once" ID="ID_1603138533" CREATED="1659349706221" MODIFIED="1659349726037">
+<icon BUILTIN="good"/>
+</node>
+</node>
+<node TEXT="records audio well" ID="ID_1402579915" CREATED="1659348214142" MODIFIED="1659348223471">
+<icon BUILTIN="good"/>
+<node TEXT="noice suppression" ID="ID_1147931705" CREATED="1659352050837" MODIFIED="1659352196963"/>
+</node>
+<node TEXT="completely free" ID="ID_1074782061" CREATED="1659349425094" MODIFIED="1659349429083">
+<icon BUILTIN="good"/>
+</node>
+</node>
+<node TEXT="debut" ID="ID_616473856" CREATED="1659348301613" MODIFIED="1659348305872">
+<icon BUILTIN="quote"/>
+<font ITALIC="true"/>
+<node TEXT="fast setup" ID="ID_1161937668" CREATED="1659349396327" MODIFIED="1659349402199">
+<icon BUILTIN="good"/>
+</node>
+<node TEXT="good audio quality" ID="ID_189307881" CREATED="1659349402552" MODIFIED="1659349408057">
+<icon BUILTIN="good"/>
+</node>
+<node TEXT="only free for non-commercial use" ID="ID_196522818" CREATED="1659349413171" MODIFIED="1659349422954">
+<icon BUILTIN="bad"/>
+</node>
+</node>
+</node>
 </node>
 </node>
 </map>
