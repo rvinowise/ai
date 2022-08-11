@@ -7,7 +7,7 @@
 // using rvinowise.ai.ui.general;
 // using rvinowise.ai.ui.unity;
 // using rvinowise.ai.unity;
-// using rvinowise.rvi.contracts;
+// using rvinowise.contracts;
 // using rvinowise.unity.extensions;
 // using rvinowise.unity.extensions.attributes;
 // using rvinowise.unity.ui.input;

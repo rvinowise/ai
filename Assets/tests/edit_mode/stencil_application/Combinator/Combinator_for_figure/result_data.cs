@@ -1,10 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using NUnit.Framework;
-using rvinowise.ai.simple.mapping_stencils;
-using UnityEngine;
-using UnityEngine.TestTools;
-
 namespace rvinowise.ai.unit_tests.generator_of_mappings {
 
 

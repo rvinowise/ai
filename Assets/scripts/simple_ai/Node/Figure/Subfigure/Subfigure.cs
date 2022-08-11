@@ -1,16 +1,8 @@
 ﻿
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using rvinowise.ai.general;
-using rvinowise.ai.unity.visuals;
-using rvinowise.unity.extensions.attributes;
-using rvinowise.unity.extensions;
-using TMPro;
-using UnityEngine;
-using rvinowise.unity.ui.input.mouse;
-using rvinowise.ai.unity;
-using rvinowise.unity.ui.input;
+
 
 namespace rvinowise.ai.unity.simple
 {

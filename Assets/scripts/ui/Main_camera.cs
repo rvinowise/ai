@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using rvinowise.rvi.contracts;
+﻿using rvinowise.contracts;
 using rvinowise.unity.ui.input;
 using UnityEngine;
 

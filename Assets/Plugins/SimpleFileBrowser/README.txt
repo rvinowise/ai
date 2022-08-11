@@ -1,6 +1,6 @@
 = Simple File Browser =
 
-Online documentation & example code available at: https://github.com/yasirkula/UnitySimpleFileBrowser
+Online documentation & example code availabel at: https://github.com/yasirkula/UnitySimpleFileBrowser
 E-mail: yasirkula@gmail.com
 
 ### ABOUT

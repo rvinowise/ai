@@ -1,6 +1,4 @@
 ﻿
-using System.Collections.Generic;
-
 namespace rvinowise.ai.general {
 
 public interface ISubfigure_appearance {

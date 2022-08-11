@@ -11,7 +11,7 @@ public interface IAction_group: IEnumerable<IAction> {
     BigInteger moment{get;}
     float mood{get;}
     
-    bool has_action<TAction>(IFigure figure) where TAction: IAction;
+    bool has_action(IFigure figure, Action_type type);
     void add_action(IAction action);
     void remove_action(IAction action);
 }

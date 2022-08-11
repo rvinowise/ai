@@ -1,15 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Numerics;
 using rvinowise.ai.general;
-using UnityEngine;
-using Vector3 = UnityEngine.Vector3;
 using System.Linq;
-using rvinowise.ai.unity.visuals;
-using rvinowise.unity.extensions;
-using rvinowise.unity.extensions.attributes;
-using rvinowise.unity.ui.input;
-using rvinowise.unity.ui.input.mouse;
-using TMPro;
+
 
 namespace rvinowise.ai.simple {
 
@@ -43,7 +36,7 @@ IFigure
         get;
         set;
     }
-    public IReadOnlyList<IFigure_appearance> get_appearances() => _appearances;
+    public IEnumerable<IFigure_appearance> get_appearances() => _appearances;
 
     public IReadOnlyList<IFigure_appearance> get_appearances_in_interval(
         BigInteger start, BigInteger end

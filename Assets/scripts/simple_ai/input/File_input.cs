@@ -1,17 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.IO;
-using System;
-using rvinowise.ai.general;
-using rvinowise.rvi.contracts;
-using rvinowise.unity.ui.input;
-using TMPro;
-using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.Serialization;
-using SimpleFileBrowser;
-
+﻿using rvinowise.ai.general;
 using System.IO.Abstractions;
 
 namespace rvinowise.ai.simple {

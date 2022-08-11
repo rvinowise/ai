@@ -1,23 +1,15 @@
 ﻿using System.Collections.Generic;
-using System.Numerics;
 using rvinowise.ai.general;
-using UnityEngine;
-using Vector3 = UnityEngine.Vector3;
-using System.Linq;
-using rvinowise.ai.ui.general;
-using rvinowise.unity.extensions;
-using TMPro;
-using rvinowise.unity;
-using rvinowise.unity.ui.input.mouse;
 
-namespace rvinowise.ai.general
+
+namespace rvinowise.ai.ui.general
 {
 
 public interface IVisual_figure:
     IFigure,
-    ISelectable
-{
+    IAccept_selection {
 
+    public new IEnumerable<IVisual_figure_appearance> get_appearances();
     public IFigure_button button { get; set; }
 
     public void show();

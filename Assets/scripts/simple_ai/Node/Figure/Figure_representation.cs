@@ -1,14 +1,8 @@
 ﻿using System.Collections.Generic;
-using System.Numerics;
 using rvinowise.ai.general;
-using UnityEngine;
-using Vector3 = UnityEngine.Vector3;
 using System.Linq;
 using rvinowise.ai.unity.simple;
-using rvinowise.ai.unity.visuals;
-using rvinowise.unity.extensions;
-using rvinowise.unity.extensions.attributes;
-using rvinowise.unity.ui.input.mouse;
+
 
 namespace rvinowise.ai.simple {
 

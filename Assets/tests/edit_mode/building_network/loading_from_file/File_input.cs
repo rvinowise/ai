@@ -2,12 +2,10 @@ using System.Collections.Generic;
 using System.IO.Abstractions;
 using Moq;
 using NUnit.Framework;
-using NUnit.Framework.Internal;
 using rvinowise.ai.general;
-using System.Linq;
 using System.Numerics;
 using rvinowise.ai.simple;
-using UnityEngine;
+
 
 namespace rvinowise.ai.unit_tests.file_input {
 

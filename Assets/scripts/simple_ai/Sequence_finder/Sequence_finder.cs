@@ -1,17 +1,11 @@
 #nullable enable
 
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using rvinowise.ai.unity;
-using UnityEngine;
-using rvinowise.unity.extensions;
-using Action = rvinowise.ai.unity.Action;
-using rvinowise.rvi.contracts;
+using rvinowise.contracts;
 using rvinowise.ai.general;
 using System.Numerics;
-using rvinowise.unity;
+
 
 namespace rvinowise.ai.simple {
 

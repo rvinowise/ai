@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4271547478742357132}
   - component: {fileID: -1396718677613751427}
   m_Layer: 0
-  m_Name: button_table
+  m_Name: Button_table
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29,6 +29,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -95,8 +96,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09eef9417f094937af48daa5cc76a719, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  table_cell_prefab: {fileID: 1333313930932307566, guid: 111cb98cbc5f96d40965000aa82b60b6,
+  table_cell_prefab: {fileID: 4845879091418838994, guid: 111cb98cbc5f96d40965000aa82b60b6,
     type: 3}
+  canvas: {fileID: 2491538839508427094}
   figure_button_prefab: {fileID: 4683541298846961202, guid: 9981862293c53cf46a82a9d24e78effb,
     type: 3}
   button_stencil_out: {fileID: 0}

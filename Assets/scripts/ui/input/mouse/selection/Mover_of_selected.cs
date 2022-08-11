@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using rvinowise;
-using rvinowise.rvi.contracts;
+using rvinowise.contracts;
 
 
 namespace rvinowise.unity.ui.input.mouse {
@@ -11,8 +8,6 @@ namespace rvinowise.unity.ui.input.mouse {
 public class Mover_of_selected: MonoBehaviour {
 
     public static Mover_of_selected instance;
-    [SerializeField]
-    public Selector selector;
 
     private bool is_moving;
     private Vector3 old_mouse_position;

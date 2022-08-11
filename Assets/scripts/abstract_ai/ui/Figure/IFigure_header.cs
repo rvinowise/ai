@@ -1,6 +1,6 @@
 ﻿
 
-namespace rvinowise.ai.general {
+namespace rvinowise.ai.ui.general {
 
 public interface IFigure_header
 {

@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-using System;
-using rvinowise.ai.general;
+﻿using rvinowise.ai.general;
 
 using TFigure = rvinowise.ai.simple.Figure;
 
@@ -9,11 +7,20 @@ namespace rvinowise.ai.simple {
 public class Network: 
     INetwork<TFigure> // where TFigure: class?, IFigure
 {
+    
+    #region INetwork
 
     public IAction_history action_history { get; }
-    public ISequence_finder<TFigure> sequence_finder { get; }
-
     public IFigure_provider<TFigure> figure_provider { get; }
+    public ISequence_finder<TFigure> sequence_finder { get; }
+    
+    public void input_signal(string id) {
+        action_history.input_signals(
+            new[] {figure_provider.find_figure_with_id(id)}    
+        );
+    }
+    
+    #endregion INetwork
 
     public Network() {
         action_history = new simple.Action_history();
@@ -26,9 +33,11 @@ public class Network:
     
     public Network(
         IAction_history action_history,
+        IFigure_provider<TFigure> figure_provider,
         ISequence_finder<TFigure> sequence_finder
     ) {
         this.action_history = action_history;
+        this.figure_provider = figure_provider;
         this.sequence_finder = sequence_finder;
     }
 
@@ -38,33 +47,18 @@ public class Network:
     
     public static INetwork<TFigure> get_network_with_base_signals() {
         INetwork<TFigure> network = new Network();
-        network.fill_figure_storage_with_base_signals();
+        new Base_signals<TFigure>(network.figure_provider);
         return network;
     }
 
-    #region INetwork
+    
 
 
-    
-    #endregion INetwork
-    
-    
-    
-    public Figure create_simple_figure(string id) {
+    private static Figure create_simple_figure(string id) {
         return new simple.Figure(id);
     }
 
-    public void input_signal(string id) {
-        action_history.input_signals(
-            new[] {figure_provider.find_figure_with_id(id)}    
-        );
-    }
-
-    public void fill_figure_storage_with_base_signals() {
-        IBase_signals_initializer figure_provider_initialiser = 
-            new Base_signals_initializer<TFigure>(figure_provider);
-        figure_provider_initialiser.create_base_signals();
-    }
+    
 
  
 

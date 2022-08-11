@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4845879091418838994}
   - component: {fileID: 1333313930932307566}
   m_Layer: 0
-  m_Name: table_cell
+  m_Name: Table_cell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29,6 +29,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -68,9 +69,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 7659138632441735922}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d965d2efaeb472b90aa7303a16aa181, type: 3}
+  m_Script: {fileID: 11500000, guid: ccab9162ad51fb642b6655a37c78096d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  item: {fileID: 0}
 --- !u!114 &1333313930932307566
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -80,7 +82,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 7659138632441735922}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f0d4349ef7126c448e3d02d7ee47111, type: 3}
+  m_Script: {fileID: 11500000, guid: 3e0239f47f754fa48a4440fd3ad0417b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item: {fileID: 0}
+  prefab: {fileID: 0}
+  reset_components:
+  - {fileID: 4845879091418838994}

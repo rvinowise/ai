@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Numerics;
-using rvinowise.ai.general;
-using rvinowise.unity;
+
 
 namespace rvinowise.ai.general {
 
@@ -10,7 +9,7 @@ public interface IFigure
 
     string id { get; set; }
 
-    IReadOnlyList<IFigure_appearance> get_appearances();
+    IEnumerable<IFigure_appearance> get_appearances();
     
     IReadOnlyList<IFigure_representation> get_representations();
     IFigure_representation create_representation();

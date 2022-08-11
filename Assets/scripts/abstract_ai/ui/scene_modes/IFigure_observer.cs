@@ -1,8 +1,4 @@
-﻿using rvinowise.ai.general;
-using UnityEngine;
-using rvinowise.unity.ui.input.mouse;
-
-namespace rvinowise.ai.ui.general {
+﻿namespace rvinowise.ai.ui.general {
 
 public interface IFigure_observer : 
 IFigure_button_click_receiver 

@@ -1,15 +1,7 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using rvinowise.ai.general;
-using rvinowise.rvi.contracts;
-using rvinowise.unity.extensions;
-using rvinowise.ai.unity.persistence;
-using rvinowise.unity.ui.table;
-using UnityEngine;
-using UnityEngine.UI;
-using rvinowise.unity.ui.input;
 
 
 namespace rvinowise.ai.simple {

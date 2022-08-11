@@ -1,20 +1,5 @@
-﻿
-using UnityEngine;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
-using rvinowise.ai.general;
-using rvinowise.ai.ui.unity;
+﻿using rvinowise.ai.general;
 using rvinowise.ai.unity.simple;
-using rvinowise.rvi.contracts;
-using rvinowise.unity.extensions;
-using rvinowise.unity.extensions.attributes;
-using rvinowise.unity.ui.input;
-using rvinowise.unity.ui.input.mouse;
-using UnityEngine.EventSystems;
-using rvinowise.unity.geometry2d;
-using Vector3 = UnityEngine.Vector3;
-using Input = UnityEngine.Input;
 using Subfigure = rvinowise.ai.unity.Subfigure;
 
 namespace rvinowise.ai.ui.general {

@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using rvinowise;
-using rvinowise.rvi.contracts;
 using rvinowise.ai.unity;
-using Action = rvinowise.ai.unity.Action;
 using rvinowise.ai.general;
-using rvinowise.unity.geometry2d;
+using rvinowise.ai.ui.general;
 using UnityEngine.EventSystems;
 
 namespace rvinowise.unity.ui.input.mouse {
@@ -18,10 +13,10 @@ public class Rectangle {
     public float bottom;
     public float top;
 
-    public Vector2 top_left => new Vector2(left, top);
-    public Vector2 top_right => new Vector2(right, top);
-    public Vector2 bottom_left => new Vector2(left, bottom);
-    public Vector2 bottom_right => new Vector2(right, bottom);
+    public Vector2 top_left => new(left, top);
+    public Vector2 top_right => new(right, top);
+    public Vector2 bottom_left => new(left, bottom);
+    public Vector2 bottom_right => new(right, bottom);
 
     public void update_from_points(Vector2 start, Vector2 end) {
         if (start.x > end.x) {
@@ -48,7 +43,7 @@ public class Box_selector: MonoBehaviour {
 
     
     private Vector2 start_position;
-    private Rectangle rect = new Rectangle();
+    private readonly Rectangle rect = new();
     private bool is_selecting;
 
     public LineRenderer line_renderer;
@@ -66,7 +61,7 @@ public class Box_selector: MonoBehaviour {
             if (EventSystem.current.IsPointerOverGameObject()) {
                 return;
             }
-            if (Selector.instance.get_selectable_under_mouse() != null) {
+            if (Marked_objects.instance.get_selectable_under_mouse() != null) {
                 return;
             }
             
@@ -98,7 +93,7 @@ public class Box_selector: MonoBehaviour {
     }
 
     void deselect_previous() {
-        Selector.instance.deselect_all();
+        Marked_objects.instance.deselect_all();
     }
 
     private void update_selection(
@@ -118,14 +113,13 @@ public class Box_selector: MonoBehaviour {
         line_renderer.SetPosition(3, rect.bottom_left);
     }
     private void select_objects() {
-        IReadOnlyList<IAction_group> action_groups 
-        = get_all_action_groups();
+        IReadOnlyList<IAction_group> action_groups = get_all_action_groups();
         foreach(IAction_group group in action_groups) {
             if (
-                group is ISelectable selectable &&
+                group is IAccept_selection selectable &&
                 is_inside_selection(selectable)
             ) {
-                Selector.select(selectable);
+                Marked_objects.instance.select(selectable);
             }
         }
     }
@@ -137,13 +131,12 @@ public class Box_selector: MonoBehaviour {
         );// as IReadOnlyList<Action_group>;
     }
 
-    bool is_inside_selection(ISelectable entity) {
-        Vector2 position = entity.transform.position;
+    bool is_inside_selection(IAccept_selection entity) {
         return (
-            (position.x > rect.left)&&
-            (position.x < rect.right)&&
-            (position.y > rect.bottom)&&
-            (position.y < rect.top)
+            (entity.x > rect.left)&&
+            (entity.x < rect.right)&&
+            (entity.y > rect.bottom)&&
+            (entity.y < rect.top)
         );
     }
 

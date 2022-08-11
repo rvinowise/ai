@@ -1,14 +1,8 @@
 /* visualises all the actions that were input into the system */
 using System.Collections.Generic;
-using rvinowise.ai.unity;
-using UnityEngine;
-using rvinowise.unity.extensions;
-using Action = rvinowise.ai.unity.Action;
 using rvinowise.ai.general;
 using System.Linq;
 using System.Numerics;
-using rvinowise.rvi.contracts;
-using rvinowise.unity.ui.input;
 using System;
 
 namespace rvinowise.ai.simple {
@@ -17,7 +11,7 @@ IAction_history
 {
 
     
-    private readonly IList<IAction_group> action_groups = 
+    private readonly List<IAction_group> action_groups = 
         new List<IAction_group>();
     
     private readonly Dictionary<BigInteger, IAction_group> moments_to_action_groups=
@@ -40,6 +34,9 @@ IAction_history
 
         return result.AsReadOnly();
     }
+
+    public IReadOnlyList<IAction_group> get_action_groups() => action_groups.AsReadOnly();
+        
 
     IFigure_appearance IAction_history.create_figure_appearance(
         IFigure figure, IAction_group start, IAction_group end

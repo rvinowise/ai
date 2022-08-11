@@ -1,13 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
-using rvinowise.ai.unity;
-using rvinowise.unity.extensions;
-using rvinowise.unity.extensions.attributes;
+using System.Linq;
 using rvinowise.ai.general;
-using UnityEngine;
 using System.Numerics;
-using rvinowise.rvi.contracts;
-using rvinowise.unity.ui.input.mouse;
+
 
 namespace rvinowise.ai.simple {
 
@@ -21,14 +17,7 @@ IAction_group
         return GetEnumerator();
     }
 
-    public BigInteger moment{
-        get {
-            return _moment;
-        }
-        private set {
-            _moment = value;
-        }
-    }
+    public BigInteger moment { get; private set; }
 
     public float mood {
         get;
@@ -39,7 +28,6 @@ IAction_group
         mood = value;
     }
 
-    private BigInteger _moment;
     private readonly IList<IAction> actions = new List<IAction>();
     
 
@@ -50,6 +38,7 @@ IAction_group
         this.moment = moment;
         this.mood = mood;
     }
+
     
 
     public void add_action(IAction in_action) {
@@ -61,18 +50,8 @@ IAction_group
     }
 
 
-    public bool has_action<TAction>(IFigure figure) where TAction: IAction {
-        foreach (var action in actions) {
-            if (
-                (action.figure == figure)&&
-                (action is TAction)
-                ) {
-                return true;
-            }
-        }
-        
-        return false;
-    }
+    public bool has_action(IFigure figure, Action_type type) =>
+        actions.Any(action => action.figure == figure && action.type == type);
 
 
     

@@ -1,15 +1,5 @@
 ﻿using System.Numerics;
 using rvinowise.ai.general;
-using System.Collections.Generic;
-using System;
-using rvinowise.unity;
-using rvinowise.unity.extensions;
-using rvinowise.unity.extensions.attributes;
-using rvinowise.unity.extensions.pooling;
-using rvinowise.unity.ui.input;
-using rvinowise.unity.ui.input.mouse;
-using UnityEngine;
-using Vector3 = UnityEngine.Vector3;
 
 
 namespace rvinowise.ai.simple {

@@ -15,9 +15,9 @@ MonoBehaviour:
   m_PixelRect:
     serializedVersion: 2
     x: 0
-    y: 43
-    width: 1920
-    height: 997
+    y: 43.2
+    width: 1536
+    height: 780.8
   m_ShowMode: 4
   m_Title: Project
   m_RootView: {fileID: 6}
@@ -43,12 +43,12 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 30
-    width: 1920
-    height: 947
+    width: 1536
+    height: 730.8
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 78
+  controlID: 94
 --- !u!114 &3
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -64,10 +64,10 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 1466
+    x: 1162.4
     y: 0
-    width: 454
-    height: 947
+    width: 373.59998
+    height: 730.8
   m_MinSize: {x: 276, y: 71}
   m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 14}
@@ -92,8 +92,8 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 363
-    height: 561
+    width: 286.4
+    height: 497.6
   m_MinSize: {x: 201, y: 221}
   m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 15}
@@ -117,18 +117,17 @@ MonoBehaviour:
   m_Position:
     serializedVersion: 2
     x: 0
-    y: 561
-    width: 1466
-    height: 386
+    y: 497.6
+    width: 1162.4
+    height: 233.19998
   m_MinSize: {x: 231, y: 271}
   m_MaxSize: {x: 10001, y: 10021}
   m_ActualView: {fileID: 13}
   m_Panes:
   - {fileID: 13}
   - {fileID: 18}
-  - {fileID: 12}
   m_Selected: 0
-  m_LastSelected: 2
+  m_LastSelected: 1
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -149,8 +148,8 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 1920
-    height: 997
+    width: 1536
+    height: 780.8
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
   m_UseTopView: 1
@@ -174,7 +173,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 1920
+    width: 1536
     height: 30
   m_MinSize: {x: 0, y: 0}
   m_MaxSize: {x: 0, y: 0}
@@ -195,8 +194,8 @@ MonoBehaviour:
   m_Position:
     serializedVersion: 2
     x: 0
-    y: 977
-    width: 1920
+    y: 760.8
+    width: 1536
     height: 20
   m_MinSize: {x: 0, y: 0}
   m_MaxSize: {x: 0, y: 0}
@@ -219,12 +218,12 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 1466
-    height: 947
+    width: 1162.4
+    height: 730.8
   m_MinSize: {x: 200, y: 200}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 79
+  controlID: 68
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -244,12 +243,12 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 1466
-    height: 561
+    width: 1162.4
+    height: 497.6
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 80
+  controlID: 69
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -265,16 +264,17 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 363
+    x: 286.4
     y: 0
-    width: 1103
-    height: 561
+    width: 876
+    height: 497.6
   m_MinSize: {x: 202, y: 221}
   m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 16}
   m_Panes:
   - {fileID: 16}
   - {fileID: 17}
+  - {fileID: 12}
   m_Selected: 0
   m_LastSelected: 1
 --- !u!114 &12
@@ -297,31 +297,31 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 0
-    y: 634
-    width: 1465
-    height: 365
+    x: 290.4
+    y: 73.6
+    width: 880.4
+    height: 476.6
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
     m_SaveData: []
   m_Spl:
-    ID: 90
-    splitterInitialOffset: 0
+    ID: 605
+    splitterInitialOffset: 206.8
     currentActiveSplitter: -1
     realSizes:
-    - 221
-    - 74
+    - 184.8
+    - 222.40001
     relativeSizes:
-    - 0.75
-    - 0.25
+    - 0.45466322
+    - 0.5453368
     minSizes:
     - 32
     - 32
     maxSizes:
     - 0
     - 0
-    lastTotalSize: 295
+    lastTotalSize: 407.2
     splitSize: 6
     xOffset: 0
     m_Version: 1
@@ -337,9 +337,9 @@ MonoBehaviour:
       uniqueId: '[unity_ai][suite]'
       name: unity_ai
       fullName: unity_ai
-      resultStatus: 1
-      duration: 0.5605429
-      messages: 
+      resultStatus: 0
+      duration: 101.86262
+      messages: One or more child tests had errors
       output: 
       stacktrace: 
       notRunnable: 0
@@ -349,13 +349,507 @@ MonoBehaviour:
       categories: []
       parentId: 
       parentUniqueId: 
-    m_ResultText: unity_ai (0.561s)
-    m_ResultStacktrace: 
+    - id: 1007
+      uniqueId: '[play_mode.dll][suite]'
+      name: play_mode.dll
+      fullName: C:/prj/ai/unity_ai/Library/ScriptAssemblies/play_mode.dll
+      resultStatus: 0
+      duration: 101.80376
+      messages: One or more child tests had errors
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1000
+      parentUniqueId: '[unity_ai][suite]'
+    - id: 1008
+      uniqueId: play_mode.dll/[rvinowise][suite]
+      name: rvinowise
+      fullName: rvinowise
+      resultStatus: 0
+      duration: 101.78175
+      messages: One or more child tests had errors
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1007
+      parentUniqueId: '[play_mode.dll][suite]'
+    - id: 1009
+      uniqueId: play_mode.dll/rvinowise/[ai][suite]
+      name: ai
+      fullName: rvinowise.ai
+      resultStatus: 0
+      duration: 101.77672
+      messages: One or more child tests had errors
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1008
+      parentUniqueId: play_mode.dll/[rvinowise][suite]
+    - id: 1010
+      uniqueId: play_mode.dll/rvinowise/ai/[unit_tests][suite]
+      name: unit_tests
+      fullName: rvinowise.ai.unit_tests
+      resultStatus: 0
+      duration: 101.768974
+      messages: One or more child tests had errors
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1009
+      parentUniqueId: play_mode.dll/rvinowise/[ai][suite]
+    - id: 1011
+      uniqueId: play_mode.dll/rvinowise/ai/unit_tests/[ui][suite]
+      name: ui
+      fullName: rvinowise.ai.unit_tests.ui
+      resultStatus: 0
+      duration: 101.76084
+      messages: One or more child tests had errors
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1010
+      parentUniqueId: play_mode.dll/rvinowise/ai/[unit_tests][suite]
+    - id: 1012
+      uniqueId: play_mode.dll/rvinowise/ai/unit_tests/ui/[play_mode][rvinowise.ai.unit_tests.ui.figure_showcase][suite]
+      name: figure_showcase
+      fullName: rvinowise.ai.unit_tests.ui.figure_showcase
+      resultStatus: 0
+      duration: 101.75399
+      messages: One or more child tests had errors
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1011
+      parentUniqueId: play_mode.dll/rvinowise/ai/unit_tests/[ui][suite]
+    - id: 1001
+      uniqueId: play_mode.dll/rvinowise/ai/unit_tests/ui/figure_showcase/[play_mode][rvinowise.ai.unit_tests.ui.figure_showcase.figure_showcase_is_populated_with_figures][suite]
+      name: figure_showcase_is_populated_with_figures
+      fullName: rvinowise.ai.unit_tests.ui.figure_showcase.figure_showcase_is_populated_with_figures
+      resultStatus: 0
+      duration: 101.74363
+      messages: One or more child tests had errors
+      output: 'The referenced script (Unknown) on this Behaviour is missing!
+
+        The
+        referenced script on this Behaviour (Game Object ''figure_representation'')
+        is missing!
+
+        The referenced script (Unknown) on this Behaviour is
+        missing!
+
+        The referenced script on this Behaviour (Game Object ''subfigure'')
+        is missing!
+
+        The referenced script (Unknown) on this Behaviour is
+        missing!
+
+        The referenced script on this Behaviour (Game Object ''connection'')
+        is missing!
+
+'
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1012
+      parentUniqueId: play_mode.dll/rvinowise/ai/unit_tests/ui/[play_mode][rvinowise.ai.unit_tests.ui.figure_showcase][suite]
+    - id: 1002
+      uniqueId: play_mode.dll/rvinowise/ai/unit_tests/ui/figure_showcase/figure_showcase_is_populated_with_figures/[play_mode][rvinowise.ai.unit_tests.ui.figure_showcase.figure_showcase_is_populated_with_figures.buttons_are_correctly_created_for_figures]
+      name: buttons_are_correctly_created_for_figures
+      fullName: rvinowise.ai.unit_tests.ui.figure_showcase.figure_showcase_is_populated_with_figures.buttons_are_correctly_created_for_figures
+      resultStatus: 0
+      duration: 101.61796
+      messages: 'SetUp : System.NullReferenceException : Object reference not set
+        to an instance of an object'
+      output: 'amount of prefabs with pooled Component ''Table_cell (rvinowise.unity.extensions.pooling.Pooled_object)''
+        = 1
+
+'
+      stacktrace: "--SetUp\r\n  at rvinowise.unity.ui.table.Table.create_cell ()
+        [0x0000d] in C:\\prj\\ai\\unity_ai\\Assets\\scripts\\ui\\Table\\Table.cs:37
+        \r\n  at rvinowise.unity.ui.table.Table.add_item (UnityEngine.MonoBehaviour
+        in_item) [0x00001] in C:\\prj\\ai\\unity_ai\\Assets\\scripts\\ui\\Table\\Table.cs:29
+        \r\n  at rvinowise.ai.unity.Button_table.create_button_for_figure (rvinowise.ai.general.IVisual_figure
+        figure) [0x0001e] in C:\\prj\\ai\\unity_ai\\Assets\\scripts\\ui\\scene_modes\\figure
+        observation\\Button_table.cs:49 \r\n  at rvinowise.ai.unity.Figure_showcase.create_figure
+        (System.String id) [0x0003f] in C:\\prj\\ai\\unity_ai\\Assets\\scripts\\ui\\scene_modes\\figure
+        observation\\Figure_showcase.cs:76 \r\n  at rvinowise.ai.simple.Figure_provider`1[TFigure].create_new_figure
+        (System.String id) [0x00001] in C:\\prj\\ai\\unity_ai\\Assets\\scripts\\figure
+        creation\\Figure_provider.cs:81 \r\n  at rvinowise.ai.simple.Figure_provider`1[TFigure].provide_figure
+        (System.String id) [0x00001] in C:\\prj\\ai\\unity_ai\\Assets\\scripts\\figure
+        creation\\Figure_provider.cs:43 \r\n  at rvinowise.ai.unity.Figure_showcase.provide_figure
+        (System.String id) [0x00000] in C:\\prj\\ai\\unity_ai\\Assets\\scripts\\ui\\scene_modes\\figure
+        observation\\Figure_showcase.cs:56 \r\n  at rvinowise.ai.unit_tests.ui.figure_showcase.figure_showcase_is_populated_with_figures.prepare
+        () [0x0003a] in C:\\prj\\ai\\unity_ai\\Assets\\tests\\play_mode\\ui\\scene_modes\\Figure_observer.cs:36
+        \r\n  at (wrapper managed-to-native) System.Reflection.RuntimeMethodInfo.InternalInvoke(System.Reflection.RuntimeMethodInfo,object,object[],System.Exception&)\r\n 
+        at System.Reflection.RuntimeMethodInfo.Invoke (System.Object obj, System.Reflection.BindingFlags
+        invokeAttr, System.Reflection.Binder binder, System.Object[] parameters,
+        System.Globalization.CultureInfo culture) [0x0006a] in <e40e5a8f982c4b618a930d29f9bd091c>:0 "
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: play_mode.dll/rvinowise/ai/unit_tests/ui/figure_showcase/[play_mode][rvinowise.ai.unit_tests.ui.figure_showcase.figure_showcase_is_populated_with_figures][suite]
+    - id: 1003
+      uniqueId: play_mode.dll/rvinowise/ai/unit_tests/ui/figure_showcase/[play_mode][rvinowise.ai.unit_tests.ui.figure_showcase.several_figure_buttons_in_a_showcase_are_clicked_after_each_other][suite]
+      name: several_figure_buttons_in_a_showcase_are_clicked_after_each_other
+      fullName: rvinowise.ai.unit_tests.ui.figure_showcase.several_figure_buttons_in_a_showcase_are_clicked_after_each_other
+      resultStatus: 2
+      duration: 0.1356482
+      messages: One or more child tests had errors
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1012
+      parentUniqueId: play_mode.dll/rvinowise/ai/unit_tests/ui/[play_mode][rvinowise.ai.unit_tests.ui.figure_showcase][suite]
+    - id: 1004
+      uniqueId: play_mode.dll/rvinowise/ai/unit_tests/ui/figure_showcase/several_figure_buttons_in_a_showcase_are_clicked_after_each_other/[play_mode][rvinowise.ai.unit_tests.ui.figure_showcase.several_figure_buttons_in_a_showcase_are_clicked_after_each_other.different_figure_details_are_shown_after_each_other]
+      name: different_figure_details_are_shown_after_each_other
+      fullName: rvinowise.ai.unit_tests.ui.figure_showcase.several_figure_buttons_in_a_showcase_are_clicked_after_each_other.different_figure_details_are_shown_after_each_other
+      resultStatus: 2
+      duration: 0.0050483
+      messages: 'SetUp : System.NullReferenceException : Object reference not set
+        to an instance of an object'
+      output: 
+      stacktrace: "--SetUp\r\n  at rvinowise.unity.extensions.Unity_extension.get_from_pool[TComponent]
+        (UnityEngine.MonoBehaviour prefab_component) [0x00000] in C:\\prj\\ai\\unity_ai\\Assets\\scripts\\unity-extensions\\MonoBehaviour.cs:15
+        \r\n  at rvinowise.unity.ui.table.Table.create_cell () [0x00000] in C:\\prj\\ai\\unity_ai\\Assets\\scripts\\ui\\Table\\Table.cs:32
+        \r\n  at rvinowise.unity.ui.table.Table.add_item (UnityEngine.MonoBehaviour
+        in_item) [0x00000] in C:\\prj\\ai\\unity_ai\\Assets\\scripts\\ui\\Table\\Table.cs:27
+        \r\n  at rvinowise.ai.unity.Button_table.create_button_for_figure (rvinowise.ai.general.IVisual_figure
+        figure) [0x0001b] in C:\\prj\\ai\\unity_ai\\Assets\\scripts\\ui\\scene_modes\\figure
+        observation\\Button_table.cs:49 \r\n  at rvinowise.ai.unity.Figure_showcase.create_figure
+        (System.String id) [0x0003a] in C:\\prj\\ai\\unity_ai\\Assets\\scripts\\ui\\scene_modes\\figure
+        observation\\Figure_showcase.cs:76 \r\n  at rvinowise.ai.simple.Figure_provider`1[TFigure].create_new_figure
+        (System.String id) [0x00000] in C:\\prj\\ai\\unity_ai\\Assets\\scripts\\figure
+        creation\\Figure_provider.cs:81 \r\n  at rvinowise.ai.simple.Figure_provider`1[TFigure].provide_figure
+        (System.String id) [0x00000] in C:\\prj\\ai\\unity_ai\\Assets\\scripts\\figure
+        creation\\Figure_provider.cs:43 \r\n  at rvinowise.ai.unity.Figure_showcase.provide_figure
+        (System.String id) [0x00000] in C:\\prj\\ai\\unity_ai\\Assets\\scripts\\ui\\scene_modes\\figure
+        observation\\Figure_showcase.cs:56 \r\n  at rvinowise.ai.unit_tests.ui.figure_showcase.several_figure_buttons_in_a_showcase_are_clicked_after_each_other.prepare
+        () [0x00045] in C:\\prj\\ai\\unity_ai\\Assets\\tests\\play_mode\\ui\\scene_modes\\Figure_observer.cs:95
+        \r\n  at (wrapper managed-to-native) System.Reflection.RuntimeMethodInfo.InternalInvoke(System.Reflection.RuntimeMethodInfo,object,object[],System.Exception&)\r\n 
+        at System.Reflection.RuntimeMethodInfo.Invoke (System.Object obj, System.Reflection.BindingFlags
+        invokeAttr, System.Reflection.Binder binder, System.Object[] parameters,
+        System.Globalization.CultureInfo culture) [0x0006a] in <e40e5a8f982c4b618a930d29f9bd091c>:0 "
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1003
+      parentUniqueId: play_mode.dll/rvinowise/ai/unit_tests/ui/figure_showcase/[play_mode][rvinowise.ai.unit_tests.ui.figure_showcase.several_figure_buttons_in_a_showcase_are_clicked_after_each_other][suite]
+    - id: 1013
+      uniqueId: play_mode.dll/rvinowise/ai/unit_tests/ui/[play_mode][rvinowise.ai.unit_tests.ui.mode_selector][suite]
+      name: mode_selector
+      fullName: rvinowise.ai.unit_tests.ui.mode_selector
+      resultStatus: 1
+      duration: 0.0301723
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1011
+      parentUniqueId: play_mode.dll/rvinowise/ai/unit_tests/[ui][suite]
+    - id: 1005
+      uniqueId: play_mode.dll/rvinowise/ai/unit_tests/ui/mode_selector/[play_mode][rvinowise.ai.unit_tests.ui.mode_selector.new_figure_is_created][suite]
+      name: new_figure_is_created
+      fullName: rvinowise.ai.unit_tests.ui.mode_selector.new_figure_is_created
+      resultStatus: 1
+      duration: 0.0177698
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1013
+      parentUniqueId: play_mode.dll/rvinowise/ai/unit_tests/ui/[play_mode][rvinowise.ai.unit_tests.ui.mode_selector][suite]
+    - id: 1006
+      uniqueId: play_mode.dll/rvinowise/ai/unit_tests/ui/mode_selector/new_figure_is_created/[play_mode][rvinowise.ai.unit_tests.ui.mode_selector.new_figure_is_created.shows_figure_graph]
+      name: shows_figure_graph
+      fullName: rvinowise.ai.unit_tests.ui.mode_selector.new_figure_is_created.shows_figure_graph
+      resultStatus: 1
+      duration: 0.0085798
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1005
+      parentUniqueId: play_mode.dll/rvinowise/ai/unit_tests/ui/mode_selector/[play_mode][rvinowise.ai.unit_tests.ui.mode_selector.new_figure_is_created][suite]
+    - id: 1016
+      uniqueId: play_mode.dll/rvinowise/ai/[unity][suite]
+      name: unity
+      fullName: rvinowise.ai.unity
+      resultStatus: 2
+      duration: 0.2580742
+      messages: One or more child tests had errors
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1011
+      parentUniqueId: play_mode.dll/rvinowise/[ai][suite]
+    - id: 1017
+      uniqueId: play_mode.dll/rvinowise/ai/unity/[unit_tests][suite]
+      name: unit_tests
+      fullName: rvinowise.ai.unity.unit_tests
+      resultStatus: 2
+      duration: 0.2506671
+      messages: One or more child tests had errors
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1016
+      parentUniqueId: play_mode.dll/rvinowise/ai/[unity][suite]
+    - id: 1018
+      uniqueId: play_mode.dll/rvinowise/ai/unity/unit_tests/[play_mode][rvinowise.ai.unity.unit_tests.figure][suite]
+      name: figure
+      fullName: rvinowise.ai.unity.unit_tests.figure
+      resultStatus: 1
+      duration: 0.0319452
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1017
+      parentUniqueId: play_mode.dll/rvinowise/ai/unity/[unit_tests][suite]
+    - id: 1007
+      uniqueId: play_mode.dll/rvinowise/ai/unity/unit_tests/figure/[play_mode][rvinowise.ai.unity.unit_tests.figure.figure_is_conforming_to_its_interface][suite]
+      name: figure_is_conforming_to_its_interface
+      fullName: rvinowise.ai.unity.unit_tests.figure.figure_is_conforming_to_its_interface
+      resultStatus: 1
+      duration: 0.0259908
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1018
+      parentUniqueId: play_mode.dll/rvinowise/ai/unity/unit_tests/[play_mode][rvinowise.ai.unity.unit_tests.figure][suite]
+    - id: 1008
+      uniqueId: play_mode.dll/rvinowise/ai/unity/unit_tests/figure/figure_is_conforming_to_its_interface/[play_mode][rvinowise.ai.unity.unit_tests.figure.figure_is_conforming_to_its_interface.figure_has_necessary_parts]
+      name: figure_has_necessary_parts
+      fullName: rvinowise.ai.unity.unit_tests.figure.figure_is_conforming_to_its_interface.figure_has_necessary_parts
+      resultStatus: 1
+      duration: 0.0192513
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1007
+      parentUniqueId: play_mode.dll/rvinowise/ai/unity/unit_tests/figure/[play_mode][rvinowise.ai.unity.unit_tests.figure.figure_is_conforming_to_its_interface][suite]
+    - id: 1020
+      uniqueId: play_mode.dll/rvinowise/ai/unity/unit_tests/[play_mode][rvinowise.ai.unity.unit_tests.figure_button][suite]
+      name: figure_button
+      fullName: rvinowise.ai.unity.unit_tests.figure_button
+      resultStatus: 1
+      duration: 0.0285764
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1019
+      parentUniqueId: play_mode.dll/rvinowise/ai/unity/[unit_tests][suite]
+    - id: 1007
+      uniqueId: play_mode.dll/rvinowise/ai/unity/unit_tests/figure_button/[play_mode][rvinowise.ai.unity.unit_tests.figure_button.figure_button_is_constructed_for_a_figure][suite]
+      name: figure_button_is_constructed_for_a_figure
+      fullName: rvinowise.ai.unity.unit_tests.figure_button.figure_button_is_constructed_for_a_figure
+      resultStatus: 1
+      duration: 0.0118579
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1020
+      parentUniqueId: play_mode.dll/rvinowise/ai/unity/unit_tests/[play_mode][rvinowise.ai.unity.unit_tests.figure_button][suite]
+    - id: 1008
+      uniqueId: play_mode.dll/rvinowise/ai/unity/unit_tests/figure_button/figure_button_is_constructed_for_a_figure/[play_mode][rvinowise.ai.unity.unit_tests.figure_button.figure_button_is_constructed_for_a_figure.figure_button_has_been_constructed_well]
+      name: figure_button_has_been_constructed_well
+      fullName: rvinowise.ai.unity.unit_tests.figure_button.figure_button_is_constructed_for_a_figure.figure_button_has_been_constructed_well
+      resultStatus: 1
+      duration: 0.0068929
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1007
+      parentUniqueId: play_mode.dll/rvinowise/ai/unity/unit_tests/figure_button/[play_mode][rvinowise.ai.unity.unit_tests.figure_button.figure_button_is_constructed_for_a_figure][suite]
+    - id: 1022
+      uniqueId: play_mode.dll/rvinowise/ai/unity/unit_tests/[play_mode][rvinowise.ai.unity.unit_tests.prefab_fields][suite]
+      name: prefab_fields
+      fullName: rvinowise.ai.unity.unit_tests.prefab_fields
+      resultStatus: 2
+      duration: 0.2377153
+      messages: One or more child tests had errors
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1021
+      parentUniqueId: play_mode.dll/rvinowise/ai/unity/[unit_tests][suite]
+    - id: 1007
+      uniqueId: play_mode.dll/rvinowise/ai/unity/unit_tests/prefab_fields/[play_mode][rvinowise.ai.unity.unit_tests.prefab_fields.table][suite]
+      name: table
+      fullName: rvinowise.ai.unity.unit_tests.prefab_fields.table
+      resultStatus: 2
+      duration: 0.2159446
+      messages: One or more child tests had errors
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1022
+      parentUniqueId: play_mode.dll/rvinowise/ai/unity/unit_tests/[play_mode][rvinowise.ai.unity.unit_tests.prefab_fields][suite]
+    - id: 1008
+      uniqueId: play_mode.dll/rvinowise/ai/unity/unit_tests/prefab_fields/table/[play_mode][rvinowise.ai.unity.unit_tests.prefab_fields.table.fields_are_assigned_in_editor]
+      name: fields_are_assigned_in_editor
+      fullName: rvinowise.ai.unity.unit_tests.prefab_fields.table.fields_are_assigned_in_editor
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1007
+      parentUniqueId: play_mode.dll/rvinowise/ai/unity/unit_tests/prefab_fields/[play_mode][rvinowise.ai.unity.unit_tests.prefab_fields.table][suite]
+    m_ResultText: "buttons_are_correctly_created_for_figures (101.618s)\n---\nSetUp
+      : System.NullReferenceException : Object reference not set to an instance of
+      an object\n---\n--SetUp\r\n  at rvinowise.unity.ui.table.Table.create_cell
+      () [0x0000d] in C:\\prj\\ai\\unity_ai\\Assets\\scripts\\ui\\Table\\Table.cs:37
+      \r\n  at rvinowise.unity.ui.table.Table.add_item (UnityEngine.MonoBehaviour
+      in_item) [0x00001] in C:\\prj\\ai\\unity_ai\\Assets\\scripts\\ui\\Table\\Table.cs:29
+      \r\n  at rvinowise.ai.unity.Button_table.create_button_for_figure (rvinowise.ai.general.IVisual_figure
+      figure) [0x0001e] in C:\\prj\\ai\\unity_ai\\Assets\\scripts\\ui\\scene_modes\\figure
+      observation\\Button_table.cs:49 \r\n  at rvinowise.ai.unity.Figure_showcase.create_figure
+      (System.String id) [0x0003f] in C:\\prj\\ai\\unity_ai\\Assets\\scripts\\ui\\scene_modes\\figure
+      observation\\Figure_showcase.cs:76 \r\n  at rvinowise.ai.simple.Figure_provider`1[TFigure].create_new_figure
+      (System.String id) [0x00001] in C:\\prj\\ai\\unity_ai\\Assets\\scripts\\figure
+      creation\\Figure_provider.cs:81 \r\n  at rvinowise.ai.simple.Figure_provider`1[TFigure].provide_figure
+      (System.String id) [0x00001] in C:\\prj\\ai\\unity_ai\\Assets\\scripts\\figure
+      creation\\Figure_provider.cs:43 \r\n  at rvinowise.ai.unity.Figure_showcase.provide_figure
+      (System.String id) [0x00000] in C:\\prj\\ai\\unity_ai\\Assets\\scripts\\ui\\scene_modes\\figure
+      observation\\Figure_showcase.cs:56 \r\n  at rvinowise.ai.unit_tests.ui.figure_showcase.figure_showcase_is_populated_with_figures.prepare
+      () [0x0003a] in C:\\prj\\ai\\unity_ai\\Assets\\tests\\play_mode\\ui\\scene_modes\\Figure_observer.cs:36
+      \r\n  at (wrapper managed-to-native) System.Reflection.RuntimeMethodInfo.InternalInvoke(System.Reflection.RuntimeMethodInfo,object,object[],System.Exception&)\r\n 
+      at System.Reflection.RuntimeMethodInfo.Invoke (System.Object obj, System.Reflection.BindingFlags
+      invokeAttr, System.Reflection.Binder binder, System.Object[] parameters, System.Globalization.CultureInfo
+      culture) [0x0006a] in <e40e5a8f982c4b618a930d29f9bd091c>:0\n---\namount of
+      prefabs with pooled Component 'Table_cell (rvinowise.unity.extensions.pooling.Pooled_object)'
+      = 1"
+    m_ResultStacktrace: "--SetUp\r\n  at rvinowise.unity.ui.table.Table.create_cell
+      () [0x0000d] in C:\\prj\\ai\\unity_ai\\Assets\\scripts\\ui\\Table\\Table.cs:37
+      \r\n  at rvinowise.unity.ui.table.Table.add_item (UnityEngine.MonoBehaviour
+      in_item) [0x00001] in C:\\prj\\ai\\unity_ai\\Assets\\scripts\\ui\\Table\\Table.cs:29
+      \r\n  at rvinowise.ai.unity.Button_table.create_button_for_figure (rvinowise.ai.general.IVisual_figure
+      figure) [0x0001e] in C:\\prj\\ai\\unity_ai\\Assets\\scripts\\ui\\scene_modes\\figure
+      observation\\Button_table.cs:49 \r\n  at rvinowise.ai.unity.Figure_showcase.create_figure
+      (System.String id) [0x0003f] in C:\\prj\\ai\\unity_ai\\Assets\\scripts\\ui\\scene_modes\\figure
+      observation\\Figure_showcase.cs:76 \r\n  at rvinowise.ai.simple.Figure_provider`1[TFigure].create_new_figure
+      (System.String id) [0x00001] in C:\\prj\\ai\\unity_ai\\Assets\\scripts\\figure
+      creation\\Figure_provider.cs:81 \r\n  at rvinowise.ai.simple.Figure_provider`1[TFigure].provide_figure
+      (System.String id) [0x00001] in C:\\prj\\ai\\unity_ai\\Assets\\scripts\\figure
+      creation\\Figure_provider.cs:43 \r\n  at rvinowise.ai.unity.Figure_showcase.provide_figure
+      (System.String id) [0x00000] in C:\\prj\\ai\\unity_ai\\Assets\\scripts\\ui\\scene_modes\\figure
+      observation\\Figure_showcase.cs:56 \r\n  at rvinowise.ai.unit_tests.ui.figure_showcase.figure_showcase_is_populated_with_figures.prepare
+      () [0x0003a] in C:\\prj\\ai\\unity_ai\\Assets\\tests\\play_mode\\ui\\scene_modes\\Figure_observer.cs:36
+      \r\n  at (wrapper managed-to-native) System.Reflection.RuntimeMethodInfo.InternalInvoke(System.Reflection.RuntimeMethodInfo,object,object[],System.Exception&)\r\n 
+      at System.Reflection.RuntimeMethodInfo.Invoke (System.Object obj, System.Reflection.BindingFlags
+      invokeAttr, System.Reflection.Binder binder, System.Object[] parameters, System.Globalization.CultureInfo
+      culture) [0x0006a] in <e40e5a8f982c4b618a930d29f9bd091c>:0 "
     m_TestListState:
-      scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 24783d98
-      m_LastClickedID: -1740802012
-      m_ExpandedIDs: 24783d985f6435a0181b45b5ad054ac8e84679fe56f0350c83ec5111eae8e2256cb3d33c3b281341f8021943ffffff7f
+      scrollPos: {x: 0, y: 39}
+      m_SelectedIDs: 28daea95
+      m_LastClickedID: -1779770840
+      m_ExpandedIDs: a499618a24783d985f6435a0181b45b57710b1bdad054ac86bca9ac9ed67d7cb40ff7df8a12eb1fbd3c595fde84679fe56f0350c83ec5111eae8e2256cb3d33c3b281341f8021943fe657143f694c64804ef4950c3354357ffffff7f
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -390,7 +884,7 @@ MonoBehaviour:
       name: unity_ai
       fullName: unity_ai
       resultStatus: 1
-      duration: 0.688059
+      duration: 0.6837231
       messages: 
       output: 
       stacktrace: 
@@ -406,7 +900,7 @@ MonoBehaviour:
       name: edit_mode.dll
       fullName: C:/prj/unity_ai/Library/ScriptAssemblies/edit_mode.dll
       resultStatus: 1
-      duration: 0.6381029
+      duration: 0.6446318
       messages: 
       output: 
       stacktrace: 
@@ -422,7 +916,7 @@ MonoBehaviour:
       name: rvinowise
       fullName: rvinowise
       resultStatus: 1
-      duration: 0.6375008
+      duration: 0.6346189
       messages: 
       output: 
       stacktrace: 
@@ -438,7 +932,7 @@ MonoBehaviour:
       name: ai
       fullName: rvinowise.ai
       resultStatus: 1
-      duration: 0.63728
+      duration: 0.6338704
       messages: 
       output: 
       stacktrace: 
@@ -454,7 +948,7 @@ MonoBehaviour:
       name: unit_tests
       fullName: rvinowise.ai.unit_tests
       resultStatus: 1
-      duration: 0.6340391
+      duration: 0.6298916
       messages: 
       output: 
       stacktrace: 
@@ -470,7 +964,7 @@ MonoBehaviour:
       name: file_input
       fullName: rvinowise.ai.unit_tests.file_input
       resultStatus: 1
-      duration: 0.4651986
+      duration: 0.4584412
       messages: 
       output: 
       stacktrace: 
@@ -486,7 +980,7 @@ MonoBehaviour:
       name: text_file_is_loaded
       fullName: rvinowise.ai.unit_tests.file_input.text_file_is_loaded
       resultStatus: 1
-      duration: 0.4595248
+      duration: 0.4535539
       messages: 
       output: 
       stacktrace: 
@@ -502,7 +996,7 @@ MonoBehaviour:
       name: history_is_loaded_to_network
       fullName: rvinowise.ai.unit_tests.file_input.text_file_is_loaded.history_is_loaded_to_network
       resultStatus: 1
-      duration: 0.4408396
+      duration: 0.4441616
       messages: 
       output: 
       stacktrace: 
@@ -519,7 +1013,7 @@ MonoBehaviour:
       name: generator_of_mappings
       fullName: rvinowise.ai.unit_tests.generator_of_mappings
       resultStatus: 1
-      duration: 0.1039575
+      duration: 0.1000745
       messages: 
       output: 
       stacktrace: 
@@ -535,7 +1029,7 @@ MonoBehaviour:
       name: not_enough_occurances_of_figure
       fullName: rvinowise.ai.unit_tests.generator_of_mappings.not_enough_occurances_of_figure
       resultStatus: 1
-      duration: 0.0132033
+      duration: 0.0070875
       messages: 
       output: 
       stacktrace: 
@@ -551,7 +1045,7 @@ MonoBehaviour:
       name: zero_iterations_are_possible
       fullName: rvinowise.ai.unit_tests.generator_of_mappings.not_enough_occurances_of_figure.zero_iterations_are_possible
       resultStatus: 1
-      duration: 0.0097952
+      duration: 0.0057856
       messages: 
       output: 
       stacktrace: 
@@ -568,7 +1062,7 @@ MonoBehaviour:
       name: regular_loop_over_combinations_can_be_done
       fullName: rvinowise.ai.unit_tests.generator_of_mappings.regular_loop_over_combinations_can_be_done
       resultStatus: 1
-      duration: 0.0680833
+      duration: 0.0766128
       messages: 
       output: 
       stacktrace: 
@@ -584,7 +1078,7 @@ MonoBehaviour:
       name: all_combinations_are_provided_in_a_loop
       fullName: rvinowise.ai.unit_tests.generator_of_mappings.regular_loop_over_combinations_can_be_done.all_combinations_are_provided_in_a_loop
       resultStatus: 1
-      duration: 0.0550395
+      duration: 0.065369
       messages: 
       output: '2, 1, 0
 
@@ -733,7 +1227,7 @@ MonoBehaviour:
       name: generator_of_order_sequences
       fullName: rvinowise.ai.unit_tests.generator_of_order_sequences
       resultStatus: 1
-      duration: 0.0179821
+      duration: 0.0221805
       messages: 
       output: 
       stacktrace: 
@@ -749,7 +1243,7 @@ MonoBehaviour:
       name: initialised_correctly_for_generation
       fullName: rvinowise.ai.unit_tests.generator_of_order_sequences.initialised_correctly_for_generation
       resultStatus: 1
-      duration: 0.0098827
+      duration: 0.0106347
       messages: 
       output: 
       stacktrace: 
@@ -765,7 +1259,7 @@ MonoBehaviour:
       name: all_combinations_are_provided_in_a_loop
       fullName: rvinowise.ai.unit_tests.generator_of_order_sequences.initialised_correctly_for_generation.all_combinations_are_provided_in_a_loop
       resultStatus: 1
-      duration: 0.005024
+      duration: 0.0054011
       messages: 
       output: 
       stacktrace: 
@@ -782,7 +1276,7 @@ MonoBehaviour:
       name: network_initialiser
       fullName: rvinowise.ai.unit_tests.network_initialiser
       resultStatus: 1
-      duration: 0.0131175
+      duration: 0.0146581
       messages: 
       output: 
       stacktrace: 
@@ -798,7 +1292,7 @@ MonoBehaviour:
       name: network_needs_to_be_initialised
       fullName: rvinowise.ai.unit_tests.network_initialiser.network_needs_to_be_initialised
       resultStatus: 1
-      duration: 0.0039145
+      duration: 0.003854
       messages: 
       output: 
       stacktrace: 
@@ -814,7 +1308,7 @@ MonoBehaviour:
       name: base_signals_are_created_in_network
       fullName: rvinowise.ai.unit_tests.network_initialiser.network_needs_to_be_initialised.base_signals_are_created_in_network
       resultStatus: 1
-      duration: 0.0015408
+      duration: 0.0020474
       messages: 
       output: 
       stacktrace: 
@@ -831,7 +1325,7 @@ MonoBehaviour:
       name: sequence_finder
       fullName: rvinowise.ai.unit_tests.sequence_finder
       resultStatus: 1
-      duration: 0.0302913
+      duration: 0.0313737
       messages: 
       output: 
       stacktrace: 
@@ -847,7 +1341,7 @@ MonoBehaviour:
       name: two_signals_repeat_twice
       fullName: rvinowise.ai.unit_tests.sequence_finder.two_signals_repeat_twice
       resultStatus: 1
-      duration: 0.0215687
+      duration: 0.0204063
       messages: 
       output: 
       stacktrace: 
@@ -863,7 +1357,7 @@ MonoBehaviour:
       name: repeated_sequences_are_found
       fullName: rvinowise.ai.unit_tests.sequence_finder.two_signals_repeat_twice.repeated_sequences_are_found
       resultStatus: 1
-      duration: 0.0199272
+      duration: 0.0193651
       messages: 
       output: 
       stacktrace: 
@@ -879,7 +1373,7 @@ MonoBehaviour:
       name: repeated_sequences_are_found(System.String[],System.Int32[][])
       fullName: rvinowise.ai.unit_tests.sequence_finder.two_signals_repeat_twice.repeated_sequences_are_found(System.String[],System.Int32[][])
       resultStatus: 1
-      duration: 0.0162457
+      duration: 0.0159464
       messages: 
       output: 
       stacktrace: 
@@ -897,7 +1391,7 @@ MonoBehaviour:
       fullName: rvinowise.ai.unit_tests.sequence_finder.two_signals_repeat_twice.repeated_sequences_are_found(System.String[],System.Int32[][]
         GeneratedTestCase2)
       resultStatus: 1
-      duration: 0.0008208
+      duration: 0.0005854
       messages: 
       output: 
       stacktrace: 
@@ -909,7 +1403,7 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1010
       parentUniqueId: edit_mode.dll/rvinowise/ai/unit_tests/sequence_finder/two_signals_repeat_twice/[edit_mode][rvinowise.ai.unit_tests.sequence_finder.two_signals_repeat_twice.repeated_sequences_are_found][suite]
-    m_ResultText: unity_ai (0.688s)
+    m_ResultText: unity_ai (0.684s)
     m_ResultStacktrace: 
     m_TestListState:
       scrollPos: {x: 0, y: 0}
@@ -957,15 +1451,15 @@ MonoBehaviour:
   m_MaxSize: {x: 10000, y: 10000}
   m_TitleContent:
     m_Text: Project
-    m_Image: {fileID: -5467254957812901981, guid: 0000000000000000d000000000000000,
+    m_Image: {fileID: -5179483145760003458, guid: 0000000000000000d000000000000000,
       type: 0}
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 634
-    width: 1465
-    height: 365
+    y: 571.2
+    width: 1161.4
+    height: 212.19998
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
@@ -983,22 +1477,22 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/scripts/unity_ai
+    - Assets/scripts/Stencil_applier
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
-  m_StartGridSize: 64
+  m_StartGridSize: 16
   m_LastFolders:
-  - Assets/scripts/unity_ai
-  m_LastFoldersGridSize: -1
-  m_LastProjectPath: C:\prj\unity_ai
+  - Assets/scripts/Stencil_applier
+  m_LastFoldersGridSize: 16
+  m_LastProjectPath: C:\prj\ai\unity_ai
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 120}
-    m_SelectedIDs: 885a0000
-    m_LastClickedID: 23176
-    m_ExpandedIDs: 00000000345a0000485a0000885a000000ca9a3bffffff7f
+    scrollPos: {x: 0, y: 239.80002}
+    m_SelectedIDs: 52580000
+    m_LastClickedID: 22610
+    m_ExpandedIDs: 000000001e580000205800002258000024580000265800002858000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1026,7 +1520,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000345a0000
+    m_ExpandedIDs: 000000001e5800002058000022580000245800002658000028580000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1057,20 +1551,20 @@ MonoBehaviour:
     m_ExpandedInstanceIDs: c6230000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: 
-      m_OriginalName: 
+      m_Name: conversion of Action_history into Figure
+      m_OriginalName: conversion of Action_history into Figure
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 0
+      m_UserData: 23002
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 11
+      m_OriginalEventType: 0
       m_IsRenamingFilename: 1
-      m_ClientGUIView: {fileID: 0}
+      m_ClientGUIView: {fileID: 5}
     m_CreateAssetUtility:
       m_EndAction: {fileID: 0}
       m_InstanceID: 0
@@ -1079,7 +1573,7 @@ MonoBehaviour:
       m_ResourceFile: 
     m_NewAssetIndexInList: -1
     m_ScrollPosition: {x: 0, y: 0}
-    m_GridSize: 64
+    m_GridSize: 16
   m_SkipHiddenPackages: 0
   m_DirectoriesAreaWidth: 207
 --- !u!114 &14
@@ -1098,15 +1592,15 @@ MonoBehaviour:
   m_MaxSize: {x: 4000, y: 4000}
   m_TitleContent:
     m_Text: Inspector
-    m_Image: {fileID: -2667387946076563598, guid: 0000000000000000d000000000000000,
+    m_Image: {fileID: -440750813802333266, guid: 0000000000000000d000000000000000,
       type: 0}
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 1466
-    y: 73
-    width: 453
-    height: 926
+    x: 1162.4
+    y: 73.6
+    width: 372.59998
+    height: 709.8
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
@@ -1140,15 +1634,15 @@ MonoBehaviour:
   m_MaxSize: {x: 4000, y: 4000}
   m_TitleContent:
     m_Text: Hierarchy
-    m_Image: {fileID: 7966133145522015247, guid: 0000000000000000d000000000000000,
+    m_Image: {fileID: -3734745235275155857, guid: 0000000000000000d000000000000000,
       type: 0}
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 73
-    width: 362
-    height: 540
+    y: 73.6
+    width: 285.4
+    height: 476.6
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
@@ -1156,9 +1650,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 900e0000
+      m_SelectedIDs: 52580000
       m_LastClickedID: 0
-      m_ExpandedIDs: 2afaffff
+      m_ExpandedIDs: 28fbffffa4540000be540000f65400001c5500006455000094550000da550000f455000010560000245600008256000086560000a856000034570000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -1198,15 +1692,15 @@ MonoBehaviour:
   m_MaxSize: {x: 4000, y: 4000}
   m_TitleContent:
     m_Text: Scene
-    m_Image: {fileID: 2593428753322112591, guid: 0000000000000000d000000000000000,
+    m_Image: {fileID: 8634526014445323508, guid: 0000000000000000d000000000000000,
       type: 0}
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 363
-    y: 73
-    width: 1101
-    height: 540
+    x: 286.4
+    y: 73.6
+    width: 874
+    height: 476.6
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
@@ -1216,8 +1710,8 @@ MonoBehaviour:
       floating: 0
       collapsed: 0
       displayed: 1
-      snapOffset: {x: 0, y: 0}
-      snapOffsetDelta: {x: -101, y: -26}
+      snapOffset: {x: -100, y: -25.600006}
+      snapOffsetDelta: {x: 0, y: 0}
       snapCorner: 3
       id: Tool Settings
       index: 0
@@ -1238,7 +1732,7 @@ MonoBehaviour:
       floating: 0
       collapsed: 0
       displayed: 1
-      snapOffset: {x: 0, y: 26}
+      snapOffset: {x: 238.4, y: 24.8}
       snapOffsetDelta: {x: 0, y: 0}
       snapCorner: 0
       id: unity-transform-toolbar
@@ -1249,7 +1743,7 @@ MonoBehaviour:
       floating: 0
       collapsed: 0
       displayed: 1
-      snapOffset: {x: 0, y: 0}
+      snapOffset: {x: 0, y: 24.8}
       snapOffsetDelta: {x: 0, y: 0}
       snapCorner: 0
       id: unity-scene-view-toolbar
@@ -1430,9 +1924,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -1.0667826, y: -1.5136721, z: -0.002213376}
+    m_Target: {x: 0, y: 0, z: 0}
     speed: 2
-    m_Value: {x: -1.0667826, y: -1.5136721, z: -0.002213376}
+    m_Value: {x: 0.010676966, y: 0.0024030532, z: 5.288596}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -1483,9 +1977,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 10.221317
+    m_Target: 10
     speed: 2
-    m_Value: 10.221317
+    m_Value: 10.004144
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -1526,15 +2020,15 @@ MonoBehaviour:
   m_MaxSize: {x: 4000, y: 4000}
   m_TitleContent:
     m_Text: Game
-    m_Image: {fileID: -6423792434712278376, guid: 0000000000000000d000000000000000,
+    m_Image: {fileID: 4621777727084837110, guid: 0000000000000000d000000000000000,
       type: 0}
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 363
-    y: 73
-    width: 1101
-    height: 540
+    x: -25309.6
+    y: -25569.6
+    width: 880.4
+    height: 476.6
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
@@ -1545,7 +2039,7 @@ MonoBehaviour:
   m_ShowGizmos: 0
   m_TargetDisplay: 0
   m_ClearColor: {r: 0, g: 0, b: 0, a: 0}
-  m_TargetSize: {x: 1101, y: 519}
+  m_TargetSize: {x: 880.4, y: 455.6}
   m_TextureFilterMode: 0
   m_TextureHideFlags: 61
   m_RenderIMGUI: 1
@@ -1560,10 +2054,10 @@ MonoBehaviour:
     m_VRangeLocked: 0
     hZoomLockedByDefault: 0
     vZoomLockedByDefault: 0
-    m_HBaseRangeMin: -550.5
-    m_HBaseRangeMax: 550.5
-    m_VBaseRangeMin: -259.5
-    m_VBaseRangeMax: 259.5
+    m_HBaseRangeMin: -352.16
+    m_HBaseRangeMax: 352.16
+    m_VBaseRangeMin: -182.24
+    m_VBaseRangeMax: 182.24
     m_HAllowExceedBaseRangeMin: 1
     m_HAllowExceedBaseRangeMax: 1
     m_VAllowExceedBaseRangeMin: 1
@@ -1572,7 +2066,7 @@ MonoBehaviour:
     m_HSlider: 0
     m_VSlider: 0
     m_IgnoreScrollWheelUntilClicked: 0
-    m_EnableMouseInput: 0
+    m_EnableMouseInput: 1
     m_EnableSliderZoomHorizontal: 0
     m_EnableSliderZoomVertical: 0
     m_UniformScale: 1
@@ -1581,23 +2075,23 @@ MonoBehaviour:
       serializedVersion: 2
       x: 0
       y: 21
-      width: 1101
-      height: 519
+      width: 880.4
+      height: 455.6
     m_Scale: {x: 1, y: 1}
-    m_Translation: {x: 550.5, y: 259.5}
+    m_Translation: {x: 440.2, y: 227.8}
     m_MarginLeft: 0
     m_MarginRight: 0
     m_MarginTop: 0
     m_MarginBottom: 0
     m_LastShownAreaInsideMargins:
       serializedVersion: 2
-      x: -550.5
-      y: -259.5
-      width: 1101
-      height: 519
+      x: -440.2
+      y: -227.8
+      width: 880.4
+      height: 455.6
     m_MinimalGUI: 1
   m_defaultScale: 1
-  m_LastWindowPixelSize: {x: 1101, y: 540}
+  m_LastWindowPixelSize: {x: 1100.5, y: 595.75}
   m_ClearInEditMode: 1
   m_NoCameraWarning: 1
   m_LowResolutionForAspectRatios: 01000000000000000000
@@ -1619,15 +2113,15 @@ MonoBehaviour:
   m_MaxSize: {x: 4000, y: 4000}
   m_TitleContent:
     m_Text: Console
-    m_Image: {fileID: -4327648978806127646, guid: 0000000000000000d000000000000000,
+    m_Image: {fileID: -4950941429401207979, guid: 0000000000000000d000000000000000,
       type: 0}
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 634
-    width: 1465
-    height: 365
+    y: 571.2
+    width: 1161.4
+    height: 212.19998
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default

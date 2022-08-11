@@ -3,7 +3,7 @@
 // using Action = rvinowise.ai.unity.Action;
 // using rvinowise.ai.general;
 // using rvinowise.ai.ui.general;
-// using rvinowise.rvi.contracts;
+// using rvinowise.contracts;
 //
 //
 //

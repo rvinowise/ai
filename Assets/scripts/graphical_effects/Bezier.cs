@@ -1,8 +1,7 @@
 using UnityEngine;
-using System.Collections.Generic;
-using System.Runtime.InteropServices.WindowsRuntime;
 using rvinowise.unity.extensions;
 using rvinowise.unity.extensions.pooling;
+    
 
 [RequireComponent(typeof(LineRenderer))]
 public class Bezier : MonoBehaviour
