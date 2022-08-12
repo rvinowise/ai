@@ -12,17 +12,19 @@ namespace rvinowise.ai.unity {
 public class Action_group_selection:
 ai.ui.unity.Selection_of_rendered_object 
 {
-    private IVisual_action_group action_group;
+    private IAction_group action_group;
     public Action_group_selection(SpriteRenderer sprite_renderer) : base(sprite_renderer) { }
 
     protected override void set_normal_state() {
         base.set_normal_state();
-        action_group.ToList().ForEach(action => action.selection.set_state(Selection_state.Normal));
+        action_group.get_actions().ToList().ForEach(action => 
+            action.ui.selection.set_state(Selection_state.Normal)
+        );
     }
 
     protected override void set_highlighted_state() {
         base.set_highlighted_state();
-        figure.button.selection.set_state(Selection_state.Highlighted);
+        figure.ui.button.selection.set_state(Selection_state.Highlighted);
     }
 
     protected override void set_selected_state() {

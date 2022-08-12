@@ -53,7 +53,7 @@ public class Sequence_finder<TFigure>:
     ) {
         ISet<IFigure> result = new HashSet<IFigure>(); 
         foreach (IAction_group group in action_groups) {
-            foreach (IAction action in group) {
+            foreach (IAction action in group.get_actions()) {
                 result.Add(action.figure);
             }
         }

@@ -13,15 +13,15 @@ namespace rvinowise.ai.unity {
 
 public class Figure_appearance:
     MonoBehaviour,
-    IVisual_figure_appearance,
+    IFigure_appearance,
     IHave_destructor
 {
     
     
     #region IVisual_figure_appearance
 
-    public IVisual_action get_start() => start_action;
-    public IVisual_action get_end() => end_action;
+    public IAction get_start() => start_action;
+    public IAction get_end() => end_action;
     
     
     #region IFigure_appearance
@@ -39,8 +39,8 @@ public class Figure_appearance:
     #endregion IFigure_appearance
     #endregion IVisual_figure_appearance
     
-    private IVisual_action start_action;
-    private IVisual_action end_action;
+    private Action start_action;
+    private Action end_action;
 
 
     [called_by_prefab]
@@ -86,8 +86,8 @@ public class Figure_appearance:
 
     public void create_curved_line() {
         bezier.init_between_points(
-            ((Action)start_action).transform,
-            ((Action)end_action).transform,
+            start_action.transform,
+            end_action.transform,
             new Vector3(0, 4f),
             new Vector3(0, 2f)
         );

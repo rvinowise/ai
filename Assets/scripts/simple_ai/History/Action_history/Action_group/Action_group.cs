@@ -8,14 +8,12 @@ using System.Numerics;
 namespace rvinowise.ai.simple {
 
 public class Action_group:
-IAction_group
- {
-  
-    public IEnumerator<IAction> GetEnumerator() => 
-        actions.GetEnumerator();
-    IEnumerator IEnumerable.GetEnumerator() {
-        return GetEnumerator();
-    }
+IAction_group 
+{
+
+    public IEnumerable<IAction> get_actions() =>
+        actions;
+
 
     public BigInteger moment { get; private set; }
 

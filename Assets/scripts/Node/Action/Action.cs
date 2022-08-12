@@ -12,7 +12,7 @@ namespace rvinowise.ai.unity {
 
 public class Action: 
 MonoBehaviour,
-IVisual_action
+IAction
 {
     #region IAction
 

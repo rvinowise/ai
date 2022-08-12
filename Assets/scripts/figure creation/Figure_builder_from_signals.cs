@@ -51,10 +51,10 @@ public class Figure_builder_from_signals
         last_subfigure_id = 0;
     }
     private void parce_actions_of(IAction_group group) {
-        foreach(IAction action in group) {
-            if (action is IAppearance_start) {
+        foreach(IAction action in group.get_actions()) {
+            if (action.type is Action_type.Start) {
                 add_next_subfigure(action.figure_appearance);
-            } else if (action is IAppearance_end) {
+            } else {
                 remember_finished_subfigure(action.figure_appearance);    
             } 
         }

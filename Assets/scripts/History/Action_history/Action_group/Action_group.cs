@@ -16,18 +16,16 @@ namespace rvinowise.ai.unity {
 
 public class Action_group:
 MonoBehaviour,
-IVisual_action_group
+IAction_group,
+IAccept_selection
 {
     private BigInteger _moment; 
     private readonly IList<IAction> actions = new List<IAction>();
   
     #region IAction_group
-    
-    public IEnumerator<IAction> GetEnumerator() => 
-        actions.GetEnumerator();
-    IEnumerator IEnumerable.GetEnumerator() {
-        return GetEnumerator();
-    }
+
+    IEnumerable<IAction> IAction_group.get_actions() => actions;
+
 
     public BigInteger moment{
         get => _moment;
@@ -41,6 +39,7 @@ IVisual_action_group
         get;
         private set;
     }
+    public IAction_group_ui ui { get; }
 
 
     public bool has_action(IFigure figure, Action_type type) =>
@@ -99,7 +98,7 @@ IVisual_action_group
         action_group_selection = new Action_group_selection(GetComponent<SpriteRenderer>());
     }
     
-    public Selection_of_object selection { get; } = action_group_selection;
+    public Selection_of_object selection { get => action_group_selection; }
     private Action_group_selection action_group_selection;
 
     #endregion IAccept_selection

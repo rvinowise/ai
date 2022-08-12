@@ -91,7 +91,7 @@ IAction_history
 
     public IReadOnlyList<IAction_group> get_selected_groups() =>
         get_action_groups().Select(
-            group => group.    
+            group => group.selection.   
         )
 
     private void put_action_into_group(

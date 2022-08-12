@@ -14,7 +14,9 @@ public interface IAction  {
     IFigure_appearance figure_appearance{get;}
     
     IAction_group action_group { get; }
-    
+
+    IAction_ui ui { get; }
+
 }
 
 }
