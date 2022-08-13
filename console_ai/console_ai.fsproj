@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="network.fs" />
+    <Compile Include="program_loop.fs" />
+    <Compile Include="main.fs" />
+  </ItemGroup>
+</Project>
