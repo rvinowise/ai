@@ -1,7 +1,9 @@
-module ai.ui.console
+module rvinowise.ai.ui.console
 
 open System
-open ai.network
+
+open rvinowise.ai
+open rvinowise.ai
 
 let print_prompt () =
     printf "\n:>"
@@ -14,8 +16,8 @@ let read_input _ =
     System.Console.ReadLine()
 
 let show_figure_dialog name =
-    match figure_storage |> get_figure name with
-        | Some found_figure -> print_appearances_of found_figure
+    match Figure_storage.figure_storage |> Figure_storage.get_figure name with
+        | Some found_figure -> Figure.print_appearances_of found_figure
         | None -> printf "no such figure."
 
 let process_input (command:string) =

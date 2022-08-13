@@ -4,8 +4,16 @@
     <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="network.fs" />
+    <Compile Include="fsharp_ai\network\Figure_appearance.fs" />
+    <Compile Include="fsharp_ai\network\Figure.fs" />
+    <Compile Include="fsharp_ai\network\Figure_storage.fs" />
+    <Compile Include="fsharp_ai\data_providers\database\database.fs" />
+    <Compile Include="fsharp_ai\data_providers\database\read.fs" />
     <Compile Include="program_loop.fs" />
     <Compile Include="main.fs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Npgsql" Version="6.0.6" />
+    <PackageReference Include="Npgsql.FSharp" Version="5.3.0" />
   </ItemGroup>
 </Project>

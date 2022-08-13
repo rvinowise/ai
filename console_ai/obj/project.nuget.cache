@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dgSpecHash": "axXVY5lDX7cFDl7/llRMOeWTrZr+XBwkORd9o2Tdj6XOpfxd55h1JfC8ENfcDQBzShZXbO0EauKSbG6d09b4Xg==",
+  "success": true,
+  "projectFilePath": "C:\\prj\\ai\\console_ai\\console_ai.fsproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\rvino\\.nuget\\packages\\fsharp.core\\6.0.5\\fsharp.core.6.0.5.nupkg.sha512",
+    "C:\\Users\\rvino\\.nuget\\packages\\npgsql\\6.0.6\\npgsql.6.0.6.nupkg.sha512",
+    "C:\\Users\\rvino\\.nuget\\packages\\npgsql.fsharp\\5.3.0\\npgsql.fsharp.5.3.0.nupkg.sha512",
+    "C:\\Users\\rvino\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
