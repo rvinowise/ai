@@ -1,8 +1,8 @@
 ﻿﻿using System;
- using System.IO;
+using System.IO;
 using System.Linq;
- using System.Text;
- using rvinowise.ai.general;
+using System.Text;
+using rvinowise.ai.general;
 
 namespace rvinowise.ai.simple {
 

@@ -22,7 +22,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\sdk\\6.0.400\\FSharp\\library-packs": {},
+          "C:\\Program Files\\dotnet\\sdk\\6.0.302\\FSharp\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -42,6 +42,11 @@
               "version": "[6.0.5, )",
               "generatePathProperty": true
             },
+            "Graphviz.NET": {
+              "target": "Package",
+              "version": "[1.0.0, )",
+              "generatePathProperty": true
+            },
             "Npgsql": {
               "target": "Package",
               "version": "[6.0.6, )",
@@ -51,6 +56,11 @@
               "target": "Package",
               "version": "[5.3.0, )",
               "generatePathProperty": true
+            },
+            "Rubjerg.Graphviz": {
+              "target": "Package",
+              "version": "[1.1.0, )",
+              "generatePathProperty": true
             }
           },
           "imports": [
@@ -59,8 +69,7 @@
             "net47",
             "net471",
             "net472",
-            "net48",
-            "net481"
+            "net48"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -69,7 +78,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.302\\RuntimeIdentifierGraph.json"
         }
       }
     }

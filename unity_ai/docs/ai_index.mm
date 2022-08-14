@@ -199,7 +199,7 @@
 </node>
 <node TEXT="persistence" POSITION="right" ID="ID_201293481" CREATED="1641509967643" MODIFIED="1641510505723" LINK="persistence/">
 <node TEXT="json format" ID="ID_423055997" CREATED="1641510507559" MODIFIED="1652303036730" LINK="persistence/json%20format.mm"/>
-<node TEXT="postgres_database" ID="ID_9368401" CREATED="1659208541268" MODIFIED="1659208546775" LINK="persistence/postgres_database.mm"/>
+<node TEXT="postgres_database.mm" ID="ID_1871556" CREATED="1660428622513" MODIFIED="1660428622517" LINK="../../../knowledge/study/programming/data%20persistence/postgres_database.mm"/>
 </node>
 <node TEXT="presenting documentation" POSITION="right" ID="ID_1134278367" CREATED="1659347819677" MODIFIED="1659355988423">
 <node TEXT="videos" ID="ID_1109093235" CREATED="1659347825149" MODIFIED="1659347920830" LINK="videos/">
