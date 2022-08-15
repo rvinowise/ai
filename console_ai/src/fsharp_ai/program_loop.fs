@@ -3,7 +3,6 @@ module rvinowise.ai.ui.console
 open System
 
 open rvinowise.ai
-open rvinowise.ai
 
 let print_prompt () =
     printf "\n:>"
@@ -15,14 +14,19 @@ let read_input _ =
     print_prompt()
     System.Console.ReadLine()
 
-let show_figure_dialog name =
-    match Figure_storage.figure_storage |> Figure_storage.get_figure name with
-        | Some found_figure -> Figure.print_appearances_of found_figure
+let appearances_of_figure name =
+    match loaded.Figure.with_id name with
+        | Some found_figure -> printed.Figure.appearances found_figure
+        | None -> printf "no such figure."
+
+let subfigures_of_figure name =
+    match loaded.Figure.with_id name with
+        | Some found_figure -> painted.Figure.internal_graph found_figure
         | None -> printf "no such figure."
 
 let process_input (command:string) =
     match command.Split [|' '|] with
-    | [|"show"; args|] -> show_figure_dialog args
+    | [|"show"; args|] -> appearances_of_figure args
     | [|"quit"|] | [|"exit"|] -> Environment.Exit 55
     | _ -> print_error()
 

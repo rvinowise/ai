@@ -1,5 +1,6 @@
 ﻿module rvinowise.ai.database.read
 
+open System.Collections.Generic
 open Npgsql.FSharp
 
 open rvinowise.ai
@@ -16,14 +17,20 @@ let appearances_of figure_id sql_uri : Figure_appearance list =
         }    
     )
 
-let internal_structure_of figure_id sql_uri: Edge list =
+let internal_structure_of
+    figure_id
+    sql_uri
+    (loaded_figures:Dictionary<string, Figure>):
+    Edge list
+    =
     sql_uri
     |> Sql.connect
     |> Sql.query "select * from Edge where parent=@figure_id"
     |> Sql.parameters [ "@figure_id", Sql.text figure_id ]
     |> Sql.execute (
         fun row -> {
-            start=row.string "start"
-            ending=row.string "ending"
+            start = Figure.provide_with_id (row.string "start") loaded_figures
+            ending = Figure.provide_with_id (row.string "ending") loaded_figures
         }    
     )
+    

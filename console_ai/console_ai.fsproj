@@ -2,10 +2,25 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net6.0</TargetFramework>
+	<src_dir>src\fsharp_ai\</src_dir>
+	<tests_dir>src\tests\</tests_dir>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="fsharp_ai\ui\Figure_painted_into_dot_file.fs" />
-    <Compile Include="main.fs" />
+    <Compile Include="src\fsharp_ai\network\Figure\Figure_appearance\Figure_appearance.fs" />
+    <Compile Include="src\fsharp_ai\network\Figure\externals.fs" />
+    <Compile Include="src\fsharp_ai\network\Figure\internals.fs" />
+    <Compile Include="src\fsharp_ai\network\Figure\Figure.fs" />
+    <Compile Include="src\fsharp_ai\network\provided_data\from_database\dialects\postgres.fs" />
+    <Compile Include="src\fsharp_ai\network\provided_data\from_database\read.fs" />
+    <Compile Include="src\fsharp_ai\network\provided_data\creating_objects\provided\Figure.fs" />
+    <Compile Include="src\fsharp_ai\network\provided_data\creating_objects\loaded\Figure.fs" />
+    <Compile Include="src\fsharp_ai\visualised\painted\Figure.fs" />
+    <Compile Include="src\fsharp_ai\visualised\printed\Figure_appearance.fs" />
+    <Compile Include="src\fsharp_ai\visualised\printed\Figure.fs" />
+    <Compile Include="src\fsharp_ai\visualised\printed\unused_Printed.fs" />
+    <Compile Include="$(src_dir)program_loop.fs" />
+    <Compile Include="$(src_dir)main.fs" />
+    <Folder Include="$(tests_dir)" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Graphviz.NET" Version="1.0.0" />
