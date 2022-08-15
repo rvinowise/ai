@@ -1,4 +1,4 @@
-﻿module rvinowise.ai.database.read
+﻿module rvinowise.ai.database.Read
 
 open System.Collections.Generic
 open Npgsql.FSharp
@@ -29,8 +29,8 @@ let internal_structure_of
     |> Sql.parameters [ "@figure_id", Sql.text figure_id ]
     |> Sql.execute (
         fun row -> {
-            start = Figure.provide_with_id (row.string "start") loaded_figures
-            ending = Figure.provide_with_id (row.string "ending") loaded_figures
+            start = provided.Figure.with_id (row.string "start") loaded_figures
+            ending = provided.Figure.with_id (row.string "ending") loaded_figures
         }    
     )
     

@@ -6,8 +6,7 @@ open System
 
 [<EntryPoint>]
 let main(args: string[]) =
-    rvinowise.ai.Figure_painted_into_dot_file.create_graph
-    
+    rvinowise.ai.ui.console.program_loop
     0
 
 
