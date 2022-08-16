@@ -2,6 +2,7 @@ module rvinowise.ai.ui.main
 
 open System
 
+open rvinowise.ai
 
 
 [<EntryPoint>]

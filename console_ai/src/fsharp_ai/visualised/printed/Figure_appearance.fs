@@ -4,4 +4,4 @@ open rvinowise
 
 
 let moments (appearance: ai.Figure_appearance) =
-    printf $"({appearance.start} {appearance.ending}) "
+    printf $"({appearance.head} {appearance.tail}) "

@@ -4,7 +4,7 @@ open rvinowise
 
 
 let figure_appearance (appearance: ai.Figure_appearance) =
-    printf $"({appearance.start} {appearance.ending}) "
+    printf $"({appearance.head} {appearance.tail}) "
 
 let appearances_of (figure: ai.Figure) =
     printfn "appearances:"

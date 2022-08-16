@@ -8,7 +8,7 @@ open rvinowise.ai
 
 let with_id id: ai.Figure option =
     let appearances = 
-        database.Read.appearances_of id database.postgres.sql_uri 
+        database.Read.appearances_of id
 
     match appearances.Length with
     | 0 -> None
