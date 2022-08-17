@@ -1,0 +1,13 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "build",
+			"type": "shell",
+			"command": "dotnet build",
+			
+			"group": "build",
+			"detail": "Build the console_ai.fsproj project using dotnet build"
+		}
+	]
+}

@@ -11,11 +11,13 @@
     <Compile Include="src\fsharp_ai\network\Figure\externals.fs" />
     <Compile Include="src\fsharp_ai\network\Figure\internals.fs" />
     <Compile Include="src\fsharp_ai\network\Figure\Figure.fs" />
+    
+    <Compile Include="src\fsharp_ai\network\provided_data\provided\Figure.fs" />
     <Compile Include="src\fsharp_ai\network\provided_data\from_database\provided_database.fs" />
     <Compile Include="src\fsharp_ai\network\provided_data\from_database\write.fs" />
-    <Compile Include="src\fsharp_ai\network\provided_data\provided\Figure.fs" />
     <Compile Include="src\fsharp_ai\network\provided_data\from_database\read.fs" />
     <Compile Include="src\fsharp_ai\network\provided_data\creating_objects\loaded\Figure.fs" />
+    
     <Compile Include="src\fsharp_ai\visualised\painted\Figure.fs" />
     <Compile Include="src\fsharp_ai\visualised\printed\Figure_appearance.fs" />
     <Compile Include="src\fsharp_ai\visualised\printed\Figure.fs" />
