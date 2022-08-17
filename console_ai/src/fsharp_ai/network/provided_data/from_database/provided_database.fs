@@ -1,14 +1,18 @@
 ﻿module rvinowise.ai.database.Provided
 
+open System
 open System.Data.Common
 open System.Configuration
 
 
+let connection_setting =
+    try
+        ConfigurationManager.ConnectionStrings.[1]
+    with
+    | :? Xml.XmlException as e ->
+        reraise()
+        
 
-
-//let init_connection _ =
-let connection_setting = ConfigurationManager.ConnectionStrings.[1]
-    
 let factory = 
 
     DbProviderFactories.RegisterFactory(
@@ -20,11 +24,15 @@ let factory =
         "System.Data.SQLite", 
         System.Data.SQLite.SQLiteFactory.Instance
     )
-    printf "registering a factory"
+
+    DbProviderFactories.RegisterFactory(
+        "MySqlConnector", MySqlConnector.MySqlConnectorFactory.Instance
+    )
 
     DbProviderFactories.GetFactory(
         connection_setting.ProviderName
     )
+
 
 let open_connection =
     

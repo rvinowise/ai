@@ -7,8 +7,8 @@ open rvinowise.ai
 
 
 let with_id id: ai.Figure option =
-    let appearances = 
-        database.Read.appearances_of id
+    let appearances 
+        = database.Read.appearances_of id
 
     match appearances.Length with
     | 0 -> None
@@ -16,6 +16,6 @@ let with_id id: ai.Figure option =
         id=id
         appearances = appearances
         edges=database.Read.internal_structure_of 
-            id database.postgres.sql_uri (Dictionary<string, Figure>())
+            id (Dictionary<string, Figure>())
 
     }

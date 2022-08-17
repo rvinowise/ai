@@ -2,27 +2,23 @@
 
 open System.Collections.Generic
 open System.Data.SqlClient
-open FSharp.Configuration
 open Dapper
 
 open rvinowise
 open rvinowise.ai
-open rvinowise.ai.database.dapper_fsharp
 open System.Data
 open System.Data.Common;    // for DbProviderFactories
 open System.Configuration
 
-type settings = FSharp.Configuration.AppSettings<"app.config">
 
 
-let appearances_of figure_id: Figure_appearance list =
+let appearances_of figure_id: ai.Figure_appearance list =
     
-    
-
-    let result = database.Provided.open_connection.Query<ai.Figure_appearance>(
-        @"select * from Figure_appearance where figure = @Figure_id",
-        {|figure_id=figure_id|}
-    )
+    let result 
+        = database.Provided.open_connection.Query<ai.Figure_appearance>(
+            @"select * from Figure_appearance where figure = @Figure_id",
+            {|figure_id=figure_id|}
+        )
     //db_connection.Close()
     Seq.toList result
     //sql_uri
@@ -38,7 +34,6 @@ let appearances_of figure_id: Figure_appearance list =
 
 let internal_structure_of
     figure_id
-    sql_uri
     (loaded_figures:Dictionary<string, Figure>):
     Edge list
     =

@@ -14,15 +14,26 @@ let read_input _ =
     print_prompt()
     System.Console.ReadLine()
 
+
 let appearances_of_figure name =
-    match loaded.Figure.with_id name with
-        | Some found_figure -> printed.Figure.appearances found_figure
-        | None -> printf "no such figure."
+    try 
+        match loaded.Figure.with_id name with
+            | Some found_figure -> printed.Figure.appearances found_figure
+            | None -> printf "no such figure."
+    with
+        | :? Xml.XmlException
+        | :? Configuration.ConfigurationErrorsException
+        | :? TypeInitializationException as e->
+            printf "loading from the database failed, bad configuration file:\n%s" e.Message
+        | _ as e->
+            printfn "failed to show appearances of figure %s:\n %s" name e.Message
+
 
 let subfigures_of_figure name =
     match loaded.Figure.with_id name with
         | Some found_figure -> painted.Figure.internal_graph found_figure
         | None -> printf "no such figure."
+
 
 let process_input (command:string) =
     match command.Split [|' '|] with

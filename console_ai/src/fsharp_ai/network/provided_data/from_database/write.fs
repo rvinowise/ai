@@ -4,15 +4,10 @@ open System.Collections.Generic
 open System
 open System.Data
 open System.Data.SqlClient
-open FSharp.Configuration
 open Dapper.FSharp
 open Dapper.FSharp.PostgreSQL
 
 open rvinowise.ai
-open rvinowise.ai.database.dapper_fsharp
-
-
-type settings = AppSettings<"app.config">
 
 
 let appearances_of figure =

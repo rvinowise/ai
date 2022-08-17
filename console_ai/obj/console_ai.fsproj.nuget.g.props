@@ -284,11 +284,21 @@
       <Link>xdot.dll</Link>
     </None>
   </ItemGroup>
+  <ImportGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
+    <Import Project="$(NuGetPackageRoot)entityframework\6.4.4\buildTransitive\netcoreapp3.0\EntityFramework.props" Condition="Exists('$(NuGetPackageRoot)entityframework\6.4.4\buildTransitive\netcoreapp3.0\EntityFramework.props')" />
+  </ImportGroup>
   <PropertyGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
-    <PkgRubjerg_Graphviz Condition=" '$(PkgRubjerg_Graphviz)' == '' ">C:\Users\rvino\.nuget\packages\rubjerg.graphviz\1.1.0</PkgRubjerg_Graphviz>
-    <PkgNpgsql Condition=" '$(PkgNpgsql)' == '' ">C:\Users\rvino\.nuget\packages\npgsql\6.0.6</PkgNpgsql>
+    <PkgSystem_Data_SqlClient Condition=" '$(PkgSystem_Data_SqlClient)' == '' ">C:\Users\rvino\.nuget\packages\system.data.sqlclient\4.8.3</PkgSystem_Data_SqlClient>
+    <PkgSystem_Configuration_ConfigurationManager Condition=" '$(PkgSystem_Configuration_ConfigurationManager)' == '' ">C:\Users\rvino\.nuget\packages\system.configuration.configurationmanager\6.0.0</PkgSystem_Configuration_ConfigurationManager>
+    <PkgEntityFramework Condition=" '$(PkgEntityFramework)' == '' ">C:\Users\rvino\.nuget\packages\entityframework\6.4.4</PkgEntityFramework>
+    <PkgSystem_Data_SQLite_EF6 Condition=" '$(PkgSystem_Data_SQLite_EF6)' == '' ">C:\Users\rvino\.nuget\packages\system.data.sqlite.ef6\1.0.116</PkgSystem_Data_SQLite_EF6>
+    <PkgSystem_Data_SQLite Condition=" '$(PkgSystem_Data_SQLite)' == '' ">C:\Users\rvino\.nuget\packages\system.data.sqlite\1.0.116</PkgSystem_Data_SQLite>
     <PkgFSharp_Core Condition=" '$(PkgFSharp_Core)' == '' ">C:\Users\rvino\.nuget\packages\fsharp.core\6.0.5</PkgFSharp_Core>
-    <PkgNpgsql_FSharp Condition=" '$(PkgNpgsql_FSharp)' == '' ">C:\Users\rvino\.nuget\packages\npgsql.fsharp\5.3.0</PkgNpgsql_FSharp>
+    <PkgSQLProvider Condition=" '$(PkgSQLProvider)' == '' ">C:\Users\rvino\.nuget\packages\sqlprovider\1.3.1</PkgSQLProvider>
+    <PkgRubjerg_Graphviz Condition=" '$(PkgRubjerg_Graphviz)' == '' ">C:\Users\rvino\.nuget\packages\rubjerg.graphviz\1.1.0</PkgRubjerg_Graphviz>
+    <PkgMySqlConnector Condition=" '$(PkgMySqlConnector)' == '' ">C:\Users\rvino\.nuget\packages\mysqlconnector\2.1.12</PkgMySqlConnector>
     <PkgGraphViz_NET Condition=" '$(PkgGraphViz_NET)' == '' ">C:\Users\rvino\.nuget\packages\graphviz.net\1.0.0</PkgGraphViz_NET>
+    <PkgDapper Condition=" '$(PkgDapper)' == '' ">C:\Users\rvino\.nuget\packages\dapper\2.0.123</PkgDapper>
+    <PkgDapper_FSharp Condition=" '$(PkgDapper_FSharp)' == '' ">C:\Users\rvino\.nuget\packages\dapper.fsharp\3.3.0</PkgDapper_FSharp>
   </PropertyGroup>
 </Project>
