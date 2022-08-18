@@ -7,7 +7,7 @@ open System.Configuration
 
 let connection_setting =
     try
-        ConfigurationManager.ConnectionStrings.[1]
+        ConfigurationManager.ConnectionStrings.[3]
     with
     | :? Xml.XmlException as e ->
         reraise()

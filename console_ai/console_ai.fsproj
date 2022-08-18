@@ -6,23 +6,27 @@
 	<tests_dir>src\tests\</tests_dir>
   </PropertyGroup>
   <ItemGroup>
+    <Folder Include="src\fsharp_ai\ui" />
     <None Include="app.config" />
-    <Compile Include="src\fsharp_ai\network\Figure\Figure_appearance\Figure_appearance.fs" />
-    <Compile Include="src\fsharp_ai\network\Figure\externals.fs" />
-    <Compile Include="src\fsharp_ai\network\Figure\internals.fs" />
-    <Compile Include="src\fsharp_ai\network\Figure\Figure.fs" />
+    <Compile Include="src\fsharp_ai\ai\Figure\Edge\Edge.fs" />
+    <Compile Include="src\fsharp_ai\ai\Figure\Appearance\Appearance.fs" />
+    <Compile Include="src\fsharp_ai\ai\Figure\Figure.fs" />
     
-    <Compile Include="src\fsharp_ai\network\provided_data\provided\Figure.fs" />
-    <Compile Include="src\fsharp_ai\network\provided_data\from_database\provided_database.fs" />
-    <Compile Include="src\fsharp_ai\network\provided_data\from_database\write.fs" />
-    <Compile Include="src\fsharp_ai\network\provided_data\from_database\read.fs" />
-    <Compile Include="src\fsharp_ai\network\provided_data\creating_objects\loaded\Figure.fs" />
+    <Compile Include="src\fsharp_ai\provided_data\provided\Figure.fs" />
     
-    <Compile Include="src\fsharp_ai\visualised\painted\Figure.fs" />
-    <Compile Include="src\fsharp_ai\visualised\printed\Figure_appearance.fs" />
-    <Compile Include="src\fsharp_ai\visualised\printed\Figure.fs" />
-    <Compile Include="src\fsharp_ai\visualised\printed\unused_Printed.fs" />
-    <Compile Include="$(src_dir)program_loop.fs" />
+    <Compile Include="src\fsharp_ai\provided_data\from_database\provided_database.fs" />
+    <Compile Include="src\fsharp_ai\provided_data\from_database\write.fs" />
+    <Compile Include="src\fsharp_ai\provided_data\from_database\read.fs" />
+    
+    <Compile Include="src\fsharp_ai\provided_data\loaded\Figure\Appearances.fs" />
+    <Compile Include="src\fsharp_ai\provided_data\loaded\Figure\Edges.fs" />
+    <Compile Include="src\fsharp_ai\provided_data\loaded\Figure\Figure.fs" />
+    
+    <Compile Include="$(src_dir)ui\visualised\painted\Figure.fs" />
+    <Compile Include="$(src_dir)ui\visualised\printed\Figure_appearance.fs" />
+    <Compile Include="$(src_dir)ui\visualised\printed\Figure.fs" />
+    <Compile Include="$(src_dir)ui\visualised\printed\unused_Printed.fs" />
+    <Compile Include="$(src_dir)ui\program_loop.fs" />
     <Compile Include="$(src_dir)main.fs" />
     <Folder Include="$(tests_dir)" />
   </ItemGroup>

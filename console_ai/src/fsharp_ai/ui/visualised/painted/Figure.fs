@@ -1,4 +1,4 @@
-module rvinowise.ai.painted.Figure
+module rvinowise.ai.ui.painted.Figure
 
 open Rubjerg.Graphviz
 open System.IO
@@ -7,22 +7,20 @@ open System.Diagnostics
 open rvinowise
 
 
-let internal_graph (figure:ai.Figure)=
-    let root = RootGraph.CreateNew("Some Unique Identifier", GraphType.Directed)
+let edges comment edges=
+    let root = RootGraph.CreateNew(comment, GraphType.Directed)
     root.SafeSetAttribute("rankdir", "LR", "")
-
     Node.IntroduceAttribute(root, "shape", "circle")
 
-    // The node names are unique identifiers within a graph in Graphviz
-    let nodeA = root.GetOrAddNode("A")
-    let nodeB = root.GetOrAddNode("B")
-    let nodeC = root.GetOrAddNode("C")
-    let nodeD = root.GetOrAddNode("D")
-
-    // The edge name is only unique between two nodes
-    let edgeAB = root.GetOrAddEdge(nodeA, nodeB, "Some edge name")
-    let edgeBC = root.GetOrAddEdge(nodeB, nodeC, "Some edge name")
-    let anotherEdgeBC = root.GetOrAddEdge(nodeB, nodeC, "Another edge name")
+    edges
+    |> Seq.iter (
+        fun (edge:ai.figure.Edge) -> 
+            let head = root.GetOrAddNode(edge.head)
+            let tail = root.GetOrAddNode(edge.tail)
+            root.GetOrAddEdge(
+                head, tail, ""
+            ) |> ignore
+        )
 
     let filename = Directory.GetCurrentDirectory() + "/out.svg"
     root.ComputeLayout()
