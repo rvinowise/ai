@@ -47,24 +47,24 @@ let entity_mentioned_in_command part =
 //        | e->
 //            printfn $"failed to show the entity %s{part}:\n %s{e.Message}"
 
-let show_something_about_figure (figure:loaded.figure.Figure) shown_part =
-    if figure.exists then
+let show_something_about_figure figure shown_part =
+    if loaded.Figure.exists figure then
         match shown_part with
         | "appearances" ->
             ui.printed.Figure.appearances figure
         | "edges" ->
-            ui.painted.Figure.edges figure.id figure.edges
+            ui.painted.Figure.edges figure
+                (loaded.figure.Edges.edges figure)
         | _ -> print_error $"%s{shown_part} is not part of a figure"
     else
-        print_error $"figure %s{figure.id} doesn't exist"
+        print_error $"figure %s{figure} doesn't exist"
        
 
 let show_entity entity_type exemplar_id =
     match entity_mentioned_in_command entity_type with
         | Figure ->
             show_something_about_figure
-                (loaded.figure.Figure exemplar_id)
-                entity_type
+                exemplar_id entity_type
         | _ -> print_error $"entity %s{entity_type} doesn't exist" 
 
 let add_signal signal_id =
@@ -81,11 +81,11 @@ let input_sensory_data (data: string) =
     //let figures =  data.Split [|' '|]
     data
     |> Seq.iter (fun figure_id ->
-        let figure = loaded.figure.Figure <| string figure_id
-        if figure.exists then
-            created.figure.Appearance.new_input figure.id
+        let figure_id = string figure_id
+        if loaded.Figure.exists <| figure_id then
+            created.figure.Appearance.new_input figure_id
         else
-            print_error $"figure ${figure.id} doesn't exist"
+            print_error $"figure ${figure_id} doesn't exist"
     )
 
 let process_input (command:string) =

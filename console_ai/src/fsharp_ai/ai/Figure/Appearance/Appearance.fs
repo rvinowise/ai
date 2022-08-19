@@ -1,12 +1,15 @@
 ﻿namespace rvinowise.ai.figure
 
+open rvinowise.ai
 
-type Appearance(figure: string, head: int64, tail: int64) = 
+type Appearance(figure: string, interval: Interval) = 
 
-    member _.figure = figure
-    member _.head = head
-    member _.tail = tail
+    member this.figure = figure
+    member this.interval = interval
+    
+    member this.head=this.interval.head
+    member this.tail=this.interval.tail
 
-    new (figure, moment) =
-        Appearance(figure, moment, moment)
+    new (figure, moment: int64) =
+        Appearance(figure, {head= moment; tail= moment})
 

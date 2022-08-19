@@ -23,7 +23,7 @@ let figure_appearance (figure:string) (appearance:ai.figure.Appearance) =
     database.Provided.open_connection.Query<ai.figure.Figure>(
         @"insert into figure_appearance (figure, head, tail)
         values (@figure, @head, @tail)",
-        {|figure=figure; head=appearance.head; tail = appearance.tail|}
+        {|figure=figure; head=appearance.interval.head; tail = appearance.interval.tail|}
     ) |> ignore
 
 //let sensory_input id =

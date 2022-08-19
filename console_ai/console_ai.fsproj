@@ -9,21 +9,22 @@
   <ItemGroup>
     <Folder Include="src\fsharp_ai\ui" />
     <None Include="app.config" />
+    <Compile Include="src\fsharp_ai\ai\data_structures.fs" />
     <Compile Include="src\fsharp_ai\ai\Figure\Edge\Edge.fs" />
     <Compile Include="src\fsharp_ai\ai\Figure\Appearance\Appearance.fs" />
     <Compile Include="src\fsharp_ai\ai\Figure\Figure.fs" />
-    
+    <Compile Include="src\fsharp_ai\ai\data_structures.fs" />
+        
     <Compile Include="src\fsharp_ai\provided_data\provided\Figure.fs" />
     
-    <Compile Include="src\fsharp_ai\provided_data\database\provided_database.fs" />
-    <Compile Include="src\fsharp_ai\provided_data\database\write.fs" />
-    <Compile Include="src\fsharp_ai\provided_data\database\read.fs" />
-    
-    <Compile Include="src\fsharp_ai\provided_data\loaded\Figure\Appearances.fs" />
-    <Compile Include="src\fsharp_ai\provided_data\loaded\Figure\Edges.fs" />
-    <Compile Include="src\fsharp_ai\provided_data\loaded\Figure\Figure.fs" />
-
+    <Compile Include="src\fsharp_ai\provided_data\loaded\provided_database.fs" />
+    <Compile Include="src\fsharp_ai\provided_data\loaded\write.fs" />
+    <Compile Include="src\fsharp_ai\provided_data\loaded\Appearances.fs" />
+    <Compile Include="src\fsharp_ai\provided_data\loaded\Edges.fs" />
+    <Compile Include="src\fsharp_ai\provided_data\loaded\Figure.fs" />
     <Compile Include="src\fsharp_ai\provided_data\created\Figure\Appearance.fs" />
+
+    <Compile Include="src\fsharp_ai\search\Sequence\Found_sequence.fs" />
     
     <Compile Include="$(src_dir)ui\visualised\painted\Figure.fs" />
     <Compile Include="$(src_dir)ui\visualised\printed\Figure_appearance.fs" />

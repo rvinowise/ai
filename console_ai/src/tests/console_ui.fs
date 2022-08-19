@@ -10,7 +10,7 @@ type TestClass () =
 
     [<Test>]
     member this.TestMethodPassing() =
-        rvinowise.ai.ui.console.process_input "show appearances a"
+        process_input "show appearances a"
         Assert.True(true)
 
     [<Test>]
