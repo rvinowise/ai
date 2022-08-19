@@ -26,9 +26,9 @@ let figure_appearance (figure:string) (appearance:ai.figure.Appearance) =
         {|figure=figure; head=appearance.head; tail = appearance.tail|}
     ) |> ignore
 
-let sensory_input id =
-    database.Provided.open_connection.Query<ai.figure.Figure>(
-        @"insert into history_line (signal)
-        values (@signal_id)",
-        {|id=id|}
-    ) |> ignore
+//let sensory_input id =
+//    database.Provided.open_connection.Query<ai.figure.Figure>(
+//        @"insert into history_line (signal)
+//        values (@signal_id)",
+//        {|id=id|}
+//    ) |> ignore

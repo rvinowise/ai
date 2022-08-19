@@ -31,3 +31,8 @@ let body_of figure_id =
         @"select * from Figure where Id = @Figure_id",
             {|figure_id=figure_id|}
     )
+
+let current_moment = 
+    database.Provided.open_connection.Query<int64>(
+        @"select Moment from Caret"
+    ) |> Seq.head

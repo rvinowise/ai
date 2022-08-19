@@ -4526,11 +4526,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "c:\\prj\\ai\\console_ai\\console_ai.fsproj",
+      "projectUniqueName": "C:\\prj\\ai\\console_ai\\console_ai.fsproj",
       "projectName": "console_ai",
-      "projectPath": "c:\\prj\\ai\\console_ai\\console_ai.fsproj",
+      "projectPath": "C:\\prj\\ai\\console_ai\\console_ai.fsproj",
       "packagesPath": "C:\\Users\\rvino\\.nuget\\packages\\",
-      "outputPath": "c:\\prj\\ai\\console_ai\\obj\\",
+      "outputPath": "C:\\prj\\ai\\console_ai\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\rvino\\AppData\\Roaming\\NuGet\\NuGet.Config",

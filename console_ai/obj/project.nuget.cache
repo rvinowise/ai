@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "hir8nknGIzrBu53uagQ6aS8g+ISp5XfPOv+j5DbLuaOgDtUeuvLtO9AC6R0v6Pr4eq/TtkTp5lWyG6LSEOOatg==",
+  "dgSpecHash": "QaCwh4SEICm7QSe2GRzfAYdQcSc0mmM45KkNQL1IUYlRRI340n3+yuO7xB7cuR7CUOZpKtaymUuXLVfKA0AICg==",
   "success": true,
-  "projectFilePath": "c:\\prj\\ai\\console_ai\\console_ai.fsproj",
+  "projectFilePath": "C:\\prj\\ai\\console_ai\\console_ai.fsproj",
   "expectedPackageFiles": [
     "C:\\Users\\rvino\\.nuget\\packages\\dapper\\2.0.123\\dapper.2.0.123.nupkg.sha512",
     "C:\\Users\\rvino\\.nuget\\packages\\dapper.fsharp\\3.3.0\\dapper.fsharp.3.3.0.nupkg.sha512",

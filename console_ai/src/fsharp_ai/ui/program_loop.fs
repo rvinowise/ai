@@ -76,8 +76,6 @@ let add_entity entity_type exemplar_id =
             add_signal exemplar_id
         | _ -> print_error $"entity %s{entity_type} doesn't exist"
     
-let input_sensed_figure figure =
-    database.Write.figure_appearance figure
     
 let input_sensory_data (data: string) =
     //let figures =  data.Split [|' '|]
@@ -85,7 +83,7 @@ let input_sensory_data (data: string) =
     |> Seq.iter (fun figure_id ->
         let figure = loaded.figure.Figure <| string figure_id
         if figure.exists then
-            input_sensed_figure figure
+            created.figure.Appearance.new_input figure.id
         else
             print_error $"figure ${figure.id} doesn't exist"
     )

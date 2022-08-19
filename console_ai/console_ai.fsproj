@@ -4,6 +4,7 @@
     <TargetFramework>net6.0</TargetFramework>
 	<src_dir>src\fsharp_ai\</src_dir>
 	<tests_dir>src\tests\</tests_dir>
+	<Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="src\fsharp_ai\ui" />
@@ -14,13 +15,15 @@
     
     <Compile Include="src\fsharp_ai\provided_data\provided\Figure.fs" />
     
-    <Compile Include="src\fsharp_ai\provided_data\from_database\provided_database.fs" />
-    <Compile Include="src\fsharp_ai\provided_data\from_database\write.fs" />
-    <Compile Include="src\fsharp_ai\provided_data\from_database\read.fs" />
+    <Compile Include="src\fsharp_ai\provided_data\database\provided_database.fs" />
+    <Compile Include="src\fsharp_ai\provided_data\database\write.fs" />
+    <Compile Include="src\fsharp_ai\provided_data\database\read.fs" />
     
     <Compile Include="src\fsharp_ai\provided_data\loaded\Figure\Appearances.fs" />
     <Compile Include="src\fsharp_ai\provided_data\loaded\Figure\Edges.fs" />
     <Compile Include="src\fsharp_ai\provided_data\loaded\Figure\Figure.fs" />
+
+    <Compile Include="src\fsharp_ai\provided_data\created\Figure\Appearance.fs" />
     
     <Compile Include="$(src_dir)ui\visualised\painted\Figure.fs" />
     <Compile Include="$(src_dir)ui\visualised\printed\Figure_appearance.fs" />
