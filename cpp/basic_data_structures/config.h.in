@@ -1,0 +1,2 @@
+#define basic_data_structures_VERSION_MAJOR @basic_data_structures_VERSION_MAJOR@
+#define basic_data_structures_VERSION_MINOR @basic_data_structures_VERSION_MINOR@

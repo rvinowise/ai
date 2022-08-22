@@ -5,6 +5,7 @@ open System
 open rvinowise
 open rvinowise.ai
 open rvinowise.ai.figure
+open rvinowise.ai
 
 let print_prompt () =
     printf "\n:>"
@@ -89,11 +90,15 @@ let input_sensory_data (data: string) =
             print_error $"figure ${figure_id} doesn't exist"
     )
 
+let find_sequences _ =
+    Finding_sequences.find_repeated_pairs("teststr2", 6, 6.66)
+
 let process_input (command:string) =
     match command.Split [|' '|] |> Array.toList with
     | ["show";entity;name] -> show_entity entity name
     | ["add";entity;name] -> add_entity entity name
     | ["input";sensory_data] -> input_sensory_data sensory_data
+    | ["find"] -> find_sequences()
     | ("quit" | "exit") :: _ -> Environment.Exit 55
     | _ -> print_error "unknown command"
 

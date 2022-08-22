@@ -209,5 +209,8 @@
 <node TEXT="programming tools" POSITION="right" ID="ID_811290730" CREATED="1659355936361" MODIFIED="1659355995816" LINK="programming%20tools/">
 <node TEXT="c-sharp" ID="ID_1340315914" CREATED="1659355996364" MODIFIED="1659356007781"/>
 </node>
+<node TEXT="project structure" POSITION="right" ID="ID_509784941" CREATED="1661115139465" MODIFIED="1661115148950" LINK="project%20structure/">
+<node TEXT="folder structure" ID="ID_1524235830" CREATED="1661115156395" MODIFIED="1661115162142" LINK="file:/C:/prj/ai/docs/project%20structure/folder%20structure.mm"/>
+</node>
 </node>
 </map>

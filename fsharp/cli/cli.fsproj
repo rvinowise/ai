@@ -23,6 +23,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\provided_data\provided_data.fsproj" />
+    
+    <ProjectReference Include="..\modules\modules.fsproj" />
+    <Reference Include="modules, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>bin\Debug\net6.0\modules.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

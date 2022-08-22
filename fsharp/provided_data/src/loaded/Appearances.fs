@@ -11,9 +11,6 @@ open System.Data.Common;    // for DbProviderFactories
 open System.Configuration
 
 
-
-
-
 let all_appearances figure_id =
     database.Provided.open_connection.Query<ai.figure.Appearance>(
         @"select * from Figure_appearance where Figure = @Figure_id",
