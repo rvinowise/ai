@@ -1,5 +1,5 @@
 set(AI_ROOT "C:/prj/ai/")
-add_compile_definitions(finding_sequences_EXPORTS)
+add_compile_definitions(FINDING_SEQUENCES_EXPORTS)
 
 cmake_minimum_required(VERSION 3.11-3.18)
 

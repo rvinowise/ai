@@ -10,7 +10,9 @@ DLLEXPORT void find_repeated_pairs(
     int a,
     double b
 ) {
-    printf("You called method find_repeated_pairs(), You passed in %s %d %f\n\r", db_connection, a,b);
+    printf("You called method find_repeated_pairs(), You passed in %s %d %f\n\r",
+        db_connection, a,b
+    );
 }
 
 
