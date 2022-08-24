@@ -1,6 +1,7 @@
 module rvinowise.ai.ui.console
 
 open System
+open System.Text.RegularExpressions
 
 open rvinowise
 open rvinowise.ai
@@ -90,15 +91,22 @@ let input_sensory_data (data: string) =
             print_error $"figure ${figure_id} doesn't exist"
     )
 
-let find_sequences _ =
-    Finding_sequences.find_repeated_pairs("teststr2", 6, 6.66)
+let find_sequences connection_string =
+    Finding_sequences.find_repeated_pairs(connection_string, 6, 6.66)
 
 let process_input (command:string) =
-    match command.Split [|' '|] |> Array.toList with
+    let words = 
+        Regex.Matches(command, @"[\""].+?[\""]|[^ ]+")//.Select(m => m.Value).ToList();
+        |> Seq.cast<Match>
+        |> Seq.map(fun m -> m.Value)
+        |> Seq.toList
+
+    //.Cast<Match>().Select(m => m.Value).ToList();
+    match words with
     | ["show";entity;name] -> show_entity entity name
     | ["add";entity;name] -> add_entity entity name
     | ["input";sensory_data] -> input_sensory_data sensory_data
-    | ["find"] -> find_sequences()
+    | ["find";connection] -> find_sequences(connection)
     | ("quit" | "exit") :: _ -> Environment.Exit 55
     | _ -> print_error "unknown command"
 

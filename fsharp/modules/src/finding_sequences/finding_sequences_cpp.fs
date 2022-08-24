@@ -8,10 +8,10 @@ open rvinowise.ai
 
 module Finding_sequences =
 
-    [<DllImport(
-        "C:/prj/ai/modules/finding_sequences/build/Debug/finding_sequences",
-         CallingConvention = CallingConvention.Cdecl)>]
-    extern void find_repeated_pairs(string db_connection, int a, float b)
+//    [<DllImport(
+//        "C:/prj/ai/modules/finding_sequences/build/bin/finding_sequences",
+//         CallingConvention = CallingConvention.Cdecl)>]
+//    extern void find_repeated_pairs(string db_connection, int a, float b)
 
-    //let find_repeated_pairs str =
-    //    printfn str
+    let find_repeated_pairs (str, a, b)=
+        printfn str

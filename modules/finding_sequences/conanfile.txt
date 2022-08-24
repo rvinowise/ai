@@ -1,0 +1,1 @@
+[requires]soci/4.0.3[options]soci:with_postgresql = True[generators]cmake
