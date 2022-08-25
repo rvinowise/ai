@@ -7,9 +7,7 @@ extern "C"
 {
 
 DLLEXPORT void find_repeated_pairs(
-    const char* db_connection,
-    int a,
-    double b
+    const char* db_connection
 );
 
 

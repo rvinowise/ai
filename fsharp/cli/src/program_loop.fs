@@ -100,13 +100,17 @@ let process_input (command:string) =
         |> Seq.cast<Match>
         |> Seq.map(fun m -> m.Value)
         |> Seq.toList
+    let words = 
+        words
+        |> Seq.map(fun word -> word.Replace("\"",""))
+        |> Seq.toList
 
     //.Cast<Match>().Select(m => m.Value).ToList();
     match words with
     | ["show";entity;name] -> show_entity entity name
     | ["add";entity;name] -> add_entity entity name
     | ["input";sensory_data] -> input_sensory_data sensory_data
-    | ["find";connection] -> find_sequences(connection)
+    | ["find";connection] -> find_sequences connection
     | ("quit" | "exit") :: _ -> Environment.Exit 55
     | _ -> print_error "unknown command"
 
