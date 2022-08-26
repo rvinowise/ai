@@ -6,6 +6,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\modules\modules.fsproj" />
+    <ProjectReference Include="..\provided_data\provided_data.fsproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="app.config" />
     <Compile Include="src\visualised\painted\Figure.fs" />
     <Compile Include="src\visualised\printed\Figure_appearance.fs" />
@@ -21,13 +26,6 @@
     
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\provided_data\provided_data.fsproj" />
-    
-    <ProjectReference Include="..\modules\modules.fsproj" />
-    <Reference Include="modules, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>bin\Debug\net6.0\modules.dll</HintPath>
-    </Reference>
-  </ItemGroup>
+  
 
 </Project>

@@ -18,7 +18,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\basic_data_structures\basic_data_structures.fsproj" />
-  </ItemGroup>  <ItemGroup>
+  </ItemGroup>
+
+  <ItemGroup>
     
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.0" />
     
@@ -28,7 +30,8 @@
     <PackageReference Include="System.Data.SQLite" Version="1.0.116" />
     <PackageReference Include="MySqlConnector" Version="2.1.12" />
     
-    <PackageReference Include="Dapper" Version="2.0.123" />	<PackageReference Include="Dapper.FSharp" Version="3.3.0" />
+    <PackageReference Include="Dapper" Version="2.0.123" />
+	  <PackageReference Include="Dapper.FSharp" Version="3.3.0" />
   </ItemGroup>
 
 </Project>
