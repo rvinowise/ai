@@ -5,11 +5,12 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
-  <ItemGroup>	<Compile Include="src\data_structures.fs" />
+  <ItemGroup>
+	<Compile Include="src\data_structures.fs" />
     <Compile Include="src\Figure\Edge\Edge.fs" />
     <Compile Include="src\Figure\Appearance\Appearance.fs" />
     <Compile Include="src\Figure\Figure.fs" />
-    <Compile Include="src\data_structures.fs" />
+    <Compile Include="src\Interval.fs" />
   </ItemGroup>
 
 </Project>
