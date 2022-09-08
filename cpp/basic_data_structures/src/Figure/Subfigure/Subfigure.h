@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 
-#include "../Appearance/Appearance.h"
+#include "../Figure_appearance/Figure_appearance.h"
 
 
 namespace rvinowise::ai {

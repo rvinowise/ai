@@ -6,8 +6,12 @@
 extern "C"
 {
 
-DLLEXPORT void find_repeated_pairs(
+DLLEXPORT void init_module(
     const char* db_connection
+);
+
+DLLEXPORT void find_repeated_pairs(
+    const char* head, const char* tail
 );
 
 

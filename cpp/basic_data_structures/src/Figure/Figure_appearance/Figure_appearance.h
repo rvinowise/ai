@@ -3,7 +3,7 @@
 #include <stdint.h>
 #include <string>
 
-#include "../Interval/Interval.hpp"
+#include "Interval/Interval.h"
 
 
 namespace rvinowise::ai {

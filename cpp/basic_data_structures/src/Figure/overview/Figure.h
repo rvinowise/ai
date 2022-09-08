@@ -4,8 +4,8 @@
 #include <string>
 #include <vector>
 
-#include "../Appearance/Appearance.h"
-#include "../Edge/Edge.h"
+#include "Figure/Figure_appearance/Figure_appearance.h"
+#include "Figure/Edge/Edge.h"
 
 
 namespace rvinowise::ai {

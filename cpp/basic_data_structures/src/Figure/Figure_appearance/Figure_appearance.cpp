@@ -1,4 +1,4 @@
-#include "Appearance.h"
+#include "Figure_appearance.h"
 
 
 using namespace std;

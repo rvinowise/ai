@@ -1,43 +1,27 @@
-set(AI_ROOT "C:/prj/ai/")
-add_compile_definitions(FINDING_SEQUENCES_EXPORTS)
 
 cmake_minimum_required(VERSION 3.11-3.18)
 
-project(finding_sequences)
+project(
+    finding_sequences
+    VERSION 1
+    LANGUAGES CXX
+)
 
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
 conan_basic_setup()
 
-add_library(${PROJECT_NAME} SHARED src/finding_sequences.cpp)
 
 
-target_link_libraries(${PROJECT_NAME} ${CONAN_LIBS})
-
-
-
-target_include_directories(
-    ${PROJECT_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/include
-)
-target_include_directories(
-    ${PROJECT_NAME} PUBLIC ${CONAN_INCLUDE_DIRS}
-)
-
-add_subdirectory(
-    ${AI_ROOT}/cpp/basic_data_structures/ 
-    subproject/basic_data_structures
-)
+target_link_libraries(${PROJECT_NAME} PRIVATE ${CONAN_LIBS})
 
 
 
-#target_link_libraries(main PRIVATE SOCI::soci_core SOCI::soci_empty)
+add_subdirectory(src)
+if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME AND BUILD_TESTING)
+    add_subdirectory(test)
+endif()
 
-# target_link_libraries(${PROJECT_NAME} PUBLIC basic_data_structures)
-# target_include_directories(${PROJECT_NAME} PUBLIC
-#     "${AI_ROOT}/cpp/basic_data_structures/src"
-# )
+set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 20)
 
-
-
-target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_20)
-
-
+enable_testing()
+add_test(NAME full_test COMMAND full_test)
