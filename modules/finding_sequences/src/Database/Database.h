@@ -1,6 +1,8 @@
 #pragma once
 
-#include "Interval/Interval.h"
+//#include "Interval/Interval.h"
+//#include <Interval/Interval.h>
+#include "C:/prj/ai/cpp/basic_data_structures/src/Interval/Interval.h"
 
 #include <iostream>
 #include <format>
@@ -10,8 +12,9 @@
 #include <soci/postgresql/soci-postgresql.h>
 
 
-namespace rvinowise::ai {
 
+
+namespace rvinowise::ai {
 
 class Database {
 

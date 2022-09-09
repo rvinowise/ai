@@ -6,6 +6,7 @@ project(
     VERSION 1
     LANGUAGES CXX
 )
+set(CMAKE_CXX_STANDARD 20)
 
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
 conan_basic_setup()
@@ -13,11 +14,6 @@ conan_basic_setup()
 
 
 add_subdirectory(src)
-if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME AND BUILD_TESTING)
-    add_subdirectory(test)
-endif()
+add_subdirectory(test)
 
 
-
-enable_testing()
-add_test(NAME full_test COMMAND full_test)
