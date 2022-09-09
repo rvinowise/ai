@@ -10,7 +10,7 @@ type Appearance(figure: string, interval: Interval) =
     member this.head=this.interval.head
     member this.tail=this.interval.tail
 
-    new (figure, moment: int64) =
+    new (figure: string, moment: int64) =
         Appearance(figure, {head= moment; tail= moment})
-    new (figure, head, tail) =
+    new (figure: string, head, tail) =
         Appearance(figure, {head= head; tail= tail})
