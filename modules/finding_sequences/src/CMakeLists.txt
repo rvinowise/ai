@@ -1,6 +1,5 @@
-cmake_minimum_required(VERSION 3.11-3.18)
+cmake_minimum_required(VERSION 3.18)
 
-set(BINARY ${CMAKE_PROJECT_NAME})
 set(AI_ROOT "C:/prj/ai/")
 add_compile_definitions(FINDING_SEQUENCES_EXPORTS)
 
@@ -19,12 +18,13 @@ add_library(${PROJECT_NAME}_lib SHARED
     Finding_sequences/Interval_in_sequence/Interval_in_sequence.cpp
     Finding_sequences/Iteration_state_of_searching_pairs/Iteration_state_of_searching_pairs.cpp
 )
-
+add_library(rvinowise::ai::finding_sequences ALIAS ${PROJECT_NAME}_lib )
 
 target_link_libraries(${PROJECT_NAME}_lib PRIVATE ${CONAN_LIBS})
 target_include_directories(
     ${PROJECT_NAME}_lib PRIVATE ${CONAN_INCLUDE_DIRS}
 )
+
 
 
 target_include_directories(
@@ -40,4 +40,4 @@ add_subdirectory(
     ${AI_ROOT}/cpp/basic_data_structures
     subproject/basic_data_structures
 )
-
+target_link_libraries(${PROJECT_NAME}_lib PUBLIC rvinowise::ai::basic_data_structures)

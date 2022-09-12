@@ -1,12 +1,13 @@
 #include "Database.h"
 
-#include "Figure/Figure_appearance/Figure_appearance.h"
-
 #include <iostream>
 #include <format>
 #include <memory>
 
 #include "spdlog/spdlog.h"
+
+
+#include "Figure/Figure_appearance/Figure_appearance.h"
 
 using namespace std;
 
