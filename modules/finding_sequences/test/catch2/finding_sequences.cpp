@@ -2,15 +2,15 @@
 
 #include "Finding_sequences/Finding_sequences.h"
 
-//#include <catch2/catch_all.hpp>
+#include <catch2/catch_all.hpp>
 #include <vector>
 #include <iostream>
 
 using namespace std;
 using namespace rvinowise::ai;
 
-int main(int argc, char** args) {
-//TEST_CASE("the same sequences") {
+//int main(int argc, char** args) {
+TEST_CASE("the same sequences") {
     vector<Interval> appearances_of_a{
         Interval(0,1),
         Interval(2,3),
@@ -34,8 +34,9 @@ int main(int argc, char** args) {
     vector<Interval> found_pairs = 
        finding_sequences.find_repeated_pairs(appearances_of_a, appearances_of_b);
 
-    //REQUIRE(found_pairs == appearances_of_ab);
-    return 0;
+    vector<int> test0{1,2};
+    vector<int> test1{1,3};
+    REQUIRE(test0 == test1);
 }
 
 // TEST_CASE("all tail apperances are before head appearances") {

@@ -2,8 +2,8 @@ set(AI_ROOT "C:/prj/ai/")
 
 cmake_minimum_required(VERSION 3.18)
 
-# include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
-# conan_basic_setup()
+include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
+conan_basic_setup()
 
 add_executable(${PROJECT_NAME}_test
     catch2/finding_sequences.cpp
@@ -27,4 +27,5 @@ target_link_libraries(${PROJECT_NAME}_test
 #     ${PROJECT_SOURCE_DIR}/src
 # )
 
-# add_test(NAME ${PROJECT_NAME}_test COMMAND ${PROJECT_NAME}_test)
+add_test(NAME test COMMAND $<TARGET_FILE:finding_sequences_test>)
+add_test(NAME test2 COMMAND finding_sequences_test)
