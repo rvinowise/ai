@@ -9,9 +9,6 @@ add_executable(${PROJECT_NAME}_test
     catch2/finding_sequences.cpp
 )
 
-
-
-
 target_link_libraries(${PROJECT_NAME}_test PRIVATE ${CONAN_LIBS})
 target_include_directories(
     ${PROJECT_NAME}_test PRIVATE ${CONAN_INCLUDE_DIRS}
@@ -27,5 +24,7 @@ target_link_libraries(${PROJECT_NAME}_test
 #     ${PROJECT_SOURCE_DIR}/src
 # )
 
-add_test(NAME test COMMAND $<TARGET_FILE:finding_sequences_test>)
+
+enable_testing()
+#add_test(NAME test COMMAND $<TARGET_FILE:finding_sequences_test>)
 add_test(NAME test2 COMMAND finding_sequences_test)

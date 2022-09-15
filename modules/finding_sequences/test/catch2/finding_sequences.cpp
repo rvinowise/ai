@@ -34,67 +34,65 @@ TEST_CASE("the same sequences") {
     vector<Interval> found_pairs = 
        finding_sequences.find_repeated_pairs(appearances_of_a, appearances_of_b);
 
-    vector<int> test0{1,2};
-    vector<int> test1{1,3};
-    REQUIRE(test0 == test1);
+    REQUIRE(found_pairs == appearances_of_ab);
 }
 
-// TEST_CASE("all tail apperances are before head appearances") {
-//     vector<Interval> appearances_of_a{
-//         Interval(0,1),
-//         Interval(2,3),
-//         Interval(4,5)
-//     };
+TEST_CASE("all tail apperances are before head appearances") {
+    vector<Interval> appearances_of_a{
+        Interval(0,1),
+        Interval(2,3),
+        Interval(4,5)
+    };
 
-//     vector<Interval> appearances_of_b{
-//         Interval(6,7),
-//         Interval(8,9),
-//         Interval(9,10)
-//     };
-//     // no apperarances are found
-//     Finding_sequences finding_sequences;
-//     vector<Interval> found_pairs = 
-//        finding_sequences.find_repeated_pairs(appearances_of_a, appearances_of_b);
+    vector<Interval> appearances_of_b{
+        Interval(6,7),
+        Interval(8,9),
+        Interval(9,10)
+    };
+    // no apperarances are found
+    Finding_sequences finding_sequences;
+    vector<Interval> found_pairs = 
+       finding_sequences.find_repeated_pairs(appearances_of_a, appearances_of_b);
 
-//     //REQUIRE(found_pairs.empty());
-// }
+    REQUIRE(found_pairs.empty());
+}
 
-// TEST_CASE("all head appearances are before tail apperances") {
-//     vector<Interval> appearances_of_a{
-//         Interval(0,1),
-//         Interval(2,3),
-//         Interval(4,5)
-//     };
+TEST_CASE("all head appearances are before tail apperances") {
+    vector<Interval> appearances_of_a{
+        Interval(0,1),
+        Interval(2,3),
+        Interval(4,5)
+    };
 
-//     vector<Interval> appearances_of_b{
-//         Interval(6,7),
-//         Interval(8,9),
-//         Interval(10,11)
-//     };
+    vector<Interval> appearances_of_b{
+        Interval(6,7),
+        Interval(8,9),
+        Interval(10,11)
+    };
 
-//     vector<Interval> appearances_of_ab{
-//         Interval(4,6)
-//     };
-//     // only one appearance is found
-//     Finding_sequences finding_sequences;
-//     vector<Interval> found_pairs = 
-//        finding_sequences.find_repeated_pairs(appearances_of_a, appearances_of_b);
+    vector<Interval> appearances_of_ab{
+        Interval(4,6)
+    };
+    // only one appearance is found
+    Finding_sequences finding_sequences;
+    vector<Interval> found_pairs = 
+       finding_sequences.find_repeated_pairs(appearances_of_a, appearances_of_b);
 
-//     //REQUIRE(found_pairs == appearances_of_ab);
-// }
+    REQUIRE(found_pairs == appearances_of_ab);
+}
 
-// TEST_CASE("no appearances of the head") {
-//     vector<Interval> appearances_of_a{};
+TEST_CASE("no appearances of the head") {
+    vector<Interval> appearances_of_a{};
 
-//     vector<Interval> appearances_of_b{
-//         Interval(6,7),
-//         Interval(8,9),
-//         Interval(9,10)
-//     };
-//     // no apperarances are found
-//     Finding_sequences finding_sequences;
-//     vector<Interval> found_pairs = 
-//        finding_sequences.find_repeated_pairs(appearances_of_a, appearances_of_b);
+    vector<Interval> appearances_of_b{
+        Interval(6,7),
+        Interval(8,9),
+        Interval(9,10)
+    };
+    // no apperarances are found
+    Finding_sequences finding_sequences;
+    vector<Interval> found_pairs = 
+       finding_sequences.find_repeated_pairs(appearances_of_a, appearances_of_b);
 
-//     //REQUIRE(found_pairs.empty());
-// }
+    REQUIRE(found_pairs.empty());
+}

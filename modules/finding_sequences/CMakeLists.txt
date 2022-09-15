@@ -14,5 +14,3 @@ add_subdirectory(src)
 add_subdirectory(test)
 
 
-enable_testing()
-add_test(NAME test1 COMMAND $<TARGET_FILE:finding_sequences_test>)
