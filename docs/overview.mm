@@ -8,7 +8,7 @@
         <attribute_value VALUE="https://www.youtube.com/shorts/66t2mLXtj9E?&amp;ab_channel=THESTRAIGHTPATH"/>
     </attribute_name>
 </attribute_registry>
-<node TEXT="ai" LOCALIZED_STYLE_REF="AutomaticLayout.level.root" FOLDED="false" ID="ID_696401721" CREATED="1610381621824" MODIFIED="1632652331747"><hook NAME="MapStyle" zoom="1.154">
+<node TEXT="ai" LOCALIZED_STYLE_REF="AutomaticLayout.level.root" FOLDED="false" ID="ID_696401721" CREATED="1610381621824" MODIFIED="1632652331747"><hook NAME="MapStyle" zoom="1.5">
     <properties show_icon_for_attributes="true" edgeColorConfiguration="#ff3333ff,#33ff00ff,#ffcc33ff" show_notes_in_map="false" show_note_icons="false" fit_to_viewport="false"/>
 
 <map_styles>
@@ -155,7 +155,7 @@
 <icon BUILTIN="present"/>
 </node>
 <node TEXT="interface" ID="ID_458974352" CREATED="1633025618126" MODIFIED="1633025653417">
-<icon BUILTIN="programming/interface_arrows"/>
+<icon BUILTIN="interface_arrows"/>
 </node>
 <node ID="ID_1543775213" CREATED="1633009004917" MODIFIED="1633009190187">
 <icon BUILTIN="puzzle_piece"/>
@@ -213,7 +213,7 @@
 <icon BUILTIN="puzzle_piece"/>
 </node>
 <node TEXT="History" ID="ID_320386492" CREATED="1633181953206" MODIFIED="1633182242962">
-<icon BUILTIN="programming/output"/>
+<icon BUILTIN="output"/>
 <icon BUILTIN="puzzle_piece"/>
 </node>
 <node TEXT="mood aka Good and Bad signals" ID="ID_1733486526" CREATED="1633182291666" MODIFIED="1633207841494">
@@ -302,22 +302,22 @@
 <icon BUILTIN="puzzle_piece"/>
 </node>
 <node TEXT="History" ID="ID_1294371949" CREATED="1633213225176" MODIFIED="1633214011132">
-<icon BUILTIN="programming/interface_arrows"/>
+<icon BUILTIN="interface_arrows"/>
 <icon BUILTIN="puzzle_piece"/>
 </node>
 <node TEXT="Figure_storage" ID="ID_1922783392" CREATED="1633213283601" MODIFIED="1652325967334">
-<icon BUILTIN="programming/output"/>
+<icon BUILTIN="output"/>
 <icon BUILTIN="puzzle_piece"/>
 </node>
 </node>
 <node TEXT="create complex figures" STYLE_REF="list item" ID="ID_335497501" CREATED="1633208051119" MODIFIED="1652326014629" COLOR="#000000" BACKGROUND_COLOR="#ffffff">
 <node TEXT="sequential figures" ID="ID_929746426" CREATED="1633213738637" MODIFIED="1652326024082">
-<icon BUILTIN="programming/input"/>
+<icon BUILTIN="input"/>
 <icon BUILTIN="puzzle_piece"/>
 <node TEXT="delete some connections" ID="ID_941756916" CREATED="1633213834027" MODIFIED="1633213851623"/>
 </node>
 <node TEXT="complex figures" ID="ID_1600074841" CREATED="1633213757298" MODIFIED="1652326102436">
-<icon BUILTIN="programming/output"/>
+<icon BUILTIN="output"/>
 <icon BUILTIN="puzzle_piece"/>
 </node>
 <node TEXT="find similarities less obvious than Sequences can notice" ID="ID_695001026" CREATED="1633214919876" MODIFIED="1652326140072">
@@ -392,7 +392,7 @@
 <font ITALIC="true"/>
 </node>
 <node TEXT="History" ID="ID_1723541640" CREATED="1633182834983" MODIFIED="1633182884702">
-<icon BUILTIN="programming/output"/>
+<icon BUILTIN="output"/>
 <icon BUILTIN="puzzle_piece"/>
 </node>
 </node>
@@ -401,10 +401,10 @@
 <node TEXT="input_receiver" ID="ID_1728916427" CREATED="1633179805199" MODIFIED="1633179825519">
 <icon BUILTIN="present"/>
 <node TEXT="sensory data from the environment" ID="ID_1098000367" CREATED="1633180434047" MODIFIED="1633180487255">
-<icon BUILTIN="programming/input"/>
+<icon BUILTIN="input"/>
 </node>
 <node TEXT="low-level paterns" ID="ID_1185664675" CREATED="1633180443986" MODIFIED="1633180531476">
-<icon BUILTIN="programming/output"/>
+<icon BUILTIN="output"/>
 <node TEXT="saved in the History" ID="ID_1697593357" CREATED="1633180534638" MODIFIED="1633180544653"/>
 </node>
 <node TEXT="History" ID="ID_816878960" CREATED="1633179861128" MODIFIED="1633179920223">
@@ -424,11 +424,11 @@
 <node TEXT="sequence_finder" ID="ID_831801661" CREATED="1632674343840" MODIFIED="1652327079304">
 <icon BUILTIN="present"/>
 <node TEXT="History interval" LOCALIZED_STYLE_REF="default" ID="ID_1804311470" CREATED="1632696515597" MODIFIED="1633110369279" COLOR="#000000" BACKGROUND_COLOR="#ffffff">
-<icon BUILTIN="programming/input"/>
+<icon BUILTIN="input"/>
 <node TEXT="finds existing figures from their Actions" LOCALIZED_STYLE_REF="default" ID="ID_998272487" CREATED="1633023743881" MODIFIED="1641509760814" COLOR="#000000" BACKGROUND_COLOR="#ffffff"/>
 </node>
 <node LOCALIZED_STYLE_REF="default" ID="ID_494090088" CREATED="1632696515597" MODIFIED="1633178429106" COLOR="#666666" BACKGROUND_COLOR="#ffffff">
-<icon BUILTIN="programming/input"/>
+<icon BUILTIN="input"/>
 <icon BUILTIN="question"/>
 <richcontent TYPE="NODE">
 
@@ -446,7 +446,7 @@
 <node TEXT="what&apos;s common between two given intervals?" LOCALIZED_STYLE_REF="default" ID="ID_919990037" CREATED="1633143062613" MODIFIED="1633179078696" COLOR="#000000" BACKGROUND_COLOR="#ffffff"/>
 </node>
 <node TEXT="sequential figures" LOCALIZED_STYLE_REF="default" ID="ID_1409202754" CREATED="1632696538460" MODIFIED="1652327091268" COLOR="#000000" BACKGROUND_COLOR="#ffffff">
-<icon BUILTIN="programming/output"/>
+<icon BUILTIN="output"/>
 <node TEXT="stores found sequences in the History as Actions" LOCALIZED_STYLE_REF="default" ID="ID_1891842202" CREATED="1632858342804" MODIFIED="1652327098826" COLOR="#000000" BACKGROUND_COLOR="#ffffff"/>
 </node>
 <node TEXT="Actions" ID="ID_760106881" CREATED="1633023694465" MODIFIED="1633024671490" LINK="#ID_116239914">
@@ -472,7 +472,7 @@
 <icon BUILTIN="cog"/>
 </node>
 <node TEXT="History interval" ID="ID_439769439" CREATED="1633143501594" MODIFIED="1633177934841">
-<icon BUILTIN="programming/input"/>
+<icon BUILTIN="input"/>
 <icon BUILTIN="bad"/>
 <icon BUILTIN="question"/>
 <node TEXT="finding all possible Figures is too expensive" LOCALIZED_STYLE_REF="default" ID="ID_1121040787" CREATED="1633142919822" MODIFIED="1633143553724" COLOR="#000000" BACKGROUND_COLOR="#ffffff">
@@ -481,7 +481,7 @@
 </node>
 </node>
 <node ID="ID_1156219083" CREATED="1633142367965" MODIFIED="1633142918257">
-<icon BUILTIN="programming/input"/>
+<icon BUILTIN="input"/>
 <icon BUILTIN="question"/>
 <richcontent TYPE="NODE">
 
@@ -502,19 +502,19 @@
 </node>
 </node>
 <node TEXT="figures" ID="ID_1662133757" CREATED="1633142378625" MODIFIED="1633142452929">
-<icon BUILTIN="programming/output"/>
+<icon BUILTIN="output"/>
 <node TEXT="occuring in both provided intervals" ID="ID_1428904404" CREATED="1633142457295" MODIFIED="1633142474410"/>
 </node>
 </node>
 <node TEXT="stencil_applier" ID="ID_1577756641" CREATED="1632674324023" MODIFIED="1652327401674">
 <icon BUILTIN="present"/>
 <node TEXT="" LOCALIZED_STYLE_REF="default" ID="ID_1998039277" CREATED="1632856746923" MODIFIED="1633105453219" COLOR="#000000" BACKGROUND_COLOR="#ffffff">
-<icon BUILTIN="programming/input"/>
+<icon BUILTIN="input"/>
 <node TEXT="target figure" ID="ID_1933989897" CREATED="1632856833384" MODIFIED="1658192433710"/>
 <node TEXT="stencil" ID="ID_1641972621" CREATED="1632856846853" MODIFIED="1632856851266"/>
 </node>
 <node TEXT="figures" LOCALIZED_STYLE_REF="default" ID="ID_1517811998" CREATED="1632856854905" MODIFIED="1633179278132" COLOR="#000000" BACKGROUND_COLOR="#ffffff">
-<icon BUILTIN="programming/output"/>
+<icon BUILTIN="output"/>
 <node TEXT="parts of the target figure" ID="ID_1716619650" CREATED="1633179279007" MODIFIED="1658192439124">
 <icon BUILTIN="box"/>
 </node>
@@ -599,7 +599,6 @@
 </node>
 <node TEXT="figure inside" ID="ID_529617439" CREATED="1653092955310" MODIFIED="1654388025429">
 <icon BUILTIN="emoji-1F441"/>
-<node TEXT="" ID="ID_806425571" CREATED="1653092962947" MODIFIED="1653092962947"/>
 </node>
 <node TEXT="stencil applier" LOCALIZED_STYLE_REF="default" ID="ID_803054102" CREATED="1653087104471" MODIFIED="1653087133495" COLOR="#000000" BACKGROUND_COLOR="#ffffff">
 <icon BUILTIN="emoji-1F441"/>
@@ -723,11 +722,11 @@
 </node>
 <node TEXT="start moment" ID="ID_1021978082" CREATED="1633000604625" MODIFIED="1633007384482" LINK="#ID_116239914">
 <icon BUILTIN="puzzle_piece"/>
-<icon BUILTIN="programming/interface_arrows"/>
+<icon BUILTIN="interface_arrows"/>
 </node>
 <node TEXT="end moment" ID="ID_1465858842" CREATED="1633000626328" MODIFIED="1633007387289" LINK="#ID_116239914">
 <icon BUILTIN="puzzle_piece"/>
-<icon BUILTIN="programming/interface_arrows"/>
+<icon BUILTIN="interface_arrows"/>
 </node>
 <node TEXT="appeared figure" ID="ID_1284095068" CREATED="1633006626203" MODIFIED="1633006643782" COLOR="#666666">
 <icon BUILTIN="puzzle_piece"/>
