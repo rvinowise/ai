@@ -138,7 +138,6 @@ Iteration_state_of_searching_pairs iteration_of_finding_a_repeated_pair(
         );
     }
     return Iteration_state_of_searching_pairs::get_not_found_state();
-    
 }
 
 
@@ -146,8 +145,6 @@ vector<Interval> Finding_sequences::find_repeated_pairs(
     vector<Interval> head_appearances, 
     vector<Interval> tail_appearances
 ) {
-    
-
     vector<Interval> result;
     result.reserve(min(head_appearances.size(), tail_appearances.size()));
 
