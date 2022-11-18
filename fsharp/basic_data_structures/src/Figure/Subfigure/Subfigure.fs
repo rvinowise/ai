@@ -1,8 +1,9 @@
 namespace rvinowise.ai.figure
 
+open rvinowise.ai
 
 
-type Subfigure(parent: string, referenced: string) = 
+type Subfigure(parent: Figure_id, referenced: Figure_id) = 
     member _.parent = parent
     member _.referenced = referenced
 
