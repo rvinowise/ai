@@ -92,20 +92,16 @@ let input_sensory_data (data: string) =
     )
 
 let find_sequences connection_string =
-    Finding_sequences.find_repeated_pairs(connection_string, 6, 6.66)
+    Finding_sequences.find_repeated_pairs(6, 8)
 
 let process_input (command:string) =
     let words = 
-        Regex.Matches(command, @"[\""].+?[\""]|[^ ]+")//.Select(m => m.Value).ToList();
+        Regex.Matches(command, @"[\""].+?[\""]|[^ ]+")
         |> Seq.cast<Match>
         |> Seq.map(fun m -> m.Value)
-        |> Seq.toList
-    let words = 
-        words
         |> Seq.map(fun word -> word.Replace("\"",""))
         |> Seq.toList
 
-    //.Cast<Match>().Select(m => m.Value).ToList();
     match words with
     | ["show";entity;name] -> show_entity entity name
     | ["add";entity;name] -> add_entity entity name

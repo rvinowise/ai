@@ -14,13 +14,13 @@ let edges comment edges=
 
     edges
     |> Seq.iter (
-        fun (edge:ai.figure.Edge) -> 
+        fun (edge: ai.figure.Edge) -> 
             let head = root.GetOrAddNode(edge.head)
             let tail = root.GetOrAddNode(edge.tail)
             root.GetOrAddEdge(
                 head, tail, ""
             ) |> ignore
-        )
+    )
 
     let filename = Directory.GetCurrentDirectory() + "/out.svg"
     root.ComputeLayout()
