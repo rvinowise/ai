@@ -8,7 +8,7 @@ instead of the references to other objects in memory,
 it uses their identifiers in the database (e.g. string id)
 *)
 
-type Edge(head: Figure_id, tail: Figure_id) = 
+type Edge(head: Subfigure_id, tail: Subfigure_id) = 
     member _.head = head
     member _.tail = tail
 
