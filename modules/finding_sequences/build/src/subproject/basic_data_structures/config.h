@@ -1,0 +1,2 @@
+#define basic_data_structures_VERSION_MAJOR 1
+#define basic_data_structures_VERSION_MINOR 0

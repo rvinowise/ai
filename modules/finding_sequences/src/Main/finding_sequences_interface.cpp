@@ -1,4 +1,4 @@
-#include "../include/finding_sequences_interface.h"
+#include "../../include/finding_sequences_interface.h"
 #include "Main.h"
 
 

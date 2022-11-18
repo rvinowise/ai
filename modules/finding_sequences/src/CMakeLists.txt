@@ -7,7 +7,16 @@ add_compile_definitions(FINDING_SEQUENCES_EXPORTS)
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
 conan_basic_setup()
 
-
+add_library(${PROJECT_NAME}_dll SHARED
+    Main/finding_sequences_interface.cpp
+    Main/main.cpp
+    Database/Database.cpp
+    Computational_resource/Computational_resource.cpp
+    Finding_sequences/Finding_sequences.cpp
+    Finding_sequences/Interval_in_sequence/Interval_in_sequence.cpp
+    Finding_sequences/Iteration_state_of_searching_pairs/Iteration_state_of_searching_pairs.cpp
+    
+)
 add_library(${PROJECT_NAME}_lib STATIC
     Main/finding_sequences_interface.cpp
     Main/main.cpp
