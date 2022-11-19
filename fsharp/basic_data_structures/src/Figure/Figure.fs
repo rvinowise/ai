@@ -3,7 +3,11 @@
 open System.Collections.Generic
 open rvinowise.ai
 
-type Figure(id, appearances, edges) =
+type Figure(
+    id, 
+    appearances, 
+    edges
+) =
     member this.id:Figure_id = id
     member this.appearances: Appearance seq = appearances
     member this.edges: Edge seq = edges

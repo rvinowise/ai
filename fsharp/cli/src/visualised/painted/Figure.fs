@@ -15,8 +15,8 @@ let edges comment edges=
     edges
     |> Seq.iter (
         fun (edge: ai.figure.Edge) -> 
-            let head = root.GetOrAddNode(edge.head)
-            let tail = root.GetOrAddNode(edge.tail)
+            let head = root.GetOrAddNode(edge.head.id)
+            let tail = root.GetOrAddNode(edge.tail.id)
             root.GetOrAddEdge(
                 head, tail, ""
             ) |> ignore

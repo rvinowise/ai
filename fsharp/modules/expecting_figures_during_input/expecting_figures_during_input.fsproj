@@ -4,7 +4,7 @@
     <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="src\spotting_figures_during_input.fs" />
+    <Compile Include="src\expecting_figures_during_input.fs" />
   </ItemGroup>
 
   <ItemGroup>

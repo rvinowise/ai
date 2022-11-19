@@ -7,7 +7,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\modules\finding_sequences\finding_sequences.fsproj" />
-    <ProjectReference Include="..\modules\spotting_figures_during_input\spotting_figures_during_input.fsproj" />
+    <ProjectReference Include="..\modules\expecting_figures_during_input\expecting_figures_during_input.fsproj" />
     <ProjectReference Include="..\provided_data\provided_data.fsproj" />
   </ItemGroup>
 
