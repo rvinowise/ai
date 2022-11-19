@@ -7,7 +7,7 @@ open System.Diagnostics
 open rvinowise
 
 
-let edges comment edges=
+let edges comment edges  = 
     let root = RootGraph.CreateNew(comment, GraphType.Directed)
     root.SafeSetAttribute("rankdir", "LR", "")
     Node.IntroduceAttribute(root, "shape", "circle")

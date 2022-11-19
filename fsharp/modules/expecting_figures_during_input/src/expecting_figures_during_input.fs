@@ -5,7 +5,7 @@ open rvinowise.ai.figure
 module Expecting_figures = 
 
 
-    type Expectation_of_figure_prolongation = {
+    type Expected_figure_prolongation = {
         prolongated: Figure
         last_activated: Subfigure list
         expected: Subfigure Set
@@ -13,7 +13,7 @@ module Expecting_figures =
 
     let get_next_subfigures 
         (edges: Edge seq)
-        subfigure 
+        (subfigure: Subfigure) 
         =
         edges
         |>Seq.filter (fun e->e.tail = subfigure)
@@ -48,7 +48,7 @@ module Expecting_figures =
             expectation
 
     let change_expectations_with_new_input 
-        (expectations: Expectation_of_figure_prolongation seq) 
+        (expectations: Expected_figure_prolongation seq) 
         figure_id 
         =
         expectations
