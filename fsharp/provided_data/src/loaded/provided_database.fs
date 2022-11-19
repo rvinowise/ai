@@ -3,7 +3,7 @@
 open System
 open System.Data.Common
 open System.Configuration
-
+open Npgsql
 
 let connection_setting =
     try
@@ -14,6 +14,11 @@ let connection_setting =
         
 
 let factory = 
+
+    DbProviderFactories.RegisterFactory(
+        "Npgsql", 
+        Npgsql.NpgsqlFactory.Instance
+    )
 
     DbProviderFactories.RegisterFactory(
         "System.Data.SqlClient", 
