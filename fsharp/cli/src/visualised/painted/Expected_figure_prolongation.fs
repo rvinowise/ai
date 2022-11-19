@@ -5,15 +5,18 @@ open System.IO
 open System.Diagnostics
 
 open rvinowise
-open rvinowise.ai.figure.Expecting_figures
+open rvinowise.ai.Expecting_figures
 
 
-let image comment expected =
+let image 
+    comment 
+    (expected:Expected_figure_prolongation) 
+    =
     let root = RootGraph.CreateNew(comment, GraphType.Directed)
     root.SafeSetAttribute("rankdir", "LR", "")
     Node.IntroduceAttribute(root, "shape", "circle")
 
-    expected.prolongated
+    expected.prolongated.edges
     |> Seq.iter (
         fun (edge: ai.figure.Edge) -> 
             let head = root.GetOrAddNode(edge.head.id)

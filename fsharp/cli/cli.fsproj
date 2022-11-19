@@ -8,12 +8,14 @@
   <ItemGroup>
     <ProjectReference Include="..\modules\finding_sequences\finding_sequences.fsproj" />
     <ProjectReference Include="..\modules\expecting_figures_during_input\expecting_figures_during_input.fsproj" />
+    <ProjectReference Include="..\modules\applying_stencils\applying_stencils.fsproj" />
     <ProjectReference Include="..\provided_data\provided_data.fsproj" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="app.config" />
     <Compile Include="src\visualised\painted\Figure.fs" />
+    <Compile Include="src\visualised\painted\Expected_figure_prolongation.fs" />
     <Compile Include="src\visualised\printed\Figure_appearance.fs" />
     <Compile Include="src\visualised\printed\Figure.fs" />
     <Compile Include="src\program_loop.fs" />

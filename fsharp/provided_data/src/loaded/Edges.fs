@@ -39,12 +39,12 @@ let write_subfigures_into_edge
     let head_subfigure=
         Seq.find (fun s->s.id=edge.head) subfigures 
 
-    new ai.figure.Edge(
-        new ai.figure.Subfigure(
+    ai.figure.Edge(
+        ai.figure.Subfigure(
             tail_subfigure.id,
             tail_subfigure.referenced
         ),
-        new ai.figure.Subfigure(
+        ai.figure.Subfigure(
             head_subfigure.id,
             head_subfigure.referenced
         )

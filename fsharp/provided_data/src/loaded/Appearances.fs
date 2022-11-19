@@ -16,7 +16,7 @@ let all_appearances figure_id =
         @"select * from Figure_appearance where Figure = @Figure_id",
         {|figure_id=figure_id|}
     )
-    //db_connection.Close()
+    
 let appearances_in_interval figure_id head tail =
     database.Provided.open_connection.Query<ai.figure.Appearance>(
         @"select * from Figure_appearance
