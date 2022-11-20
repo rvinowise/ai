@@ -2,6 +2,7 @@ namespace rvinowise.ai
 
 open rvinowise.ai.figure
 
+
 module Applying_stencils = 
 
     type Mapped_stencil = {
@@ -18,6 +19,7 @@ module Applying_stencils =
         stencil
         target 
         =
+        ()
 
 
     let results_of_stencil_application

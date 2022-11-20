@@ -10,6 +10,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\provided_data\provided_data.fsproj" />
     <ProjectReference Include="..\..\basic_data_structures\basic_data_structures.fsproj" />
+    <ProjectReference Include="..\..\..\modules\applying_stencils\enumerating_combinations\enumerating_combinations.csproj" />
   </ItemGroup>
 
 </Project>

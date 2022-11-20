@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 
-namespace rvinowise.ai.simple.mapping_stencils {
+namespace rvinowise.ai.mapping_stencils {
 
 
 public class Generator_of_mappings:
