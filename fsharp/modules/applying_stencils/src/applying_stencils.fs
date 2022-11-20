@@ -27,6 +27,6 @@ module Applying_stencils =
         target
         =
         target
-        |>map_stencil_onto_target stencil
-        |>Seq.map retrieve_result target
+        //|>map_stencil_onto_target stencil
+        //|>Seq.map retrieve_result target
     
