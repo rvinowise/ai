@@ -15,7 +15,7 @@ module Applying_stencils =
         =
         ()
 
-    let map_stencil_onto_target = 
+    let map_stencil_onto_target
         stencil
         target 
         =
