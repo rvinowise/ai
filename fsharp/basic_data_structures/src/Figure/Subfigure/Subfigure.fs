@@ -10,5 +10,7 @@ type Subfigure =
 
         new (id, referenced) =
             {id = id; referenced = referenced;}
+        new (id: Subfigure_id) =
+            {id = id; referenced = id;}
     end
 

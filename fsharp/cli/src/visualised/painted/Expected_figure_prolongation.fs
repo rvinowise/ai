@@ -19,10 +19,10 @@ let image
     expected.prolongated.edges
     |> Seq.iter (
         fun (edge: ai.figure.Edge) -> 
-            let head = root.GetOrAddNode(edge.head.id)
             let tail = root.GetOrAddNode(edge.tail.id)
+            let head = root.GetOrAddNode(edge.head.id)
             root.GetOrAddEdge(
-                head, tail, ""
+                tail, head, ""
             ) |> ignore
     )
 

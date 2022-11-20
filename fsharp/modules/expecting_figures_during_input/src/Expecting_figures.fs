@@ -1,15 +1,10 @@
 namespace rvinowise.ai
 
 open rvinowise.ai.figure
+open Expected_figure_prolongation
 
 module Expecting_figures = 
 
-
-    type Expected_figure_prolongation = {
-        prolongated: Figure
-        last_activated: Subfigure list
-        expected: Subfigure Set
-    }
 
     let get_next_subfigures 
         (edges: Edge seq)
@@ -20,7 +15,7 @@ module Expecting_figures =
         |>Seq.map (fun e->e.head)
         |>Seq.toList
 
-    let prolongate_a_figure_with_a_lower_figure 
+    let prolongate_a_figure_with_an_input_figure 
         fired_figure expectation 
         =
         let expected_figures = 
@@ -52,5 +47,5 @@ module Expecting_figures =
         figure_id 
         =
         expectations
-        |> Seq.map (prolongate_a_figure_with_a_lower_figure figure_id)
+        |> Seq.map (prolongate_a_figure_with_an_input_figure figure_id)
 
