@@ -9,14 +9,22 @@ module Applying_stencils =
     }
 
     let retrieve_result
-        mapping
         target
+        mapping
         =
         ()
 
-    let apply_stencil
+    let map_stencil_onto_target = 
+        stencil
+        target 
+        =
+
+
+    let results_of_stencil_application
         stencil
         target
         =
-        ()
+        target
+        |>map_stencil_onto_target stencil
+        |>Seq.map retrieve_result target
     
