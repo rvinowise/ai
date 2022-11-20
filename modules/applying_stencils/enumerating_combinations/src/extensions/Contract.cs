@@ -1,9 +1,6 @@
-﻿//#define DEBUG
-//#define UNITY_ASSERTIONS
-#define RVI_CONTRACTS
+﻿#define RVI_CONTRACTS
 
-using System;
-
+using System.Diagnostics;
 
 namespace rvinowise.contracts {
 public class Contract {
@@ -11,13 +8,11 @@ public class Contract {
     public static void Requires( bool condition, string message="")
     {
 #if RVI_CONTRACTS
-            #region debug
-            if (!condition)
-            {
-                bool test = true;
-            }
-            #endregion
-            UnityEngine.Debug.Assert(condition, message);
+        #region debug
+        if (!condition) {
+            Debug.Assert(condition, message);
+        }
+        #endregion
 #endif
     }
 
@@ -37,13 +32,10 @@ public class Contract {
     {
 #if RVI_CONTRACTS
         #region debug
-        if (!condition)
-        {
-            bool test = true;
+        if (!condition) {
+            Debug.Assert(condition, message);
         }
         #endregion
-        UnityEngine.Debug.Assert(condition, message);
-        //UnityEngine.Assertions.Assert.IsTrue(condition);
 #endif
     }
     
@@ -53,13 +45,10 @@ public class Contract {
     {
 #if RVI_CONTRACTS
         #region debug
-        if (!condition)
-        {
-            bool test = true;
+        if (!condition) {
+            Debug.Assert(condition, message);
         }
         #endregion
-        UnityEngine.Debug.Assert(condition, message);
-        //UnityEngine.Assertions.Assert.IsTrue(condition);
 #endif
     }
     
@@ -68,13 +57,10 @@ public class Contract {
     {
 #if RVI_CONTRACTS
         #region debug
-        if (!condition)
-        {
-            bool test = true;
+        if (!condition) {
+            Debug.Assert(condition, message);
         }
         #endregion
-        UnityEngine.Debug.Assert(condition, message);
-        //UnityEngine.Assertions.Assert.IsTrue(condition);
 #endif
     }
 }
