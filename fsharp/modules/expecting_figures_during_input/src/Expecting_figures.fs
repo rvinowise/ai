@@ -34,11 +34,12 @@ module Expecting_figures =
                     (get_next_subfigures
                         expectation.prolongated.edges)
                 |>Set.ofSeq
-            let next_expected = 
-                expectation.expected
-                |>Set.difference fired_subfigures
+            let updated_expected = 
+                fired_subfigures
+                |>Set.difference expectation.expected
                 |>Set.union new_expected
-            {expectation with expected = next_expected}
+            //let updated_expected = expectation.expected - fired_subfigures + new_expected
+            {expectation with expected = updated_expected}
         else
             expectation
 

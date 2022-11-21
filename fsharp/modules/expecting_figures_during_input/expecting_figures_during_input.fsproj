@@ -6,7 +6,8 @@
   <ItemGroup>
     <Compile Include="src\Expected_figure_prolongation.fs" />
     <Compile Include="src\Expecting_figures.fs" />
-    <Compile Include="src\test\Expected_figure_prolongation.fs" />
+    <Compile Include="src\painted\Expected_figure_prolongation.fs" />
+    <Compile Include="src\test\expectation of prolongation of figures.fs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -20,6 +21,8 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+    <PackageReference Include="Graphviz.NET" Version="1.0.0" />
+    <PackageReference Include="Rubjerg.Graphviz" Version="1.1.0" />
   </ItemGroup>
 
 </Project>
