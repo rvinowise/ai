@@ -71,14 +71,18 @@ module ``expectation of prolongation of figures``=
             expected_subfigures_after_d
         )
 
-    [<Fact>]
+    [<Fact>(Skip="ui")]
     let paint_expectation()=
         let high_figure = a_high_level_relatively_simple_figure()
         let initial_expectation = from_figure high_figure
+        let expectation_after_b = 
+            prolongate_a_figure_with_an_input_figure "b" initial_expectation
+        let expectation_after_d = 
+            prolongate_a_figure_with_an_input_figure "d" expectation_after_b
         
         high_figure.id
         |>empty_root_graph 
-        |>provide_clastered_subgraph_inside_root_graph "step1" initial_expectation
-        |>provide_clastered_subgraph_inside_root_graph "step2" initial_expectation
-        |>provide_clastered_subgraph_inside_root_graph "step3" initial_expectation
+        |>provide_clastered_subgraph_inside_root_graph "initial_expectation" initial_expectation
+        |>provide_clastered_subgraph_inside_root_graph "expectation_after_b" expectation_after_b
+        |>provide_clastered_subgraph_inside_root_graph "expectation_after_d" expectation_after_d
         |>open_image_of_graph
