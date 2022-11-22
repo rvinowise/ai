@@ -40,9 +40,4 @@ module Figure=
     let nodes_referencing_lower_figure figure lower_figure = 
         figure
         |> subfigures 
-        |> Seq.filter (fun s->
-            match s.referenced with
-            |Subfigure_reference.Lower_figure id ->
-                id = lower_figure
-            | _ -> false
-        )
+        |> Subfigure.referencing_figure lower_figure

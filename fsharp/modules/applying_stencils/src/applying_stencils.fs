@@ -15,29 +15,37 @@ module Applying_stencil =
         ()
 
 
-    
+    let input_for_first_mappings_permutators
+        stencil
+        target
+        =
+        let first_nodes_of_stencil = Figure.first_nodes stencil
+        
+        let figures_to_map = 
+            first_nodes_of_stencil
+            |>Subfigure.participating_figures
+
+        let nodes_in_target = 
+            figures_to_map
+            |>Seq.map (Figure.nodes_referencing_lower_figure target)
+
+        let nodes_in_stencil = 
+            figures_to_map
+            |>Seq.map (fun f->
+                Subfigure.referencing_figure f first_nodes_of_stencil
+            )
+        
+        {|
+            nodes_in_target = nodes_in_target;
+            nodes_in_target = nodes_in_stencil
+        |}
 
     let map_first_nodes
         stencil
         target
         =
 
-        let first_nodes_of_stencil = Figure.first_nodes stencil
         
-
-        let figures_to_map = 
-            first_nodes_of_stencil
-            |>Subfigure.participating_figures
-
-        //let appearances_in_stencil = Subfigure.
-
-        let in_target = 
-            figures_to_map
-            |>Seq.map (Figure.nodes_referencing_lower_figure target)
-
-        let in_stencil = 
-            figures_to_map
-            |>Seq.map (Figure.nodes_referencing_lower_figure target)
             
         let generator = Generator_of_order_sequences<int[]>();
         ()

@@ -28,3 +28,12 @@ module Subfigure =
             |Lower_figure id -> Some id
             | _ -> None
         )
+
+    let referencing_figure figure (subfigures: Subfigure seq) =
+        subfigures
+        |> Seq.filter (fun s->
+            match s.referenced with
+            |Subfigure_reference.Lower_figure id ->
+                id = figure
+            | _ -> false
+        )

@@ -61,3 +61,8 @@ module ``application of stencils``=
         ()
         //Assert.Equal(prolongation.expected, first_subfigures)
 
+    [<Fact>]
+    let ``preparing inputs for permutators, which map initial nodes``()=
+        let permutator_input = Applying_stencil.input_for_first_mappings_permutators
+            (a_fitting_stencil())
+            (a_high_level_relatively_simple_figure())
