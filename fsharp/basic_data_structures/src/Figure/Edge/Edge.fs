@@ -8,6 +8,8 @@ instead of the references to other objects in memory,
 it uses their identifiers in the database (e.g. string id)
 *)
 
+
+
 type Edge = 
     struct
         val tail: Subfigure
@@ -17,3 +19,22 @@ type Edge =
             {tail = tail; head = head;}
     end
 
+[<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
+module Edge =
+    
+    let all_nodes edges =
+        (edges: Edge seq)
+        |>Seq.collect (fun e->[e.tail; e.head])
+        |>Set.ofSeq
+    
+    let first_nodes edges =
+        edges
+        |>all_nodes
+        |>Seq.filter (
+            fun s->
+                edges
+                |> Seq.exists (fun e-> e.head = s)
+                |> not
+            )
+        |>Set.ofSeq
+    

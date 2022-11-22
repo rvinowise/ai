@@ -1,15 +1,10 @@
 ﻿module rvinowise.ai.loaded.figure.Edges
 
-open System.Collections.Generic
-open System.Data.SqlClient
 open Dapper
 
 open rvinowise
 open rvinowise.ai
-open System.Data
-open System.Data.Common;    // for DbProviderFactories
-open System.Configuration
-
+open rvinowise.ai.figure
 
 
 type Edge = {
@@ -21,7 +16,7 @@ type Edge = {
 type Subfigure = {
     id: Subfigure_id
     parent: Figure_id
-    referenced: Figure_id
+    referenced: string
 }
 
 let subfigures figure_id =
@@ -42,11 +37,16 @@ let write_subfigures_into_edge
     ai.figure.Edge(
         ai.figure.Subfigure(
             tail_subfigure.id,
-            tail_subfigure.referenced
+            match tail_subfigure.referenced with
+            |"out" -> Stencil_output
+            | _ -> Lower_figure tail_subfigure.referenced
         ),
         ai.figure.Subfigure(
             head_subfigure.id,
-            head_subfigure.referenced
+            match head_subfigure.referenced with
+            |"out" -> Stencil_output
+            | _ -> Lower_figure head_subfigure.referenced
+
         )
     )
 
