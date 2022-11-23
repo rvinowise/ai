@@ -6,6 +6,7 @@ open System.Diagnostics
 open System
 
 open rvinowise
+open rvinowise.ai
 
 [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
 module Node =
@@ -15,6 +16,12 @@ module Node =
 
 [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
 module Graph =
+
+    let empty_root_graph name =
+        let root = RootGraph.CreateNew(name, GraphType.Directed)
+        root.SafeSetAttribute("rankdir", "LR", "")
+        Node.IntroduceAttribute(root, "shape", "circle")
+        root
     
     let set_attribute key value (element:Graph) =
         element.SafeSetAttribute(key,value,"")
@@ -75,30 +82,26 @@ module Figure=
         root
 
 
-    let open_picture 
-        comment
-        edges  
-        = 
-        let root = RootGraph.CreateNew(comment, GraphType.Directed)
-        root.SafeSetAttribute("rankdir", "LR", "")
-        Node.IntroduceAttribute(root, "shape", "circle")
-
-        edges
-        |> Seq.iter (
-            fun (edge: ai.figure.Edge) -> 
-                let tail = root.GetOrAddNode(edge.tail.id)
-                let head = root.GetOrAddNode(edge.head.id)
-                root.GetOrAddEdge(
-                    tail, head, ""
-                ) |> ignore
-        )
-
-        let filename = Directory.GetCurrentDirectory() + "/out.svg"
+    
+    let open_image_of_graph (root:RootGraph) =
+        let filename = Directory.GetCurrentDirectory() + "/out"
         root.ComputeLayout()
-        root.ToSvgFile(filename)
+        root.ToSvgFile(filename+".svg")
+        root.ToDotFile(filename+".dot")
         root.FreeLayout()
-        Process.Start("cmd", $"/c {filename}") |> ignore
+        Process.Start("cmd", $"/c {filename}.svg") |> ignore
         ()
+
+    let visualise_figure 
+        (figure:Figure) 
+        =
+        figure.id
+        |>Graph.empty_root_graph
+        |>provide_clustered_subgraph_inside_root_graph figure.id figure.edges
+        |>open_image_of_graph
+        |>ignore
+
+    
 
     let create_history =
         let root = RootGraph.CreateNew("history", GraphType.Directed)

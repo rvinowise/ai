@@ -11,7 +11,7 @@ open rvinowise.ai.ui.painted.Expected_figure_prolongation
 
 module ``expectation of prolongation of figures``=
     
-    let a_high_level_relatively_simple_figure() =
+    let a_high_level_relatively_simple_figure =
         Figure(
             "F",
             [
@@ -35,7 +35,7 @@ module ``expectation of prolongation of figures``=
 
     [<Fact>]
     let ``an expected prolongation, constructed from a figure, expects its first subfigures at first``()=
-        let figure_f = a_high_level_relatively_simple_figure()
+        let figure_f = a_high_level_relatively_simple_figure
         let first_subfigures = [
             Subfigure("b");
             Subfigure("h")
@@ -48,7 +48,7 @@ module ``expectation of prolongation of figures``=
 
     [<Fact>]
     let ``prolongating a figure with a new input changes expectations``()=
-        let high_figure = a_high_level_relatively_simple_figure()
+        let high_figure = a_high_level_relatively_simple_figure
         let expected_subfigures_after_b = [
             Subfigure("c");
             Subfigure("d");
@@ -74,7 +74,7 @@ module ``expectation of prolongation of figures``=
 
     [<Fact(Skip="ui")>]
     let paint_expectation()=
-        let high_figure = a_high_level_relatively_simple_figure()
+        let high_figure = a_high_level_relatively_simple_figure
         let initial_expectation = from_figure high_figure
         let expectation_after_b = 
             prolongate_expectation_with_an_input_figure "b" initial_expectation

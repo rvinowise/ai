@@ -11,11 +11,7 @@ open rvinowise.ai.ui.painted
 
 
 
-let empty_root_graph name =
-    let root = RootGraph.CreateNew(name, GraphType.Directed)
-    root.SafeSetAttribute("rankdir", "LR", "")
-    Node.IntroduceAttribute(root, "shape", "circle")
-    root
+
 
 
 let mark_expected_nodes
@@ -32,9 +28,6 @@ let mark_expected_nodes
             |>ignore
     )
     graph
-
-
-
 
 
 let provide_expected_prolongation_inside_graph
@@ -55,21 +48,6 @@ let provide_expected_prolongation_inside_graph
 
 
 
-
-type Frame={
-    prolongation: Expected_figure_prolongation;
-    comment: string
-}
-
-
-let open_image_of_graph (root:RootGraph) =
-    let filename = Directory.GetCurrentDirectory() + "/out"
-    root.ComputeLayout()
-    root.ToSvgFile(filename+".svg")
-    root.ToDotFile(filename+".dot")
-    root.FreeLayout()
-    Process.Start("cmd", $"/c {filename}.svg") |> ignore
-    ()
 
 let visualise_prolongation 
     (prolongation:Expected_figure_prolongation) 
