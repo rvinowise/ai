@@ -6,14 +6,16 @@
     <GenerateProgramFile>false</GenerateProgramFile>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\provided_data\provided_data.fsproj" />
-  </ItemGroup>
+  
 
   <ItemGroup>
     <Compile Include="src\visualised\painted\Figure.fs" />
     <Compile Include="src\visualised\printed\Figure_appearance.fs" />
     <Compile Include="src\visualised\printed\Figure.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\provided_data\provided_data.fsproj" />
   </ItemGroup>
 
   <ItemGroup>

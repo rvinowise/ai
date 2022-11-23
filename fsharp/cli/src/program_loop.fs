@@ -55,9 +55,9 @@ let show_something_about_figure figure shown_part =
         | "appearances" ->
             ui.printed.Figure.appearances figure
                 (ai.loaded.figure.Appearances.all_appearances figure)
-        | "edges" ->
-            ui.painted.Figure.edges figure
-                (loaded.figure.Edges.edges figure)
+        // | "edges" ->
+        //     ui.painted.Figure.open_picture figure
+        //         (loaded.figure.Edges.edges figure)
         | _ -> print_error $"%s{shown_part} is not part of a figure"
     else
         print_error $"figure %s{figure} doesn't exist"

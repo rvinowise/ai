@@ -1,6 +1,7 @@
 namespace rvinowise.ai.figure
 
 open rvinowise.ai.mapping_stencils
+open rvinowise.ai
 
 module Applying_stencil = 
 
@@ -19,11 +20,11 @@ module Applying_stencil =
         stencil
         target
         =
-        let first_nodes_of_stencil = Figure.first_nodes stencil
+        let first_nodes_of_stencil = Figure.first_subfigures stencil
         
         let figures_to_map = 
             first_nodes_of_stencil
-            |>Subfigure.participating_figures
+            |>Subfigure.referenced_figures
 
         let nodes_in_target = 
             figures_to_map
@@ -37,7 +38,7 @@ module Applying_stencil =
         
         {|
             nodes_in_target = nodes_in_target;
-            nodes_in_target = nodes_in_stencil
+            nodes_in_stencil = nodes_in_stencil
         |}
 
     let map_first_nodes

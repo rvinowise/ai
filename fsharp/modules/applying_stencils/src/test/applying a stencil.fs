@@ -41,7 +41,13 @@ module ``application of stencils``=
                     Subfigure("b"),Subfigure("d")
                 );
                 Edge(
+                    Subfigure("c"),Subfigure("b")
+                );
+                Edge(
                     Subfigure("d"),Subfigure("e")
+                );
+                Edge(
+                    Subfigure("d"),Subfigure("f")
                 );
                 Edge(
                     Subfigure("e"),Subfigure("f")
@@ -49,6 +55,7 @@ module ``application of stencils``=
                 Edge(
                     Subfigure("h"),Subfigure("f")
                 );
+                
             ]
         )
 
@@ -63,6 +70,10 @@ module ``application of stencils``=
 
     [<Fact>]
     let ``preparing inputs for permutators, which map initial nodes``()=
-        let permutator_input = Applying_stencil.input_for_first_mappings_permutators
-            (a_fitting_stencil())
-            (a_high_level_relatively_simple_figure())
+        let permutator_input = Applying_stencil.input_for_first_mappings_permutators 
+                                (a_fitting_stencil()) 
+                                (a_high_level_relatively_simple_figure())
+        ()
+
+    // [<Fact(Skip="ui")>]
+    // let ``paint target figure``()=

@@ -1,6 +1,7 @@
 namespace rvinowise.ai.test
 
 open Xunit
+open FsUnit
 
 open rvinowise.ai
 open rvinowise.ai.figure
@@ -41,7 +42,8 @@ module ``expectation of prolongation of figures``=
         ]
         let prolongation = 
             Expected_figure_prolongation.from_figure figure_f
-        Assert.Equal(prolongation.expected, first_subfigures)
+        
+        prolongation.expected |> should equal first_subfigures
 
 
     [<Fact>]
@@ -59,30 +61,29 @@ module ``expectation of prolongation of figures``=
         ]
         let initial_expectation = from_figure high_figure
         let next_expectation = 
-            prolongate_a_figure_with_an_input_figure "b" initial_expectation 
-        Assert.Equal(
-            next_expectation.expected,
-            expected_subfigures_after_b
-        )
+            prolongate_expectation_with_an_input_figure "b" initial_expectation 
+        
+        next_expectation.expected
+        |> should equal expected_subfigures_after_b
+        
         let next_expectation = 
-            prolongate_a_figure_with_an_input_figure "d" next_expectation 
-        Assert.Equal(
-            next_expectation.expected,
-            expected_subfigures_after_d
-        )
+            prolongate_expectation_with_an_input_figure "d" next_expectation 
+        
+        next_expectation.expected
+        |> should equal expected_subfigures_after_d
 
-    [<Fact>(Skip="ui")]
+    [<Fact(Skip="ui")>]
     let paint_expectation()=
         let high_figure = a_high_level_relatively_simple_figure()
         let initial_expectation = from_figure high_figure
         let expectation_after_b = 
-            prolongate_a_figure_with_an_input_figure "b" initial_expectation
+            prolongate_expectation_with_an_input_figure "b" initial_expectation
         let expectation_after_d = 
-            prolongate_a_figure_with_an_input_figure "d" expectation_after_b
+            prolongate_expectation_with_an_input_figure "d" expectation_after_b
         
         high_figure.id
         |>empty_root_graph 
-        |>provide_clastered_subgraph_inside_root_graph "initial_expectation" initial_expectation
-        |>provide_clastered_subgraph_inside_root_graph "expectation_after_b" expectation_after_b
-        |>provide_clastered_subgraph_inside_root_graph "expectation_after_d" expectation_after_d
+        |>provide_expected_prolongation_inside_graph "initial_expectation" initial_expectation
+        |>provide_expected_prolongation_inside_graph "expectation_after_b" expectation_after_b
+        |>provide_expected_prolongation_inside_graph "expectation_after_d" expectation_after_d
         |>open_image_of_graph

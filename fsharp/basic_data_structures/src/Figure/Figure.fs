@@ -13,12 +13,14 @@ type Figure(
     new (id) =
         Figure(id,[])
 
+
+
 [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
 module Figure=
 
 
-    let first_nodes (figure:Figure) =
-        Edge.first_nodes figure.edges
+    let first_subfigures (figure:Figure) =
+        Edge.first_subfigures figure.edges
 
     let subfigure_occurances (subfigure:Figure) (figure:Figure) =
         figure.edges
@@ -29,13 +31,13 @@ module Figure=
 
     let lower_figures (figure:Figure) =
         figure.edges
-        |>Edge.all_nodes
-        |>Subfigure.participating_figures
+        |>Edge.all_subfigures
+        |>Subfigure.referenced_figures
         |>Set.ofSeq
 
     let subfigures (figure:Figure) =
         figure.edges
-        |>Edge.all_nodes
+        |>Edge.all_subfigures
 
     let nodes_referencing_lower_figure figure lower_figure = 
         figure
