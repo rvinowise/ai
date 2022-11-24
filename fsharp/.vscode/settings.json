@@ -1,7 +1,7 @@
 {
-    "dotnet-test-explorer.testProjectPath": "\\modules\\expecting_figures\\expecting_figures.fsproj"
-    // "dotnet-test-explorer.testProjectPaths": [
-    //     "\\modules\\applying_stencils\\applying_stencils.fsproj",
-    //     "\\modules\\expecting_figures\\expecting_figures.fsproj"
-    // ]
+    "dotnet-test-explorer.testProjectPath": "\\modules\\applying_stencils\\applying_stencils.fsproj",
+    "dotnet-test-explorer.testProjectPaths": [
+        "\\modules\\applying_stencils\\applying_stencils.fsproj",
+        "\\modules\\expecting_figures\\expecting_figures.fsproj"
+    ]
 }

@@ -76,12 +76,12 @@ module ``application of stencils``=
                                 a_high_level_relatively_simple_figure
         ()
 
-    [<Fact(Skip="ui")>]
+    [<Fact>]
     let ``paint target figure``()=
         let figure: Figure = a_high_level_relatively_simple_figure
 
         figure.id
         |>painted.Graph.empty_root_graph 
         |>painted.Figure.provide_clustered_subgraph_inside_root_graph 
-            "target figure" figure
+            "target figure" figure.edges
         |>painted.Figure.open_image_of_graph

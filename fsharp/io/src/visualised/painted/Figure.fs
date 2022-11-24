@@ -1,5 +1,6 @@
 namespace rvinowise.ai.ui.painted
 
+open Rubjerg
 open Rubjerg.Graphviz
 open System.IO
 open System.Diagnostics
@@ -7,10 +8,11 @@ open System
 
 open rvinowise
 open rvinowise.ai
+open rvinowise.ai.figure
 
 [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
 module Node =
-    let set_attribute key value (element:Node) =
+    let set_attribute key value (element:Graphviz.Node) =
         element.SafeSetAttribute(key,value,"")
         element
 
