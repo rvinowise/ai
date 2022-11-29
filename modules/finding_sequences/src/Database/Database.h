@@ -11,7 +11,6 @@
 
 #include "Interval/Interval.h"
 
-
 namespace rvinowise::ai {
 
 class Database {
