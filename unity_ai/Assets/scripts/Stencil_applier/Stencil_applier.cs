@@ -22,7 +22,7 @@ public class Stencil_applier {
 
     
 
-    public IList<IFigure> apply_stencil(
+    public IReadOnlyList<IFigure> apply_stencil(
         IStencil stencil, 
         IFigure_representation target
     ) {
@@ -34,7 +34,7 @@ public class Stencil_applier {
                 extract_figures_out_of_projected_stencils(mapping);
         }
 
-        return null;
+        return out_figures;
     }
 
     private IList<Stencil_mapping> map_stencil_onto_target(
@@ -98,7 +98,9 @@ public class Stencil_applier {
         return potential_mappings;
     }
 
-    private IReadOnlyList<ISubfigure> get_appearances_of_figure_in_graph(IFigure figure, IFigure_representation graph) {
+    private IReadOnlyList<ISubfigure> get_appearances_of_figure_in_graph(
+		IFigure figure, IFigure_representation graph
+	) {
         List<ISubfigure> result = new List<ISubfigure>();
         
         foreach (ISubfigure subfigure in graph.get_subfigures()) {

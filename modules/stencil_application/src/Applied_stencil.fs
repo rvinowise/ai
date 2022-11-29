@@ -1,2 +1,0 @@
-namespace rvinowise.ai.stencil
-

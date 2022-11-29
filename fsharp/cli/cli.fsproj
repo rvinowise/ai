@@ -3,37 +3,24 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net6.0</TargetFramework>
-    <PlatformTarget>AMD64</PlatformTarget>
-    <Configuration>Debug</Configuration>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <Optimize>False</Optimize>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <Optimize>True</Optimize>
+    <GenerateProgramFile>false</GenerateProgramFile>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\modules\modules.fsproj" />
+    <ProjectReference Include="..\modules\finding_sequences\finding_sequences.fsproj" />
+    <ProjectReference Include="..\modules\expecting_figures_during_input\expecting_figures_during_input.fsproj" />
+    <ProjectReference Include="..\modules\applying_stencils\applying_stencils.fsproj" />
     <ProjectReference Include="..\provided_data\provided_data.fsproj" />
-    <ProjectReference Include="..\basic_data_structures\basic_data_structures.fsproj" />
+	<ProjectReference Include="..\io\io.fsproj" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="app.config" />
-    <Compile Include="src\visualised\painted\Figure.fs" />
-    <Compile Include="src\visualised\printed\Figure_appearance.fs" />
-    <Compile Include="src\visualised\printed\Figure.fs" />
-    <Compile Include="src\visualised\printed\unused_Printed.fs" />
     <Compile Include="src\program_loop.fs" />
     <Compile Include="src\main.fs" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Graphviz.NET" Version="1.0.0" />
-    <PackageReference Include="Rubjerg.Graphviz" Version="1.1.0" />
     
   </ItemGroup>
 

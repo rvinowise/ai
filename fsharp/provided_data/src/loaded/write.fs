@@ -13,11 +13,18 @@ let new_signal (id:string) =
         {|id=id|}
     ) |> ignore
 
-let figure_appearance (figure:string) (appearance:ai.figure.Appearance) =
+let figure_appearance 
+    figure
+    (appearance:ai.figure.Appearance) 
+    =
     database.Provided.open_connection.Query<ai.figure.Figure>(
         @"insert into figure_appearance (figure, head, tail)
         values (@figure, @head, @tail)",
-        {|figure=figure; head=appearance.interval.head; tail = appearance.interval.tail|}
+        {|
+            figure = figure; 
+            head = appearance.interval.head; 
+            tail = appearance.interval.tail
+        |}
     ) |> ignore
 
 //let sensory_input id =
