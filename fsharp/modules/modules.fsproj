@@ -5,13 +5,21 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <Optimize>False</Optimize>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <Optimize>True</Optimize>
+  </PropertyGroup>
+
   <ItemGroup>
     <Compile Include="src\finding_sequences\finding_sequences_cpp.fs" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\provided_data\provided_data.fsproj" />
-    <ProjectReference Include="..\basic_data_structure\basic_data_structure.fsproj" />
+    <ProjectReference Include="..\basic_data_structures\basic_data_structures.fsproj" />
   </ItemGroup>
 
 </Project>

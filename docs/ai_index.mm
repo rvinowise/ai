@@ -195,7 +195,7 @@
 </node>
 <node TEXT="overview.mm" POSITION="right" ID="ID_963805880" CREATED="1641509947257" MODIFIED="1641509947259" LINK="overview.mm"/>
 <node TEXT="interface" POSITION="right" ID="ID_815172773" CREATED="1643857705088" MODIFIED="1643857711564" LINK="interface/">
-<node TEXT="interface design" ID="ID_464923108" CREATED="1643857714125" MODIFIED="1652303028614" LINK="interface/interface%20design.mm"/>
+<node TEXT="user interface design" ID="ID_464923108" CREATED="1643857714125" MODIFIED="1667646848717" LINK="interface/interface%20design.mm"/>
 </node>
 <node TEXT="persistence" POSITION="right" ID="ID_201293481" CREATED="1641509967643" MODIFIED="1641510505723" LINK="persistence/">
 <node TEXT="json format" ID="ID_423055997" CREATED="1641510507559" MODIFIED="1652303036730" LINK="persistence/json%20format.mm"/>
@@ -211,6 +211,7 @@
 </node>
 <node TEXT="project structure" POSITION="right" ID="ID_509784941" CREATED="1661115139465" MODIFIED="1661115148950" LINK="project%20structure/">
 <node TEXT="folder structure" ID="ID_1524235830" CREATED="1661115156395" MODIFIED="1661115162142" LINK="file:/C:/prj/ai/docs/project%20structure/folder%20structure.mm"/>
+<node TEXT="folder structure.ora" ID="ID_892733686" CREATED="1667651924931" MODIFIED="1667651924931" LINK="project%20structure/folder%20structure.ora"/>
 </node>
 </node>
 </map>

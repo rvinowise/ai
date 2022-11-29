@@ -8,7 +8,7 @@
         <attribute_value VALUE="https://www.youtube.com/shorts/66t2mLXtj9E?&amp;ab_channel=THESTRAIGHTPATH"/>
     </attribute_name>
 </attribute_registry>
-<node TEXT="ai" LOCALIZED_STYLE_REF="AutomaticLayout.level.root" FOLDED="false" ID="ID_696401721" CREATED="1610381621824" MODIFIED="1632652331747"><hook NAME="MapStyle" zoom="1.154">
+<node TEXT="ai" LOCALIZED_STYLE_REF="AutomaticLayout.level.root" FOLDED="false" ID="ID_696401721" CREATED="1610381621824" MODIFIED="1632652331747"><hook NAME="MapStyle" zoom="1.5">
     <properties show_icon_for_attributes="true" edgeColorConfiguration="#ff3333ff,#33ff00ff,#ffcc33ff" show_notes_in_map="false" show_note_icons="false" fit_to_viewport="false"/>
 
 <map_styles>
@@ -654,7 +654,7 @@
 <icon BUILTIN="info_circle"/>
 </node>
 </node>
-<node TEXT="two of them represent occurence of a pattern/figure" LOCALIZED_STYLE_REF="default" ID="ID_1141160856" CREATED="1632653189150" MODIFIED="1633054261550">
+<node TEXT="two of them represent an occurence of a pattern/figure" LOCALIZED_STYLE_REF="default" ID="ID_1141160856" CREATED="1632653189150" MODIFIED="1667682442102">
 <icon BUILTIN="cog"/>
 <node TEXT="Figure_appearance" ID="ID_466013870" CREATED="1633027058338" MODIFIED="1633054482361">
 <icon BUILTIN="puzzle_pieces"/>
@@ -688,11 +688,11 @@
 <icon BUILTIN="bad"/>
 <node TEXT="they use moment (integer) instead" ID="ID_1305059511" CREATED="1633010759465" MODIFIED="1633025719124"/>
 </node>
-<node TEXT="unity" ID="ID_519322222" CREATED="1632858035279" MODIFIED="1633021775973" LINK="../../../../prj/unity_ai/Assets/scripts/unity_ai/Action/">
+<node TEXT="unity" ID="ID_519322222" CREATED="1632858035279" MODIFIED="1667652344426" LINK="file:/C:/prj/ai/unity_ai/Assets/scripts/Node/Action/">
 <icon BUILTIN="present"/>
 </node>
 </node>
-<node TEXT="unity" ID="ID_1470616392" CREATED="1632858019445" MODIFIED="1633021731038" LINK="../../../../prj/unity_ai/Assets/scripts/unity_ai/History/Action_history/">
+<node TEXT="unity" ID="ID_1470616392" CREATED="1632858019445" MODIFIED="1667652386370" LINK="file:/C:/prj/ai/unity_ai/Assets/scripts/History/Action_history/">
 <icon BUILTIN="present"/>
 </node>
 </node>
@@ -824,7 +824,7 @@
 </node>
 <node TEXT="doc" ID="ID_730844926" CREATED="1632857696939" MODIFIED="1633005948197">
 <icon BUILTIN="book_open"/>
-<node TEXT="general" ID="ID_1749796058" CREATED="1632857632311" MODIFIED="1652392570127" LINK="Figures"/>
+<node TEXT="general" ID="ID_1749796058" CREATED="1632857632311" MODIFIED="1667818325181" LINK="Figures/"/>
 <node TEXT="unity" ID="ID_773007300" CREATED="1632857704205" MODIFIED="1652392844316" LINK="../Assets/scripts/unity_ai/Node/Figure/doc/Figure_imp.bmp"/>
 </node>
 </node>
@@ -838,8 +838,9 @@
 <icon BUILTIN="cog"/>
 <node TEXT="constructing new figures from old ones" LOCALIZED_STYLE_REF="default" ID="ID_1804521571" CREATED="1632660286074" MODIFIED="1632857557097"/>
 </node>
-<node TEXT="doc" ID="ID_655960896" CREATED="1632857764762" MODIFIED="1632857766538">
-<node TEXT="general" ID="ID_23924885" CREATED="1632857656131" MODIFIED="1652392609812" LINK="Stencils"/>
+<node TEXT="doc" ID="ID_655960896" CREATED="1632857764762" MODIFIED="1667682520011">
+<icon BUILTIN="book_open"/>
+<node TEXT="general" ID="ID_23924885" CREATED="1632857656131" MODIFIED="1667818312159" LINK="Stencils/"/>
 </node>
 </node>
 </node>

@@ -1,1 +1,0 @@
-the algorithm of finding repetitions in raw signals. it creates higher-level abstractions named "Figures". this video shows the simple, Sequential figures, consisting of repeated pairs of smaller Subfigures.

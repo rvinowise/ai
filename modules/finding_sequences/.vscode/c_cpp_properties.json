@@ -4,18 +4,15 @@
             "name": "win64_ai",
             "includePath": [
                 "${workspaceFolder}/**",
-                "${workspaceFolder}/src/**",
                 "${workspaceFolder}/src",
-                "C:/prj/ai/modules/finding_sequences/src/",
-                "C:/prj/ai/modules/finding_sequences/src/**",
-                "C:/prj/ai/cpp/basic_data_structures/src/**",
-                
-                "C:/Users/rvino/.conan/data/soci/4.0.3/_/_/package/04c04a9c80b2b031366beada455eae4607146fbb/include/**",
-                "C:/Users/rvino/.conan/data/catch2/3.1.0/_/_/package/5a61a86bb3e07ce4262c80e1510f9c05e9b6d48b/include/**",
-                "C:/Users/rvino/.conan/data/spdlog/1.10.0/_/_/package/70a17ef929dad20e1afdd6cf274326a965e13481/include/**",
-                "C:/.conan/2564b7/1/include/**",
+                "C:/prj/ai/modules/finding_sequences/src",
                 "C:/prj/ai/cpp/basic_data_structures/src",
-                "C:/Users/rvino/.conan/data/boost-ext-ut/1.1.9/_/_/package/5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9/include/ut-1.1.9/include"
+                "C:/Users/rvino/.conan/data/soci/4.0.3/_/_/package/04c04a9c80b2b031366beada455eae4607146fbb/include",
+                "C:/Program Files/PostgreSQL/14/include",
+                "C:/Users/rvino/.conan/data/spdlog/1.10.0/_/_/package/70a17ef929dad20e1afdd6cf274326a965e13481/include",
+                "C:/.conan/2564b7/1/include",
+                "C:/Users/rvino/.conan/data/boost-ext-ut/1.1.9/_/_/package/5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9/include/ut-1.1.9/include",
+                "C:/Users/rvino/.conan/data/catch2/3.1.0/_/_/package/164640aad040835ac89882393a96d89200694f04/include"
             ],
             "defines": [
                 "_DEBUG",

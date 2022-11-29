@@ -1,18 +1,12 @@
 ﻿module rvinowise.ai.database.Write
 
 open Dapper
-open System.Collections.Generic
-open System
-open System.Data
-open System.Data.SqlClient
-open Dapper.FSharp
-open Dapper.FSharp.PostgreSQL
 
 open rvinowise
 open rvinowise.ai
 
 
-let new_signal id =
+let new_signal (id:string) =
     database.Provided.open_connection.Query<ai.figure.Figure>(
         @"insert into Figure (id)
         values (@id)",

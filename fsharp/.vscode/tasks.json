@@ -23,5 +23,15 @@
             },
             "problemMatcher": "$msCompile"
         }
+        {
+            "label": "rebuild",
+            "command": "dotnet clean; dotnet build",
+            "type": "shell",
+            "group": "build",
+            "presentation": {
+                "reveal": "silent"
+            },
+            "problemMatcher": "$msCompile"
+        }
     ]
 }

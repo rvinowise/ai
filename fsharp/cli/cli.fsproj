@@ -3,11 +3,22 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net6.0</TargetFramework>
+    <PlatformTarget>AMD64</PlatformTarget>
+    <Configuration>Debug</Configuration>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <Optimize>False</Optimize>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <Optimize>True</Optimize>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\modules\modules.fsproj" />
     <ProjectReference Include="..\provided_data\provided_data.fsproj" />
+    <ProjectReference Include="..\basic_data_structures\basic_data_structures.fsproj" />
   </ItemGroup>
 
   <ItemGroup>

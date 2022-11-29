@@ -57,10 +57,24 @@ Interval_in_sequence find_next_tailfigure(
     return Interval_in_sequence::non_existent();
 }
 
+// Interval_in_sequence get_previous_appearance(
+//     Interval_in_sequence relative_to
+// ) {
+//     return Interval_in_sequence(
+//         relative_to.index()-1,
+//         appearances[relative_to.index()-1]
+//     );
+// }
 
 Interval_in_sequence find_closest_appearance_to_the_moment(
+    /* the head appearance found in the initial step of this iteration 
+    (it can be the result) */
     size_t start_from_index,
-    uint64_t not_later_than_moment,
+
+    /* moment of the head of the considered tail
+    (the tail of the found head should go before it) */
+    uint64_t should_be_before_moment,
+
     vector<Interval> appearances
 ) {
 
@@ -69,17 +83,25 @@ Interval_in_sequence find_closest_appearance_to_the_moment(
             start_from_index,
             appearances[start_from_index]
         );
-    if (considered_appearance.tail() > not_later_than_moment) {
+    if (considered_appearance.tail() >= should_be_before_moment) {
         return Interval_in_sequence::non_existent();
     }
+
+    //skip some head appearances, to find the one closest to the found tail
+    Interval_in_sequence next_appearance{considered_appearance};
     while (
-        considered_appearance.tail() < not_later_than_moment
-        ) {
+        considered_appearance.index()+1 < appearances.size()
+    ) {
+        Interval next_appearance = appearances[considered_appearance.index()+1];
+        if (next_appearance.get_tail() >= should_be_before_moment) {
+            return considered_appearance;        
+        }
         considered_appearance = Interval_in_sequence(
-            considered_appearance.index() + 1,
-            appearances[considered_appearance.index() + 1]
+            considered_appearance.index()+1,
+            next_appearance
         );
     }
+
     return considered_appearance;
 }
 
@@ -89,7 +111,7 @@ Interval_in_sequence find_previous_headfigure(
     size_t start_from_index, 
 
     /* moment of the head of the considered tail
-    (the head of the found head should go after it) */
+    (the head of the found head should go before it) */
     uint64_t not_later_than_moment,
     vector<Interval> head_appearances
 ) {
@@ -122,16 +144,18 @@ Iteration_state_of_searching_pairs iteration_of_finding_a_repeated_pair(
             next_headfigure.tail(), 
             tail_appearances
         );
-
+    if (!found_tail.exists()) {
+        return Iteration_state_of_searching_pairs::get_not_found_state();
+    }
     // file://./iteration_of_finding_a_repeated_pair-find_previous_headfigure.ora
     Interval_in_sequence found_head = 
-        find_previous_headfigure( 
+        find_closest_appearance_to_the_moment( 
             next_headfigure.index(), 
             found_tail.head(), 
             head_appearances
         );
 
-    if (found_head.exists() && found_tail.exists()) {
+    if (found_head.exists()) {
         return Iteration_state_of_searching_pairs(
             found_head,
             found_tail
@@ -151,20 +175,22 @@ vector<Interval> Finding_sequences::find_repeated_pairs(
     vector<Interval> result;
     result.reserve(min(head_appearances.size(), tail_appearances.size()));
 
-    Iteration_state_of_searching_pairs iteration = 
-        Iteration_state_of_searching_pairs::get_state_before_the_first_iteration();
-
-    do {
+    Iteration_state_of_searching_pairs iteration = iteration_of_finding_a_repeated_pair(
+        Iteration_state_of_searching_pairs::get_state_before_the_first_iteration(),
+        head_appearances,
+        tail_appearances
+    );
+    while (
+        !iteration.has_failed_to_find_pair()
+    ) {
+        result.push_back(iteration.get_found_pair());
         iteration = iteration_of_finding_a_repeated_pair(
             iteration,
             head_appearances,
             tail_appearances
         );
-        result.push_back(iteration.get_found_pair());
-        
-    } while (
-        !iteration.has_failed_to_find_pair()
-    );
+    }
+    
 
     return result;
 }

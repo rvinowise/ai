@@ -5,6 +5,14 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <Optimize>False</Optimize>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <Optimize>True</Optimize>
+  </PropertyGroup>
+
   <ItemGroup>
     <Compile Include="src\provided\Figure.fs" />
     
@@ -19,16 +27,17 @@
   <ItemGroup>
     <ProjectReference Include="..\basic_data_structures\basic_data_structures.fsproj" />
   </ItemGroup>
-
+  
   <ItemGroup>
-    
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.0" />
     
     <!--database access-->
+    <PackageReference Include="Npgsql" Version="6.0.7" /> <!--postgres -->
+    <PackageReference Include="System.Data.SQLite" Version="1.0.116" /> <!--SQLite-->
+    <PackageReference Include="MySqlConnector" Version="2.1.12" /> <!--MySql-->
+
     <PackageReference Include="SQLProvider" Version="1.3.1" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.3" />
-    <PackageReference Include="System.Data.SQLite" Version="1.0.116" />
-    <PackageReference Include="MySqlConnector" Version="2.1.12" />
     
     <PackageReference Include="Dapper" Version="2.0.123" />
 	  <PackageReference Include="Dapper.FSharp" Version="3.3.0" />

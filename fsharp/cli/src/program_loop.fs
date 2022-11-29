@@ -5,8 +5,6 @@ open System.Text.RegularExpressions
 
 open rvinowise
 open rvinowise.ai
-open rvinowise.ai.figure
-open rvinowise.ai
 
 let print_prompt () =
     printf "\n:>"
@@ -49,19 +47,36 @@ let entity_mentioned_in_command part =
 //        | e->
 //            printfn $"failed to show the entity %s{part}:\n %s{e.Message}"
 
+let full_exception_chain (e:Exception)  =
+    let rec extracted_messages (e:Exception) (message:string) =
+        match e with
+        | null -> message
+        | _ -> 
+            let message = message + $"\n%s{e.message}"
+            extracted_messages e.InnerException message 
+    extracted_messages e ""
+
 let show_something_about_figure figure shown_part =
-    if loaded.Figure.exists figure then
-        match shown_part with
-        | "appearances" ->
-            ui.printed.Figure.appearances figure
-                (ai.loaded.figure.Appearances.all_appearances figure)
-        | "edges" ->
-            ui.painted.Figure.edges figure
-                (loaded.figure.Edges.edges figure)
-        | _ -> print_error $"%s{shown_part} is not part of a figure"
-    else
-        print_error $"figure %s{figure} doesn't exist"
-       
+    try
+        if loaded.Figure.exists figure then
+            match shown_part with
+            | "appearances" ->
+                ui.printed.Figure.appearances figure
+                    (ai.loaded.figure.Appearances.all_appearances figure)
+            | "edges" ->
+                ui.painted.Figure.edges figure
+                    (loaded.figure.Edges.edges figure)
+            | _ -> print_error $"%s{shown_part} is not part of a figure"
+        else
+            print_error $"figure %s{figure} doesn't exist"
+    with
+    | :? System.TypeInitializationException as e ->
+        match e.InnerException  with
+            | :? System.Configuration.ConfigurationException -> 
+                print_error $"error in configuration file with db-connections:\n${full_exception_chain e}" 
+            | _ -> print_error $"${full_exception_chain e}"
+    | :? System.Exception as e -> 
+        print_error $"${full_exception_chain e}"
 
 let show_entity entity_type exemplar_id =
     match entity_mentioned_in_command entity_type with
@@ -91,8 +106,8 @@ let input_sensory_data (data: string) =
             print_error $"figure ${figure_id} doesn't exist"
     )
 
-let find_sequences connection_string =
-    Finding_sequences.find_repeated_pairs(connection_string, 6, 6.66)
+let find_sequences head tail =
+    Finding_sequences.find_repeated_pairs(head, tail)
 
 let process_input (command:string) =
     let words = 
@@ -110,13 +125,13 @@ let process_input (command:string) =
     | ["show";entity;name] -> show_entity entity name
     | ["add";entity;name] -> add_entity entity name
     | ["input";sensory_data] -> input_sensory_data sensory_data
-    | ["find";connection] -> find_sequences connection
+    | ["find";head;tail] -> find_sequences head tail
     | ("quit" | "exit") :: _ -> Environment.Exit 55
     | _ -> print_error "unknown command"
 
 
 
-let program_loop =
+let program_loop () =
     read_input
     |> Seq.initInfinite
     |> Seq.iter process_input

@@ -1,17 +1,15 @@
 namespace rvinowise.ai
 
-open System
 open System.Runtime.InteropServices
 
-open rvinowise
-open rvinowise.ai
 
 module Finding_sequences =
 
     [<DllImport(
         "C:/prj/ai/modules/finding_sequences/build/Debug/finding_sequences",
-         CallingConvention = CallingConvention.Cdecl)>]
-    extern void find_repeated_pairs(string db_connection)
+         CallingConvention = CallingConvention.Cdecl
+    )>]
+    extern void init_module(string db_connection)
+    extern void find_repeated_pairs(string head, string tail)
 
-    //let find_repeated_pairs str =
-    //    printfn str
+    init_module("host=127.0.0.1;port=5432;dbname=ai;user=postgres;password= ;")

@@ -7,17 +7,18 @@ open System.Configuration
 
 let connection_setting =
     try
-        ConfigurationManager.ConnectionStrings.[3]
+        let chosen_database = ConfigurationManager.ConnectionStrings.["ai_postgres"]
+        chosen_database
     with
-    | :? Xml.XmlException as e ->
+    | :? Xml.XmlException ->
         reraise()
         
 
 let factory = 
 
     DbProviderFactories.RegisterFactory(
-        "System.Data.SqlClient", 
-        System.Data.SqlClient.SqlClientFactory.Instance
+        "Npgsql", 
+        Npgsql.NpgsqlFactory.Instance
     )
 
     DbProviderFactories.RegisterFactory(
@@ -26,7 +27,13 @@ let factory =
     )
 
     DbProviderFactories.RegisterFactory(
-        "MySqlConnector", MySqlConnector.MySqlConnectorFactory.Instance
+        "MySqlConnector", 
+        MySqlConnector.MySqlConnectorFactory.Instance
+    )
+    
+    DbProviderFactories.RegisterFactory(
+        "System.Data.SqlClient", 
+        System.Data.SqlClient.SqlClientFactory.Instance
     )
 
     DbProviderFactories.GetFactory(

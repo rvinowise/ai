@@ -199,6 +199,23 @@
 <node TEXT="to synchronise it with the voice recording" ID="ID_1228405520" CREATED="1659348050915" MODIFIED="1659348064421"/>
 </node>
 <node TEXT="record the played animation with a screen recorder" ID="ID_1204395415" CREATED="1659348084658" MODIFIED="1659348101564">
+<node TEXT="OBS" ID="ID_151462782" CREATED="1659348163077" MODIFIED="1659348189117">
+<icon BUILTIN="quote"/>
+<font ITALIC="true"/>
+<node TEXT="complicated setup" ID="ID_1858983332" CREATED="1659348202795" MODIFIED="1659348213684">
+<icon BUILTIN="bad"/>
+<node TEXT="but it can only be done once" ID="ID_1603138533" CREATED="1659349706221" MODIFIED="1659349726037">
+<icon BUILTIN="good"/>
+</node>
+</node>
+<node TEXT="records audio well" ID="ID_1402579915" CREATED="1659348214142" MODIFIED="1659348223471">
+<icon BUILTIN="good"/>
+<node TEXT="noice suppression" ID="ID_1147931705" CREATED="1659352050837" MODIFIED="1659352196963"/>
+</node>
+<node TEXT="completely free" ID="ID_1074782061" CREATED="1659349425094" MODIFIED="1659349429083">
+<icon BUILTIN="good"/>
+</node>
+</node>
 <node TEXT="freeCam" ID="ID_57476719" CREATED="1659348101780" MODIFIED="1659348131886">
 <icon BUILTIN="quote"/>
 <font ITALIC="true"/>
@@ -219,26 +236,8 @@
     </p>
   </body>
 </html>
-
 </richcontent>
 </node>
-</node>
-</node>
-<node TEXT="OBS" ID="ID_151462782" CREATED="1659348163077" MODIFIED="1659348189117">
-<icon BUILTIN="quote"/>
-<font ITALIC="true"/>
-<node TEXT="complicated setup" ID="ID_1858983332" CREATED="1659348202795" MODIFIED="1659348213684">
-<icon BUILTIN="bad"/>
-<node TEXT="but it can only be done once" ID="ID_1603138533" CREATED="1659349706221" MODIFIED="1659349726037">
-<icon BUILTIN="good"/>
-</node>
-</node>
-<node TEXT="records audio well" ID="ID_1402579915" CREATED="1659348214142" MODIFIED="1659348223471">
-<icon BUILTIN="good"/>
-<node TEXT="noice suppression" ID="ID_1147931705" CREATED="1659352050837" MODIFIED="1659352196963"/>
-</node>
-<node TEXT="completely free" ID="ID_1074782061" CREATED="1659349425094" MODIFIED="1659349429083">
-<icon BUILTIN="good"/>
 </node>
 </node>
 <node TEXT="debut" ID="ID_616473856" CREATED="1659348301613" MODIFIED="1659348305872">

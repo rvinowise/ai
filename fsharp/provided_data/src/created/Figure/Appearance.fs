@@ -1,7 +1,5 @@
 module rvinowise.ai.created.figure.Appearance
 
-open System.Collections.Generic
-
 open rvinowise
 open rvinowise.ai
 

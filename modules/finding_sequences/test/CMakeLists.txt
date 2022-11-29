@@ -25,6 +25,6 @@ target_link_libraries(${PROJECT_NAME}_test
 # )
 
 
-enable_testing()
+
 #add_test(NAME test COMMAND $<TARGET_FILE:finding_sequences_test>)
 add_test(NAME test2 COMMAND finding_sequences_test)

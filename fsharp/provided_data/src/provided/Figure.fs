@@ -2,17 +2,15 @@
 
 open System.Collections.Generic
 
-open rvinowise
-open rvinowise.ai
 open rvinowise.ai.figure
 
 
-let empty id: ai.figure.Figure = Figure(id)
+let empty id: Figure = Figure(id)
     
 let with_id
     (id:string)
-    (loaded_figures:Dictionary<string, ai.figure.Figure>) :
-    ai.figure.Figure
+    (loaded_figures:Dictionary<string, Figure>) :
+    Figure
     =
     let is_found, full_figure = loaded_figures.TryGetValue id 
     match is_found with

@@ -1,12 +1,12 @@
 ﻿module rvinowise.ai.loaded.Figure
 
-open System.Collections.Generic
 open Dapper
 
 open rvinowise
 open rvinowise.ai
 
-let body figure_id =
+let body (figure_id:string) =
+    let connection = database.Provided.open_connection
     database.Provided.open_connection.Query<ai.figure.Figure>(
         @"select * from Figure where Id = @Figure_id",
             {|figure_id=figure_id|}

@@ -49,7 +49,7 @@ bool Iteration_state_of_searching_pairs::has_failed_to_find_pair() {
 Interval Iteration_state_of_searching_pairs::get_found_pair() {
     return Interval(
         head_cursor.head(),
-        head_cursor.tail()
+        tail_cursor.tail()
     );
 }
 

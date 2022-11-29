@@ -1,14 +1,9 @@
 ﻿module rvinowise.ai.loaded.figure.Appearances
 
-open System.Collections.Generic
-open System.Data.SqlClient
 open Dapper
 
 open rvinowise
 open rvinowise.ai
-open System.Data
-open System.Data.Common;    // for DbProviderFactories
-open System.Configuration
 
 
 let all_appearances figure_id =

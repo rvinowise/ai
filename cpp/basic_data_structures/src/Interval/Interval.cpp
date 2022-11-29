@@ -1,4 +1,3 @@
-
 #include "Interval.h"
 #include <iostream>
 
@@ -8,13 +7,22 @@ namespace rvinowise::ai {
 
 Interval::Interval()
 {
-    cout << "interval is default constructed";
 }
 
 Interval::Interval(uint64_t head, uint64_t tail):
 head{head}, tail{tail} 
 {
-    cout << "interval is constructed";
+}
+
+bool Interval::operator==(const Interval& o) const {
+    return 
+        (this->head==o.head) 
+        &&
+        (this->tail==o.tail);
+}
+
+std::ostream& operator<<(std::ostream& os, const Interval& interval) {
+    return os << "{" << interval.head << ", " << interval.tail << "}";
 }
 
 }
