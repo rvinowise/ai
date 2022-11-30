@@ -52,7 +52,7 @@ let full_exception_chain (e:Exception)  =
         match e with
         | null -> message
         | _ -> 
-            let message = message + $"\n%s{e.message}"
+            let message = message + $"\n%s{e.Message}"
             extracted_messages e.InnerException message 
     extracted_messages e ""
 
@@ -63,9 +63,9 @@ let show_something_about_figure figure shown_part =
             | "appearances" ->
                 ui.printed.Figure.appearances figure
                     (ai.loaded.figure.Appearances.all_appearances figure)
-            | "edges" ->
-                ui.painted.Figure.edges figure
-                    (loaded.figure.Edges.edges figure)
+            // | "edges" ->
+            //     ui.painted.Figure.visualise_figure figure
+            //         (loaded.figure.Edges.edges figure)
             | _ -> print_error $"%s{shown_part} is not part of a figure"
         else
             print_error $"figure %s{figure} doesn't exist"
@@ -75,7 +75,7 @@ let show_something_about_figure figure shown_part =
             | :? System.Configuration.ConfigurationException -> 
                 print_error $"error in configuration file with db-connections:\n${full_exception_chain e}" 
             | _ -> print_error $"${full_exception_chain e}"
-    | :? System.Exception as e -> 
+    | _ as e -> 
         print_error $"${full_exception_chain e}"
 
 let show_entity entity_type exemplar_id =
