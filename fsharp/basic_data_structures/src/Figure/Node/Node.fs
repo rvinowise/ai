@@ -24,6 +24,13 @@ type Node =
         val id: Node_id
         val referenced: Node_reference
 
+        new (id) =
+            {id = id; referenced = Lower_figure id;}
+        new (id, referenced: string) =
+            {id = id; referenced = Lower_figure referenced;}
+        new (id, referenced) =
+            {id = id; referenced = referenced;}
+
         // override this.Equals(other) =
         //     match other with
         //     | :? Node as other -> 
@@ -60,9 +67,20 @@ module Subfigure =
 [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
 module Node =
 
+    open System.Text.RegularExpressions
+
+
+    let label_from_id label =
+        Regex.Replace(label, @"[^a-zA-Z]", "");
+
     let only_subfigures (nodes: Node seq) =
         nodes
         |>Seq.choose(fun n->
             Subfigure.ofNode n
         )
 
+    let stencil_out id =
+        Node(
+            id,
+            Stencil_output
+        )

@@ -17,10 +17,10 @@ module Applying_stencil =
 
 
     let input_for_first_mappings_permutators
-        stencil
-        target
+        (stencil: Stencil)
+        (target: Figure)
         =
-        let first_nodes_of_stencil = Figure.first_subfigures stencil
+        let first_nodes_of_stencil = Stencil.first_subfigures stencil
         
         let figures_to_map = 
             first_nodes_of_stencil

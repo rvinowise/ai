@@ -37,7 +37,12 @@ module Graph =
 
 
 [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
+module Stencil=
+
+
+[<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
 module Figure=
+
 
     let provide_cluster_inside_graph 
         name
@@ -46,6 +51,7 @@ module Figure=
         graph.GetOrAddSubgraph("cluster_"+name)
         |> Graph.set_attribute "label" name
 
+    
 
     let provide_subgraph_inside_graph
         (subgraph_id: string)
@@ -58,18 +64,20 @@ module Figure=
                 let tail = 
                     graph
                     |>Graph.provide_node (subgraph_id+edge.tail.id)
-                    |>Node.set_attribute "label" edge.tail.id
+                    |>Node.set_attribute "label" 
+                        (Node.label_from_id edge.tail.id)
                 
                 let head = 
                     graph
                     |>Graph.provide_node (subgraph_id+edge.head.id)
-                    |>Node.set_attribute "label" edge.head.id
+                    |>Node.set_attribute "label" 
+                        (Node.label_from_id edge.head.id)
 
                 graph.GetOrAddEdge(
                     tail, head, ""
                 ) |> ignore
         )
-        graph    
+        graph
 
 
     let provide_clustered_subgraph_inside_root_graph
