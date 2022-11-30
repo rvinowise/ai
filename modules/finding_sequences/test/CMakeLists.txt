@@ -2,6 +2,11 @@ set(AI_ROOT "C:/prj/ai/")
 
 cmake_minimum_required(VERSION 3.18)
 
+# add_subdirectory(
+#     ../src 
+#     subproject/business_logic
+# )
+
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
 conan_basic_setup()
 
@@ -15,7 +20,7 @@ target_include_directories(
 )
 
 target_link_libraries(${PROJECT_NAME}_test
-    PUBLIC 
+    PRIVATE 
     rvinowise::ai::finding_sequences
 )
 # target_include_directories(
