@@ -17,6 +17,10 @@ module Node =
         element
 
 [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
+module Edge =
+    let 
+
+[<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
 module Graph =
 
     let empty_root_graph name =

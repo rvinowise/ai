@@ -2,48 +2,47 @@ namespace rvinowise.ai
 
 
 
+
+
 type Node_reference =
-    | Lower_figure of Figure_id
-    | Stencil_output
+| Lower_figure of Figure_id
+| Stencil_output
 
 
+namespace rvinowise.ai.figure
+    open rvinowise.ai
 
-type Subfigure = 
-    struct
-        val id: Node_id
-        val referenced: Figure_id
+    type Subfigure = 
+        struct
+            val id: Node_id
+            val referenced: Figure_id
 
-        new (id, referenced) =
-            {id = id; referenced = referenced;}
-        new (id: Node_id) =
-            {id = id; referenced = id;}
-    end
+            new (id, referenced) =
+                {id = id; referenced = referenced;}
+            new (id: Node_id) =
+                {id = id; referenced = id;}
+        end
 
-type Node =
-    struct
-        val id: Node_id
-        val referenced: Node_reference
+namespace rvinowise.ai.stencil
+    open rvinowise.ai
 
-        new (id) =
-            {id = id; referenced = Lower_figure id;}
-        new (id, referenced: string) =
-            {id = id; referenced = Lower_figure referenced;}
-        new (id, referenced) =
-            {id = id; referenced = referenced;}
+    type Node =
+        struct
+            val id: Node_id
+            val referenced: Node_reference
 
-        // override this.Equals(other) =
-        //     match other with
-        //     | :? Node as other -> 
-        //         this.id = other.id && this.referenced = other.referenced
-        //     | :? Subfigure as other -> 
-        //         other.id = this.id 
-        //         &&
-        //         match this.referenced with
-        //         | Lower_figure figure_id -> 
-        //             figure_id = other.referenced
-        //         | _ -> false
-        //     | _ -> false
-    end
+            new (id) =
+                {id = id; referenced = Lower_figure id;}
+            new (id, referenced: string) =
+                {id = id; referenced = Lower_figure referenced;}
+            new (id, referenced) =
+                {id = id; referenced = referenced;}
+        end
+
+namespace rvinowise.ai
+    type Node=
+    |Figure_node of figure.Subfigure
+    |Stencil_node of stencil.Node
 
 [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
 module Subfigure = 
