@@ -9,14 +9,20 @@ open rvinowise.ai.ui.painted.applying_stencil
 open rvinowise.ai.ui
 
 module ``application of stencils``=
-    
+
+    open System.Text.RegularExpressions
+
+    let remove_number label =
+            Regex.Replace(label, @"[^a-zA-Z]", "");
+
     let Subfigure id =
-        ai.Subfigure(
+        
+        ai.figure.Subfigure(
             id,
-            Node.label_from_id id
+            remove_number id
         )
 
-    open rvinowise.ai.Node
+    open rvinowise.ai.stencil
 
     type Used_figures()=
         member _.a_fitting_stencil: Stencil =
@@ -24,10 +30,10 @@ module ``application of stencils``=
                 "S",
                 [
                     stencil.Edge(
-                        Node("b"), stencil_out("out1")
+                        Node("b"), Node.stencil_out("out1")
                     );
                     stencil.Edge(
-                        stencil_out("out1"), Node("f")
+                        Node.stencil_out("out1"), Node("f")
                     );
                     stencil.Edge(
                         Node("h"),Node("f")
@@ -40,28 +46,28 @@ module ``application of stencils``=
             Figure(
                 "F",
                 [
-                    Edge(
+                    figure.Edge(
                         Subfigure("b0"),Subfigure("c")
                     );
-                    Edge(
+                    figure.Edge(
                         Subfigure("b0"),Subfigure("d")
                     );
-                    Edge(
+                    figure.Edge(
                         Subfigure("c"),Subfigure("b1")
                     );
-                    Edge(
+                    figure.Edge(
                         Subfigure("d"),Subfigure("e")
                     );
-                    Edge(
+                    figure.Edge(
                         Subfigure("d"),Subfigure("f0")
                     );
-                    Edge(
+                    figure.Edge(
                         Subfigure("e"),Subfigure("f1")
                     );
-                    Edge(
+                    figure.Edge(
                         Subfigure("h"),Subfigure("f1")
                     );
-                    Edge(
+                    figure.Edge(
                         Subfigure("b2"),Subfigure("h")
                     );
                     
@@ -97,9 +103,11 @@ module ``application of stencils``=
             figure.id
             |>painted.Graph.empty_root_graph 
             |>painted.Figure.provide_clustered_subgraph_inside_root_graph 
-                "target figure" figure.edges
+                "target figure" 
+                (painted.Figure.painted_edges figure.edges)
             |>painted.Figure.provide_clustered_subgraph_inside_root_graph 
-                "stencil" stencil.edges
+                "stencil"
+                (painted.Stencil.painted_edges stencil.edges)
             |>painted.Figure.open_image_of_graph
 
         

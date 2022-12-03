@@ -4,11 +4,30 @@ open Rubjerg
 open Rubjerg.Graphviz
 open System.IO
 open System.Diagnostics
-open System
 
 open rvinowise
 open rvinowise.ai
 open rvinowise.ai.figure
+
+type Node =
+    struct
+        val id:Node_id
+        val label:string
+
+        new(id, label) = {
+            id=id; label=label;
+        }
+    end
+
+type Edge=
+    struct
+        val tail: Node
+        val head: Node
+
+        new (tail, head) = {
+            tail=tail; head=head
+        }
+    end
 
 [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
 module Node =
@@ -16,9 +35,7 @@ module Node =
         element.SafeSetAttribute(key,value,"")
         element
 
-[<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
-module Edge =
-    let 
+
 
 [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
 module Graph =
@@ -43,10 +60,37 @@ module Graph =
 [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
 module Stencil=
 
+    let painted_node (node: stencil.Node)=
+        let label = match node.referenced with
+        |Lower_figure id -> id
+        |Stencil_output -> "out"
+        Node(node.id, label)
+
+    let painted_edges (edges: stencil.Edge seq)=
+        edges
+        |>Seq.map (fun e->
+            Edge(
+                (painted_node e.tail),
+                (painted_node e.head)
+            )
+        )
 
 [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
 module Figure=
 
+    open rvinowise.ai
+
+    let painted_node (node: figure.Subfigure)=
+        Node(node.id, node.referenced)
+
+    let painted_edges (edges: figure.Edge seq)=
+        edges
+        |>Seq.map (fun e->
+            Edge(
+                (painted_node e.tail),
+                (painted_node e.head)
+            )
+        )
 
     let provide_cluster_inside_graph 
         name
@@ -59,23 +103,21 @@ module Figure=
 
     let provide_subgraph_inside_graph
         (subgraph_id: string)
-        (edges: ai.figure.Edge seq)
+        (edges: Edge seq)
         (graph: Graph)
         =
         edges
         |> Seq.iter (
-            fun (edge: ai.figure.Edge) -> 
+            fun edge -> 
                 let tail = 
                     graph
                     |>Graph.provide_node (subgraph_id+edge.tail.id)
-                    |>Node.set_attribute "label" 
-                        (Node.label_from_id edge.tail.id)
+                    |>Node.set_attribute "label" edge.tail.label
                 
                 let head = 
                     graph
                     |>Graph.provide_node (subgraph_id+edge.head.id)
-                    |>Node.set_attribute "label" 
-                        (Node.label_from_id edge.head.id)
+                    |>Node.set_attribute "label" edge.head.label
 
                 graph.GetOrAddEdge(
                     tail, head, ""
@@ -86,7 +128,7 @@ module Figure=
 
     let provide_clustered_subgraph_inside_root_graph
         name
-        (edges:ai.figure.Edge seq) 
+        (edges:Edge seq) 
         (root:RootGraph)
         =
         root
@@ -111,33 +153,9 @@ module Figure=
         =
         figure.id
         |>Graph.empty_root_graph
-        |>provide_clustered_subgraph_inside_root_graph figure.id figure.edges
+        |>provide_clustered_subgraph_inside_root_graph figure.id 
+            (painted_edges figure.edges)
         |>open_image_of_graph
         |>ignore
 
     
-
-    let create_history =
-        let root = RootGraph.CreateNew("history", GraphType.Directed)
-        root.SafeSetAttribute("rankdir", "LR", "")
-
-        Node.IntroduceAttribute(root, "shape", "box")
-
-        // The node names are unique identifiers within a graph in Graphviz
-        let nodeA = root.GetOrAddNode("1")
-        let nodeB = root.GetOrAddNode("2")
-        let nodeC = root.GetOrAddNode("3")
-        let nodeD = root.GetOrAddNode("4")
-
-        // The edge name is only unique between two nodes
-        let edgeAB = root.GetOrAddEdge(nodeA, nodeB, "Some edge name")
-        let edgeBC = root.GetOrAddEdge(nodeB, nodeC, "Some edge name")
-        let cd = root.GetOrAddEdge(nodeC, nodeD, "Another edge name")
-
-        let filename = Directory.GetCurrentDirectory() + "/out.svg"
-        root.ComputeLayout()
-        root.ToSvgFile(filename)
-        root.FreeLayout()
-        Process.Start("cmd", $"/c {filename}") |> ignore
-        //root.ToDotFile(Directory.GetCurrentDirectory() + "/out.dot")
-        ()
