@@ -11,6 +11,9 @@ open rvinowise.ai.ui
 module ``application of stencils``=
 
     open System.Text.RegularExpressions
+    open Xunit
+    open FsUnit
+
 
     let remove_number label =
             Regex.Replace(label, @"[^a-zA-Z]", "");
@@ -90,10 +93,18 @@ module ``application of stencils``=
 
         [<Fact>]
         member this.``preparing inputs for permutators, which map initial nodes``()=
-            let permutator_input = Applying_stencil.input_for_first_mappings_permutators 
+            let permutator_input = 
+                Applying_stencil.input_for_first_mappings_permutators 
                                     this.figures.a_fitting_stencil
                                     this.figures.a_high_level_relatively_simple_figure
-            ()
+            permutator_input |> should equal {|
+                
+            |}
+            (* 
+                b
+                f
+                h
+             *)
 
         [<Fact>] //(Skip="ui")
         member this.``paint the target figure and the stencil``()=

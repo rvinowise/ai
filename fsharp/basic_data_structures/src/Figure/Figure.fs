@@ -42,4 +42,4 @@ module Figure=
     let nodes_referencing_lower_figure figure lower_figure = 
         figure
         |> subfigures 
-        |> Subfigure.referencing_figure lower_figure
+        |> Subfigure.pick_referencing_figure lower_figure

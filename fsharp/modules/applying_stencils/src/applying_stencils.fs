@@ -20,26 +20,28 @@ module Applying_stencil =
         (stencil: Stencil)
         (target: Figure)
         =
-        let first_nodes_of_stencil = Stencil.first_subfigures stencil
+        let first_subfigures_of_stencil = Stencil.first_subfigures stencil
         
         let figures_to_map = 
-            first_nodes_of_stencil
+            first_subfigures_of_stencil
             |>Subfigure.referenced_figures
 
-        let nodes_in_target = 
+        let subfigures_in_target = 
             figures_to_map
             |>Seq.map (Figure.nodes_referencing_lower_figure target)
 
-        let nodes_in_stencil = 
+        let subfigures_in_stencil = 
             figures_to_map
             |>Seq.map (fun f->
-                Subfigure.referencing_figure f first_nodes_of_stencil
+                Subfigure.pick_referencing_figure f first_subfigures_of_stencil
             )
         
         {|
-            nodes_in_target = nodes_in_target;
-            nodes_in_stencil = nodes_in_stencil
+            subfigures_in_target = subfigures_in_target;
+            subfigures_in_stencil = subfigures_in_stencil
         |}
+
+        
 
     let map_first_nodes
         stencil

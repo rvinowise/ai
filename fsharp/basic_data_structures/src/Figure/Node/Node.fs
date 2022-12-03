@@ -48,7 +48,7 @@ namespace rvinowise.ai
             |>Seq.map(fun s->s.referenced)
             |>Set.ofSeq
 
-        let referencing_figure figure (subfigures: Subfigure seq) =
+        let pick_referencing_figure figure (subfigures: Subfigure seq) =
             subfigures
             |> Seq.filter (fun s->s.referenced = figure)
 
