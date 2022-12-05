@@ -7,8 +7,9 @@ add_compile_definitions(FINDING_SEQUENCES_EXPORTS)
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
 conan_basic_setup()
 
+#set(FINDING_SEQUENCES_SRC)
 
-add_library(${PROJECT_NAME}_lib SHARED
+add_library(${PROJECT_NAME}_dll SHARED
     Main/finding_sequences_interface.cpp
     Main/main.cpp
     Database/Database.cpp
@@ -29,17 +30,17 @@ add_library(${PROJECT_NAME}_lib SHARED
 #     Finding_sequences/Interval_in_sequence/Interval_in_sequence.cpp
 #     Finding_sequences/Iteration_state_of_searching_pairs/Iteration_state_of_searching_pairs.cpp  
 # )
-add_library(rvinowise::ai::finding_sequences ALIAS ${PROJECT_NAME}_lib )
-target_link_libraries(${PROJECT_NAME}_lib PUBLIC rvinowise::ai::basic_data_structures)
-target_link_libraries(${PROJECT_NAME}_lib PUBLIC ${CONAN_LIBS})
+add_library(rvinowise::ai::finding_sequences ALIAS ${PROJECT_NAME}_dll )
+target_link_libraries(${PROJECT_NAME}_dll PUBLIC rvinowise::ai::basic_data_structures)
+target_link_libraries(${PROJECT_NAME}_dll PUBLIC ${CONAN_LIBS})
 target_include_directories(
-    ${PROJECT_NAME}_lib PUBLIC ${CONAN_INCLUDE_DIRS}
+    ${PROJECT_NAME}_dll PUBLIC ${CONAN_INCLUDE_DIRS}
 )
 
 
 
 target_include_directories(
-    ${PROJECT_NAME}_lib PUBLIC
+    ${PROJECT_NAME}_dll PUBLIC
     ${PROJECT_SOURCE_DIR}/include
     ${PROJECT_SOURCE_DIR}/src
 )
