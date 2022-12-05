@@ -11,7 +11,6 @@ open rvinowise.ai.ui
 module ``application of stencils``=
 
     open System.Text.RegularExpressions
-    open Xunit
     open FsUnit
 
 
@@ -93,18 +92,23 @@ module ``application of stencils``=
 
         [<Fact>]
         member this.``preparing inputs for permutators, which map initial nodes``()=
+            
+            let _, subfigures_in_stencil, subfigures_in_target =
+                Applying_stencil.sorted_subfigures_to_map_first
+                    this.figures.a_fitting_stencil
+                    this.figures.a_high_level_relatively_simple_figure
+            
             let permutator_input = 
                 Applying_stencil.input_for_first_mappings_permutators 
-                                    this.figures.a_fitting_stencil
-                                    this.figures.a_high_level_relatively_simple_figure
-            permutator_input |> should equal {|
-                
-            |}
-            (* 
-                b
-                f
-                h
-             *)
+                                    subfigures_in_stencil,
+                                    subfigures_in_target
+                                    
+            permutator_input |> should equal [|
+                (* b *)(1,3) ;
+                (* h *)(1,1) ;
+            |]
+
+        
 
         [<Fact>] //(Skip="ui")
         member this.``paint the target figure and the stencil``()=

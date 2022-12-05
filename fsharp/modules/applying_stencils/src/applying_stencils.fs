@@ -1,5 +1,6 @@
 namespace rvinowise.ai.figure
 
+open System.Diagnostics.Contracts
 open rvinowise.ai.mapping_stencils
 open rvinowise.ai
 
@@ -9,17 +10,8 @@ module Applying_stencil =
         subfigures: (Subfigure*Subfigure) Set
     }
 
-    let retrieve_result
-        target
-        mapping
-        =
-        ()
-
-
-    let input_for_first_mappings_permutators
-        (stencil: Stencil)
-        (target: Figure)
-        =
+    
+    let sorted_subfigures_to_map_first stencil target =
         let first_subfigures_of_stencil = Stencil.first_subfigures stencil
         
         let figures_to_map = 
@@ -35,45 +27,68 @@ module Applying_stencil =
             |>Seq.map (fun f->
                 Subfigure.pick_referencing_figure f first_subfigures_of_stencil
             )
+            
+        (figures_to_map, subfigures_in_stencil, subfigures_in_target )
+
+    let input_for_first_mappings_permutators subfigures_in_stencil subfigures_in_target =
         
-        {|
-            subfigures_in_target = subfigures_in_target;
-            subfigures_in_stencil = subfigures_in_stencil
-        |}
+        let amounts_in_stencil = 
+            subfigures_in_stencil
+            |>Seq.map Seq.length
+
+        let amounts_in_target = 
+            subfigures_in_target
+            |>Seq.map Seq.length
+
+        Seq.zip amounts_in_stencil amounts_in_target
 
         
 
+    let prepared_generator_of_first_mappings
+        subfigures_in_stencil
+        subfigures_in_target
+        =
+        let generator = Generator_of_order_sequences<int[]>()
+        
+        (input_for_first_mappings_permutators subfigures_in_stencil subfigures_in_target)
+        |>Seq.map Generator_of_mappings
+        |>Seq.map generator.add_order
+        |>ignore
+        
+        generator
+        
+    let mapping_from_generator_output subfigures_in_stencil subfigures_in_target indices =
+        Contract.Requires ((Seq.length subfigures_in_stencil) = (Seq.length subfigures_in_target)) 
+        
     let map_first_nodes
         stencil
         target
         =
 
+        let figures_to_map, subfigures_in_stencil, subfigures_in_target =
+            sorted_subfigures_to_map_first stencil target
         
-            
-        let generator = Generator_of_order_sequences<int[]>();
-        ()
+        (prepared_generator_of_first_mappings subfigures_in_stencil subfigures_in_target)
+        |>Seq.map (mapping_from_generator_output subfigures_in_stencil subfigures_in_target)
         
-
-        // figures_to_map
-        // |>Seq.map generator.add_order(Generator_of_mappings(
-        //     target
-        //     |> Figure.subfigure_occurances 
-        //     |> Seq.length, 
-        //     Seq.length occurances_in_stencil
-        // ))
+        
 
     let map_stencil_onto_target
         stencil
         target 
         =
-        ()
+            
+        map_first_nodes stencil target
+        
 
+    let retrieve_result target mapping =
+        ()
 
     let results_of_stencil_application
         stencil
         target
         =
         target
-        //|>map_stencil_onto_target stencil
-        //|>Seq.map retrieve_result target
+        |>map_stencil_onto_target stencil
+        |>Seq.map (retrieve_result target)
     

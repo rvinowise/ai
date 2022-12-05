@@ -10,7 +10,7 @@ public partial class initialised_correctly_for_generation {
         Generator_of_order_sequences<int[]> generator = 
             new Generator_of_order_sequences<int[]>();
 
-        generator.add_order(new Generator_of_mappings(4, 2));
+        generator.add_order(new Generator_of_mappings(2, 4));
         generator.add_order(new Generator_of_mappings(3, 3));
 
         return generator;

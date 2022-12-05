@@ -14,15 +14,15 @@ public class Generator_of_mappings:
     public readonly int amount_in_target;
 
     public Generator_of_mappings(
-        int amount_in_source,
-        int amount_in_target
+        int amount_in_target,
+        int amount_in_source
     ) {
         contracts.Contract.Requires<ArgumentException>(
-            amount_in_source >= amount_in_target,
+            amount_in_target <= amount_in_source,
             "impossible to provide any combinations with so few figure occurences"
         );
-        this.amount_in_source = amount_in_source;
         this.amount_in_target = amount_in_target;
+        this.amount_in_source = amount_in_source;
 
     }
 
