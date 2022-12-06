@@ -1,0 +1,46 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <GenerateProgramFile>false</GenerateProgramFile>
+  </PropertyGroup>
+
+  
+  
+  <ItemGroup>
+    <ProjectReference Include="enumerating_combinations\enumerating_combinations.csproj" />
+	<ProjectReference Include="enumerating_combinations.test\test.csproj" />
+  </ItemGroup>
+
+  
+  
+  <ItemGroup>
+    <Compile Remove="enumerating_combinations\obj\**" />
+    <Compile Remove="enumerating_combinations\bin\**" />
+    <Compile Remove="enumerating_combinations.test\bin\**" />
+    <Compile Remove="enumerating_combinations.test\obj\**" />
+    <Compile Remove="obj\**" />
+  </ItemGroup>
+
+  
+  
+  <ItemGroup>
+    <EmbeddedResource Remove="enumerating_combinations\obj\**" />
+    <EmbeddedResource Remove="enumerating_combinations\bin\**" />
+    <EmbeddedResource Remove="enumerating_combinations.test\bin\**" />
+    <EmbeddedResource Remove="enumerating_combinations.test\obj\**" />
+    <EmbeddedResource Remove="obj\**" />
+  </ItemGroup>
+
+  
+  
+  <ItemGroup>
+    <None Remove="enumerating_combinations\obj\**" />
+    <None Remove="enumerating_combinations\bin\**" />
+    <None Remove="enumerating_combinations.test\bin\**" />
+    <None Remove="enumerating_combinations.test\obj\**" />
+    <None Remove="obj\**" />
+  </ItemGroup>
+
+
+</Project>

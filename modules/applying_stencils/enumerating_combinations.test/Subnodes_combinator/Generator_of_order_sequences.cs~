@@ -31,7 +31,7 @@ public partial class initialised_correctly_for_generation {
     }
     
     [Test]
-    public void order_with_only_one_taken_is_possible() {
+    public void order_with_only_one_possibility_is_possible() {
         var generator = get_generator();
 
         generator.add_order(new Generator_of_mappings(1, 3));

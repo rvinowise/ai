@@ -10,19 +10,19 @@ namespace rvinowise.ai.mapping_stencils {
 public class Generator_of_mappings:
     IEnumerable<int[]> {
     
-    public readonly int amount_in_source;
-    public readonly int amount_in_target;
+    public readonly int available_amount;
+    public readonly int taken_amount;
 
     public Generator_of_mappings(
-        int amount_in_target,
-        int amount_in_source
+        int taken_amount,
+        int available_amount
     ) {
         contracts.Contract.Requires<ArgumentException>(
-            amount_in_target <= amount_in_source,
+            taken_amount <= available_amount,
             "impossible to provide any combinations with so few figure occurences"
         );
-        this.amount_in_target = amount_in_target;
-        this.amount_in_source = amount_in_source;
+        this.taken_amount = taken_amount;
+        this.available_amount = available_amount;
 
     }
 
@@ -48,7 +48,7 @@ public class Generator_of_mappings_enumerator : IEnumerator<int[]>
     private readonly ISet<int> unassigned_orders = new SortedSet<int>();
 
     private readonly Generator_of_mappings generator;
-    private int amount_in_source => generator.amount_in_source;
+    private int available_amount => generator.available_amount;
 
     private int get_needed_amount() {
         return combination.Length;
@@ -59,7 +59,7 @@ public class Generator_of_mappings_enumerator : IEnumerator<int[]>
 
     public Generator_of_mappings_enumerator(Generator_of_mappings generator) {
         this.generator = generator;
-        combination = new int[generator.amount_in_target];
+        combination = new int[generator.taken_amount];
         Reset();
     }
 
@@ -121,7 +121,7 @@ public class Generator_of_mappings_enumerator : IEnumerator<int[]>
 
     public bool is_last() {
         for (int i_subfigure = 0; i_subfigure < get_needed_amount(); i_subfigure++) {
-            if (combination[i_subfigure] != amount_in_source - i_subfigure) {
+            if (combination[i_subfigure] != available_amount - i_subfigure) {
                 return false;
             }
         }
@@ -147,7 +147,7 @@ public class Generator_of_mappings_enumerator : IEnumerator<int[]>
     }
 
     private bool[] get_free_occurances() {
-        bool[] free_occurances = Enumerable.Repeat(true, amount_in_source).ToArray();
+        bool[] free_occurances = Enumerable.Repeat(true, available_amount).ToArray();
         for (int order = 0; order < get_needed_amount(); order++) {
             if (!unassigned_orders.Contains(order)) {
                 free_occurances[combination[order]] = false;

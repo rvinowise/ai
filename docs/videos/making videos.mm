@@ -193,8 +193,10 @@
 <node TEXT="impl: implementation" ID="ID_425363286" CREATED="1632698181664" MODIFIED="1632698185978"/>
 </node>
 </node>
-<node TEXT="make an animation in adobe animate" STYLE_REF="list item" POSITION="right" ID="ID_491046293" CREATED="1659347977366" MODIFIED="1659348004078"/>
-<node TEXT="play it in a browser" STYLE_REF="list item" POSITION="right" ID="ID_304720144" CREATED="1659348004515" MODIFIED="1659348028049">
+<node TEXT="adobe animate" POSITION="right" ID="ID_33338120" CREATED="1670332072402" MODIFIED="1670332085279">
+<icon BUILTIN="present"/>
+<node TEXT="make an animation in adobe animate" STYLE_REF="list item" ID="ID_491046293" CREATED="1659347977366" MODIFIED="1659348004078"/>
+<node TEXT="play it in a browser" STYLE_REF="list item" ID="ID_304720144" CREATED="1659348004515" MODIFIED="1659348028049">
 <node TEXT="control the play by the keyboard" ID="ID_580249839" CREATED="1659348028622" MODIFIED="1659348075376">
 <node TEXT="to synchronise it with the voice recording" ID="ID_1228405520" CREATED="1659348050915" MODIFIED="1659348064421"/>
 </node>
@@ -253,6 +255,14 @@
 <icon BUILTIN="bad"/>
 </node>
 </node>
+</node>
+</node>
+</node>
+<node TEXT="recording paint" POSITION="right" ID="ID_855438480" CREATED="1670332083577" MODIFIED="1670332109573">
+<icon BUILTIN="present"/>
+<node TEXT="move drawn elements on the screen in an image editor" ID="ID_256608263" CREATED="1670332110312" MODIFIED="1670332131250"/>
+<node TEXT="record the movements with a screen recorder" ID="ID_1010537565" CREATED="1670332134546" MODIFIED="1670332147248">
+<node TEXT="OBS" ID="ID_1598932783" CREATED="1670332147511" MODIFIED="1670332148930"/>
 </node>
 </node>
 </node>

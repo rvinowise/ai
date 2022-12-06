@@ -1,0 +1,6 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=108cb8a9_002De4ea_002D4036_002Da3bc_002D494d2708e515/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="order_with_only_one_possibility_is_possible" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::03B37D55-5E02-F3D4-B1CF-A0A7BEC8691F::net6.0::rvinowise.ai.unit_tests.generator_of_order_sequences.initialised_correctly_for_generation.order_with_only_one_possibility_is_possible&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

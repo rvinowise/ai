@@ -1,5 +1,6 @@
 ﻿#define RVI_CONTRACTS
 
+using System;
 using System.Diagnostics;
 
 namespace rvinowise.contracts {
