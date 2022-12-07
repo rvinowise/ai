@@ -118,18 +118,13 @@ public class Generator_of_mappings_enumerator : IEnumerator<int[]>
         }
     }
     
-
-    public bool is_last() {
-        for (int i_subfigure = 0; i_subfigure < get_needed_amount(); i_subfigure++) {
-            if (combination[i_subfigure] != available_amount - i_subfigure) {
-                return false;
-            }
-        }
-        return true;
-    }
+    
     
     private bool has_next_free_occurances(int order) {
         int current_occurance_occupied_by_order = combination[order];
+        if (current_occurance_occupied_by_order == -1) {
+            return true; // only one occurance is needed - nothing else is occupied
+        }
         int next_free_occurance = get_next_free_occurance(
             current_occurance_occupied_by_order
         );
@@ -150,7 +145,9 @@ public class Generator_of_mappings_enumerator : IEnumerator<int[]>
         bool[] free_occurances = Enumerable.Repeat(true, available_amount).ToArray();
         for (int order = 0; order < get_needed_amount(); order++) {
             if (!unassigned_orders.Contains(order)) {
-                free_occurances[combination[order]] = false;
+                if (combination[order] >= 0) { // this condition is needed only if one occurance is needed
+                    free_occurances[combination[order]] = false;
+                }
             }
         }
         return free_occurances;

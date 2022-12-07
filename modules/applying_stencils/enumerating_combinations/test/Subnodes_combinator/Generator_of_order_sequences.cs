@@ -44,6 +44,35 @@ public partial class initialised_correctly_for_generation {
         }
         
     }
+
+    [Test]
+    public void only_one_order_is_possible() {
+        var generator = get_generator();
+
+        generator.add_order(new Generator_of_mappings(1, 3));
+
+        var expected = new[] {
+            new[] {
+                new[] { 0 }
+            },
+            new[] {
+                new[] { 1 }
+            },
+            new[] {
+                new[] { 2 }
+            }
+        };
+
+        int i_combination = 0;
+        foreach (var combination in generator) {
+            Assert.That(
+                expected[i_combination],
+                Is.EqualTo(combination)
+            );
+            i_combination++;
+        }
+        
+    }
     
 }
 
