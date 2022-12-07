@@ -55,13 +55,6 @@ module Applying_stencil =
         |>Seq.map generator.add_order
         |>ignore
         
-        let generator2 = Generator_of_order_sequences<int[]>()
-        generator2.add_order(Generator_of_mappings(1, 3));
-        generator2.add_order(Generator_of_mappings(1, 1));
-        
-        for i in generator2 do
-            printf "%O" i
-        
         generator
         
     let mapping_from_generator_output subfigures_in_stencil subfigures_in_target indices =

@@ -18,28 +18,5 @@
     <PackageReference Include="coverlet.collector" Version="3.1.2" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Compile Remove="obj\**" />
-    <Compile Remove="enumerating_combinations.test\obj\**" />
-    <Compile Remove="enumerating_combinations.test\bin\**" />
-    <Compile Remove="enumerating_combinations\obj\**" />
-    <Compile Remove="enumerating_combinations\bin\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Remove="obj\**" />
-    <EmbeddedResource Remove="enumerating_combinations.test\obj\**" />
-    <EmbeddedResource Remove="enumerating_combinations.test\bin\**" />
-    <EmbeddedResource Remove="enumerating_combinations\obj\**" />
-    <EmbeddedResource Remove="enumerating_combinations\bin\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="obj\**" />
-    <None Remove="enumerating_combinations.test\obj\**" />
-    <None Remove="enumerating_combinations.test\bin\**" />
-    <None Remove="enumerating_combinations\obj\**" />
-    <None Remove="enumerating_combinations\bin\**" />
-  </ItemGroup>
 
 </Project>
