@@ -7,6 +7,7 @@ open rvinowise.ai
 open rvinowise.ai.figure
 open rvinowise.ai.ui.painted.applying_stencil
 open rvinowise.ai.ui
+open rvinowise.ai.mapping_stencils
 
 module ``application of stencils``=
 
@@ -108,7 +109,27 @@ module ``application of stencils``=
                 (* h *)(1,1) ;
             |]
 
+        [<Fact>]
+        member this.``generator of initial mappings returns combinations``()=
+            
+            let generator = Generator_of_order_sequences<int[]>()
         
+            generator.add_order(Generator_of_mappings(1, 3))
+            let enumerator = generator.GetEnumerator()
+            enumerator.MoveNext()
+            |> should equal true
+            enumerator.Current
+            |> should equal [| [|0|] |]
+            enumerator.MoveNext()
+            |> should equal true
+            enumerator.Current
+            |> should equal [| [|1|] |]
+            enumerator.MoveNext()
+            |> should equal true
+            enumerator.Current
+            |> should equal [| [|2|] |]
+            enumerator.MoveNext()
+            |> should equal false                                   
 
         [<Fact>] //(Skip="ui")
         member this.``paint the target figure and the stencil``()=

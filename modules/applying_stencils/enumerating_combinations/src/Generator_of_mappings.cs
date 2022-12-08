@@ -10,8 +10,8 @@ namespace rvinowise.ai.mapping_stencils {
 public class Generator_of_mappings:
     IEnumerable<int[]> {
     
-    public readonly int available_amount;
     public readonly int taken_amount;
+    public readonly int available_amount;
 
     public Generator_of_mappings(
         int taken_amount,

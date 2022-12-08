@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using rvinowise.ai.mapping_stencils;
+using rvinowise.contracts;
 
 namespace rvinowise.ai.unit_tests.generator_of_order_sequences {
 
@@ -73,7 +74,37 @@ public partial class initialised_correctly_for_generation {
         }
         
     }
+
+    [Test]
+    public void manual_iteration_with_IEnumerable_is_possible() {
+        var generator = get_generator();
+
+        generator.add_order(new Generator_of_mappings(1, 3));
+
+        var enumerator = generator.GetEnumerator();
+        var test0 = enumerator.Current;
+        var test1 = enumerator.MoveNext();
+        var test2 = enumerator.Current;
+        var test3 = enumerator.MoveNext();
+        var test4 = enumerator.Current;
+        var test5 = enumerator.MoveNext();
+        var test6 = enumerator.Current;
+        var test7 = enumerator.MoveNext();
+
+    }
     
+    [Test]
+    public void throws_if_enumerated_without_added_orders() {
+        var generator = get_generator();
+
+        var enumerator = generator.GetEnumerator();
+        
+        Assert.Throws<Broken_contract_exception>(
+            () => enumerator.MoveNext()
+        );
+
+
+    }
 }
 
 

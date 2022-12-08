@@ -42,23 +42,41 @@ module Applying_stencil =
 
         Seq.zip amounts_in_stencil amounts_in_target
 
-        
+    let add_order_to_generator (generator:Generator_of_order_sequences_integer) (order:Generator_of_mappings) =
+        generator.add_order(order)
 
     let prepared_generator_of_first_mappings
         subfigures_in_stencil
         subfigures_in_target
         =
-        let generator = Generator_of_order_sequences<int[]>()
+        //let generator = Generator_of_order_sequences<int[]>()
+        let generator = Generator_of_order_sequences_integer()
         
-        (input_for_first_mappings_permutators subfigures_in_stencil subfigures_in_target)
-        |>Seq.map Generator_of_mappings
-        |>Seq.map generator.add_order
-        |>ignore
+//        (input_for_first_mappings_permutators subfigures_in_stencil subfigures_in_target)
+//        |>Seq.map Generator_of_mappings
+//        |>Seq.map (printf "test1: %O")
+//        |>ignore
+        
+        [Generator_of_mappings(1,3); Generator_of_mappings(1,1)]
+        |>Seq.map (printf "test1: %O")
+        
+        let enumerator = generator.GetEnumerator()
+        printf "test3: %O" generator
+        
+        let test0 = enumerator.Current
+        let test0 = enumerator.MoveNext()
+        let test0 = enumerator.Current
+        let test0 = enumerator.MoveNext()
+        let test0 = enumerator.Current
+        let test0 = enumerator.MoveNext()
+        let test0 = enumerator.Current
+        let test0 = enumerator.MoveNext()
         
         generator
         
     let mapping_from_generator_output subfigures_in_stencil subfigures_in_target indices =
-        Contract.Requires ((Seq.length subfigures_in_stencil) = (Seq.length subfigures_in_target)) 
+        Contract.Requires ((Seq.length subfigures_in_stencil) = (Seq.length subfigures_in_target))
+        
         
     let map_first_nodes
         stencil
@@ -68,8 +86,13 @@ module Applying_stencil =
         let figures_to_map, subfigures_in_stencil, subfigures_in_target =
             sorted_subfigures_to_map_first stencil target
         
-        (prepared_generator_of_first_mappings subfigures_in_stencil subfigures_in_target)
-        |>Seq.map (mapping_from_generator_output subfigures_in_stencil subfigures_in_target)
+        let generator = (prepared_generator_of_first_mappings subfigures_in_stencil subfigures_in_target)
+        
+//        generator
+//        |>Seq.map (mapping_from_generator_output subfigures_in_stencil subfigures_in_target)
+        for i in generator do
+            printf "%O" i
+        generator
         
         
 

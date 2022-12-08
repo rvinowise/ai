@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using rvinowise.contracts;
 
 
 namespace rvinowise.ai.mapping_stencils {
@@ -11,6 +12,11 @@ namespace rvinowise.ai.mapping_stencils {
     (with Reset and MoveNext methods) 
     */
 
+public class Generator_of_order_sequences_integer: Generator_of_order_sequences<int[]> {
+    public void add_order(Generator_of_mappings in_order) {
+        base.add_order(in_order);
+    }
+}
 public class Generator_of_order_sequences<T>:
     IEnumerable<T[]>
 {
@@ -22,6 +28,8 @@ public class Generator_of_order_sequences<T>:
     public void add_order(IEnumerable<T> in_order) {
         orders.Add(in_order);
     }
+    
+    
 
     public T[] get_combination_as_indexes(
         IEnumerable<IEnumerator<T>> mapping_enumerators
@@ -39,6 +47,10 @@ public class Generator_of_order_sequences<T>:
     #region IEnumerable
 
     public IEnumerator<T[]> GetEnumerator() {
+        if (!orders.Any()) {
+            throw new Broken_contract_exception("enumerable orders should be added to the generator before enumerating it");
+        }
+        
         IList<IEnumerator<T>> order_enumerators = orders.Select(
             order => order.GetEnumerator()
         ).ToList();
