@@ -5,25 +5,30 @@ open Xunit
 open rvinowise
 open rvinowise.ai
 open rvinowise.ai.figure
+open rvinowise.ai.figure.Applying_stencil
 open rvinowise.ai.ui.painted.applying_stencil
 open rvinowise.ai.ui
 open rvinowise.ai.mapping_stencils
 
-module ``application of stencils``=
 
+module Simple =
+    
     open System.Text.RegularExpressions
-    open FsUnit
-
-
     let remove_number label =
-            Regex.Replace(label, @"[^a-zA-Z]", "");
-
+                Regex.Replace(label, @"[^a-zA-Z]", "")
+                
     let Subfigure id =
         
         ai.figure.Subfigure(
             id,
             remove_number id
         )
+        
+        
+module ``application of stencils``=
+
+    open FsUnit
+    
 
     open rvinowise.ai.stencil
 
@@ -50,28 +55,28 @@ module ``application of stencils``=
                 "F",
                 [
                     figure.Edge(
-                        Subfigure("b0"),Subfigure("c")
+                        Simple.Subfigure("b0"),Simple.Subfigure("c")
                     );
                     figure.Edge(
-                        Subfigure("b0"),Subfigure("d")
+                        Simple.Subfigure("b0"),Simple.Subfigure("d")
                     );
                     figure.Edge(
-                        Subfigure("c"),Subfigure("b1")
+                        Simple.Subfigure("c"),Simple.Subfigure("b1")
                     );
                     figure.Edge(
-                        Subfigure("d"),Subfigure("e")
+                        Simple.Subfigure("d"),Simple.Subfigure("e")
                     );
                     figure.Edge(
-                        Subfigure("d"),Subfigure("f0")
+                        Simple.Subfigure("d"),Simple.Subfigure("f0")
                     );
                     figure.Edge(
-                        Subfigure("e"),Subfigure("f1")
+                        Simple.Subfigure("e"),Simple.Subfigure("f1")
                     );
                     figure.Edge(
-                        Subfigure("h"),Subfigure("f1")
+                        Simple.Subfigure("h"),Simple.Subfigure("f1")
                     );
                     figure.Edge(
-                        Subfigure("b2"),Subfigure("h")
+                        Simple.Subfigure("b2"),Simple.Subfigure("h")
                     );
                     
                 ]
@@ -131,10 +136,25 @@ module ``application of stencils``=
             enumerator.MoveNext()
             |> should equal false                                   
 
+        
+//        [<Fact>]
+//        member this.``mapping of first stencil subfigures onto target produces initial mapping``()=
+//            let figure = this.figures.a_high_level_relatively_simple_figure
+//            let stencil = this.figures.a_fitting_stencil
+//            
+//            (map_first_nodes stencil figure)
+//            |> should equal
+//            {
+//                Mapped_stencil.subfigures=[
+//                    Subfigure()
+//                ]
+//            }
+            
+        
         [<Fact>] //(Skip="ui")
         member this.``paint the target figure and the stencil``()=
             let figure = this.figures.a_high_level_relatively_simple_figure
-            let stencil: rvinowise.ai.Stencil = this.figures.a_fitting_stencil
+            let stencil = this.figures.a_fitting_stencil
 
             figure.id
             |>painted.Graph.empty_root_graph 

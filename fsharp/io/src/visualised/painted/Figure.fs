@@ -112,12 +112,14 @@ module Figure=
                 let tail = 
                     graph
                     |>Graph.provide_node (subgraph_id+edge.tail.id)
-                    |>Node.set_attribute "label" edge.tail.label
+                    //|>Node.set_attribute "label" edge.tail.label
+                    |>Node.set_attribute "label" edge.tail.id
                 
                 let head = 
                     graph
                     |>Graph.provide_node (subgraph_id+edge.head.id)
-                    |>Node.set_attribute "label" edge.head.label
+                    //|>Node.set_attribute "label" edge.head.label
+                    |>Node.set_attribute "label" edge.head.id
 
                 graph.GetOrAddEdge(
                     tail, head, ""

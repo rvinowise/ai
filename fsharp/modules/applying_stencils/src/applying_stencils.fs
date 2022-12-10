@@ -21,7 +21,8 @@ module Applying_stencil =
         let subfigures_in_target = 
             figures_to_map
             |>Seq.map (Figure.nodes_referencing_lower_figure target)
-
+            |>Seq.map Array.ofSeq
+            
         let subfigures_in_stencil = 
             figures_to_map
             |>Seq.map (fun f->
@@ -55,8 +56,22 @@ module Applying_stencil =
         
         generator
         
-        
     
+    let mapping_of_subfigure
+        (target_subfigures:Subfigure[])
+        target_subfigure_index
+        subfigure_of_stencil
+        =
+        (subfigure_of_stencil, target_subfigures.[target_subfigure_index])
+        
+    let mappings_of_figure
+        (used_occurances:int[])
+        (subfigures_chosen_by_stencil: Subfigure seq)
+        (subfigures_available_in_target: Subfigure[])
+        =
+        (used_occurances, subfigures_chosen_by_stencil)
+        ||>Seq.map2 (mapping_of_subfigure subfigures_available_in_target)
+        
         
     let mapping_from_generator_output
         subfigures_in_stencil
@@ -66,24 +81,27 @@ module Applying_stencil =
         Contract.Requires ((Seq.length subfigures_in_stencil) = (Seq.length subfigures_in_target))
         
         
-        //let mapped_nodes = (Subfigure*Subfigure) set
+        let mapped_nodes =
+            (indices, subfigures_in_stencil, subfigures_in_target)
+            |||>Seq.map3 mappings_of_figure
+            |>Seq.concat
+            |>Set.ofSeq
         
-        //indices
-        //|>Seq.map Mapped_stencil
+        {subfigures=mapped_nodes;}
+        
         
         
     let map_first_nodes
         stencil
         target
         =
-
         let figures_to_map, subfigures_in_stencil, subfigures_in_target =
             sorted_subfigures_to_map_first stencil target
         
         let generator = (prepared_generator_of_first_mappings subfigures_in_stencil subfigures_in_target)
         
         generator
-        |>Seq.iter (mapping_from_generator_output subfigures_in_stencil subfigures_in_target)
+        |>Seq.map (mapping_from_generator_output subfigures_in_stencil subfigures_in_target)
 
         
 
