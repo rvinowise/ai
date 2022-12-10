@@ -40,8 +40,19 @@ namespace rvinowise.ai
     open rvinowise.ai.figure
     open rvinowise.ai.stencil
 
+
     [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
-    module Subfigure = 
+    module Subfigure =
+        
+        let ofNode (node:Node) =
+            match node.referenced with
+                |Node_reference.Lower_figure figure_id -> 
+                    Some (Subfigure(node.id, figure_id))
+                | _ -> None
+
+
+    [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
+    module Subfigures = 
         
         let referenced_figures (subfigures: Subfigure seq) =
             subfigures
@@ -52,15 +63,14 @@ namespace rvinowise.ai
             subfigures
             |> Seq.filter (fun s->s.referenced = figure)
 
-        let ofNode (node:Node) =
-            match node.referenced with
-                |Node_reference.Lower_figure figure_id -> 
-                    Some (Subfigure(node.id, figure_id))
-                | _ -> None
-            
+        
+        let take_ids (subfigures:Subfigure seq) =
+            subfigures
+            |>Seq.map (fun s -> s.id) 
+
 
     [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
-    module Node =
+    module Nodes =
 
         open System.Text.RegularExpressions
 
@@ -69,6 +79,10 @@ namespace rvinowise.ai
             |>Seq.choose(fun n->
                 Subfigure.ofNode n
             )
+
+
+    [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
+    module Node =
 
         let stencil_out id =
             Node(

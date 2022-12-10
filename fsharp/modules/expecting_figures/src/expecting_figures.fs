@@ -21,7 +21,7 @@ module Expecting_figures =
         =
         let expected_figures = 
             expectation.expected
-            |>Subfigure.referenced_figures
+            |>Subfigures.referenced_figures
                 
         if (Seq.contains fired_figure expected_figures) then
             let fired_subfigures = 

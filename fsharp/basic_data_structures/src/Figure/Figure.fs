@@ -32,7 +32,7 @@ module Figure=
     let lower_figures (figure:Figure) =
         figure.edges
         |>Edge.all_subfigures
-        |>Subfigure.referenced_figures
+        |>Subfigures.referenced_figures
         |>Set.ofSeq
 
     let subfigures (figure:Figure) =
@@ -42,4 +42,4 @@ module Figure=
     let nodes_referencing_lower_figure figure lower_figure = 
         figure
         |> subfigures 
-        |> Subfigure.pick_referencing_figure lower_figure
+        |> Subfigures.pick_referencing_figure lower_figure

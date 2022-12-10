@@ -100,14 +100,14 @@ module ``application of stencils``=
         member this.``preparing inputs for permutators, which map initial nodes``()=
             
             let _, subfigures_in_stencil, subfigures_in_target =
-                Applying_stencil.sorted_subfigures_to_map_first
+                sorted_subfigures_to_map_first
                     this.figures.a_fitting_stencil
                     this.figures.a_high_level_relatively_simple_figure
             
             let permutator_input = 
-                Applying_stencil.input_for_first_mappings_permutators 
-                                    subfigures_in_stencil,
-                                    subfigures_in_target
+                input_for_first_mappings_permutators 
+                    subfigures_in_stencil
+                    subfigures_in_target
                                     
             permutator_input |> should equal [|
                 (* b *)(1,3) ;
@@ -137,18 +137,20 @@ module ``application of stencils``=
             |> should equal false                                   
 
         
-//        [<Fact>]
-//        member this.``mapping of first stencil subfigures onto target produces initial mapping``()=
-//            let figure = this.figures.a_high_level_relatively_simple_figure
-//            let stencil = this.figures.a_fitting_stencil
-//            
-//            (map_first_nodes stencil figure)
-//            |> should equal
-//            {
-//                Mapped_stencil.subfigures=[
-//                    Subfigure()
-//                ]
-//            }
+        [<Fact>]
+        member this.``mapping of first stencil subfigures onto target produces initial mapping``()=
+            let figure = this.figures.a_high_level_relatively_simple_figure
+            let stencil = this.figures.a_fitting_stencil
+            
+            (map_first_nodes stencil figure)
+            |> should equal
+            {
+                Mapped_stencil.subfigures=[
+                    ("b","b0")
+                    ("h","h")
+                ]
+                |> Set.ofSeq
+            }
             
         
         [<Fact>] //(Skip="ui")

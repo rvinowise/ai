@@ -7,7 +7,7 @@ open rvinowise.ai
 module Applying_stencil = 
 
     type Mapped_stencil = {
-        subfigures: (Subfigure*Subfigure) Set
+        subfigures: (Node_id*Node_id) Set
     }
 
     
@@ -16,18 +16,20 @@ module Applying_stencil =
         
         let figures_to_map = 
             first_subfigures_of_stencil
-            |>Subfigure.referenced_figures
+            |>Subfigures.referenced_figures
 
         let subfigures_in_target = 
             figures_to_map
             |>Seq.map (Figure.nodes_referencing_lower_figure target)
+            |>Seq.map Subfigures.take_ids
             |>Seq.map Array.ofSeq
             
         let subfigures_in_stencil = 
             figures_to_map
             |>Seq.map (fun f->
-                Subfigure.pick_referencing_figure f first_subfigures_of_stencil
+                Subfigures.pick_referencing_figure f first_subfigures_of_stencil
             )
+            |>Seq.map Subfigures.take_ids
             
         (figures_to_map, subfigures_in_stencil, subfigures_in_target )
 
@@ -58,16 +60,16 @@ module Applying_stencil =
         
     
     let mapping_of_subfigure
-        (target_subfigures:Subfigure[])
+        (target_subfigures:Node_id[])
         target_subfigure_index
         subfigure_of_stencil
         =
-        (subfigure_of_stencil, target_subfigures.[target_subfigure_index])
+        (subfigure_of_stencil, target_subfigures[target_subfigure_index])
         
     let mappings_of_figure
-        (used_occurances:int[])
-        (subfigures_chosen_by_stencil: Subfigure seq)
-        (subfigures_available_in_target: Subfigure[])
+        used_occurances
+        subfigures_chosen_by_stencil
+        subfigures_available_in_target
         =
         (used_occurances, subfigures_chosen_by_stencil)
         ||>Seq.map2 (mapping_of_subfigure subfigures_available_in_target)
