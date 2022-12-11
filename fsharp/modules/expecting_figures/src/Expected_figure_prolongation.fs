@@ -16,9 +16,10 @@ module Expected_figure_prolongation =
     
 
     let from_figure (figure: Figure) :Expected_figure_prolongation =
-        let first_subfigures = Figure.first_subfigures figure
         {
-            Expected_figure_prolongation.prolongated=figure;
-            Expected_figure_prolongation.expected=first_subfigures
+            prolongated=figure;
+            expected=figure
+                        |>Figure.first_subfigures 
+                        |>Set.ofSeq
         }
 

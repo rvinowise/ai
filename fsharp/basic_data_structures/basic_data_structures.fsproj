@@ -21,6 +21,7 @@
     <Compile Include="src\Figure\Appearance\Appearance.fs" />
     <Compile Include="src\Figure\Figure.fs" />
     <Compile Include="src\Figure\Stencil.fs" />
+    <Compile Include="src\functions\Nodes.fs" />
   </ItemGroup>
 
 </Project>

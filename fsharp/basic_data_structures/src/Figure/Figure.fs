@@ -20,7 +20,7 @@ module Figure=
 
 
     let first_subfigures (figure:Figure) =
-        Edge.first_subfigures figure.edges
+        Edges.first_subfigures figure.edges
 
     let subfigure_occurances (subfigure:Figure) (figure:Figure) =
         figure.edges
@@ -31,15 +31,19 @@ module Figure=
 
     let lower_figures (figure:Figure) =
         figure.edges
-        |>Edge.all_subfigures
+        |>Edges.all_subfigures
         |>Subfigures.referenced_figures
         |>Set.ofSeq
 
     let subfigures (figure:Figure) =
         figure.edges
-        |>Edge.all_subfigures
+        |>Edges.all_subfigures
 
     let nodes_referencing_lower_figure figure lower_figure = 
         figure
         |> subfigures 
         |> Subfigures.pick_referencing_figure lower_figure
+
+    let subfigures_with_ids ids (figure:Figure)=
+        figure.edges
+        |>  Edges.subfigures_with_ids ids

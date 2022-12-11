@@ -6,18 +6,11 @@ open Expected_figure_prolongation
 module Expecting_figures = 
 
 
-    let get_next_subfigures 
-        (edges: Edge seq)
-        (subfigure: Subfigure) 
-        =
-        edges
-        |>Seq.filter (fun e->e.tail = subfigure)
-        |>Seq.map (fun e->e.head)
-        |>Seq.toList
+    
 
     let prolongate_expectation_with_an_input_figure 
-        fired_figure 
-        expectation 
+        (fired_figure: Figure_id)
+        (expectation: Expected_figure_prolongation) 
         =
         let expected_figures = 
             expectation.expected
@@ -33,9 +26,10 @@ module Expecting_figures =
             let new_expected = 
                 fired_subfigures
                 |>Seq.collect
-                    (get_next_subfigures
+                    (Subfigure.next_subfigures
                         expectation.prolongated.edges)
                 |>Set.ofSeq
+
             let updated_expected = 
                 fired_subfigures
                 |>Set.difference expectation.expected
@@ -47,7 +41,7 @@ module Expecting_figures =
 
     let change_expectations_with_new_input 
         (expectations: Expected_figure_prolongation seq) 
-        figure_id 
+        figure_id
         =
         expectations
         |> Seq.map (prolongate_expectation_with_an_input_figure figure_id)

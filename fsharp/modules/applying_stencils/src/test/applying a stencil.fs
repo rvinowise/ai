@@ -134,7 +134,7 @@ module ``application of stencils``=
             enumerator.Current
             |> should equal [| [|2|] |]
             enumerator.MoveNext()
-            |> should equal false                                   
+            |> should equal false
 
         
         [<Fact>]
@@ -144,15 +144,37 @@ module ``application of stencils``=
             
             (map_first_nodes stencil figure)
             |> should equal
-            {
-                Mapped_stencil.subfigures=[
-                    ("b","b0")
-                    ("h","h")
-                ]
-                |> Set.ofSeq
-            }
+            [
+                ("b","b0")
+                ("h","h")
+            ]
+            |> Set.ofSeq
             
-        
+
+        [<Fact>]
+        member this.``complete mapping of stencil onto target can be produced``()=
+            let figure = this.figures.a_high_level_relatively_simple_figure
+            let stencil = this.figures.a_fitting_stencil
+            
+            (map_stencil_onto_target stencil figure)
+            |> should equal
+            [
+                [   ("b","b0");
+                    ("h","h");
+                    ("f","f0"); 
+                ];
+                [   ("b","b1");
+                    ("h","h");
+                    ("f","f0");
+                ];
+                [   ("b","b2");
+                    ("h","h");
+                    ("f","f0");
+                ];
+            ]
+            |>Seq.map Set.ofSeq
+
+
         [<Fact>] //(Skip="ui")
         member this.``paint the target figure and the stencil``()=
             let figure = this.figures.a_high_level_relatively_simple_figure

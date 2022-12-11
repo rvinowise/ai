@@ -19,6 +19,6 @@ module Stencil =
     
     let first_subfigures (stencil:Stencil) =
         stencil.edges
-        |>rvinowise.ai.stencil.Edge.first_nodes 
+        |>rvinowise.ai.stencil.Edges.first_nodes 
         |>Nodes.only_subfigures
 

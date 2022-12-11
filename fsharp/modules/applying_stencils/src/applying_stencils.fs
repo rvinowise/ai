@@ -21,7 +21,7 @@ module Applying_stencil =
         let subfigures_in_target = 
             figures_to_map
             |>Seq.map (Figure.nodes_referencing_lower_figure target)
-            |>Seq.map Subfigures.take_ids
+            |>Seq.map Subfigures.ids
             |>Seq.map Array.ofSeq
             
         let subfigures_in_stencil = 
@@ -29,9 +29,10 @@ module Applying_stencil =
             |>Seq.map (fun f->
                 Subfigures.pick_referencing_figure f first_subfigures_of_stencil
             )
-            |>Seq.map Subfigures.take_ids
+            |>Seq.map Subfigures.ids
             
         (figures_to_map, subfigures_in_stencil, subfigures_in_target )
+
 
     let input_for_first_mappings_permutators subfigures_in_stencil subfigures_in_target =
         
@@ -82,15 +83,10 @@ module Applying_stencil =
         =
         Contract.Requires ((Seq.length subfigures_in_stencil) = (Seq.length subfigures_in_target))
         
-        
-        let mapped_nodes =
-            (indices, subfigures_in_stencil, subfigures_in_target)
-            |||>Seq.map3 mappings_of_figure
-            |>Seq.concat
-            |>Set.ofSeq
-        
-        {subfigures=mapped_nodes;}
-        
+        (indices, subfigures_in_stencil, subfigures_in_target)
+        |||>Seq.map3 mappings_of_figure
+        |>Seq.concat
+        |>Set.ofSeq
         
         
     let map_first_nodes
@@ -107,12 +103,24 @@ module Applying_stencil =
 
         
 
+
+    let prolongate_mapping 
+        stencil
+        target 
+        (mapped_nodes: (Node_id*Node_id)seq )
+        =
+        mapped_nodes
+        //|>Seq.map 
+
+
     let map_stencil_onto_target
         stencil
         target 
         =
             
-        map_first_nodes stencil target
+        (map_first_nodes stencil target)
+        |>Seq.map (prolongate_mapping stencil target)
+
         
 
     let retrieve_result target mapping =
