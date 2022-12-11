@@ -4,8 +4,8 @@
             "name": "win64_ai",
             "includePath": [
                 "${workspaceFolder}/**",
-                "${workspaceFolder}/src",
-                "C:/prj/ai/modules/finding_sequences/src",
+                "${workspaceFolder}/library",
+                "C:/prj/ai/modules/finding_sequences/library",
                 "C:/prj/ai/cpp/basic_data_structures/src",
                 "C:/Users/rvino/.conan/data/soci/4.0.3/_/_/package/04c04a9c80b2b031366beada455eae4607146fbb/include",
                 "C:/Program Files/PostgreSQL/14/include",
