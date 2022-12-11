@@ -102,7 +102,21 @@ module Applying_stencil =
         |>Seq.map (mapping_from_generator_output subfigures_in_stencil subfigures_in_target)
 
         
+    let next_subfigures_in_stencil stencil mapped_subfigure =
+        let stencil_subfigure, _ = mapped_subfigure
+        stencil
+        |> Stencil.next_subfigures stencil_subfigure
 
+    let next_subfigures_in_target target mapped_subfigure =
+        let _ , target_subfigure = mapped_subfigure
+        target
+        |> Figure.next_subfigures target_subfigure
+
+    let mappings_of_next_subfigure mapped_subfigure stencil target  =
+        let stencil_subfigure, target_subfigure = mapped_subfigure
+        stencil
+        |> Stencil.next_subfigures stencil_subfigure
+        |>Seq.map (find_subfigure_among_future_target_subfigures target)
 
     let prolongate_mapping 
         stencil
@@ -110,7 +124,8 @@ module Applying_stencil =
         (mapped_nodes: (Node_id*Node_id)seq )
         =
         mapped_nodes
-        //|>Seq.map 
+        |>Seq.map (mappings_of_next_subfigure target stencil)
+        
 
 
     let map_stencil_onto_target
