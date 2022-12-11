@@ -36,10 +36,11 @@ let provide_expected_prolongation_inside_graph
     (graph:RootGraph)
     =
     graph
-    |>Figure.provide_cluster_inside_graph subgraph_id
-    |>Figure.provide_subgraph_inside_graph 
+    |>Graph.provide_cluster_inside_graph subgraph_id
+    |>Graph.provide_subgraph_inside_graph 
         subgraph_id
-        prolongation.prolongated.edges
+        (prolongation.prolongated.edges
+        |>Figure.painted_edges)
     |>mark_expected_nodes
         prolongation
         subgraph_id
@@ -53,9 +54,9 @@ let visualise_prolongation
     (prolongation:Expected_figure_prolongation) 
     =
     prolongation.prolongated.id
-    |>empty_root_graph
+    |>Graph.empty_root_graph
     |>provide_expected_prolongation_inside_graph prolongation.prolongated.id prolongation
-    |>open_image_of_graph
+    |>Graph.open_image_of_graph
     |>ignore
 
     

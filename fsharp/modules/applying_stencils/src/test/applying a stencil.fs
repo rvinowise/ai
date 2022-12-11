@@ -144,35 +144,41 @@ module ``application of stencils``=
             
             (map_first_nodes stencil figure)
             |> should equal
-            [
-                ("b","b0")
-                ("h","h")
-            ]
-            |> Set.ofSeq
+                [   [   ("b","b0");
+                        ("h","h")
+                    ];
+                    [   ("b","b1");
+                        ("h","h")
+                    ];
+                    [   ("b","b2");
+                        ("h","h")
+                    ];
+                ]
             
 
-        [<Fact>]
+        [<Fact(Skip="not ready")>]
         member this.``complete mapping of stencil onto target can be produced``()=
             let figure = this.figures.a_high_level_relatively_simple_figure
             let stencil = this.figures.a_fitting_stencil
             
             (map_stencil_onto_target stencil figure)
             |> should equal
-            [
-                [   ("b","b0");
-                    ("h","h");
-                    ("f","f0"); 
-                ];
-                [   ("b","b1");
-                    ("h","h");
-                    ("f","f0");
-                ];
-                [   ("b","b2");
-                    ("h","h");
-                    ("f","f0");
-                ];
-            ]
-            |>Seq.map Set.ofSeq
+                [
+                    [   ("b","b0");
+                        ("h","h");
+                        ("f","f0"); 
+                    ];
+                    [   ("b","b1");
+                        ("h","h");
+                        ("f","f0");
+                    ];
+                    [   ("b","b2");
+                        ("h","h");
+                        ("f","f0");
+                    ];
+                ]
+                //|>Seq.map Set.ofSeq
+            
 
 
         [<Fact>] //(Skip="ui")
@@ -182,12 +188,12 @@ module ``application of stencils``=
 
             figure.id
             |>painted.Graph.empty_root_graph 
-            |>painted.Figure.provide_clustered_subgraph_inside_root_graph 
+            |>painted.Graph.provide_clustered_subgraph_inside_root_graph 
                 "target figure" 
                 (painted.Figure.painted_edges figure.edges)
-            |>painted.Figure.provide_clustered_subgraph_inside_root_graph 
+            |>painted.Graph.provide_clustered_subgraph_inside_root_graph 
                 "stencil"
                 (painted.Stencil.painted_edges stencil.edges)
-            |>painted.Figure.open_image_of_graph
+            |>painted.Graph.open_image_of_graph
 
         

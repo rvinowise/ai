@@ -26,8 +26,10 @@ module Expecting_figures =
             let new_expected = 
                 fired_subfigures
                 |>Seq.collect
-                    (Subfigure.next_subfigures
-                        expectation.prolongated.edges)
+                    (fun s ->
+                        Subfigure.next_subfigures
+                            expectation.prolongated.edges
+                            s.id)
                 |>Set.ofSeq
 
             let updated_expected = 

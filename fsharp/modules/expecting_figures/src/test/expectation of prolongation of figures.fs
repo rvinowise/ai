@@ -8,6 +8,7 @@ open rvinowise.ai.figure
 open rvinowise.ai.Expecting_figures
 open rvinowise.ai.Expected_figure_prolongation
 open rvinowise.ai.ui.painted.Expected_figure_prolongation
+open rvinowise.ai.ui.painted
 
 module ``expectation of prolongation of figures``=
     
@@ -15,19 +16,19 @@ module ``expectation of prolongation of figures``=
         Figure(
             "F",
             [
-                Edge(
+                figure.Edge(
                     Subfigure("b"),Subfigure("c")
                 );
-                Edge(
+                figure.Edge(
                     Subfigure("b"),Subfigure("d")
                 );
-                Edge(
+                figure.Edge(
                     Subfigure("d"),Subfigure("e")
                 );
-                Edge(
+                figure.Edge(
                     Subfigure("e"),Subfigure("f")
                 );
-                Edge(
+                figure.Edge(
                     Subfigure("h"),Subfigure("f")
                 );
             ]
@@ -72,7 +73,7 @@ module ``expectation of prolongation of figures``=
         next_expectation.expected
         |> should equal expected_subfigures_after_d
 
-    [<Fact(Skip="ui")>]
+    [<Fact>] //(Skip="ui")
     let paint_expectation()=
         let high_figure = a_high_level_relatively_simple_figure
         let initial_expectation = from_figure high_figure
@@ -82,8 +83,8 @@ module ``expectation of prolongation of figures``=
             prolongate_expectation_with_an_input_figure "d" expectation_after_b
         
         high_figure.id
-        |>empty_root_graph 
+        |>Graph.empty_root_graph 
         |>provide_expected_prolongation_inside_graph "initial_expectation" initial_expectation
         |>provide_expected_prolongation_inside_graph "expectation_after_b" expectation_after_b
         |>provide_expected_prolongation_inside_graph "expectation_after_d" expectation_after_d
-        |>open_image_of_graph
+        |>Graph.open_image_of_graph
