@@ -118,14 +118,26 @@ module Applying_stencil =
         |> Stencil.next_subfigures stencil_subfigure
         |>Seq.map (find_subfigure_among_future_target_subfigures target)
 
-    let prolongate_mapping 
+    let next_unmapped_subfigures stencil mapped_nodes =
+        []
+
+    let prolongate_mapping2 
         stencil
         target 
         (mapped_nodes: (Node_id*Node_id)seq )
         =
         mapped_nodes
+        |>next_unmapped_subfigures stencil
+        match 
+
         |>Seq.map (mappings_of_next_subfigure target stencil)
         
+
+    let prolongate_mapping2 
+        stencil
+        target 
+        (mapped_nodes: (Node_id*Node_id)seq )
+        (last_mapped_subfigures: (Node_id*Node_id)seq )
 
 
     let map_stencil_onto_target
