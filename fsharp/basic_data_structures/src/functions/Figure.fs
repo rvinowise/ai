@@ -43,3 +43,5 @@ namespace rvinowise.ai
             stencil.edges
             |>rvinowise.ai.stencil.Edges.first_nodes 
             |>Nodes.only_subfigures
+
+        

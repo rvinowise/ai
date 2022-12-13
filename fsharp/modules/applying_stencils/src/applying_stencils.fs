@@ -144,13 +144,26 @@ module Applying_stencil =
         |>Seq.distinct
         |>Nodes.only_subfigures
 
+    let ``targets of mapping of stencil subfigures`` 
+        (mapping: Map<Node_id, Node_id>)
+        subfigures =
+        subfigures
+        |>Seq.map (Set. mapping)
+
     let prolongate_mapping_with_subfigure
-        stencil
+        (stencil: Stencil)
         target
         mapping 
         subfigure
         =
-
+        subfigure
+        |>Node.previous_subfigures stencil.edges
+        |>``targets of mapping of stencil subfigures`` mapping
+        |>``same subfigures in target, which go after the previously mapped subfigures``
+            subfigure
+            target
+        |>mapping_prolongated_by_subfigures
+            mapping
 
     let prolongate_mapping 
         stencil
@@ -166,12 +179,13 @@ module Applying_stencil =
                 mapping
         )
         
+        
 
     let rec prolongate_mappings 
         stencil
         target 
         (last_mapped_subfigures: (Node_id)seq )
-        (mappings: (Node_id*Node_id)Set seq )
+        mappings
         =
         let next_subfigures_to_map = 
             stencil

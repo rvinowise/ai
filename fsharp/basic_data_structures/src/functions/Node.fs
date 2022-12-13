@@ -40,6 +40,15 @@ namespace rvinowise.ai
 
 
     [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
+    module Nodes =
+
+        let only_subfigures (nodes: Node seq) =
+            nodes
+            |>Seq.choose(fun n->
+                Subfigure.ofNode n
+            )
+
+    [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
     module Node =
 
         let stencil_out id =
@@ -53,17 +62,17 @@ namespace rvinowise.ai
             |>Seq.filter (fun e->e.tail.id = node)
             |>Seq.map (fun e->e.head)
 
-    [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
-    module Nodes =
+        let previous_nodes (edges: stencil.Edge seq) (node:Node_id) =
+            edges
+            |>Seq.filter (fun e->e.head.id = node)
+            |>Seq.map (fun e->e.tail)
+        
+        let previous_subfigures edges node =
+            node
+            |>previous_nodes edges
+            |>Nodes.only_subfigures
 
-        let only_subfigures (nodes: Node seq) =
-            nodes
-            |>Seq.choose(fun n->
-                Subfigure.ofNode n
-            )
+    
 
-        // let ids (nodes:Node seq) =
-        //     nodes
-        //     |>Seq.map (fun n -> n.id)
 
     
