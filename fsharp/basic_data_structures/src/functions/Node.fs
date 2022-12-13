@@ -48,10 +48,13 @@ namespace rvinowise.ai
                 Stencil_output
             )
 
+        let next_nodes (edges: stencil.Edge seq) (node:Node_id) =
+            edges
+            |>Seq.filter (fun e->e.tail.id = node)
+            |>Seq.map (fun e->e.head)
+
     [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
     module Nodes =
-
-        open System.Text.RegularExpressions
 
         let only_subfigures (nodes: Node seq) =
             nodes
@@ -59,5 +62,8 @@ namespace rvinowise.ai
                 Subfigure.ofNode n
             )
 
+        // let ids (nodes:Node seq) =
+        //     nodes
+        //     |>Seq.map (fun n -> n.id)
 
     

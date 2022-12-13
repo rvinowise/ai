@@ -132,13 +132,75 @@ module Applying_stencil =
 
         |>Seq.map (mappings_of_next_subfigure target stencil)
         
+    let (|Seq|_|) test input =
+        if Seq.compareWith Operators.compare input test = 0
+            then Some ()
+            else None
 
-    let prolongate_mapping2 
+
+    let next_subfigures subfigures (stencil: Stencil)=
+        subfigures
+        |>Seq.collect (Node.next_nodes stencil.edges)
+        |>Seq.distinct
+        |>Nodes.only_subfigures
+
+    let prolongate_mapping_with_subfigure
+        stencil
+        target
+        mapping 
+        subfigure
+        =
+
+
+    let prolongate_mapping 
+        stencil
+        target
+        next_subfigures_to_map
+        mapping
+        =
+        next_subfigures_to_map
+        |>Seq.collect (
+            prolongate_mapping_with_subfigure
+                stencil
+                target
+                mapping
+        )
+        
+
+    let rec prolongate_mappings 
         stencil
         target 
-        (mapped_nodes: (Node_id*Node_id)seq )
-        (last_mapped_subfigures: (Node_id*Node_id)seq )
+        (last_mapped_subfigures: (Node_id)seq )
+        (mappings: (Node_id*Node_id)Set seq )
+        =
+        let next_subfigures_to_map = 
+            stencil
+            |>next_subfigures last_mapped_subfigures
+            |>Subfigures.ids
 
+        let mappings =
+            mappings
+            |>Seq.collect (prolongate_mapping stencil target next_subfigures_to_map)
+
+        match next_subfigures_to_map with
+        | Seq [] -> 
+            mappings
+        | _ -> 
+            prolongate_mappings
+                stencil 
+                target 
+                next_subfigures_to_map
+                mappings
+
+    let stencil_node mapped_node =
+        fst mapped_node
+
+    let subfigures_of_stencil mappings =
+        mappings
+        |>Seq.map (fun mapping->
+            mapping
+            |>Seq.map stencil_node
+        )
 
     let map_stencil_onto_target
         stencil
@@ -146,7 +208,10 @@ module Applying_stencil =
         =
             
         (map_first_nodes stencil target)
-        |>Seq.map (prolongate_mapping stencil target)
+        |> prolongate_mappings
+            stencil 
+            target
+            subfigures_of_stencil
 
         
 
