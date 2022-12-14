@@ -5,14 +5,15 @@ open rvinowise.ai.mapping_stencils
 open rvinowise.ai
 
 module Applying_stencil = 
+    open System.Collections.Generic
 
     type Mapped_stencil = {
         subfigures: (Node_id*Node_id) Set
     }
 
     
-    let sorted_subfigures_to_map_first stencil target =
-        let first_subfigures_of_stencil = Stencil.first_subfigures stencil
+    let sorted_subfigures_to_map_first first_subfigures_of_stencil target =
+        //let first_subfigures_of_stencil = Stencil.first_subfigures stencil
         
         let figures_to_map = 
             first_subfigures_of_stencil
@@ -61,19 +62,21 @@ module Applying_stencil =
         
     
     let mapping_of_subfigure
+        (mapping: Dictionary<Node_id, Node_id>)
         (target_subfigures:Node_id[])
         target_subfigure_index
         subfigure_of_stencil
         =
-        (subfigure_of_stencil, target_subfigures[target_subfigure_index])
+        mapping.Add(subfigure_of_stencil, target_subfigures[target_subfigure_index])
         
     let mappings_of_figure
-        used_occurances
-        subfigures_chosen_by_stencil
-        subfigures_available_in_target
+        (mapping: Dictionary<Node_id, Node_id>)
+        (used_occurances,
+        subfigures_chosen_by_stencil,
+        subfigures_available_in_target)
         =
         (used_occurances, subfigures_chosen_by_stencil)
-        ||>Seq.map2 (mapping_of_subfigure subfigures_available_in_target)
+        ||>Seq.iter2 (mapping_of_subfigure mapping subfigures_available_in_target)
         
         
     let mapping_from_generator_output
@@ -82,55 +85,53 @@ module Applying_stencil =
         indices
         =
         Contract.Requires ((Seq.length subfigures_in_stencil) = (Seq.length subfigures_in_target))
+        let mapping = Dictionary<Node_id, Node_id>()
         
         (indices, subfigures_in_stencil, subfigures_in_target)
-        |||>Seq.map3 mappings_of_figure
-        |>Seq.concat
-        |>Set.ofSeq
+        |||>Seq.zip3
+        |>Seq.iter (mappings_of_figure mapping)
+        |>ignore
         
+        mapping
         
+
     let map_first_nodes
-        stencil
+        first_subfigures_of_stencil
         target
         =
-        let figures_to_map, subfigures_in_stencil, subfigures_in_target =
-            sorted_subfigures_to_map_first stencil target
+        let figures_to_map, 
+            subfigures_in_stencil,
+            subfigures_in_target =
+                sorted_subfigures_to_map_first first_subfigures_of_stencil target
         
-        let generator = (prepared_generator_of_first_mappings subfigures_in_stencil subfigures_in_target)
+        let generator = 
+            (prepared_generator_of_first_mappings subfigures_in_stencil subfigures_in_target)
         
         generator
-        |>Seq.map (mapping_from_generator_output subfigures_in_stencil subfigures_in_target)
+        |>Seq.map (
+            mapping_from_generator_output 
+                subfigures_in_stencil 
+                subfigures_in_target
+        )
 
         
-    let next_subfigures_in_stencil stencil mapped_subfigure =
-        let stencil_subfigure, _ = mapped_subfigure
-        stencil
-        |> Stencil.next_subfigures stencil_subfigure
+    // let next_subfigures_in_stencil (stencil:Stencil) mapped_subfigure =
+    //     let stencil_subfigure, _ = mapped_subfigure
+    //     stencil_subfigure
+    //     |> Node.next_nodes stencil.edges
+    //     |> Nodes.only_subfigures
 
-    let next_subfigures_in_target target mapped_subfigure =
-        let _ , target_subfigure = mapped_subfigure
-        target
-        |> Figure.next_subfigures target_subfigure
+    // let next_subfigures_in_target (target: Figure) mapped_subfigure =
+    //     let _ , target_subfigure = mapped_subfigure
+    //     mapped_subfigure
+    //     |> Subfigure.next_subfigures target.edges
 
-    let mappings_of_next_subfigure mapped_subfigure stencil target  =
-        let stencil_subfigure, target_subfigure = mapped_subfigure
-        stencil
-        |> Stencil.next_subfigures stencil_subfigure
-        |>Seq.map (find_subfigure_among_future_target_subfigures target)
+
 
     let next_unmapped_subfigures stencil mapped_nodes =
         []
 
-    let prolongate_mapping2 
-        stencil
-        target 
-        (mapped_nodes: (Node_id*Node_id)seq )
-        =
-        mapped_nodes
-        |>next_unmapped_subfigures stencil
-        match 
-
-        |>Seq.map (mappings_of_next_subfigure target stencil)
+    
         
     let (|Seq|_|) test input =
         if Seq.compareWith Operators.compare input test = 0
@@ -145,10 +146,40 @@ module Applying_stencil =
         |>Nodes.only_subfigures
 
     let ``targets of mapping of stencil subfigures`` 
-        (mapping: Map<Node_id, Node_id>)
-        subfigures =
+        (mapping: Dictionary<Node_id, Node_id>)
+        subfigures 
+        =
         subfigures
-        |>Seq.map (Set. mapping)
+        |>Seq.map (fun s->
+            mapping[s]
+        )
+
+    let subfigures_after_other_subfigures
+        figure
+        referenced_figure
+        previous_subfigures
+        =
+        figure.edges
+
+    let copy_of_mapping_with_prolongation
+        (mapping: Dictionary<Node_id,Node_id>)
+        stencil_subfigure
+        target_subfigure
+        =
+        let mapping = Dictionary<Node_id,Node_id>(mapping)
+        mapping[stencil_subfigure] <- target_subfigure
+        mapping
+
+
+    let mapping_prolongated_by_subfigures
+        mapping
+        stencil_subfigure
+        target_subfigures
+        =
+        target_subfigures
+        |>Seq.map (
+            copy_of_mapping_with_prolongation mapping stencil_subfigure
+        )
 
     let prolongate_mapping_with_subfigure
         (stencil: Stencil)
@@ -158,12 +189,14 @@ module Applying_stencil =
         =
         subfigure
         |>Node.previous_subfigures stencil.edges
+        |>Subfigures.ids
         |>``targets of mapping of stencil subfigures`` mapping
-        |>``same subfigures in target, which go after the previously mapped subfigures``
-            subfigure
+        |>subfigures_after_other_subfigures
             target
+            subfigure
         |>mapping_prolongated_by_subfigures
             mapping
+            subfigure
 
     let prolongate_mapping 
         stencil
@@ -206,27 +239,22 @@ module Applying_stencil =
                 next_subfigures_to_map
                 mappings
 
-    let stencil_node mapped_node =
-        fst mapped_node
-
-    let subfigures_of_stencil mappings =
-        mappings
-        |>Seq.map (fun mapping->
-            mapping
-            |>Seq.map stencil_node
-        )
 
     let map_stencil_onto_target
         stencil
         target 
         =
-            
-        (map_first_nodes stencil target)
-        |> prolongate_mappings
+        let first_subfigures_of_stencil = Stencil.first_subfigures stencil
+        
+        target
+        |>map_first_nodes first_subfigures_of_stencil
+        |>prolongate_mappings
             stencil 
             target
-            subfigures_of_stencil
-
+            (
+                first_subfigures_of_stencil
+                |>Subfigures.ids
+            )
         
 
     let retrieve_result target mapping =

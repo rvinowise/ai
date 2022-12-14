@@ -92,7 +92,7 @@ module ``application of stencils``=
             let target = this.figures.a_high_level_relatively_simple_figure
             let stencil = this.figures.a_fitting_stencil
 
-            let output = Applying_stencil.results_of_stencil_application stencil target 
+            let output = results_of_stencil_application stencil target 
             ()
             //Assert.Equal(prolongation.expected, first_subfigures)
 
@@ -101,7 +101,9 @@ module ``application of stencils``=
             
             let _, subfigures_in_stencil, subfigures_in_target =
                 sorted_subfigures_to_map_first
-                    this.figures.a_fitting_stencil
+                    (
+                        Stencil.first_subfigures this.figures.a_fitting_stencil
+                    )
                     this.figures.a_high_level_relatively_simple_figure
             
             let permutator_input = 
@@ -142,19 +144,32 @@ module ``application of stencils``=
             let figure = this.figures.a_high_level_relatively_simple_figure
             let stencil = this.figures.a_fitting_stencil
             
-            (map_first_nodes stencil figure)
+            (
+                map_first_nodes 
+                    (Stencil.first_subfigures stencil) 
+                    figure
+            )
             |> should equal
-                [   [   ("b","b0");
-                        ("h","h")
-                    ];
-                    [   ("b","b1");
-                        ("h","h")
-                    ];
-                    [   ("b","b2");
-                        ("h","h")
-                    ];
+                [   dict ["b","b0";"h","h"];
+                    dict ["b","b1";"h","h"];
+                    dict ["b","b2";"h","h"]
                 ]
             
+        [<Fact>]
+        member this.``finding following subfigures referencing a specific figure``()=
+            (subfigures_after_other_subfigures
+                this.figures.a_high_level_relatively_simple_figure
+                "f"
+                ["b0"]
+            )|> should equal
+                ["f0","f1"]
+
+            (subfigures_after_other_subfigures
+                this.figures.a_high_level_relatively_simple_figure
+                "f"
+                ["d","b2"]
+            )|> should equal
+                ["f1"]
 
         [<Fact(Skip="not ready")>]
         member this.``complete mapping of stencil onto target can be produced``()=
