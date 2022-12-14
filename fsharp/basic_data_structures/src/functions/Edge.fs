@@ -1,4 +1,5 @@
 namespace rvinowise.ai.figure
+    open rvinowise.ai
 
     [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
     module Edges =
@@ -31,6 +32,11 @@ namespace rvinowise.ai.figure
                 )
             )
 
+        let starting_from (subfigure: Node_id) (edges: Edge seq) =
+            edges
+            |>Seq.filter (fun e->e.tail.id = subfigure)
+            |>Seq.map (fun e->e.head)
+
 namespace rvinowise.ai.stencil
     open rvinowise.ai
 
@@ -53,10 +59,7 @@ namespace rvinowise.ai.stencil
                 )
             |>Seq.distinct
 
-        let next_nodes 
-            (edges: Edge seq)
-            (node: Node_id) 
-            =
+        let starting_from (node: Node_id) (edges: Edge seq) =
             edges
             |>Seq.filter (fun e->e.tail.id = node)
             |>Seq.map (fun e->e.head)

@@ -154,12 +154,54 @@ module Applying_stencil =
             mapping[s]
         )
 
+    let rec subfigures_reacheble_from_edges
+        (reached: HashSet<Node_id>)
+        (reaching_edges: figure.Edge seq)
+        (all_edges)
+        referenced_figure
+        =
+        edges
+        |>Edges.starting_from starting_subfigure all_edges
+        |>check_reaching referenced_figure
+
+        reaching_edges
+        |>Seq.filter (fun edge->
+            edge.head.referenced = referenced_figure
+        )
+        |>Seq.iter (fun edge -> 
+            reached.Add(edge.head.id) |> ignore
+        )
+         
+
+        reaching_edges
+        |>Seq.map Edge.next_edges all_edges
+        |>Seq.map subfigures_reacheble_from_edges reached 
+
+    let rec subfigures_reacheble_from_subfigure 
+        (figure: Figure)
+        referenced_figure
+        starting_subfigure
+        =
+
+        let edges = Subfigure.outgoing_edges figure.edges starting_subfigure
+        subfigures_reacheble_from_edges 
+            (HashSet<Node_id>())
+            edges 
+            referenced_figure
+
+        edges
+        |>Edges.starting_from starting_subfigure
+        |>check_reaching referenced_figure
+
     let subfigures_after_other_subfigures
-        figure
+        (figure:Figure)
         referenced_figure
         previous_subfigures
         =
-        figure.edges
+        previous_subfigures
+        |>Seq.map (subfigures_reacheble_from_subfigure figure.edges referenced_figure)
+        |>Seq.map Set.ofSeq
+        |>Seq.reduce Set.intersect
 
     let copy_of_mapping_with_prolongation
         (mapping: Dictionary<Node_id,Node_id>)

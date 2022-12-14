@@ -21,6 +21,16 @@ namespace rvinowise.ai
             |>Seq.filter (fun e->e.tail.id = subfigure)
             |>Seq.map (fun e->e.head)
 
+        let outgoing_edges 
+            (edges: figure.Edge seq) 
+            node_id
+            =
+            edges
+            |>Seq.filter (fun e->
+                e.tail = node_id
+            )
+
+
     [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
     module Subfigures = 
         
