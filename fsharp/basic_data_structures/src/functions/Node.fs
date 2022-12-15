@@ -67,14 +67,18 @@ namespace rvinowise.ai
                 Stencil_output
             )
 
+        let incoming_edges edges node =
+            edges
+            |>Seq.filter (fun e->e.head.id = node)
+
         let next_nodes (edges: stencil.Edge seq) (node:Node_id) =
             edges
             |>Seq.filter (fun e->e.tail.id = node)
             |>Seq.map (fun e->e.head)
 
         let previous_nodes (edges: stencil.Edge seq) (node:Node_id) =
-            edges
-            |>Seq.filter (fun e->e.head.id = node)
+            node
+            |>incoming_edges edges
             |>Seq.map (fun e->e.tail)
         
         let previous_subfigures edges node =
@@ -82,7 +86,10 @@ namespace rvinowise.ai
             |>previous_nodes edges
             |>Nodes.only_subfigures
 
-    
+        
 
-
+        let previous_subfigures_jumping_over_outputs edges node =
+            node
+            |>incoming_edges edges
+            
     

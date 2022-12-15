@@ -26,13 +26,17 @@ module Simple =
         
         
 module ``application of stencils``=
-
     open FsUnit
-    
-
     open rvinowise.ai.stencil
-
+    open rvinowise.ai
+    open System.Collections.Generic
+    
     type Used_figures()=
+        
+        member _.initial_mapping_without_prolongation = dict ["b","b1";"h","h"]
+        member _.initial_fruitful_mapping = dict ["b","b0";"h","h"]
+        member _.initial_useless_mapping = dict ["b","b2";"h","h"]
+        
         member _.a_fitting_stencil: Stencil =
             rvinowise.ai.Stencil(
                 "S",
@@ -81,10 +85,72 @@ module ``application of stencils``=
                     
                 ]
             )
+            
+        
 
-    type tests(used_figures: Used_figures)=
+    type ``prolongate a mapping with a subfigure``(used_figures: Used_figures)=
         interface IClassFixture<Used_figures>
+        member _.figures = used_figures
+        
+        [<Fact>]
+        member this.``normal case``()=    
+            prolongate_mapping_with_subfigure
+                this.figures.a_fitting_stencil
+                this.figures.a_high_level_relatively_simple_figure
+                this.figures.initial_useless_mapping
+                (Simple.Subfigure("f"))
+            |> should equal
+                [
+                    dict [
+                        "b","b2";
+                        "h","h";
+                        "f","f1"
+                    ]
+                ]
+            
+        [<Fact>]
+        member this.``empty sequence is returned, if a mapping can't be prolongated by this subfigure``()=    
+            prolongate_mapping_with_subfigure
+                this.figures.a_fitting_stencil
+                this.figures.a_high_level_relatively_simple_figure
+                this.figures.initial_mapping_without_prolongation
+                (Simple.Subfigure("f"))
+            |> should equal
+                []
+                
+    type ``prolongate mapping``(used_figures: Used_figures)=
+        interface IClassFixture<Used_figures>
+        member _.figures = used_figures
+        
+        [<Fact>]
+        member this.``impossible to prolongate, because of no matching following subfigures``()=
+            prolongate_mapping 
+                this.figures.a_fitting_stencil
+                this.figures.a_high_level_relatively_simple_figure
+                [Simple.Subfigure("f")]
+                this.figures.initial_mapping_without_prolongation
+            |> should equal
+                []
+        
+        [<Fact>]
+        member this.``prolongation with a single following node``()=
+            prolongate_mapping 
+                this.figures.a_fitting_stencil
+                this.figures.a_high_level_relatively_simple_figure
+                [Simple.Subfigure("f")]
+                this.figures.initial_useless_mapping
+            |> should equal
+                [
+                     dict [
+                        "b","b1";
+                        "h","h";
+                        "f","f"
+                    ]
+                ]
 
+
+    type ``apply a stencil``(used_figures: Used_figures)=
+        interface IClassFixture<Used_figures>
         member _.figures = used_figures
 
         [<Fact>]
@@ -171,6 +237,8 @@ module ``application of stencils``=
             )|> should equal
                 ["f1"]
 
+        
+        
         [<Fact>]
         member this.``complete mapping of stencil onto target can be produced``()=
             let figure = this.figures.a_high_level_relatively_simple_figure

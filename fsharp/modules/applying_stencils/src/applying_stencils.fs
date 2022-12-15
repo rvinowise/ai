@@ -147,7 +147,7 @@ module Applying_stencil =
         |>Nodes.only_subfigures
 
     let ``targets of mapping of stencil subfigures`` 
-        (mapping: Dictionary<Node_id, Node_id>)
+        (mapping: IDictionary<Node_id, Node_id>)
         subfigures 
         =
         subfigures
@@ -212,7 +212,7 @@ module Applying_stencil =
         |>Seq.reduce Set.intersect
 
     let copy_of_mapping_with_prolongation
-        (mapping: Dictionary<Node_id,Node_id>)
+        (mapping: IDictionary<Node_id,Node_id>)
         stencil_subfigure
         target_subfigure
         =
@@ -234,7 +234,7 @@ module Applying_stencil =
     let prolongate_mapping_with_subfigure
         (stencil: Stencil)
         target
-        mapping 
+        (mapping: IDictionary<Node_id, Node_id>) 
         (prolongating_stencil_subfigure: Subfigure)
         =
         prolongating_stencil_subfigure.id
@@ -272,9 +272,6 @@ module Applying_stencil =
             stencil
             |>next_subfigures last_mapped_subfigures
 
-        let test = Array.ofSeq mappings
-        let test0 = prolongate_mapping stencil target next_subfigures_to_map test[1]
-        
         let mappings =
             mappings
             |>Seq.collect (prolongate_mapping stencil target next_subfigures_to_map)
