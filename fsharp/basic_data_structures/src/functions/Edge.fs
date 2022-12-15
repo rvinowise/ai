@@ -37,6 +37,20 @@ namespace rvinowise.ai.figure
             |>Seq.filter (fun e->e.tail.id = subfigure)
             |>Seq.map (fun e->e.head)
 
+
+    [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
+    module Edge =
+        
+        let next_edges 
+            (edges: Edge seq)
+            (edge: Edge)
+            =
+            edges
+            |>Seq.filter (fun e->
+                e.tail.id = edge.head.id
+            )
+
+
 namespace rvinowise.ai.stencil
     open rvinowise.ai
 

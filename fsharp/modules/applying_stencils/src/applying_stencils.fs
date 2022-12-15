@@ -1,6 +1,7 @@
 namespace rvinowise.ai.figure
 
 open System.Diagnostics.Contracts
+open Rubjerg.Graphviz
 open rvinowise.ai.mapping_stencils
 open rvinowise.ai
 
@@ -155,51 +156,58 @@ module Applying_stencil =
         )
 
     let rec subfigures_reacheble_from_edges
-        (reached: HashSet<Node_id>)
-        (reaching_edges: figure.Edge seq)
+        (reached_goals: HashSet<Node_id>)
         (all_edges)
-        referenced_figure
+        goal_figure
+        (reaching_edges: figure.Edge seq)
         =
-        edges
-        |>Edges.starting_from starting_subfigure all_edges
-        |>check_reaching referenced_figure
-
         reaching_edges
         |>Seq.filter (fun edge->
-            edge.head.referenced = referenced_figure
+            edge.head.referenced = goal_figure
         )
         |>Seq.iter (fun edge -> 
-            reached.Add(edge.head.id) |> ignore
+            reached_goals.Add(edge.head.id) |> ignore
         )
-         
 
         reaching_edges
-        |>Seq.map Edge.next_edges all_edges
-        |>Seq.map subfigures_reacheble_from_edges reached 
+        |>Seq.map (Edge.next_edges all_edges)
+        |>Seq.iter (
+            subfigures_reacheble_from_edges 
+                reached_goals 
+                all_edges
+                goal_figure
+        )
+        |>ignore
+
 
     let rec subfigures_reacheble_from_subfigure 
         (figure: Figure)
-        referenced_figure
-        starting_subfigure
+        goal_figure
+        (starting_subfigure:Node_id)
         =
-
         let edges = Subfigure.outgoing_edges figure.edges starting_subfigure
+        let reached_goals = HashSet<Node_id>()
         subfigures_reacheble_from_edges 
-            (HashSet<Node_id>())
-            edges 
-            referenced_figure
+            reached_goals
+            figure.edges
+            goal_figure
+            edges
+        |>ignore
 
-        edges
-        |>Edges.starting_from starting_subfigure
-        |>check_reaching referenced_figure
+        reached_goals
+
 
     let subfigures_after_other_subfigures
-        (figure:Figure)
-        referenced_figure
-        previous_subfigures
+        (figure_in_which_search: Figure)
+        figure_referenced_by_goal_subfigures
+        (subfigures_before_goals: Node_id seq)
         =
-        previous_subfigures
-        |>Seq.map (subfigures_reacheble_from_subfigure figure.edges referenced_figure)
+        subfigures_before_goals
+        |>Seq.map (
+            subfigures_reacheble_from_subfigure 
+                figure_in_which_search 
+                figure_referenced_by_goal_subfigures
+        )
         |>Seq.map Set.ofSeq
         |>Seq.reduce Set.intersect
 
@@ -227,18 +235,18 @@ module Applying_stencil =
         (stencil: Stencil)
         target
         mapping 
-        subfigure
+        (prolongating_stencil_subfigure: Subfigure)
         =
-        subfigure
+        prolongating_stencil_subfigure.id
         |>Node.previous_subfigures stencil.edges
         |>Subfigures.ids
         |>``targets of mapping of stencil subfigures`` mapping
         |>subfigures_after_other_subfigures
             target
-            subfigure
+            (prolongating_stencil_subfigure.referenced)
         |>mapping_prolongated_by_subfigures
             mapping
-            subfigure
+            prolongating_stencil_subfigure.id
 
     let prolongate_mapping 
         stencil
@@ -253,20 +261,20 @@ module Applying_stencil =
                 target
                 mapping
         )
-        
-        
 
     let rec prolongate_mappings 
         stencil
         target 
-        (last_mapped_subfigures: (Node_id)seq )
-        mappings
+        (last_mapped_subfigures: Node_id seq )
+        (mappings:Dictionary<Node_id, Node_id> seq)
         =
         let next_subfigures_to_map = 
             stencil
             |>next_subfigures last_mapped_subfigures
-            |>Subfigures.ids
 
+        let test = Array.ofSeq mappings
+        let test0 = prolongate_mapping stencil target next_subfigures_to_map test[1]
+        
         let mappings =
             mappings
             |>Seq.collect (prolongate_mapping stencil target next_subfigures_to_map)
@@ -278,7 +286,7 @@ module Applying_stencil =
             prolongate_mappings
                 stencil 
                 target 
-                next_subfigures_to_map
+                (Subfigures.ids next_subfigures_to_map)
                 mappings
 
 

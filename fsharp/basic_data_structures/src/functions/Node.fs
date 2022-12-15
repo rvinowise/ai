@@ -27,7 +27,7 @@ namespace rvinowise.ai
             =
             edges
             |>Seq.filter (fun e->
-                e.tail = node_id
+                e.tail.id = node_id
             )
 
 

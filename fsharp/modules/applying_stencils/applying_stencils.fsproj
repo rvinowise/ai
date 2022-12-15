@@ -9,7 +9,7 @@
   <ItemGroup>
     <Compile Include="src\applying_stencils.fs" />
     <Compile Include="src\painted\applying_stencil.fs" />
-    <Compile Include="src\test\applying a stencil.fs" />
+    <Compile Include="src\test\applying_a_stencil.fs" />
   </ItemGroup>
 
   <ItemGroup>
