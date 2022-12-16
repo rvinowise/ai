@@ -3,6 +3,7 @@ namespace rvinowise.ai.figure
 open System.Diagnostics.Contracts
 open Rubjerg.Graphviz
 open rvinowise.ai.mapping_stencils
+open rvinowise.ai.stencil
 open rvinowise.ai
 
 module Applying_stencil = 
@@ -63,7 +64,7 @@ module Applying_stencil =
         
     
     let mapping_of_subfigure
-        (mapping: Dictionary<Node_id, Node_id>)
+        (mapping: Mapping)
         (target_subfigures:Node_id[])
         target_subfigure_index
         subfigure_of_stencil
@@ -71,7 +72,7 @@ module Applying_stencil =
         mapping.Add(subfigure_of_stencil, target_subfigures[target_subfigure_index])
         
     let mappings_of_figure
-        (mapping: Dictionary<Node_id, Node_id>)
+        mapping
         (used_occurances,
         subfigures_chosen_by_stencil,
         subfigures_available_in_target)
@@ -86,7 +87,7 @@ module Applying_stencil =
         indices
         =
         Contract.Requires ((Seq.length subfigures_in_stencil) = (Seq.length subfigures_in_target))
-        let mapping = Dictionary<Node_id, Node_id>()
+        let mapping = Mapping.empty
         
         (indices, subfigures_in_stencil, subfigures_in_target)
         |||>Seq.zip3
@@ -115,19 +116,6 @@ module Applying_stencil =
                 subfigures_in_target
         )
 
-        
-    // let next_subfigures_in_stencil (stencil:Stencil) mapped_subfigure =
-    //     let stencil_subfigure, _ = mapped_subfigure
-    //     stencil_subfigure
-    //     |> Node.next_nodes stencil.edges
-    //     |> Nodes.only_subfigures
-
-    // let next_subfigures_in_target (target: Figure) mapped_subfigure =
-    //     let _ , target_subfigure = mapped_subfigure
-    //     mapped_subfigure
-    //     |> Subfigure.next_subfigures target.edges
-
-
 
     let next_unmapped_subfigures stencil mapped_nodes =
         []
@@ -147,7 +135,7 @@ module Applying_stencil =
         |>Nodes.only_subfigures
 
     let ``targets of mapping of stencil subfigures`` 
-        (mapping: IDictionary<Node_id, Node_id>)
+        (mapping:Mapping)
         subfigures 
         =
         subfigures
@@ -212,11 +200,11 @@ module Applying_stencil =
         |>Seq.reduce Set.intersect
 
     let copy_of_mapping_with_prolongation
-        (mapping: IDictionary<Node_id,Node_id>)
+        (mapping:Mapping)
         stencil_subfigure
         target_subfigure
         =
-        let mapping = Dictionary<Node_id,Node_id>(mapping)
+        let mapping = Mapping.copy mapping
         mapping[stencil_subfigure] <- target_subfigure
         mapping
 
@@ -234,11 +222,11 @@ module Applying_stencil =
     let prolongate_mapping_with_subfigure
         (stencil: Stencil)
         target
-        (mapping: IDictionary<Node_id, Node_id>) 
+        mapping  
         (prolongating_stencil_subfigure: Subfigure)
         =
         prolongating_stencil_subfigure.id
-        |>Node.previous_subfigures stencil.edges
+        |>Node.previous_subfigures_jumping_over_outputs stencil.edges
         |>Subfigures.ids
         |>``targets of mapping of stencil subfigures`` mapping
         |>subfigures_after_other_subfigures
@@ -266,7 +254,7 @@ module Applying_stencil =
         stencil
         target 
         (last_mapped_subfigures: Node_id seq )
-        (mappings:Dictionary<Node_id, Node_id> seq)
+        (mappings: Mapping seq)
         =
         let next_subfigures_to_map = 
             stencil

@@ -67,7 +67,7 @@ namespace rvinowise.ai
                 Stencil_output
             )
 
-        let incoming_edges edges node =
+        let incoming_edges (edges: stencil.Edge seq) (node:Node_id) =
             edges
             |>Seq.filter (fun e->e.head.id = node)
 
@@ -91,5 +91,10 @@ namespace rvinowise.ai
         let previous_subfigures_jumping_over_outputs edges node =
             node
             |>incoming_edges edges
+            |>Seq.collect (fun edge->
+                match Subfigure.ofNode edge.tail with
+                |Some previous_subfigure -> Seq.ofList [previous_subfigure]
+                |None -> (previous_subfigures edges edge.tail.id)
+            )
             
     

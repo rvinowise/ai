@@ -142,13 +142,39 @@ module ``application of stencils``=
             |> should equal
                 [
                      dict [
-                        "b","b1";
+                        "b","b2";
                         "h","h";
-                        "f","f"
+                        "f","f1"
                     ]
                 ]
-
-
+    
+    type ``create a complete mapping of stencil onto target``(used_figures: Used_figures)=
+        interface IClassFixture<Used_figures>
+        member _.figures = used_figures
+        
+        // [<Fact>]
+        // member this.``several mappings can be produced by one stencil application``()=
+        //     let result =
+        //         map_stencil_onto_target
+        //             this.figures.a_fitting_stencil
+        //             this.figures.a_high_level_relatively_simple_figure
+        //             |> Set.ofSeq
+        //     let expected =
+        //         (Set.ofSeq [
+        //             dict [
+        //                 "b","b0";
+        //                 "h","h";
+        //                 "f","f1"
+        //             ];
+        //             dict [
+        //                 "b","b2";
+        //                 "h","h";
+        //                 "f","f1"
+        //             ]
+        //         ])
+        //     ()
+    
+    
     type ``apply a stencil``(used_figures: Used_figures)=
         interface IClassFixture<Used_figures>
         member _.figures = used_figures
