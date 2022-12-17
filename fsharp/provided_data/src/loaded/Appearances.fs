@@ -7,13 +7,13 @@ open rvinowise.ai
 
 
 let all_appearances figure_id =
-    database.Provided.open_connection.Query<ai.figure.Appearance>(
+    database.Provided.open_connection.Query<Interval>(
         @"select * from Figure_appearance where Figure = @Figure_id",
         {|figure_id=figure_id|}
     )
     
 let appearances_in_interval figure_id head tail =
-    database.Provided.open_connection.Query<ai.figure.Appearance>(
+    database.Provided.open_connection.Query<Interval>(
         @"select * from Figure_appearance
         where Figure = @Figure_id
         and Head >= @Head
@@ -24,6 +24,6 @@ let appearances_in_interval figure_id head tail =
 
 
 let current_moment = 
-    database.Provided.open_connection.Query<int64>(
+    database.Provided.open_connection.Query<Moment>(
         @"select Moment from Caret"
     ) |> Seq.head

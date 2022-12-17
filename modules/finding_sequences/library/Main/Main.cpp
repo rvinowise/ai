@@ -1,7 +1,7 @@
 #include "Main.h"
 
 #include <iostream>
-#include <format>
+//#include <format>
 #include <memory>
 
 #include <boost/contract.hpp>
@@ -34,14 +34,13 @@ Main* Main::get_instance() {
 }
 
 
-vector<Interval> Main::find_repeated_pairs(
+vector<Interval> Main::find_repeated_pairs_in_database(
         string head, string tail
 ) {
     auto head_appearances = database.fetch_appearances(head);
     auto tail_appearances = database.fetch_appearances(tail);
-    return finding_sequences.find_repeated_pairs(head_appearances, tail_appearances);
+    return Finding_sequences::find_repeated_pairs(head_appearances, tail_appearances);
 }
-
 
 
 

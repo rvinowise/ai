@@ -14,7 +14,6 @@ class Main {
     
     inline static std::unique_ptr<Main> instance;
     Database database;
-    Finding_sequences finding_sequences;
 
     public:
     Main(const std::string connection_string);
@@ -22,9 +21,13 @@ class Main {
 
     static void init_module(const std::string connection_string);
     static Main* get_instance();
-    std::vector<Interval> find_repeated_pairs(
+    std::vector<Interval> find_repeated_pairs_in_database(
         std::string head, std::string tail
     );
+    // std::vector<Interval> find_repeated_pairs(
+    //     std::vector<Interval>, std::vector<Interval>
+    // );
+    
 
 };
 

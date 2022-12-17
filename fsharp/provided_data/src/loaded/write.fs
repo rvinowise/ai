@@ -15,15 +15,15 @@ let new_signal (id:string) =
 
 let figure_appearance 
     figure
-    (appearance:ai.figure.Appearance) 
+    (appearance: Interval) 
     =
     database.Provided.open_connection.Query<ai.figure.Figure>(
         @"insert into figure_appearance (figure, head, tail)
         values (@figure, @head, @tail)",
         {|
             figure = figure; 
-            head = appearance.interval.head; 
-            tail = appearance.interval.tail
+            head = appearance.head; 
+            tail = appearance.tail
         |}
     ) |> ignore
 

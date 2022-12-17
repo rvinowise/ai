@@ -5,7 +5,7 @@
 #include "Interval/Interval.h"
 
 #include <iostream>
-#include <format>
+//#include <format>
 #include <memory>
 #include <vector>
 
@@ -14,14 +14,6 @@
 using namespace std;
 
 namespace rvinowise::ai {
-
-Finding_sequences::Finding_sequences() {
-
-}
-
-
-Finding_sequences::~Finding_sequences(){}
-
 
 
 Interval_in_sequence get_next_headfigure(

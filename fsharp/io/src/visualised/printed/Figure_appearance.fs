@@ -3,5 +3,5 @@
 open rvinowise
 
 
-let moments (appearance: ai.figure.Appearance) =
+let moments (appearance: ai.Interval) =
     printf $"({appearance.head} {appearance.tail}) "
