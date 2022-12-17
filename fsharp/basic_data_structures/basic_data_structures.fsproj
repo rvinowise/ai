@@ -18,7 +18,6 @@
     <Compile Include="src\Interval.fs" />
 	<Compile Include="src\Figure\Node\Node.fs" />
     <Compile Include="src\Figure\Edge\Edge.fs" />
-    <Compile Include="src\Figure\Appearance\Appearance.fs" />
     <Compile Include="src\Figure\Figure.fs" />
     <Compile Include="src\Figure\Stencil.fs" />
     <Compile Include="src\functions\Node.fs" />

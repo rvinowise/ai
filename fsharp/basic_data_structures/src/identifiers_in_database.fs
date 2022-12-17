@@ -2,4 +2,4 @@
 
 type Figure_id = string
 type Node_id = string
-type Moment = int64
+type Moment = uint64

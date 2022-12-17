@@ -17,17 +17,17 @@ set(FINDING_SEQUENCES_SRC
     Finding_sequences/Iteration_state_of_searching_pairs/Iteration_state_of_searching_pairs.cpp
 )
 
-add_library(${PROJECT_NAME} SHARED ${FINDING_SEQUENCES_SRC}) #only for test
-add_library(rvinowise::ai::finding_sequences ALIAS ${PROJECT_NAME} )
+add_library(${PROJECT_NAME} SHARED ${FINDING_SEQUENCES_SRC}) #for using from dotnet
+
+add_library(${PROJECT_NAME}_static STATIC ${FINDING_SEQUENCES_SRC}) #for convenient using in c++ (e.g. unit test)
+add_library(rvinowise::ai::finding_sequences ALIAS ${PROJECT_NAME}_static )
+target_link_libraries(${PROJECT_NAME}_static PUBLIC ${PROJECT_NAME})
 
 target_link_libraries(${PROJECT_NAME} PUBLIC rvinowise::ai::basic_data_structures)
 target_link_libraries(${PROJECT_NAME} PUBLIC ${CONAN_LIBS})
 target_include_directories(
     ${PROJECT_NAME} PUBLIC ${CONAN_INCLUDE_DIRS}
 )
-
-# add_library(${PROJECT_NAME} SHARED ${FINDING_SEQUENCES_SRC})
-# target_link_libraries(${PROJECT_NAME} PUBLIC rvinowise::ai::finding_sequences)
 
 target_include_directories(
     ${PROJECT_NAME} PUBLIC

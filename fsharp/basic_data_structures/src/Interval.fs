@@ -1,7 +1,21 @@
 ﻿namespace rvinowise.ai
 
+open System.Runtime.InteropServices
 
-type Interval = {
-    head: Moment
-    tail: Moment
-}
+[<StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)>]
+type Interval = 
+    struct
+        val head: Moment
+        val tail: Moment
+
+        new(head, tail) =
+            {head=head;tail=tail}
+        new(head: int, tail: int) =
+            {head=uint64(head);tail=uint64(tail)}
+    end
+
+[<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
+module Interval =
+
+    let moment (moment:Moment) = Interval(moment, moment)
+    //let moment (moment:int) = Interval(uint64(moment), uint64(moment))

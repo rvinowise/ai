@@ -10,13 +10,9 @@
 namespace rvinowise::ai {
 
 /**/
-class Finding_sequences {
-    
+static class Finding_sequences {
     public:
-    Finding_sequences();
-    ~Finding_sequences();
-
-    std::vector<Interval> find_repeated_pairs(std::vector<Interval>, std::vector<Interval>);
+    static std::vector<Interval> find_repeated_pairs(std::vector<Interval>, std::vector<Interval>);
 
 
 };
