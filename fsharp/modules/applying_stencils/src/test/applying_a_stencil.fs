@@ -33,9 +33,9 @@ module ``application of stencils``=
     
     type Used_figures()=
         
-        member _.initial_mapping_without_prolongation = dict ["b","b1";"h","h"]
-        member _.initial_fruitful_mapping = dict ["b","b0";"h","h"]
-        member _.initial_useless_mapping = dict ["b","b2";"h","h"]
+        member _.initial_mapping_without_prolongation = Mapping ["b","b1";"h","h"]
+        member _.initial_fruitful_mapping = Mapping ["b","b0";"h","h"]
+        member _.initial_useless_mapping = Mapping ["b","b2";"h","h"]
         
         member _.a_fitting_stencil: Stencil =
             rvinowise.ai.Stencil(
@@ -101,7 +101,7 @@ module ``application of stencils``=
                 (Simple.Subfigure("f"))
             |> should equal
                 [
-                    dict [
+                    Mapping [
                         "b","b2";
                         "h","h";
                         "f","f1"
@@ -141,7 +141,7 @@ module ``application of stencils``=
                 this.figures.initial_useless_mapping
             |> should equal
                 [
-                     dict [
+                    Mapping [
                         "b","b2";
                         "h","h";
                         "f","f1"
@@ -152,27 +152,27 @@ module ``application of stencils``=
         interface IClassFixture<Used_figures>
         member _.figures = used_figures
         
-        // [<Fact>]
-        // member this.``several mappings can be produced by one stencil application``()=
-        //     let result =
-        //         map_stencil_onto_target
-        //             this.figures.a_fitting_stencil
-        //             this.figures.a_high_level_relatively_simple_figure
-        //             |> Set.ofSeq
-        //     let expected =
-        //         (Set.ofSeq [
-        //             dict [
-        //                 "b","b0";
-        //                 "h","h";
-        //                 "f","f1"
-        //             ];
-        //             dict [
-        //                 "b","b2";
-        //                 "h","h";
-        //                 "f","f1"
-        //             ]
-        //         ])
-        //     ()
+        [<Fact>]
+        member this.``several mappings can be produced by one stencil application``()=
+            let result =
+                map_stencil_onto_target
+                    this.figures.a_fitting_stencil
+                    this.figures.a_high_level_relatively_simple_figure
+                    |> Set.ofSeq
+            let expected =
+                (Set.ofSeq [
+                    Mapping [
+                        "b","b0";
+                        "h","h";
+                        "f","f1"
+                    ];
+                    Mapping [
+                        "b","b2";
+                        "h","h";
+                        "f","f1"
+                    ]
+                ])
+            ()
     
     
     type ``apply a stencil``(used_figures: Used_figures)=
@@ -242,9 +242,9 @@ module ``application of stencils``=
                     figure
             )
             |> should equal
-                [   dict ["b","b0";"h","h"];
-                    dict ["b","b1";"h","h"];
-                    dict ["b","b2";"h","h"]
+                [   Mapping ["b","b0";"h","h"];
+                    Mapping ["b","b1";"h","h"];
+                    Mapping ["b","b2";"h","h"]
                 ]
             
         [<Fact>]
@@ -273,17 +273,17 @@ module ``application of stencils``=
             (map_stencil_onto_target stencil figure)
             |> should equal
                 [
-                    dict [
+                    Mapping [
                         "b","b0";
                         "h","h";
                         "f","f0"; 
                     ];
-                    dict [
+                    Mapping [
                         "b","b1";
                         "h","h";
                         "f","f0";
                     ];
-                    dict [
+                    Mapping [
                         "b","b2";
                         "h","h";
                         "f","f0";
