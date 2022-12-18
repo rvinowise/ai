@@ -1,7 +1,7 @@
 namespace rvinowise.ai
 
 open System.Runtime.InteropServices
-
+open System
 
 module Finding_sequences =
 
@@ -26,18 +26,28 @@ module Finding_sequences =
         int size_heads,
         Interval[] tails, 
         int size_tails,
-        [<Out>] Interval& result
+        [<Out>] Interval[] result
     )
 
-    [<DllImport(
-        path_to_dll,
-        CallingConvention = CallingConvention.Cdecl
-    )>]
-    extern int passing_array(
-        int[] heads, 
-        int size_heads,
-        int[] tails, 
-        int size_tails
-    )
+    let prepared_array_for_results length: Interval array =
+        Array.create length (Interval.moment 0UL)
 
+    let repeated_pairs 
+        (heads: array<Interval>)
+        (tails: array<Interval>)
+        =
+        let mutable repetitions = 
+            (heads.Length, tails.Length)
+            ||>min
+            |>prepared_array_for_results
+
+        let found_amount = find_repeated_pairs(
+                heads, heads.Length,
+                tails, tails.Length,
+                repetitions
+            )
+        Array.Resize(&repetitions, found_amount)
+        repetitions
+
+        
     //init_module("host=127.0.0.1;port=5432;dbname=ai;user=postgres;password= ;")

@@ -28,4 +28,4 @@ target_include_directories(
 # )
 
 
-add_test(NAME test2 COMMAND finding_sequences_test)
+add_test(NAME test COMMAND ${PROJECT_NAME}_test)

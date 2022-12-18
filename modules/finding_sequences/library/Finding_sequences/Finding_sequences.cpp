@@ -133,7 +133,7 @@ Iteration_state_of_searching_pairs iteration_of_finding_a_repeated_pair(
     Interval_in_sequence found_tail = 
         find_next_tailfigure( 
             iteration_conditions.tail_cursor.index(), 
-            next_headfigure.tail(), 
+            next_headfigure.tail()+1, 
             tail_appearances
         );
     if (!found_tail.exists()) {

@@ -12,10 +12,14 @@ type Interval =
             {head=head;tail=tail}
         new(head: int, tail: int) =
             {head=uint64(head);tail=uint64(tail)}
+
+        override this.ToString() =
+            $"Interval({this.head}, {this.tail})"
     end
 
 [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
 module Interval =
 
-    let moment (moment:Moment) = Interval(moment, moment)
+    let moment (moment:Moment): Interval = 
+        Interval(moment, moment)
     //let moment (moment:int) = Interval(uint64(moment), uint64(moment))

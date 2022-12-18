@@ -8,9 +8,9 @@ project(
     LANGUAGES CXX
 )
 set(CMAKE_CXX_STANDARD 20)
-
+include(CTest)
 
 add_subdirectory(library)
 add_subdirectory(test)
 
-enable_testing()
+#enable_testing()

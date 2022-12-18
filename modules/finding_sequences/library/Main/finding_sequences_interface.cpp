@@ -44,7 +44,6 @@ DLLEXPORT size_t find_repeated_pairs(
         vector<Interval>(tails, tails+size_tails)
     );
 
-    repetitions = new Interval[result.size()];
     for(size_t i=0; i<result.size(); i++) {
         repetitions[i] = result[i];
     }

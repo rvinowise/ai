@@ -134,3 +134,36 @@ TEST_CASE("no appearances of the head") {
 
     REQUIRE(found_pairs.empty());
 }
+
+
+TEST_CASE("intervals are tightly overlapping") {
+    vector<Interval> appearances_of_a{
+        Interval(0,1),
+        Interval(1,2),
+        Interval(2,3),
+        Interval(3,4),
+        Interval(4,5),
+        Interval(5,6)
+    };
+
+    vector<Interval> appearances_of_b{
+        Interval(0,1),
+        Interval(1,2),
+        Interval(2,3),
+        Interval(3,4),
+        Interval(4,5),
+        Interval(5,6)
+    };
+    vector<Interval> appearances_of_ab{
+        Interval(0,3),
+        Interval(1,4),
+        Interval(2,5),
+        Interval(3,6)
+    };
+
+    Finding_sequences finding_sequences;
+    vector<Interval> found_pairs = 
+       finding_sequences.find_repeated_pairs(appearances_of_a, appearances_of_b);
+
+    REQUIRE(found_pairs == appearances_of_ab);
+}
