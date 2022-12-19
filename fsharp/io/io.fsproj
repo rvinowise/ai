@@ -13,7 +13,10 @@
   
 
   <ItemGroup>
+    <Compile Include="src\visualised\painted\data_structures.fs" />
     <Compile Include="src\visualised\painted\Figure.fs" />
+    <Compile Include="src\visualised\painted\Graph.fs" />
+    <Compile Include="src\visualised\painted\History_line.fs" />
     <Compile Include="src\visualised\printed\Figure_appearance.fs" />
     <Compile Include="src\visualised\printed\Figure.fs" />
   </ItemGroup>

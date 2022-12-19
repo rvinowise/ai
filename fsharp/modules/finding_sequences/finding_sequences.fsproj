@@ -7,7 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="src\finding_sequences_cpp.fs" />
+    <Compile Include="src\finding_repetitions_cpp.fs" />
+    <Compile Include="src\finding_repetitions.fs" />
     <!-- tests -->
     <Compile Include="src\test\finding_a_sequence.fs" />
   </ItemGroup>
@@ -28,6 +29,10 @@
     </PackageReference>
     <PackageReference Include="Graphviz.NET" Version="1.0.0" />
     <PackageReference Include="Rubjerg.Graphviz" Version="1.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="xunit.runner.json" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
 </Project>

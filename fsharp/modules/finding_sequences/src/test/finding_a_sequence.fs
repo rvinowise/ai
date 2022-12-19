@@ -1,6 +1,7 @@
 namespace rvinowise.ai.test
 
 open System.Runtime.InteropServices
+open BenchmarkDotNet.Configs
 open Xunit
 open Xunit.Abstractions
 open FsUnit
@@ -8,35 +9,31 @@ open BenchmarkDotNet.Attributes
 open BenchmarkDotNet.Running
 
 
-module ``finding sequences``=
-    open rvinowise.ai.Finding_sequences
+module finding_sequences =
+    open rvinowise.ai.Finding_repetitions_cpp
     open rvinowise.ai
 
 
-    type ``benchmarking finding repetitions``() =
+    type Benchmarking_finding_repetitions() =
         
-        let items_amount = 10000 
+        [<Params(10, 1000, 10000)>]
+        member val items_amount = 0 with get, set
         
-        let ``long sequences of input``()=
-            let heads = [|
-                for i in 0..items_amount ->
+        member this.long_sequence_of_input() = 
+            [|
+                for i in 0..this.items_amount ->
                     Interval(i,i+1)
-                |]
-            let tails = [|
-                for i in 0..items_amount ->
-                    Interval(i,i+1)
-                |]
-            (heads, tails)
+            |]
 
-        let heads, tails = ``long sequences of input``()
+        member this.heads = this.long_sequence_of_input()
 
         [<Benchmark>]
-        member _.``prepare long sequences of input``()=
-            ``long sequences of input``()
+        member this.prepare_long_sequences_of_input()=
+            this.long_sequence_of_input()
 
         [<Benchmark>]
-        member _.``search in big sequences``()=
-            Finding_sequences.repeated_pairs heads tails
+        member this.search_in_big_sequences()=
+            Finding_repetitions_cpp.repeated_pairs this.heads this.heads
 
     type ``invoking native methods``(output: ITestOutputHelper)=
         let output = output
@@ -59,10 +56,7 @@ module ``finding sequences``=
                     Interval(0,3);
                     Interval(2,5);
                 |]
-            
-            ()
 
-        
 
         [<Fact>]
         member this.``finding repeated pairs in big sequences``()=
@@ -85,6 +79,10 @@ module ``finding sequences``=
                 |]
             
         [<Fact>]
-        member _.benchmarking()=
+        member _.benchmark()=
 
-            BenchmarkRunner.Run<``benchmarking finding repetitions``>() |> ignore
+            let config = 
+                DefaultConfig.Instance.
+                    WithOptions(ConfigOptions.DisableOptimizationsValidator)
+
+            BenchmarkRunner.Run<Benchmarking_finding_repetitions>(config) |> ignore

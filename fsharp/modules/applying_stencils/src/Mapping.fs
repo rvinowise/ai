@@ -48,8 +48,8 @@ namespace rvinowise.ai.stencil
 
                     (this_tails, other_tails)
                     ||>Seq.zip
-                    |>Seq.find (fun (this, other) ->
-                        this <> other
+                    |>Seq.find (fun (this_element, other_element) ->
+                        this_element <> other_element
                     )
                     |> fun (this, other) ->
                         this.CompareTo(other)

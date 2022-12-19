@@ -3,7 +3,7 @@ namespace rvinowise.ai
 open System.Runtime.InteropServices
 open System
 
-module Finding_sequences =
+module Finding_repetitions_cpp =
 
     [<Literal>]
     let path_to_dll = "C:/prj/ai/modules/finding_sequences/build/library/bin/finding_sequences"
@@ -49,5 +49,5 @@ module Finding_sequences =
         Array.Resize(&repetitions, found_amount)
         repetitions
 
-        
+
     //init_module("host=127.0.0.1;port=5432;dbname=ai;user=postgres;password= ;")

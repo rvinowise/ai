@@ -107,7 +107,7 @@ let input_sensory_data (data: string) =
     )
 
 let find_sequences head tail =
-    Finding_sequences.find_repeated_pairs(head, tail)
+    Finding_repetitions_cpp.find_repeated_pairs(head, tail)
 
 let process_input (command:string) =
     let words = 
