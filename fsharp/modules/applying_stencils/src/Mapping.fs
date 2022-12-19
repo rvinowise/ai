@@ -48,11 +48,14 @@ namespace rvinowise.ai.stencil
 
                     (this_tails, other_tails)
                     ||>Seq.zip
-                    |>Seq.find (fun (this_element, other_element) ->
+                    |>Seq.tryFind (fun (this_element, other_element) ->
                         this_element <> other_element
                     )
-                    |> fun (this, other) ->
-                        this.CompareTo(other)
+                    |> fun pair_with_difference ->
+                        match pair_with_difference with
+                        |Some (this, other) ->
+                            this.CompareTo(other)
+                        |None -> 0
 
                 match other with
                 | :? Mapping as other -> 
