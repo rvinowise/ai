@@ -99,11 +99,34 @@ namespace rvinowise.ai.stencil
 
     [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
     module Mapping=
+        open rvinowise.ai.figure
         
         let copy (copied:IDictionary<Node_id, Node_id>): Mapping =
             Mapping(copied)
 
-        let empty: Mapping =
+        let empty(): Mapping =
             Mapping()
 
+        
+        let targets_of_mapping 
+            (mapping:Mapping)
+            subfigures 
+            =
+            subfigures
+            |>Seq.map (fun s->
+                mapping[s]
+            )
+
+        let retrieve_result stencil target mapping =
+            //i don't know how to handle stencils with multiple outputs. assume it's one for now
+            let output_node = 
+                stencil
+                |>Stencil.outputs
+                |>Seq.head
+
+
+            output_node.id
+            |>Node.previous_subfigures stencil.edges
+            |>Subfigures.ids
+            |>targets_of_mapping mapping
         

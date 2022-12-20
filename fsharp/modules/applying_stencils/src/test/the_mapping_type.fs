@@ -97,3 +97,32 @@ module ``the mapping type``=
             ]
             |>Set.ofSeq
             |>should haveCount 1
+            
+        
+        type ``creating mappings``()=
+            
+            [<Fact>]
+            member this.``several mutable mappings can coexist without sharing data``()=
+                let mapping1 = Mapping.empty()
+                mapping1["a"] <- "a1"
+                let mapping2 = Mapping.empty()
+                mapping2["a"] <- "a2"
+                
+                mapping2
+                |>should haveCount 1
+                
+            [<Fact>]
+            member this.``a copy of another mapping has same structure``()=
+                let original = Mapping [
+                    "a","a0";
+                    "b","b0"
+                ]
+                
+                let copy = Mapping.copy original 
+                
+                (copy=original)|>should be True
+                copy|>should haveCount 2
+                
+                copy["b1"] <- "b1"
+                copy|>should haveCount 3
+                original|>should haveCount 2

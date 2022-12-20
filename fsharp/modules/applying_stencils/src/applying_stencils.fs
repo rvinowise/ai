@@ -15,7 +15,6 @@ module Applying_stencil =
 
     
     let sorted_subfigures_to_map_first first_subfigures_of_stencil target =
-        //let first_subfigures_of_stencil = Stencil.first_subfigures stencil
         
         let figures_to_map = 
             first_subfigures_of_stencil
@@ -34,7 +33,7 @@ module Applying_stencil =
             )
             |>Seq.map Subfigures.ids
             
-        (figures_to_map, subfigures_in_stencil, subfigures_in_target )
+        (subfigures_in_stencil, subfigures_in_target )
 
 
     let input_for_first_mappings_permutators subfigures_in_stencil subfigures_in_target =
@@ -87,12 +86,11 @@ module Applying_stencil =
         indices
         =
         Contract.Requires ((Seq.length subfigures_in_stencil) = (Seq.length subfigures_in_target))
-        let mapping = Mapping.empty
+        let mapping = Mapping.empty()
         
         (indices, subfigures_in_stencil, subfigures_in_target)
         |||>Seq.zip3
         |>Seq.iter (mappings_of_figure mapping)
-        |>ignore
         
         mapping
         
@@ -101,8 +99,7 @@ module Applying_stencil =
         first_subfigures_of_stencil
         target
         =
-        let figures_to_map, 
-            subfigures_in_stencil,
+        let subfigures_in_stencil,
             subfigures_in_target =
                 sorted_subfigures_to_map_first first_subfigures_of_stencil target
         
@@ -134,14 +131,7 @@ module Applying_stencil =
         |>Seq.distinct
         |>Nodes.only_subfigures
 
-    let ``targets of mapping of stencil subfigures`` 
-        (mapping:Mapping)
-        subfigures 
-        =
-        subfigures
-        |>Seq.map (fun s->
-            mapping[s]
-        )
+    
 
     let rec subfigures_reacheble_from_edges
         (reached_goals: HashSet<Node_id>)
@@ -168,7 +158,7 @@ module Applying_stencil =
         |>ignore
 
 
-    let rec subfigures_reacheble_from_subfigure 
+    let subfigures_reacheble_from_subfigure 
         (figure: Figure)
         goal_figure
         (starting_subfigure:Node_id)
@@ -228,7 +218,7 @@ module Applying_stencil =
         prolongating_stencil_subfigure.id
         |>Node.previous_subfigures_jumping_over_outputs stencil.edges
         |>Subfigures.ids
-        |>``targets of mapping of stencil subfigures`` mapping
+        |>Mapping.targets_of_mapping mapping
         |>subfigures_after_other_subfigures
             target
             (prolongating_stencil_subfigure.referenced)
@@ -260,19 +250,22 @@ module Applying_stencil =
             stencil
             |>next_subfigures last_mapped_subfigures
 
-        let mappings =
-            mappings
-            |>Seq.collect (prolongate_mapping stencil target next_subfigures_to_map)
-
         match next_subfigures_to_map with
         | Seq [] -> 
             mappings
-        | _ -> 
+        | _ ->
+            let mappings =
+                mappings
+                |>Seq.collect (prolongate_mapping stencil target next_subfigures_to_map)
             prolongate_mappings
                 stencil 
                 target 
                 (Subfigures.ids next_subfigures_to_map)
                 mappings
+        
+        
+
+        
 
 
     let map_stencil_onto_target
@@ -292,8 +285,7 @@ module Applying_stencil =
             )
         
 
-    let retrieve_result target mapping =
-        ()
+    
 
     let results_of_stencil_application
         stencil
@@ -301,5 +293,5 @@ module Applying_stencil =
         =
         target
         |>map_stencil_onto_target stencil
-        //|>Seq.map (retrieve_result target)
+        |>Seq.map (Mapping.retrieve_result stencil target)
     

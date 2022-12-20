@@ -1,5 +1,18 @@
 namespace rvinowise.ai.figure
     open rvinowise.ai
+    open System.Collections.Generic
+
+    [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
+    module Edge =
+        
+        let next_edges 
+            (edges: Edge seq)
+            (edge: Edge)
+            =
+            edges
+            |>Seq.filter (fun e->
+                e.tail.id = edge.head.id
+            )
 
     [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
     module Edges =
@@ -37,18 +50,51 @@ namespace rvinowise.ai.figure
             |>Seq.filter (fun e->e.tail.id = subfigure)
             |>Seq.map (fun e->e.head)
 
-
-    [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
-    module Edge =
-        
-        let next_edges 
-            (edges: Edge seq)
-            (edge: Edge)
+        let rec subfigures_reacheble_from_edges
+            (reached_goals: HashSet<Node_id>)
+            (all_edges)
+            (reaching_edges: figure.Edge seq)
             =
-            edges
-            |>Seq.filter (fun e->
-                e.tail.id = edge.head.id
+            reaching_edges
+            |>Seq.iter (fun edge -> 
+                reached_goals.Add(edge.head.id) |> ignore
             )
+
+            reaching_edges
+            |>Seq.map (Edge.next_edges all_edges)
+            |>Seq.iter (
+                subfigures_reacheble_from_edges 
+                    reached_goals 
+                    all_edges
+            )
+            |>ignore
+
+        let subfigures_reacheble_from_subfigure 
+            (figure: Figure)
+            (starting_subfigure:Node_id)
+            =
+            let edges = Subfigure.outgoing_edges figure.edges starting_subfigure
+            let reached_goals = HashSet<Node_id>()
+            subfigures_reacheble_from_edges 
+                reached_goals
+                figure.edges
+                edges
+            |>ignore
+
+            reached_goals
+
+        let subfigures_reacheble_from_other_subfigures
+            (figure_in_which_search: Figure)
+            (subfigures_before_goals: Node_id seq)
+            =
+            subfigures_before_goals
+            |>Seq.map (
+                subfigures_reacheble_from_subfigure 
+                    figure_in_which_search 
+            )
+            |>Seq.map Set.ofSeq
+            |>Seq.reduce Set.intersect
+    
 
 
 namespace rvinowise.ai.stencil
@@ -77,3 +123,5 @@ namespace rvinowise.ai.stencil
             edges
             |>Seq.filter (fun e->e.tail.id = node)
             |>Seq.map (fun e->e.head)
+
+        

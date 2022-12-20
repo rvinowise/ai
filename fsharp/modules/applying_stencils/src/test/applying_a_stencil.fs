@@ -86,7 +86,15 @@ module ``application of stencils``=
                 ]
             )
             
-        
+         member _.result_of_fruitful_stencil_application =
+            Figure(
+                "F",
+                [
+                    figure.Edge(
+                        Simple.Subfigure("d"),Simple.Subfigure("e")
+                    );
+                ]
+            )
 
     type ``prolongate a mapping with a subfigure``(used_figures: Used_figures)=
         interface IClassFixture<Used_figures>
@@ -183,15 +191,17 @@ module ``application of stencils``=
         member this.``a fitting stencil, applied to a figure, outputs subgraphs``()=
             let target = this.figures.a_high_level_relatively_simple_figure
             let stencil = this.figures.a_fitting_stencil
+            //let output = this.figures.result_of_fruitful_stencil_application
+            (results_of_stencil_application stencil target)
+            |>should equal [
+                this.figures.result_of_fruitful_stencil_application
+            ]
 
-            let output = results_of_stencil_application stencil target 
-            ()
-            //Assert.Equal(prolongation.expected, first_subfigures)
 
         [<Fact>]
         member this.``preparing inputs for permutators, which map initial nodes``()=
             
-            let _, subfigures_in_stencil, subfigures_in_target =
+            let subfigures_in_stencil, subfigures_in_target =
                 sorted_subfigures_to_map_first
                     (
                         Stencil.first_subfigures this.figures.a_fitting_stencil
@@ -262,8 +272,6 @@ module ``application of stencils``=
                 ["d";"b2"]
             )|> should equal
                 ["f1"]
-
-        
         
         [<Fact>]
         member this.``complete mapping of stencil onto target can be produced``()=
@@ -276,17 +284,12 @@ module ``application of stencils``=
                     Mapping [
                         "b","b0";
                         "h","h";
-                        "f","f0"; 
-                    ];
-                    Mapping [
-                        "b","b1";
-                        "h","h";
-                        "f","f0";
+                        "f","f1"; 
                     ];
                     Mapping [
                         "b","b2";
                         "h","h";
-                        "f","f0";
+                        "f","f1";
                     ];
                 ]
                 //|>Seq.map Set.ofSeq

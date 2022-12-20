@@ -2,9 +2,10 @@ namespace rvinowise.ai
 
     open rvinowise.ai.figure
     open rvinowise.ai.stencil
-
+    open System.Collections.Generic
 
     [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
+        
     module Subfigure =
         
         let ofNode (node:Node) =
@@ -30,6 +31,9 @@ namespace rvinowise.ai
                 e.tail.id = node_id
             )
 
+        
+
+        
 
     [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
     module Subfigures = 

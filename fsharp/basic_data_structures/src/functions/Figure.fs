@@ -33,15 +33,3 @@ namespace rvinowise.ai.figure
         let subfigures_with_ids ids (figure:Figure)=
             figure.edges
             |>  Edges.subfigures_with_ids ids
-
-namespace rvinowise.ai
-
-    [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
-    module Stencil =
-        
-        let first_subfigures (stencil:Stencil) =
-            stencil.edges
-            |>rvinowise.ai.stencil.Edges.first_nodes 
-            |>Nodes.only_subfigures
-
-        

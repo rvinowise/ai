@@ -14,6 +14,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="src\extension_methods.fs" />
     <Compile Include="src\identifiers_in_database.fs" />
     <Compile Include="src\Interval.fs" />
 	<Compile Include="src\Figure\Node\Node.fs" />
@@ -23,6 +24,7 @@
     <Compile Include="src\functions\Node.fs" />
     <Compile Include="src\functions\Edge.fs" />
     <Compile Include="src\functions\Figure.fs" />
+    <Compile Include="src\functions\Stencil.fs" />
   </ItemGroup>
 
 </Project>
