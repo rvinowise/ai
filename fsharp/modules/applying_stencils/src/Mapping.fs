@@ -124,9 +124,24 @@ namespace rvinowise.ai.stencil
                 |>Stencil.outputs
                 |>Seq.head
 
+            let output_beginning =
+                output_node.id
+                |>Node.previous_subfigures stencil.edges
+                |>Subfigures.ids
+                |>targets_of_mapping mapping
+                |>Edges.subfigures_reacheble_from_other_subfigures
+                    target
+                |>Set.ofSeq
 
-            output_node.id
-            |>Node.previous_subfigures stencil.edges
-            |>Subfigures.ids
-            |>targets_of_mapping mapping
-        
+            let output_ending =
+                output_node.id
+                |>Node.next_subfigures stencil.edges
+                |>Subfigures.ids
+                |>targets_of_mapping mapping
+                |>Edges.subfigures_reaching_other_subfigures
+                    target
+                |>Set.ofSeq
+            
+            (output_beginning, output_ending) 
+            ||>Set.intersect 
+            

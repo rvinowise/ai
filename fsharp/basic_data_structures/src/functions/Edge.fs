@@ -33,7 +33,6 @@ namespace rvinowise.ai.figure
                 )
             |>Seq.distinct
 
-        
 
         let subfigures_with_ids ids edges  =
             edges
@@ -50,7 +49,8 @@ namespace rvinowise.ai.figure
             |>Seq.filter (fun e->e.tail.id = subfigure)
             |>Seq.map (fun e->e.head)
 
-        let rec subfigures_reacheble_from_edges
+
+        let rec private subfigures_reacheble_from_edges
             (reached_goals: HashSet<Node_id>)
             (all_edges)
             (reaching_edges: figure.Edge seq)
@@ -83,6 +83,20 @@ namespace rvinowise.ai.figure
 
             reached_goals
 
+        let subfigures_reaching_subfigure
+            (figure: Figure)
+            (final_subfigure:Node_id)
+            =
+            let edges = Subfigure.incoming_edges figure.edges final_subfigure
+            let reached_goals = HashSet<Node_id>()
+            subfigures_reaching_edges
+                reached_goals
+                figure.edges
+                edges
+            |>ignore
+
+            reached_goals
+
         let subfigures_reacheble_from_other_subfigures
             (figure_in_which_search: Figure)
             (subfigures_before_goals: Node_id seq)
@@ -95,7 +109,17 @@ namespace rvinowise.ai.figure
             |>Seq.map Set.ofSeq
             |>Seq.reduce Set.intersect
     
-
+        let subfigures_reaching_other_subfigures
+            (figure_in_which_search: Figure)
+            (subfigures_after_goals: Node_id seq)
+            =
+            subfigures_after_goals
+            |>Seq.map (
+                subfigures_reaching_subfigure 
+                    figure_in_which_search 
+            )
+            |>Seq.map Set.ofSeq
+            |>Seq.reduce Set.intersect
 
 namespace rvinowise.ai.stencil
     open rvinowise.ai

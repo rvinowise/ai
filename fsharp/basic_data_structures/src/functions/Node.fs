@@ -31,6 +31,15 @@ namespace rvinowise.ai
                 e.tail.id = node_id
             )
 
+        let incoming_edges 
+            (edges: figure.Edge seq) 
+            node_id
+            =
+            edges
+            |>Seq.filter (fun e->
+                e.head.id = node_id
+            )
+
         
 
         
@@ -79,6 +88,11 @@ namespace rvinowise.ai
             edges
             |>Seq.filter (fun e->e.tail.id = node)
             |>Seq.map (fun e->e.head)
+
+        let next_subfigures edges node =
+            node
+            |>next_nodes edges
+            |>Nodes.only_subfigures
 
         let previous_nodes (edges: stencil.Edge seq) (node:Node_id) =
             node
