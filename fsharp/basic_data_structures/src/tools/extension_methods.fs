@@ -24,23 +24,29 @@ module HashSet =
     
     
     let intersectMany
-        (source: IEnumerable<HashSet<'a> >)
+        (sets: IEnumerable<HashSet<'a> >)
         =
-        source.Aggregate(fun set1 set2 -> 
-            set1.IntersectWith(set2)
-            set1
-        )
+        if Seq.isEmpty sets then
+            HashSet<'a>()
+        else
+            sets.Aggregate(fun set1 set2 -> 
+                set1.IntersectWith(set2)
+                set1
+            )
     
     let intersectMany' (sets: HashSet<'a> seq) =
-        sets
-        |>Seq.skip 1
-        |>Seq.fold 
-            (
-                fun (accumulator:HashSet<'a>) (set1:HashSet<'a>) ->
-                    set1.IntersectWith(accumulator)
-                    set1
-            )
-            (Seq.head sets)
+        if Seq.isEmpty sets then
+            HashSet<'a>()
+        else
+            sets
+            |>Seq.skip 1
+            |>Seq.fold 
+                (
+                    fun (accumulator:HashSet<'a>) (set1:HashSet<'a>) ->
+                        set1.IntersectWith(accumulator)
+                        set1
+                )
+                (Seq.head sets)
         
     
 

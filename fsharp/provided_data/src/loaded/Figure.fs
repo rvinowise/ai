@@ -7,7 +7,7 @@ open rvinowise.ai
 
 let body (figure_id:string) =
     let connection = database.Provided.open_connection
-    database.Provided.open_connection.Query<ai.figure.Figure>(
+    database.Provided.open_connection.Query<ai.Figure>(
         @"select * from Figure where Id = @Figure_id",
             {|figure_id=figure_id|}
     ) |> Seq.tryHead
@@ -17,6 +17,6 @@ let exists id =
     body id <> None
 
 let all =
-    database.Provided.open_connection.Query<ai.figure.Figure>(
+    database.Provided.open_connection.Query<ai.Figure>(
         @"select * from Figure"
     )

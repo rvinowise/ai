@@ -36,6 +36,10 @@
 namespace rvinowise.ai.figure
     open rvinowise.ai
     
+    module Figure =
+        let with_edges (edges:Edge seq)=
+            Figure("out",edges)
+
     module Example =
 
         let a_high_level_relatively_simple_figure = Figure(

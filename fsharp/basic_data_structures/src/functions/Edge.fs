@@ -76,7 +76,7 @@ namespace rvinowise.ai.figure
             else
                 ()
         
-        let all_subfigures_reacheble_from_subfigure
+        let private all_subfigures_reacheble_from_subfigure
             (step_further: Node_id -> Subfigure seq)
             (starting_subfigure: Node_id)
             =
@@ -87,27 +87,22 @@ namespace rvinowise.ai.figure
                 [starting_subfigure]
             reached_goals
 
-        let subfigures_reacheble_from_every_subfigure
+        let private subfigures_reacheble_from_every_subfigure
             (step_further: Node_id -> Subfigure seq)
             (starting_subfigures: Node_id seq)
             =
-
             starting_subfigures
             |>Seq.map (all_subfigures_reacheble_from_subfigure step_further)
             |>HashSet.intersectMany
+
 
         let subfigures_reacheble_from_other_subfigures
             (figure_in_which_search: Figure)
             (subfigures_before_goals: Node_id seq)
             =
-            let reached_goals = HashSet<Node_id>()
-            
             subfigures_before_goals
-            |>all_subfigures_reacheble_from_subfigures
-                reached_goals
+            |>subfigures_reacheble_from_every_subfigure
                 (Subfigure.next_subfigures figure_in_which_search.edges)
-            reached_goals
-
     
         let subfigures_reaching_other_subfigures
             (figure_in_which_search: Figure)
@@ -120,6 +115,7 @@ namespace rvinowise.ai.figure
             )
             |>HashSet.intersectMany
 
+
         [<Fact>]
         let ``subfigures reaching others``()=
             subfigures_reaching_other_subfigures
@@ -127,7 +123,7 @@ namespace rvinowise.ai.figure
                 [
                     "b1";"f1"
                 ]
-            |> should equal ["b1"]
+            |> should equal ["b0"]
         [<Fact>]
         let ``subfigures reacheble from others``()=
             subfigures_reacheble_from_other_subfigures

@@ -142,6 +142,6 @@ namespace rvinowise.ai.stencil
                     target
                 |>Set.ofSeq
             
-            (output_beginning, output_ending) 
-            ||>Set.intersect 
-            
+            output_beginning
+            |>Set.intersect output_ending
+            |>Figure.subgraph_with_subfigures target

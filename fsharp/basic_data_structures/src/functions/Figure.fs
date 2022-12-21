@@ -4,6 +4,7 @@ namespace rvinowise.ai.figure
     [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
     module Figure=
 
+        
 
         let first_subfigures (figure:Figure) =
             Edges.first_subfigures figure.edges
@@ -35,4 +36,21 @@ namespace rvinowise.ai.figure
             |>  Edges.subfigures_with_ids ids
 
 
-        
+        let private edges_between_subfigures 
+            (edges:Edge seq)
+            (subfigures:Node_id Set)
+            =
+            edges
+            |>Seq.filter (fun edge->
+                Set.contains edge.tail.id subfigures
+                &&
+                Set.contains edge.head.id subfigures
+            )
+
+        let subgraph_with_subfigures 
+            (target:Figure) 
+            (subfigures: Node_id Set)
+            =
+            subfigures
+            |>edges_between_subfigures target.edges
+            |>Figure.with_edges

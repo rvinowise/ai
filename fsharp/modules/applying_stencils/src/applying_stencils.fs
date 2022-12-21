@@ -285,7 +285,9 @@ module Applying_stencil =
             )
         
 
-    
+    let private not_empty_figure (figure:Figure) =
+        figure.edges
+        |>Seq.isEmpty|>not
 
     let results_of_stencil_application
         stencil
@@ -294,4 +296,6 @@ module Applying_stencil =
         target
         |>map_stencil_onto_target stencil
         |>Seq.map (Mapping.retrieve_result stencil target)
+        |>Seq.filter not_empty_figure
+
     

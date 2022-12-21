@@ -2,7 +2,7 @@
 
 open System.Collections.Generic
 
-open rvinowise.ai.figure
+open rvinowise.ai
 
 
 let empty id: Figure = Figure(id)
