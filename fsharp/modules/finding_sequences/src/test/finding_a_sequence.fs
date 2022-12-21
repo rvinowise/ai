@@ -1,10 +1,10 @@
 namespace rvinowise.ai.test
 
 open System.Runtime.InteropServices
-open BenchmarkDotNet.Configs
 open Xunit
 open Xunit.Abstractions
 open FsUnit
+open BenchmarkDotNet.Configs
 open BenchmarkDotNet.Attributes
 open BenchmarkDotNet.Running
 

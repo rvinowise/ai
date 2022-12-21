@@ -33,3 +33,6 @@ namespace rvinowise.ai.figure
         let subfigures_with_ids ids (figure:Figure)=
             figure.edges
             |>  Edges.subfigures_with_ids ids
+
+
+        

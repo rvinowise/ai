@@ -19,6 +19,17 @@ namespace rvinowise.ai.figure
                 {id = id; referenced = id;}
         end
 
+    module Subfigure=
+        open System.Text.RegularExpressions
+        let private remove_number label =
+            Regex.Replace(label, @"[^a-zA-Z]", "")
+                    
+        let simple id =
+            Subfigure(
+                id,
+                remove_number id
+            )
+
 namespace rvinowise.ai.stencil
     open rvinowise.ai
 
