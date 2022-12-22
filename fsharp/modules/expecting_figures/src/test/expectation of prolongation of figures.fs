@@ -13,8 +13,8 @@ open rvinowise.ai.ui.painted
 module ``expectation of prolongation of figures``=
     
     let a_high_level_relatively_simple_figure =
-        Figure(
-            "F",
+        rvinowise.ai.figure.Figure.regular
+            "F"
             [
                 figure.Edge(
                     Subfigure("b"),Subfigure("c")
@@ -32,7 +32,7 @@ module ``expectation of prolongation of figures``=
                     Subfigure("h"),Subfigure("f")
                 );
             ]
-        )
+        
 
     [<Fact>]
     let ``an expected prolongation, constructed from a figure, expects its first subfigures at first``()=

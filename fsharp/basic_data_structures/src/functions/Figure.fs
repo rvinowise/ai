@@ -1,7 +1,7 @@
 namespace rvinowise.ai.figure
     open rvinowise.ai
 
-    [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
+    //[<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
     module Figure=
 
         
@@ -53,4 +53,4 @@ namespace rvinowise.ai.figure
             =
             subfigures
             |>edges_between_subfigures target.edges
-            |>Figure.with_edges
+            |>Figure.stencil_output

@@ -145,7 +145,6 @@ module ``application of stencils``=
         member this.``a fitting stencil, applied to a figure, outputs subgraphs``()=
             let target = figure.Example.a_high_level_relatively_simple_figure
             let stencil = this.figures.a_fitting_stencil
-            //let output = this.figures.result_of_fruitful_stencil_application
             target
             |>results_of_stencil_application stencil
             |>should equal [

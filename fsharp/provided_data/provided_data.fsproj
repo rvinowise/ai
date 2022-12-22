@@ -6,8 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="src\provided\Figure.fs" />
-    
     <Compile Include="src\loaded\provided_database.fs" />
     <Compile Include="src\loaded\write.fs" />
     <Compile Include="src\loaded\Appearances.fs" />
