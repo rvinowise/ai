@@ -14,40 +14,7 @@ namespace rvinowise.ai
                     Some (Subfigure(node.id, figure_id))
                 | _ -> None
 
-        let next_subfigures 
-            (edges: figure.Edge seq)
-            (subfigure: Node_id) 
-            =
-            edges
-            |>Seq.filter (fun e->e.tail.id = subfigure)
-            |>Seq.map (fun e->e.head)
-
-        let previous_subfigures 
-            (edges: figure.Edge seq)
-            (subfigure: Node_id) 
-            =
-            edges
-            |>Seq.filter (fun e->e.head.id = subfigure)
-            |>Seq.map (fun e->e.tail)
-
-        let outgoing_edges 
-            (edges: figure.Edge seq) 
-            node_id
-            =
-            edges
-            |>Seq.filter (fun e->
-                e.tail.id = node_id
-            )
-
-        let incoming_edges 
-            (edges: figure.Edge seq) 
-            node_id
-            =
-            edges
-            |>Seq.filter (fun e->
-                e.head.id = node_id
-            )
-
+        
         
         
         

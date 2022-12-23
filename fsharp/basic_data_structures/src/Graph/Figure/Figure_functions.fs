@@ -1,10 +1,51 @@
 namespace rvinowise.ai
-    open rvinowise.ai
+
+    open Xunit
+    open FsUnit
 
     [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
     module Figure=
-
+        open rvinowise.ai.figure
+        open rvinowise.extensions
         
+
+        let subfigures_reacheble_from_other_subfigures
+            (figure_in_which_search: Figure)
+            (subfigures_before_goals: Node_id seq)
+            =
+            subfigures_before_goals
+            |>Edge.subfigures_reacheble_from_other_subfigures 
+                figure_in_which_search.edges
+    
+        let subfigures_reaching_other_subfigures
+            (figure_in_which_search: Figure)
+            (subfigures_after_goals: Node_id seq)
+            =
+            subfigures_after_goals
+            |>Seq.map (
+                all_subfigures_reacheble_from_subfigure
+                    (Subfigure.previous_subfigures figure_in_which_search.edges)
+            )
+            |>HashSet.intersectMany
+
+
+        [<Fact>]
+        let ``subfigures reaching others``()=
+            subfigures_reaching_other_subfigures
+                figure.Example.a_high_level_relatively_simple_figure
+                [
+                    "b1";"f1"
+                ]
+            |> should equal ["b0"]
+        [<Fact>]
+        let ``subfigures reacheble from others``()=
+            subfigures_reacheble_from_other_subfigures
+                figure.Example.a_high_level_relatively_simple_figure
+                [
+                    "b0";"b2"
+                ]
+            |> should equal ["f1"]
+
 
         let first_subfigures (figure:Figure) =
             Edges.first_subfigures figure.edges
