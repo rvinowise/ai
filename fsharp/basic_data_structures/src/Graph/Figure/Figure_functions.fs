@@ -1,7 +1,7 @@
-namespace rvinowise.ai.figure
+namespace rvinowise.ai
     open rvinowise.ai
 
-    //[<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
+    [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
     module Figure=
 
         

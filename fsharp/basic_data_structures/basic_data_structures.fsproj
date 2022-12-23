@@ -18,14 +18,16 @@
     <Compile Include="src\tools\extension_methods.fs" />
     <Compile Include="src\identifiers_in_database.fs" />
     <Compile Include="src\Interval.fs" />
-	<Compile Include="src\Figure\Node\Node.fs" />
-    <Compile Include="src\Figure\Edge\Edge.fs" />
-    <Compile Include="src\Figure\Figure.fs" />
-    <Compile Include="src\Figure\Stencil.fs" />
-    <Compile Include="src\functions\Node.fs" />
-    <Compile Include="src\functions\Edge.fs" />
-    <Compile Include="src\functions\Figure.fs" />
-    <Compile Include="src\functions\Stencil.fs" />
+
+	<Compile Include="src\Graph\Node\Node_type.fs" />
+	<Compile Include="src\Graph\Node\Node_functions.fs" />
+    <Compile Include="src\Graph\Edge\Edge_type.fs" />
+    <Compile Include="src\Graph\Edge\Edge_functions.fs" />
+    <Compile Include="src\Graph\Figure\Figure_type.fs" />
+    <Compile Include="src\Graph\Figure\Figure_functions.fs" />
+    <Compile Include="src\Graph\Stencil\Stencil_type.fs" />
+    <Compile Include="src\Graph\Stencil\Stencil_functions.fs" />
+
   </ItemGroup>
 
   <ItemGroup>

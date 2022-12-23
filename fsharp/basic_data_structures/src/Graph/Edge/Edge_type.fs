@@ -1,7 +1,7 @@
 namespace rvinowise.ai.figure
     open rvinowise.ai
 
-    (* figure.Edge only connect subfigures, but stencil.Edge can either connect subfigures or stencil outputs  *)
+    (* figure.Edge only connects subfigures, but stencil.Edge can either connect subfigures or stencil outputs  *)
 
     type Edge = 
         struct
