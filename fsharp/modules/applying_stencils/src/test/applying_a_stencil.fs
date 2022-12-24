@@ -20,9 +20,9 @@ module ``application of stencils``=
         member _.initial_fruitful_mapping = Mapping ["b","b0";"h","h"]
         member _.initial_useless_mapping = Mapping ["b","b2";"h","h"]
         
-        member _.a_fitting_stencil: Stencil =
-            Stencil(
-                "S",
+        member _.a_fitting_stencil=
+            Stencil.regular
+                "S"
                 [
                     stencil.Edge(
                         Node("b"), Node.stencil_out("out1")
@@ -34,19 +34,17 @@ module ``application of stencils``=
                         Node("h"),Node("f")
                     );
                 ]
-            )
-
         
             
          member _.result_of_fruitful_stencil_application =
-            Figure(
-                "out",
+            Figure.regular
+                "out"
                 [
                     figure.Edge(
                         Subfigure.simple("d"),Subfigure.simple("e")
                     );
                 ]
-            )
+            
 
     type ``prolongate a mapping with a subfigure``(used_figures: Used_figures)=
         interface IClassFixture<Used_figures>

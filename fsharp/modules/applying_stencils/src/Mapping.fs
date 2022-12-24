@@ -124,11 +124,12 @@ namespace rvinowise.ai.stencil
 
             let output_beginning =
                 output_node.id
-                |>Figure.previous_subfigures stencil
+                |>Edges.previous_vertices stencil
                 |>Subfigures.ids
                 |>targets_of_mapping mapping
-                |>Edges.subfigures_reacheble_from_other_subfigures
-                    target
+                |>figure.Edges.subfigures_reacheble_from_other_subfigures
+                    (fun _->true)
+                    target.edges
                 |>Set.ofSeq
 
             let output_ending =

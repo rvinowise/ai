@@ -28,18 +28,22 @@ namespace rvinowise.ai
         
 
         let subfigures_reacheble_from_other_subfigures
+            (is_needed: Subfigure->bool)
             (figure_in_which_search: Figure)
             (subfigures_before_goals: Node_id seq)
             =
-            Edges.subfigures_reacheble_from_other_subfigures 
+            Edges.subfigures_reacheble_from_other_subfigures
+                is_needed
                 figure_in_which_search.edges
                 subfigures_before_goals
     
         let subfigures_reaching_other_subfigures
+            (is_needed: Subfigure->bool)
             (figure_in_which_search: Figure)
             (subfigures_after_goals: Node_id seq)
             =
             Edges.subfigures_reaching_other_subfigures
+                is_needed
                 figure_in_which_search.edges
                 subfigures_after_goals
 
@@ -119,3 +123,4 @@ namespace rvinowise.ai
             subfigures
             |>edges_between_subfigures target.edges
             |>stencil_output
+

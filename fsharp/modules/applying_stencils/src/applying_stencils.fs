@@ -1,13 +1,14 @@
 namespace rvinowise.ai.figure
 
-open System.Diagnostics.Contracts
-open Rubjerg.Graphviz
-open rvinowise.ai.mapping_stencils
-open rvinowise.ai.stencil
-open rvinowise.ai
 
 module Applying_stencil = 
     open System.Collections.Generic
+    open System.Diagnostics.Contracts
+    open Rubjerg.Graphviz
+    open rvinowise.ai.mapping_stencils
+    open rvinowise.ai.stencil
+    open rvinowise.ai
+    open rvinowise
 
     type Mapped_stencil = {
         subfigures: (Node_id*Node_id) Set
@@ -127,7 +128,7 @@ module Applying_stencil =
 
     let next_subfigures subfigures (stencil: Stencil)=
         subfigures
-        |>Seq.collect (Node.next_nodes stencil.edges)
+        |>Seq.collect (ai.stencil.Edges.next_nodes stencil.edges)
         |>Seq.distinct
         |>Nodes.only_subfigures
 
@@ -135,12 +136,12 @@ module Applying_stencil =
 
     let rec subfigures_reacheble_from_edges
         (reached_goals: HashSet<Node_id>)
-        (all_edges)
+        all_edges
         goal_figure
-        (reaching_edges: figure.Edge seq)
+        reaching_edges
         =
         reaching_edges
-        |>Seq.filter (fun edge->
+        |>Seq.filter (fun (edge:figure.Edge)->
             edge.head.referenced = goal_figure
         )
         |>Seq.iter (fun edge -> 
@@ -148,7 +149,7 @@ module Applying_stencil =
         )
 
         reaching_edges
-        |>Seq.map (Edge.next_edges all_edges)
+        |>Seq.map (Edges.next_edges all_edges)
         |>Seq.iter (
             subfigures_reacheble_from_edges 
                 reached_goals 
@@ -157,13 +158,12 @@ module Applying_stencil =
         )
         |>ignore
 
-
     let subfigures_reacheble_from_subfigure 
         (figure: Figure)
         goal_figure
         (starting_subfigure:Node_id)
         =
-        let edges = Subfigure.outgoing_edges figure.edges starting_subfigure
+        let edges = Edges.outgoing_edges figure.edges starting_subfigure
         let reached_goals = HashSet<Node_id>()
         subfigures_reacheble_from_edges 
             reached_goals
@@ -173,7 +173,6 @@ module Applying_stencil =
         |>ignore
 
         reached_goals
-
 
     let subfigures_after_other_subfigures
         (figure_in_which_search: Figure)
@@ -216,7 +215,7 @@ module Applying_stencil =
         (prolongating_stencil_subfigure: Subfigure)
         =
         prolongating_stencil_subfigure.id
-        |>Node.previous_subfigures_jumping_over_outputs stencil.edges
+        |>Edges.previous_subfigures_jumping_over_outputs stencil.edges
         |>Subfigures.ids
         |>Mapping.targets_of_mapping mapping
         |>subfigures_after_other_subfigures

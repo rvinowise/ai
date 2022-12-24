@@ -26,15 +26,6 @@
             result+=")"
             result.ToString()
 
-    type Stencil2(
-        id, 
-        edges
-    ) =
-        member this.id:Figure_id = id
-        member this.edges: stencil.Edge seq = edges
-        
-        new (id) =
-            Stencil2(id,[])
 
 
 
