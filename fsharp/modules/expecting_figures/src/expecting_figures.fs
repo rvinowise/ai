@@ -1,10 +1,11 @@
 namespace rvinowise.ai
 
-open rvinowise.ai.figure
-open Expected_figure_prolongation
+
 
 module Expecting_figures = 
-
+    open rvinowise.ai.figure
+    open rvinowise.ai
+    open Expected_figure_prolongation
 
     
 
@@ -26,10 +27,11 @@ module Expecting_figures =
             let new_expected = 
                 fired_subfigures
                 |>Seq.collect(fun s ->
-                    Subfigure.next_subfigures
-                        expectation.prolongated.edges
+                    Figure.next_subfigures
+                        expectation.prolongated
                         s.id)
                 |>Set.ofSeq
+                
 
             let updated_expected = 
                 fired_subfigures

@@ -13,7 +13,7 @@ open rvinowise.ai.ui.painted
 module ``expectation of prolongation of figures``=
     
     let a_high_level_relatively_simple_figure =
-        rvinowise.ai.figure.Figure.regular
+        rvinowise.ai.Figure.regular
             "F"
             [
                 figure.Edge(

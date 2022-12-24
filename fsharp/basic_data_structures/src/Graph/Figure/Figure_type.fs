@@ -7,8 +7,6 @@
     type Figure = {
         id: Figure_id
         edges: Edge seq
-
-        
     }
     with 
         override this.ToString() =
@@ -56,30 +54,6 @@
 
 namespace rvinowise.ai.figure
     open rvinowise.ai
-    open Xunit
-    open FsUnit
-    
-    //[<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
-    module Figure =
-        
-        let regular (id:string) (edges:Edge seq)=
-            {id=id;edges=edges}
-            
-        let stencil_output (edges:Edge seq)=
-            regular "out" edges
-
-        let empty id = regular id []
-
-        [<Fact>]
-        let ``equality comparison``()=
-            let f1 = regular "F" [
-                Edge(Subfigure("a0","a"), Subfigure("b0","b"))
-            ]
-            let f2 = regular "F" [
-                Edge(Subfigure("a0","a"), Subfigure("b0","b"))
-            ]
-            f1 |>should equal f2
-
 
     module Example =
 

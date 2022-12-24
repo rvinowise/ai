@@ -10,9 +10,7 @@ namespace rvinowise.ai.stencil
         new() = {
             inherit Dictionary<Node_id, Node_id>();
         }
-        // new(copied: Mapping) = {
-        //     inherit Dictionary<Node_id,Node_id>(copied);
-        // }
+    
         new(copied: IDictionary<Node_id, Node_id>) = {
             inherit Dictionary<Node_id,Node_id>(copied);
         }
@@ -126,7 +124,7 @@ namespace rvinowise.ai.stencil
 
             let output_beginning =
                 output_node.id
-                |>Node.previous_subfigures stencil.edges
+                |>Figure.previous_subfigures stencil
                 |>Subfigures.ids
                 |>targets_of_mapping mapping
                 |>Edges.subfigures_reacheble_from_other_subfigures
@@ -135,7 +133,7 @@ namespace rvinowise.ai.stencil
 
             let output_ending =
                 output_node.id
-                |>Node.next_subfigures stencil.edges
+                |>Figure.next_subfigures stencil
                 |>Subfigures.ids
                 |>targets_of_mapping mapping
                 |>Edges.subfigures_reaching_other_subfigures

@@ -5,18 +5,24 @@ namespace rvinowise.ai
     open System.Collections.Generic
 
     [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
-        
     module Subfigure =
         
+        open System.Text.RegularExpressions
+        let private remove_number label =
+            Regex.Replace(label, @"[^a-zA-Z]", "")
+                    
+        let simple id =
+            Subfigure(
+                id,
+                remove_number id
+            )
+
         let ofNode (node:Node) =
             match node.referenced with
                 |Node_reference.Lower_figure figure_id -> 
                     Some (Subfigure(node.id, figure_id))
                 | _ -> None
 
-        
-        
-        
         
 
     [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
@@ -55,39 +61,4 @@ namespace rvinowise.ai
                 Stencil_output
             )
 
-        let incoming_edges (edges: stencil.Edge seq) (node:Node_id) =
-            edges
-            |>Seq.filter (fun e->e.head.id = node)
-
-        let next_nodes (edges: stencil.Edge seq) (node:Node_id) =
-            edges
-            |>Seq.filter (fun e->e.tail.id = node)
-            |>Seq.map (fun e->e.head)
-
-        let next_subfigures edges node =
-            node
-            |>next_nodes edges
-            |>Nodes.only_subfigures
-
-        let previous_nodes (edges: stencil.Edge seq) (node:Node_id) =
-            node
-            |>incoming_edges edges
-            |>Seq.map (fun e->e.tail)
         
-        let previous_subfigures edges node =
-            node
-            |>previous_nodes edges
-            |>Nodes.only_subfigures
-
-        
-
-        let previous_subfigures_jumping_over_outputs edges node =
-            node
-            |>incoming_edges edges
-            |>Seq.collect (fun edge->
-                match Subfigure.ofNode edge.tail with
-                |Some previous_subfigure -> Seq.ofList [previous_subfigure]
-                |None -> (previous_subfigures edges edge.tail.id)
-            )
-            
-    

@@ -1,10 +1,32 @@
 ﻿namespace rvinowise.ai
 
     open System.Collections.Generic
-    open rvinowise.ai
+    open System.Text
+    open rvinowise.ai.stencil
+    open rvinowise.extensions
 
 
-    type Stencil(
+    type Stencil = {
+        id: Figure_id
+        edges: Edge seq
+    }
+    with 
+        override this.ToString() =
+            let result = StringBuilder()
+            result 
+            += $"Stencil_{this.id}( "
+            this.edges
+            |>Seq.iter(fun edge ->
+                result 
+                ++ edge.tail.id
+                ++"->"
+                ++ edge.head.id
+                +=" "
+            )
+            result+=")"
+            result.ToString()
+
+    type Stencil2(
         id, 
         edges
     ) =
@@ -12,7 +34,7 @@
         member this.edges: stencil.Edge seq = edges
         
         new (id) =
-            Stencil(id,[])
+            Stencil2(id,[])
 
 
 

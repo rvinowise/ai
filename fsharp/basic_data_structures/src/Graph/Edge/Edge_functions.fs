@@ -1,77 +1,90 @@
+
+namespace rvinowise.ai
+    open rvinowise
+
+
+    [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
+    module Edges =
+        
+        let incoming_edges<'Edge when 'Edge :> ai.Edge> 
+            (edges: 'Edge seq) 
+            (node:Node_id) 
+            =
+            edges
+            |>Seq.filter (fun e->e.head_id = node)
+
+        let outgoing_edges<'Edge when 'Edge :> ai.Edge> 
+            (edges: 'Edge seq) 
+            node_id
+            =
+            edges
+            |>Seq.filter (fun e->
+                e.tail_id = node_id
+            )
+        
+        let next_edges<'Edge when 'Edge :> ai.Edge>  
+            (edges: 'Edge seq)
+            (edge: 'Edge)
+            =
+            edges
+            |>Seq.filter (fun e->
+                e.tail_id = edge.head_id
+            )
+
+        let all_nodes<'Edge when 'Edge :> ai.Edge> 
+            (edges: 'Edge seq)
+            =
+            edges
+            |>Seq.collect (fun edge->[edge.tail_id; edge.head_id])
+            |>Seq.distinct
+
+        let first_nodes<'Edge when 'Edge :> ai.Edge> 
+            (edges: 'Edge seq)
+            =
+            edges
+            |>all_nodes
+            |>Seq.filter (
+                fun node->
+                    edges
+                    |> Seq.exists (fun edge-> edge.head_id = node)
+                    |> not
+                )
+            |>Seq.distinct
+
+        
+
+
 namespace rvinowise.ai.figure
     open FsUnit
     open Xunit
     open System.Collections.Generic
     open rvinowise.ai
+    open rvinowise
     open rvinowise.extensions
-
-    [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
-    module Edge =
-        
-        let next_edges 
-            (edges: Edge seq)
-            (edge: Edge)
-            =
-            edges
-            |>Seq.filter (fun e->
-                e.tail.id = edge.head.id
-            )
 
     [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
     module Edges =
         
         let next_subfigures 
-            (edges: Edge seq)
-            (subfigure: Node_id) 
+            (edges: figure.Edge seq)
+            (subfigure: Node_id)
             =
             edges
             |>Seq.filter (fun e->e.tail.id = subfigure)
             |>Seq.map (fun e->e.head)
 
         let previous_subfigures 
-            (edges: Edge seq)
-            (subfigure: Node_id) 
+            (edges: figure.Edge seq)
+            (subfigure: Node_id)
             =
             edges
             |>Seq.filter (fun e->e.head.id = subfigure)
             |>Seq.map (fun e->e.tail)
 
-        let outgoing_edges 
-            (edges: Edge seq) 
-            node_id
-            =
-            edges
-            |>Seq.filter (fun e->
-                e.tail.id = node_id
-            )
-
-        let incoming_edges 
-            (edges: Edge seq) 
-            node_id
-            =
-            edges
-            |>Seq.filter (fun e->
-                e.head.id = node_id
-            )
-
-
-
         let all_subfigures edges =
-            (edges: Edge seq)
+            (edges: figure.Edge seq)
             |>Seq.collect (fun e->[e.tail; e.head])
             |>Seq.distinct
-        
-        let first_subfigures edges =
-            edges
-            |>all_subfigures
-            |>Seq.filter (
-                fun s->
-                    edges
-                    |> Seq.exists (fun e-> e.head = s)
-                    |> not
-                )
-            |>Seq.distinct
-
 
         let subfigures_with_ids ids edges  =
             edges
@@ -83,7 +96,7 @@ namespace rvinowise.ai.figure
                 )
             )
 
-        let starting_from (subfigure: Node_id) (edges: Edge seq) =
+        let subfigures_starting_from (subfigure: Node_id) (edges: figure.Edge seq) =
             edges
             |>Seq.filter (fun e->e.tail.id = subfigure)
             |>Seq.map (fun e->e.head)
@@ -133,7 +146,7 @@ namespace rvinowise.ai.figure
 
 
         let subfigures_reacheble_from_other_subfigures
-            (edges: Edge seq)
+            (edges: figure.Edge seq)
             (subfigures_before_goals: Node_id seq)
             =
             subfigures_before_goals
@@ -141,7 +154,7 @@ namespace rvinowise.ai.figure
                 (next_subfigures edges)
     
         let subfigures_reaching_other_subfigures
-            (edges: Edge seq)
+            (edges: figure.Edge seq)
             (subfigures_after_goals: Node_id seq)
             =
             subfigures_after_goals
@@ -153,14 +166,18 @@ namespace rvinowise.ai.figure
 
 
 
+    
+
 namespace rvinowise.ai.stencil
     open rvinowise.ai
 
     [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
     module Edges =
         
+        
+
         let all_nodes edges =
-            (edges: Edge seq)
+            (edges: stencil.Edge seq)
             |>Seq.collect (fun e->[e.tail; e.head])
             |>Seq.distinct
         
@@ -175,9 +192,51 @@ namespace rvinowise.ai.stencil
                 )
             |>Seq.distinct
 
-        let starting_from (node: Node_id) (edges: Edge seq) =
+        let next_nodes
+            (edges: stencil.Edge seq) (node:Node_id) 
+            =
+            node 
+            |>Edges.outgoing_edges edges
+            |>Seq.map (fun e->e.head)
+
+        let previous_nodes
+            (edges: stencil.Edge seq) node
+            =
+            node
+            |>Edges.incoming_edges edges
+            |>Seq.map (fun e->e.tail)
+
+        let next_subfigures 
+            (edges: stencil.Edge seq)
+            (node: Node_id)
+            =
+            node
+            |>next_nodes edges
+            |>Nodes.only_subfigures    
+
+        let previous_subfigures
+            (edges: stencil.Edge seq) node 
+            =
+            node
+            |>previous_nodes edges
+            |>Nodes.only_subfigures
+
+        let previous_subfigures_jumping_over_outputs
+            (edges: stencil.Edge seq) node 
+            =
+            node
+            |>Edges.incoming_edges edges
+            |>Seq.collect (fun edge->
+                match Subfigure.ofNode edge.tail with
+                |Some previous_subfigure -> Seq.ofList [previous_subfigure]
+                |None -> (previous_subfigures edges edge.tail.id)
+            )
+
+        let nodes_starting_from 
+            (node: Node_id) 
+            (edges: stencil.Edge seq) 
+            =
             edges
             |>Seq.filter (fun e->e.tail.id = node)
             |>Seq.map (fun e->e.head)
 
-        

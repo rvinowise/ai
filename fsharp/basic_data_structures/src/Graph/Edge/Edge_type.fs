@@ -1,8 +1,18 @@
+
+
+namespace rvinowise.ai
+
+    type Edge =
+        interface
+            abstract member tail_id:Node_id
+            abstract member head_id:Node_id
+
+        end
+
 namespace rvinowise.ai.figure
-    open rvinowise.ai
+    open rvinowise
 
     (* figure.Edge only connects subfigures, but stencil.Edge can either connect subfigures or stencil outputs  *)
-
     type Edge = 
         struct
             val tail: Subfigure
@@ -10,12 +20,16 @@ namespace rvinowise.ai.figure
 
             new (tail, head) =
                 {tail = tail; head = head;}
-        end
 
-    
+            interface ai.Edge with
+                member this.tail_id = this.tail.id
+                member this.head_id = this.head.id
+        end
+        
+         
 
 namespace rvinowise.ai.stencil
-    open rvinowise.ai
+    open rvinowise
 
     type Edge = 
         struct
@@ -24,6 +38,8 @@ namespace rvinowise.ai.stencil
 
             new (tail, head) =
                 {tail = tail; head = head;}
-        end
 
-    
+            interface ai.Edge with
+                member this.tail_id = this.tail.id
+                member this.head_id = this.head.id
+        end

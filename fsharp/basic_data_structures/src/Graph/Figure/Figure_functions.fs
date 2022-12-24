@@ -8,35 +8,43 @@ namespace rvinowise.ai
         open rvinowise.ai.figure
         open rvinowise.extensions
         
+        let regular (id:string) (edges:Edge seq)=
+            {id=id;edges=edges}
+            
+        let stencil_output (edges:Edge seq)=
+            regular "out" edges
+
+        let empty id = regular id []
+
+        [<Fact>]
+        let ``equality comparison``()=
+            let f1 = regular "F" [
+                Edge(Subfigure("a0","a"), Subfigure("b0","b"))
+            ]
+            let f2 = regular "F" [
+                Edge(Subfigure("a0","a"), Subfigure("b0","b"))
+            ]
+            f1 |>should equal f2
+        
 
         let subfigures_reacheble_from_other_subfigures
             (figure_in_which_search: Figure)
             (subfigures_before_goals: Node_id seq)
             =
-            subfigures_before_goals
-            |>Edge.subfigures_reacheble_from_other_subfigures 
+            Edges.subfigures_reacheble_from_other_subfigures 
                 figure_in_which_search.edges
+                subfigures_before_goals
     
         let subfigures_reaching_other_subfigures
             (figure_in_which_search: Figure)
             (subfigures_after_goals: Node_id seq)
             =
-            subfigures_after_goals
-            |>Seq.map (
-                all_subfigures_reacheble_from_subfigure
-                    (Subfigure.previous_subfigures figure_in_which_search.edges)
-            )
-            |>HashSet.intersectMany
+            Edges.subfigures_reaching_other_subfigures
+                figure_in_which_search.edges
+                subfigures_after_goals
 
+        
 
-        [<Fact>]
-        let ``subfigures reaching others``()=
-            subfigures_reaching_other_subfigures
-                figure.Example.a_high_level_relatively_simple_figure
-                [
-                    "b1";"f1"
-                ]
-            |> should equal ["b0"]
         [<Fact>]
         let ``subfigures reacheble from others``()=
             subfigures_reacheble_from_other_subfigures
@@ -46,9 +54,25 @@ namespace rvinowise.ai
                 ]
             |> should equal ["f1"]
 
+        [<Fact>]
+        let ``subfigures reaching others``()=
+            subfigures_reaching_other_subfigures
+                figure.Example.a_high_level_relatively_simple_figure
+                [
+                    "b1";"f1"
+                ]
+            |> should equal ["b0"]
+        
+
+        let next_subfigures figure subfigure=
+            Edges.next_subfigures figure.edges subfigure
+
+        let previous_subfigures figure subfigure=
+            Edges.previous_subfigures figure.edges subfigure
 
         let first_subfigures (figure:Figure) =
             Edges.first_subfigures figure.edges
+            
 
         let subfigure_occurances (subfigure:Figure) (figure:Figure) =
             figure.edges
@@ -94,4 +118,4 @@ namespace rvinowise.ai
             =
             subfigures
             |>edges_between_subfigures target.edges
-            |>Figure.stencil_output
+            |>stencil_output

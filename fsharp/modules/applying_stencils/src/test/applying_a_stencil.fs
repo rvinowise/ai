@@ -3,9 +3,7 @@ namespace rvinowise.ai.test
 open Xunit
 open FsUnit
 
-open rvinowise
 open rvinowise.ai
-open rvinowise.ai.figure
 open rvinowise.ai.figure.Applying_stencil
 open rvinowise.ai.ui
 open rvinowise.ai.mapping_stencils
@@ -23,7 +21,7 @@ module ``application of stencils``=
         member _.initial_useless_mapping = Mapping ["b","b2";"h","h"]
         
         member _.a_fitting_stencil: Stencil =
-            rvinowise.ai.Stencil(
+            Stencil(
                 "S",
                 [
                     stencil.Edge(
