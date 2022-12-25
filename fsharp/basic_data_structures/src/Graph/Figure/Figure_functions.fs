@@ -6,6 +6,7 @@ namespace rvinowise.ai
     [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
     module Figure=
         open rvinowise.ai.figure
+        open rvinowise
         open rvinowise.extensions
         
         let regular (id:string) (edges:Edge seq)=
@@ -26,13 +27,20 @@ namespace rvinowise.ai
             ]
             f1 |>should equal f2
         
+        let need_every_subfigure subfigure =
+            true
+
+        let need_subfigure_referencing_figure 
+            referenced_figure
+            (subfigure: Subfigure) =
+            subfigure.referenced = referenced_figure
 
         let subfigures_reacheble_from_other_subfigures
             (is_needed: Subfigure->bool)
             (figure_in_which_search: Figure)
-            (subfigures_before_goals: Node_id seq)
+            (subfigures_before_goals: Subfigure seq)
             =
-            Edges.subfigures_reacheble_from_other_subfigures
+            Edges.vertices_reacheble_from_other_vertices
                 is_needed
                 figure_in_which_search.edges
                 subfigures_before_goals
@@ -40,9 +48,9 @@ namespace rvinowise.ai
         let subfigures_reaching_other_subfigures
             (is_needed: Subfigure->bool)
             (figure_in_which_search: Figure)
-            (subfigures_after_goals: Node_id seq)
+            (subfigures_after_goals: Subfigure seq)
             =
-            Edges.subfigures_reaching_other_subfigures
+            Edges.vertices_reaching_other_vertices
                 is_needed
                 figure_in_which_search.edges
                 subfigures_after_goals
@@ -52,27 +60,25 @@ namespace rvinowise.ai
         [<Fact>]
         let ``subfigures reacheble from others``()=
             subfigures_reacheble_from_other_subfigures
+                need_every_subfigure
                 figure.Example.a_high_level_relatively_simple_figure
-                [
-                    "b0";"b2"
-                ]
-            |> should equal ["f1"]
+                (["b0";"b2"]|>Subfigure.many_simple)
+            |> should equal (["f1"]|>Subfigure.many_simple)
 
         [<Fact>]
         let ``subfigures reaching others``()=
             subfigures_reaching_other_subfigures
+                need_every_subfigure
                 figure.Example.a_high_level_relatively_simple_figure
-                [
-                    "b1";"f1"
-                ]
-            |> should equal ["b0"]
+                (["b1";"f1"]|>Subfigure.many_simple)
+            |> should equal (["b0"]|>Subfigure.many_simple)
         
 
         let next_subfigures figure subfigure=
-            Edges.next_subfigures figure.edges subfigure
+            Edges.next_vertices figure.edges subfigure
 
         let previous_subfigures figure subfigure=
-            Edges.previous_subfigures figure.edges subfigure
+            Edges.previous_vertices figure.edges subfigure
 
         let first_subfigures (figure:Figure) =
             Edges.first_subfigures figure.edges
@@ -105,22 +111,22 @@ namespace rvinowise.ai
             |>  Edges.subfigures_with_ids ids
 
 
-        let private edges_between_subfigures 
-            (edges:Edge seq)
-            (subfigures:Node_id Set)
+        let private edges_between_vertices 
+            (edges:seq<#ai.Edge>)
+            (vertices:Set<#Vertex>)
             =
             edges
-            |>Seq.filter (fun edge->
-                Set.contains edge.tail.id subfigures
+            |>Seq.filter (fun (edge:#ai.Edge)->
+                Set.contains edge.tail vertices
                 &&
-                Set.contains edge.head.id subfigures
+                Set.contains edge.head vertices
             )
 
-        let subgraph_with_subfigures 
+        let subgraph_with_vertices 
             (target:Figure) 
-            (subfigures: Node_id Set)
+            (vertices:Set<#Vertex>)
             =
-            subfigures
-            |>edges_between_subfigures target.edges
+            vertices
+            |>edges_between_vertices target.edges
             |>stencil_output
 

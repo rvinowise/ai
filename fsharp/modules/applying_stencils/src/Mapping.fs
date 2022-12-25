@@ -3,19 +3,20 @@ namespace rvinowise.ai.stencil
     open rvinowise.ai
     open System.Linq
     open System
+    open rvinowise.ai.figure
 
     type Mapping = 
-        inherit Dictionary<Node_id,Node_id>
+        inherit Dictionary<Node_id,Subfigure>
 
         new() = {
-            inherit Dictionary<Node_id, Node_id>();
+            inherit Dictionary<Node_id, Subfigure>();
         }
     
-        new(copied: IDictionary<Node_id, Node_id>) = {
-            inherit Dictionary<Node_id,Node_id>(copied);
+        new(copied: IDictionary<Node_id, Subfigure>) = {
+            inherit Dictionary<Node_id,Subfigure>(copied);
         }
-        new(content: (Node_id*Node_id) seq) as this = 
-            {inherit Dictionary<Node_id,Node_id>();} 
+        new(content: (Node_id*Subfigure) seq) as this = 
+            {inherit Dictionary<Node_id,Subfigure>();} 
             then
                 content
                 |>Seq.iter (fun (tail, target) ->
@@ -26,25 +27,24 @@ namespace rvinowise.ai.stencil
             
             member this.CompareTo other =
                 
-                let tail_of_mapped_node (pair:KeyValuePair<Node_id, Node_id>) =
+                let tail_of_mapped_node (pair:KeyValuePair<Node_id, Subfigure>) =
                     pair.Key
-                let target_of_mapped_node (pair:KeyValuePair<Node_id, Node_id>) =
+                let target_of_mapped_node (pair:KeyValuePair<Node_id, Subfigure>) =
                     pair.Value
                 let compare_mapped_nodes
                     (this:Mapping) 
                     (other:Mapping) 
-                    (compared_element: KeyValuePair<Node_id, Node_id> -> Node_id)
                     =
-                    let this_tails = 
+                    let this_items = 
                         this
-                        |>Seq.map (fun pair -> compared_element pair)
+                        |>Seq.map (fun pair->(pair.Key,pair.Value))
                         |>Seq.sort 
-                    let other_tails = 
+                    let other_items = 
                         other
-                        |>Seq.map (fun pair -> compared_element pair)
+                        |>Seq.map (fun pair->(pair.Key,pair.Value))
                         |>Seq.sort 
 
-                    (this_tails, other_tails)
+                    (this_items, other_items)
                     ||>Seq.zip
                     |>Seq.tryFind (fun (this_element, other_element) ->
                         this_element <> other_element
@@ -52,7 +52,8 @@ namespace rvinowise.ai.stencil
                     |> fun pair_with_difference ->
                         match pair_with_difference with
                         |Some (this, other) ->
-                            this.CompareTo(other)
+                            //this.CompareTo(other)
+                            if this < other then -1 else 1
                         |None -> 0
 
                 match other with
@@ -60,12 +61,7 @@ namespace rvinowise.ai.stencil
                     if (this.Count <> other.Count) then
                         this.Count - other.Count
                     else 
-                        let comparison_of_targets = 
-                            compare_mapped_nodes this other target_of_mapped_node
-                        if comparison_of_targets = 0 then
-                            compare_mapped_nodes this other tail_of_mapped_node
-                        else
-                            comparison_of_targets
+                        compare_mapped_nodes this other
                 | _ -> 1
 
 
@@ -89,7 +85,7 @@ namespace rvinowise.ai.stencil
         override this.GetHashCode() =
             let mutable hash_code = 0
             this
-            |>Seq.iter (fun (pair: KeyValuePair<Node_id,Node_id>) ->
+            |>Seq.iter (fun (pair: KeyValuePair<Node_id,Subfigure>) ->
                 hash_code <- hash_code ^^^ pair.GetHashCode()
             )
             hash_code
@@ -101,7 +97,7 @@ namespace rvinowise.ai.stencil
         open rvinowise.ai
         open rvinowise
         
-        let copy (copied:IDictionary<Node_id, Node_id>): Mapping =
+        let copy (copied:IDictionary<Node_id, Subfigure>): Mapping =
             Mapping(copied)
 
         let empty(): Mapping =
@@ -110,11 +106,11 @@ namespace rvinowise.ai.stencil
         
         let targets_of_mapping 
             (mapping:Mapping)
-            subfigures 
+            (subfigures: Subfigure seq) 
             =
             subfigures
-            |>Seq.map (fun s->
-                mapping[s]
+            |>Seq.map (fun subfigure->
+                mapping[subfigure.id]
             )
 
         let retrieve_result stencil target mapping =
@@ -122,27 +118,26 @@ namespace rvinowise.ai.stencil
             let output_node = 
                 stencil
                 |>Stencil.outputs
+                |>Seq.head
 
             let output_beginning =
                 output_node
                 |>ai.Edges.previous_vertices stencil.edges
-                |>Vertex.ids
                 |>targets_of_mapping mapping
-                |>figure.Edges.subfigures_reacheble_from_other_subfigures
-                    (fun _->true)
+                |>Edges.vertices_reacheble_from_other_vertices
+                    Figure.need_every_subfigure
                     target.edges
                 |>Set.ofSeq
 
             let output_ending =
                 output_node
                 |>ai.Edges.next_vertices stencil.edges
-                |>Vertex.ids
                 |>targets_of_mapping mapping
-                |>Edges.subfigures_reaching_other_subfigures
-                    (fun _->true)
-                    target.edge
+                |>Edges.vertices_reaching_other_vertices
+                    Figure.need_every_subfigure
+                    target.edges
                 |>Set.ofSeq
             
             output_beginning
             |>Set.intersect output_ending
-            |>Figure.subgraph_with_subfigures target
+            |>Figure.subgraph_with_vertices target

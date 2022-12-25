@@ -24,33 +24,6 @@
             result+=")"
             result.ToString()
 
-    type Figure2(
-        id, 
-        edges
-    ) =
-        member this.id:Figure_id = id
-        member this.edges: Edge seq = edges
-        
-        new (id) =
-            Figure2(id,[])
-
-        override this.ToString() =
-            let result = StringBuilder()
-            
-            result 
-            += $"Figure_{this.id}( "
-            
-            edges
-            |>Seq.iter(fun edge ->
-                result 
-                ++ edge.tail.id
-                ++"->"
-                ++ edge.head.id
-                +=" "
-                
-            )
-            result+=")"
-            result.ToString()
 
 namespace rvinowise.ai.figure
     open rvinowise.ai
@@ -61,7 +34,7 @@ namespace rvinowise.ai.figure
             id="F";
             edges=[
                 figure.Edge(
-                    Subfigure.simple("b0"),Subfigure.simple("c")
+                    Subfigure.simple "b0",Subfigure.simple("c")
                 );
                 figure.Edge(
                     Subfigure.simple("b0"),Subfigure.simple("d")

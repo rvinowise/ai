@@ -33,50 +33,62 @@ namespace rvinowise.ai
                 e.tail_id = edge.head_id
             )
 
-        let next_vertices<'Vertex, 'Edge when 'Vertex :> Vertex and 'Edge :> ai.Edge>
-            (edges: seq<'Edge>) 
-            (vertex: 'Vertex) 
+        let next_vertices
+            (edges: seq<#Edge>) 
+            (vertex: #Vertex) 
             =
             vertex.id 
             |>outgoing_edges edges
-            |>Seq.map (fun e->e.head :?> 'Vertex)
+            |>Seq.map (fun e->e.head :?> #Vertex)
 
         let previous_vertices
             (edges: seq<#Edge>) 
-            (vertex: Vertex) 
+            (vertex: #Vertex) 
             =
             vertex.id
             |>incoming_edges edges
-            |>Seq.map (fun e->e.tail)
+            |>Seq.map (fun e->e.tail :?> #Vertex)
 
-        let all_vertices<'Edge when 'Edge :> ai.Edge> 
-            (edges: 'Edge seq)
+        let all_vertices 
+            (edges: #Edge seq)
             =
             edges
             |>Seq.collect (fun edge->[edge.tail; edge.head])
             |>Seq.distinct
 
-        let is_first_vertex<'Edge when 'Edge :> ai.Edge> 
-            (edges: 'Edge seq)
-            (vertex:Vertex)
+        let is_first_vertex
+            (edges: seq<#Edge> )
+            (vertex: #Vertex)
             =
             edges
             |> Seq.exists (fun edge-> edge.head_id = vertex.id)
             |> not
 
-        let first_vertices<'Edge when 'Edge :> ai.Edge> 
-            (edges: 'Edge seq)
+        let first_vertices
+            (edges: seq<#Edge>)
             =
             edges
             |>all_vertices
             |>Seq.filter (is_first_vertex edges)
             |>Seq.distinct
 
+        let vertices_with_ids
+            (edges: seq<#Edge>) 
+            ids  
+            =
+            edges
+            |>all_vertices
+            |>Seq.filter (fun vertex->
+                ids
+                |>Set.exists (fun id -> 
+                    vertex.id = id
+                )
+            )
         
         let rec private all_vertices_reacheble_from_vertices
             (is_needed:#Vertex->bool)
             (step_further: #Vertex -> #Vertex seq)
-            (reached_goals: #HashSet<Vertex>)
+            (reached_goals: HashSet<#Vertex>)
             (starting_vertices: #Vertex seq)
             =
             let further_vertices =
@@ -98,7 +110,7 @@ namespace rvinowise.ai
             else
                 ()
         
-        let all_vertices_reacheble_from_vertex
+        let all_vertices_reacheble_from_vertex//<'Vertex when 'Vertex :> Vertex>
             (is_needed:#Vertex->bool)
             (step_further: #Vertex -> #Vertex seq)
             (starting_vertex: #Vertex)
@@ -120,6 +132,28 @@ namespace rvinowise.ai
             |>Seq.map (all_vertices_reacheble_from_vertex is_needed step_further)
             |>HashSet.intersectMany
 
+        let vertices_reacheble_from_other_vertices
+            (is_needed: #Vertex->bool)
+            (edges: seq<#Edge>)
+            (subfigures_before_goals: seq<#Vertex>)
+            :HashSet<#Vertex>
+            =
+            vertices_reacheble_from_every_vertex
+                is_needed
+                (next_vertices edges)
+                subfigures_before_goals
+
+        let vertices_reaching_other_vertices
+            (is_needed: #Vertex->bool)
+            (edges: seq<#Edge>)
+            (subfigures_after_goals: seq<#Vertex>)
+            :HashSet<#Vertex>
+            =
+            vertices_reacheble_from_every_vertex
+                is_needed
+                (previous_vertices edges)
+                subfigures_after_goals
+
 
 namespace rvinowise.ai.figure
     open FsUnit
@@ -132,22 +166,6 @@ namespace rvinowise.ai.figure
 
     [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
     module Edges =
-        
-        // let next_subfigures 
-        //     (edges: figure.Edge seq)
-        //     (subfigure: Node_id)
-        //     =
-        //     edges
-        //     |>Seq.filter (fun e->e.tail.id = subfigure)
-        //     |>Seq.map (fun e->e.head)
-
-        // let previous_subfigures 
-        //     (edges: figure.Edge seq)
-        //     (subfigure: Node_id)
-        //     =
-        //     edges
-        //     |>Seq.filter (fun e->e.head.id = subfigure)
-        //     |>Seq.map (fun e->e.tail)
 
         let all_subfigures edges =
             (edges: figure.Edge seq)
@@ -182,31 +200,7 @@ namespace rvinowise.ai.figure
         let test<'Vertex when 'Vertex :> ai.Vertex> (vertex:'Vertex) =
             [vertex] |>Seq.ofList
 
-        let subfigures_reacheble_from_other_subfigures
-            (is_needed:Subfigure->bool)
-            (edges: figure.Edge seq)
-            (subfigures_before_goals: seq<Subfigure>)
-            :HashSet<#Subfigure>
-            =
-            Edges.vertices_reacheble_from_every_vertex
-                is_needed
-                (Edges.next_vertices edges)
-                subfigures_before_goals
-            :?>HashSet<#Subfigure>
-
-        let subfigures_reaching_other_subfigures
-            (is_needed:Vertex->bool)
-            (edges: figure.Edge seq)
-            (subfigures_after_goals: seq<Vertex>)
-            =
-            subfigures_after_goals
-            |>Seq.map (
-                Edges.all_vertices_reacheble_from_vertex
-                    is_needed
-                    //(fun vertex->[vertex])
-                    (Edges.previous_vertices edges)
-            )
-            |>HashSet.intersectMany
+        
 
 
 

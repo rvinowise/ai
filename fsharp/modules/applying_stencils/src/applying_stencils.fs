@@ -24,7 +24,7 @@ module Applying_stencil =
         let subfigures_in_target = 
             figures_to_map
             |>Seq.map (Figure.nodes_referencing_lower_figure target)
-            |>Seq.map Subfigures.ids
+            |>Seq.map Vertex.ids
             |>Seq.map Array.ofSeq
             
         let subfigures_in_stencil = 
@@ -32,7 +32,7 @@ module Applying_stencil =
             |>Seq.map (fun f->
                 Subfigures.pick_referencing_figure f first_subfigures_of_stencil
             )
-            |>Seq.map Subfigures.ids
+            |>Seq.map Vertex.ids
             
         (subfigures_in_stencil, subfigures_in_target )
 
@@ -216,7 +216,7 @@ module Applying_stencil =
         =
         prolongating_stencil_subfigure.id
         |>Edges.previous_subfigures_jumping_over_outputs stencil.edges
-        |>Subfigures.ids
+        |>Vertex.ids
         |>Mapping.targets_of_mapping mapping
         |>subfigures_after_other_subfigures
             target
@@ -259,7 +259,7 @@ module Applying_stencil =
             prolongate_mappings
                 stencil 
                 target 
-                (Subfigures.ids next_subfigures_to_map)
+                (Vertex.ids next_subfigures_to_map)
                 mappings
         
         
@@ -280,7 +280,7 @@ module Applying_stencil =
             target
             (
                 first_subfigures_of_stencil
-                |>Subfigures.ids
+                |>Vertex.ids
             )
         
 

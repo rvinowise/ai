@@ -23,6 +23,9 @@ namespace rvinowise.ai
                 remove_number id
             )
 
+        let many_simple ids =
+            ids|>Seq.map simple
+
         let ofNode (node:Node) =
             match node.referenced with
                 |Node_reference.Lower_figure figure_id -> 
