@@ -98,6 +98,8 @@ namespace rvinowise.ai.stencil
     [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
     module Mapping=
         open rvinowise.ai.figure
+        open rvinowise.ai
+        open rvinowise
         
         let copy (copied:IDictionary<Node_id, Node_id>): Mapping =
             Mapping(copied)
@@ -120,12 +122,11 @@ namespace rvinowise.ai.stencil
             let output_node = 
                 stencil
                 |>Stencil.outputs
-                |>Seq.head
 
             let output_beginning =
-                output_node.id
-                |>Edges.previous_vertices stencil
-                |>Subfigures.ids
+                output_node
+                |>ai.Edges.previous_vertices stencil.edges
+                |>Vertex.ids
                 |>targets_of_mapping mapping
                 |>figure.Edges.subfigures_reacheble_from_other_subfigures
                     (fun _->true)
@@ -133,12 +134,13 @@ namespace rvinowise.ai.stencil
                 |>Set.ofSeq
 
             let output_ending =
-                output_node.id
-                |>Figure.next_subfigures stencil
-                |>Subfigures.ids
+                output_node
+                |>ai.Edges.next_vertices stencil.edges
+                |>Vertex.ids
                 |>targets_of_mapping mapping
                 |>Edges.subfigures_reaching_other_subfigures
-                    target
+                    (fun _->true)
+                    target.edge
                 |>Set.ofSeq
             
             output_beginning

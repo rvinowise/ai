@@ -5,6 +5,12 @@ namespace rvinowise.ai
     open System.Collections.Generic
 
     [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
+    module Vertex =
+        let ids<'Vertex when 'Vertex:>Vertex> (vertices:'Vertex seq)=
+            vertices
+            |>Seq.map (fun vertex->vertex.id)
+
+    [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
     module Subfigure =
         
         open System.Text.RegularExpressions
@@ -38,9 +44,9 @@ namespace rvinowise.ai
             |> Seq.filter (fun s->s.referenced = figure)
 
         
-        let ids (subfigures:Subfigure seq) =
-            subfigures
-            |>Seq.map (fun s -> s.id) 
+        // let ids (subfigures:Subfigure seq) =
+        //     subfigures
+        //     |>Seq.map (fun s -> s.id) 
 
 
     [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
