@@ -9,7 +9,7 @@ namespace rvinowise.ai.ui.painted
 
     type Node =
         struct
-            val id:Node_id
+            val id:Vertex_id
             val label:string
 
             new(id, label) = {

@@ -3,10 +3,13 @@
     open System.Text
     open rvinowise.extensions
     open rvinowise.ai.figure
+    open System.Collections.Generic
 
     type Figure = {
         id: Figure_id
         edges: Edge seq
+
+        subfigures: IDictionary<Vertex_id, Subfigure>
     }
     with 
         override this.ToString() =
@@ -24,6 +27,18 @@
             result+=")"
             result.ToString()
 
+        static member simple (id:Figure_id) (edges:seq<Vertex_id*Vertex_id>) =
+            {
+                id=id;
+                edges=
+                    edges
+                    |>Seq.map (fun (tail_id, head_id)->
+                        ai.Edge(
+                            tail_id, head_id
+                        );
+                    )
+                subfigures=dict ["a","b"]
+            }
 
 namespace rvinowise.ai.figure
     open rvinowise.ai

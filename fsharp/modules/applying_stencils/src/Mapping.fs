@@ -6,17 +6,17 @@ namespace rvinowise.ai.stencil
     open rvinowise.ai.figure
 
     type Mapping = 
-        inherit Dictionary<Node_id,Subfigure>
+        inherit Dictionary<Vertex_id,Subfigure>
 
         new() = {
-            inherit Dictionary<Node_id, Subfigure>();
+            inherit Dictionary<Vertex_id, Subfigure>();
         }
     
-        new(copied: IDictionary<Node_id, Subfigure>) = {
-            inherit Dictionary<Node_id,Subfigure>(copied);
+        new(copied: IDictionary<Vertex_id, Subfigure>) = {
+            inherit Dictionary<Vertex_id,Subfigure>(copied);
         }
-        new(content: (Node_id*Subfigure) seq) as this = 
-            {inherit Dictionary<Node_id,Subfigure>();} 
+        new(content: (Vertex_id*Subfigure) seq) as this = 
+            {inherit Dictionary<Vertex_id,Subfigure>();} 
             then
                 content
                 |>Seq.iter (fun (tail, target) ->
@@ -27,9 +27,9 @@ namespace rvinowise.ai.stencil
             
             member this.CompareTo other =
                 
-                let tail_of_mapped_node (pair:KeyValuePair<Node_id, Subfigure>) =
+                let tail_of_mapped_node (pair:KeyValuePair<Vertex_id, Subfigure>) =
                     pair.Key
-                let target_of_mapped_node (pair:KeyValuePair<Node_id, Subfigure>) =
+                let target_of_mapped_node (pair:KeyValuePair<Vertex_id, Subfigure>) =
                     pair.Value
                 let compare_mapped_nodes
                     (this:Mapping) 
@@ -85,7 +85,7 @@ namespace rvinowise.ai.stencil
         override this.GetHashCode() =
             let mutable hash_code = 0
             this
-            |>Seq.iter (fun (pair: KeyValuePair<Node_id,Subfigure>) ->
+            |>Seq.iter (fun (pair: KeyValuePair<Vertex_id,Subfigure>) ->
                 hash_code <- hash_code ^^^ pair.GetHashCode()
             )
             hash_code
@@ -97,7 +97,7 @@ namespace rvinowise.ai.stencil
         open rvinowise.ai
         open rvinowise
         
-        let copy (copied:IDictionary<Node_id, Subfigure>): Mapping =
+        let copy (copied:IDictionary<Vertex_id, Subfigure>): Mapping =
             Mapping(copied)
 
         let empty(): Mapping =

@@ -9,12 +9,12 @@ open rvinowise.ai.figure
 
 type Edge = {
     parent: Figure_id
-    tail: Node_id
-    head: Node_id
+    tail: Vertex_id
+    head: Vertex_id
 }
 
 type Subfigure = {
-    id: Node_id
+    id: Vertex_id
     parent: Figure_id
     referenced: string
 }

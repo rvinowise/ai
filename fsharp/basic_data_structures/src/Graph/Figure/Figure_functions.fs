@@ -35,20 +35,23 @@ namespace rvinowise.ai
             (subfigure: Subfigure) =
             subfigure.referenced = referenced_figure
 
+        let subfigure_with_id id =
+            
+
         let subfigures_reacheble_from_other_subfigures
             (is_needed: Subfigure->bool)
             (figure_in_which_search: Figure)
-            (subfigures_before_goals: Subfigure seq)
+            (subfigures_before_goals: Vertex_id seq)
             =
             Edges.vertices_reacheble_from_other_vertices
-                is_needed
+                (is_needed (subfigure_with_id))
                 figure_in_which_search.edges
                 subfigures_before_goals
     
         let subfigures_reaching_other_subfigures
             (is_needed: Subfigure->bool)
             (figure_in_which_search: Figure)
-            (subfigures_after_goals: Subfigure seq)
+            (subfigures_after_goals: Vertex_id seq)
             =
             Edges.vertices_reaching_other_vertices
                 is_needed

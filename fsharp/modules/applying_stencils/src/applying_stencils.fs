@@ -11,7 +11,7 @@ module Applying_stencil =
     open rvinowise
 
     type Mapped_stencil = {
-        subfigures: (Node_id*Node_id) Set
+        subfigures: (Vertex_id*Vertex_id) Set
     }
 
     
@@ -65,7 +65,7 @@ module Applying_stencil =
     
     let mapping_of_subfigure
         (mapping: Mapping)
-        (target_subfigures:Node_id[])
+        (target_subfigures:Vertex_id[])
         target_subfigure_index
         subfigure_of_stencil
         =
@@ -135,7 +135,7 @@ module Applying_stencil =
     
 
     let rec subfigures_reacheble_from_edges
-        (reached_goals: HashSet<Node_id>)
+        (reached_goals: HashSet<Vertex_id>)
         all_edges
         goal_figure
         reaching_edges
@@ -161,10 +161,10 @@ module Applying_stencil =
     let subfigures_reacheble_from_subfigure 
         (figure: Figure)
         goal_figure
-        (starting_subfigure:Node_id)
+        (starting_subfigure:Vertex_id)
         =
         let edges = Edges.outgoing_edges figure.edges starting_subfigure
-        let reached_goals = HashSet<Node_id>()
+        let reached_goals = HashSet<Vertex_id>()
         subfigures_reacheble_from_edges 
             reached_goals
             figure.edges
@@ -177,7 +177,7 @@ module Applying_stencil =
     let subfigures_after_other_subfigures
         (figure_in_which_search: Figure)
         figure_referenced_by_goal_subfigures
-        (subfigures_before_goals: Node_id seq)
+        (subfigures_before_goals: Vertex_id seq)
         =
         subfigures_before_goals
         |>Seq.map (
@@ -242,7 +242,7 @@ module Applying_stencil =
     let rec prolongate_mappings 
         stencil
         target 
-        (last_mapped_subfigures: Node_id seq )
+        (last_mapped_subfigures: Vertex_id seq )
         (mappings: Mapping seq)
         =
         let next_subfigures_to_map = 
