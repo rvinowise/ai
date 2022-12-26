@@ -111,22 +111,13 @@ namespace rvinowise.ai
             |>  Edges.subfigures_with_ids ids
 
 
-        let private edges_between_vertices 
-            (edges:seq<#ai.Edge>)
-            (vertices:Set<#Vertex>)
-            =
-            edges
-            |>Seq.filter (fun (edge:#ai.Edge)->
-                Set.contains edge.tail vertices
-                &&
-                Set.contains edge.head vertices
-            )
+        
 
         let subgraph_with_vertices 
             (target:Figure) 
-            (vertices:Set<#Vertex>)
+            (vertices:Set<Vertex>)
             =
             vertices
-            |>edges_between_vertices target.edges
+            |>Edges.edges_between_vertices target.edges
             |>stencil_output
 

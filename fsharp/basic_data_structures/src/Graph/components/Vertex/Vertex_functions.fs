@@ -6,7 +6,7 @@ namespace rvinowise.ai
 
     [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
     module Vertex =
-        let ids<'Vertex when 'Vertex:>Vertex> (vertices:'Vertex seq)=
+        let ids (vertices:Vertex seq)=
             vertices
             |>Seq.map (fun vertex->vertex.id)
 

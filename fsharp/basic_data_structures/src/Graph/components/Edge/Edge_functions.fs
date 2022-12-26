@@ -34,20 +34,20 @@ namespace rvinowise.ai
             )
 
         let next_vertices
-            (edges: seq<#Edge>) 
-            (vertex: #Vertex) 
+            (edges: seq<Edge>) 
+            (vertex: Node_id) 
             =
             vertex.id 
             |>outgoing_edges edges
-            |>Seq.map (fun e->e.head :?> #Vertex)
+            |>Seq.map (fun e->e.head)
 
         let previous_vertices
-            (edges: seq<#Edge>) 
-            (vertex: #Vertex) 
+            (edges: seq<Edge>) 
+            (vertex: Vertex) 
             =
             vertex.id
             |>incoming_edges edges
-            |>Seq.map (fun e->e.tail :?> #Vertex)
+            |>Seq.map (fun e->e.tail)
 
         let all_vertices 
             (edges: #Edge seq)
@@ -134,7 +134,7 @@ namespace rvinowise.ai
 
         let vertices_reacheble_from_other_vertices
             (is_needed: #Vertex->bool)
-            (edges: seq<#Edge>)
+            (edges: seq<Edge>)
             (subfigures_before_goals: seq<#Vertex>)
             :HashSet<#Vertex>
             =
@@ -154,6 +154,17 @@ namespace rvinowise.ai
                 (previous_vertices edges)
                 subfigures_after_goals
 
+
+        let edges_between_vertices 
+            (edges:seq< #ai.Edge>)
+            (vertices:Set< Vertex>)
+            =
+            edges
+            |>Seq.filter (fun edge->
+                Set.contains edge.tail vertices
+                &&
+                Set.contains edge.head vertices
+            )
 
 namespace rvinowise.ai.figure
     open FsUnit
@@ -195,15 +206,7 @@ namespace rvinowise.ai.figure
             |>Seq.filter (fun e->e.tail.id = subfigure)
             |>Seq.map (fun e->e.head)
 
-
         
-        let test<'Vertex when 'Vertex :> ai.Vertex> (vertex:'Vertex) =
-            [vertex] |>Seq.ofList
-
-        
-
-
-
     
 
 namespace rvinowise.ai.stencil
@@ -212,8 +215,6 @@ namespace rvinowise.ai.stencil
     [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
     module Edges =
         
-        
-
         let all_nodes edges =
             (edges: stencil.Edge seq)
             |>Seq.collect (fun e->[e.tail; e.head])
