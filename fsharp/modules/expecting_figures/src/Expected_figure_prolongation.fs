@@ -19,7 +19,7 @@ module Expected_figure_prolongation =
         {
             prolongated=figure;
             expected=figure
-                        |>Figure.first_subfigures 
+                        |>Figure.first_vertices 
                         |>Set.ofSeq
         }
 

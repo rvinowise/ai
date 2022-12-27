@@ -9,47 +9,45 @@ namespace rvinowise.ai
         open rvinowise
         open rvinowise.extensions
         
-        let regular (id:string) (edges:Edge seq)=
-            {id=id;edges=edges}
-            
-        let stencil_output (edges:Edge seq)=
-            regular "out" edges
 
-        let empty id = regular id []
+
+        
 
         [<Fact>]
         let ``equality comparison``()=
-            let f1 = regular "F" [
-                Edge(Subfigure("a0","a"), Subfigure("b0","b"))
+            let f1 = built.from_tuples "F" [
+                "a0","a","b0","b"
             ]
-            let f2 = regular "F" [
-                Edge(Subfigure("a0","a"), Subfigure("b0","b"))
+            let f2 = built.from_tuples "F" [
+                "a0","a","b0","b"
             ]
             f1 |>should equal f2
         
-        let need_every_subfigure subfigure =
+        let need_every_vertex _ =
             true
 
-        let need_subfigure_referencing_figure 
-            referenced_figure
-            (subfigure: Subfigure) =
-            subfigure.referenced = referenced_figure
+        let need_vertex_referencing_figure 
+            (owner_figure:Figure)
+            (referenced_figure:Figure_id)
+            (checked_vertex) =
+            let (exist,reference) = owner_figure.subfigures.TryGetValue(checked_vertex)
+            exist && reference=referenced_figure
 
-        let subfigure_with_id id =
-            
+        let reference_of_vertex (figure:Figure) vertex =
+            Dictionary.some_value vertex figure.subfigures
 
         let subfigures_reacheble_from_other_subfigures
-            (is_needed: Subfigure->bool)
+            (is_needed: Vertex_id->bool)
             (figure_in_which_search: Figure)
             (subfigures_before_goals: Vertex_id seq)
             =
             Edges.vertices_reacheble_from_other_vertices
-                (is_needed (subfigure_with_id))
+                is_needed
                 figure_in_which_search.edges
                 subfigures_before_goals
     
         let subfigures_reaching_other_subfigures
-            (is_needed: Subfigure->bool)
+            (is_needed: Vertex_id->bool)
             (figure_in_which_search: Figure)
             (subfigures_after_goals: Vertex_id seq)
             =
@@ -63,64 +61,40 @@ namespace rvinowise.ai
         [<Fact>]
         let ``subfigures reacheble from others``()=
             subfigures_reacheble_from_other_subfigures
-                need_every_subfigure
+                need_every_vertex
                 figure.Example.a_high_level_relatively_simple_figure
-                (["b0";"b2"]|>Subfigure.many_simple)
-            |> should equal (["f1"]|>Subfigure.many_simple)
+                ["b0";"b2"]
+            |> should equal ["f1"]
 
         [<Fact>]
         let ``subfigures reaching others``()=
             subfigures_reaching_other_subfigures
-                need_every_subfigure
+                need_every_vertex
                 figure.Example.a_high_level_relatively_simple_figure
-                (["b1";"f1"]|>Subfigure.many_simple)
-            |> should equal (["b0"]|>Subfigure.many_simple)
+                ["b1";"f1"]
+            |> should equal ["b0"]
         
 
-        let next_subfigures figure subfigure=
+        let next_vertices figure subfigure=
             Edges.next_vertices figure.edges subfigure
 
-        let previous_subfigures figure subfigure=
+        let previous_vertices figure subfigure=
             Edges.previous_vertices figure.edges subfigure
 
-        let first_subfigures (figure:Figure) =
-            Edges.first_subfigures figure.edges
+        let first_vertices (figure:Figure) =
+            Edges.first_vertices figure.edges
             
 
-        let subfigure_occurances (subfigure:Figure) (figure:Figure) =
-            figure.edges
-            |>Seq.collect (fun e->
-                [e.tail; e.head]
-            )
-            |>Set.ofSeq
+        let vertices_referencing_lower_figure (figure:Figure) lower_figure = 
+            figure.subfigures
+            |> Dictionary.keys_with_value lower_figure 
 
-        let lower_figures (figure:Figure) =
-            figure.edges
-            |>Edges.all_subfigures
-            |>Subfigures.referenced_figures
-            |>Set.ofSeq
-
-        let subfigures (figure:Figure) =
-            figure.edges
-            |>Edges.all_subfigures
-
-        let nodes_referencing_lower_figure figure lower_figure = 
-            figure
-            |> subfigures 
-            |> Subfigures.pick_referencing_figure lower_figure
-
-        let subfigures_with_ids ids (figure:Figure)=
-            figure.edges
-            |>  Edges.subfigures_with_ids ids
-
-
-        
 
         let subgraph_with_vertices 
             (target:Figure) 
-            (vertices:Set<Vertex>)
+            (vertices:Set<Vertex_id>)
             =
             vertices
             |>Edges.edges_between_vertices target.edges
-            |>stencil_output
+            |>built.stencil_output target
 

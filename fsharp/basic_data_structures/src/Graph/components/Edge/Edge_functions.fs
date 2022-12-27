@@ -156,24 +156,8 @@ namespace rvinowise.ai
 
     
 
-namespace rvinowise.ai.stencil
-    open rvinowise.ai
 
-    [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
-    module Edges =
         
-
-        let previous_subfigures_jumping_over_outputs
-            (edges: Edge seq) 
-            node 
-            =
-            node
-            |>Edges.incoming_edges edges
-            |>Seq.collect (fun edge->
-                match Subfigure.ofNode edge.tail with
-                |Some previous_subfigure -> Seq.ofList [previous_subfigure.id]
-                |None -> (Edges.previous_vertices edges edge.tail.id)
-            )
 
 
 

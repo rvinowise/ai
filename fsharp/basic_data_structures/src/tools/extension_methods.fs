@@ -17,6 +17,22 @@ module Extensions=
         left ++ right |> ignore
 
 
+module Dictionary=
+    open System.Collections.Generic
+    open System.Linq
+
+    let inline some_value key (dictionary: IDictionary<'a,'b>) =
+        let (exist, value) = dictionary.TryGetValue(key)
+        if exist then
+            Some value
+        else    
+            None
+
+    let keys_with_value value (dictionary: IDictionary<'a,'b>) =
+        dictionary
+            .Where(fun pair -> pair.Value = value)
+            .Select(fun pair -> pair.Key);
+
 module HashSet =
     open System.Collections.Generic
     open System.Linq
