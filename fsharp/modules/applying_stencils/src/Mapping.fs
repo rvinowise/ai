@@ -5,18 +5,24 @@ namespace rvinowise.ai.stencil
     open System
     open rvinowise.ai.figure
 
+    type Mapped_vertex = KeyValuePair<Vertex_id,Vertex_id>
+    type Mapping_dict = Dictionary<Vertex_id, Vertex_id>
+    type IMapping_dict = IDictionary<Vertex_id, Vertex_id>
+
+    (* mapping ot a stencil onto a figure, so that its subgraph can be retrieved,
+    which is the output *)
     type Mapping = 
-        inherit Dictionary<Vertex_id,Subfigure>
+        inherit Dictionary<Vertex_id,Vertex_id>
 
         new() = {
-            inherit Dictionary<Vertex_id, Subfigure>();
+            inherit Mapping_dict();
         }
     
-        new(copied: IDictionary<Vertex_id, Subfigure>) = {
-            inherit Dictionary<Vertex_id,Subfigure>(copied);
+        new(copied: IDictionary<Vertex_id,Vertex_id>) = {
+            inherit Mapping_dict(copied);
         }
-        new(content: (Vertex_id*Subfigure) seq) as this = 
-            {inherit Dictionary<Vertex_id,Subfigure>();} 
+        new(content: (Vertex_id*Vertex_id) seq) as this = 
+            {inherit Mapping_dict();} 
             then
                 content
                 |>Seq.iter (fun (tail, target) ->
@@ -27,9 +33,9 @@ namespace rvinowise.ai.stencil
             
             member this.CompareTo other =
                 
-                let tail_of_mapped_node (pair:KeyValuePair<Vertex_id, Subfigure>) =
+                let tail_of_mapped_node (pair:Mapped_vertex) =
                     pair.Key
-                let target_of_mapped_node (pair:KeyValuePair<Vertex_id, Subfigure>) =
+                let target_of_mapped_node (pair:Mapped_vertex) =
                     pair.Value
                 let compare_mapped_nodes
                     (this:Mapping) 
@@ -85,7 +91,7 @@ namespace rvinowise.ai.stencil
         override this.GetHashCode() =
             let mutable hash_code = 0
             this
-            |>Seq.iter (fun (pair: KeyValuePair<Vertex_id,Subfigure>) ->
+            |>Seq.iter (fun (pair: Mapped_vertex) ->
                 hash_code <- hash_code ^^^ pair.GetHashCode()
             )
             hash_code
@@ -97,7 +103,7 @@ namespace rvinowise.ai.stencil
         open rvinowise.ai
         open rvinowise
         
-        let copy (copied:IDictionary<Vertex_id, Subfigure>): Mapping =
+        let copy (copied:Mapping) =
             Mapping(copied)
 
         let empty(): Mapping =
@@ -106,11 +112,11 @@ namespace rvinowise.ai.stencil
         
         let targets_of_mapping 
             (mapping:Mapping)
-            (subfigures: Subfigure seq) 
+            (subfigures: Vertex_id seq) 
             =
             subfigures
             |>Seq.map (fun subfigure->
-                mapping[subfigure.id]
+                mapping[subfigure]
             )
 
         let retrieve_result stencil target mapping =
@@ -125,8 +131,8 @@ namespace rvinowise.ai.stencil
                 |>ai.Edges.previous_vertices stencil.edges
                 |>targets_of_mapping mapping
                 |>Edges.vertices_reacheble_from_other_vertices
-                    Figure.need_every_subfigure
-                    target.edges
+                    Figure.need_every_vertex
+                    target.graph.edges
                 |>Set.ofSeq
 
             let output_ending =
@@ -134,8 +140,8 @@ namespace rvinowise.ai.stencil
                 |>ai.Edges.next_vertices stencil.edges
                 |>targets_of_mapping mapping
                 |>Edges.vertices_reaching_other_vertices
-                    Figure.need_every_subfigure
-                    target.edges
+                    Figure.need_every_vertex
+                    target.graph.edges
                 |>Set.ofSeq
             
             output_beginning

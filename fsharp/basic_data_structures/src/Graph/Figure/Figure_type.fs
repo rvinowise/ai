@@ -1,23 +1,25 @@
-﻿namespace rvinowise.ai
-
-    open System.Text
-    open rvinowise.extensions
+﻿namespace rvinowise.ai.figure
     open System.Collections.Generic
+    open rvinowise.ai
 
     type Vertex_data = IDictionary<Vertex_id, Figure_id>
 
-    type Figure = {
-        id: Figure_id
-        edges: Edge seq
 
+namespace rvinowise.ai
+    open System.Text
+    open rvinowise.extensions
+    open rvinowise.ai.figure
+    
+    type Figure = {
+        graph: Graph
         subfigures: Vertex_data
     }
     with 
         override this.ToString() =
             let result = StringBuilder()
             result 
-            += $"Figure_{this.id}( "
-            this.edges
+            += $"Figure_{this.graph.id}( "
+            this.graph.edges
             |>Seq.iter(fun edge ->
                 result 
                 ++ edge.tail
@@ -33,6 +35,7 @@
 
 namespace rvinowise.ai.figure
     open rvinowise.ai
+    open rvinowise.extensions
     open System.Diagnostics.Contracts
     open Xunit
     open FsUnit
@@ -82,22 +85,15 @@ namespace rvinowise.ai.figure
 
 
     module built=
-        let simple (id:Figure_id) (edges:seq<Vertex_id*Vertex_id>) =
+        let simple id (edges:seq<Vertex_id*Vertex_id>) =
             {
-                id=id;
-                edges=
-                    edges
-                    |>Seq.map (fun (tail_id, head_id)->
-                        Edge(
-                            tail_id, head_id
-                        );
-                    )
+                graph=graph.built.simple id edges
                 subfigures=
                     edges
                     |>Seq.map (fun(tail_id,head_id)->
                         [
-                            (tail_id, Vertex.remove_number tail_id);
-                            (head_id, Vertex.remove_number head_id)
+                            (tail_id, String.remove_number tail_id);
+                            (head_id, String.remove_number head_id)
                         ]
                     )
                     |>Seq.concat
@@ -109,8 +105,10 @@ namespace rvinowise.ai.figure
             (figure:Figure)
             (edges:Edge seq) =
             {
-                id=id;
-                edges=edges;
+                graph={
+                    id=id;
+                    edges=edges
+                }
                 subfigures=Linking_vertices_to_data.vertex_data_from_edges_of_figure figure.subfigures edges
 
             }
@@ -119,18 +117,11 @@ namespace rvinowise.ai.figure
             (id:Figure_id)
             (edges:seq<Vertex_id*Figure_id*Vertex_id*Figure_id>) =
             {
-                id=id;
-                edges=
-                    edges
-                    |>Seq.map (fun (tail_id, _, head_id,_)->
-                        Edge(
-                            tail_id, head_id
-                        );
-                    )
+                graph=graph.built.from_tuples id edges
                 subfigures=Linking_vertices_to_data.vertex_data_from_tuples edges
             }
 
-        let stencil_output (figure:Figure)(edges:Edge seq)=
+        let stencil_output figure (edges:Edge seq)=
             from_edges_of_figure "out" figure edges
 
         let empty id = from_tuples id []

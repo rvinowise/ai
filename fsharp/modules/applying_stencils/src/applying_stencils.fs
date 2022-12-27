@@ -10,29 +10,27 @@ module Applying_stencil =
     open rvinowise.ai
     open rvinowise
 
-    type Mapped_stencil = {
-        subfigures: (Vertex_id*Vertex_id) Set
-    }
-
     
-    let sorted_subfigures_to_map_first first_subfigures_of_stencil target =
+    let sorted_subfigures_to_map_first 
+        (first_subfigures_of_stencil: Vertex_id seq) 
+        target =
         
         let figures_to_map = 
             first_subfigures_of_stencil
-            |>Subfigures.referenced_figures
+            |>Figure.referenced_figures target
 
         let subfigures_in_target = 
             figures_to_map
-            |>Seq.map (Figure.nodes_referencing_lower_figure target)
-            |>Seq.map Vertex.ids
+            |>Seq.map (Figure.vertices_referencing_lower_figure target)
             |>Seq.map Array.ofSeq
             
         let subfigures_in_stencil = 
             figures_to_map
-            |>Seq.map (fun f->
-                Subfigures.pick_referencing_figure f first_subfigures_of_stencil
+            |>Seq.map (fun referenced_figure->
+                Figure.referenced_figures 
+                    referenced_figure 
+                    first_subfigures_of_stencil
             )
-            |>Seq.map Vertex.ids
             
         (subfigures_in_stencil, subfigures_in_target )
 

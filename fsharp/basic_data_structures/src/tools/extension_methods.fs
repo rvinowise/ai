@@ -7,7 +7,7 @@ open BenchmarkDotNet.Attributes
 open BenchmarkDotNet.Running
 
 [<AutoOpen>]
-module Extensions=
+module StringBuilder=
     open System.Text
 
     let (++) (left : System.Text.StringBuilder) (right : 't) : System.Text.StringBuilder =
@@ -21,17 +21,27 @@ module Dictionary=
     open System.Collections.Generic
     open System.Linq
 
-    let inline some_value key (dictionary: IDictionary<'a,'b>) =
+    let inline some_value (dictionary: IDictionary<'a,'b>) key  =
         let (exist, value) = dictionary.TryGetValue(key)
         if exist then
             Some value
         else    
             None
 
-    let keys_with_value value (dictionary: IDictionary<'a,'b>) =
+    let keys_with_value (dictionary: IDictionary<'a,'b>) value  =
         dictionary
             .Where(fun pair -> pair.Value = value)
             .Select(fun pair -> pair.Key);
+
+    
+
+module KeyValuyePair=
+    open System.Collections.Generic
+
+    let key (pair:KeyValuePair<'a,'b>) =
+        pair.Key
+    let value (pair:KeyValuePair<'a,'b>) =
+        pair.Value
 
 module HashSet =
     open System.Collections.Generic
@@ -143,3 +153,10 @@ module HashSet =
         |>intersectMany'
         |>should equal
             (HashSet())
+
+
+module String =
+    open System.Text.RegularExpressions
+    
+    let remove_number label =
+        Regex.Replace(label, @"[^a-zA-Z]", "")

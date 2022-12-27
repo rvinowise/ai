@@ -21,18 +21,12 @@ module ``application of stencils``=
         member _.initial_useless_mapping = Mapping ["b","b2";"h","h"]
         
         member _.a_fitting_stencil=
-            Stencil.regular
+            stencil.built.simple
                 "S"
                 [
-                    stencil.Edge(
-                        Node("b"), Node.stencil_out("out1")
-                    );
-                    stencil.Edge(
-                        Node.stencil_out("out1"), Node("f")
-                    );
-                    stencil.Edge(
-                        Node("h"),Node("f")
-                    );
+                    "b","out1";
+                    "out1","f";
+                    "h","f";
                 ]
         
             
