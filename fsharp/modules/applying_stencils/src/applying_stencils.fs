@@ -1,5 +1,6 @@
 namespace rvinowise.ai.figure
-
+open Xunit
+open FsUnit
 
 module Applying_stencil = 
     open System.Collections.Generic
@@ -13,8 +14,8 @@ module Applying_stencil =
     
     let sorted_subfigures_to_map_first 
         (first_subfigures_of_stencil: Vertex_id seq) 
-        target =
-        
+        target 
+        =
         let figures_to_map = 
             first_subfigures_of_stencil
             |>Figure.referenced_figures target
@@ -34,6 +35,25 @@ module Applying_stencil =
             
         (subfigures_in_stencil, subfigures_in_target )
 
+    [<Fact>]
+    let ``sorted_subfigures_to_map_first``()=
+        let target = figure.Example.a_high_level_relatively_simple_figure
+        let stencil = stencil.example.a_fitting_stencil
+
+        sorted_subfigures_to_map_first
+            (Stencil.first_subfigures stencil)
+            target
+        |>should equal
+            (
+                [
+                    ["b"];
+                    ["h"]
+                ],
+                [
+                    ["b0";"b1";"b2"];
+                    ["h"]
+                ]
+            )
 
     let input_for_first_mappings_permutators subfigures_in_stencil subfigures_in_target =
         

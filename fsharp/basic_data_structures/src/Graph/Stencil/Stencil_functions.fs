@@ -21,7 +21,8 @@ namespace rvinowise.ai
             |Some node -> node=Node_reference.Stencil_output
 
         let first_subfigures stencil=
-            Graph.first_vertices
+            Graph.first_vertices stencil.graph
+            |>Seq.filter (is_output stencil)
 
         let previous_subfigures_jumping_over_outputs
             stencil

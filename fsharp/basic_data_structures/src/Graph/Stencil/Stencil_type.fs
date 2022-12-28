@@ -94,3 +94,15 @@ namespace rvinowise.ai.stencil
                 graph=graph.built.from_tuples id edges
                 nodes=vertex_data_from_tuples edges
             }
+
+    module example=
+        open rvinowise.ai
+
+        let a_fitting_stencil =
+            built.simple
+                "S"
+                [
+                    "b","out1";
+                    "out1","f";
+                    "h","f";
+                ]

@@ -19,24 +19,12 @@ module ``application of stencils``=
         member _.initial_mapping_without_prolongation = Mapping ["b","b1";"h","h"]
         member _.initial_fruitful_mapping = Mapping ["b","b0";"h","h"]
         member _.initial_useless_mapping = Mapping ["b","b2";"h","h"]
-        
-        member _.a_fitting_stencil=
-            stencil.built.simple
-                "S"
-                [
-                    "b","out1";
-                    "out1","f";
-                    "h","f";
-                ]
-        
             
-         member _.result_of_fruitful_stencil_application =
-            Figure.regular
+        member _.result_of_fruitful_stencil_application =
+            figure.built.simple
                 "out"
                 [
-                    figure.Edge(
-                        Subfigure.simple("d"),Subfigure.simple("e")
-                    );
+                        "d","e"
                 ]
             
 
