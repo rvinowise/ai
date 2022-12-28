@@ -22,6 +22,7 @@
     <Compile Include="src\Graph\components\Edge\Edge_type.fs" />
     <Compile Include="src\Graph\components\Edge\Edge_functions.fs" />
     <Compile Include="src\Graph\Graph_type.fs" />
+    <Compile Include="src\Graph\Graph_functions.fs" />
     <Compile Include="src\Graph\Figure\Figure_type.fs" />
     <Compile Include="src\Graph\Figure\Figure_functions.fs" />
     <Compile Include="src\Graph\Stencil\Stencil_type.fs" />

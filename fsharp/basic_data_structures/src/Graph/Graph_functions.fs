@@ -1,51 +1,46 @@
 ﻿namespace rvinowise.ai
-    open System.Text
-    open rvinowise.extensions
 
-    type Graph = {
-        id: Figure_id
-        edges: Edge seq
-    } with 
-        override this.ToString() =
-            let result = StringBuilder()
-            result 
-            += $"Graph_{this.id}( "
-            this.edges
-            |>Seq.iter(fun edge ->
-                result 
-                ++ edge.tail
-                ++"->"
-                ++ edge.head
-                +=" "
-            )
-            result+=")"
-            result.ToString()
+    open Xunit
+    open FsUnit
 
-namespace rvinowise.ai.graph
-    open rvinowise.ai
+    [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
+    module Graph=
+        open rvinowise
+        open rvinowise.extensions
 
-    module built=
+        
+        let need_every_vertex _ =
+            true
 
-        let simple (id:Figure_id) (edges:seq<Vertex_id*Vertex_id>) =
-            {
-                id=id;
-                edges=
-                    edges
-                    |>Seq.map (fun (tail_id, head_id)->
-                        Edge(
-                            tail_id, head_id
-                        );
-                    )
-            }
+        
 
-        let from_tuples id edges =
-            {
-                id=id;
-                edges=
-                    edges
-                    |>Seq.map (fun (tail_id, _, head_id,_)->
-                        Edge(
-                            tail_id, head_id
-                        );
-                    )
-            }
+        let vertices_reacheble_from_other_vertices
+            (is_needed: Vertex_id->bool)
+            (graph_in_which_search: Graph)
+            (vertices_before_goals: Vertex_id seq)
+            =
+            Edges.vertices_reacheble_from_other_vertices
+                is_needed
+                graph_in_which_search.edges
+                vertices_before_goals
+    
+        let vertices_reaching_other_vertices
+            (is_needed: Vertex_id->bool)
+            (graph_in_which_search: Graph)
+            (vertices_after_goals: Vertex_id seq)
+            =
+            Edges.vertices_reaching_other_vertices
+                is_needed
+                graph_in_which_search.edges
+                vertices_after_goals
+
+        
+
+        let next_vertices graph vertex=
+            Edges.next_vertices graph.edges vertex
+
+        let previous_vertices graph vertex=
+            Edges.previous_vertices graph.edges vertex
+
+        let first_vertices (graph:Graph) =
+            Edges.first_vertices graph.edges
