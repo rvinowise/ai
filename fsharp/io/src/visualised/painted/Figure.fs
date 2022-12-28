@@ -14,41 +14,51 @@ namespace rvinowise.ai.ui.painted
     [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
     module Stencil=
 
-        let painted_node 
+        let painted_vertex 
             stencil
-            node_id
+            vertex
             =
             let label = 
                 match 
-                    Stencil.node_with_id stencil node_id
+                    Stencil.node_with_id stencil vertex
                 with
-                |Lower_figure id -> id
-                |Stencil_output -> "out"
-            painted.Node(node_id, label)
+                |Some (Lower_figure id) -> id
+                |Some (Stencil_output) -> "out"
+                |None -> "?"
+            painted.Node(vertex, label)
 
         let painted_edges 
-            stencil
-            (edges: Edge seq)=
+            (stencil:Stencil)
+            =
+            let edges = stencil.graph.edges
             edges
             |>Seq.map (fun e->
                 painted.Edge(
-                    (painted_node stencil e.tail),
-                    (painted_node stencil e.head)
+                    (painted_vertex stencil e.tail),
+                    (painted_vertex stencil e.head)
                 )
             )
 
     [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
     module Figure=
 
-        let painted_node (node: figure.Subfigure)=
-            painted.Node(node.id, node.referenced)
+        let painted_vertex 
+            figure
+            vertex
+            =
+            let label = 
+                Figure.reference_of_vertex figure vertex
+                
+            painted.Node(vertex, label)
 
-        let painted_edges (edges: figure.Edge seq)=
-            edges
+        let painted_edges 
+            figure
+            =
+            figure.graph.edges
             |>Seq.map (fun e->
                 painted.Edge(
-                    (painted_node e.tail),
-                    (painted_node e.head)
+                    (painted_vertex figure e.tail),
+                    (painted_vertex figure e.head)
                 )
             )
 

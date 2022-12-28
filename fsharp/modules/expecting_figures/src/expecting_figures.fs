@@ -1,13 +1,11 @@
 namespace rvinowise.ai
 
 
-
 module Expecting_figures = 
     open rvinowise.ai.figure
     open rvinowise.ai
     open Expected_figure_prolongation
 
-    
 
     let prolongate_expectation_with_an_input_figure 
         (fired_figure: Figure_id)
@@ -15,21 +13,23 @@ module Expecting_figures =
         =
         let expected_figures = 
             expectation.expected
-            |>Subfigures.referenced_figures
+            |>Figure.referenced_figures expectation.prolongated
                 
         if (Seq.contains fired_figure expected_figures) then
             let fired_subfigures = 
                 expectation.expected
                 |>Set.filter (fun expected -> 
-                    expected.referenced = fired_figure
+                    expected
+                    |>Figure.reference_of_vertex expectation.prolongated 
+                        = fired_figure
                 )
                     
             let new_expected = 
                 fired_subfigures
-                |>Seq.collect(fun s ->
-                    Figure.next_subfigures
-                        expectation.prolongated
-                        s.id)
+                |>Seq.collect(fun subfigure ->
+                    Graph.next_vertices
+                        expectation.prolongated.graph
+                        subfigure)
                 |>Set.ofSeq
                 
 
@@ -47,5 +47,7 @@ module Expecting_figures =
         figure_id
         =
         expectations
-        |> Seq.map (prolongate_expectation_with_an_input_figure figure_id)
+        |> Seq.map (
+            prolongate_expectation_with_an_input_figure figure_id
+        )
 

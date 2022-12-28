@@ -24,7 +24,7 @@ namespace rvinowise.ai
         let ``vertices reacheble from others``()=
             Graph.vertices_reacheble_from_other_vertices
                 Graph.need_every_vertex
-                figure.Example.a_high_level_relatively_simple_figure.graph
+                figure.example.a_high_level_relatively_simple_figure.graph
                 ["b0";"b2"]
             |> should equal ["f1"]
 
@@ -32,7 +32,7 @@ namespace rvinowise.ai
         let ``vertices reaching others``()=
             Graph.vertices_reaching_other_vertices
                 Graph.need_every_vertex
-                figure.Example.a_high_level_relatively_simple_figure.graph
+                figure.example.a_high_level_relatively_simple_figure.graph
                 ["b1";"f1"]
             |> should equal ["b0"]
 
@@ -44,14 +44,26 @@ namespace rvinowise.ai
             let (exist,reference) = owner_figure.subfigures.TryGetValue(checked_vertex)
             exist && reference=referenced_figure
 
-        let reference_of_vertex (figure:Figure) vertex =
-            Dictionary.some_value vertex figure.subfigures
+        let nonexistent_vertex = Figure_id "0" 
 
+        let reference_of_vertex 
+            owner_figure 
+            vertex
+            =
+            match
+                Dictionary.some_value owner_figure.subfigures vertex 
+            with
+            | Some referenced_figure -> referenced_figure
+            | None -> nonexistent_vertex
+
+    
         let vertices_referencing_lower_figure (owner_figure:Figure) lower_figure = 
             lower_figure 
             |> Dictionary.keys_with_value owner_figure.subfigures  
 
-        let referenced_figures owner_figure (subfigures:Vertex_id seq)=
+        let referenced_figures 
+            owner_figure
+            (subfigures:Vertex_id seq)=
             subfigures
             |>Seq.choose (Dictionary.some_value owner_figure.subfigures)
 
@@ -89,3 +101,5 @@ namespace rvinowise.ai
         let has_edges (figure:Figure) =
             figure.graph.edges
             |>Seq.isEmpty|>not
+
+        

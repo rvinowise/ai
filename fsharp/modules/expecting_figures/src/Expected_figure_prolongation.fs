@@ -4,22 +4,18 @@ open rvinowise.ai.figure
 
 type Expected_figure_prolongation = {
     prolongated: Figure
-    expected: Subfigure Set
+    expected: Vertex_id Set
 }
 
 
 [<CompilationRepresentationAttribute(CompilationRepresentationFlags.ModuleSuffix)>]
 module Expected_figure_prolongation =
 
-    
-
-    
-
-    let from_figure (figure: Figure) :Expected_figure_prolongation =
+    let from_figure (figure: Figure) =
         {
             prolongated=figure;
-            expected=figure
-                        |>Figure.first_vertices 
-                        |>Set.ofSeq
+            expected=figure.graph
+                |>Graph.first_vertices 
+                |>Set.ofSeq
         }
 

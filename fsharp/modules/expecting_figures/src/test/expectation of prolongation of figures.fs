@@ -13,24 +13,14 @@ open rvinowise.ai.ui.painted
 module ``expectation of prolongation of figures``=
     
     let a_high_level_relatively_simple_figure =
-        rvinowise.ai.Figure.regular
+        rvinowise.ai.figure.built.simple
             "F"
             [
-                figure.Edge(
-                    Subfigure("b"),Subfigure("c")
-                );
-                figure.Edge(
-                    Subfigure("b"),Subfigure("d")
-                );
-                figure.Edge(
-                    Subfigure("d"),Subfigure("e")
-                );
-                figure.Edge(
-                    Subfigure("e"),Subfigure("f")
-                );
-                figure.Edge(
-                    Subfigure("h"),Subfigure("f")
-                );
+                "b","c";
+                "b","d";
+                "d","e";
+                "e","f";
+                "h","f"
             ]
         
 
@@ -38,8 +28,7 @@ module ``expectation of prolongation of figures``=
     let ``an expected prolongation, constructed from a figure, expects its first subfigures at first``()=
         let figure_f = a_high_level_relatively_simple_figure
         let first_subfigures = [
-            Subfigure("b");
-            Subfigure("h")
+            "b";"h"
         ]
         let prolongation = 
             Expected_figure_prolongation.from_figure figure_f
@@ -51,14 +40,10 @@ module ``expectation of prolongation of figures``=
     let ``prolongating a figure with a new input changes expectations``()=
         let high_figure = a_high_level_relatively_simple_figure
         let expected_subfigures_after_b = [
-            Subfigure("c");
-            Subfigure("d");
-            Subfigure("h");
+            "c";"d";"h";
         ]
         let expected_subfigures_after_d = [
-            Subfigure("c");
-            Subfigure("e");
-            Subfigure("h");
+            "c";"e";"h";
         ]
         let initial_expectation = from_figure high_figure
         let next_expectation = 
@@ -82,7 +67,7 @@ module ``expectation of prolongation of figures``=
         let expectation_after_d = 
             prolongate_expectation_with_an_input_figure "d" expectation_after_b
         
-        high_figure.id
+        high_figure.graph.id
         |>Graph.empty_root_graph 
         |>provide_expected_prolongation_inside_graph "initial_expectation" initial_expectation
         |>provide_expected_prolongation_inside_graph "expectation_after_b" expectation_after_b

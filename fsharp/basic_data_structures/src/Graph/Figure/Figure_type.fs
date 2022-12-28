@@ -126,7 +126,7 @@ namespace rvinowise.ai.figure
 
         let empty id = from_tuples id []
 
-    module Example =
+    module example =
         open rvinowise.ai
 
         let a_high_level_relatively_simple_figure = 

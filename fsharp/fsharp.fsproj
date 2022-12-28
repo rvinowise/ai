@@ -9,6 +9,10 @@
     <NoWarn>NU1701</NoWarn>
     <!-- because it's a root-project, without the Main entry point -->
     <OutputType>Library</OutputType>
+
+    <!-- or else tests give an error -->
+    <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
+    <GenerateRuntimeConfigDevFile>true</GenerateRuntimeConfigDevFile>
   </PropertyGroup>
 
   <ItemGroup>

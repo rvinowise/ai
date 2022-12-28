@@ -13,10 +13,12 @@ module Applying_stencil =
 
     
     let sorted_subfigures_to_map_first 
-        (first_subfigures_of_stencil: Vertex_id seq) 
         stencil
         target 
         =
+        let first_subfigures_of_stencil = 
+            Stencil.first_subfigures stencil
+        
         let figures_to_map = 
             first_subfigures_of_stencil
             |>Figure.referenced_figures target
@@ -38,11 +40,10 @@ module Applying_stencil =
 
     [<Fact>]
     let ``sorted subfigures to map first``()=
-        let target = figure.Example.a_high_level_relatively_simple_figure
+        let target = figure.example.a_high_level_relatively_simple_figure
         let stencil = stencil.example.a_fitting_stencil
 
         sorted_subfigures_to_map_first
-            (Stencil.first_subfigures stencil)
             stencil
             target
         |>should equal
@@ -117,13 +118,13 @@ module Applying_stencil =
         
 
     let map_first_nodes
-        first_subfigures_of_stencil
         stencil
         target
         =
+        let first_subfigures_of_stencil = Stencil.first_subfigures stencil
         let subfigures_in_stencil,
             subfigures_in_target =
-                sorted_subfigures_to_map_first first_subfigures_of_stencil stencil target
+                sorted_subfigures_to_map_first stencil target
         
         let generator = 
             (prepared_generator_of_first_mappings subfigures_in_stencil subfigures_in_target)
@@ -231,14 +232,12 @@ module Applying_stencil =
         stencil
         target
         =
-        let first_subfigures_of_stencil = Stencil.first_subfigures stencil
-        
         target
-        |>map_first_nodes first_subfigures_of_stencil
+        |>map_first_nodes stencil
         |>prolongate_mappings
             stencil 
             target
-            first_subfigures_of_stencil
+            (Stencil.first_subfigures stencil)
             
         
     let results_of_stencil_application

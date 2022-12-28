@@ -8,7 +8,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="src\Expected_figure_prolongation.fs" />
-    <Compile Include="src\Expecting_figures.fs" />
+    <Compile Include="src\expecting_figures.fs" />
     <Compile Include="src\painted\Expected_figure_prolongation.fs" />
     <Compile Include="src\test\expectation of prolongation of figures.fs" />
   </ItemGroup>

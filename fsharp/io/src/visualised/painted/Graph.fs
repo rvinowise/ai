@@ -95,6 +95,6 @@ namespace rvinowise.ai.ui.painted
             figure.graph.id
             |>empty_root_graph
             |>provide_clustered_subgraph_inside_root_graph figure.graph.id 
-                (Figure.painted_edges figure.edges)
+                (Figure.painted_edges figure)
             |>open_image_of_graph
             |>ignore
