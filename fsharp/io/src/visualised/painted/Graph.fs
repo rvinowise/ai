@@ -10,6 +10,7 @@ namespace rvinowise.ai.ui.painted
     open System.IO
     open System.Diagnostics
 
+    type External_graph = Rubjerg.Graphviz.Graph
         
     module Graph =
 
@@ -19,19 +20,19 @@ namespace rvinowise.ai.ui.painted
             Node.IntroduceAttribute(root, "shape", "circle")
             root
         
-        let set_attribute key value (element:Graph) =
+        let set_attribute key value (element:External_graph) =
             element.SafeSetAttribute(key,value,"")
             element
 
         let provide_node 
             id
-            (graph:Graph) 
+            (graph:External_graph) 
             =
             graph.GetOrAddNode(id)
 
         let provide_cluster_inside_graph 
             name
-            (graph:Graph)
+            (graph:External_graph)
             =
             graph.GetOrAddSubgraph("cluster_"+name)
             |> set_attribute "label" name
@@ -41,7 +42,7 @@ namespace rvinowise.ai.ui.painted
         let provide_subgraph_inside_graph
             (subgraph_id: string)
             (edges: painted.Edge seq)
-            (graph: Graph)
+            (graph: External_graph)
             =
             edges
             |> Seq.iter (
@@ -91,9 +92,9 @@ namespace rvinowise.ai.ui.painted
         let visualise_figure 
             (figure:Figure) 
             =
-            figure.id
+            figure.graph.id
             |>empty_root_graph
-            |>provide_clustered_subgraph_inside_root_graph figure.id 
+            |>provide_clustered_subgraph_inside_root_graph figure.graph.id 
                 (Figure.painted_edges figure.edges)
             |>open_image_of_graph
             |>ignore

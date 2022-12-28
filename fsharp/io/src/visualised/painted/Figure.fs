@@ -8,24 +8,32 @@ namespace rvinowise.ai.ui.painted
     open rvinowise
     open rvinowise.ai
     open rvinowise.ai.figure
+    open rvinowise.ai.stencil
     open rvinowise.ai.ui
 
     [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
     module Stencil=
 
-        let painted_node (node: stencil.Node)=
+        let painted_node 
+            stencil
+            node_id
+            =
             let label = 
-                match node.referenced with
+                match 
+                    Stencil.node_with_id stencil node_id
+                with
                 |Lower_figure id -> id
                 |Stencil_output -> "out"
-            painted.Node(node.id, label)
+            painted.Node(node_id, label)
 
-        let painted_edges (edges: stencil.Edge seq)=
+        let painted_edges 
+            stencil
+            (edges: Edge seq)=
             edges
             |>Seq.map (fun e->
                 painted.Edge(
-                    (painted_node e.tail),
-                    (painted_node e.head)
+                    (painted_node stencil e.tail),
+                    (painted_node stencil e.head)
                 )
             )
 

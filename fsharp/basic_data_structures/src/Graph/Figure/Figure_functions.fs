@@ -56,10 +56,36 @@ namespace rvinowise.ai
             |>Seq.choose (Dictionary.some_value owner_figure.subfigures)
 
         let subgraph_with_vertices 
-            target 
+            original_figure 
             (vertices:Set<Vertex_id>)
             =
             vertices
-            |>Edges.edges_between_vertices target.graph.edges
-            |>built.stencil_output target
+            |>Edges.edges_between_vertices original_figure.graph.edges
+            |>built.stencil_output original_figure
 
+        let is_vertex_referencing_figure 
+            owner_figure
+            referenced_figure
+            checked_vertex
+            =
+            checked_vertex
+            |>Dictionary.some_value owner_figure.subfigures
+                = Some(referenced_figure)
+
+        let subfigures_after_other_subfigures
+            owner_figure
+            figure_referenced_by_needed_subfigures
+            subfigures_before_goals
+            =
+            Graph.vertices_reacheble_from_other_vertices
+                (
+                    is_vertex_referencing_figure 
+                        owner_figure 
+                        figure_referenced_by_needed_subfigures
+                    )
+                owner_figure.graph
+                subfigures_before_goals
+
+        let has_edges (figure:Figure) =
+            figure.graph.edges
+            |>Seq.isEmpty|>not

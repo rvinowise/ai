@@ -128,19 +128,19 @@ namespace rvinowise.ai.stencil
 
             let output_beginning =
                 output_node
-                |>ai.Edges.previous_vertices stencil.graph.edges
+                |>Graph.previous_vertices stencil.graph
                 |>targets_of_mapping mapping
                 |>Edges.vertices_reacheble_from_other_vertices
-                    Figure.need_every_vertex
+                    Graph.need_every_vertex
                     target.graph.edges
                 |>Set.ofSeq
 
             let output_ending =
                 output_node
-                |>ai.Edges.next_vertices stencil.edges
+                |>Graph.next_vertices stencil.graph
                 |>targets_of_mapping mapping
                 |>Edges.vertices_reaching_other_vertices
-                    Figure.need_every_vertex
+                    Graph.need_every_vertex
                     target.graph.edges
                 |>Set.ofSeq
             

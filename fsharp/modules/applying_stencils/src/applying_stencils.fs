@@ -14,6 +14,7 @@ module Applying_stencil =
     
     let sorted_subfigures_to_map_first 
         (first_subfigures_of_stencil: Vertex_id seq) 
+        stencil
         target 
         =
         let figures_to_map = 
@@ -27,21 +28,22 @@ module Applying_stencil =
             
         let subfigures_in_stencil = 
             figures_to_map
-            |>Seq.map (fun referenced_figure->
-                Figure.referenced_figures 
-                    referenced_figure 
+            |>Seq.map (
+                Stencil.subfigures_referencing_figure 
+                    stencil
                     first_subfigures_of_stencil
-            )
+                )
             
         (subfigures_in_stencil, subfigures_in_target )
 
     [<Fact>]
-    let ``sorted_subfigures_to_map_first``()=
+    let ``sorted subfigures to map first``()=
         let target = figure.Example.a_high_level_relatively_simple_figure
         let stencil = stencil.example.a_fitting_stencil
 
         sorted_subfigures_to_map_first
             (Stencil.first_subfigures stencil)
+            stencil
             target
         |>should equal
             (
@@ -116,11 +118,12 @@ module Applying_stencil =
 
     let map_first_nodes
         first_subfigures_of_stencil
+        stencil
         target
         =
         let subfigures_in_stencil,
             subfigures_in_target =
-                sorted_subfigures_to_map_first first_subfigures_of_stencil target
+                sorted_subfigures_to_map_first first_subfigures_of_stencil stencil target
         
         let generator = 
             (prepared_generator_of_first_mappings subfigures_in_stencil subfigures_in_target)
@@ -143,68 +146,7 @@ module Applying_stencil =
             then Some ()
             else None
 
-
-    let next_subfigures subfigures (stencil: Stencil)=
-        subfigures
-        |>Seq.collect (ai.stencil.Edges.next_nodes stencil.edges)
-        |>Seq.distinct
-        |>Nodes.only_subfigures
-
     
-
-    let rec subfigures_reacheble_from_edges
-        (reached_goals: HashSet<Vertex_id>)
-        all_edges
-        goal_figure
-        reaching_edges
-        =
-        reaching_edges
-        |>Seq.filter (fun (edge:figure.Edge)->
-            edge.head.referenced = goal_figure
-        )
-        |>Seq.iter (fun edge -> 
-            reached_goals.Add(edge.head.id) |> ignore
-        )
-
-        reaching_edges
-        |>Seq.map (Edges.next_edges all_edges)
-        |>Seq.iter (
-            subfigures_reacheble_from_edges 
-                reached_goals 
-                all_edges
-                goal_figure
-        )
-        |>ignore
-
-    let subfigures_reacheble_from_subfigure 
-        (figure: Figure)
-        goal_figure
-        (starting_subfigure:Vertex_id)
-        =
-        let edges = Edges.outgoing_edges figure.edges starting_subfigure
-        let reached_goals = HashSet<Vertex_id>()
-        subfigures_reacheble_from_edges 
-            reached_goals
-            figure.edges
-            goal_figure
-            edges
-        |>ignore
-
-        reached_goals
-
-    let subfigures_after_other_subfigures
-        (figure_in_which_search: Figure)
-        figure_referenced_by_goal_subfigures
-        (subfigures_before_goals: Vertex_id seq)
-        =
-        subfigures_before_goals
-        |>Seq.map (
-            subfigures_reacheble_from_subfigure 
-                figure_in_which_search 
-                figure_referenced_by_goal_subfigures
-        )
-        |>Seq.map Set.ofSeq
-        |>Seq.reduce Set.intersect
 
     let copy_of_mapping_with_prolongation
         (mapping:Mapping)
@@ -227,21 +169,20 @@ module Applying_stencil =
         )
 
     let prolongate_mapping_with_subfigure
-        (stencil: Stencil)
+        stencil
         target
         mapping  
-        (prolongating_stencil_subfigure: Subfigure)
+        (prolongating_stencil_subfigure: Vertex_id)
         =
-        prolongating_stencil_subfigure.id
-        |>Edges.previous_subfigures_jumping_over_outputs stencil.edges
-        |>Vertex.ids
+        prolongating_stencil_subfigure
+        |>Stencil.previous_subfigures_jumping_over_outputs stencil
         |>Mapping.targets_of_mapping mapping
-        |>subfigures_after_other_subfigures
+        |>Figure.subfigures_after_other_subfigures
             target
-            (prolongating_stencil_subfigure.referenced)
+            prolongating_stencil_subfigure
         |>mapping_prolongated_by_subfigures
             mapping
-            prolongating_stencil_subfigure.id
+            prolongating_stencil_subfigure
 
     let prolongate_mapping 
         stencil
@@ -265,19 +206,20 @@ module Applying_stencil =
         =
         let next_subfigures_to_map = 
             stencil
-            |>next_subfigures last_mapped_subfigures
+            |>Stencil.next_subfigures last_mapped_subfigures
 
         match next_subfigures_to_map with
         | Seq [] -> 
             mappings
         | _ ->
-            let mappings =
+            let (mappings:Mapping seq) = 
                 mappings
-                |>Seq.collect (prolongate_mapping stencil target next_subfigures_to_map)
+                |>Seq.collect 
+                    (prolongate_mapping stencil target next_subfigures_to_map)
             prolongate_mappings
                 stencil 
                 target 
-                (Vertex.ids next_subfigures_to_map)
+                next_subfigures_to_map
                 mappings
         
         
@@ -287,7 +229,7 @@ module Applying_stencil =
 
     let map_stencil_onto_target
         stencil
-        target 
+        target
         =
         let first_subfigures_of_stencil = Stencil.first_subfigures stencil
         
@@ -296,16 +238,9 @@ module Applying_stencil =
         |>prolongate_mappings
             stencil 
             target
-            (
-                first_subfigures_of_stencil
-                |>Vertex.ids
-            )
+            first_subfigures_of_stencil
+            
         
-
-    let private not_empty_figure (figure:Figure) =
-        figure.edges
-        |>Seq.isEmpty|>not
-
     let results_of_stencil_application
         stencil
         target
@@ -313,6 +248,6 @@ module Applying_stencil =
         target
         |>map_stencil_onto_target stencil
         |>Seq.map (Mapping.retrieve_result stencil target)
-        |>Seq.filter not_empty_figure
+        |>Seq.filter Figure.has_edges
 
     
