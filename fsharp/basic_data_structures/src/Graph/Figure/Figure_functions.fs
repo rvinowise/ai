@@ -63,7 +63,8 @@ namespace rvinowise.ai
 
         let referenced_figures 
             owner_figure
-            (subfigures:Vertex_id seq)=
+            (subfigures:Vertex_id seq)
+            =
             subfigures
             |>Seq.choose (Dictionary.some_value owner_figure.subfigures)
 

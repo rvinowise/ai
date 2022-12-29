@@ -78,7 +78,7 @@ module finding_sequences =
                         Interval(i,i+3)
                 |]
             
-        [<Fact>]
+        [<Fact(Skip="slow")>]
         member _.benchmark()=
 
             let config = 

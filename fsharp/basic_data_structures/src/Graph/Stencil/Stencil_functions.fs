@@ -25,9 +25,7 @@ namespace rvinowise.ai
             |>is_output stencil
             |>not
 
-        let first_subfigures stencil=
-            Graph.first_vertices stencil.graph
-            |>Seq.filter (is_subfigure stencil)
+        
 
         let only_subfigures stencil vertices=
             vertices
@@ -61,7 +59,7 @@ namespace rvinowise.ai
             |>Dictionary.some_value owner_stencil.nodes
                 = Some (Node_reference.Lower_figure referenced_figure)
 
-        let subfigures_referencing_figure 
+        let vertices_referencing_figure 
             owner_stencil
             search_in_these_vertices
             referenced_figure
@@ -73,6 +71,32 @@ namespace rvinowise.ai
                     referenced_figure
             )
         
-        let node_with_id stencil vertex_id =
+        let nonexistent_vertex = Node_reference.Lower_figure "0" 
+
+        let referenced_node stencil vertex_id =
             vertex_id
             |>Dictionary.some_value stencil.nodes
+            |>function
+            |Some node_reference -> node_reference
+            |None -> nonexistent_vertex
+        
+        let referenced_nodes
+            owner_stencil
+            (vertices:Vertex_id seq)
+            =
+            vertices
+            |>Seq.choose (Dictionary.some_value owner_stencil.nodes)
+
+        let first_subfigures stencil=
+            stencil.graph
+            |>Graph.first_vertices 
+            |>Seq.filter (is_subfigure stencil)
+
+        let first_referenced_figures stencil=
+            Graph.first_vertices stencil.graph
+            |>Seq.map (referenced_node stencil)
+            |>Seq.choose (function
+                |Node_reference.Lower_figure referenced_figure -> Some referenced_figure
+                |_->None
+            )
+            |>Seq.distinct

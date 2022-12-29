@@ -62,14 +62,15 @@ namespace rvinowise.ai.figure
             
         [<Fact>]
         let ``contract violation accessing verticex of a figure``()=
-            
-            vertex_data_from_edges_of_figure
-                (dict ["a0","a";"b1","b"])
-                [
-                    Edge("a0","b1");
-                    Edge("b1","a1")
-                ]
-            |>should throw typeof<System.ArgumentException>
+            Assert.Throws<System.ArgumentException>(fun()->
+                vertex_data_from_edges_of_figure
+                    (dict ["a0","a";"b1","b"])
+                    [
+                        Edge("a0","b1");
+                        Edge("b1","a1")
+                    ]
+                |>ignore
+            )
 
 
         let vertex_data_from_tuples edges=

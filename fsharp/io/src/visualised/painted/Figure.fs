@@ -20,11 +20,10 @@ namespace rvinowise.ai.ui.painted
             =
             let label = 
                 match 
-                    Stencil.node_with_id stencil vertex
+                    Stencil.referenced_node stencil vertex
                 with
-                |Some (Lower_figure id) -> id
-                |Some (Stencil_output) -> "out"
-                |None -> "?"
+                |Lower_figure id -> id
+                |Stencil_output -> "out"
             painted.Node(vertex, label)
 
         let painted_edges 

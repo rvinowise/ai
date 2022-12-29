@@ -20,21 +20,22 @@ module Applying_stencil =
             Stencil.first_subfigures stencil
         
         let figures_to_map = 
-            first_subfigures_of_stencil
-            |>Figure.referenced_figures target
+            stencil
+            |>Stencil.first_referenced_figures
+            
 
+        let subfigures_in_stencil = 
+            figures_to_map
+            |>Seq.map (
+                Stencil.vertices_referencing_figure 
+                    stencil
+                    first_subfigures_of_stencil
+                )
+            
         let subfigures_in_target = 
             figures_to_map
             |>Seq.map (Figure.vertices_referencing_lower_figure target)
             |>Seq.map Array.ofSeq
-            
-        let subfigures_in_stencil = 
-            figures_to_map
-            |>Seq.map (
-                Stencil.subfigures_referencing_figure 
-                    stencil
-                    first_subfigures_of_stencil
-                )
             
         (subfigures_in_stencil, subfigures_in_target )
 
@@ -53,8 +54,8 @@ module Applying_stencil =
                     ["h"]
                 ],
                 [
-                    ["b0";"b1";"b2"];
-                    ["h"]
+                    [|"b0";"b1";"b2"|];
+                    [|"h"|]
                 ]
             )
 
@@ -121,7 +122,7 @@ module Applying_stencil =
         stencil
         target
         =
-        let first_subfigures_of_stencil = Stencil.first_subfigures stencil
+        let first_subfigures_of_stencil = Stencil.first_referenced_figures stencil
         let subfigures_in_stencil,
             subfigures_in_target =
                 sorted_subfigures_to_map_first stencil target
@@ -237,7 +238,7 @@ module Applying_stencil =
         |>prolongate_mappings
             stencil 
             target
-            (Stencil.first_subfigures stencil)
+            (Stencil.first_referenced_figures stencil)
             
         
     let results_of_stencil_application
