@@ -1,13 +1,7 @@
 namespace rvinowise.ai.ui.painted
 
     open Rubjerg
-    open Rubjerg.Graphviz
-    open System.IO
-    open System.Diagnostics
-
-    open rvinowise
     open rvinowise.ai
-    open rvinowise.ai.figure
     open rvinowise.ai.stencil
     open rvinowise.ai.ui
 
@@ -24,7 +18,7 @@ namespace rvinowise.ai.ui.painted
                 with
                 |Lower_figure id -> id
                 |Stencil_output -> "out"
-            painted.Node(vertex, label)
+            painted.Vertex(vertex, label)
 
         let painted_edges 
             (stencil:Stencil)
@@ -48,7 +42,7 @@ namespace rvinowise.ai.ui.painted
             let label = 
                 Figure.reference_of_vertex figure vertex
                 
-            painted.Node(vertex, label)
+            painted.Vertex(vertex, label)
 
         let painted_edges 
             figure
@@ -62,9 +56,5 @@ namespace rvinowise.ai.ui.painted
             )
 
         
-    [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
-    module Node =
-        let set_attribute key value (element:Graphviz.Node) =
-            element.SafeSetAttribute(key,value,"")
-            element
+    
 

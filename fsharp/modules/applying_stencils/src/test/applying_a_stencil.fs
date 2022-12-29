@@ -239,6 +239,6 @@ module ``application of stencils``=
             |>painted.Graph.provide_clustered_subgraph_inside_root_graph 
                 "stencil"
                 (painted.Stencil.painted_edges stencil)
-            |>painted.Graph.open_image_of_graph
+            |>painted.image.open_image_of_graph
 
         

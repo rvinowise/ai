@@ -23,8 +23,8 @@ let mark_expected_nodes
     |> Seq.iter (
         fun (vertex) ->
             graph.GetOrAddNode(subgraph_id+vertex)
-            |>Node.set_attribute "fillcolor" "red"
-            |>Node.set_attribute "style" "filled"
+            |>Vertex.set_attribute "fillcolor" "red"
+            |>Vertex.set_attribute "style" "filled"
             |>ignore
     )
     graph
@@ -58,7 +58,7 @@ let visualise_prolongation
     |>provide_expected_prolongation_inside_graph 
         prolongation.prolongated.graph.id
         prolongation
-    |>Graph.open_image_of_graph
+    |>image.open_image_of_graph
     |>ignore
 
     

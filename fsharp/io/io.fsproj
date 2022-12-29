@@ -13,10 +13,14 @@
   
 
   <ItemGroup>
-    <Compile Include="src\visualised\painted\data_structures.fs" />
-    <Compile Include="src\visualised\painted\Figure.fs" />
+    <Compile Include="src\visualised\painted\external_library.fs" />
+
+    <Compile Include="src\visualised\painted\graph_elements.fs" />
     <Compile Include="src\visualised\painted\Graph.fs" />
-    <Compile Include="src\visualised\painted\History_line.fs" />
+    <Compile Include="src\visualised\painted\Figure_and_stencil.fs" />
+    <Compile Include="src\visualised\painted\Signal_history.fs" />
+    <Compile Include="src\visualised\painted\painted_image.fs" />
+
     <Compile Include="src\visualised\printed\Figure_appearance.fs" />
     <Compile Include="src\visualised\printed\Figure.fs" />
   </ItemGroup>

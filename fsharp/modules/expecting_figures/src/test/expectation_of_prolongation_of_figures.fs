@@ -72,4 +72,4 @@ module ``expectation of prolongation of figures``=
         |>provide_expected_prolongation_inside_graph "initial_expectation" initial_expectation
         |>provide_expected_prolongation_inside_graph "expectation_after_b" expectation_after_b
         |>provide_expected_prolongation_inside_graph "expectation_after_d" expectation_after_d
-        |>Graph.open_image_of_graph
+        |>image.open_image_of_graph

@@ -7,7 +7,7 @@ namespace rvinowise.ai.ui.painted
     open rvinowise.ai
     open rvinowise.ai.figure
 
-    type Node =
+    type Vertex =
         struct
             val id:Vertex_id
             val label:string
@@ -19,12 +19,18 @@ namespace rvinowise.ai.ui.painted
 
     type Edge=
         struct
-            val tail: Node
-            val head: Node
+            val tail: Vertex
+            val head: Vertex
 
             new (tail, head) = {
                 tail=tail; head=head
             }
         end
 
+
     
+    [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
+    module Vertex =
+        let set_attribute key value (element:Graphviz.Node) =
+            element.SafeSetAttribute(key,value,"")
+            element
