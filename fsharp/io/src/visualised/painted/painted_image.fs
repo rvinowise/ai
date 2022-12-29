@@ -30,12 +30,12 @@ namespace rvinowise.ai.ui.painted
             |>open_image_of_graph
             |>ignore
 
-        let visualise_singnal_history 
-            (figure:Figure) 
+        let visualise_history 
+            (history:rvinowise.ai.History) 
             =
             "signal history"
-            |>Graph.empty_root_graph
+            |>infrastructure.Graph.empty_root_graph
             |>Graph.provide_clustered_subgraph_inside_root_graph "signal history"
-                (Signal_history.painted_edges figure)
+                (History.painted_edges figure)
             |>open_image_of_graph
             |>ignore

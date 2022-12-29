@@ -1,4 +1,4 @@
-namespace rvinowise.ai.ui.painted
+namespace rvinowise.ui.painted
 
     open Rubjerg
     open Rubjerg.Graphviz
@@ -29,8 +29,4 @@ namespace rvinowise.ai.ui.painted
 
 
     
-    [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
-    module Vertex =
-        let set_attribute key value (element:Graphviz.Node) =
-            element.SafeSetAttribute(key,value,"")
-            element
+    

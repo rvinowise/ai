@@ -28,7 +28,7 @@
     <Compile Include="src\Graph\Stencil\Stencil_type.fs" />
     <Compile Include="src\Graph\Stencil\Stencil_functions.fs" />
 
-    <Compile Include="src\Signal_history\History_interval.fs" />
+    <Compile Include="src\History\History.fs" />
   </ItemGroup>
 
   <ItemGroup>

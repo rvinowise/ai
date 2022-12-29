@@ -5,12 +5,7 @@ namespace rvinowise.ai
         fired: Set<Figure_id> 
     }
 
-    type Ensemble' =
-        struct
-            val fired: Figure_id[]
-        end
-
-    type History_interval = {
+    type History = {
         interval: Interval
         fired_ensembles: Map<Moment, Ensemble> 
     }
@@ -34,32 +29,38 @@ namespace rvinowise.ai.history
             ensembles
             =
             {
-                interval=Interval.regular tail (tail+uint64(Seq.length(ensembles)))
+                interval=Interval.regular tail (tail+uint64(Seq.length(ensembles))-1UL)
 
                 fired_ensembles=
                     ensembles
-                    |>Seq.mapi (fun (fired_figures: Figure_id seq)=
-                        
-                    )
+                    |>Seq.mapi (fun index (fired_figures: Figure_id seq)->
+                        (
+                            tail+uint64(index),
+                            Ensemble.ofSeq fired_figures
+                        )
+                    )|>Map.ofSeq
             }
         
         [<Fact>]
         let ``from tuples``()=
-            from_tuples 0UL [
-                ["a";"x"];
-                ["b";"y"];
-                ["a";"z";"x"];
-                ["c"];
-                ["b";"x"];
-                ["b"];
-                ["a"];
-                ["c"]
-            ]
+            let history = 
+                from_tuples 0UL [
+                    ["a";"x"];
+                    ["b";"y"];
+                    ["a";"z";"x"];
+                    ["c"];
+                    ["b";"x"];
+                    ["b"];
+                    ["a"];
+                    ["c"]
+                ]
+            history.interval
+            |>should equal
+                (Interval.regular 0UL 7UL)
 
 
 namespace rvinowise.ai
 
     [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
-    module History_interval =
-
-        let 
+    module History =
+        ()

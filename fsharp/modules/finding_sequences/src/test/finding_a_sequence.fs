@@ -21,8 +21,8 @@ module finding_sequences =
         
         member this.long_sequence_of_input() = 
             [|
-                for i in 0..this.items_amount ->
-                    Interval(i,i+1)
+                for i in 0..this.items_amount -> 
+                    Interval.from_int i (i+1)
             |]
 
         member this.heads = this.long_sequence_of_input()
@@ -42,19 +42,19 @@ module finding_sequences =
         member this.``passing array of structures to a native method``()=
             repeated_pairs
                 [|
-                    Interval(0,1);
-                    Interval(2,3);
-                    Interval(4,5);
+                    Interval.from_int 0 1;
+                    Interval.from_int 2 3;
+                    Interval.from_int 4 5;
                 |]
                 [|
-                    Interval(0,1);
-                    Interval(2,3);
-                    Interval(4,5);
+                    Interval.from_int 0 1;
+                    Interval.from_int 2 3;
+                    Interval.from_int 4 5;
                 |]
             |> should equal
                 [|
-                    Interval(0,3);
-                    Interval(2,5);
+                    Interval.from_int 0 3 ;
+                    Interval.from_int 2 5 ;
                 |]
 
 
@@ -64,18 +64,18 @@ module finding_sequences =
             
             let heads = [|
                 for i in 0..items_amount ->
-                    Interval(i,i+1)
+                    Interval.from_int i (i+1)
             |]
             let tails = [|
                 for i in 0..items_amount ->
-                    Interval(i,i+1)
+                    Interval.from_int i (i+1) 
             |]
             
             repeated_pairs heads tails
             |>should equal 
                 [|
                     for i in 0..items_amount-2 ->
-                        Interval(i,i+3)
+                        Interval.from_int i (i+3)
                 |]
             
         [<Fact(Skip="slow")>]
