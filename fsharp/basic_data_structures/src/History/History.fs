@@ -7,7 +7,7 @@ namespace rvinowise.ai
 
     type History = {
         interval: Interval
-        fired_ensembles: Map<Moment, Ensemble> 
+        ensembles: Map<Moment, Ensemble> 
     }
 
 namespace rvinowise.ai
@@ -20,9 +20,10 @@ namespace rvinowise.ai
 namespace rvinowise.ai.history
     open Xunit
     open FsUnit
+    open rvinowise.ai
     
     module built =
-        open rvinowise.ai
+        
 
         let from_tuples 
             tail
@@ -31,7 +32,7 @@ namespace rvinowise.ai.history
             {
                 interval=Interval.regular tail (tail+uint64(Seq.length(ensembles))-1UL)
 
-                fired_ensembles=
+                ensembles=
                     ensembles
                     |>Seq.mapi (fun index (fired_figures: Figure_id seq)->
                         (
@@ -41,10 +42,25 @@ namespace rvinowise.ai.history
                     )|>Map.ofSeq
             }
         
+        
+
+    module example=
+        let short_history_with_some_repetitions=
+            built.from_tuples 0UL [
+                    ["a";"x"];
+                    ["b";"y"];
+                    ["a";"z";"x"];
+                    ["c"];
+                    ["b";"x"];
+                    ["b"];
+                    ["a"];
+                    ["c"]
+                ]
+        
         [<Fact>]
-        let ``from tuples``()=
+        let ``history interval can start from any moment``()=
             let history = 
-                from_tuples 0UL [
+                built.from_tuples 0UL [
                     ["a";"x"];
                     ["b";"y"];
                     ["a";"z";"x"];
@@ -57,7 +73,6 @@ namespace rvinowise.ai.history
             history.interval
             |>should equal
                 (Interval.regular 0UL 7UL)
-
 
 namespace rvinowise.ai
 

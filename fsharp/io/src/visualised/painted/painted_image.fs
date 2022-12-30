@@ -1,8 +1,11 @@
 namespace rvinowise.ai.ui.painted
+    open Xunit
+    open FsUnit
 
     module image =
         open Rubjerg.Graphviz
         open rvinowise.ai
+        open rvinowise
         open rvinowise.ai.ui
         open rvinowise.ui
         open System.IO
@@ -32,9 +35,16 @@ namespace rvinowise.ai.ui.painted
         let visualise_history 
             (history:rvinowise.ai.History) 
             =
-            "signal history"
+            history
+            |>painted.History.description
             |>infrastructure.Graph.empty
-            |>infrastructure.Graph.with_circle_vertices
+            |>infrastructure.Graph.with_rectangle_vertices
+            |>painted.History.add_history history
             //|>infrastructure.Graph.with_cluster "signal history" ()
             |>open_image_of_graph
             |>ignore
+        
+        [<Fact>]
+        let ``visualise history``()=
+            ai.history.example.short_history_with_some_repetitions
+            |>visualise_history

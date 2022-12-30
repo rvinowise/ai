@@ -20,6 +20,7 @@
     <ProjectReference Include="modules\expecting_figures\expecting_figures.fsproj" />
     <ProjectReference Include="modules\finding_sequences\finding_sequences.fsproj" />
     <ProjectReference Include="modules\applying_stencils\applying_stencils.fsproj" />
+    <ProjectReference Include="modules\keeping_history\keeping_history.fsproj" />
   </ItemGroup>
 
   <ItemGroup>

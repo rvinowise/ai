@@ -47,6 +47,10 @@ namespace rvinowise.ui.infrastructure
         let with_circle_vertices graph=
             External_node.IntroduceAttribute(graph.root, "shape", "circle")
             graph
+        
+        let with_rectangle_vertices graph=
+            External_node.IntroduceAttribute(graph.root, "shape", "rectangle")
+            graph
 
         let with_attribute key value (graph:Graph) =
             graph.impl.SafeSetAttribute(key,value,"")
