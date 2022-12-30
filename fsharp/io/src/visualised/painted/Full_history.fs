@@ -9,9 +9,6 @@ namespace rvinowise.ai.ui.painted
 
     module History =
         
-        let description history=
-            $"appearences of {history.figure} from {history.interval.tail} to {history.interval.head}"
-
         let add_fired_figures
             ensemble
             graph
@@ -43,17 +40,19 @@ namespace rvinowise.ai.ui.painted
             |>Seq.iteri (fun index ensemble ->
                 add_ensemble_to_graph 
                     graph
-                    (index)
+                    (uint64(index))
                     ensemble
             )
 
-        let add_figure_histories
-            histories
+        let add_history
+            history
             (graph:infrastructure.Graph)
             =
-            histories
+            graph
+            |>add_ensembles history
 
-        
+        let description history=
+            $"history from {history.interval.tail} to {history.interval.head}"
 
 
         

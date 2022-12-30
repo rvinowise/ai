@@ -2,4 +2,4 @@
 
 type Figure_id = string
 type Vertex_id = string
-type Moment = uint64
+type Moment = int

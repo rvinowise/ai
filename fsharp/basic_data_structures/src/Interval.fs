@@ -30,6 +30,23 @@ module Interval =
         (head: int)
         (tail: int)
         =
-        regular (uint64(head)) (uint64(tail))
+        regular (head) (tail)
     
+    let ofPair tuple=
+        let tail,head = tuple
+        Interval(tail,head)
     //let moment (moment:int) = Interval(uint64(moment), uint64(moment))
+
+    let head (interval:Interval)=
+        interval.head
+    let tail (interval:Interval)=
+        interval.tail
+
+    let bordering_interval intervals =
+        regular 
+            (intervals
+            |>Seq.map tail
+            |>Seq.min)
+            (intervals
+            |>Seq.map head
+            |>Seq.min)
