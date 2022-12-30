@@ -5,48 +5,42 @@ open System
 open System.IO
 open System.Diagnostics
 
-open rvinowise
+open rvinowise.ui
 open rvinowise.ai
-open rvinowise.ai.ui.painted
+open rvinowise.ai.ui
 
 
 
-type External_graph = Rubjerg.Graphviz.Graph
 
 
 let mark_expected_nodes
     (prolongation:Expected_figure_prolongation) 
     subgraph_id
-    (graph:External_graph)
+    (graph:infrastructure.Graph)
     =
     prolongation.expected
     |> Seq.iter (
         fun (vertex) ->
-            graph.GetOrAddNode(subgraph_id+vertex)
-            |>Vertex.set_attribute "fillcolor" "red"
-            |>Vertex.set_attribute "style" "filled"
+            graph
+            |>infrastructure.Graph.provide_vertex (subgraph_id+vertex)
+            |>rvinowise.ui.infrastructure.Vertex.fill_with_color "red"
             |>ignore
     )
     graph
 
 
-let provide_expected_prolongation_inside_graph
+let with_expected_prolongation
     name
     (prolongation:Expected_figure_prolongation) 
-    (graph:RootGraph)
+    (graph:infrastructure.Graph)
     =
-    let subgraph_id = prolongation.prolongated.graph.id
     graph
-    |>Graph.provide_cluster_inside_graph name
-    |>Graph.provide_subgraph_inside_graph 
-        name 
-        (Figure.painted_edges prolongation.prolongated)
+    |>infrastructure.Graph.provide_cluster name
+    |>painted.Figure.add_figure prolongation.prolongated
     |>mark_expected_nodes
         prolongation
-        name
-    |>ignore
+        prolongation.prolongated.graph.id
     graph
-
 
 
 
@@ -54,8 +48,8 @@ let visualise_prolongation
     (prolongation:Expected_figure_prolongation) 
     =
     prolongation.prolongated.graph.id
-    |>Graph.empty_root_graph
-    |>provide_expected_prolongation_inside_graph 
+    |>infrastructure.Graph.empty
+    |>with_expected_prolongation 
         prolongation.prolongated.graph.id
         prolongation
     |>image.open_image_of_graph

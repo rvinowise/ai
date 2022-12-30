@@ -14,9 +14,8 @@
 
   <ItemGroup>
     <Compile Include="src\visualised\painted\external\graph_elements.fs" />
-    <Compile Include="src\visualised\painted\external\graphviz\graph.fs" />
+    <Compile Include="src\visualised\painted\external\graphviz\Graph.fs" />
 
-    <Compile Include="src\visualised\painted\Graph.fs" />
     <Compile Include="src\visualised\painted\Figure_and_stencil.fs" />
     <Compile Include="src\visualised\painted\History.fs" />
     <Compile Include="src\visualised\painted\painted_image.fs" />

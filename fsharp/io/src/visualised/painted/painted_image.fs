@@ -4,18 +4,16 @@ namespace rvinowise.ai.ui.painted
         open Rubjerg.Graphviz
         open rvinowise.ai
         open rvinowise.ai.ui
+        open rvinowise.ui
         open System.IO
         open System.Diagnostics
 
         
 
         
-        let open_image_of_graph (root:RootGraph) =
+        let open_image_of_graph (graph:infrastructure.Graph) =
             let filename = Directory.GetCurrentDirectory() + "/out"
-            root.ComputeLayout()
-            root.ToSvgFile(filename+".svg")
-            root.ToDotFile(filename+".dot")
-            root.FreeLayout()
+            graph|>infrastructure.Graph.save_to_file filename
             Process.Start("cmd", $"/c {filename}.svg") |> ignore
             ()
 
@@ -24,9 +22,10 @@ namespace rvinowise.ai.ui.painted
             (figure:Figure) 
             =
             figure.graph.id
-            |>Graph.empty_root_graph
-            |>Graph.provide_clustered_subgraph_inside_root_graph figure.graph.id 
-                (Figure.painted_edges figure)
+            |>infrastructure.Graph.empty
+            |>infrastructure.Graph.with_circle_vertices
+            |>infrastructure.Graph.with_cluster figure.graph.id 
+                (painted.Graph.add_graph figure.graph)
             |>open_image_of_graph
             |>ignore
 
@@ -34,8 +33,8 @@ namespace rvinowise.ai.ui.painted
             (history:rvinowise.ai.History) 
             =
             "signal history"
-            |>infrastructure.Graph.empty_root_graph
-            |>Graph.provide_clustered_subgraph_inside_root_graph "signal history"
-                (History.painted_edges figure)
+            |>infrastructure.Graph.empty
+            |>infrastructure.Graph.with_circle_vertices
+            //|>infrastructure.Graph.with_cluster "signal history" ()
             |>open_image_of_graph
             |>ignore

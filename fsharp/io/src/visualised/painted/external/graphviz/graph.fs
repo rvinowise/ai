@@ -12,6 +12,7 @@ namespace rvinowise.ui.infrastructure
     type Graph = {
         root:External_root
         impl:External_graph
+        id:string
     }
     type Vertex = {
         impl:External_node
@@ -24,6 +25,11 @@ namespace rvinowise.ui.infrastructure
             vertex.impl.SafeSetAttribute(key,value,"")
             vertex
 
+        let fill_with_color color vertex =
+            vertex
+            |>set_attribute "fillcolor" color
+            |>set_attribute "style" "filled"
+
     [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
     module Graph=
 
@@ -32,7 +38,11 @@ namespace rvinowise.ui.infrastructure
         let empty name=
             let root:External_root = External_root.CreateNew(name, GraphType.Directed)
             root.SafeSetAttribute("rankdir", "LR", "")
-            {root=root;impl=root}
+            {
+                root=root;
+                impl=root;
+                id=name;
+            }
         
         let with_circle_vertices graph=
             External_node.IntroduceAttribute(graph.root, "shape", "circle")
@@ -54,7 +64,7 @@ namespace rvinowise.ui.infrastructure
             (graph:Graph) 
             =
             {
-                Vertex.impl=graph.impl.GetOrAddNode(id)
+                Vertex.impl=graph.impl.GetOrAddNode(graph.id+id)
             }
 
 
@@ -64,7 +74,7 @@ namespace rvinowise.ui.infrastructure
             (graph:Graph) 
             =
             graph.impl.GetOrAddEdge(
-                tail, head, ""
+                tail.impl, head.impl, ""
             )|>ignore
             graph
 
@@ -75,44 +85,26 @@ namespace rvinowise.ui.infrastructure
             =
             {
                 root = owner_graph.root
-                impl = owner_graph.impl.GetOrAddSubgraph("cluster_"+name);
+                impl = owner_graph.impl.GetOrAddSubgraph("cluster_"+owner_graph.id+name); //graphviz needs clusters to have word "cluster" in their name
+                id = "cluster_"+owner_graph.id+name
             }
             |> with_attribute "label" name
 
-        let provide_subgraph_inside_graph
-            (subgraph_id: string)
-            (edges: painted.Edge seq)
-            (graph: Graph)
-            =
-            edges
-            |> Seq.iter (
-                fun edge -> 
-                    let tail = 
-                        graph
-                        |>provide_vertex (subgraph_id+edge.tail.id)
-                        //|>Node.set_attribute "label" edge.tail.label
-                        |>Vertex.set_attribute "label" edge.tail.id
-                    
-                    let head = 
-                        graph
-                        |>provide_vertex (subgraph_id+edge.head.id)
-                        //|>Node.set_attribute "label" edge.head.label
-                        |>Vertex.set_attribute "label" edge.head.id
-
-                    graph
-                    |>provide_edge
-                        tail head
-                    |> ignore
-            )
-            graph
-
-        let provide_clustered_subgraph
+        let with_cluster
             name
-            (edges:painted.Edge seq) 
-            (graph:Graph)
+            how_to_fill
+            (owner_graph)
             =
-            graph
-            |>provide_cluster_inside_graph name
-            |>provide_subgraph_inside_graph name edges
-            |>ignore
-            graph
+            owner_graph
+            |>provide_cluster name
+            |>how_to_fill
+            owner_graph
+
+        
+        
+        let save_to_file filename graph=
+            let root = graph.root
+            root.ComputeLayout()
+            root.ToSvgFile(filename+".svg")
+            root.ToDotFile(filename+".dot")
+            root.FreeLayout()

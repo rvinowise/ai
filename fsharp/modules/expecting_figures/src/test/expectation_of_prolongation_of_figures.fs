@@ -9,6 +9,7 @@ open rvinowise.ai.Expecting_figures
 open rvinowise.ai.Expected_figure_prolongation
 open rvinowise.ai.ui.painted.Expected_figure_prolongation
 open rvinowise.ai.ui.painted
+open rvinowise.ui
 
 module ``expectation of prolongation of figures``=
     
@@ -68,8 +69,9 @@ module ``expectation of prolongation of figures``=
             prolongate_expectation_with_an_input_figure "d" expectation_after_b
         
         high_figure.graph.id
-        |>Graph.empty_root_graph 
-        |>provide_expected_prolongation_inside_graph "initial_expectation" initial_expectation
-        |>provide_expected_prolongation_inside_graph "expectation_after_b" expectation_after_b
-        |>provide_expected_prolongation_inside_graph "expectation_after_d" expectation_after_d
+        |>infrastructure.Graph.empty
+        |>infrastructure.Graph.with_circle_vertices
+        |>with_expected_prolongation "initial_expectation" initial_expectation
+        |>with_expected_prolongation "expectation_after_b" expectation_after_b
+        |>with_expected_prolongation "expectation_after_d" expectation_after_d
         |>image.open_image_of_graph

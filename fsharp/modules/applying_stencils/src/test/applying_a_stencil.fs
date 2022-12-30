@@ -13,6 +13,7 @@ open rvinowise.ai.mapping_stencils
 module ``application of stencils``=
     
     open rvinowise.ai.stencil
+    open rvinowise.ui
     
     type Used_figures()=
         
@@ -232,13 +233,12 @@ module ``application of stencils``=
             let stencil = stencil.example.a_fitting_stencil
 
             figure.graph.id
-            |>painted.Graph.empty_root_graph 
-            |>painted.Graph.provide_clustered_subgraph_inside_root_graph 
-                "target figure" 
-                (painted.Figure.painted_edges figure)
-            |>painted.Graph.provide_clustered_subgraph_inside_root_graph 
-                "stencil"
-                (painted.Stencil.painted_edges stencil)
+            |>infrastructure.Graph.empty
+            |>infrastructure.Graph.with_circle_vertices
+            |>infrastructure.Graph.with_cluster "target figure" 
+                (painted.Graph.add_graph figure.graph)
+            |>infrastructure.Graph.with_cluster "stencil"
+                (painted.Graph.add_graph stencil.graph)
             |>painted.image.open_image_of_graph
 
         
