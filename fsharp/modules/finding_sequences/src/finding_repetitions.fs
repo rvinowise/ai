@@ -6,7 +6,7 @@ module Finding_repetitions =
 
   
     let prepared_array_for_results length: Interval array =
-        Array.create length (Interval.moment 0UL)
+        Array.create length (Interval.moment 0)
 
     let repeated_pairs 
         (heads: array<Interval>)

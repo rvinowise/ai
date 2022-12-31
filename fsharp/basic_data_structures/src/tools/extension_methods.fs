@@ -160,3 +160,16 @@ module String =
     
     let remove_number label =
         Regex.Replace(label, @"[^a-zA-Z]", "")
+
+
+module Map =
+
+    let add_by_key 
+        key
+        element
+        (map:Map< 'Key, seq<'Value> >)
+        =
+        let elements = 
+            map[key] 
+            |>Seq.append [element]
+        Map.add key elements map

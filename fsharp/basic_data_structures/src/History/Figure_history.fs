@@ -1,6 +1,8 @@
 namespace rvinowise.ai
     open System.Collections.Generic
-
+    open rvinowise
+    open FsUnit
+    open Xunit
  
     type Figure_history = {
         figure: Figure_id
@@ -12,22 +14,6 @@ namespace rvinowise.ai
     |Tail of Figure_id
     |Head of Figure_id
 
-    module History=
-
-        let add_appearances_to_map 
-            history 
-            map
-            = 
-            history.appearances
-            |>Seq.iter (fun interval->
-                Map.add history.figure interval.tail map
-                Map.add history.figure interval.head map
-            )
-
-        let combine histories=
-            let ensembles: Map<Moment, Action> = Map[]
-            histories
-            |>Seq.map
 
 namespace rvinowise.ai.history
     open Xunit
@@ -49,8 +35,51 @@ namespace rvinowise.ai.history
                 appearances=intervals
                 interval=Interval.bordering_interval intervals
             }
+
+namespace rvinowise.ai
+    module History=
+        open rvinowise
+        open FsUnit
+        open Xunit
+
+        let add_appearances_to_map 
+            history 
+            map
+            = 
+            history.appearances
+            |>Seq.fold (fun map interval->
+                map
+                |>extensions.Map.add_by_key interval.tail history.figure 
+                |>extensions.Map.add_by_key interval.head history.figure 
+            ) map
+
+        let combine histories =
+            histories
+            |>Seq.fold (fun map history->
+                add_appearances_to_map history map
+            ) Map.empty
+
+        [<Fact>]
+        let ``combine figure histories``()=
+            let history_of_a = history.built.from_tuples "a" [
+                0,1; 2,4
+            ]
+            let history_of_b = history.built.from_tuples "b" [
+                0,2; 4,4
+            ]
+            [history_of_a; history_of_b]
+            |>combine 
+            |>should equal
+
+
+
+
         
         
+namespace rvinowise.ai.history
+    open Xunit
+    open FsUnit
+    open rvinowise.ai
 
     module example=
         let short_history_with_some_repetitions=

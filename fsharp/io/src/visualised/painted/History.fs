@@ -12,46 +12,15 @@ namespace rvinowise.ai.ui.painted
         let description history=
             $"appearences of {history.figure} from {history.interval.tail} to {history.interval.head}"
 
-        let add_fired_figures
-            ensemble
-            graph
-            =
-            ensemble.fired
-            |>Seq.iter (fun fired_figure ->
-                graph
-                |>infrastructure.Graph.with_vertex fired_figure
-                |>ignore
-            )
-            
-
-        let add_ensemble_to_graph
-            (graph: infrastructure.Graph)
-            (moment:Moment)
-            ensemble
-            =
-            graph
-            |>infrastructure.Graph.with_cluster 
-                (moment.ToString())
-                (add_fired_figures ensemble)
-            ()
-
-        let add_ensembles
-            history
-            (graph:infrastructure.Graph)
-            =
-            history.ensembles
-            |>Seq.iteri (fun index ensemble ->
-                add_ensemble_to_graph 
-                    graph
-                    (index)
-                    ensemble
-            )
+        
 
         let add_figure_histories
             histories
             (graph:infrastructure.Graph)
             =
             histories
+            |>History.combine
+            |>Seq.map
 
         
 
