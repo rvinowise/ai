@@ -53,6 +53,7 @@ namespace rvinowise.ai.ui.painted
                 (string moment)
                 (fill_batch_with_events events)
 
+
         let add_figure_histories
             histories
             graph
