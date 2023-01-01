@@ -4,4 +4,4 @@ open rvinowise
 
 
 let moments (appearance: ai.Interval) =
-    printf $"({appearance.head} {appearance.tail}) "
+    printf $"({appearance.start} {appearance.finish}) "

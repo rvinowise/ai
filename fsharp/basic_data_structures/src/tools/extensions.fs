@@ -167,9 +167,12 @@ module Map =
     let add_by_key 
         key
         element
-        (map:Map< 'Key, seq<'Value> >)
+        (map:Map< 'Key, Set<'Value> >)
         =
         let elements = 
-            map[key] 
-            |>Seq.append [element]
+            map.TryFind(key) 
+            |>function
+            |Some existing_elements -> existing_elements
+            |None -> Set.empty
+            |>Set.add element
         Map.add key elements map

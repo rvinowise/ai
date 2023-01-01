@@ -5,30 +5,32 @@ namespace rvinowise.ui.infrastructure
     open Rubjerg.Graphviz
 
 
-    type External_graph = Rubjerg.Graphviz.Graph
-    type External_root = Rubjerg.Graphviz.RootGraph
-    type External_node = Rubjerg.Graphviz.Node
+    type private External_graph = Rubjerg.Graphviz.Graph
+    type private External_root = Rubjerg.Graphviz.RootGraph
+    type private External_node = Rubjerg.Graphviz.Node
     
     type Graph = {
-        root:External_root
-        impl:External_graph
         id:string
+        impl:External_graph
+        root:External_root
     }
     type Vertex = {
+        id:string
+        parent:Graph
         impl:External_node
     }
 
 
     [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
     module Vertex =
-        let set_attribute key value (vertex:Vertex) =
+        let with_attribute key value (vertex:Vertex) =
             vertex.impl.SafeSetAttribute(key,value,"")
             vertex
 
         let fill_with_color color vertex =
             vertex
-            |>set_attribute "fillcolor" color
-            |>set_attribute "style" "filled"
+            |>with_attribute "fillcolor" color
+            |>with_attribute "style" "filled"
 
     [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
     module Graph=
@@ -56,21 +58,24 @@ namespace rvinowise.ui.infrastructure
             graph.impl.SafeSetAttribute(key,value,"")
             graph
         
-        let with_vertex 
-            id
-            (graph:Graph) 
-            =
-            graph.impl.GetOrAddNode(id)|>ignore
-            graph
-        
         let provide_vertex
             id
             (graph:Graph) 
             =
             {
-                Vertex.impl=graph.impl.GetOrAddNode(graph.id+id)
+                Vertex.id = id
+                parent = graph
+                impl=graph.impl.GetOrAddNode(graph.id+id)
             }
+            |>Vertex.with_attribute "label" id
 
+        let with_vertex 
+            id
+            (graph:Graph) 
+            =
+            provide_vertex id graph |>ignore
+            graph
+        
 
         let with_edge
             tail
@@ -87,17 +92,18 @@ namespace rvinowise.ui.infrastructure
             name
             (owner_graph:Graph)
             =
+            let cluster_id = "cluster_"+owner_graph.id+name
             {
                 root = owner_graph.root
-                impl = owner_graph.impl.GetOrAddSubgraph("cluster_"+owner_graph.id+name); //graphviz needs clusters to have word "cluster" in their name
-                id = "cluster_"+owner_graph.id+name
+                impl = owner_graph.impl.GetOrAddSubgraph(cluster_id); //graphviz needs clusters to have word "cluster" in their name
+                id = cluster_id
             }
             |> with_attribute "label" name
 
         let with_cluster
             name
             how_to_fill
-            (owner_graph)
+            owner_graph
             =
             owner_graph
             |>provide_cluster name

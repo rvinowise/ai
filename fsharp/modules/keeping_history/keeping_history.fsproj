@@ -7,11 +7,7 @@
     <NoWarn>NU1701</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="src\Mapping.fs" />
-    <Compile Include="src\applying_stencils.fs" />
-    <Compile Include="src\painted\applying_stencil.fs" />
-    <Compile Include="src\test\applying_a_stencil.fs" />
-    <Compile Include="src\test\the_mapping_type.fs" />
+    
   </ItemGroup>
 
   <ItemGroup>

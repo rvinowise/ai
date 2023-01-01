@@ -5,16 +5,14 @@ open System.Runtime.InteropServices
 [<StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)>]
 type Interval = 
     struct
-        val head: Moment
-        val tail: Moment
+        val start: Moment
+        val finish: Moment
 
-        new(head, tail) =
-            {head=head;tail=tail}
-        // new(head: int, tail: int) =
-        //     {head=uint64(head);tail=uint64(tail)}
+        new(start, finish) =
+            {start=start;finish=finish}
 
         override this.ToString() =
-            $"Interval({this.head}, {this.tail})"
+            $"Interval({this.start}, {this.finish})"
     end
 
 [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
@@ -23,30 +21,30 @@ module Interval =
     let moment (moment:Moment): Interval = 
         Interval(moment, moment)
     
-    let regular head tail =
-        Interval(head, tail)
+    let regular start finish =
+        Interval(start, finish)
 
     let from_int 
-        (head: int)
-        (tail: int)
+        (start: int)
+        (finish: int)
         =
-        regular (head) (tail)
+        regular (start) (finish)
     
     let ofPair tuple=
-        let tail,head = tuple
-        Interval(tail,head)
+        let start, finish = tuple
+        Interval(start, finish)
     //let moment (moment:int) = Interval(uint64(moment), uint64(moment))
 
-    let head (interval:Interval)=
-        interval.head
-    let tail (interval:Interval)=
-        interval.tail
+    let start (interval:Interval)=
+        interval.start
+    let finish (interval:Interval)=
+        interval.finish
 
     let bordering_interval intervals =
         regular 
             (intervals
-            |>Seq.map tail
+            |>Seq.map start 
             |>Seq.min)
             (intervals
-            |>Seq.map head
-            |>Seq.min)
+            |>Seq.map finish
+            |>Seq.max)

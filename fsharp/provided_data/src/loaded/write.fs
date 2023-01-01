@@ -22,8 +22,8 @@ let figure_appearance
         values (@figure, @head, @tail)",
         {|
             figure = figure; 
-            head = appearance.head; 
-            tail = appearance.tail
+            head = appearance.start; 
+            tail = appearance.finish
         |}
     ) |> ignore
 

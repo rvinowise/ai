@@ -40,6 +40,7 @@ let with_expected_prolongation
     |>mark_expected_nodes
         prolongation
         prolongation.prolongated.graph.id
+    |>ignore
     graph
 
 

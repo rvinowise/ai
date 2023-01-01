@@ -10,9 +10,9 @@ namespace rvinowise.ai
         appearances: seq<Interval>
     }
 
-    type Action=
-    |Tail of Figure_id
-    |Head of Figure_id
+    type Appearance_event=
+    |Start of Figure_id
+    |Finish of Figure_id
 
 
 namespace rvinowise.ai.history
@@ -42,21 +42,31 @@ namespace rvinowise.ai
         open FsUnit
         open Xunit
 
-        let add_appearances_to_map 
+        let interval history =
+            history.interval
+
+        let figure history =
+            history.figure
+
+        let add_events_to_map 
             history 
-            map
+            (map: Map<Moment, Set<Appearance_event> >)
             = 
             history.appearances
             |>Seq.fold (fun map interval->
                 map
-                |>extensions.Map.add_by_key interval.tail history.figure 
-                |>extensions.Map.add_by_key interval.head history.figure 
+                |>extensions.Map.add_by_key 
+                    interval.start
+                    (Start history.figure)
+                |>extensions.Map.add_by_key
+                    interval.finish
+                    (Finish history.figure)
             ) map
 
         let combine histories =
             histories
             |>Seq.fold (fun map history->
-                add_appearances_to_map history map
+                add_events_to_map history map
             ) Map.empty
 
         [<Fact>]
@@ -69,7 +79,24 @@ namespace rvinowise.ai
             ]
             [history_of_a; history_of_b]
             |>combine 
-            |>should equal
+            |>should equal Map[
+                0,[
+                    Start "a";
+                    Start "b"
+                ];
+                1,[
+                    Finish "a"
+                ];
+                2,[
+                    Start "a";
+                    Finish "b"
+                ];
+                4,[
+                    Start "b";
+                    Finish "a";
+                    Finish "b"
+                ]
+            ]
 
 
 

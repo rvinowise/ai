@@ -18,12 +18,12 @@ namespace rvinowise.ai.ui.painted
                     let tail = 
                         to_graph
                         |>infrastructure.Graph.provide_vertex (added_graph.id+edge.tail)
-                        |>infrastructure.Vertex.set_attribute "label" edge.tail
+                        |>infrastructure.Vertex.with_attribute "label" edge.tail
                     
                     let head = 
                         to_graph
                         |>infrastructure.Graph.provide_vertex (added_graph.id+edge.head)
-                        |>infrastructure.Vertex.set_attribute "label" edge.head
+                        |>infrastructure.Vertex.with_attribute "label" edge.head
 
                     to_graph
                     |>infrastructure.Graph.with_edge
@@ -44,12 +44,12 @@ namespace rvinowise.ai.ui.painted
         //             let tail = 
         //                 to_graph
         //                 |>infrastructure.Graph.provide_vertex (figure.graph.id+edge.tail)
-        //                 |>infrastructure.Vertex.set_attribute "label" edge.tail
+        //                 |>infrastructure.Vertex.with_attribute "label" edge.tail
                     
         //             let head = 
         //                 to_graph
         //                 |>infrastructure.Graph.provide_vertex (figure.graph.id+edge.head)
-        //                 |>infrastructure.Vertex.set_attribute "label" edge.head
+        //                 |>infrastructure.Vertex.with_attribute "label" edge.head
 
         //             to_graph
         //             |>infrastructure.Graph.with_edge
@@ -73,12 +73,12 @@ namespace rvinowise.ai.ui.painted
                     let tail = 
                         to_graph
                         |>infrastructure.Graph.provide_vertex (figure.graph.id+edge.tail)
-                        |>infrastructure.Vertex.set_attribute "label" edge.tail
+                        |>infrastructure.Vertex.with_attribute "label" edge.tail
                     
                     let head = 
                         to_graph
                         |>infrastructure.Graph.provide_vertex (figure.graph.id+edge.head)
-                        |>infrastructure.Vertex.set_attribute "label" edge.head
+                        |>infrastructure.Vertex.with_attribute "label" edge.head
 
                     to_graph
                     |>infrastructure.Graph.with_edge
