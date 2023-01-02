@@ -10,24 +10,25 @@ namespace rvinowise.ai.ui.painted
 
         let add_graph
             (added_graph: ai.Graph)
-            (to_graph: infrastructure.Node)
+            (to_graph: infrastructure.Graph)
+            (to_node: infrastructure.Node)
             =
             added_graph.edges
             |> Seq.iter (
                 fun edge -> 
                     let tail = 
-                        to_graph
-                        |>infrastructure.Graph.provide_vertex (added_graph.id+edge.tail)
+                        to_node
+                        |>infrastructure.Graph.provide_vertex to_graph (added_graph.id+edge.tail)
                         |>infrastructure.Graph.with_attribute "label" edge.tail
                     
                     let head = 
-                        to_graph
-                        |>infrastructure.Graph.provide_vertex (added_graph.id+edge.head)
+                        to_node
+                        |>infrastructure.Graph.provide_vertex to_graph (added_graph.id+edge.head)
                         |>infrastructure.Graph.with_attribute "label" edge.head
 
-                    to_graph
+                    tail
                     |>infrastructure.Graph.with_edge
-                        tail head
+                        to_graph head
                     |> ignore
             )
 
@@ -38,25 +39,26 @@ namespace rvinowise.ai.ui.painted
 
         let add_figure
             (figure: ai.Figure)
-            (to_graph: infrastructure.Node)
+            (to_graph: infrastructure.Graph)
+            (to_node: infrastructure.Node)
             =
             figure.graph.edges
             |> Seq.iter (fun edge -> 
                 let tail = 
-                    to_graph
-                    |>infrastructure.Graph.provide_vertex (figure.graph.id+edge.tail)
+                    to_node
+                    |>infrastructure.Graph.provide_vertex to_graph (figure.graph.id+edge.tail)
                     |>infrastructure.Graph.with_attribute "label" edge.tail
                 
                 let head = 
-                    to_graph
-                    |>infrastructure.Graph.provide_vertex (figure.graph.id+edge.head)
+                    to_node
+                    |>infrastructure.Graph.provide_vertex to_graph (figure.graph.id+edge.head)
                     |>infrastructure.Graph.with_attribute "label" edge.head
 
-                to_graph
+                tail
                 |>infrastructure.Graph.with_edge
-                    tail head
+                    to_graph head
                 |> ignore
             )
-            to_graph
+            to_node
     
 

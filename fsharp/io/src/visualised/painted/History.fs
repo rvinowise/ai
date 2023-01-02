@@ -29,12 +29,13 @@ namespace rvinowise.ai.ui.painted
 
         let fill_batch_with_events
             events
-            (batch_graph: infrastructure.Node)
+            (owner_graph: infrastructure.Graph)
+            (batch_cluster: infrastructure.Node)
             =
             events
             |>Seq.iter (fun (event:Appearance_event) ->
-                batch_graph
-                |>infrastructure.Graph.with_vertex
+                batch_cluster
+                |>infrastructure.Graph.with_vertex owner_graph
                     (
                         match event with
                         |Start figure -> "("+figure
@@ -42,17 +43,18 @@ namespace rvinowise.ai.ui.painted
                     )
                 |>ignore
             )
-            batch_graph
+            batch_cluster
 
         let add_next_event_batch 
+            (owner_graph: infrastructure.Graph)
             (moment:Moment)
             (events: Appearance_event seq)
-            (graph: infrastructure.Node)
+            (receptacle: infrastructure.Node)
             =
-            graph
-            |>infrastructure.Graph.with_vertex 
+            receptacle
+            |>infrastructure.Graph.with_vertex owner_graph 
                 (string moment)
-            |>fill_batch_with_events events
+            |>fill_batch_with_events owner_graph events
 
 
         let add_figure_histories
@@ -62,8 +64,8 @@ namespace rvinowise.ai.ui.painted
             histories
             |>History.combine
             |>Seq.iter (fun pair->
-                graph
-                |>add_next_event_batch 
+                graph.root
+                |>add_next_event_batch graph
                     pair.Key
                     pair.Value
                 |>ignore

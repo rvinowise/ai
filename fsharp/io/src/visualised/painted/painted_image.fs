@@ -13,7 +13,7 @@ namespace rvinowise.ai.ui.painted
         
 
         
-        let open_image_of_graph (graph:infrastructure.Node) =
+        let open_image_of_graph (graph:infrastructure.Graph) =
             let filename = Directory.GetCurrentDirectory() + "/out"
             graph|>infrastructure.Graph.save_to_file filename
             Process.Start("cmd", $"/c {filename}.svg") |> ignore
@@ -28,15 +28,28 @@ namespace rvinowise.ai.ui.painted
         
         [<Fact>]
         let ``construct a graph``()=
-            "my graph"
-            |>Graph.empty
-            |>Graph.with_circle_vertices
-            |>Graph.provide_vertex "outer"
-            |>Graph.with_vertex "b"
-            |>Graph.with_vertex "c1"
-            |>Graph.with_vertex "c2"
-            //|>Graph.with_vertex "c3"
-            |>Graph.provide_vertex "outer2"
-            |>Graph.with_vertex "d"
-            |>Graph.with_vertex "e"
+            let graph, root_vertex =
+                "my graph"
+                |>Graph.empty
+                
+                root_vertex
+                |>Graph.provide_vertex graph "vertex"
+                |>Graph.with_circle_vertices graph
+            
+            let tail=  
+                root_vertex              
+                |>Graph.provide_vertex graph "outer"
+                |>Graph.with_vertex graph "b"
+                |>Graph.with_vertex graph "c"
+            
+            let head =
+                root_vertex
+                |>Graph.provide_vertex graph "outer2"
+                |>Graph.with_vertex graph "d"
+                |>Graph.with_vertex graph "e"
+            
+            tail
+            |>Graph.with_edge graph head
+
+            tail
             |>open_image_of_graph
