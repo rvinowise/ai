@@ -1,8 +1,8 @@
 namespace rvinowise.ai.ui.painted
 
     open Rubjerg
+    open rvinowise
     open rvinowise.ai
-    open rvinowise.ai.stencil
     open rvinowise.ui
 
     module Graph=
@@ -10,7 +10,7 @@ namespace rvinowise.ai.ui.painted
 
         let add_graph
             (added_graph: ai.Graph)
-            (to_graph: infrastructure.Graph)
+            (to_graph: infrastructure.Node)
             =
             added_graph.edges
             |> Seq.iter (
@@ -18,12 +18,12 @@ namespace rvinowise.ai.ui.painted
                     let tail = 
                         to_graph
                         |>infrastructure.Graph.provide_vertex (added_graph.id+edge.tail)
-                        |>infrastructure.Vertex.with_attribute "label" edge.tail
+                        |>infrastructure.Graph.with_attribute "label" edge.tail
                     
                     let head = 
                         to_graph
                         |>infrastructure.Graph.provide_vertex (added_graph.id+edge.head)
-                        |>infrastructure.Vertex.with_attribute "label" edge.head
+                        |>infrastructure.Graph.with_attribute "label" edge.head
 
                     to_graph
                     |>infrastructure.Graph.with_edge
@@ -31,59 +31,31 @@ namespace rvinowise.ai.ui.painted
                     |> ignore
             )
 
-    [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
-    module Stencil=
-        ()
-        // let add_stencil
-        //     (stencil: Stencil)
-        //     (to_graph: infrastructure.Graph)
-        //     =
-        //     stencil.graph.edges
-        //     |> Seq.iter (
-        //         fun edge -> 
-        //             let tail = 
-        //                 to_graph
-        //                 |>infrastructure.Graph.provide_vertex (figure.graph.id+edge.tail)
-        //                 |>infrastructure.Vertex.with_attribute "label" edge.tail
-                    
-        //             let head = 
-        //                 to_graph
-        //                 |>infrastructure.Graph.provide_vertex (figure.graph.id+edge.head)
-        //                 |>infrastructure.Vertex.with_attribute "label" edge.head
-
-        //             to_graph
-        //             |>infrastructure.Graph.with_edge
-        //                 tail head
-        //             |> ignore
-        //     )
-        //     to_graph
-        
 
     [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
     module Figure=
 
 
         let add_figure
-            (figure: Figure)
-            (to_graph: infrastructure.Graph)
+            (figure: ai.Figure)
+            (to_graph: infrastructure.Node)
             =
             figure.graph.edges
-            |> Seq.iter (
-                fun edge -> 
-                    let tail = 
-                        to_graph
-                        |>infrastructure.Graph.provide_vertex (figure.graph.id+edge.tail)
-                        |>infrastructure.Vertex.with_attribute "label" edge.tail
-                    
-                    let head = 
-                        to_graph
-                        |>infrastructure.Graph.provide_vertex (figure.graph.id+edge.head)
-                        |>infrastructure.Vertex.with_attribute "label" edge.head
-
+            |> Seq.iter (fun edge -> 
+                let tail = 
                     to_graph
-                    |>infrastructure.Graph.with_edge
-                        tail head
-                    |> ignore
+                    |>infrastructure.Graph.provide_vertex (figure.graph.id+edge.tail)
+                    |>infrastructure.Graph.with_attribute "label" edge.tail
+                
+                let head = 
+                    to_graph
+                    |>infrastructure.Graph.provide_vertex (figure.graph.id+edge.head)
+                    |>infrastructure.Graph.with_attribute "label" edge.head
+
+                to_graph
+                |>infrastructure.Graph.with_edge
+                    tail head
+                |> ignore
             )
             to_graph
     

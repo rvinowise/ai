@@ -1,44 +1,40 @@
 (* incapsulate infrastructure - a library for painting graphs *)
 namespace rvinowise.ui.infrastructure
 
-    open Rubjerg
-    open Rubjerg.Graphviz
+    open FsUnit
+    open Xunit
 
 
-    type private External_graph = Rubjerg.Graphviz.Graph
+    type private External_graph = Rubjerg.Graphviz.SubGraph
     type private External_root = Rubjerg.Graphviz.RootGraph
     type private External_node = Rubjerg.Graphviz.Node
     type private External_element = Rubjerg.Graphviz.CGraphThing
     
-    type Graph = {
-        id:string
-        parent:Graph option
-        root:External_root
-        impl:External_graph
-    }
-    type Vertex = {
-        id:string
-        parent:Graph
-        root:External_root
-        impl:External_node
-    }
-    type Node=
-    |Graph of Graph
-    |Vertex of Vertex
 
- 
+    type Element=
+    |Vertex of External_node
+    |Cluster of External_graph
+
+    type Node={
+        id:string
+        parent:Node option
+
+        id_impl:string
+        element_impl:Element
+        root_impl:External_root
+    }
 
     [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
-    module Node =
-        let impl (node:Node)=
-            match node with
-            |Graph graph -> graph.impl :> External_element
-            |Vertex vertex -> vertex.impl :> External_element
+    module Graph=
+        open Rubjerg
+        open System
 
-        
+        //type private Node = rvinowise.ui.infrastructure.Node
 
         let with_attribute key value (node:Node) =
-            (impl node).SafeSetAttribute(key,value,"")
+            match node.element_impl with
+            |Cluster g -> g.SafeSetAttribute(key,value,"")
+            |Vertex v->v.SafeSetAttribute(key,value,"")
             node
 
         let fill_with_color color node =
@@ -46,136 +42,97 @@ namespace rvinowise.ui.infrastructure
             |>with_attribute "fillcolor" color
             |>with_attribute "style" "filled"
 
-    [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
-    module Vertex =
-        let with_attribute key value (vertex:Vertex) =
-            vertex.impl.SafeSetAttribute(key,value,"")
-            vertex
-
-        let fill_with_color color vertex =
-            vertex
-            |>with_attribute "fillcolor" color
-            |>with_attribute "style" "filled"
-
-    [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
-    module Graph=
-
-        open rvinowise.ui
-        open System.Diagnostics.Contracts
-        open System
-
         let empty name=
-            let root:External_root = External_root.CreateNew(name, GraphType.Directed)
-            root.SafeSetAttribute("rankdir", "LR", "")
-            Graph {
-                Graph.id=name
+            let external_root:External_root = External_root.CreateNew(name, Graphviz.GraphType.Directed)
+            external_root.SafeSetAttribute("rankdir", "LR", "")
+            //external_root.SafeSetAttribute("cluster", "true", "")
+            {
+                Node.id=name
+                Node.id_impl=name
                 parent=None
-                root=root
-                impl = root
+                root_impl=external_root
+                element_impl = Cluster (external_root.GetOrAddSubgraph(name))
             }
         
         let with_circle_vertices (node: Node)=
-            match node with
-            |Graph graph->
-                External_node.IntroduceAttribute(graph.root, "shape", "circle")
-            |Node ->
+            External_node.IntroduceAttribute(node.root_impl, "shape", "circle")
             node
-        
-        let with_rectangle_vertices graph=
-            External_node.IntroduceAttribute(graph.root, "shape", "rectangle")
-            graph
 
-        let with_attribute key value (graph:Graph) =
-            graph.impl.SafeSetAttribute(key,value,"")
-            graph
+        let with_rectangle_vertices node=
+            External_node.IntroduceAttribute(node.root_impl, "shape", "rectangle")
+            node
 
+        let private transform_vertex_into_graph node=
+            match node.element_impl with
+            |Vertex vertex -> 
+                match node.parent with
+                |Some parent -> 
+                    let new_graph = 
+                        match parent.element_impl with
+                        |Cluster parent_graph ->
+                            parent.root_impl.Delete(vertex)
+                            let graph = 
+                                parent_graph.GetOrAddSubgraph(node.id_impl)
+                            graph.SafeSetAttribute("label", node.id, "")
+                            graph.SafeSetAttribute("cluster", "true", "")
+                            graph
+                        |Vertex _ -> raise (ArgumentException("parent must be a graph"))
+                    {
+                        node with 
+                            element_impl=Cluster new_graph
+                    },new_graph
+                |None -> raise (ArgumentException("root node shouldn't be turned into a graph"))
+            |Cluster cluster -> node,cluster
+            
 
-        let private provide_cluster_inside_graph
-            name
-            (owner_graph:Graph)
-            =
-            let cluster_id = "cluster_"+owner_graph.id+name
-            {
-                Graph.id = cluster_id
-                parent = Some owner_graph
-                root = owner_graph.root
-                impl = owner_graph.impl.GetOrAddSubgraph(cluster_id); //graphviz needs clusters to have word "cluster" in their name
-            }
-            |> with_attribute "label" name
-
-        
-        let private transform_vertex_into_cluster (vertex:Vertex) =
-            let owner_graph = vertex.parent
-            owner_graph.impl.Delete(vertex.impl)
-            owner_graph|>provide_cluster_inside_graph vertex.id 
-
-
-        let private provide_vertex
+        let provide_vertex
             id
             (owner_node:Node) 
             =
-            let owner_graph = 
-                match owner_node with
-                |Graph graph -> 
-                    graph
-                |Vertex vertex ->
-                    transform_vertex_into_cluster vertex
+            let owner_node, owner_graph = 
+                match owner_node.element_impl with
+                |Cluster parent_graph -> owner_node, parent_graph
+                |Vertex _->(transform_vertex_into_graph owner_node)
+            
+            let vertex_impl = 
+                owner_graph.GetOrAddNode(owner_node.id_impl+id)
+            vertex_impl.SafeSetAttribute("label",id,"")
+            
             {
-                Vertex.id = id
-                parent = owner_graph
-                root = owner_graph.root
-                impl = owner_graph.impl.GetOrAddNode(owner_graph.id+id)
+                Node.id = id
+                Node.id_impl = owner_node.id_impl+id
+                parent = Some owner_node
+                root_impl = owner_node.root_impl
+                element_impl = Vertex vertex_impl
             }
 
-
-        let get_vertex
-            id
-            (owner_node:Node) 
-            =
-            owner_node
-            |>provide_vertex id
-            |>Node.Vertex
-            |>Node.with_attribute "label" id
 
         let with_vertex 
             id
             (node:Node) 
             =
             let vertex = (provide_vertex id node)
-            Node.Graph vertex.parent
+            node
 
 
         let with_edge
-            tail
-            head
-            (graph:Graph) 
+            (tail:Node)
+            (head:Node)
+            (owner_node:Node) 
             =
-            graph.impl.GetOrAddEdge(
-                tail.impl, head.impl, ""
-            )|>ignore
-            graph
+            // owner_node.graph_impl.GetOrAddEdge(
+            //     tail.vertex_impl, head.vertex_impl, ""
+            // )|>ignore
+            owner_node
 
 
         
-
-        
-        let provide_node
-            name
-            (owner_graph:Graph)
-            =
-            let node_id = "cluster_"+owner_graph.id+name
-            {
-                id = node_id
-                parent = owner_graph
-                root = owner_graph.root
-                impl = owner_graph.impl.GetOrAddSubgraph(node_id); //graphviz needs clusters to have word "cluster" in their name
-            }
-            |> with_attribute "label" name
-
-        
-        let save_to_file filename graph=
-            let root = graph.root
+        let save_to_file filename node=
+            let root = node.root_impl
             root.ComputeLayout()
             root.ToSvgFile(filename+".svg")
             root.ToDotFile(filename+".dot")
             root.FreeLayout()
+        
+
+        

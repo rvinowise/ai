@@ -5,7 +5,6 @@ namespace rvinowise.ui.painted
 
     open rvinowise
     open rvinowise.ai
-    open rvinowise.ai.figure
 
     type Vertex =
         struct
