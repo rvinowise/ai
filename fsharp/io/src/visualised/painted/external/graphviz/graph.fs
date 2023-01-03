@@ -61,16 +61,17 @@ namespace rvinowise.ui.infrastructure
             {
                 Graph.nodes=[]
                 root_impl=external_root
-                root={
+                root_node={
                     Node.id = name
                     id_impl = name
                     children=[]
                     parent=None
-                    impl=Vertex (external_root.GetOrAddNode(name))
+                    impl=Cluster (external_root.GetOrAddSubgraph(name))
                 }
-            },
+            }
         
-        
+        let root_node graph =
+            graph.root_node
 
         let private transform_vertex_into_graph 
             (graph:Graph) 
@@ -163,6 +164,11 @@ namespace rvinowise.ui.infrastructure
                 |None->raise (ArgumentException("it's complicated to analyse unfinished clusters without child vertices"))
             |Element.Vertex vertex_impl -> node, vertex_impl
 
+        [<Fact>]
+        let ``lowest child vertex``()=
+            empty
+
+
         let with_edge
             (owner_graph:Graph)
             (head:Node)
@@ -177,7 +183,10 @@ namespace rvinowise.ui.infrastructure
 
 
         
-        let save_to_file filename graph=
+        let save_to_file 
+            filename 
+            graph
+            =
             let root = graph.root_impl
             root.ComputeLayout()
             root.ToSvgFile(filename+".svg")

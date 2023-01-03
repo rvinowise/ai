@@ -28,8 +28,8 @@ namespace rvinowise.ai.ui.painted
             $"appearances of {figures} from {border.start} to {border.finish}"
 
         let fill_batch_with_events
-            events
             (owner_graph: infrastructure.Graph)
+            events
             (batch_cluster: infrastructure.Node)
             =
             events
@@ -60,60 +60,60 @@ namespace rvinowise.ai.ui.painted
         let add_figure_histories
             histories
             graph
-            =
-            histories
-            |>History.combine
-            |>Seq.iter (fun pair->
-                graph.root
-                |>add_next_event_batch graph
-                    pair.Key
-                    pair.Value
-                |>ignore
-            )
-            graph
+            =()
+            // histories
+            // |>History.combine
+            // |>Seq.iter (fun pair->
+            //     graph.root
+            //     |>add_next_event_batch graph
+            //         pair.Key
+            //         pair.Value
+            //     |>ignore
+            // )
+            // graph
 
         
         let as_graph 
             histories 
-            =
-            let description = 
-                histories
-                |>combined_description
+            =()
+            // let description = 
+            //     histories
+            //     |>combined_description
             
-            "unused text"
-            |>infrastructure.Graph.empty
-            |>infrastructure.Graph.with_rectangle_vertices
-            |>infrastructure.Graph.provide_vertex description
-            |>add_figure_histories histories
+            // "unused text"
+            // |>infrastructure.Graph.empty
+            // |>infrastructure.Graph.with_rectangle_vertices
+            // |>infrastructure.Graph.provide_vertex description
+            // |>add_figure_histories histories
         
         
         let as_graph' 
             histories 
-            =
-            let description = 
-                histories
-                |>combined_description
+            =()
+            // let description = 
+            //     histories
+            //     |>combined_description
             
-            let graph = 
-                "unused text"
-                |>infrastructure.Graph.empty
-                |>infrastructure.Graph.with_rectangle_vertices
-                |>infrastructure.Graph.provide_vertex description
+            // let graph = 
+            //     "unused text"
+            //     |>infrastructure.Graph.empty
+            //     |>infrastructure.Graph.root_node
+            //     |>infrastructure.Graph.with_rectangle_vertices
+            //     |>infrastructure.Graph.provide_vertex description
                 
-            graph
-            //|>add_figure_histories histories
-            |>add_next_event_batch 
-                1
-                [Start "a";Start "b";Start "c"]
-            |>add_next_event_batch 
-                2
-                [Start "d";Start "e";Start "f"]
-            |>add_next_event_batch 
-                3
-                [Start "j";Start "o";Start "i"]
-            |>add_next_event_batch 
-                4
-                [Start "j";Start "o";Start "p"]
+            // graph
+            // |>add_next_event_batch 
+            //     1
+            //     [Start "a";Start "b";Start "c"]
+            // |>add_next_event_batch 
+            //     2
+            //     [Start "d";Start "e";Start "f"]
+            // |>add_next_event_batch 
+            //     3
+            //     [Start "j";Start "o";Start "i"]
+            // |>add_next_event_batch 
+            //     4
+            //     [Start "j";Start "o";Start "p"]
 
         
         
