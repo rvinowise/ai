@@ -24,14 +24,15 @@ namespace rvinowise.ui.infrastructure
     type Node={
         id:Node_id
         parent:Node option
-        children: Node seq
+        mutable children: Node seq
 
         id_impl:string
-        impl:Element
+        mutable impl:Element
+        mutable child_node_attr:Map<string, string>
     }
 
     type Graph={
-        nodes: Node seq
+        mutable nodes: Node seq
         root_node: Node
         root_impl: External_root
     }
@@ -57,6 +58,7 @@ namespace rvinowise.ui.infrastructure
         let empty name=
             let external_root:External_root = External_root.CreateNew(name, Graphviz.GraphType.Directed)
             external_root.SafeSetAttribute("rankdir", "LR", "")
+            external_root.SafeSetAttribute("compound", "true", "")
             //external_root.SafeSetAttribute("cluster", "true", "")
             {
                 Graph.nodes=[]
@@ -67,6 +69,7 @@ namespace rvinowise.ui.infrastructure
                     children=[]
                     parent=None
                     impl=Cluster (external_root.GetOrAddSubgraph(name))
+                    child_node_attr=Map.empty
                 }
             }
         
@@ -91,48 +94,63 @@ namespace rvinowise.ui.infrastructure
                             cluster.SafeSetAttribute("cluster", "true", "")
                             cluster
                         |Vertex _ -> raise (ArgumentException("parent must be a graph"))
-                    {
-                        node with 
-                            impl=Cluster new_cluster_impl
-                    },new_cluster_impl
+                    
+                    node.impl <- Cluster new_cluster_impl
+                    new_cluster_impl
                 |None -> raise (ArgumentException("root node shouldn't be turned into a graph"))
-            |Cluster cluster_impl -> node,cluster_impl
+            |Cluster cluster_impl -> cluster_impl
             
         let with_circle_vertices 
             graph
             (node: Node)
             =
-            let node, graph_impl = (transform_vertex_into_graph graph node)
-            graph_impl.SafeSetAttribute("shape", "circle","")
+            let graph_impl = (transform_vertex_into_graph graph node)
+            //graph_impl.SafeSetAttribute("shape", "circle","")
+            node.child_node_attr <- Map.add "shape" "circle" node.child_node_attr
+
             node
 
         let with_rectangle_vertices graph node=
-            //External_node.IntroduceAttribute(node.root_impl, "shape", "rectangle")
-            let node, graph_impl = (transform_vertex_into_graph graph node)
-            graph_impl.SafeSetAttribute("shape", "circle","")
+            let  graph_impl = (transform_vertex_into_graph graph node)
+            //External_node.IntroduceAttribute(graph_impl, "shape", "rectangle")
+            node.child_node_attr <- Map.add "shape" "rectangle" node.child_node_attr
             node
+
+        let write_attributes_to_node 
+            (attr:Map<string, string>) 
+            (node_impl:External_node)
+            =
+            attr
+            |>Seq.iter (fun pair->
+                node_impl.SafeSetAttribute(pair.Key, pair.Value,"")
+            )
+
 
         let provide_vertex
             (owner_graph:Graph)
             (id:Node_id)
             (owner_node:Node) 
             =
-            let owner_node, owner_cluster = 
+            let owner_cluster = 
                 match owner_node.impl with
-                |Cluster parent_cluster -> owner_node, parent_cluster
+                |Cluster parent_cluster -> parent_cluster
                 |Vertex _->(transform_vertex_into_graph owner_graph owner_node)
             
             let vertex_impl = 
                 owner_cluster.GetOrAddNode(owner_node.id_impl+id)
             vertex_impl.SafeSetAttribute("label",id,"")
-            
-            {
+            vertex_impl|>write_attributes_to_node owner_node.child_node_attr
+
+            let new_vertex = {
                 Node.id = id
                 Node.id_impl = owner_node.id_impl+id
                 parent = Some owner_node
                 children=[]
                 impl = Vertex vertex_impl
+                child_node_attr = Map.empty
             }
+            owner_node.children <- owner_node.children|>Seq.append [new_vertex]
+            new_vertex
 
 
         let with_vertex 
@@ -166,8 +184,21 @@ namespace rvinowise.ui.infrastructure
 
         [<Fact>]
         let ``lowest child vertex``()=
-            empty
+            let graph = empty "my graph"
+            
+            let outer_cluster = 
+                graph.root_node
+                |>provide_vertex graph "outer1"
+            
+            let inner_vertex =
+                outer_cluster
+                |>provide_vertex graph "outer2"
+                |>provide_vertex graph "vertex"
 
+            outer_cluster
+            |>lowest_child_vertex
+            |>fst
+            |>should equal inner_vertex
 
         let with_edge
             (owner_graph:Graph)
@@ -176,9 +207,11 @@ namespace rvinowise.ui.infrastructure
             =
             let vertex_tail, tail_impl = lowest_child_vertex tail
             let vertex_head, head_impl = lowest_child_vertex head
-            owner_graph.root_impl.GetOrAddEdge(
+            let edge_impl = owner_graph.root_impl.GetOrAddEdge(
                 tail_impl, head_impl, ""
-            )|>ignore
+            )
+            edge_impl.SafeSetAttribute("ltail",tail.id_impl,"")
+            edge_impl.SafeSetAttribute("lhead",head.id_impl,"")
             tail
 
 

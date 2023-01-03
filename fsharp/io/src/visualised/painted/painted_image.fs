@@ -34,16 +34,16 @@ namespace rvinowise.ai.ui.painted
                 
             let tail=  
                 graph.root_node
+                |>Graph.provide_vertex graph "outer_circles"
                 |>Graph.with_circle_vertices graph
-                |>Graph.provide_vertex graph "outer"
-                //|>Graph.with_vertex graph "b"
-                //|>Graph.with_vertex graph "c"
+                |>Graph.with_vertex graph "b"
+                |>Graph.with_vertex graph "c"
             
             let head =
                 graph.root_node
                 |>Graph.provide_vertex graph "outer2"
-                //|>Graph.with_vertex graph "d"
-                //|>Graph.with_vertex graph "e"
+                |>Graph.with_vertex graph "d"
+                |>Graph.with_vertex graph "e"
             
             tail
             |>Graph.with_edge graph head
