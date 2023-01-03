@@ -37,10 +37,16 @@ namespace rvinowise.ui.infrastructure
         root_impl: External_root
     }
 
+    type Graph_node={
+        mutable graph: Graph
+        mutable node: Node
+    }
+
     [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
     module Graph=
         open Rubjerg
         open System
+        open System.Diagnostics.Contracts
 
         //type private Node = rvinowise.ui.infrastructure.Node
 
@@ -59,62 +65,61 @@ namespace rvinowise.ui.infrastructure
             let external_root:External_root = External_root.CreateNew(name, Graphviz.GraphType.Directed)
             external_root.SafeSetAttribute("rankdir", "LR", "")
             external_root.SafeSetAttribute("compound", "true", "")
-            //external_root.SafeSetAttribute("cluster", "true", "")
+            let root_node={
+                Node.id = name
+                id_impl = name
+                children=[]
+                parent=None
+                impl=Cluster (external_root.GetOrAddSubgraph(name))
+                child_node_attr=Map.empty
+            }
             {
-                Graph.nodes=[]
-                root_impl=external_root
-                root_node={
-                    Node.id = name
-                    id_impl = name
-                    children=[]
-                    parent=None
-                    impl=Cluster (external_root.GetOrAddSubgraph(name))
-                    child_node_attr=Map.empty
+                Graph_node.graph={
+                    Graph.nodes=[]
+                    root_impl=external_root
+                    root_node = root_node
                 }
+                node=root_node
             }
         
         let root_node graph =
             graph.root_node
 
         let private transform_vertex_into_graph 
-            (graph:Graph) 
-            node
+            (graph_node:Graph_node) 
             =
-            match node.impl with
+            match graph_node.node.impl with
             |Vertex vertex -> 
-                match node.parent with
+                match graph_node.node.parent with
                 |Some parent -> 
                     let new_cluster_impl = 
                         match parent.impl with
                         |Cluster parent_cluster ->
-                            graph.root_impl.Delete(vertex)
+                            graph_node.graph.root_impl.Delete(vertex)
                             let cluster = 
-                                parent_cluster.GetOrAddSubgraph(node.id_impl)
-                            cluster.SafeSetAttribute("label", node.id, "")
+                                parent_cluster.GetOrAddSubgraph(graph_node.node.id_impl)
+                            cluster.SafeSetAttribute("label", graph_node.node.id, "")
                             cluster.SafeSetAttribute("cluster", "true", "")
                             cluster
                         |Vertex _ -> raise (ArgumentException("parent must be a graph"))
                     
-                    node.impl <- Cluster new_cluster_impl
+                    graph_node.node.impl <- Cluster new_cluster_impl
                     new_cluster_impl
                 |None -> raise (ArgumentException("root node shouldn't be turned into a graph"))
             |Cluster cluster_impl -> cluster_impl
             
         let with_circle_vertices 
-            graph
-            (node: Node)
+            graph_node
             =
-            let graph_impl = (transform_vertex_into_graph graph node)
-            //graph_impl.SafeSetAttribute("shape", "circle","")
-            node.child_node_attr <- Map.add "shape" "circle" node.child_node_attr
+            let graph_impl = (transform_vertex_into_graph graph_node)
+            graph_node.node.child_node_attr <- Map.add "shape" "circle" graph_node.node.child_node_attr
 
-            node
+            graph_node
 
-        let with_rectangle_vertices graph node=
-            let  graph_impl = (transform_vertex_into_graph graph node)
-            //External_node.IntroduceAttribute(graph_impl, "shape", "rectangle")
-            node.child_node_attr <- Map.add "shape" "rectangle" node.child_node_attr
-            node
+        let with_rectangle_vertices graph_node =
+            let  graph_impl = (transform_vertex_into_graph graph_node)
+            graph_node.node.child_node_attr <- Map.add "shape" "rectangle" graph_node.node.child_node_attr
+            graph_node
 
         let write_attributes_to_node 
             (attr:Map<string, string>) 
@@ -127,53 +132,53 @@ namespace rvinowise.ui.infrastructure
 
 
         let provide_vertex
-            (owner_graph:Graph)
             (id:Node_id)
-            (owner_node:Node) 
+            target
             =
             let owner_cluster = 
-                match owner_node.impl with
+                match target.node.impl with
                 |Cluster parent_cluster -> parent_cluster
-                |Vertex _->(transform_vertex_into_graph owner_graph owner_node)
+                |Vertex _->(transform_vertex_into_graph target)
             
             let vertex_impl = 
-                owner_cluster.GetOrAddNode(owner_node.id_impl+id)
+                owner_cluster.GetOrAddNode(target.node.id_impl+id)
             vertex_impl.SafeSetAttribute("label",id,"")
-            vertex_impl|>write_attributes_to_node owner_node.child_node_attr
+            vertex_impl|>write_attributes_to_node target.node.child_node_attr
 
             let new_vertex = {
                 Node.id = id
-                Node.id_impl = owner_node.id_impl+id
-                parent = Some owner_node
+                Node.id_impl = target.node.id_impl+id
+                parent = Some target.node
                 children=[]
                 impl = Vertex vertex_impl
                 child_node_attr = Map.empty
             }
-            owner_node.children <- owner_node.children|>Seq.append [new_vertex]
-            new_vertex
+            target.node.children <- target.node.children|>Seq.append [new_vertex]
+            {target with node=new_vertex}
 
 
         let with_vertex 
-            graph
             id
-            (node:Node) 
+            target
             =
-            let vertex = (provide_vertex graph id node)
-            node
+            let vertex = (provide_vertex target id)
+            target
+
+        let with_filled_vertex 
+            id
+            (fill_vertex:Graph_node->unit)
+            target
+            =
+            let vertex = provide_vertex target id
+            fill_vertex vertex
+            vertex
 
         let is_vertex_impl node =
             match node.impl with
             |Cluster _ -> false
             |Vertex _ -> true
 
-        // let rec private first_vertex_up_hierarchy node = 
-        //     match node.parent with
-        //     |Element.Cluster cluster_impl -> 
-        //         match node.children|>Seq.tryHead with
-        //         |Some child -> (first_vertex_up_hierarchy child)
-        //         |None->node
-        //     |Element.Vertex vertex_impl -> node, vertex_impl
-            
+       
         let rec private lowest_child_vertex node=
             match node.impl with
             |Element.Cluster cluster_impl -> 
@@ -184,34 +189,34 @@ namespace rvinowise.ui.infrastructure
 
         [<Fact>]
         let ``lowest child vertex``()=
-            let graph = empty "my graph"
             
             let outer_cluster = 
-                graph.root_node
-                |>provide_vertex graph "outer1"
+                "my graph"
+                |>empty
+                |>provide_vertex "outer1"
             
             let inner_vertex =
                 outer_cluster
-                |>provide_vertex graph "outer2"
-                |>provide_vertex graph "vertex"
+                |>provide_vertex "outer2"
+                |>provide_vertex "vertex"
 
-            outer_cluster
+            outer_cluster.node
             |>lowest_child_vertex
             |>fst
             |>should equal inner_vertex
 
         let with_edge
-            (owner_graph:Graph)
-            (head:Node)
-            (tail:Node)
+            (head:Graph_node)
+            (tail:Graph_node)
             =
-            let vertex_tail, tail_impl = lowest_child_vertex tail
-            let vertex_head, head_impl = lowest_child_vertex head
-            let edge_impl = owner_graph.root_impl.GetOrAddEdge(
+            Contract.Requires(head.graph = tail.graph)
+            let vertex_tail, tail_impl = lowest_child_vertex tail.node
+            let vertex_head, head_impl = lowest_child_vertex head.node
+            let edge_impl = head.graph.root_impl.GetOrAddEdge(
                 tail_impl, head_impl, ""
             )
-            edge_impl.SafeSetAttribute("ltail",tail.id_impl,"")
-            edge_impl.SafeSetAttribute("lhead",head.id_impl,"")
+            edge_impl.SafeSetAttribute("ltail",tail.node.id_impl,"")
+            edge_impl.SafeSetAttribute("lhead",head.node.id_impl,"")
             tail
 
 

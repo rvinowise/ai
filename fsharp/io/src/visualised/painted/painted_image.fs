@@ -28,25 +28,25 @@ namespace rvinowise.ai.ui.painted
         
         [<Fact>]
         let ``construct a graph``()=
-            let graph =
+            let root_node =
                 "my graph"
                 |>Graph.empty
                 
             let tail=  
-                graph.root_node
+                root_node
                 |>Graph.provide_vertex graph "outer_circles"
-                |>Graph.with_circle_vertices graph
-                |>Graph.with_vertex graph "b"
-                |>Graph.with_vertex graph "c"
+                |>Graph.with_circle_vertices
+                |>Graph.with_vertex "b"
+                |>Graph.with_vertex "c"
             
             let head =
-                graph.root_node
-                |>Graph.provide_vertex graph "outer2"
-                |>Graph.with_vertex graph "d"
-                |>Graph.with_vertex graph "e"
+                root_node
+                |>Graph.provide_vertex "outer2"
+                |>Graph.with_vertex "d"
+                |>Graph.with_vertex "e"
             
             tail
-            |>Graph.with_edge graph head
+            |>Graph.with_edge head
             |>ignore
 
             graph
