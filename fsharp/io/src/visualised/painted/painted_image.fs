@@ -22,7 +22,10 @@ namespace rvinowise.ai.ui.painted
 
         [<Fact>]//(Skip="ui")
         let ``visualise history``()=
-            [ai.history.example.short_history_with_some_repetitions]
+            [
+                ai.history.example.short_history_with_some_repetitions;
+                ai.history.example.another_history_for_combining_togetner
+            ]
             |>History.as_graph
             |>open_image_of_graph
         

@@ -12,7 +12,7 @@ namespace rvinowise.ai
 
     type Appearance_event=
     |Start of Figure_id
-    |Finish of Figure_id
+    |Finish of Figure_id * Moment
 
 
 namespace rvinowise.ai.history
@@ -60,7 +60,7 @@ namespace rvinowise.ai
                     (Start history.figure)
                 |>extensions.Map.add_by_key
                     interval.finish
-                    (Finish history.figure)
+                    (Finish (history.figure, interval.start))
             ) map
 
         let combine histories =
@@ -110,13 +110,21 @@ namespace rvinowise.ai.history
 
     module example=
         let short_history_with_some_repetitions=
-            built.from_tuples "F" [
+            built.from_tuples "a" [
                     10,15;
                     11,16;
                     15,17;
                     20,20
                 ]
         
+        let another_history_for_combining_togetner=
+            built.from_tuples "b" [
+                    11,12;
+                    12,14;
+                    13,17;
+                    20,24
+                ]
+
         [<Fact>]
         let ``history interval can start from any moment``()=
             short_history_with_some_repetitions.interval
