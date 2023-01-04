@@ -235,9 +235,9 @@ module ``application of stencils``=
             figure.graph.id
             |>infrastructure.Graph.empty
             |>infrastructure.Graph.with_circle_vertices
-            |>infrastructure.Graph.with_vertex "target figure" 
+            |>infrastructure.Graph.with_filled_vertex "target figure" 
                 (painted.Graph.add_graph figure.graph)
-            |>infrastructure.Graph.with_vertex "stencil"
+            |>infrastructure.Graph.with_filled_vertex "stencil"
                 (painted.Graph.add_graph stencil.graph)
             |>painted.image.open_image_of_graph
 

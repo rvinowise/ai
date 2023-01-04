@@ -14,33 +14,31 @@ open rvinowise.ai.ui
 
 let mark_expected_nodes
     (prolongation:Expected_figure_prolongation) 
-    subgraph_id
-    (graph: infrastructure.Node)
+    (node: infrastructure.Node)
     =
     prolongation.expected
     |> Seq.iter (
         fun (vertex) ->
-            graph
-            |>infrastructure.Graph.provide_vertex (subgraph_id+vertex)
+            node
+            |>infrastructure.Graph.provide_vertex vertex
             |>rvinowise.ui.infrastructure.Graph.fill_with_color "red"
             |>ignore
     )
-    graph
+    node
 
 
 let with_expected_prolongation
     name
     (prolongation:Expected_figure_prolongation) 
-    (graph:infrastructure.Node)
+    node
     =
-    graph
+    node
     |>infrastructure.Graph.provide_vertex name
     |>painted.Figure.add_figure prolongation.prolongated
     |>mark_expected_nodes
         prolongation
-        prolongation.prolongated.graph.id
     |>ignore
-    graph
+    node
 
 
 

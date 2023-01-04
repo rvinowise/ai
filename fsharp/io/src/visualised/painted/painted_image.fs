@@ -13,18 +13,18 @@ namespace rvinowise.ai.ui.painted
         
 
         
-        let open_image_of_graph (graph:infrastructure.Graph) =
+        let open_image_of_graph (graph_node:infrastructure.Node) =
             let filename = Directory.GetCurrentDirectory() + "/out"
-            graph|>infrastructure.Graph.save_to_file filename
+            graph_node.graph|>infrastructure.Graph.save_to_file filename
             Process.Start("cmd", $"/c {filename}.svg") |> ignore
             ()
 
 
-        // [<Fact(Skip="ui")>]
-        // let ``visualise history``()=
-        //     [ai.history.example.short_history_with_some_repetitions]
-        //     |>History.as_graph
-        //     |>open_image_of_graph
+        [<Fact>]//(Skip="ui")
+        let ``visualise history``()=
+            [ai.history.example.short_history_with_some_repetitions]
+            |>History.as_graph
+            |>open_image_of_graph
         
         [<Fact>]
         let ``construct a graph``()=
@@ -34,7 +34,7 @@ namespace rvinowise.ai.ui.painted
                 
             let tail=  
                 root_node
-                |>Graph.provide_vertex graph "outer_circles"
+                |>Graph.provide_vertex "outer_circles"
                 |>Graph.with_circle_vertices
                 |>Graph.with_vertex "b"
                 |>Graph.with_vertex "c"
@@ -49,5 +49,5 @@ namespace rvinowise.ai.ui.painted
             |>Graph.with_edge head
             |>ignore
 
-            graph
+            root_node
             |>open_image_of_graph

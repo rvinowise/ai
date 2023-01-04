@@ -29,7 +29,7 @@ namespace rvinowise.ai.ui.painted
 
         let fill_batch_with_events
             events
-            (batch_cluster: infrastructure.Graph_node)
+            (batch_cluster: infrastructure.Node)
             =
             events
             |>Seq.iter (fun (event:Appearance_event) ->
@@ -47,7 +47,7 @@ namespace rvinowise.ai.ui.painted
         let add_next_event_batch 
             (moment:Moment)
             (events: Appearance_event seq)
-            (receptacle: infrastructure.Graph_node)
+            (receptacle: infrastructure.Node)
             =
             receptacle
             |>infrastructure.Graph.with_vertex (string moment)
@@ -56,32 +56,31 @@ namespace rvinowise.ai.ui.painted
 
         let add_figure_histories
             histories
-            graph
-            =()
-            // histories
-            // |>History.combine
-            // |>Seq.iter (fun pair->
-            //     graph.root
-            //     |>add_next_event_batch graph
-            //         pair.Key
-            //         pair.Value
-            //     |>ignore
-            // )
-            // graph
+            node
+            =
+            histories
+            |>History.combine
+            |>Seq.iter (fun pair->
+                node
+                |>add_next_event_batch 
+                    pair.Key
+                    pair.Value
+                |>ignore
+            )
+            node
 
         
         let as_graph 
             histories 
-            =()
-            // let description = 
-            //     histories
-            //     |>combined_description
+            =
+            let description = 
+                histories
+                |>combined_description
             
-            // "unused text"
-            // |>infrastructure.Graph.empty
-            // |>infrastructure.Graph.with_rectangle_vertices
-            // |>infrastructure.Graph.provide_vertex description
-            // |>add_figure_histories histories
+            description
+            |>infrastructure.Graph.empty
+            |>infrastructure.Graph.with_rectangle_vertices
+            |>add_figure_histories histories
         
         
         let as_graph' 

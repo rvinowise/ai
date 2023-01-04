@@ -10,7 +10,7 @@ namespace rvinowise.ai.ui.painted
 
         let add_graph
             (added_graph: ai.Graph)
-            (to_node: infrastructure.Graph_node)
+            (to_node: infrastructure.Node)
             =
             added_graph.edges
             |> Seq.iter (
@@ -36,11 +36,11 @@ namespace rvinowise.ai.ui.painted
 
         let add_figure
             (figure: ai.Figure)
-            (to_node: infrastructure.Graph_node)
+            (to_node: infrastructure.Node)
             =
             figure.graph.edges
             |> Seq.iter (fun edge -> 
-                let tail = 
+                let tail =
                     to_node
                     |>infrastructure.Graph.provide_vertex (edge.tail)
                 
