@@ -176,3 +176,13 @@ module Map =
             |None -> Set.empty
             |>Set.add element
         Map.add key elements map
+
+
+    let getOrDefault key default' (map: Map<_,_>) =
+        match map.TryGetValue key with
+        | true, value -> value
+        | _ -> default'
+
+    let toPairs (map: Map<'Key,'Value>) = 
+        map
+        |>Seq.map(fun pair -> pair.Key, pair.Value)

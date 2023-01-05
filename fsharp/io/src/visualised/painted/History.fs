@@ -1,10 +1,25 @@
 namespace rvinowise.ai.ui.painted
+    open FsUnit
+    open Xunit
 
-
+    open rvinowise
+    open rvinowise.extensions
     open rvinowise.ui
     open rvinowise.ui.infrastructure
     open rvinowise.ai
 
+    type Appearance_event=
+    |Start of Figure_id
+    |Finish of Figure_id * Moment
+
+    type Event_batch = {
+        events: Map<Appearance_event, infrastructure.Node option>
+        node: infrastructure.Node option
+    }
+
+    type Combined_history = {
+        batches: Map<Moment, Event_batch>
+    }
 
     module History =
         
@@ -26,11 +41,71 @@ namespace rvinowise.ai.ui.painted
 
             $"appearances of {figures} from {border.start} to {border.finish}"
 
+        let add_events_to_combined_history 
+            history 
+            (combined_history: Combined_history)
+            //(map: Map<Moment, Set<Appearance_event> >)
+            = 
+            history.appearances
+            |>Seq.fold (fun (combined:Combined_history) interval->
+                {combined_history with 
+                    batches=
+                        let start_batch = 
+                            combined_history.batches
+                            |>Map.getOrDefault interval.start {events=Map.empty;node=None}
+                        let start_batch = {
+                            start_batch with events=start_batch.events
+                                            |>Map.add (Start history.figure) None 
+                        }    
+                        
+                        let end_batch = 
+                            combined_history.batches|>
+                            Map.getOrDefault interval.finish {events=Map.empty;node=None}
+                        let end_batch = {
+                            end_batch with events=end_batch.events
+                                            |>Map.add (Finish (history.figure, interval.start)) None 
+                        } 
+                        combined_history.batches
+                        |>Map.add interval.start start_batch
+                        |>Map.add interval.finish end_batch
+                }
+            ) combined_history
 
-        let get_start_of_appearance 
-            appeared_figure
-            moment
-            
+        let combine histories =
+            histories
+            |>Seq.fold (fun combined history->
+                add_events_to_combined_history history combined
+            ) {batches=Map.empty}
+
+        [<Fact>]
+        let ``combine figure histories``()=
+            let history_of_a = history.built.from_tuples "a" [
+                0,1; 2,4
+            ]
+            let history_of_b = history.built.from_tuples "b" [
+                0,2; 4,4
+            ]
+            [history_of_a; history_of_b]
+            |>combine 
+            |>should equal Map[
+                0,[
+                    Start "a";
+                    Start "b"
+                ];
+                1,[
+                    Finish ("a",0)
+                ];
+                2,[
+                    Start "a";
+                    Finish ("b",0)
+                ];
+                4,[
+                    Start "b";
+                    Finish ("a",2);
+                    Finish ("b",4)
+                ]
+            ]
+
 
         let connect_finish_to_start
             start_node
@@ -39,67 +114,82 @@ namespace rvinowise.ai.ui.painted
             start_node
             |>infrastructure.Graph.with_edge finish_node
 
-        let fill_batch_with_events
-            (created_starts: Map<Moment, seq<infrastructure.Node> >)
-            events
-            (batch_cluster: infrastructure.Node)
+        let represent_batch_graphically
+            (batch: Event_batch)
+            (painted_batch: infrastructure.Node)
             =
-            events
-            |>Seq.iter (fun (event:Appearance_event) ->
-                let new_vertex = 
-                    batch_cluster
-                    |>infrastructure.Graph.provide_vertex (
-                        match event with
-                        |Start figure -> "("+figure
-                        |Finish (figure, _) -> figure+")"
-                    )
-                match event with
-                |Start figure ->
-                    created_starts = created_starts|>extensions.Map.add_by_key 
-                |Finish (figure, start_moment) ->
-                    let start_vertex = get_start_of_appearance new_vertex.data.id
-                    connect_finish_to_start new_vertex
+            {batch with
+                events=
+                batch.events
+                |>Seq.map (fun pair->pair.Key, pair.Value)
+                |>Seq.map (fun (event, vertex) ->
+                        (
+                            event,
+                            Some( 
+                                painted_batch
+                                |>infrastructure.Graph.provide_vertex (
+                                    match event with
+                                    |Start figure -> "("+figure
+                                    |Finish (figure, _) -> figure+")"
+                                )
+                            )
+                        )
+                )
+                |>Map
+            }
 
-            )
-            batch_cluster
-
-        let add_event_batch 
+        let add_event_batches 
             (receptacle: infrastructure.Node)
-            (moment:Moment,
-            events: Appearance_event seq)
+            (combined_history: Combined_history)
             =
-            receptacle
-            |>infrastructure.Graph.provide_vertex (string moment)
-            |>fill_batch_with_events events
+            {combined_history with
+                batches =
+                combined_history.batches
+                |>Seq.map(fun pair->pair.Key, pair.Value)
+                |>Seq.map (fun (moment, batch) ->
+                    (
+                        moment,
+                        receptacle
+                        |>infrastructure.Graph.provide_vertex (string moment)
+                        |>represent_batch_graphically batch
+                    )
+                )
+                |>Map
+            }
 
         let connect_start_to_finish 
-            histories
-            (start_node:infrastructure.Node)
+            (history: Combined_history)
             =
+            history.batches
+            |>
             node.data.children
             |>Seq.map
             |>infrastructure.Graph.provide_vertex (string moment)
 
-        let connect_event_batches
-            (tail, head)
+        let connect_two_batches
+            start finish
             =
-            tail
-            |>infrastructure.Graph.with_edge head
-            |>ignore
+            start.batch
+            |>infrastructure.Graph.with_edge finish.batch
+
+        let connect_event_batches
+            (history: Combined_history)
+            =
+            history.batches
+            |>extensions.Map.toPairs
+            |>Seq.sort
+            |>Seq.pairwise
+            ||>connect_two_batches
 
         let add_figure_histories
             histories
             node
             =
             histories
-            |>History.combine
-            |>Seq.map (fun pair->pair.Key,pair.Value)
-            |>Seq.map (add_event_batch 
-                node
-            )
-            |>Seq.map (connect_start_to_finish histories)
-            |>Seq.pairwise
-            |>Seq.iter (connect_event_batches)
+            |>combine
+            |>add_event_batches node
+            |>connect_start_to_finish
+            |>connect_event_batches
             node
 
         
@@ -116,33 +206,6 @@ namespace rvinowise.ai.ui.painted
             |>add_figure_histories histories
         
         
-        let as_graph' 
-            histories 
-            =()
-            // let description = 
-            //     histories
-            //     |>combined_description
-            
-            // let graph = 
-            //     "unused text"
-            //     |>infrastructure.Graph.empty
-            //     |>infrastructure.Graph.root_node
-            //     |>infrastructure.Graph.with_rectangle_vertices
-            //     |>infrastructure.Graph.provide_vertex description
-                
-            // graph
-            // |>add_next_event_batch 
-            //     1
-            //     [Start "a";Start "b";Start "c"]
-            // |>add_next_event_batch 
-            //     2
-            //     [Start "d";Start "e";Start "f"]
-            // |>add_next_event_batch 
-            //     3
-            //     [Start "j";Start "o";Start "i"]
-            // |>add_next_event_batch 
-            //     4
-            //     [Start "j";Start "o";Start "p"]
 
         
         
