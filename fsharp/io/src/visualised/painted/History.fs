@@ -40,6 +40,7 @@ namespace rvinowise.ai.ui.painted
             |>infrastructure.Graph.with_edge finish_node
 
         let fill_batch_with_events
+            (created_starts: Map<Moment, seq<infrastructure.Node> >)
             events
             (batch_cluster: infrastructure.Node)
             =
@@ -53,7 +54,8 @@ namespace rvinowise.ai.ui.painted
                         |Finish (figure, _) -> figure+")"
                     )
                 match event with
-                |Start figure ->()
+                |Start figure ->
+                    created_starts = created_starts|>extensions.Map.add_by_key 
                 |Finish (figure, start_moment) ->
                     let start_vertex = get_start_of_appearance new_vertex.data.id
                     connect_finish_to_start new_vertex
