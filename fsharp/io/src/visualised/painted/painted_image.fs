@@ -20,6 +20,8 @@ namespace rvinowise.ai.ui.painted
             ()
 
 
+        
+        
         [<Fact>]//(Skip="ui")
         let ``visualise history``()=
             [
@@ -29,7 +31,7 @@ namespace rvinowise.ai.ui.painted
             |>History.as_graph
             |>open_image_of_graph
         
-        [<Fact>]
+        [<Fact>]//(Skip="ui")
         let ``construct a graph``()=
             let root_node =
                 "my graph"
@@ -54,3 +56,9 @@ namespace rvinowise.ai.ui.painted
 
             root_node
             |>open_image_of_graph
+        
+        
+        [<Fact>]
+        let ``two functions opening the same filename``()=
+            ``visualise history``()
+            ``construct a graph``()

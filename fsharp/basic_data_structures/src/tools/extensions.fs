@@ -186,3 +186,10 @@ module Map =
     let toPairs (map: Map<'Key,'Value>) = 
         map
         |>Seq.map(fun pair -> pair.Key, pair.Value)
+
+exception LackingDataException of string
+module Option=
+    let value_exc (option: 'T option) =
+        match option with
+        |Some value -> value
+        |None -> raise (LackingDataException "the option must have a value, but it's None") 
