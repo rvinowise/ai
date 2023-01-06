@@ -219,7 +219,7 @@ namespace rvinowise.ui.infrastructure
             let vertex_tail, tail_impl = lowest_child_vertex tail.data
             let vertex_head, head_impl = lowest_child_vertex head.data
             let edge_impl = head.graph.root_impl.GetOrAddEdge(
-                tail_impl, head_impl, ""
+                tail_impl, head_impl, $"{tail.data.id_impl}->{head.data.id_impl}"
             )
             edge_impl.SafeSetAttribute("ltail",tail.data.id_impl,"")
             edge_impl.SafeSetAttribute("lhead",head.data.id_impl,"")

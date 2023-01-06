@@ -25,6 +25,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\provided_data\provided_data.fsproj" />
+
+    <!-- graphviz wrapper -->
+    <!-- <ProjectReference Include="..\..\Graphviz.NetWrapper\GraphvizWrapper\GraphvizWrapper.vsxproj" />
+    <ProjectReference Include="..\..\Graphviz.NetWrapper\Rubjerg.Graphviz\Rubjerg.Graphviz.csproj" /> -->
   </ItemGroup>
 
   <ItemGroup>

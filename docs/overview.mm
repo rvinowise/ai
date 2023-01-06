@@ -140,60 +140,6 @@
 </hook>
 <node TEXT="type: project" POSITION="left" ID="ID_683065071" CREATED="1631768151045" MODIFIED="1632652341983"/>
 <node TEXT="bookmarks: done" STYLE_REF="done" POSITION="left" ID="ID_1334217373" CREATED="1632064659870" MODIFIED="1632136937093"/>
-<node TEXT="legend" POSITION="left" ID="ID_49802336" CREATED="1632692624170" MODIFIED="1632692627877">
-<node TEXT="icons" ID="ID_143750967" CREATED="1632698164973" MODIFIED="1632698166792">
-<node TEXT="what it is" ID="ID_643462232" CREATED="1632844495015" MODIFIED="1633006313614">
-<icon BUILTIN="box_inscribed"/>
-</node>
-<node TEXT="performed actions" ID="ID_1227376260" CREATED="1632692808705" MODIFIED="1632844518681" ICON_SIZE="12 pt">
-<icon BUILTIN="cog"/>
-</node>
-<node TEXT="part of its parent" ID="ID_1359020773" CREATED="1633009100181" MODIFIED="1633009170130">
-<icon BUILTIN="puzzle_piece"/>
-</node>
-<node TEXT="implemented as a class" ID="ID_824684101" CREATED="1632692658197" MODIFIED="1633006306693" ICON_SIZE="12 pt">
-<icon BUILTIN="present"/>
-</node>
-<node TEXT="interface" ID="ID_458974352" CREATED="1633025618126" MODIFIED="1633025653417">
-<icon BUILTIN="interface_arrows"/>
-</node>
-<node ID="ID_1543775213" CREATED="1633009004917" MODIFIED="1633009190187">
-<icon BUILTIN="puzzle_piece"/>
-<icon BUILTIN="cog"/>
-<icon BUILTIN="present"/>
-<richcontent TYPE="NODE">
-
-<html>
-  <head>
-    
-  </head>
-  <body>
-    <p>
-      <b>part</b>&nbsp;of its parent's <b>functionality</b>&nbsp;implemented as a <b>class</b>
-    </p>
-  </body>
-</html>
-</richcontent>
-</node>
-<node TEXT="parent" ID="ID_1260762948" CREATED="1633025370106" MODIFIED="1633025372725">
-<node TEXT="a part" ID="ID_1132425494" CREATED="1633024491557" MODIFIED="1633025537405">
-<icon BUILTIN="puzzle_piece"/>
-<icon BUILTIN="cog"/>
-<node TEXT="action of parent, using the part" ID="ID_1865617723" CREATED="1633025389610" MODIFIED="1633025557880"/>
-</node>
-<node TEXT="an external object" ID="ID_914719038" CREATED="1633024823886" MODIFIED="1633025584290">
-<icon BUILTIN="cog"/>
-<icon BUILTIN="puzzle_piece"/>
-<node TEXT="action of parent, using the object" ID="ID_329143368" CREATED="1633025415670" MODIFIED="1633025570749"/>
-</node>
-</node>
-</node>
-<node TEXT="abbreviations" ID="ID_57577033" CREATED="1632698169568" MODIFIED="1632698172983">
-<node TEXT="doc: documentation" ID="ID_1233211989" CREATED="1632698174304" MODIFIED="1632698180892"/>
-<node TEXT="impl: implementation" ID="ID_425363286" CREATED="1632698181664" MODIFIED="1632698185978"/>
-<node TEXT="gui: user (human) interface" ID="ID_50351405" CREATED="1652702076147" MODIFIED="1652702099531"/>
-</node>
-</node>
 <node TEXT="process" POSITION="right" ID="ID_393996128" CREATED="1633181155567" MODIFIED="1633181347389" COLOR="#7f7f7f">
 <font BOLD="true"/>
 <node STYLE_REF="list item" ID="ID_913201831" CREATED="1633181351387" MODIFIED="1633221846453" COLOR="#000000" BACKGROUND_COLOR="#ffffff"><richcontent TYPE="NODE">
@@ -460,11 +406,17 @@
 </node>
 <node ID="ID_1796785334" TREE_ID="ID_1891842202"/>
 </node>
-<node TEXT="unity" ID="ID_550676609" CREATED="1632698228404" MODIFIED="1652327055247" LINK="../Assets/scripts/unity_ai/Sequence_finder/">
-<icon BUILTIN="present"/>
-</node>
 <node TEXT="animated explanations" ID="ID_381909901" CREATED="1658182054809" MODIFIED="1658188337705" LINK="modules/find%20sequences/">
 <icon BUILTIN="book_open"/>
+</node>
+<node TEXT="c++" ID="ID_983316736" CREATED="1672993437481" MODIFIED="1672993504617" LINK="../modules/finding_sequences/">
+<icon BUILTIN="present"/>
+<node TEXT="f# wrapper" LOCALIZED_STYLE_REF="default" ID="ID_375675934" CREATED="1672993403241" MODIFIED="1672994511881" LINK="../fsharp/modules/finding_sequences/" COLOR="#000000" BACKGROUND_COLOR="#ffffff">
+<icon BUILTIN="present"/>
+</node>
+</node>
+<node TEXT="unity" ID="ID_550676609" CREATED="1632698228404" MODIFIED="1652327055247" LINK="../Assets/scripts/unity_ai/Sequence_finder/">
+<icon BUILTIN="present"/>
 </node>
 </node>
 <node TEXT="figure finder" LOCALIZED_STYLE_REF="default" ID="ID_1255975763" CREATED="1633110650941" MODIFIED="1633180939221" COLOR="#000000" BACKGROUND_COLOR="#ffffff">
@@ -522,6 +474,16 @@
 <node TEXT="algorithm of stencil application" LOCALIZED_STYLE_REF="default" ID="ID_1267499080" CREATED="1632698228404" MODIFIED="1658248717024" LINK="../Assets/scripts/unity_ai/Stencil_applier/algorithm%20of%20stencil%20application.png" COLOR="#000000" BACKGROUND_COLOR="#ffffff">
 <icon BUILTIN="book_open"/>
 </node>
+<node TEXT="f#" LOCALIZED_STYLE_REF="default" ID="ID_677528210" CREATED="1672993946516" MODIFIED="1672994504995" LINK="../fsharp/modules/applying_stencils/" COLOR="#000000" BACKGROUND_COLOR="#ffffff">
+<icon BUILTIN="present"/>
+<node TEXT="enumerating combinations" ID="ID_361701911" CREATED="1672993864615" MODIFIED="1672993891553">
+<icon BUILTIN="puzzle_piece"/>
+<icon BUILTIN="present"/>
+<node TEXT="c#" ID="ID_1496762197" CREATED="1672993844640" MODIFIED="1672993879208" LINK="../modules/applying_stencils/enumerating_combinations/">
+<icon BUILTIN="present"/>
+</node>
+</node>
+</node>
 <node TEXT="unity" ID="ID_121660820" CREATED="1632698228404" MODIFIED="1652327397658" LINK="../Assets/scripts/unity_ai/Stencil_applier/">
 <icon BUILTIN="present"/>
 </node>
@@ -556,7 +518,27 @@
 </node>
 <node TEXT="gui" ID="ID_648302623" CREATED="1652701806811" MODIFIED="1652702542658">
 <icon BUILTIN="emoji-1F441"/>
-<node TEXT="unity" ID="ID_1915337885" CREATED="1652702148999" MODIFIED="1652702152002">
+<node TEXT="f#" ID="ID_1519993343" CREATED="1672994793248" MODIFIED="1672994798885">
+<node TEXT="io" ID="ID_1596013576" CREATED="1672994846275" MODIFIED="1672994846276" LINK="../fsharp/io/">
+<node TEXT="xunit" LOCALIZED_STYLE_REF="default" ID="ID_1331508045" CREATED="1672995005120" MODIFIED="1672996058669" COLOR="#000000" BACKGROUND_COLOR="#ffffff">
+<icon BUILTIN="connection/cross_reference"/>
+<icon BUILTIN="puzzle_piece"/>
+<node TEXT="unit tests allow running modules without integrating them into an app" ID="ID_1123011872" CREATED="1672995045607" MODIFIED="1672996085554">
+<icon BUILTIN="good"/>
+</node>
+</node>
+<node TEXT="combined history" ID="ID_234217125" CREATED="1672995605057" MODIFIED="1672995631474" LINK="../fsharp/io/src/visualised/painted/History.fs">
+<icon BUILTIN="present"/>
+</node>
+<node TEXT="graph visualisation" ID="ID_885971602" CREATED="1672995787272" MODIFIED="1672996024604" LINK="../fsharp/io/src/visualised/painted/external/">
+<node TEXT="Rubjerg.Graphviz" LOCALIZED_STYLE_REF="default" ID="ID_1612077793" CREATED="1672995866872" MODIFIED="1672996074155" LINK="https://github.com/Rubjerg/Graphviz.NetWrapper" COLOR="#000000" BACKGROUND_COLOR="#ffffff">
+<icon BUILTIN="connection/cross_reference"/>
+<icon BUILTIN="puzzle_piece"/>
+</node>
+</node>
+</node>
+</node>
+<node TEXT="unity" LOCALIZED_STYLE_REF="default" ID="ID_1915337885" CREATED="1652702148999" MODIFIED="1672995517711" COLOR="#000000" BACKGROUND_COLOR="#ffffff">
 <node TEXT="mode selector" ID="ID_605733536" CREATED="1652702063809" MODIFIED="1653091149221">
 <icon BUILTIN="present"/>
 <node TEXT="activates certain gui modules" LOCALIZED_STYLE_REF="default" ID="ID_1426347125" CREATED="1652704317628" MODIFIED="1652704366833" COLOR="#000000" BACKGROUND_COLOR="#ffffff">
@@ -732,8 +714,16 @@
 <icon BUILTIN="puzzle_piece"/>
 <font ITALIC="true"/>
 </node>
-<node TEXT="unity" ID="ID_324999900" CREATED="1633007090240" MODIFIED="1633007128138" LINK="file:/D:/prj/unity_ai/Assets/scripts/unity_ai/Figure/Figure_appearance.cs">
+<node TEXT="impl" ID="ID_685337980" CREATED="1672996946708" MODIFIED="1672996949625">
 <icon BUILTIN="present"/>
+<node TEXT="unity" LOCALIZED_STYLE_REF="default" ID="ID_324999900" CREATED="1633007090240" MODIFIED="1672996953608" LINK="file:/D:/prj/unity_ai/Assets/scripts/unity_ai/Figure/Figure_appearance.cs" COLOR="#000000" BACKGROUND_COLOR="#ffffff"/>
+<node TEXT="f#" ID="ID_1821133170" CREATED="1672996954479" MODIFIED="1672998163575">
+<icon BUILTIN="connection"/>
+<node TEXT="Interval" ID="ID_1869253889" CREATED="1672998044697" MODIFIED="1672998148447">
+<icon BUILTIN="present"/>
+<node TEXT="basic representation, with the higher logic spread across different functions" LOCALIZED_STYLE_REF="default" ID="ID_993318251" CREATED="1672998065589" MODIFIED="1672998142335" COLOR="#000000" BACKGROUND_COLOR="#ffffff"/>
+</node>
+</node>
 </node>
 </node>
 <node TEXT="base signal" LOCALIZED_STYLE_REF="default" ID="ID_16202785" CREATED="1632667640489" MODIFIED="1633052652234">
@@ -753,6 +743,14 @@
 </node>
 <node TEXT="a sequence of actions as a figure" LOCALIZED_STYLE_REF="default" ID="ID_1829914945" CREATED="1632652612940" MODIFIED="1633003600645">
 <icon BUILTIN="box_inscribed"/>
+</node>
+<node TEXT="stores newly found consequences" LOCALIZED_STYLE_REF="default" ID="ID_1797044550" CREATED="1632660876585" MODIFIED="1632843447303">
+<icon BUILTIN="cog"/>
+</node>
+<node TEXT="impl" ID="ID_1126502242" CREATED="1672996604232" MODIFIED="1672996606694">
+<icon BUILTIN="present"/>
+<node TEXT="unity" LOCALIZED_STYLE_REF="default" ID="ID_1322309816" CREATED="1632857904649" MODIFIED="1652393054346" LINK="../Assets/scripts/unity_ai/Node/Figure" COLOR="#000000" BACKGROUND_COLOR="#ffffff">
+<icon BUILTIN="present"/>
 <node TEXT="pairs of pairs etc..." ID="ID_843370968" CREATED="1633029120331" MODIFIED="1633029203942">
 <icon BUILTIN="box_inscribed"/>
 <node TEXT="for debug" ID="ID_140862798" CREATED="1633029442742" MODIFIED="1633029445004"/>
@@ -761,11 +759,7 @@
 <icon BUILTIN="box_inscribed"/>
 </node>
 </node>
-<node TEXT="stores newly found consequences" LOCALIZED_STYLE_REF="default" ID="ID_1797044550" CREATED="1632660876585" MODIFIED="1632843447303">
-<icon BUILTIN="cog"/>
-</node>
-<node TEXT="unity" LOCALIZED_STYLE_REF="default" ID="ID_1322309816" CREATED="1632857904649" MODIFIED="1652393054346" LINK="../Assets/scripts/unity_ai/Node/Figure" COLOR="#000000" BACKGROUND_COLOR="#ffffff">
-<icon BUILTIN="present"/>
+<node TEXT="can be implemented as the complex figure" ID="ID_835092495" CREATED="1672996565724" MODIFIED="1672996754352"/>
 </node>
 </node>
 <node TEXT="complex figure" LOCALIZED_STYLE_REF="default" ID="ID_456447488" CREATED="1632652436242" MODIFIED="1652344814357" COLOR="#000000" BACKGROUND_COLOR="#ffffff">
@@ -820,6 +814,7 @@
 <node TEXT="impl" ID="ID_336158823" CREATED="1632851482734" MODIFIED="1633005920889">
 <icon BUILTIN="present"/>
 <node TEXT="unity" ID="ID_68276127" CREATED="1632851490126" MODIFIED="1652653527550" LINK="../Assets/scripts/unity_ai/Node/Figure"/>
+<node TEXT="f#" ID="ID_673341646" CREATED="1672996515346" MODIFIED="1672996520637" LINK="../fsharp/basic_data_structures/src/Graph/Figure/"/>
 </node>
 <node TEXT="doc" ID="ID_730844926" CREATED="1632857696939" MODIFIED="1633005948197">
 <icon BUILTIN="book_open"/>
@@ -841,6 +836,65 @@
 <icon BUILTIN="book_open"/>
 <node TEXT="general" ID="ID_23924885" CREATED="1632857656131" MODIFIED="1667818312159" LINK="Stencils/"/>
 </node>
+<node TEXT="impl" ID="ID_1269052540" CREATED="1672996454027" MODIFIED="1672996457403">
+<icon BUILTIN="present"/>
+<node TEXT="f#" ID="ID_1657121670" CREATED="1672996493122" MODIFIED="1672996498230" LINK="../fsharp/basic_data_structures/src/Graph/Stencil/"/>
+</node>
+</node>
+</node>
+<node TEXT="legend" POSITION="right" ID="ID_49802336" CREATED="1632692624170" MODIFIED="1672994032199" BACKGROUND_COLOR="#eeeeee">
+<icon BUILTIN="group"/>
+<node TEXT="icons" ID="ID_143750967" CREATED="1632698164973" MODIFIED="1632698166792">
+<node TEXT="what it is" ID="ID_643462232" CREATED="1632844495015" MODIFIED="1633006313614">
+<icon BUILTIN="box_inscribed"/>
+</node>
+<node TEXT="performed actions" ID="ID_1227376260" CREATED="1632692808705" MODIFIED="1632844518681" ICON_SIZE="12 pt">
+<icon BUILTIN="cog"/>
+</node>
+<node TEXT="part of its parent" ID="ID_1359020773" CREATED="1633009100181" MODIFIED="1633009170130">
+<icon BUILTIN="puzzle_piece"/>
+</node>
+<node TEXT="implemented as a class" ID="ID_824684101" CREATED="1632692658197" MODIFIED="1633006306693" ICON_SIZE="12 pt">
+<icon BUILTIN="present"/>
+</node>
+<node TEXT="interface" ID="ID_458974352" CREATED="1633025618126" MODIFIED="1633025653417">
+<icon BUILTIN="interface_arrows"/>
+</node>
+<node ID="ID_1543775213" CREATED="1633009004917" MODIFIED="1633009190187">
+<icon BUILTIN="puzzle_piece"/>
+<icon BUILTIN="cog"/>
+<icon BUILTIN="present"/>
+<richcontent TYPE="NODE">
+
+<html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      <b>part</b>&nbsp;of its parent's <b>functionality</b>&nbsp;implemented as a <b>class</b>
+    </p>
+  </body>
+</html>
+</richcontent>
+</node>
+<node TEXT="parent" ID="ID_1260762948" CREATED="1633025370106" MODIFIED="1633025372725">
+<node TEXT="a part" ID="ID_1132425494" CREATED="1633024491557" MODIFIED="1633025537405">
+<icon BUILTIN="puzzle_piece"/>
+<icon BUILTIN="cog"/>
+<node TEXT="action of parent, using the part" ID="ID_1865617723" CREATED="1633025389610" MODIFIED="1633025557880"/>
+</node>
+<node TEXT="an external object" ID="ID_914719038" CREATED="1633024823886" MODIFIED="1633025584290">
+<icon BUILTIN="cog"/>
+<icon BUILTIN="puzzle_piece"/>
+<node TEXT="action of parent, using the object" ID="ID_329143368" CREATED="1633025415670" MODIFIED="1633025570749"/>
+</node>
+</node>
+</node>
+<node TEXT="abbreviations" ID="ID_57577033" CREATED="1632698169568" MODIFIED="1632698172983">
+<node TEXT="doc: documentation" ID="ID_1233211989" CREATED="1632698174304" MODIFIED="1632698180892"/>
+<node TEXT="impl: implementation" ID="ID_425363286" CREATED="1632698181664" MODIFIED="1632698185978"/>
+<node TEXT="gui: user (human) interface" ID="ID_50351405" CREATED="1652702076147" MODIFIED="1652702099531"/>
 </node>
 </node>
 </node>

@@ -14,9 +14,9 @@ namespace rvinowise.ai.ui.painted
 
         
         let open_image_of_graph (graph_node:infrastructure.Node) =
-            let filename = Directory.GetCurrentDirectory() + "/out"
+            let filename = Directory.GetCurrentDirectory() + $"/{graph_node.data.id}"
             graph_node.graph|>infrastructure.Graph.save_to_file filename
-            Process.Start("cmd", $"/c {filename}.svg") |> ignore
+            Process.Start("cmd", $"/c \"{filename}.svg\"") |> ignore
             ()
 
 
