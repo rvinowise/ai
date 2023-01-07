@@ -8,7 +8,7 @@
         <attribute_value VALUE="https://www.youtube.com/shorts/66t2mLXtj9E?&amp;ab_channel=THESTRAIGHTPATH"/>
     </attribute_name>
 </attribute_registry>
-<node TEXT="ai" LOCALIZED_STYLE_REF="AutomaticLayout.level.root" FOLDED="false" ID="ID_696401721" CREATED="1610381621824" MODIFIED="1632652331747"><hook NAME="MapStyle" zoom="0.888">
+<node TEXT="ai" LOCALIZED_STYLE_REF="AutomaticLayout.level.root" FOLDED="false" ID="ID_696401721" CREATED="1610381621824" MODIFIED="1632652331747"><hook NAME="MapStyle" zoom="1.2">
     <properties show_icon_for_attributes="true" edgeColorConfiguration="#ff3333ff,#33ff00ff,#ffcc33ff" show_notes_in_map="false" show_note_icons="false" fit_to_viewport="false"/>
 
 <map_styles>
@@ -222,7 +222,7 @@
 </html>
 </richcontent>
 <node TEXT="what is similar between all intervals leading to Good?" ID="ID_1762737923" CREATED="1633216410862" MODIFIED="1633216444298">
-<node ID="ID_70683288" CREATED="1633216703050" MODIFIED="1633216722000">
+<node ID="ID_70683288" CREATED="1633216703050" MODIFIED="1673046337332">
 <icon BUILTIN="box_inscribed"/>
 <richcontent TYPE="NODE">
 
@@ -232,10 +232,11 @@
   </head>
   <body>
     <p>
-      <b>what</b>&nbsp;leads to Good?
+      <i>what</i>&nbsp;leads to Good?
     </p>
   </body>
 </html>
+
 </richcontent>
 </node>
 </node>
@@ -244,14 +245,15 @@
 <node TEXT="performance: Sequences are easy to find" ID="ID_635659040" CREATED="1633212111010" MODIFIED="1652326181045">
 <icon BUILTIN="good"/>
 </node>
-<node TEXT="Sequence_finder" ID="ID_1279391488" CREATED="1633213198538" MODIFIED="1652325962043">
+<node TEXT="sequence finder" ID="ID_1279391488" CREATED="1633213198538" MODIFIED="1673046904255">
 <icon BUILTIN="puzzle_piece"/>
 </node>
-<node TEXT="History" ID="ID_1294371949" CREATED="1633213225176" MODIFIED="1633214011132">
+<node TEXT="history" ID="ID_1294371949" CREATED="1633213225176" MODIFIED="1673046909932">
 <icon BUILTIN="interface_arrows"/>
 <icon BUILTIN="puzzle_piece"/>
 </node>
-<node TEXT="Figure_storage" ID="ID_1922783392" CREATED="1633213283601" MODIFIED="1652325967334">
+<node TEXT="figure storage" ID="ID_1922783392" CREATED="1633213283601" MODIFIED="1673047412555">
+<icon BUILTIN="useless"/>
 <icon BUILTIN="output"/>
 <icon BUILTIN="puzzle_piece"/>
 </node>
@@ -284,7 +286,7 @@
 </node>
 </node>
 </node>
-<node STYLE_REF="list item" ID="ID_775536893" CREATED="1633217807474" MODIFIED="1652326445948"><richcontent TYPE="NODE">
+<node STYLE_REF="list item" ID="ID_775536893" CREATED="1633217807474" MODIFIED="1673047491292"><richcontent TYPE="NODE">
 
 <html>
   <head>
@@ -292,10 +294,11 @@
   </head>
   <body>
     <p>
-      build <b>imaginary</b>&nbsp;Intervals
+      build <b>imaginary</b>&nbsp;history intervals
     </p>
   </body>
 </html>
+
 </richcontent>
 <node ID="ID_488025138" CREATED="1633218781284" MODIFIED="1633221329946"><richcontent TYPE="NODE">
 
@@ -369,13 +372,23 @@
 </node>
 <node TEXT="sequence_finder" ID="ID_831801661" CREATED="1632674343840" MODIFIED="1652327079304">
 <icon BUILTIN="present"/>
-<node TEXT="History interval" LOCALIZED_STYLE_REF="default" ID="ID_1804311470" CREATED="1632696515597" MODIFIED="1633110369279" COLOR="#000000" BACKGROUND_COLOR="#ffffff">
+<node TEXT="history" ID="ID_672497217" CREATED="1673047899906" MODIFIED="1673047906993">
 <icon BUILTIN="input"/>
-<node TEXT="finds existing figures from their Actions" LOCALIZED_STYLE_REF="default" ID="ID_998272487" CREATED="1633023743881" MODIFIED="1641509760814" COLOR="#000000" BACKGROUND_COLOR="#ffffff"/>
+<node TEXT="finds figure appearances from time moments" LOCALIZED_STYLE_REF="default" ID="ID_998272487" CREATED="1633023743881" MODIFIED="1673052745362" COLOR="#000000" BACKGROUND_COLOR="#ffffff">
+<icon BUILTIN="cog"/>
 </node>
-<node LOCALIZED_STYLE_REF="default" ID="ID_494090088" CREATED="1632696515597" MODIFIED="1633178429106" COLOR="#666666" BACKGROUND_COLOR="#ffffff">
-<icon BUILTIN="input"/>
-<icon BUILTIN="question"/>
+<node TEXT="two overlapping historiy intervals of different figures" LOCALIZED_STYLE_REF="default" ID="ID_1790584575" CREATED="1673047632103" MODIFIED="1673054292682" COLOR="#000000" BACKGROUND_COLOR="#ffffff">
+<icon BUILTIN="control/type_of_parent"/>
+<node TEXT="to find repeated pairs" ID="ID_1159060041" CREATED="1673047815237" MODIFIED="1673047852616"/>
+<node TEXT="f# c++" ID="ID_1844990719" CREATED="1673054119577" MODIFIED="1673054160266">
+<icon BUILTIN="connection"/>
+</node>
+</node>
+<node TEXT="History interval" LOCALIZED_STYLE_REF="default" ID="ID_1804311470" CREATED="1632696515597" MODIFIED="1673054131259" COLOR="#000000" BACKGROUND_COLOR="#ffffff">
+<icon BUILTIN="control/type_of_parent"/>
+</node>
+<node LOCALIZED_STYLE_REF="default" ID="ID_494090088" CREATED="1632696515597" MODIFIED="1673054131260" COLOR="#000000" BACKGROUND_COLOR="#ffffff">
+<icon BUILTIN="control/type_of_parent"/>
 <richcontent TYPE="NODE">
 
 <html>
@@ -388,53 +401,50 @@
     </p>
   </body>
 </html>
+
 </richcontent>
 <node TEXT="what&apos;s common between two given intervals?" LOCALIZED_STYLE_REF="default" ID="ID_919990037" CREATED="1633143062613" MODIFIED="1633179078696" COLOR="#000000" BACKGROUND_COLOR="#ffffff"/>
 </node>
+</node>
 <node TEXT="sequential figures" LOCALIZED_STYLE_REF="default" ID="ID_1409202754" CREATED="1632696538460" MODIFIED="1652327091268" COLOR="#000000" BACKGROUND_COLOR="#ffffff">
 <icon BUILTIN="output"/>
-<node TEXT="stores found sequences in the History as Actions" LOCALIZED_STYLE_REF="default" ID="ID_1891842202" CREATED="1632858342804" MODIFIED="1652327098826" COLOR="#000000" BACKGROUND_COLOR="#ffffff"/>
+<node TEXT="stores found sequences in the History as Actions" LOCALIZED_STYLE_REF="default" ID="ID_1891842202" CREATED="1632858342804" MODIFIED="1673053279897" COLOR="#000000" BACKGROUND_COLOR="#ffffff"/>
+<node TEXT="repeated pairs" ID="ID_1515093377" CREATED="1673053281590" MODIFIED="1673053290920">
+<icon BUILTIN="punctuation/equal"/>
 </node>
-<node TEXT="Actions" ID="ID_760106881" CREATED="1633023694465" MODIFIED="1633024671490" LINK="#ID_116239914">
+</node>
+<node TEXT="event (action)" ID="ID_760106881" CREATED="1633023694465" MODIFIED="1673053363105" LINK="#ID_116239914">
 <icon BUILTIN="cog"/>
 <icon BUILTIN="puzzle_piece"/>
-<node ID="ID_967049376" TREE_ID="ID_998272487"/>
-<node TEXT="finds repeated pairs of the existing figures" STYLE_REF="list item" ID="ID_1377379187" CREATED="1633023816776" MODIFIED="1633023847435">
-<node TEXT="new sequences" ID="ID_255731350" CREATED="1633023852687" MODIFIED="1652327256906">
-<icon BUILTIN="box_inscribed"/>
-</node>
-</node>
-<node ID="ID_1796785334" TREE_ID="ID_1891842202"/>
+<node TEXT="for finding existing figures from their events" LOCALIZED_STYLE_REF="default" ID="ID_967049376" CREATED="1633023743881" MODIFIED="1673053483520" COLOR="#000000" BACKGROUND_COLOR="#ffffff"/>
+<node TEXT="for storing found sequences in the history as events" LOCALIZED_STYLE_REF="default" ID="ID_1796785334" CREATED="1632858342804" MODIFIED="1673053554303" COLOR="#000000" BACKGROUND_COLOR="#ffffff"/>
 </node>
 <node TEXT="animated explanations" ID="ID_381909901" CREATED="1658182054809" MODIFIED="1658188337705" LINK="modules/find%20sequences/">
 <icon BUILTIN="book_open"/>
 </node>
-<node TEXT="c++" ID="ID_983316736" CREATED="1672993437481" MODIFIED="1672993504617" LINK="../modules/finding_sequences/">
+<node TEXT="impl" ID="ID_944389057" CREATED="1673047597472" MODIFIED="1673047600113">
 <icon BUILTIN="present"/>
-<node TEXT="f# wrapper" LOCALIZED_STYLE_REF="default" ID="ID_375675934" CREATED="1672993403241" MODIFIED="1672994511881" LINK="../fsharp/modules/finding_sequences/" COLOR="#000000" BACKGROUND_COLOR="#ffffff">
-<icon BUILTIN="present"/>
+<node TEXT="c++" LOCALIZED_STYLE_REF="default" ID="ID_983316736" CREATED="1672993437481" MODIFIED="1673047604535" LINK="../modules/finding_sequences/" COLOR="#000000" BACKGROUND_COLOR="#ffffff">
+<node TEXT="f# wrapper" LOCALIZED_STYLE_REF="default" ID="ID_375675934" CREATED="1672993403241" MODIFIED="1673047604541" LINK="../fsharp/modules/finding_sequences/" COLOR="#000000" BACKGROUND_COLOR="#ffffff"/>
 </node>
-</node>
-<node TEXT="unity" ID="ID_550676609" CREATED="1632698228404" MODIFIED="1652327055247" LINK="../Assets/scripts/unity_ai/Sequence_finder/">
-<icon BUILTIN="present"/>
+<node TEXT="unity" LOCALIZED_STYLE_REF="default" ID="ID_550676609" CREATED="1632698228404" MODIFIED="1673047604540" LINK="../Assets/scripts/unity_ai/Sequence_finder/" COLOR="#000000" BACKGROUND_COLOR="#ffffff"/>
 </node>
 </node>
 <node TEXT="figure finder" LOCALIZED_STYLE_REF="default" ID="ID_1255975763" CREATED="1633110650941" MODIFIED="1633180939221" COLOR="#000000" BACKGROUND_COLOR="#ffffff">
-<node TEXT="finds figures in raw input signls" ID="ID_1576747888" CREATED="1652701563929" MODIFIED="1652701583905">
+<node TEXT="finds figures in raw input signals" ID="ID_1576747888" CREATED="1652701563929" MODIFIED="1673054425863">
 <icon BUILTIN="cog"/>
 </node>
-<node TEXT="History interval" ID="ID_439769439" CREATED="1633143501594" MODIFIED="1633177934841">
+<node TEXT="history" ID="ID_1821465384" CREATED="1673054046013" MODIFIED="1673054048876">
 <icon BUILTIN="input"/>
-<icon BUILTIN="bad"/>
-<icon BUILTIN="question"/>
+<node TEXT="History interval" ID="ID_439769439" CREATED="1633143501594" MODIFIED="1673054057964">
+<icon BUILTIN="control/type_of_parent"/>
 <node TEXT="finding all possible Figures is too expensive" LOCALIZED_STYLE_REF="default" ID="ID_1121040787" CREATED="1633142919822" MODIFIED="1633143553724" COLOR="#000000" BACKGROUND_COLOR="#ffffff">
 <icon BUILTIN="bad"/>
-<node TEXT="Sequence_finder is doing that with Sequences, which are less numerous" ID="ID_1739474341" CREATED="1633143415209" MODIFIED="1652327297194"/>
+<node TEXT="sequence finder is doing that with Sequences, which are less numerous" ID="ID_1739474341" CREATED="1633143415209" MODIFIED="1673045709868"/>
 </node>
 </node>
-<node ID="ID_1156219083" CREATED="1633142367965" MODIFIED="1633142918257">
-<icon BUILTIN="input"/>
-<icon BUILTIN="question"/>
+<node ID="ID_1156219083" CREATED="1633142367965" MODIFIED="1673054057966">
+<icon BUILTIN="control/type_of_parent"/>
 <richcontent TYPE="NODE">
 
 <html>
@@ -447,10 +457,12 @@
     </p>
   </body>
 </html>
+
 </richcontent>
 <node TEXT="finding what&apos;s common between two given intervals" LOCALIZED_STYLE_REF="default" ID="ID_749870449" CREATED="1633143062613" MODIFIED="1633143315656" COLOR="#000000" BACKGROUND_COLOR="#ffffff">
 <icon BUILTIN="cog"/>
 <icon BUILTIN="good"/>
+</node>
 </node>
 </node>
 <node TEXT="figures" ID="ID_1662133757" CREATED="1633142378625" MODIFIED="1633142452929">
@@ -474,8 +486,9 @@
 <node TEXT="algorithm of stencil application" LOCALIZED_STYLE_REF="default" ID="ID_1267499080" CREATED="1632698228404" MODIFIED="1658248717024" LINK="../Assets/scripts/unity_ai/Stencil_applier/algorithm%20of%20stencil%20application.png" COLOR="#000000" BACKGROUND_COLOR="#ffffff">
 <icon BUILTIN="book_open"/>
 </node>
-<node TEXT="f#" LOCALIZED_STYLE_REF="default" ID="ID_677528210" CREATED="1672993946516" MODIFIED="1672994504995" LINK="../fsharp/modules/applying_stencils/" COLOR="#000000" BACKGROUND_COLOR="#ffffff">
+<node TEXT="impl" ID="ID_1135469188" CREATED="1673045748597" MODIFIED="1673045751809">
 <icon BUILTIN="present"/>
+<node TEXT="f#" LOCALIZED_STYLE_REF="default" ID="ID_677528210" CREATED="1672993946516" MODIFIED="1673045788222" LINK="../fsharp/modules/applying_stencils/" COLOR="#000000" BACKGROUND_COLOR="#ffffff">
 <node TEXT="enumerating combinations" ID="ID_361701911" CREATED="1672993864615" MODIFIED="1672993891553">
 <icon BUILTIN="puzzle_piece"/>
 <icon BUILTIN="present"/>
@@ -484,12 +497,14 @@
 </node>
 </node>
 </node>
-<node TEXT="unity" ID="ID_121660820" CREATED="1632698228404" MODIFIED="1652327397658" LINK="../Assets/scripts/unity_ai/Stencil_applier/">
-<icon BUILTIN="present"/>
+<node TEXT="unity" ID="ID_121660820" CREATED="1632698228404" MODIFIED="1673045784881" LINK="../Assets/scripts/unity_ai/Stencil_applier/">
+<icon BUILTIN="useless"/>
 </node>
 </node>
-<node TEXT="figure provider" ID="ID_1870262604" CREATED="1652699646645" MODIFIED="1652699662014">
+</node>
+<node TEXT="figure provider" ID="ID_1870262604" CREATED="1652699646645" MODIFIED="1673055853814">
 <icon BUILTIN="present"/>
+<icon BUILTIN="useless"/>
 <node TEXT="creates of retrieves from storage figures with demanded sequences" ID="ID_379625545" CREATED="1652700724216" MODIFIED="1652701519128">
 <icon BUILTIN="cog"/>
 </node>
@@ -530,7 +545,8 @@
 <node TEXT="combined history" ID="ID_234217125" CREATED="1672995605057" MODIFIED="1672995631474" LINK="../fsharp/io/src/visualised/painted/History.fs">
 <icon BUILTIN="present"/>
 </node>
-<node TEXT="graph visualisation" ID="ID_885971602" CREATED="1672995787272" MODIFIED="1672996024604" LINK="../fsharp/io/src/visualised/painted/external/">
+<node TEXT="graph visualisation" ID="ID_885971602" CREATED="1672995787272" MODIFIED="1673045177467" LINK="../fsharp/io/src/visualised/painted/external/">
+<icon BUILTIN="puzzle_piece"/>
 <node TEXT="Rubjerg.Graphviz" LOCALIZED_STYLE_REF="default" ID="ID_1612077793" CREATED="1672995866872" MODIFIED="1672996074155" LINK="https://github.com/Rubjerg/Graphviz.NetWrapper" COLOR="#000000" BACKGROUND_COLOR="#ffffff">
 <icon BUILTIN="connection/cross_reference"/>
 <icon BUILTIN="puzzle_piece"/>
@@ -538,7 +554,7 @@
 </node>
 </node>
 </node>
-<node TEXT="unity" LOCALIZED_STYLE_REF="default" ID="ID_1915337885" CREATED="1652702148999" MODIFIED="1672995517711" COLOR="#000000" BACKGROUND_COLOR="#ffffff">
+<node TEXT="unity" LOCALIZED_STYLE_REF="default" FOLDED="true" ID="ID_1915337885" CREATED="1652702148999" MODIFIED="1672995517711" COLOR="#000000" BACKGROUND_COLOR="#ffffff">
 <node TEXT="mode selector" ID="ID_605733536" CREATED="1652702063809" MODIFIED="1653091149221">
 <icon BUILTIN="present"/>
 <node TEXT="activates certain gui modules" LOCALIZED_STYLE_REF="default" ID="ID_1426347125" CREATED="1652704317628" MODIFIED="1652704366833" COLOR="#000000" BACKGROUND_COLOR="#ffffff">
@@ -589,15 +605,15 @@
 </node>
 </node>
 <node TEXT="objects" STYLE_REF="topic" POSITION="right" ID="ID_1902469308" CREATED="1632652416117" MODIFIED="1632652499107">
-<node TEXT="action history" LOCALIZED_STYLE_REF="default" ID="ID_74294546" CREATED="1632652535678" MODIFIED="1652654208870">
+<node TEXT="history" LOCALIZED_STYLE_REF="default" ID="ID_74294546" CREATED="1632652535678" MODIFIED="1673056196000">
 <icon BUILTIN="present"/>
 <node TEXT="stores all inputs and outputs" LOCALIZED_STYLE_REF="default" ID="ID_1764693530" CREATED="1632652563385" MODIFIED="1652654241241">
 <icon BUILTIN="cog"/>
 </node>
-<node TEXT="action" LOCALIZED_STYLE_REF="default" ID="ID_116239914" CREATED="1632653173466" MODIFIED="1633054159638">
+<node TEXT="event (action)" LOCALIZED_STYLE_REF="default" ID="ID_116239914" CREATED="1632653173466" MODIFIED="1673056549086">
 <icon BUILTIN="puzzle_piece"/>
 <icon BUILTIN="present"/>
-<node TEXT="start or end" LOCALIZED_STYLE_REF="default" ID="ID_203101022" CREATED="1632661278385" MODIFIED="1633003600642">
+<node TEXT="start or finish (end)" LOCALIZED_STYLE_REF="default" ID="ID_203101022" CREATED="1632661278385" MODIFIED="1673056563607">
 <icon BUILTIN="box_inscribed"/>
 <node TEXT="of a figure" LOCALIZED_STYLE_REF="default" ID="ID_1572738222" CREATED="1632663599889" MODIFIED="1652654296743" LINK="#ID_528434013"/>
 </node>
@@ -657,29 +673,39 @@
 </html>
 </richcontent>
 </node>
-<node TEXT="not used in code" LOCALIZED_STYLE_REF="default" ID="ID_888100481" CREATED="1652654442402" MODIFIED="1652654474419" COLOR="#000000" BACKGROUND_COLOR="#ffffff">
+<node TEXT="not used in business logic" LOCALIZED_STYLE_REF="default" ID="ID_888100481" CREATED="1652654442402" MODIFIED="1673057823534" COLOR="#000000" BACKGROUND_COLOR="#ffffff">
 <icon BUILTIN="useless"/>
 </node>
 </node>
-<node TEXT="move into History" ID="ID_1717472207" CREATED="1632858115356" MODIFIED="1632858148534" COLOR="#666666">
-<icon BUILTIN="question"/>
-<font ITALIC="true"/>
-</node>
-<node TEXT="not used by figures/patterns" LOCALIZED_STYLE_REF="default" ID="ID_1510788628" CREATED="1633010049846" MODIFIED="1633026941772" COLOR="#000000" BACKGROUND_COLOR="#ffffff">
-<icon BUILTIN="bad"/>
+<node TEXT="not used by figures/patterns" LOCALIZED_STYLE_REF="default" ID="ID_1510788628" CREATED="1633010049846" MODIFIED="1673056591805" COLOR="#000000" BACKGROUND_COLOR="#ffffff">
+<icon BUILTIN="useless"/>
 <node TEXT="they use moment (integer) instead" ID="ID_1305059511" CREATED="1633010759465" MODIFIED="1633025719124"/>
 </node>
-<node TEXT="unity" ID="ID_519322222" CREATED="1632858035279" MODIFIED="1667652344426" LINK="file:/C:/prj/ai/unity_ai/Assets/scripts/Node/Action/">
+<node TEXT="impl" ID="ID_628021174" CREATED="1673056624630" MODIFIED="1673056626928">
 <icon BUILTIN="present"/>
+<node TEXT="unity" LOCALIZED_STYLE_REF="default" ID="ID_519322222" CREATED="1632858035279" MODIFIED="1673056629996" LINK="file:/C:/prj/ai/unity_ai/Assets/scripts/Node/Action/" COLOR="#000000" BACKGROUND_COLOR="#ffffff"/>
+<node TEXT="f#" ID="ID_1651572470" CREATED="1673057126055" MODIFIED="1673057144788" LINK="../fsharp/io/src/visualised/painted/History.fs">
+<node TEXT="only used for gui" ID="ID_61330095" CREATED="1673057145179" MODIFIED="1673057169743">
+<icon BUILTIN="emoji-1F441"/>
+<node TEXT="otherwise a sequence of intervals for a figure is used" ID="ID_963222866" CREATED="1673057175554" MODIFIED="1673057199365"/>
 </node>
 </node>
-<node TEXT="unity" ID="ID_1470616392" CREATED="1632858019445" MODIFIED="1667652386370" LINK="file:/C:/prj/ai/unity_ai/Assets/scripts/History/Action_history/">
+</node>
+</node>
+<node TEXT="impl" ID="ID_655112641" CREATED="1673041112652" MODIFIED="1673041118381">
 <icon BUILTIN="present"/>
+<node TEXT="unity" LOCALIZED_STYLE_REF="default" ID="ID_1470616392" CREATED="1632858019445" MODIFIED="1673041121776" LINK="file:/C:/prj/ai/unity_ai/Assets/scripts/History/Action_history/" COLOR="#000000" BACKGROUND_COLOR="#ffffff"/>
+<node TEXT="f#" ID="ID_841590264" CREATED="1673041122281" MODIFIED="1673041227960" LINK="../fsharp/io/src/visualised/painted/">
+<node TEXT="only for visualisation of several figure histories" ID="ID_1379744774" CREATED="1673041125256" MODIFIED="1673044817960">
+<icon BUILTIN="emoji-1F441"/>
+</node>
+<node TEXT="History.fs" ID="ID_148664055" CREATED="1673041196100" MODIFIED="1673041224705" LINK="../fsharp/io/src/visualised/painted/History.fs"/>
+</node>
 </node>
 </node>
 <node TEXT="figure" ID="ID_528434013" CREATED="1652344739806" MODIFIED="1652344742574">
 <icon BUILTIN="present"/>
-<node TEXT="figure_appearances" ID="ID_520776432" CREATED="1633006137463" MODIFIED="1633008806775">
+<node TEXT="appearances" ID="ID_520776432" CREATED="1633006137463" MODIFIED="1673058102184">
 <icon BUILTIN="puzzle_piece"/>
 <icon BUILTIN="cog"/>
 <icon BUILTIN="present"/>
@@ -710,18 +736,14 @@
 <icon BUILTIN="puzzle_piece"/>
 <icon BUILTIN="interface_arrows"/>
 </node>
-<node TEXT="appeared figure" ID="ID_1284095068" CREATED="1633006626203" MODIFIED="1633006643782" COLOR="#666666">
-<icon BUILTIN="puzzle_piece"/>
-<font ITALIC="true"/>
-</node>
 <node TEXT="impl" ID="ID_685337980" CREATED="1672996946708" MODIFIED="1672996949625">
 <icon BUILTIN="present"/>
 <node TEXT="unity" LOCALIZED_STYLE_REF="default" ID="ID_324999900" CREATED="1633007090240" MODIFIED="1672996953608" LINK="file:/D:/prj/unity_ai/Assets/scripts/unity_ai/Figure/Figure_appearance.cs" COLOR="#000000" BACKGROUND_COLOR="#ffffff"/>
 <node TEXT="f#" ID="ID_1821133170" CREATED="1672996954479" MODIFIED="1672998163575">
 <icon BUILTIN="connection"/>
-<node TEXT="Interval" ID="ID_1869253889" CREATED="1672998044697" MODIFIED="1672998148447">
+<node TEXT="Interval" ID="ID_1869253889" CREATED="1672998044697" MODIFIED="1673058170300">
+<icon BUILTIN="punctuation/equal"/>
 <icon BUILTIN="present"/>
-<node TEXT="basic representation, with the higher logic spread across different functions" LOCALIZED_STYLE_REF="default" ID="ID_993318251" CREATED="1672998065589" MODIFIED="1672998142335" COLOR="#000000" BACKGROUND_COLOR="#ffffff"/>
 </node>
 </node>
 </node>
@@ -736,30 +758,13 @@
 </node>
 </node>
 </node>
-<node TEXT="sequential figure" LOCALIZED_STYLE_REF="default" ID="ID_1800053006" CREATED="1632668003992" MODIFIED="1652344814355" COLOR="#000000" BACKGROUND_COLOR="#ffffff">
+<node TEXT="repeated pair" ID="ID_424221858" CREATED="1673060853045" MODIFIED="1673060873520">
 <icon BUILTIN="control/type_of_parent"/>
-<node TEXT="raw input/output" LOCALIZED_STYLE_REF="default" ID="ID_973109195" CREATED="1633007976220" MODIFIED="1633008284610" COLOR="#000000" BACKGROUND_COLOR="#ffffff">
+<node TEXT="minimally valuable figure" ID="ID_1497797221" CREATED="1673060875550" MODIFIED="1673060901335">
 <icon BUILTIN="box_inscribed"/>
 </node>
-<node TEXT="a sequence of actions as a figure" LOCALIZED_STYLE_REF="default" ID="ID_1829914945" CREATED="1632652612940" MODIFIED="1633003600645">
-<icon BUILTIN="box_inscribed"/>
-</node>
-<node TEXT="stores newly found consequences" LOCALIZED_STYLE_REF="default" ID="ID_1797044550" CREATED="1632660876585" MODIFIED="1632843447303">
-<icon BUILTIN="cog"/>
-</node>
-<node TEXT="impl" ID="ID_1126502242" CREATED="1672996604232" MODIFIED="1672996606694">
-<icon BUILTIN="present"/>
-<node TEXT="unity" LOCALIZED_STYLE_REF="default" ID="ID_1322309816" CREATED="1632857904649" MODIFIED="1652393054346" LINK="../Assets/scripts/unity_ai/Node/Figure" COLOR="#000000" BACKGROUND_COLOR="#ffffff">
-<icon BUILTIN="present"/>
-<node TEXT="pairs of pairs etc..." ID="ID_843370968" CREATED="1633029120331" MODIFIED="1633029203942">
-<icon BUILTIN="box_inscribed"/>
-<node TEXT="for debug" ID="ID_140862798" CREATED="1633029442742" MODIFIED="1633029445004"/>
-</node>
-<node TEXT="a text string with names of Base_signals" ID="ID_938368443" CREATED="1633029241175" MODIFIED="1633029292263">
-<icon BUILTIN="box_inscribed"/>
-</node>
-</node>
-<node TEXT="can be implemented as the complex figure" ID="ID_835092495" CREATED="1672996565724" MODIFIED="1672996754352"/>
+<node TEXT="produced by the sequence finder" ID="ID_1933016781" CREATED="1673060902228" MODIFIED="1673061067747">
+<icon BUILTIN="puzzle_piece"/>
 </node>
 </node>
 <node TEXT="complex figure" LOCALIZED_STYLE_REF="default" ID="ID_456447488" CREATED="1632652436242" MODIFIED="1652344814357" COLOR="#000000" BACKGROUND_COLOR="#ffffff">
@@ -820,6 +825,39 @@
 <icon BUILTIN="book_open"/>
 <node TEXT="general" ID="ID_1749796058" CREATED="1632857632311" MODIFIED="1667818325181" LINK="Figures/"/>
 <node TEXT="unity" ID="ID_773007300" CREATED="1632857704205" MODIFIED="1652392844316" LINK="../Assets/scripts/unity_ai/Node/Figure/doc/Figure_imp.bmp"/>
+</node>
+</node>
+<node TEXT="sequential figure" LOCALIZED_STYLE_REF="default" ID="ID_1800053006" CREATED="1632668003992" MODIFIED="1652344814355" COLOR="#000000" BACKGROUND_COLOR="#ffffff">
+<icon BUILTIN="control/type_of_parent"/>
+<node TEXT="just an implementation optimisation" ID="ID_1268857083" CREATED="1673060954459" MODIFIED="1673060986597">
+<icon BUILTIN="bad"/>
+<icon BUILTIN="box_inscribed"/>
+<node TEXT="can be substituted by a complex figure" ID="ID_1871980201" CREATED="1673060966279" MODIFIED="1673061010636"/>
+<node TEXT="raw input/output" LOCALIZED_STYLE_REF="default" ID="ID_973109195" CREATED="1633007976220" MODIFIED="1633008284610" COLOR="#000000" BACKGROUND_COLOR="#ffffff">
+<icon BUILTIN="box_inscribed"/>
+</node>
+<node TEXT="a sequence of actions as a figure" LOCALIZED_STYLE_REF="default" ID="ID_1829914945" CREATED="1632652612940" MODIFIED="1633003600645">
+<icon BUILTIN="box_inscribed"/>
+</node>
+</node>
+<node TEXT="stores newly found consequences" LOCALIZED_STYLE_REF="default" ID="ID_1797044550" CREATED="1632660876585" MODIFIED="1632843447303">
+<icon BUILTIN="cog"/>
+</node>
+<node TEXT="impl" ID="ID_1126502242" CREATED="1672996604232" MODIFIED="1672996606694">
+<icon BUILTIN="present"/>
+<node TEXT="unity" LOCALIZED_STYLE_REF="default" ID="ID_1322309816" CREATED="1632857904649" MODIFIED="1652393054346" LINK="../Assets/scripts/unity_ai/Node/Figure" COLOR="#000000" BACKGROUND_COLOR="#ffffff">
+<icon BUILTIN="present"/>
+<node TEXT="pairs of pairs etc..." ID="ID_843370968" CREATED="1633029120331" MODIFIED="1633029203942">
+<icon BUILTIN="box_inscribed"/>
+<node TEXT="for debugging" ID="ID_140862798" CREATED="1633029442742" MODIFIED="1673061425485"/>
+</node>
+<node TEXT="a text string with names of Base_signals" ID="ID_938368443" CREATED="1633029241175" MODIFIED="1633029292263">
+<icon BUILTIN="box_inscribed"/>
+</node>
+</node>
+<node TEXT="f#" ID="ID_835092495" CREATED="1672996565724" MODIFIED="1673061096867">
+<icon BUILTIN="useless"/>
+</node>
 </node>
 </node>
 </node>

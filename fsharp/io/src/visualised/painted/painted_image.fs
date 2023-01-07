@@ -57,8 +57,4 @@ namespace rvinowise.ai.ui.painted
             root_node
             |>open_image_of_graph
         
-        
-        [<Fact>]
-        let ``two functions opening the same filename``()=
-            ``visualise history``()
-            ``construct a graph``()
+  

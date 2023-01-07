@@ -37,7 +37,7 @@ namespace rvinowise.ai.ui.painted
             let border = 
                 histories
                 |>Seq.map History.interval
-                |>Interval.bordering_interval
+                |>Interval.bordering_interval_of_intervals
 
             $"appearances of {figures} from {border.start} to {border.finish}"
 

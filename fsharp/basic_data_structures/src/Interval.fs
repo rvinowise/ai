@@ -40,7 +40,7 @@ module Interval =
     let finish (interval:Interval)=
         interval.finish
 
-    let bordering_interval intervals =
+    let bordering_interval_of_intervals intervals =
         regular 
             (intervals
             |>Seq.map start 
@@ -48,3 +48,8 @@ module Interval =
             (intervals
             |>Seq.map finish
             |>Seq.max)
+    
+    let bordering_interval_of_moments moments =
+        regular 
+            (moments|>Seq.min)
+            (moments|>Seq.max)
