@@ -44,6 +44,7 @@ namespace rvinowise.ai.mood.history
     open Xunit
     open FsUnit
     open rvinowise.ai
+    open rvinowise
 
     module built =
         let changes_from_tuples
@@ -63,7 +64,7 @@ namespace rvinowise.ai.mood.history
             last_mood:Mood
             mood_at_moments:Mood seq
         }
-        let at_all_moments_from_tuples
+        let complete_from_tuples
             tuples
             =
             let mood_changes = 
@@ -77,16 +78,20 @@ namespace rvinowise.ai.mood.history
                     |>Seq.pairwise
                     |>Seq.fold (
                         fun 
-                            (history) 
+                            history
                             (
                                 start,
                                 finish
                             ) ->
                             let mood_change = start.Value
-                            let moments_number = finish.Key-start.Key
+                            let amount_of_moments = finish.Key-start.Key
+                            let new_mood = history.last_mood + mood_change
                             {
-
-
+                                last_mood=new_mood
+                                mood_at_moments=
+                                    Seq.append 
+                                        history.mood_at_moments
+                                        (List.init amount_of_moments (fun _->new_mood))
                             }
                         
                         )
@@ -95,6 +100,36 @@ namespace rvinowise.ai.mood.history
                             mood_at_moments=[]
                         }
                     |>fun detailed_history->detailed_history.mood_at_moments
+                    |>fun mood_at_moments ->
+                        Seq.append
+                            mood_at_moments
+                            [
+                                mood_changes.changes
+                                |>Seq.last
+                                |>extensions.KeyValuyePair.value
+                                |>fun last_mood_change->
+                                    (mood_at_moments
+                                    |>Seq.last)
+                                    +
+                                    last_mood_change
+                            ]
+
+            }
+        
+        [<Fact>]
+        let ``mood history build complete_from_tuples``()=
+            [
+                10,1; 15,1; 16,-2; 20,3
+            ]
+            |>complete_from_tuples
+            |>should equal {
+                interval=Interval.ofPair (10,20)
+                mood_at_moments=[
+                    1;1;1;1;1;
+                    2;
+                    0;0;0;0;
+                    3
+                ]
             }
 
 namespace rvinowise.ai
