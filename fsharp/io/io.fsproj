@@ -15,8 +15,9 @@
     <Compile Include="src\visualised\painted\external\graph_elements.fs" />
     <Compile Include="src\visualised\painted\external\graphviz\Graph.fs" />
 
-    <Compile Include="src\visualised\painted\Figure_and_stencil.fs" />
-    <Compile Include="src\visualised\painted\History.fs" />
+    <Compile Include="src\visualised\painted\Graph\Figure.fs" />
+    <Compile Include="src\visualised\painted\Graph\Graph.fs" />
+    <Compile Include="src\visualised\painted\History\History.fs" />
     <Compile Include="src\visualised\painted\painted_image.fs" />
 
     <Compile Include="src\visualised\printed\Figure_appearance.fs" />

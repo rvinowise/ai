@@ -31,12 +31,12 @@ namespace rvinowise.ai.ui.painted
             =
             let figures =
                 histories
-                |>Seq.map History.figure
+                |>Seq.map figure.History.figure
                 |>String.concat ","
 
             let border = 
                 histories
-                |>Seq.map History.interval
+                |>Seq.map figure.History.interval
                 |>Interval.bordering_interval_of_intervals
 
             $"appearances of {figures} from {border.start} to {border.finish}"
@@ -87,10 +87,10 @@ namespace rvinowise.ai.ui.painted
                 batch.events
                 |>Seq.map (fun pair->pair.Key)
 
-            let history_of_a = history.built.from_tuples "a" [
+            let history_of_a = figure.history.built.from_tuples "a" [
                 0,1; 2,4
             ]
-            let history_of_b = history.built.from_tuples "b" [
+            let history_of_b = figure.history.built.from_tuples "b" [
                 0,2; 4,4
             ]
             [history_of_a; history_of_b]
@@ -208,7 +208,7 @@ namespace rvinowise.ai.ui.painted
                 |Start figure->()
             )
 
-        let connect_start_to_finish 
+        let connect_events_start_to_finish 
             (history: Combined_history)
             =
             history.batches
@@ -242,7 +242,7 @@ namespace rvinowise.ai.ui.painted
             histories
             |>combine
             |>add_graphic_event_batches node
-            |>connect_start_to_finish
+            |>connect_events_start_to_finish
             |>connect_event_batches
             |>ignore
             node

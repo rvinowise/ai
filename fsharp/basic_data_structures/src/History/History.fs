@@ -132,13 +132,13 @@ namespace rvinowise.ai.mood.history
                 ]
             }
 
-namespace rvinowise.ai
+namespace rvinowise.ai.figure
     module History=
-        open rvinowise
+        open rvinowise.ai
         open FsUnit
         open Xunit
 
-        let interval history =
+        let interval (history:Figure_history) =
             history.interval
 
         let figure history =
@@ -147,8 +147,22 @@ namespace rvinowise.ai
         let mood_at_moment history moment=
             ()
 
-    // module Mood_history=
-    //     let ofChanges mood_changes=
+namespace rvinowise.ai.mood
+    module History=
+        open rvinowise.ai
+        open FsUnit
+        open Xunit
+
+        let interval (history:Mood_history) =
+            history.interval
+
+
+        let mood_at_moment history moment=
+            ()
+
+        let ofChanges mood_changes=
+            ()
+        
 
      
         

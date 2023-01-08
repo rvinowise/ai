@@ -31,6 +31,7 @@ namespace rvinowise.ai.ui.painted
             |>History.as_graph
             |>open_image_of_graph
         
+        
         [<Fact>]//(Skip="ui")
         let ``construct a graph``()=
             let root_node =
