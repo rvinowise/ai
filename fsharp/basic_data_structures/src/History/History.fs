@@ -188,8 +188,13 @@ namespace rvinowise.ai.history
                     20,24
                 ]
 
-        let short_history_of_mood_changes=()
-
+        let short_history_of_mood_changes=
+            mood.history.built.changes_from_tuples [
+                11,1;
+                13,1; 
+                17,-2;
+                20,3
+            ]
 
         [<Fact>]
         let ``history interval can start from any moment``()=

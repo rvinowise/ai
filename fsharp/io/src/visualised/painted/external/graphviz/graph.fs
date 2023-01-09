@@ -7,19 +7,20 @@ namespace rvinowise.ui.infrastructure
 
     type private External_subgraph = Rubjerg.Graphviz.SubGraph
     type private External_root = Rubjerg.Graphviz.RootGraph
+    type private External_graph = Rubjerg.Graphviz.Graph
     type private External_node = Rubjerg.Graphviz.Node
     type private External_element = Rubjerg.Graphviz.CGraphThing
     
     type Node_id = string
 
     type Cluster = {
-        impl: External_subgraph
+        impl: External_graph
         children: Node_id seq
     }
 
     type Element=
     |Vertex of External_node
-    |Cluster of External_subgraph
+    |Cluster of External_graph
 
     type Node_data={
         id:Node_id
@@ -69,13 +70,14 @@ namespace rvinowise.ui.infrastructure
         let empty name=
             let external_root:External_root = External_root.CreateNew(name, Graphviz.GraphType.Directed)
             external_root.SafeSetAttribute("rankdir", "LR", "")
-            external_root.SafeSetAttribute("compound", "true", "")
+            external_root.SafeSetAttribute("compound", "true", "") //for edges between clusters
+            external_root.SafeSetAttribute("newrank", "true", "") //for different rankdir directions
             let root_node: Node_data={
                 id = name
                 id_impl = name
                 children=[]
                 parent=None
-                impl=Cluster (external_root.GetOrAddSubgraph(name))
+                impl=Cluster external_root
                 child_node_attr=Map.empty
             }
             {
@@ -105,7 +107,7 @@ namespace rvinowise.ui.infrastructure
                                 parent_cluster.GetOrAddSubgraph(graph_node.data.id_impl)
                             cluster.SafeSetAttribute("label", graph_node.data.id, "")
                             cluster.SafeSetAttribute("cluster", "true", "")
-                            cluster
+                            cluster:>External_graph
                         |Vertex _ -> raise (ArgumentException("parent must be a graph"))
                     
                     graph_node.data.impl <- Cluster new_cluster_impl
@@ -125,6 +127,18 @@ namespace rvinowise.ui.infrastructure
             let  graph_impl = (transform_vertex_into_graph graph_node)
             graph_node.data.child_node_attr <- Map.add "shape" "rectangle" graph_node.data.child_node_attr
             graph_node
+
+        let with_horisontal_children graph_node=
+            graph_node
+            |>with_attribute "rankdir" "LR"
+        
+        let with_vertical_children graph_node=
+            graph_node
+            |>with_attribute "rankdir" "TB"
+        
+        let with_perpendicular_children graph_node =
+            graph_node
+            |>with_attribute "rank" "same"
 
         let write_attributes_to_node 
             (attr:Map<string, string>) 
