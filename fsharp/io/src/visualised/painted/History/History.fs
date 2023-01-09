@@ -306,21 +306,22 @@ namespace rvinowise.ai.ui.painted
 
             history
 
-        let connect_two_batches
+        let arrange_two_batches
             (start, finish)
             =
             start
-            |>infrastructure.Graph.with_edge finish
+            |>infrastructure.Graph.provide_edge finish
+            |>infrastructure.Edge.with_attribute "style" "invis"
             |>ignore
 
-        let graphically_connect_event_batches
+        let graphically_arrange_event_batches_sequentially
             (history: Combined_history)
             =
             history.batches
             |>Seq.map(fun pair -> pair.Value)
             |>Seq.choose (fun batch -> batch.node)
             |>Seq.pairwise
-            |>Seq.iter connect_two_batches
+            |>Seq.iter arrange_two_batches
             
             history
             
@@ -336,7 +337,7 @@ namespace rvinowise.ai.ui.painted
             |>graphically_add_event_batches node
             |>arrange_events_inside_batches
             |>graphically_connect_events_start_to_finish
-            |>graphically_connect_event_batches
+            |>graphically_arrange_event_batches_sequentially
             |>ignore
             node
 

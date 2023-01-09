@@ -10,6 +10,7 @@ namespace rvinowise.ui.infrastructure
     type private External_graph = Rubjerg.Graphviz.Graph
     type private External_node = Rubjerg.Graphviz.Node
     type private External_element = Rubjerg.Graphviz.CGraphThing
+    type private External_edge = Rubjerg.Graphviz.Edge
     
     type Node_id = string
 
@@ -39,14 +40,24 @@ namespace rvinowise.ui.infrastructure
     }
 
     type Node={
-        mutable graph: Graph
-        mutable data: Node_data
+        graph: Graph
+        data: Node_data
+    }
+    type Edge={
+        graph: Graph
+        impl: External_edge
     }
 
     [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
     module Node=
         let id (node:Node)=
             node.data.id
+
+    [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
+    module Edge=
+        let with_attribute key value (edge:Edge) =
+            edge.impl.SafeSetAttribute(key,value,"")
+            edge
 
     [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
     module Graph=
@@ -152,7 +163,7 @@ namespace rvinowise.ui.infrastructure
 
         let provide_vertex
             (id:Node_id)
-            owner
+            (owner:Node)
             =
             let owner_cluster = 
                 match owner.data.impl with
@@ -192,13 +203,13 @@ namespace rvinowise.ui.infrastructure
             fill_vertex vertex
             target
 
-        let is_vertex_impl node =
-            match node.impl with
-            |Cluster _ -> false
-            |Vertex _ -> true
+        // let is_vertex_impl node =
+        //     match node.impl with
+        //     |Cluster _ -> false
+        //     |Vertex _ -> true
 
        
-        let rec private lowest_child_vertex node=
+        let rec private lowest_child_vertex (node:Node_data)=
             match node.impl with
             |Element.Cluster cluster_impl -> 
                 match node.children|>Seq.tryHead with
@@ -225,7 +236,9 @@ namespace rvinowise.ui.infrastructure
             |>fun n->n.id
             |>should equal inner_vertex.data.id
 
-        let with_edge
+        
+
+        let provide_edge
             (head:Node)
             (tail:Node)
             =
@@ -235,12 +248,24 @@ namespace rvinowise.ui.infrastructure
             let edge_impl = head.graph.root_impl.GetOrAddEdge(
                 tail_impl, head_impl, $"{tail.data.id_impl}->{head.data.id_impl}"
             )
-            edge_impl.SafeSetAttribute("ltail",tail.data.id_impl,"")
-            edge_impl.SafeSetAttribute("lhead",head.data.id_impl,"")
+            if (tail.data = vertex_tail) then () else
+                edge_impl.SafeSetAttribute("ltail",tail.data.id_impl,"")
+            if (head.data = vertex_head) then () else
+                edge_impl.SafeSetAttribute("lhead",head.data.id_impl,"")
+            {
+                Edge.graph = tail.graph;
+                impl=edge_impl
+            }
+
+
+        let with_edge
+            (head:Node)
+            (tail:Node)
+            =
+            tail|>provide_edge head
             tail
 
 
-        
         let save_to_file 
             filename 
             graph
