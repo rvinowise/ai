@@ -160,6 +160,32 @@ namespace rvinowise.ui.infrastructure
                 node_impl.SafeSetAttribute(pair.Key, pair.Value,"")
             )
 
+        let provide_html_vertex
+            (label:Node_id)
+            (owner:Node)
+            =
+            let owner_cluster = 
+                match owner.data.impl with
+                |Cluster parent_cluster -> parent_cluster
+                |Vertex _->(transform_vertex_into_graph owner)
+            
+            let id = Guid.NewGuid().ToString()
+            let vertex_impl = 
+                owner_cluster.GetOrAddNode(owner.data.id_impl+id)
+            vertex_impl.SetAttribute("label",label)
+            vertex_impl.SafeSetAttribute("shape","plaintext","")
+            vertex_impl|>write_attributes_to_node owner.data.child_node_attr
+
+            let new_vertex = {
+                id = id
+                id_impl = owner.data.id_impl+id
+                parent = Some owner.data
+                children=[]
+                impl = Vertex vertex_impl
+                child_node_attr = owner.data.child_node_attr
+            }
+            owner.data.children <- owner.data.children|>Seq.append [new_vertex]
+            {owner with data=new_vertex}
 
         let provide_vertex
             (id:Node_id)

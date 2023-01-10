@@ -140,7 +140,7 @@ namespace rvinowise.ai.ui.painted
             |>fun history->history.batches
             |>Map.toPairs
             |>Seq.map (fun (moment,batch) ->
-                moment, (batch.events)
+                moment, (batch.events|>Seq.sort)
             )
             |>should equal [
                 0,[
@@ -208,10 +208,11 @@ namespace rvinowise.ai.ui.painted
                     (   
                         batch,
                         receptacle
-                        |>infrastructure.Graph.provide_vertex (
+                        |>infrastructure.Graph.provide_html_vertex (
                             batch
                             |>html_layout_for_event_batch
-                            |>RenderView.AsString.htmlDocument
+                            |>RenderView.AsString.htmlNode
+                            |>sprintf "<\n%s\n>"
                         )
                     )
                 )
