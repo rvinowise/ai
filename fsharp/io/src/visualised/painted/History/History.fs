@@ -2,6 +2,8 @@ namespace rvinowise.ai.ui.painted
     open FsUnit
     open Xunit
 
+    open Giraffe.ViewEngine
+
     open rvinowise
     open rvinowise.extensions
     open rvinowise.ui
@@ -13,11 +15,19 @@ namespace rvinowise.ai.ui.painted
     |Finish of Figure_id * Moment
     |Mood_change of int
 
+
+
     type Event_batch = {
-        events: Map<Appearance_event, infrastructure.Node option>
+        events: Appearance_event seq
         mood:Mood
-        node: infrastructure.Node option
     }
+
+    module Event_batch=
+        let empty =
+            {
+                events= []
+                mood= 0
+            }
 
     type Combined_history = {
         batches: Map<Moment, Event_batch>
@@ -33,15 +43,19 @@ namespace rvinowise.ai.ui.painted
             =
             let figures =
                 histories
-                |>Seq.map figure.History.figure
+                |>Seq.map ai.figure.History.figure
                 |>String.concat ","
 
             let border = 
                 histories
-                |>Seq.map figure.History.interval
+                |>Seq.map ai.figure.History.interval
                 |>Interval.bordering_interval_of_intervals
 
             $"appearances of {figures} from {border.start} to {border.finish}"
+
+
+        
+
 
         let add_events_to_combined_history 
             figure_history 
@@ -57,30 +71,22 @@ namespace rvinowise.ai.ui.painted
                             |>Map.add interval.start (
                                 let start_batch = 
                                     combined.batches
-                                    |>Map.getOrDefault interval.start {
-                                        events=Map.empty
-                                        mood=0
-                                        node=None
-                                    }
+                                    |>Map.getOrDefault interval.start Event_batch.empty
                                 {start_batch with 
                                     events=
                                         start_batch.events
-                                        |>Map.add (Start figure_history.figure) None 
+                                        |>Seq.append [Start figure_history.figure]
                                 }
                             )
                         combined_batches
                         |>Map.add interval.finish (
                             let end_batch = 
                                 combined_batches
-                                |>Map.getOrDefault interval.finish {
-                                    events=Map.empty
-                                    mood=0
-                                    node=None
-                                }
+                                |>Map.getOrDefault interval.finish Event_batch.empty
                             {end_batch with 
                                 events=
                                     end_batch.events
-                                    |>Map.add (Finish (figure_history.figure, interval.start)) None 
+                                    |>Seq.append [Finish (figure_history.figure, interval.start)] 
                             }
                         )
                         
@@ -102,15 +108,11 @@ namespace rvinowise.ai.ui.painted
                         |>Map.add moment (
                             let previous_batch = 
                                 combined.batches
-                                |>Map.getOrDefault moment {
-                                    events=Map.empty
-                                    mood=0
-                                    node=None
-                                }
+                                |>Map.getOrDefault moment Event_batch.empty
                             {previous_batch with 
                                 events=
                                     previous_batch.events
-                                    |>Map.add (Mood_change mood_change) None 
+                                    |>Seq.append [Mood_change mood_change] 
                             }
                         )
                         
@@ -127,14 +129,10 @@ namespace rvinowise.ai.ui.painted
 
         [<Fact>]
         let ``combine figure histories``()=
-            let event_batch_without_graphics batch=
-                batch.events
-                |>Seq.map (fun pair->pair.Key)
-
-            let history_of_a = figure.history.built.from_tuples "a" [
+            let history_of_a = ai.figure.history.built.from_tuples "a" [
                 0,1; 2,4
             ]
-            let history_of_b = figure.history.built.from_tuples "b" [
+            let history_of_b = ai.figure.history.built.from_tuples "b" [
                 0,2; 4,4
             ]
             [history_of_a; history_of_b]
@@ -142,7 +140,7 @@ namespace rvinowise.ai.ui.painted
             |>fun history->history.batches
             |>Map.toPairs
             |>Seq.map (fun (moment,batch) ->
-                moment, (event_batch_without_graphics batch)
+                moment, (batch.events)
             )
             |>should equal [
                 0,[
@@ -177,134 +175,69 @@ namespace rvinowise.ai.ui.painted
             start_node
             |>infrastructure.Graph.with_edge finish_node
 
-        let represent_batch_graphically
-            (batch: Event_batch)
-            (painted_batch: infrastructure.Node)
+        let _port = attr "port"
+
+        let html_layout_for_event_batch
+            (batch:Event_batch)
             =
-            {batch with
-                events=
-                    batch.events
-                    |>Seq.map (fun pair->pair.Key, pair.Value)
-                    |>Seq.map (fun (event, vertex) ->
-                        (
-                            event,
-                            Some( 
-                                painted_batch
-                                |>infrastructure.Graph.provide_vertex (
-                                    match event with
-                                    |Start figure -> "("+figure
-                                    |Finish (figure, _) -> figure+")"
-                                    |Mood_change value ->
-                                        if value>0 then
-                                            $"+{value}"
-                                        else
-                                            $"{value}"
-                                )
-                            )
-                        )
-                    )
-                    |>Map
-                
-                node= Some painted_batch
-            }
+            table [] (
+                batch.events
+                |>Seq.map (fun event->
+                    let event_label = 
+                        match event with
+                        |Start figure-> $"({figure}"
+                        |Finish (figure, _) -> $"{figure})"
+                        |Mood_change value ->string(value)
+                    tr [] [ td [_port event_label] [str event_label ]] 
+                )
+                |>List.ofSeq
+            )
+            
+
+    
 
         let graphically_add_event_batches 
             (receptacle: infrastructure.Node)
             (combined_history: Combined_history)
             =
-            {combined_history with
-                batches =
-                combined_history.batches
-                |>Map.toPairs
-                |>Seq.map (fun (moment, batch) ->
-                    (
-                        moment,
+            combined_history.batches
+            |>Map.toPairs
+            |>Seq.map (fun (moment, batch) ->
+                (
+                    moment,
+                    (   
+                        batch,
                         receptacle
-                        |>infrastructure.Graph.provide_vertex (string moment)
-                        |>represent_batch_graphically batch
+                        |>infrastructure.Graph.provide_vertex (
+                            batch
+                            |>html_layout_for_event_batch
+                            |>RenderView.AsString.htmlDocument
+                        )
                     )
                 )
-                |>Map
-            }
+            )
+            |>Map
 
-        let find_appearance_start_in_history
-            history
-            appeared_figure
-            start_moment
-            =
-            history.batches
-            |>Map.find start_moment
-            |>fun batch->batch.events
-            |>Map.find (Start appeared_figure)
-            |>Option.value_exc
 
-        let connect_events_start_to_finish_in_batch
-            history
-            batch
+        let graphically_connect_events_start_to_finish
+            (batches:Map<Moment, (Event_batch*infrastructure.Node) > )
             =
-            batch.events
-            |>Map.toPairs
-            |>Seq.iter(fun (event, node)->
-                match event with 
-                |Finish (figure,start_moment)->
-                    match node with
-                    |Some finish_node ->
-                        let start_node =
-                            find_appearance_start_in_history
-                                history
-                                figure
-                                start_moment
+            batches
+            |>Seq.map extensions.KeyValuyePair.value
+            |>Seq.iter(fun (batch,node) ->
+                batch.events
+                |>Seq.iter(fun event ->
+                    match event with 
+                    |Finish (figure, start_moment)->
+                        let start_batch, start_node = batches[start_moment]
                         start_node
-                        |>Graph.with_edge  finish_node
+                        |>Graph.with_edge  node
                         |>ignore
-                    |None ->raise (System.ApplicationException(
-                        "graphic node should be written into the event batch at this point"
-                    ))
-                |_ ->()
+                        
+                    |_ ->()
+                )
             )
-
-        let arrange_events_inside_batch
-            (batch:Event_batch)
-            =
-            batch.events
-            |>Map.toPairs
-            |>Seq.pairwise
-            |>Seq.iter(fun ((_, start_node), (_, finish_node))->
-                match (start_node, finish_node) with
-                | Some start_node,Some finish_node->
-                    start_node
-                    |>infrastructure.Graph.with_edge finish_node
-                    |>ignore
-                |_->()
-            )
-            match batch.node with
-            |Some node->
-                node
-                |>infrastructure.Graph.with_perpendicular_children
-                |>ignore
-            |None->()
-            
-            batch
-
-
-        let arrange_events_inside_batches history =
-            {history with
-                batches=
-                    history.batches
-                    |>Seq.map (fun pair->
-                        pair.Key, (arrange_events_inside_batch pair.Value)
-                    )
-                    |>Map.ofSeq
-            }
-
-        let graphically_connect_events_start_to_finish 
-            (history: Combined_history)
-            =
-            history.batches
-            |>Seq.map (fun pair->pair.Value)
-            |>Seq.iter (connect_events_start_to_finish_in_batch history)
-
-            history
+            batches
 
         let arrange_two_batches
             (start, finish)
@@ -315,15 +248,14 @@ namespace rvinowise.ai.ui.painted
             |>ignore
 
         let graphically_arrange_event_batches_sequentially
-            (history: Combined_history)
+            (batches:Map<Moment, (Event_batch*infrastructure.Node) > )
             =
-            history.batches
-            |>Seq.map(fun pair -> pair.Value)
-            |>Seq.choose (fun batch -> batch.node)
+            batches
+            |>Seq.map (extensions.KeyValuyePair.value>>snd)
             |>Seq.pairwise
             |>Seq.iter arrange_two_batches
             
-            history
+            batches
             
         let add_histories
             figure_histories
@@ -333,9 +265,7 @@ namespace rvinowise.ai.ui.painted
             figure_histories
             |>combine_figure_histories
             |>add_mood_changes_to_combined_history mood_changes_history
-            //|>add_mood_history mood_changes_history
             |>graphically_add_event_batches node
-            |>arrange_events_inside_batches
             |>graphically_connect_events_start_to_finish
             |>graphically_arrange_event_batches_sequentially
             |>ignore

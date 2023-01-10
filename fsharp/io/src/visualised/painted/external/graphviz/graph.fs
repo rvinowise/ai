@@ -262,7 +262,7 @@ namespace rvinowise.ui.infrastructure
             (head:Node)
             (tail:Node)
             =
-            tail|>provide_edge head
+            tail|>provide_edge head|>ignore
             tail
 
 
