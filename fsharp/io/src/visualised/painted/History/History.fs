@@ -178,6 +178,7 @@ namespace rvinowise.ai.ui.painted
         let _port = attr "port"
 
         let html_layout_for_event_batch
+            (moment:Moment)
             (batch:Event_batch)
             =
             table [
@@ -188,6 +189,7 @@ namespace rvinowise.ai.ui.painted
                 ] 
                 (
                     batch.events
+                    |>Seq.sort
                     |>Seq.map (fun event->
                         let event_label = 
                             match event with
@@ -196,6 +198,9 @@ namespace rvinowise.ai.ui.painted
                             |Mood_change value ->string(value)
                         tr [] [ td [_port event_label] [str event_label ]] 
                     )
+                    |>Seq.append([
+                        tr [] [ td [_port "moment"] [str (string moment) ]] 
+                    ])
                     |>List.ofSeq
                 )
             
@@ -217,7 +222,7 @@ namespace rvinowise.ai.ui.painted
                         //|>infrastructure.Graph.provide_vertex ("batch"+ string(moment))
                         |>infrastructure.Graph.provide_html_vertex (
                             batch
-                            |>html_layout_for_event_batch
+                            |>html_layout_for_event_batch moment
                             |>RenderView.AsString.htmlNode
                             |>sprintf "<\n%s\n>"
                         )
@@ -237,9 +242,9 @@ namespace rvinowise.ai.ui.painted
                 |>Seq.iter(fun event ->
                     match event with 
                     |Finish (figure, start_moment)->
-                        let start_batch, start_node = batches[start_moment]
-                        start_node
-                        |>Graph.with_edge  node
+                        let _, start_node = batches[start_moment]
+                        (start_node, $"({figure}")
+                        ||>Graph.provide_edge_between_ports  node $"{figure})"
                         |>ignore
                         
                     |_ ->()

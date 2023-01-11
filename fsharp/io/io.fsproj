@@ -26,10 +26,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\provided_data\provided_data.fsproj" />
-
-    <!-- graphviz wrapper -->
-    <!-- <ProjectReference Include="..\..\Graphviz.NetWrapper\GraphvizWrapper\GraphvizWrapper.vsxproj" />
-    <ProjectReference Include="..\..\Graphviz.NetWrapper\Rubjerg.Graphviz\Rubjerg.Graphviz.csproj" /> -->
+    
+    <ProjectReference Include="..\..\DotNetGraph\Sources\DotNetGraph\DotNetGraph.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -41,10 +39,10 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     
-    <!-- <PackageReference Include="Graphviz.NET" Version="1.0.0" />
-    <PackageReference Include="Rubjerg.Graphviz" Version="1.1.0" /> -->
+    <!-- <PackageReference Include="Graphviz.NET" Version="1.0.0" /> -->
+    <PackageReference Include="Rubjerg.Graphviz" Version="1.1.0" />
     <!-- <PackageReference Include="QuikGraph.Graphviz" Version="2.5.0" /> -->
-    <PackageReference Include="DotNetGraph" Version="2.7.0" />
+    <!-- <PackageReference Include="DotNetGraph" Version="2.7.0" /> -->
 
     
     <PackageReference Include="Giraffe.ViewEngine" Version="1.4.0" />

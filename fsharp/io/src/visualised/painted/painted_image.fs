@@ -15,7 +15,13 @@ namespace rvinowise.ai.ui.painted
         
         let open_image_of_graph (graph_node:infrastructure.Node) =
             let filename = Directory.GetCurrentDirectory() + $"/{graph_node.data.id}"
-            graph_node.graph|>infrastructure.Graph.save_to_file filename
+            let root =
+                (graph_node.graph
+                |>infrastructure.Graph.save_to_file filename
+                |>Rubjerg.Graphviz.RootGraph.FromDotFile)
+            root.ComputeLayout()       
+            root.ToSvgFile($"{filename}.svg")
+            root.FreeLayout()
             Process.Start("cmd", $"/c \"{filename}.svg\"") |> ignore
             ()
 
@@ -34,7 +40,7 @@ namespace rvinowise.ai.ui.painted
             ||>History.as_graph
             |>open_image_of_graph
         
-        
+
         [<Fact>]//(Skip="ui")
         let ``construct a graph``()=
             let root_node =

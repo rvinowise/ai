@@ -115,10 +115,10 @@ namespace rvinowise.ui.infrastructure
                     let new_cluster_impl = 
                         match parent.impl with
                         |Cluster parent_cluster ->
-                            graph_node.graph.root_impl.Elements.Remove(vertex)
+                            graph_node.graph.root_impl.Elements.Remove(vertex)|>ignore
                             let cluster = 
                                 parent_cluster.AddSubGraph(graph_node.data.id_impl)
-                            cluster.AddLine($"label={graph_node.data.id}")
+                            cluster.AddLine($"label={graph_node.data.id}")|>ignore
                             cluster.AddLine($"cluster=true")
                         |Vertex _ -> raise (ArgumentException("parent must be a graph"))
                     
@@ -264,7 +264,30 @@ namespace rvinowise.ui.infrastructure
             |>fun n->n.id
             |>should equal inner_vertex.data.id
 
-        
+        let provide_edge_between_ports
+            (head:Node)
+            head_port
+            (tail:Node)
+            tail_port
+            =
+            Contract.Requires(head.graph = tail.graph)
+            let tail_impl = 
+                match tail.data.impl with
+                |Vertex v -> v
+                |Cluster _ -> raise (ArgumentException("ports can't be in clusters, but in leaf verticex"))
+            let head_impl = 
+                match head.data.impl with
+                |Vertex v -> v
+                |Cluster _ -> raise (ArgumentException("ports can't be in clusters, but in leaf verticex"))
+                 
+            let edge_impl = DotNetGraph.Edge.DotEdge(tail_impl, tail_port, head_impl, head_port)
+            edge_impl.SetCustomAttribute("id",$"\"{tail.data.id_impl}->{head.data.id_impl}\"")|>ignore
+         
+            head.graph.root_impl.Elements.Add(edge_impl)
+            {
+                Edge.graph = tail.graph;
+                impl=edge_impl
+            }
 
         let provide_edge
             (head:Node)
@@ -276,7 +299,6 @@ namespace rvinowise.ui.infrastructure
             
             let edge_impl = DotNetGraph.Edge.DotEdge(tail_impl, head_impl)
             edge_impl.SetCustomAttribute("id",$"\"{tail.data.id_impl}->{head.data.id_impl}\"")|>ignore
-            edge_impl.
             if (tail.data = vertex_tail) then () else
                 edge_impl.SetCustomAttribute("ltail",tail.data.id_impl)|>ignore
             if (head.data = vertex_head) then () else
@@ -304,6 +326,7 @@ namespace rvinowise.ui.infrastructure
             let root = graph.root_impl
             let dot = root.Compile(true)
             File.WriteAllText(filename+".dot", dot);
+            filename+".dot"
             //root.ToSvgFile(filename+".svg")
         
 
