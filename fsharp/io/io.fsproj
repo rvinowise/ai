@@ -33,7 +33,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    
     <PackageReference Include="xUnit" Version="2.4.2" />
     <PackageReference Include="fsunit" Version="5.1.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.4.0" />
@@ -41,8 +40,13 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Graphviz.NET" Version="1.0.0" />
-    <PackageReference Include="Rubjerg.Graphviz" Version="1.1.0" />
+    
+    <!-- <PackageReference Include="Graphviz.NET" Version="1.0.0" />
+    <PackageReference Include="Rubjerg.Graphviz" Version="1.1.0" /> -->
+    <!-- <PackageReference Include="QuikGraph.Graphviz" Version="2.5.0" /> -->
+    <PackageReference Include="DotNetGraph" Version="2.7.0" />
+
+    
     <PackageReference Include="Giraffe.ViewEngine" Version="1.4.0" />
     
   </ItemGroup>

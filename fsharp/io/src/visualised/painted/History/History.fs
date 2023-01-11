@@ -180,18 +180,24 @@ namespace rvinowise.ai.ui.painted
         let html_layout_for_event_batch
             (batch:Event_batch)
             =
-            table [] (
-                batch.events
-                |>Seq.map (fun event->
-                    let event_label = 
-                        match event with
-                        |Start figure-> $"({figure}"
-                        |Finish (figure, _) -> $"{figure})"
-                        |Mood_change value ->string(value)
-                    tr [] [ td [_port event_label] [str event_label ]] 
+            table [
+                    (attr "BORDER" "0") 
+                    (attr "CELLBORDER" "1") 
+                    (attr "CELLSPACING" "0") 
+                    (attr "CELLPADDING""4")
+                ] 
+                (
+                    batch.events
+                    |>Seq.map (fun event->
+                        let event_label = 
+                            match event with
+                            |Start figure-> $"({figure}"
+                            |Finish (figure, _) -> $"{figure})"
+                            |Mood_change value ->string(value)
+                        tr [] [ td [_port event_label] [str event_label ]] 
+                    )
+                    |>List.ofSeq
                 )
-                |>List.ofSeq
-            )
             
 
     
@@ -208,6 +214,7 @@ namespace rvinowise.ai.ui.painted
                     (   
                         batch,
                         receptacle
+                        //|>infrastructure.Graph.provide_vertex ("batch"+ string(moment))
                         |>infrastructure.Graph.provide_html_vertex (
                             batch
                             |>html_layout_for_event_batch

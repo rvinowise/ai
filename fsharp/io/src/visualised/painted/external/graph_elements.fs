@@ -1,7 +1,5 @@
 namespace rvinowise.ui.painted
 
-    open Rubjerg
-    open Rubjerg.Graphviz
 
     open rvinowise
     open rvinowise.ai

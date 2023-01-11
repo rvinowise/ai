@@ -1,18 +1,21 @@
 (* incapsulate infrastructure - a library for painting graphs *)
 namespace rvinowise.ui.infrastructure
 
+    open System.IO
+    open DotNetGraph.Node
     open FsUnit
     open Xunit
 
+    open DotNetGraph
+    open DotNetGraph.Extensions
 
-    type private External_subgraph = Rubjerg.Graphviz.SubGraph
-    type private External_root = Rubjerg.Graphviz.RootGraph
-    type private External_graph = Rubjerg.Graphviz.Graph
-    type private External_node = Rubjerg.Graphviz.Node
-    type private External_element = Rubjerg.Graphviz.CGraphThing
-    type private External_edge = Rubjerg.Graphviz.Edge
-    
     type Node_id = string
+    type private External_vertex = DotNetGraph.Node.DotNode
+    type private External_edge = DotNetGraph.Edge.DotEdge
+    type private External_graph = DotNetGraph.DotGraph
+    type private External_root = DotNetGraph.DotGraph
+    
+    
 
     type Cluster = {
         impl: External_graph
@@ -20,7 +23,7 @@ namespace rvinowise.ui.infrastructure
     }
 
     type Element=
-    |Vertex of External_node
+    |Vertex of External_vertex
     |Cluster of External_graph
 
     type Node_data={
@@ -56,12 +59,11 @@ namespace rvinowise.ui.infrastructure
     [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
     module Edge=
         let with_attribute key value (edge:Edge) =
-            edge.impl.SafeSetAttribute(key,value,"")
+            edge.impl.SetCustomAttribute(key,value)|>ignore
             edge
 
     [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
     module Graph=
-        open Rubjerg
         open System
         open System.Diagnostics.Contracts
 
@@ -69,8 +71,8 @@ namespace rvinowise.ui.infrastructure
 
         let with_attribute key value (node:Node) =
             match node.data.impl with
-            |Cluster g -> g.SafeSetAttribute(key,value,"")
-            |Vertex v->v.SafeSetAttribute(key,value,"")
+            |Cluster g -> g.AddLine($"{key}={value}")|>ignore
+            |Vertex v->v.SetCustomAttribute(key,value)|>ignore
             node
 
         let fill_with_color color node =
@@ -79,10 +81,10 @@ namespace rvinowise.ui.infrastructure
             |>with_attribute "style" "filled"
 
         let empty name=
-            let external_root:External_root = External_root.CreateNew(name, Graphviz.GraphType.Directed)
-            external_root.SafeSetAttribute("rankdir", "LR", "")
-            external_root.SafeSetAttribute("compound", "true", "") //for edges between clusters
-            external_root.SafeSetAttribute("newrank", "true", "") //for different rankdir directions
+            let external_root:External_root = DotGraph(name, true)
+            external_root.AddLine("rankdir=LR")|>ignore
+            external_root.AddLine("compound=true")|>ignore //for edges between clusters
+            external_root.AddLine("newrank=true")|>ignore //for different rankdir directions
             let root_node: Node_data={
                 id = name
                 id_impl = name
@@ -113,12 +115,11 @@ namespace rvinowise.ui.infrastructure
                     let new_cluster_impl = 
                         match parent.impl with
                         |Cluster parent_cluster ->
-                            graph_node.graph.root_impl.Delete(vertex)
+                            graph_node.graph.root_impl.Elements.Remove(vertex)
                             let cluster = 
-                                parent_cluster.GetOrAddSubgraph(graph_node.data.id_impl)
-                            cluster.SafeSetAttribute("label", graph_node.data.id, "")
-                            cluster.SafeSetAttribute("cluster", "true", "")
-                            cluster:>External_graph
+                                parent_cluster.AddSubGraph(graph_node.data.id_impl)
+                            cluster.AddLine($"label={graph_node.data.id}")
+                            cluster.AddLine($"cluster=true")
                         |Vertex _ -> raise (ArgumentException("parent must be a graph"))
                     
                     graph_node.data.impl <- Cluster new_cluster_impl
@@ -153,11 +154,11 @@ namespace rvinowise.ui.infrastructure
 
         let write_attributes_to_node 
             (attr:Map<string, string>) 
-            (node_impl:External_node)
+            (node_impl:External_vertex)
             =
             attr
             |>Seq.iter (fun pair->
-                node_impl.SafeSetAttribute(pair.Key, pair.Value,"")
+                node_impl.SetCustomAttribute(pair.Key, pair.Value)|>ignore
             )
 
         let provide_html_vertex
@@ -169,13 +170,16 @@ namespace rvinowise.ui.infrastructure
                 |Cluster parent_cluster -> parent_cluster
                 |Vertex _->(transform_vertex_into_graph owner)
             
+            
             let id = Guid.NewGuid().ToString()
-            let vertex_impl = 
-                owner_cluster.GetOrAddNode(owner.data.id_impl+id)
-            vertex_impl.SetAttribute("label",label)
-            vertex_impl.SafeSetAttribute("shape","plaintext","")
-            vertex_impl|>write_attributes_to_node owner.data.child_node_attr
+            
+            let vertex_impl = DotNode(owner.data.id_impl+id);
+            owner_cluster.Elements.Add(vertex_impl);
+            vertex_impl.SetCustomAttribute("label",label)|>ignore
+            vertex_impl.SetCustomAttribute("shape","plaintext")|>ignore
+            //vertex_impl|>write_attributes_to_node owner.data.child_node_attr
 
+            
             let new_vertex = {
                 id = id
                 id_impl = owner.data.id_impl+id
@@ -196,11 +200,14 @@ namespace rvinowise.ui.infrastructure
                 |Cluster parent_cluster -> parent_cluster
                 |Vertex _->(transform_vertex_into_graph owner)
             
-            let vertex_impl = 
-                owner_cluster.GetOrAddNode(owner.data.id_impl+id)
-            vertex_impl.SafeSetAttribute("label",id,"")
+            
+            let vertex_impl = DotNode(owner.data.id_impl+id);
+            owner_cluster.Elements.Add(vertex_impl);
+                
+            vertex_impl.SetCustomAttribute("label",id)|>ignore
             vertex_impl|>write_attributes_to_node owner.data.child_node_attr
 
+            
             let new_vertex = {
                 id = id
                 id_impl = owner.data.id_impl+id
@@ -229,12 +236,7 @@ namespace rvinowise.ui.infrastructure
             fill_vertex vertex
             target
 
-        // let is_vertex_impl node =
-        //     match node.impl with
-        //     |Cluster _ -> false
-        //     |Vertex _ -> true
 
-       
         let rec private lowest_child_vertex (node:Node_data)=
             match node.impl with
             |Element.Cluster cluster_impl -> 
@@ -271,13 +273,16 @@ namespace rvinowise.ui.infrastructure
             Contract.Requires(head.graph = tail.graph)
             let vertex_tail, tail_impl = lowest_child_vertex tail.data
             let vertex_head, head_impl = lowest_child_vertex head.data
-            let edge_impl = head.graph.root_impl.GetOrAddEdge(
-                tail_impl, head_impl, $"{tail.data.id_impl}->{head.data.id_impl}"
-            )
+            
+            let edge_impl = DotNetGraph.Edge.DotEdge(tail_impl, head_impl)
+            edge_impl.SetCustomAttribute("id",$"\"{tail.data.id_impl}->{head.data.id_impl}\"")|>ignore
+            edge_impl.
             if (tail.data = vertex_tail) then () else
-                edge_impl.SafeSetAttribute("ltail",tail.data.id_impl,"")
+                edge_impl.SetCustomAttribute("ltail",tail.data.id_impl)|>ignore
             if (head.data = vertex_head) then () else
-                edge_impl.SafeSetAttribute("lhead",head.data.id_impl,"")
+                edge_impl.SetCustomAttribute("lhead",head.data.id_impl)|>ignore
+            head.graph.root_impl.Elements.Add(edge_impl)
+            
             {
                 Edge.graph = tail.graph;
                 impl=edge_impl
@@ -297,10 +302,9 @@ namespace rvinowise.ui.infrastructure
             graph
             =
             let root = graph.root_impl
-            root.ComputeLayout()
-            root.ToSvgFile(filename+".svg")
-            root.ToDotFile(filename+".dot")
-            root.FreeLayout()
+            let dot = root.Compile(true)
+            File.WriteAllText(filename+".dot", dot);
+            //root.ToSvgFile(filename+".svg")
         
 
         
