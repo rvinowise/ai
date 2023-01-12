@@ -10,28 +10,7 @@ namespace rvinowise.ai.ui.painted
     open rvinowise.ui.infrastructure
     open rvinowise.ai
 
-    type Appearance_event=
-    |Start of Figure_id
-    |Finish of Figure_id * Moment
-    |Mood_change of int
-
-
-
-    type Event_batch = {
-        events: Appearance_event seq
-        mood:Mood
-    }
-
-    module Event_batch=
-        let empty =
-            {
-                events= []
-                mood= 0
-            }
-
-    type Combined_history = {
-        batches: Map<Moment, Event_batch>
-    }
+    
 
     module History =
         
@@ -54,8 +33,51 @@ namespace rvinowise.ai.ui.painted
             $"appearances of {figures} from {border.start} to {border.finish}"
 
 
-        
+        let add_signal_to_history 
+            figure
+            moment
+            (batches:Map<Moment, Event_batch>)
+            =
+            batches
+                |>Map.add moment (
+                    let start_batch = 
+                        batches
+                        |>Map.getOrDefault moment Event_batch.empty
+                    {start_batch with 
+                        events=
+                            start_batch.events
+                            |>Seq.append [Signal figure]
+                    }
+                )
 
+        let add_start_and_finish_to_history
+            figure
+            (interval:Interval)
+            (batches:Map<Moment, Event_batch>)
+            =
+            let combined_batches =
+                batches
+                |>Map.add interval.start (
+                    let start_batch = 
+                        batches
+                        |>Map.getOrDefault interval.start Event_batch.empty
+                    {start_batch with 
+                        events=
+                            start_batch.events
+                            |>Seq.append [Start figure]
+                    }
+                )
+            combined_batches
+            |>Map.add interval.finish (
+                let end_batch = 
+                    combined_batches
+                    |>Map.getOrDefault interval.finish Event_batch.empty
+                {end_batch with 
+                    events=
+                        end_batch.events
+                        |>Seq.append [Finish (figure, interval.start)] 
+                }
+            )
 
         let add_events_to_combined_history 
             figure_history 
@@ -66,30 +88,16 @@ namespace rvinowise.ai.ui.painted
             |>Seq.fold (fun combined interval->
                 {combined with 
                     batches=
-                        let combined_batches =
-                            combined.batches
-                            |>Map.add interval.start (
-                                let start_batch = 
-                                    combined.batches
-                                    |>Map.getOrDefault interval.start Event_batch.empty
-                                {start_batch with 
-                                    events=
-                                        start_batch.events
-                                        |>Seq.append [Start figure_history.figure]
-                                }
-                            )
-                        combined_batches
-                        |>Map.add interval.finish (
-                            let end_batch = 
-                                combined_batches
-                                |>Map.getOrDefault interval.finish Event_batch.empty
-                            {end_batch with 
-                                events=
-                                    end_batch.events
-                                    |>Seq.append [Finish (figure_history.figure, interval.start)] 
-                            }
-                        )
-                        
+                        if interval.start = interval.finish then
+                            add_signal_to_history
+                                figure_history.figure
+                                interval.start
+                                combined.batches
+                        else
+                            add_start_and_finish_to_history
+                                figure_history.figure
+                                interval
+                                combined.batches
                 }
             ) combined_history
 
@@ -155,9 +163,8 @@ namespace rvinowise.ai.ui.painted
                     Finish ("b",0)
                 ];
                 4,[
-                    Start "b";
                     Finish ("a",2);
-                    Finish ("b",4)
+                    Signal "b"
                 ]
             ]
 
@@ -175,35 +182,11 @@ namespace rvinowise.ai.ui.painted
             start_node
             |>infrastructure.Graph.with_edge finish_node
 
-        let _port = attr "port"
+        
 
-        let html_layout_for_event_batch
-            (moment:Moment)
-            (batch:Event_batch)
-            =
-            table [
-                    (attr "BORDER" "0") 
-                    (attr "CELLBORDER" "1") 
-                    (attr "CELLSPACING" "0") 
-                    (attr "CELLPADDING""4")
-                ] 
-                (
-                    batch.events
-                    |>Seq.sort
-                    |>Seq.map (fun event->
-                        let event_label = 
-                            match event with
-                            |Start figure-> $"({figure}"
-                            |Finish (figure, _) -> $"{figure})"
-                            |Mood_change value ->string(value)
-                        tr [] [ td [_port event_label] [str event_label ]] 
-                    )
-                    |>Seq.append([
-                        tr [] [ td [_port "moment"] [str (string moment) ]] 
-                    ])
-                    |>List.ofSeq
-                )
-            
+
+        
+                
 
     
 
@@ -222,7 +205,7 @@ namespace rvinowise.ai.ui.painted
                         //|>infrastructure.Graph.provide_vertex ("batch"+ string(moment))
                         |>infrastructure.Graph.provide_html_vertex (
                             batch
-                            |>html_layout_for_event_batch moment
+                            |>Batch_html.layout_for_event_batch moment
                             |>RenderView.AsString.htmlNode
                             |>sprintf "<\n%s\n>"
                         )

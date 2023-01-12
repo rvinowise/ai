@@ -3,6 +3,7 @@ namespace rvinowise.ui.infrastructure
 
     open System.IO
     open DotNetGraph.Node
+    open DotNetGraph.SubGraph
     open FsUnit
     open Xunit
 
@@ -12,7 +13,7 @@ namespace rvinowise.ui.infrastructure
     type Node_id = string
     type private External_vertex = DotNetGraph.Node.DotNode
     type private External_edge = DotNetGraph.Edge.DotEdge
-    type private External_graph = DotNetGraph.DotGraph
+    type private External_graph = DotNetGraph.IDotGraph
     type private External_root = DotNetGraph.DotGraph
     
     
@@ -116,14 +117,15 @@ namespace rvinowise.ui.infrastructure
                         match parent.impl with
                         |Cluster parent_cluster ->
                             graph_node.graph.root_impl.Elements.Remove(vertex)|>ignore
-                            let cluster = 
-                                parent_cluster.AddSubGraph(graph_node.data.id_impl)
-                            cluster.AddLine($"label={graph_node.data.id}")|>ignore
-                            cluster.AddLine($"cluster=true")
+                            let new_cluster_impl = DotSubGraph(graph_node.data.id_impl)
+                            new_cluster_impl.AddLine($"label={graph_node.data.id}")|>ignore
+                            new_cluster_impl.AddLine("cluster=true")|>ignore
+                            parent_cluster.Elements.Add(new_cluster_impl);
+                            new_cluster_impl
                         |Vertex _ -> raise (ArgumentException("parent must be a graph"))
                     
                     graph_node.data.impl <- Cluster new_cluster_impl
-                    new_cluster_impl
+                    new_cluster_impl :> IDotGraph
                 |None -> raise (ArgumentException("root node shouldn't be turned into a graph"))
             |Cluster cluster_impl -> cluster_impl
             
@@ -300,9 +302,9 @@ namespace rvinowise.ui.infrastructure
             let edge_impl = DotNetGraph.Edge.DotEdge(tail_impl, head_impl)
             edge_impl.SetCustomAttribute("id",$"\"{tail.data.id_impl}->{head.data.id_impl}\"")|>ignore
             if (tail.data = vertex_tail) then () else
-                edge_impl.SetCustomAttribute("ltail",tail.data.id_impl)|>ignore
+                edge_impl.SetCustomAttribute("ltail",$"\"{tail.data.id_impl}\"")|>ignore
             if (head.data = vertex_head) then () else
-                edge_impl.SetCustomAttribute("lhead",head.data.id_impl)|>ignore
+                edge_impl.SetCustomAttribute("lhead",$"\"{head.data.id_impl}\"")|>ignore
             head.graph.root_impl.Elements.Add(edge_impl)
             
             {

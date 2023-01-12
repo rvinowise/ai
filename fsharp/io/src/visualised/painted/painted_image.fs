@@ -1,4 +1,5 @@
 namespace rvinowise.ai.ui.painted
+    open System
     open Xunit
     open FsUnit
 
@@ -11,14 +12,19 @@ namespace rvinowise.ai.ui.painted
         open System.Diagnostics
 
         
-
+        exception BadGraphvizFile of string
         
         let open_image_of_graph (graph_node:infrastructure.Node) =
             let filename = Directory.GetCurrentDirectory() + $"/{graph_node.data.id}"
-            let root =
-                (graph_node.graph
+            let dot_file =
+                graph_node.graph
                 |>infrastructure.Graph.save_to_file filename
-                |>Rubjerg.Graphviz.RootGraph.FromDotFile)
+            let root =
+                try 
+                    dot_file
+                    |>Rubjerg.Graphviz.RootGraph.FromDotFile
+                with
+                    | :? Exception -> raise (BadGraphvizFile "bad .dot file was generated")
             root.ComputeLayout()       
             root.ToSvgFile($"{filename}.svg")
             root.FreeLayout()
