@@ -106,7 +106,7 @@ namespace rvinowise.ai.mood.history
                             [
                                 mood_changes.changes
                                 |>Seq.last
-                                |>extensions.KeyValuyePair.value
+                                |>extensions.KeyValuePair.value
                                 |>fun last_mood_change->
                                     (mood_at_moments
                                     |>Seq.last)
