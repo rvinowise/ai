@@ -1,4 +1,4 @@
-﻿namespace rvinowise.ai.ui.painted
+﻿namespace rvinowise.ai
     open FsUnit
     open Xunit
     

@@ -24,7 +24,7 @@ namespace rvinowise.ai.ui.painted
                     dot_file
                     |>Rubjerg.Graphviz.RootGraph.FromDotFile
                 with
-                    | :? Exception -> raise (BadGraphvizFile "bad .dot file was generated")
+                    | _ -> raise (BadGraphvizFile "bad .dot file was generated")
             root.ComputeLayout()       
             root.ToSvgFile($"{filename}.svg")
             root.FreeLayout()

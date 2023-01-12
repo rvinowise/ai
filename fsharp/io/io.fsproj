@@ -18,7 +18,6 @@
     <Compile Include="src\visualised\painted\Graph\Figure.fs" />
     <Compile Include="src\visualised\painted\Graph\Graph.fs" />
     
-    <Compile Include="src\visualised\painted\History\Types.fs" />
     <Compile Include="src\visualised\painted\History\Batch_html.fs" />
     <Compile Include="src\visualised\painted\History\History.fs" />
     

@@ -75,8 +75,4 @@ namespace rvinowise.ai.history
             |>should equal
                 (Interval.regular 0UL 7UL)
 
-namespace rvinowise.ai
 
-    [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
-    module History =
-        ()
