@@ -30,7 +30,7 @@
   <ItemGroup>
     <ProjectReference Include="..\provided_data\provided_data.fsproj" />
     
-    <ProjectReference Include="..\..\DotNetGraph\Sources\DotNetGraph\DotNetGraph.csproj" />
+    <ProjectReference Include="..\..\..\DotNetGraph\Sources\DotNetGraph\DotNetGraph.csproj" />
   </ItemGroup>
 
   <ItemGroup>
