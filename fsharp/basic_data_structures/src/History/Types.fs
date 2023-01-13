@@ -22,7 +22,16 @@
                 events= []
                 mood= 0
             }
+        
+        let ofSignals mood figures =
+            {
+                mood=mood
+                events= 
+                    figures
+                    |>Seq.map Signal
+            }
 
     type Combined_history = {
+        //interval: Interval
         batches: Map<Moment, Event_batch>
     }

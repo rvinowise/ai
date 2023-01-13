@@ -62,7 +62,7 @@ namespace rvinowise.ai.ui.painted
             (batches:Map<Moment, (Event_batch*infrastructure.Node) > )
             =
             batches
-            |>Seq.map extensions.KeyValuyePair.value
+            |>Seq.map extensions.KeyValuePair.value
             |>Seq.iter(fun (batch,node) ->
                 batch.events
                 |>Seq.iter(fun event ->
@@ -90,7 +90,7 @@ namespace rvinowise.ai.ui.painted
             (batches:Map<Moment, (Event_batch*infrastructure.Node) > )
             =
             batches
-            |>Seq.map (extensions.KeyValuyePair.value>>snd)
+            |>Seq.map (extensions.KeyValuePair.value>>snd)
             |>Seq.pairwise
             |>Seq.iter arrange_two_batches
             

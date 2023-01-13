@@ -10,7 +10,7 @@ namespace rvinowise.ai
             |>Seq.filter (fun vertex->
                 vertex.Value=Stencil_output
             )
-            |>Seq.map KeyValuyePair.key
+            |>Seq.map KeyValuePair.key
             |>Seq.distinct
 
         let is_output stencil vertex=

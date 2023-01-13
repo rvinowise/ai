@@ -11,7 +11,14 @@ namespace rvinowise.ai
     [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
     module Combined_history =
         
-        
+        let interval history =
+            let moments = 
+                history.batches
+                |>Seq.map extensions.KeyValuePair.key
+            (
+                moments|>Seq.min,
+                moments|>Seq.max
+            )|>Interval.ofPair
 
 
         let add_signal_to_history 
@@ -61,7 +68,7 @@ namespace rvinowise.ai
             )
 
         let add_events_to_combined_history 
-            figure_history 
+            (figure_history : Figure_history)
             (combined_history: Combined_history)
             = 
             figure_history.appearances
@@ -108,12 +115,15 @@ namespace rvinowise.ai
             ) combined_history
 
         let combine_figure_histories 
-            figure_histories 
+            (figure_histories : Figure_history seq)
             =
             figure_histories
-            |>Seq.fold (fun combined_history figure_history->
+            |>Seq.fold (fun combined_history figure_history ->
                 add_events_to_combined_history figure_history combined_history
-            ) {batches=Map.empty}
+            ) 
+                {
+                    Combined_history.batches=Map.empty
+                }
 
         [<Fact>]
         let ``combine figure histories``()=
@@ -153,3 +163,62 @@ namespace rvinowise.ai
             (combined_history: Combined_history)
             =
             ()
+
+
+namespace rvinowise.ai.history
+    open FsUnit
+    open Xunit
+
+    open rvinowise.ai
+
+    module built =
+        
+        let from_tuples 
+            start
+            batches
+            =
+            {
+                //interval=Interval.regular start (start+Seq.length(batches)-1)
+
+                batches=
+                    batches
+                    |>Seq.mapi (fun index (fired_figures: Figure_id seq)->
+                        (
+                            start+index,
+                            Event_batch.ofSignals 0 fired_figures
+                        )
+                    )|>Map.ofSeq
+            }
+        
+        
+
+    module example=
+        let short_history_with_some_repetitions=
+            built.from_tuples 0 [
+                    ["a";"x"];
+                    ["b";"y"];
+                    ["a";"z";"x"];
+                    ["c"];
+                    ["b";"x"];
+                    ["b"];
+                    ["a"];
+                    ["c"]
+                ]
+        
+        [<Fact>]
+        let ``history interval can start from any moment``()=
+            let history = 
+                built.from_tuples 0 [
+                    ["a";"x"];
+                    ["b";"y"];
+                    ["a";"z";"x"];
+                    ["c"];
+                    ["b";"x"];
+                    ["b"];
+                    ["a"];
+                    ["c"]
+                ]
+            history
+            |>Combined_history.interval
+            |>should equal
+                (Interval.regular 0 7)

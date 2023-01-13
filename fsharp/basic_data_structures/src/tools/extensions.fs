@@ -35,7 +35,7 @@ module Dictionary=
 
     
 
-module KeyValuyePair=
+module KeyValuePair=
     open System.Collections.Generic
 
     let key (pair:KeyValuePair<'a,'b>) =

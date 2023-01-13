@@ -15,4 +15,7 @@ module finding_sequences_in_history =
     [<Fact>]
     let ``visualising stages of pattern finding``()=
         let signal_history =
-            ai.Combined_history.
+            [
+                []
+            ]
+            |>ai.Combined_history.built.ofSignals
