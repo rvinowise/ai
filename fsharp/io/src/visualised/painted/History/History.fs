@@ -90,24 +90,26 @@ namespace rvinowise.ai.ui.painted
             history 
             node
             =
+            node
+            |>infrastructure.Graph.with_rectangle_vertices
+            
             history
             |>add_event_batches node
             |>connect_events_start_to_finish
             |>arrange_event_batches_sequentially
             |>ignore
-            node
             
         
         let as_graph 
             combined_history 
             =
-            combined_history
-            |>combined_history_description
-            |>infrastructure.Graph.empty
-            |>infrastructure.Graph.with_rectangle_vertices
-            |>add_combined_history combined_history
-        
-        
+            let graph=
+                combined_history
+                |>combined_history_description
+                |>infrastructure.Graph.empty
+                
+            graph|>add_combined_history combined_history
+            graph
 
         
         

@@ -13,11 +13,13 @@
     <Compile Include="src\finding_repetitions.fs" />
     <!-- tests -->
     <Compile Include="src\test\finding_a_sequence.fs" />
+    <Compile Include="src\test\finding_sequences_in_history.fs" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\provided_data\provided_data.fsproj" />
     <ProjectReference Include="..\..\basic_data_structures\basic_data_structures.fsproj" />
+    <ProjectReference Include="..\..\io\io.fsproj" />
   </ItemGroup>
 
   <ItemGroup>

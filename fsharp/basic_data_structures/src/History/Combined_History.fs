@@ -190,6 +190,25 @@ namespace rvinowise.ai.combined_history
                     )|>Map.ofSeq
             }
         
+        [<Fact>]
+        let ``history interval can start from any moment``()=
+            let history = 
+                from_contingent_signals 0 [
+                    ["a";"x"];
+                    ["b";"y"];
+                    ["a";"z";"x"];
+                    ["c"];
+                    ["b";"x"];
+                    ["b"];
+                    ["a"];
+                    ["c"]
+                ]
+            history
+            |>Combined_history.interval
+            |>should equal
+                (Interval.regular 0 7)
+
+
         let from_figure_and_mood_histories
             figure_histories
             mood_changes_history
@@ -212,20 +231,4 @@ namespace rvinowise.ai.combined_history
                     ["c"]
                 ]
         
-        [<Fact>]
-        let ``history interval can start from any moment``()=
-            let history = 
-                built.from_contingent_signals 0 [
-                    ["a";"x"];
-                    ["b";"y"];
-                    ["a";"z";"x"];
-                    ["c"];
-                    ["b";"x"];
-                    ["b"];
-                    ["a"];
-                    ["c"]
-                ]
-            history
-            |>Combined_history.interval
-            |>should equal
-                (Interval.regular 0 7)
+        

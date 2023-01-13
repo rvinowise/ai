@@ -13,7 +13,7 @@
 
   <ItemGroup>
     <Compile Include="src\visualised\painted\external\graph_elements.fs" />
-    <Compile Include="src\visualised\painted\external\graphviz\Graph.fs" />
+    <Compile Include="src\visualised\painted\external\DotNetGraph\Graph.fs" />
 
     <Compile Include="src\visualised\painted\Graph\Figure.fs" />
     <Compile Include="src\visualised\painted\Graph\Graph.fs" />

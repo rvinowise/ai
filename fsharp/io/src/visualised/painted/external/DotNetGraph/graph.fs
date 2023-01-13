@@ -118,8 +118,8 @@ namespace rvinowise.ui.infrastructure
                         |Cluster parent_cluster ->
                             graph_node.graph.root_impl.Elements.Remove(vertex)|>ignore
                             let new_cluster_impl = DotSubGraph(graph_node.data.id_impl)
-                            new_cluster_impl.AddLine($"label={graph_node.data.id}")|>ignore
-                            new_cluster_impl.AddLine("cluster=true")|>ignore
+                            new_cluster_impl.Label <- graph_node.data.id
+                            new_cluster_impl.SetCustomAttribute("cluster", "true")|>ignore
                             parent_cluster.Elements.Add(new_cluster_impl);
                             new_cluster_impl
                         |Vertex _ -> raise (ArgumentException("parent must be a graph"))
