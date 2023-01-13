@@ -1,1 +1,17 @@
-[requires]soci/4.0.3 #sql database interface (micro orm)#unit testingcatch2/3.1.0  #(elegant and popular)boost-ext-ut/1.1.9 #(most advanced)spdlog/1.10.0 #logging (the most popular library in 2022)boost/1.79.0 #for contracts. the only library providing contracts for c++, not a popular one though[options]soci:with_postgresql = True[generators]cmake
+[requires]
+#soci/4.0.3 #sql database interface (micro orm)
+
+#unit testing
+catch2/3.2.1  #(elegant and popular)
+#boost-ext-ut/1.1.9 #(most advanced)
+
+spdlog/1.11.0 #logging (the most popular library in 2022)
+#boost/1.81.0 #for contracts. the only library providing contracts for c++, not a popular one though
+
+
+[options]
+#soci:with_postgresql = True
+
+
+[generators]
+cmake

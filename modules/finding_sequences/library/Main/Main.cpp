@@ -1,17 +1,14 @@
 #include "Main.h"
 
 #include <iostream>
-//#include <format>
 #include <memory>
 
-#include <boost/contract.hpp>
 
 using namespace std;
 
 namespace rvinowise::ai {
 
-Main::Main(const std::string connection_string):
-database(connection_string)
+Main::Main()
 {
 
 }
@@ -20,8 +17,8 @@ Main::~Main() {
     
 }
 
-void Main::init_module(const std::string connection_string) {
-    instance = std::make_unique<Main>(connection_string);
+void Main::init_module() {
+    instance = std::make_unique<Main>();
 }
 
 Main* Main::get_instance() {
@@ -33,14 +30,6 @@ Main* Main::get_instance() {
     return instance.get();
 }
 
-
-vector<Interval> Main::find_repeated_pairs_in_database(
-        string head, string tail
-) {
-    auto head_appearances = database.fetch_appearances(head);
-    auto tail_appearances = database.fetch_appearances(tail);
-    return Finding_sequences::find_repeated_pairs(head_appearances, tail_appearances);
-}
 
 
 

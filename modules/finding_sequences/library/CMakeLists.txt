@@ -10,7 +10,6 @@ conan_basic_setup()
 set(FINDING_SEQUENCES_SRC
     Main/finding_sequences_interface.cpp
     Main/main.cpp
-    Database/Database.cpp
     Computational_resource/Computational_resource.cpp
     Finding_sequences/Finding_sequences.cpp
     Finding_sequences/Interval_in_sequence/Interval_in_sequence.cpp
