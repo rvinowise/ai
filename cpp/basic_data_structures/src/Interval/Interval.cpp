@@ -9,7 +9,7 @@ Interval::Interval()
 {
 }
 
-Interval::Interval(uint64_t head, uint64_t tail):
+Interval::Interval(Moment head, Moment tail):
 head{head}, tail{tail} 
 {
 }
