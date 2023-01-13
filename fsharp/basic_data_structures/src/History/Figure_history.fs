@@ -21,7 +21,7 @@ namespace rvinowise.ai
         mood_at_moments: seq<Mood>
     }
 
-namespace rvinowise.ai.figure.history
+namespace rvinowise.ai.figure_history
     open Xunit
     open FsUnit
     open rvinowise.ai
@@ -40,7 +40,7 @@ namespace rvinowise.ai.figure.history
                 interval=Interval.bordering_interval_of_intervals intervals
             }
 
-namespace rvinowise.ai.mood.history
+namespace rvinowise.ai.mood_history
     open Xunit
     open FsUnit
     open rvinowise.ai
@@ -131,9 +131,18 @@ namespace rvinowise.ai.mood.history
                     3
                 ]
             }
+    module example=
+        let short_history_of_mood_changes=
+            built.changes_from_tuples [
+                11,1;
+                13,1; 
+                17,-2;
+                20,3
+            ]
 
-namespace rvinowise.ai.figure
-    module History=
+namespace rvinowise.ai
+    [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
+    module Figure_history=
         open rvinowise.ai
         open FsUnit
         open Xunit
@@ -147,8 +156,9 @@ namespace rvinowise.ai.figure
         let mood_at_moment history moment=
             ()
 
-namespace rvinowise.ai.mood
-    module History=
+namespace rvinowise.ai
+    [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
+    module Mood_history=
         open rvinowise.ai
         open FsUnit
         open Xunit
@@ -166,14 +176,14 @@ namespace rvinowise.ai.mood
 
      
         
-namespace rvinowise.ai.history
+namespace rvinowise.ai.figure_history
     open Xunit
     open FsUnit
     open rvinowise.ai
 
     module example=
         let short_history_with_some_repetitions=
-            figure.history.built.from_tuples "a" [
+            figure_history.built.from_tuples "a" [
                     10,15;
                     11,16;
                     15,17;
@@ -181,20 +191,14 @@ namespace rvinowise.ai.history
                 ]
         
         let another_history_for_combining_togetner=
-            figure.history.built.from_tuples "b" [
+            figure_history.built.from_tuples "b" [
                     11,12;
                     12,14;
                     13,17;
                     20,24
                 ]
 
-        let short_history_of_mood_changes=
-            mood.history.built.changes_from_tuples [
-                11,1;
-                13,1; 
-                17,-2;
-                20,3
-            ]
+        
 
         [<Fact>]
         let ``history interval can start from any moment``()=

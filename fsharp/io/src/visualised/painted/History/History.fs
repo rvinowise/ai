@@ -10,31 +10,21 @@ namespace rvinowise.ai.ui.painted
     open rvinowise.ui.infrastructure
     open rvinowise.ai
 
-    
-
     module History=
-
-
-        let description (history:Figure_history)=
+        let figure_history_description (history:Figure_history)=
             $"appearances of {history.figure} from {history.interval.finish} to {history.interval.start}"
         
-        let combined_description 
-            (histories: Figure_history seq)
+        let combined_history_description 
+            (history: Combined_history)
             =
-            let figures =
-                histories
-                |>Seq.map ai.figure.History.figure
-                |>String.concat ","
-
             let border = 
-                histories
-                |>Seq.map ai.figure.History.interval
-                |>Interval.bordering_interval_of_intervals
+                history
+                |>Combined_history.interval
 
-            $"appearances of {figures} from {border.start} to {border.finish}"
+            $"history from {border.start} to {border.finish}"
 
 
-        let graphically_add_event_batches 
+        let add_event_batches 
             (receptacle: infrastructure.Node)
             (combined_history: Combined_history)
             =
@@ -58,7 +48,7 @@ namespace rvinowise.ai.ui.painted
             |>Map
 
 
-        let graphically_connect_events_start_to_finish
+        let connect_events_start_to_finish
             (batches:Map<Moment, (Event_batch*infrastructure.Node) > )
             =
             batches
@@ -86,7 +76,7 @@ namespace rvinowise.ai.ui.painted
             |>infrastructure.Edge.with_attribute "style" "invis"
             |>ignore
 
-        let graphically_arrange_event_batches_sequentially
+        let arrange_event_batches_sequentially
             (batches:Map<Moment, (Event_batch*infrastructure.Node) > )
             =
             batches
@@ -96,33 +86,26 @@ namespace rvinowise.ai.ui.painted
             
             batches
             
-        let add_histories
-            figure_histories
-            mood_changes_history
+        let add_combined_history 
+            history 
             node
             =
-            figure_histories
-            |>ai.Combined_history.combine_figure_histories
-            |>ai.Combined_history.add_mood_changes_to_combined_history mood_changes_history
-            |>graphically_add_event_batches node
-            |>graphically_connect_events_start_to_finish
-            |>graphically_arrange_event_batches_sequentially
+            history
+            |>add_event_batches node
+            |>connect_events_start_to_finish
+            |>arrange_event_batches_sequentially
             |>ignore
             node
-
+            
         
         let as_graph 
-            figure_histories
-            mood_changes_history 
+            combined_history 
             =
-            let description = 
-                figure_histories
-                |>combined_description
-            
-            description
+            combined_history
+            |>combined_history_description
             |>infrastructure.Graph.empty
             |>infrastructure.Graph.with_rectangle_vertices
-            |>add_histories figure_histories mood_changes_history
+            |>add_combined_history combined_history
         
         
 

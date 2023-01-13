@@ -38,12 +38,13 @@ namespace rvinowise.ai.ui.painted
         let ``visualise history``()=
             (
                 [
-                    ai.history.example.short_history_with_some_repetitions;
-                    ai.history.example.another_history_for_combining_togetner
+                    ai.figure_history.example.short_history_with_some_repetitions;
+                    ai.figure_history.example.another_history_for_combining_togetner
                 ],
-                history.example.short_history_of_mood_changes
+                mood_history.example.short_history_of_mood_changes
             )
-            ||>History.as_graph
+            ||>ai.combined_history.built.from_figure_and_mood_histories
+            |>History.as_graph
             |>open_image_of_graph
         
 

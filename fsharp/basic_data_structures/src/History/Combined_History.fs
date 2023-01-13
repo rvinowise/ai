@@ -127,10 +127,10 @@ namespace rvinowise.ai
 
         [<Fact>]
         let ``combine figure histories``()=
-            let history_of_a = ai.figure.history.built.from_tuples "a" [
+            let history_of_a = ai.figure_history.built.from_tuples "a" [
                 0,1; 2,4
             ]
-            let history_of_b = ai.figure.history.built.from_tuples "b" [
+            let history_of_b = ai.figure_history.built.from_tuples "b" [
                 0,2; 4,4
             ]
             [history_of_a; history_of_b]
@@ -165,7 +165,7 @@ namespace rvinowise.ai
             ()
 
 
-namespace rvinowise.ai.history
+namespace rvinowise.ai.combined_history
     open FsUnit
     open Xunit
 
@@ -173,7 +173,7 @@ namespace rvinowise.ai.history
 
     module built =
         
-        let from_tuples 
+        let from_contingent_signals 
             start
             batches
             =
@@ -190,11 +190,18 @@ namespace rvinowise.ai.history
                     )|>Map.ofSeq
             }
         
+        let from_figure_and_mood_histories
+            figure_histories
+            mood_changes_history
+            =
+            figure_histories
+            |>Combined_history.combine_figure_histories
+            |>Combined_history.add_mood_changes_to_combined_history mood_changes_history
         
 
     module example=
         let short_history_with_some_repetitions=
-            built.from_tuples 0 [
+            built.from_contingent_signals 0 [
                     ["a";"x"];
                     ["b";"y"];
                     ["a";"z";"x"];
@@ -208,7 +215,7 @@ namespace rvinowise.ai.history
         [<Fact>]
         let ``history interval can start from any moment``()=
             let history = 
-                built.from_tuples 0 [
+                built.from_contingent_signals 0 [
                     ["a";"x"];
                     ["b";"y"];
                     ["a";"z";"x"];
