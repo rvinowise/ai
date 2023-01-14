@@ -9,8 +9,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="src\finding_repetitions_cpp.fs" />
-    <Compile Include="src\finding_repetitions.fs" />
+    <Compile Include="src\cpp_impl\finding_repetitions_cpp.fs" />
+    <Compile Include="src\cpp_impl\finding_repetitions.fs" />
+    <Compile Include="src\fsharp_impl\finding_repetitions.fs" />
     <!-- tests -->
     <Compile Include="src\test\finding_a_sequence.fs" />
     <Compile Include="src\test\finding_sequences_in_history.fs" />

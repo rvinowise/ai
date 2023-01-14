@@ -1,6 +1,7 @@
-namespace rvinowise.ai
+namespace rvinowise.ai.cpp_impl
 
 open System
+open rvinowise.ai
 
 module Finding_repetitions =
 
@@ -8,7 +9,7 @@ module Finding_repetitions =
     let prepared_array_for_results length: Interval array =
         Array.create length (Interval.moment 0)
 
-    let repeated_pairs 
+    let repeated_pair 
         (heads: array<Interval>)
         (tails: array<Interval>)
         =
@@ -25,4 +26,7 @@ module Finding_repetitions =
         Array.Resize(&repetitions, found_amount)
         repetitions
 
-
+    let many_repetitions
+        (figures: array<array<Interval>>)
+        =
+        ()
