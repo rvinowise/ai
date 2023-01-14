@@ -7,8 +7,8 @@ module Finding_repeated_pairs =
 
   
     let pair_with_next_unobstructed_b_start
-        (a_appearances: Interval seq)
-        (b_appearances: Interval seq)
+        (a_appearances: Interval array)
+        (b_appearances: Interval array)
         (a_finish: Moment)
         =
         let closest_finish = 
@@ -16,8 +16,8 @@ module Finding_repeated_pairs =
         
 
     let repeated_pair 
-        (a_appearances: Interval seq)
-        (b_appearances: Interval seq)
+        (a_appearances: Interval array)
+        (b_appearances: Interval array)
         =
 
         a_appearances
