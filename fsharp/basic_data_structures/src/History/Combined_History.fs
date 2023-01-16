@@ -217,6 +217,21 @@ namespace rvinowise.ai.combined_history
             |>Combined_history.combine_figure_histories
             |>Combined_history.add_mood_changes_to_combined_history mood_changes_history
         
+        let to_figure_histories
+            combined_history
+            =
+            let figure_appearances: Map<Figure_id, Seq<Interval>> = Map.empty
+            combined_history.batches
+            |>extensions.Map.toPairs
+            |>Seq.map (fun ((moment:Moment), (batch: Event_batch)) ->
+                batch.events
+                |>Seq.map function
+                |Start figure ->
+                    figure_appearances
+                |Finish figure,moment ->
+                |Signal figure ->
+                |Mood_change value ->
+            )
 
     module example=
         let short_history_with_some_repetitions=
