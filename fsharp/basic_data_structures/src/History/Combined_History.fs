@@ -170,8 +170,10 @@ namespace rvinowise.ai.combined_history
     open Xunit
 
     open rvinowise.ai
+    open rvinowise 
 
     module built =
+        open System.Collections.Generic
         
         let from_contingent_signals 
             start
@@ -220,18 +222,52 @@ namespace rvinowise.ai.combined_history
         let to_figure_histories
             combined_history
             =
-            let figure_appearances: Map<Figure_id, Seq<Interval>> = Map.empty
+            let figure_appearances = 
+                Dictionary<Figure_id, ResizeArray<Interval>>()
             combined_history.batches
             |>extensions.Map.toPairs
-            |>Seq.map (fun ((moment:Moment), (batch: Event_batch)) ->
+            |>Seq.iter (fun ((moment:Moment), (batch: Event_batch)) ->
                 batch.events
-                |>Seq.map function
-                |Start figure ->
-                    figure_appearances
-                |Finish figure,moment ->
-                |Signal figure ->
-                |Mood_change value ->
+                |>Seq.iter (function
+                    |Finish (figure, start_moment) ->
+                        let old_appearances=
+                            figure_appearances
+                            |>extensions.Dictionary.getOrDefault 
+                                figure (ResizeArray())
+                        old_appearances.Add(Interval.regular start_moment moment)
+                        figure_appearances[figure]<- old_appearances
+                    |Signal figure ->
+                        let old_appearances=
+                            figure_appearances
+                            |>extensions.Dictionary.getOrDefault 
+                                figure (ResizeArray())
+                        old_appearances.Add(Interval.moment moment)
+                        figure_appearances[figure]<- old_appearances
+                    |Mood_change value ->()
+                    |Start figure ->()
+                )
             )
+            figure_appearances
+            |>Seq.map (fun pair ->
+                figure_history.built.from_intervals pair.Key pair.Value
+            )
+
+        [<Fact>]
+        let ``turn a combined history into separate figure histories``()=
+            from_contingent_signals 0
+                [
+                    ["a";"b"]//0
+                    ["c";"d"]//1
+                    ["a"]//2
+                    ["b"]//3
+                ]
+                |>to_figure_histories
+                |>should equal [
+                    figure_history.built.from_moments "a" [0;2]
+                    figure_history.built.from_moments "b" [0;3]
+                    figure_history.built.from_moments "c" [1]
+                    figure_history.built.from_moments "d" [1]
+                ]
 
     module example=
         let short_history_with_some_repetitions=

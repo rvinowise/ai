@@ -25,10 +25,13 @@ module Finding_many_repetitions =
         |>Seq.map Finding_repetitions.repeated_pair_with_histories
 
     let repetitions_in_combined_history
-        combined_history
+        (combined_history:Combined_history)
         =
+        combined_history
+        |>rvinowise.ai.combined_history.built.to_figure_histories
+        |>many_repetitions
 
-
+    [<Fact>]
     let ``finding repetitions in simple combined history``()=
         combined_history.built.from_contingent_signals 0 [
             ["a"];//0

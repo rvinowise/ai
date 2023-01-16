@@ -33,7 +33,10 @@ module Dictionary=
             .Where(fun pair -> pair.Value = value)
             .Select(fun pair -> pair.Key);
 
-    
+    let getOrDefault key default' (dictionary: IDictionary<_,_>) =
+        match dictionary.TryGetValue key with
+        | true, value -> value
+        | _ -> default'
 
 module KeyValuePair=
     open System.Collections.Generic

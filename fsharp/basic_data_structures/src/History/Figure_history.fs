@@ -64,18 +64,28 @@ namespace rvinowise.ai.figure_history
     open rvinowise.ai
 
     module built =
-        let from_tuples 
+        
+        let from_intervals 
             figure
-            tuples
+            intervals
             =
-            let intervals = 
-                tuples
-                |>Seq.map Interval.ofPair
             {
                 figure=figure
                 appearances=intervals
                 interval=Interval.bordering_interval_of_intervals intervals
             }
+        
+        let from_tuples 
+            figure
+            tuples
+            =
+            from_intervals 
+                figure
+                (
+                    tuples
+                    |>Seq.map Interval.ofPair
+                )
+            
         let from_moments 
             figure
             moments

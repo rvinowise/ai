@@ -16,7 +16,7 @@ module finding_sequences =
 
     type Benchmarking_finding_repetitions() =
         
-        [<Params(10, 100(*, 10000*))>]
+        [<Params(5, 50(*, 10000*))>]
         member val items_amount = 0 with get, set
         
         member this.long_sequence_of_input() = 
