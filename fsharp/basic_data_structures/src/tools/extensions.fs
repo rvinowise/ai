@@ -195,15 +195,3 @@ module Option=
         |Some value -> value
         |None -> raise (LackingDataException "the option must have a value, but it's None") 
 
-module Array =
-    let tryFind_starting_from_index 
-        is_needed
-        (start_index: int)
-        elements
-        =
-        for i in start_from_index .. appearances_a.Length-1 do
-
-        elements 
-        |> Seq.mapi (fun i x -> i, x)
-        |> Seq.tryFind (fun (i, x) -> fn i x)
-        |> Option.map snd

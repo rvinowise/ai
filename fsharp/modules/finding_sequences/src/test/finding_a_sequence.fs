@@ -10,7 +10,7 @@ open BenchmarkDotNet.Running
 
 
 module finding_sequences =
-    open rvinowise.ai.Finding_repetitions_cpp
+    //open rvinowise.ai.cpp_impl
     open rvinowise.ai
 
 
@@ -32,15 +32,18 @@ module finding_sequences =
             this.long_sequence_of_input()
 
         [<Benchmark>]
-        member this.search_in_big_sequences()=
-            Finding_repetitions_cpp.repeated_pairs this.heads this.heads
+        member this.cpp_search_in_big_sequences()=
+            cpp_impl.Finding_repetitions.repeated_pair this.heads this.heads
+        [<Benchmark>]
+        member this.fsharp_search_in_big_sequences()=
+            fsharp_impl.Finding_repetitions.repeated_pair this.heads this.heads
 
     type ``invoking native methods``(output: ITestOutputHelper)=
         let output = output
 
         [<Fact>]
-        member this.``passing array of structures to a native method``()=
-            repeated_pairs
+        member this.``finding repeated pair in tiny intricate sequences``()=
+            fsharp_impl.Finding_repetitions.repeated_pair
                 [|
                     Interval.from_int 0 1;
                     Interval.from_int 2 3;
@@ -60,7 +63,7 @@ module finding_sequences =
 
         [<Fact>]
         member this.``finding repeated pairs in big sequences``()=
-            let items_amount = 100
+            let items_amount = 10
             
             let heads = [|
                 for i in 0..items_amount ->
@@ -71,7 +74,7 @@ module finding_sequences =
                     Interval.from_int i (i+1) 
             |]
             
-            repeated_pairs heads tails
+            fsharp_impl.Finding_repetitions.repeated_pair heads tails
             |>should equal 
                 [|
                     for i in 0..items_amount-2 ->

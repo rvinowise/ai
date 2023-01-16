@@ -13,7 +13,7 @@ module finding_sequences_in_history =
     open rvinowise.ai
     open rvinowise.ui
 
-    [<Fact>]
+    [<Fact(Skip="ui")>]
     let ``visualising stages of pattern finding``()=
         let signal_history =
             combined_history.built.from_contingent_signals 0 [

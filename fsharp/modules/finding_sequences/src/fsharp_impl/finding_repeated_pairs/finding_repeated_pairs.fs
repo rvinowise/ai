@@ -3,7 +3,7 @@ namespace rvinowise.ai.fsharp_impl
 open System
 open rvinowise.ai
 
-module Finding_repeated_pairs =
+module Finding_repetitions =
     (* figure "a" is the beginning of the found pair, 
     and figure "b" is its ending, for intuitive naming *)
 
@@ -38,51 +38,187 @@ module Finding_repeated_pairs =
                 state.a_cursor.interval.start
                 state.b_cursor.interval.finish
 
-    let next_a
+        let not_found_state =
+            {
+                a_cursor=Interval_in_sequence.non_existent
+                b_cursor=Interval_in_sequence.non_existent
+                has_failed_to_find_pair = true
+            }
+        
+        let state_before_the_first_iteration=
+            {
+                a_cursor={
+                    exists=true
+                    index=0
+                    interval=Interval.moment 0
+                }
+                b_cursor={
+                    exists=true
+                    index=0
+                    interval=Interval.moment 0
+                }
+                has_failed_to_find_pair=false
+            }
+
+
+    let rec next_half_of_pair
+        (half_to_take: Interval->Moment)
         (start_from_index: int) // index right after the a-figure used for the previously found pair
         (start_from_moment: Moment) //start of the b-figure of the preiously found pair 
-        (appearances_a: Interval array)
+        (appearances: Interval array)
         =
-        
-        for i in start_from_index .. appearances_a.Length-1 do
-            if (appearances_a[i].finish >= start_from_moment) then
+        if (start_from_index >= appearances.Length) then
+                Interval_in_sequence.non_existent
+        else if (half_to_take appearances[start_from_index] >= start_from_moment) then
+            {
+                index=start_from_index
+                interval=appearances[start_from_index]
+                exists=true
+            }
+        else 
+            next_half_of_pair 
+                half_to_take
+                (start_from_index+1)
+                start_from_moment
+                appearances
+
+    let next_a
+        (start_from_index: int) 
+        (start_from_moment: Moment) // b-figure of the considered a-figure for the new appearance 
+        (appearances_a: Interval array) 
+        =
+        next_half_of_pair
+            Interval.start
+            start_from_index
+            start_from_moment
+            appearances_a
+
+    let next_b
+        (start_from_index: int) 
+        (start_from_moment: Moment) // b-figure of the considered a-figure for the new appearance 
+        (appearances_b: Interval array) 
+        =
+        next_half_of_pair
+            Interval.finish
+            start_from_index
+            start_from_moment
+            appearances_b
+
+
+    let rec find_A_closest_to_the_moment
+        (appearances: Interval array)
+        (* moment of the start of the considered B
+        (the finish of the found A should go before it) *)
+        (should_be_before_moment: Moment)
+        (* the A found in the initial step of this iteration 
+        (it can be the result) *)
+        (start_from_index: int)
+        (default_appearance: Interval_in_sequence)// =Interval_in_sequence.non_existent
+        =
+        if start_from_index < appearances.Length then
+            let closer_appearance = 
                 {
-                    index=i
-                    interval=appearances_a[i]
+                    index=start_from_index
+                    interval=appearances[start_from_index]
                     exists=true
                 }
+            if (closer_appearance.interval.finish >= should_be_before_moment) then
+                default_appearance
             else
-                ()
-        Interval_in_sequence.non_existent
-    }
+                find_A_closest_to_the_moment
+                    appearances
+                    should_be_before_moment
+                    (closer_appearance.index+1)
+                    closer_appearance
+        else 
+            default_appearance
 
 
-
-
-
-    let cursor_from_finish_a 
-        index
-        (appearance_a:Interval) 
-        = {
-            index=index
-            moment=appearance_a.finish
-        }
-
-    let next_pair
-        (appearances_a: Interval array)
-        (appearances_b: Interval array)
-        (cursor: Cursor)
+    let iteration_of_finding_a_repeated_pair
+        (iteration_conditions: Iteration_state_of_searching_pairs)
+        (a_appearances: Interval array)
+        (b_appearances: Interval array)
         =
-        let next_a = appearances_a[cursor.index+1]
-        let next_b = appearances_b[cursor.index+1]
+        // file://./iteration_of_finding_a_repeated_pair-get_next_headfigure.ora
+        let next_a = 
+            next_a
+                iteration_conditions.a_cursor.index 
+                iteration_conditions.b_cursor.interval.start
+                a_appearances
             
+            
+        // file://./iteration_of_finding_a_repeated_pair-find_next_tailfigure.ora
+        let found_b = 
+            next_b 
+                iteration_conditions.b_cursor.index
+                (next_a.interval.finish+1)
+                b_appearances
+            
+        if (not found_b.exists) then
+            Iteration_state_of_searching_pairs.not_found_state
+        else
+            // file://./iteration_of_finding_a_repeated_pair-find_previous_headfigure.ora
+            let found_a = 
+                find_A_closest_to_the_moment
+                    a_appearances
+                    found_b.interval.start
+                    next_a.index
+                    Interval_in_sequence.non_existent
+                
+
+            if (found_a.exists) then
+                {
+                    a_cursor=found_a
+                    b_cursor=found_b
+                    has_failed_to_find_pair=false
+                }
+            else
+                Iteration_state_of_searching_pairs.not_found_state
+    
+
+    let rec find_repeated_pairs
+        (a_appearances: Interval array)
+        (b_appearances: Interval array)
+        (previous_iteration: Iteration_state_of_searching_pairs)
+        (found_pairs: Interval ResizeArray)
+        =
+        
+        if (not previous_iteration.has_failed_to_find_pair) then
+            found_pairs.Add(Iteration_state_of_searching_pairs.found_pair previous_iteration)
+            let iteration = 
+                iteration_of_finding_a_repeated_pair
+                    previous_iteration
+                    a_appearances
+                    b_appearances
+
+            find_repeated_pairs
+                a_appearances
+                b_appearances
+                iteration
+                found_pairs
+        else
+            found_pairs
+    
+
+
 
     let repeated_pair 
-        (appearances_a: Interval array)
-        (appearances_b: Interval array)
+        (a_appearances: Interval array)
+        (b_appearances: Interval array)
         =
-        a_appearances
-        |>Seq.mapi cursor_from_finish_a
-        |>Seq.map next_pair a_appearances b_appearances
+        let found_pairs = ResizeArray()
+
+        let iteration = 
+            iteration_of_finding_a_repeated_pair
+                (Iteration_state_of_searching_pairs.state_before_the_first_iteration)
+                a_appearances
+                b_appearances
+
+        find_repeated_pairs 
+            a_appearances
+            b_appearances
+            iteration
+            found_pairs
+        
 
 

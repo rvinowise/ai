@@ -33,6 +33,7 @@ Interval_in_sequence get_next_headfigure(
     return Interval_in_sequence::non_existent();
 }
 
+//todo repetition
 Interval_in_sequence find_next_tailfigure(
     size_t start_from_index, 
     uint64_t start_from_moment, // tail of the considered head part for the new appearance
@@ -49,14 +50,6 @@ Interval_in_sequence find_next_tailfigure(
     return Interval_in_sequence::non_existent();
 }
 
-// Interval_in_sequence get_previous_appearance(
-//     Interval_in_sequence relative_to
-// ) {
-//     return Interval_in_sequence(
-//         relative_to.index()-1,
-//         appearances[relative_to.index()-1]
-//     );
-// }
 
 Interval_in_sequence find_closest_appearance_to_the_moment(
     /* the head appearance found in the initial step of this iteration 
@@ -65,7 +58,7 @@ Interval_in_sequence find_closest_appearance_to_the_moment(
 
     /* moment of the head of the considered tail
     (the tail of the found head should go before it) */
-    uint64_t should_be_before_moment,
+    Moment should_be_before_moment,
 
     vector<Interval> appearances
 ) {
