@@ -1,6 +1,6 @@
 
 cmake_minimum_required(VERSION 3.18)
-#set(CONAN_DISABLE_CHECK_COMPILER True CACHE BOOL "" FORCE )
+set(CONAN_DISABLE_CHECK_COMPILER True CACHE BOOL "" FORCE )
 
 project(
     finding_sequences

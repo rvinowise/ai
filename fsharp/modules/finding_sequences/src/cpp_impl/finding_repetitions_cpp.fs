@@ -6,8 +6,8 @@ open System
 module Finding_repetitions_cpp =
 
     [<Literal>]
+    //let path_to_dll = "C:/prj/ai/modules/finding_sequences/build/library/bin/finding_sequences"
     let path_to_dll = "C:/prj/ai/modules/finding_sequences/build/library/bin/finding_sequences"
-    
     
     type size_t = uint64
 

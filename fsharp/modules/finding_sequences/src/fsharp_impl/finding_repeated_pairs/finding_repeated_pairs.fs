@@ -88,7 +88,7 @@ module Finding_repetitions =
         (appearances_a: Interval array) 
         =
         next_half_of_pair
-            Interval.start
+            Interval.finish
             start_from_index
             start_from_moment
             appearances_a
@@ -99,7 +99,7 @@ module Finding_repetitions =
         (appearances_b: Interval array) 
         =
         next_half_of_pair
-            Interval.finish
+            Interval.start
             start_from_index
             start_from_moment
             appearances_b
@@ -166,7 +166,7 @@ module Finding_repetitions =
                     Interval_in_sequence.non_existent
                 
 
-            if (found_a.exists) then
+            if found_a.exists then
                 {
                     a_cursor=found_a
                     b_cursor=found_b
@@ -200,8 +200,6 @@ module Finding_repetitions =
             found_pairs
     
 
-
-
     let repeated_pair 
         (a_appearances: Interval array)
         (b_appearances: Interval array)
@@ -210,7 +208,7 @@ module Finding_repetitions =
 
         let iteration = 
             iteration_of_finding_a_repeated_pair
-                (Iteration_state_of_searching_pairs.state_before_the_first_iteration)
+                Iteration_state_of_searching_pairs.state_before_the_first_iteration
                 a_appearances
                 b_appearances
 
@@ -220,5 +218,20 @@ module Finding_repetitions =
             iteration
             found_pairs
         
-
-
+    let repeated_pair_with_histories
+        ((a_history: Figure_history),
+        (b_history: Figure_history))
+        =
+        {
+            figure=a_history.figure+b_history.figure
+            appearances=
+                repeated_pair 
+                    (Array.ofSeq a_history.appearances)
+                    (Array.ofSeq b_history.appearances)
+            interval=
+                Interval.bordering_interval_of_intervals
+                    [
+                        a_history.interval
+                        b_history.interval
+                    ]
+        }

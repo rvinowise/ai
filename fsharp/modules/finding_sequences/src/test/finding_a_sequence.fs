@@ -16,7 +16,7 @@ module finding_sequences =
 
     type Benchmarking_finding_repetitions() =
         
-        [<Params(10, 1000, 10000)>]
+        [<Params(10, 100(*, 10000*))>]
         member val items_amount = 0 with get, set
         
         member this.long_sequence_of_input() = 
@@ -42,7 +42,7 @@ module finding_sequences =
         let output = output
 
         [<Fact>]
-        member this.``finding repeated pair in tiny intricate sequences``()=
+        member this.``f# finding repeated pair in tiny intricate sequences``()=
             fsharp_impl.Finding_repetitions.repeated_pair
                 [|
                     Interval.from_int 0 1;
@@ -59,11 +59,28 @@ module finding_sequences =
                     Interval.from_int 0 3 ;
                     Interval.from_int 2 5 ;
                 |]
-
+        [<Fact>]
+        member this.``c++ finding repeated pair in tiny intricate sequences``()=
+            cpp_impl.Finding_repetitions.repeated_pair
+                [|
+                    Interval.from_int 0 1;
+                    Interval.from_int 2 3;
+                    Interval.from_int 4 5;
+                |]
+                [|
+                    Interval.from_int 0 1;
+                    Interval.from_int 2 3;
+                    Interval.from_int 4 5;
+                |]
+            |> should equal
+                [|
+                    Interval.from_int 0 3 ;
+                    Interval.from_int 2 5 ;
+                |]
 
         [<Fact>]
-        member this.``finding repeated pairs in big sequences``()=
-            let items_amount = 10
+        member this.``f# finding repeated pairs in big sequences``()=
+            let items_amount = 100
             
             let heads = [|
                 for i in 0..items_amount ->
@@ -80,8 +97,28 @@ module finding_sequences =
                     for i in 0..items_amount-2 ->
                         Interval.from_int i (i+3)
                 |]
+        
+        [<Fact>]
+        member this.``c++ finding repeated pairs in big sequences``()=
+            let items_amount = 100
             
-        [<Fact(Skip="slow")>]
+            let heads = [|
+                for i in 0..items_amount ->
+                    Interval.from_int i (i+1)
+            |]
+            let tails = [|
+                for i in 0..items_amount ->
+                    Interval.from_int i (i+1) 
+            |]
+            
+            cpp_impl.Finding_repetitions.repeated_pair heads tails
+            |>should equal 
+                [|
+                    for i in 0..items_amount-2 ->
+                        Interval.from_int i (i+3)
+                |]
+            
+        [<Fact>] //(Skip="slow")
         member _.benchmark()=
 
             let config = 

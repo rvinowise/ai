@@ -21,6 +21,43 @@ namespace rvinowise.ai
         mood_at_moments: seq<Mood>
     }
 
+
+namespace rvinowise.ai
+    [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
+    module Figure_history=
+        open rvinowise.ai
+        open FsUnit
+        open Xunit
+
+        let interval (history:Figure_history) =
+            history.interval
+
+        let figure history =
+            history.figure
+
+        let mood_at_moment history moment=
+            ()
+
+namespace rvinowise.ai
+    [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
+    module Mood_history=
+        open rvinowise.ai
+        open FsUnit
+        open Xunit
+
+        let interval (history:Mood_history) =
+            history.interval
+
+
+        let mood_at_moment history moment=
+            ()
+
+        let ofChanges mood_changes=
+            ()
+        
+
+
+
 namespace rvinowise.ai.figure_history
     open Xunit
     open FsUnit
@@ -39,6 +76,21 @@ namespace rvinowise.ai.figure_history
                 appearances=intervals
                 interval=Interval.bordering_interval_of_intervals intervals
             }
+        let from_moments 
+            figure
+            moments
+            =
+            let intervals = 
+                moments
+                |>Seq.map Interval.moment
+            {
+                figure=figure
+                appearances=intervals
+                interval=Interval.bordering_interval_of_moments moments
+            }
+        
+        
+
 
 namespace rvinowise.ai.mood_history
     open Xunit
@@ -140,39 +192,6 @@ namespace rvinowise.ai.mood_history
                 20,3
             ]
 
-namespace rvinowise.ai
-    [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
-    module Figure_history=
-        open rvinowise.ai
-        open FsUnit
-        open Xunit
-
-        let interval (history:Figure_history) =
-            history.interval
-
-        let figure history =
-            history.figure
-
-        let mood_at_moment history moment=
-            ()
-
-namespace rvinowise.ai
-    [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
-    module Mood_history=
-        open rvinowise.ai
-        open FsUnit
-        open Xunit
-
-        let interval (history:Mood_history) =
-            history.interval
-
-
-        let mood_at_moment history moment=
-            ()
-
-        let ofChanges mood_changes=
-            ()
-        
 
      
         
