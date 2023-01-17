@@ -13,7 +13,7 @@ module finding_sequences_in_history =
     open rvinowise.ai
     open rvinowise.ui
 
-    [<Fact(Skip="ui")>] //
+    [<Fact>] //(Skip="ui")
     let ``visualising stages of pattern finding``()=
         let signal_history =
             combined_history.built.from_contingent_signals 0 [
@@ -29,13 +29,25 @@ module finding_sequences_in_history =
             ]
         let step2_history =
             signal_history
-            |>Finding_many_repetitions.repetitions_in_combined_history
+            |>Finding_many_repetitions.combined_history_with_repetitions
         
+        let step3_history =
+            step2_history
+            |>Finding_many_repetitions.combined_history_with_repetitions
+
+        let step4_history =
+            step3_history
+            |>Finding_many_repetitions.combined_history_with_repetitions
+
         "stages of pattern search"
         |>infrastructure.Graph.empty
         |>infrastructure.Graph.with_filled_vertex "step 1"
             (ui.painted.History.add_combined_history signal_history)
         |>infrastructure.Graph.with_filled_vertex "step 2"
             (ui.painted.History.add_combined_history step2_history)
+        |>infrastructure.Graph.with_filled_vertex "step 3"
+            (ui.painted.History.add_combined_history step3_history)
+        |>infrastructure.Graph.with_filled_vertex "step 4"
+            (ui.painted.History.add_combined_history step4_history)
         |>ui.painted.image.open_image_of_graph
 

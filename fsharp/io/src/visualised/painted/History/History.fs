@@ -12,7 +12,9 @@ namespace rvinowise.ai.ui.painted
 
     module History=
         let figure_history_description (history:Figure_history)=
-            $"appearances of {history.figure} from {history.interval.finish} to {history.interval.start}"
+            $"appearances of {history.figure} from 
+            {Figure_history.start history} to 
+            {Figure_history.finish history}"
         
         let combined_history_description 
             (history: Combined_history)
@@ -92,6 +94,7 @@ namespace rvinowise.ai.ui.painted
             =
             node
             |>infrastructure.Graph.with_rectangle_vertices
+            |>ignore
             
             history
             |>add_event_batches node

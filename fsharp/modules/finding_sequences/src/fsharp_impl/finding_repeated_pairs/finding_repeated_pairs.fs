@@ -234,12 +234,6 @@ module Finding_repetitions =
                     (a_history.appearances)
                     (b_history.appearances)
                 ).ToArray()
-            interval=
-                Interval.bordering_interval_of_intervals
-                    [
-                        a_history.interval
-                        b_history.interval
-                    ]
         }
 
 

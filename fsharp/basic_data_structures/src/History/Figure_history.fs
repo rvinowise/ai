@@ -6,7 +6,6 @@ namespace rvinowise.ai
  
     type Figure_history = {
         figure: Figure_id
-        interval: Interval
         appearances: array<Interval>
     }
 
@@ -29,8 +28,6 @@ namespace rvinowise.ai
         open FsUnit
         open Xunit
 
-        let interval (history:Figure_history) =
-            history.interval
 
         let figure history =
             history.figure
@@ -40,6 +37,16 @@ namespace rvinowise.ai
 
         let has_repetitions history =
             Seq.length history.appearances > 1
+
+        let start history =
+            history.appearances
+            |>Array.head 
+            |>Interval.start
+
+        let finish history =
+            history.appearances
+            |>Array.last 
+            |>Interval.finish
 
 namespace rvinowise.ai
     [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
@@ -80,7 +87,6 @@ namespace rvinowise.ai.figure_history
             {
                 figure=figure
                 appearances=intervals
-                interval=Interval.bordering_interval_of_intervals intervals
             }
         
         let from_tuples 
@@ -106,7 +112,6 @@ namespace rvinowise.ai.figure_history
             {
                 figure=figure
                 appearances=intervals
-                interval=Interval.bordering_interval_of_moments moments
             }
         
         
@@ -239,10 +244,6 @@ namespace rvinowise.ai.figure_history
 
         
 
-        [<Fact>]
-        let ``history interval can start from any moment``()=
-            short_history_with_some_repetitions.interval
-            |>should equal
-                (Interval.regular 10 20)
+    
 
 

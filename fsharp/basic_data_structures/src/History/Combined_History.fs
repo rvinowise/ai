@@ -252,6 +252,13 @@ namespace rvinowise.ai.combined_history
                 figure_history.built.from_intervals pair.Key (pair.Value.ToArray())
             )
 
+        let from_combined_histories 
+            (histories: Combined_history seq)
+            =
+            histories
+            |>Seq.collect to_figure_histories
+            |>from_figure_and_mood_histories Mood_history.empty
+
         [<Fact>]
         let ``turn a combined history into separate figure histories``()=
             from_contingent_signals 0

@@ -22,7 +22,7 @@ module Finding_many_repetitions =
         =
         (figure_histories,figure_histories)
         ||>Seq.allPairs
-        |>Seq.filter is_possible_pair
+        //|>Seq.filter is_possible_pair
         |>Seq.map Finding_repetitions.repeated_pair_with_histories
         |>Seq.filter Figure_history.has_repetitions
 
@@ -32,6 +32,18 @@ module Finding_many_repetitions =
         combined_history
         |>ai.combined_history.built.to_figure_histories
         |>many_repetitions
+        |>ai.combined_history.built.from_figure_and_mood_histories
+            Mood_history.empty
+
+    let combined_history_with_repetitions
+        (combined_history:Combined_history)
+        =
+        let original_histories=
+            combined_history
+            |>ai.combined_history.built.to_figure_histories
+        original_histories
+        |>many_repetitions
+        |>Seq.append original_histories
         |>ai.combined_history.built.from_figure_and_mood_histories
             Mood_history.empty
 
@@ -51,6 +63,9 @@ module Finding_many_repetitions =
         |>many_repetitions
         |>Seq.sort
         |>should equal [
+            figure_history.built.from_tuples "aa" [
+                0,4; 4,6
+            ]
             figure_history.built.from_tuples "ab" [
                 0,1; 6,7
             ]
@@ -59,17 +74,5 @@ module Finding_many_repetitions =
             ]
             figure_history.built.from_tuples "ca" [
                 2,4; 5,6
-            ]
-            figure_history.built.from_moments "a" [
-                0;4;6
-            ]
-            figure_history.built.from_moments "b" [
-                1;7
-            ]
-            figure_history.built.from_moments "c" [
-                2;5
-            ]
-            figure_history.built.from_moments "x" [
-                3
             ]
         ]
