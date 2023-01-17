@@ -7,7 +7,7 @@ namespace rvinowise.ai
     type Figure_history = {
         figure: Figure_id
         interval: Interval
-        appearances: seq<Interval>
+        appearances: array<Interval>
     }
 
     type Mood = int
@@ -38,6 +38,9 @@ namespace rvinowise.ai
         let mood_at_moment history moment=
             ()
 
+        let has_repetitions history =
+            Seq.length history.appearances > 1
+
 namespace rvinowise.ai
     [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
     module Mood_history=
@@ -55,6 +58,11 @@ namespace rvinowise.ai
         let ofChanges mood_changes=
             ()
         
+        let empty=
+            {
+                Mood_changes_history.interval = Interval.moment 0
+                changes=Map.empty
+            }
 
 
 
@@ -84,6 +92,7 @@ namespace rvinowise.ai.figure_history
                 (
                     tuples
                     |>Seq.map Interval.ofPair
+                    |>Array.ofSeq
                 )
             
         let from_moments 
@@ -93,6 +102,7 @@ namespace rvinowise.ai.figure_history
             let intervals = 
                 moments
                 |>Seq.map Interval.moment
+                |>Array.ofSeq
             {
                 figure=figure
                 appearances=intervals

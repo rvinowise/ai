@@ -212,8 +212,8 @@ namespace rvinowise.ai.combined_history
 
 
         let from_figure_and_mood_histories
-            figure_histories
             mood_changes_history
+            figure_histories
             =
             figure_histories
             |>Combined_history.combine_figure_histories
@@ -249,7 +249,7 @@ namespace rvinowise.ai.combined_history
             )
             figure_appearances
             |>Seq.map (fun pair ->
-                figure_history.built.from_intervals pair.Key pair.Value
+                figure_history.built.from_intervals pair.Key (pair.Value.ToArray())
             )
 
         [<Fact>]

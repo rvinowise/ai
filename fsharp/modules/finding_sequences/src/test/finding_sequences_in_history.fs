@@ -9,11 +9,11 @@ open BenchmarkDotNet.Running
 
 
 module finding_sequences_in_history =
-    open rvinowise.ai.Finding_repetitions_cpp
+    open rvinowise.ai.fsharp_impl
     open rvinowise.ai
     open rvinowise.ui
 
-    [<Fact>] //(Skip="ui")
+    [<Fact(Skip="ui")>] //
     let ``visualising stages of pattern finding``()=
         let signal_history =
             combined_history.built.from_contingent_signals 0 [
@@ -29,7 +29,7 @@ module finding_sequences_in_history =
             ]
         let step2_history =
             signal_history
-        
+            |>Finding_many_repetitions.repetitions_in_combined_history
         
         "stages of pattern search"
         |>infrastructure.Graph.empty

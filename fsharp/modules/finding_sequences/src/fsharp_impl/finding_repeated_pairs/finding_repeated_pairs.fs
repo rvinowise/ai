@@ -3,6 +3,9 @@ namespace rvinowise.ai.fsharp_impl
 open System
 open rvinowise.ai
 
+open FsUnit
+open Xunit
+
 module Finding_repetitions =
     (* figure "a" is the beginning of the found pair, 
     and figure "b" is its ending, for intuitive naming *)
@@ -67,6 +70,7 @@ module Finding_repetitions =
         (start_from_moment: Moment) //start of the b-figure of the preiously found pair 
         (appearances: Interval array)
         =
+        
         if (start_from_index >= appearances.Length) then
                 Interval_in_sequence.non_existent
         else if (half_to_take appearances[start_from_index] >= start_from_moment) then
@@ -135,46 +139,46 @@ module Finding_repetitions =
 
 
     let iteration_of_finding_a_repeated_pair
-        (iteration_conditions: Iteration_state_of_searching_pairs)
+        (previous_iteration: Iteration_state_of_searching_pairs)
         (a_appearances: Interval array)
         (b_appearances: Interval array)
         =
         // file://./iteration_of_finding_a_repeated_pair-get_next_headfigure.ora
         let next_a = 
             next_a
-                iteration_conditions.a_cursor.index 
-                iteration_conditions.b_cursor.interval.start
+                previous_iteration.a_cursor.index 
+                previous_iteration.b_cursor.interval.start
                 a_appearances
-            
-            
-        // file://./iteration_of_finding_a_repeated_pair-find_next_tailfigure.ora
-        let found_b = 
-            next_b 
-                iteration_conditions.b_cursor.index
-                (next_a.interval.finish+1)
-                b_appearances
-            
-        if (not found_b.exists) then
-            Iteration_state_of_searching_pairs.not_found_state
-        else
-            // file://./iteration_of_finding_a_repeated_pair-find_previous_headfigure.ora
-            let found_a = 
-                find_A_closest_to_the_moment
-                    a_appearances
-                    found_b.interval.start
-                    next_a.index
-                    Interval_in_sequence.non_existent
+        if (not next_a.exists) then
+            Iteration_state_of_searching_pairs.not_found_state     
+        else     
+            // file://./iteration_of_finding_a_repeated_pair-find_next_tailfigure.ora
+            let found_b = 
+                next_b 
+                    previous_iteration.b_cursor.index
+                    (next_a.interval.finish+1)
+                    b_appearances
                 
-
-            if found_a.exists then
-                {
-                    a_cursor=found_a
-                    b_cursor=found_b
-                    has_failed_to_find_pair=false
-                }
-            else
+            if (not found_b.exists) then
                 Iteration_state_of_searching_pairs.not_found_state
-    
+            else
+                // file://./iteration_of_finding_a_repeated_pair-find_previous_headfigure.ora
+                let found_a = 
+                    find_A_closest_to_the_moment
+                        a_appearances
+                        found_b.interval.start
+                        next_a.index
+                        Interval_in_sequence.non_existent
+
+                if found_a.exists then
+                    {
+                        a_cursor=found_a
+                        b_cursor=found_b
+                        has_failed_to_find_pair=false
+                    }
+                else
+                    Iteration_state_of_searching_pairs.not_found_state
+        
 
     let rec find_repeated_pairs
         (a_appearances: Interval array)
@@ -218,16 +222,18 @@ module Finding_repetitions =
             iteration
             found_pairs
         
+        
     let repeated_pair_with_histories
-        ((a_history: Figure_history),
-        (b_history: Figure_history))
+        (a_history: Figure_history,
+        b_history: Figure_history)
         =
         {
             figure=a_history.figure+b_history.figure
             appearances=
-                repeated_pair 
-                    (Array.ofSeq a_history.appearances)
-                    (Array.ofSeq b_history.appearances)
+                (repeated_pair 
+                    (a_history.appearances)
+                    (b_history.appearances)
+                ).ToArray()
             interval=
                 Interval.bordering_interval_of_intervals
                     [
@@ -235,3 +241,24 @@ module Finding_repetitions =
                         b_history.interval
                     ]
         }
+
+
+    [<Fact(Timeout=1000)>]
+    let ``finding repetitions, when the last A-figure is taken, but there's still B-figures left ``()=
+        
+        async { 
+        
+            let signal1 = figure_history.built.from_moments "signal1" [0;5]
+            let signal2 = figure_history.built.from_moments "signal2" [1;6;7]
+            repeated_pair
+                (signal1.appearances|>Array.ofSeq)
+                (signal2.appearances|>Array.ofSeq)
+            |>should equal (
+                [
+                    0,1; 5,6
+                ]
+                |>Seq.map Interval.ofPair
+            )
+                
+        }
+            

@@ -5,6 +5,7 @@ open FsUnit
 
 open System
 open rvinowise.ai
+open rvinowise
 
 module Finding_many_repetitions =
 
@@ -23,15 +24,18 @@ module Finding_many_repetitions =
         ||>Seq.allPairs
         |>Seq.filter is_possible_pair
         |>Seq.map Finding_repetitions.repeated_pair_with_histories
+        |>Seq.filter Figure_history.has_repetitions
 
     let repetitions_in_combined_history
         (combined_history:Combined_history)
         =
         combined_history
-        |>rvinowise.ai.combined_history.built.to_figure_histories
+        |>ai.combined_history.built.to_figure_histories
         |>many_repetitions
+        |>ai.combined_history.built.from_figure_and_mood_histories
+            Mood_history.empty
 
-    [<Fact>]
+    [<Fact>]//(Skip="bug")
     let ``finding repetitions in simple combined history``()=
         combined_history.built.from_contingent_signals 0 [
             ["a"];//0
@@ -43,7 +47,9 @@ module Finding_many_repetitions =
             ["a"];//6
             ["b"];//7
         ]
-        |>repetitions_in_combined_history
+        |>ai.combined_history.built.to_figure_histories
+        |>many_repetitions
+        |>Seq.sort
         |>should equal [
             figure_history.built.from_tuples "ab" [
                 0,1; 6,7

@@ -59,7 +59,7 @@ module finding_sequences =
                     Interval.from_int 0 3 ;
                     Interval.from_int 2 5 ;
                 |]
-        [<Fact>]
+        [<Fact>] //(Skip="c++")
         member this.``c++ finding repeated pair in tiny intricate sequences``()=
             cpp_impl.Finding_repetitions.repeated_pair
                 [|
@@ -98,7 +98,7 @@ module finding_sequences =
                         Interval.from_int i (i+3)
                 |]
         
-        [<Fact>]
+        [<Fact>] //(Skip="c++")
         member this.``c++ finding repeated pairs in big sequences``()=
             let items_amount = 100
             
@@ -118,7 +118,7 @@ module finding_sequences =
                         Interval.from_int i (i+3)
                 |]
             
-        [<Fact>] //(Skip="slow")
+        [<Fact(Skip="slow")>] //
         member _.benchmark()=
 
             let config = 
