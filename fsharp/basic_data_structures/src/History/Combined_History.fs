@@ -88,31 +88,40 @@ namespace rvinowise.ai
                 }
             ) combined_history
 
-        let add_mood_changes_to_combined_history 
-            (mood_changes_history: Mood_changes_history) 
+        let add_mood_to_combined_history 
+            (mood_history: Map<Moment, Mood_state>) 
             (combined_history: Combined_history)
-            //(map: Map<Moment, Set<Appearance_event> >)
             = 
-            mood_changes_history.changes
+            mood_history
             |>Seq.fold (fun combined moment_mood ->
                 {combined with 
                     batches=
                         let moment = moment_mood.Key
-                        let mood_change = moment_mood.Value
+                        let mood_change = moment_mood.Value.change
+                        let mood_value = moment_mood.Value.value
                         combined.batches
                         |>Map.add moment (
                             let previous_batch = 
                                 combined.batches
                                 |>Map.getOrDefault moment Event_batch.empty
                             {previous_batch with 
-                                events=
-                                    previous_batch.events
-                                    |>Seq.append [Mood_change mood_change] 
+                                mood=
+                                    {
+                                        change=mood_change
+                                        value=mood_value
+                                    }
                             }
                         )
                         
                 }
             ) combined_history
+
+        let get_mood_history (combined_history: Combined_history) =
+            combined_history.batches
+            |>Seq.map (fun moment_batch->
+                (moment_batch.Key, moment_batch.Value.mood)
+            )
+            |>Map.ofSeq
 
         let combine_figure_histories 
             (figure_histories : Figure_history seq)
@@ -159,7 +168,7 @@ namespace rvinowise.ai
             ]
 
         let add_mood_history 
-            (mood_changes_history: Mood_changes_history) 
+            (mood_changes_history: Map<Moment, Mood>) 
             (combined_history: Combined_history)
             =
             ()
@@ -180,18 +189,31 @@ namespace rvinowise.ai.combined_history
             batches
             =
             {
-                //interval=Interval.regular start (start+Seq.length(batches)-1)
-
                 batches=
                     batches
-                    |>Seq.mapi (fun index (fired_figures: Figure_id seq)->
+                    |>Seq.mapi (fun index (fired_signals: string seq)->
                         (
                             start+index,
-                            Event_batch.ofSignals 0 fired_figures
+                            Event_batch.ofSignalsWithMood fired_signals
                         )
                     )|>Map.ofSeq
             }
         
+        [<Fact>]
+        let ``construct combined history with mood``()=
+            let history = 
+                from_contingent_signals 0 [
+                    ["a";"x"];
+                    ["+1";"b";"y"];
+                    ["a";"z";"x"];
+                    ["+2";"c"];
+                    ["b";"x"];
+                    ["b"];
+                    ["-3";"a"];
+                    ["c"]
+                ]
+            history
+
         [<Fact>]
         let ``history interval can start from any moment``()=
             let history = 
@@ -210,14 +232,19 @@ namespace rvinowise.ai.combined_history
             |>should equal
                 (Interval.regular 0 7)
 
-
-        let from_figure_and_mood_histories
-            mood_changes_history
+        let from_figure_histories
             figure_histories
             =
             figure_histories
             |>Combined_history.combine_figure_histories
-            |>Combined_history.add_mood_changes_to_combined_history mood_changes_history
+
+        let from_figure_and_mood_histories
+            mood_history
+            figure_histories
+            =
+            figure_histories
+            |>from_figure_histories
+            |>Combined_history.add_mood_to_combined_history mood_history
         
         let to_figure_histories
             combined_history
@@ -243,8 +270,7 @@ namespace rvinowise.ai.combined_history
                                 figure (ResizeArray())
                         old_appearances.Add(Interval.moment moment)
                         figure_appearances[figure]<- old_appearances
-                    |Mood_change value ->()
-                    |Start figure ->()
+                    |_ ->()
                 )
             )
             figure_appearances
@@ -257,7 +283,17 @@ namespace rvinowise.ai.combined_history
             =
             histories
             |>Seq.collect to_figure_histories
-            |>from_figure_and_mood_histories Mood_history.empty
+            |>from_figure_histories
+        
+        let add_figure_histories
+            (figure_histories: Figure_history seq)
+            (combined_history: Combined_history)
+            =
+            combined_history
+            |>to_figure_histories 
+            |>Seq.append figure_histories
+            |>from_figure_histories
+
 
         [<Fact>]
         let ``turn a combined history into separate figure histories``()=
