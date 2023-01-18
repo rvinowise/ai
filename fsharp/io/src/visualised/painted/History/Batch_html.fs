@@ -8,23 +8,44 @@ namespace rvinowise.ai.ui.painted
 
         let _port = attr "port"
         
-        let cell_of_mood_change mood_change =
+        let mood_color mood =
             let red,green =
-                if (mood_change < 0) then
-                    1f , 1f + float32(mood_change) / 5f
+                if (mood < 0) then
+                    1f , 1f + float32(mood) / 5f
                 else 
-                    1f - float32(mood_change) / 5f , 1f
-            
-            let mood_color=
-                Color.FromArgb(255, int(red*255f), int(green*255f), 255)
-                |>ColorTranslator.ToHtml
+                    1f - float32(mood) / 5f , 1f
+        
+            Color.FromArgb(255, int(red*255f), int(green*255f), 255)
+            |>ColorTranslator.ToHtml
+        
+        let cell_of_mood_change mood_change =
+            if mood_change = 0 then
+                None
+            else
+                let string_change = 
+                    if mood_change>0 then $"+{mood_change}" else $"{mood_change}"
+                tr [] 
+                    [ td [attr "BGCOLOR" (mood_color mood_change); _port "mood_change"] [str string_change ]] 
+                |>Some
 
-            let string_change = 
-                if mood_change>0 then $"+{mood_change}" else $"{mood_change}"
-            tr [] 
-                [ td [attr "BGCOLOR" mood_color; _port "mood_change"] [str string_change ]] 
+        let cell_of_mood_value (mood_value) =
+            if mood_value = 0 then
+                None
+            else
+                tr [] 
+                    [td 
+                        [attr "BGCOLOR" (mood_color mood_value); _port "mood_value"] 
+                        [str (string mood_value) ]
+                    ] 
+                |>Some
 
-        let cell_for_event 
+        let cells_of_mood (mood:Mood_state) =
+            [
+            (cell_of_mood_change mood.change);
+            (cell_of_mood_value mood.value)
+            ]|>Seq.choose id
+
+        let cell_of_event 
             event 
             =
             match event with
@@ -34,7 +55,6 @@ namespace rvinowise.ai.ui.painted
                 tr [] [ td [_port $"{figure})"] [str $"{figure})" ]] 
             |Signal (figure) -> 
                 tr [] [ td [_port $"({figure})"] [str $"({figure})" ]] 
-            |Mood_change value ->cell_of_mood_change value
             
         let cell_for_moment moment =
             tr [] 
@@ -42,6 +62,7 @@ namespace rvinowise.ai.ui.painted
                     [attr "BORDER" "0"; attr "BGCOLOR" "#aaaaaa"; _port "moment"] 
                     [str (string moment) ]
                 ] 
+        
 
         let layout_for_event_batch
             (moment:Moment)
@@ -54,12 +75,15 @@ namespace rvinowise.ai.ui.painted
                     (attr "CELLPADDING""4")
                 ] 
                 (
-                    batch.events
-                    |>Seq.sort
-                    |>Seq.map cell_for_event
-                    |>Seq.append([
-                        cell_for_moment moment
-                        
-                    ])
+                    let cells_of_events = 
+                        batch.events
+                        |>Seq.sort
+                        |>Seq.map cell_of_event
+                    
+                    [cell_for_moment moment]
+                    |>Seq.append(
+                        cells_of_mood batch.mood
+                    )
+                    |>Seq.append cells_of_events
                     |>List.ofSeq
                 )

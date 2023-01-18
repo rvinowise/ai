@@ -32,21 +32,11 @@ module Finding_many_repetitions =
         combined_history
         |>ai.combined_history.built.to_figure_histories
         |>many_repetitions
-        |>ai.combined_history.built.from_figure_and_mood_histories
-            Mood_history.empty
+        |>ai.combined_history.built.from_figure_histories
+        |>Combined_history.add_mood_to_combined_history
+            (Combined_history.get_mood_history combined_history)
 
-    let combined_history_with_repetitions
-        (combined_history:Combined_history)
-        =
-        let original_histories=
-            combined_history
-            |>ai.combined_history.built.to_figure_histories
-        original_histories
-        |>many_repetitions
-        |>Seq.append original_histories
-        |>ai.combined_history.built.from_figure_and_mood_histories
-            Mood_history.empty
-
+    
     [<Fact>]//(Skip="bug")
     let ``finding repetitions in simple combined history``()=
         combined_history.built.from_contingent_signals 0 [

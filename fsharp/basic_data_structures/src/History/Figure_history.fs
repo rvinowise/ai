@@ -11,10 +11,7 @@ namespace rvinowise.ai
 
     type Mood = int
 
-    type Mood_changes_history = {
-        interval: Interval
-        changes: Map<Moment, Mood>
-    }
+   
     type Mood_history = {
         interval: Interval
         mood_at_moments: seq<Mood>
@@ -65,11 +62,7 @@ namespace rvinowise.ai
         let ofChanges mood_changes=
             ()
         
-        let empty=
-            {
-                Mood_changes_history.interval = Interval.moment 0
-                changes=Map.empty
-            }
+      
 
 
 
@@ -124,21 +117,10 @@ namespace rvinowise.ai.mood_history
     open rvinowise
 
     module built =
-        let changes_from_tuples
-            (tuples: (Moment*Mood) seq)
-            =
-            {
-                interval=
-                    tuples
-                    |>Seq.map (fun tuple->fst tuple)
-                    |>Interval.bordering_interval_of_moments
-                changes=
-                    tuples
-                    |>Map.ofSeq
-            }
+        
 
         type Detailed_history={
-            last_mood:Mood
+            initial_mood:Mood
             mood_at_moments:Mood seq
         }
         let complete_from_tuples
@@ -146,12 +128,12 @@ namespace rvinowise.ai.mood_history
             =
             let mood_changes = 
                 tuples
-                |>changes_from_tuples
+                |>Map.ofSeq
             
             {
-                interval=mood_changes.interval
+                initial_mood = 0
                 mood_at_moments=
-                    mood_changes.changes
+                    mood_changes
                     |>Seq.pairwise
                     |>Seq.fold (
                         fun 
@@ -162,9 +144,9 @@ namespace rvinowise.ai.mood_history
                             ) ->
                             let mood_change = start.Value
                             let amount_of_moments = finish.Key-start.Key
-                            let new_mood = history.last_mood + mood_change
+                            let new_mood = history.initial_mood + mood_change
                             {
-                                last_mood=new_mood
+                                initial_mood=new_mood
                                 mood_at_moments=
                                     Seq.append 
                                         history.mood_at_moments
@@ -173,7 +155,7 @@ namespace rvinowise.ai.mood_history
                         
                         )
                         {
-                            Detailed_history.last_mood=0
+                            Detailed_history.initial_mood=0
                             mood_at_moments=[]
                         }
                     |>fun detailed_history->detailed_history.mood_at_moments
@@ -181,7 +163,7 @@ namespace rvinowise.ai.mood_history
                         Seq.append
                             mood_at_moments
                             [
-                                mood_changes.changes
+                                mood_changes
                                 |>Seq.last
                                 |>extensions.KeyValuePair.value
                                 |>fun last_mood_change->
@@ -209,8 +191,8 @@ namespace rvinowise.ai.mood_history
                 ]
             }
     module example=
-        let short_history_of_mood_changes=
-            built.changes_from_tuples [
+        let short_history_of_mood=
+            Map.ofSeq [
                 11,1;
                 13,1; 
                 17,-2;

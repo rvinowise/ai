@@ -37,7 +37,7 @@ namespace rvinowise.ai.ui.painted
         [<Fact>]//(Skip="ui")
         let ``visualise history``()=
             (
-                mood_history.example.short_history_of_mood_changes,
+                mood_history.example.short_history_of_mood,
                 [
                     ai.figure_history.example.short_history_with_some_repetitions;
                     ai.figure_history.example.another_history_for_combining_togetner
