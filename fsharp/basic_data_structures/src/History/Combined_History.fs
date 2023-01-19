@@ -11,9 +11,9 @@ namespace rvinowise.ai
     [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
     module Combined_history =
         
-        let interval history =
+        let interval (history:Event_batches) =
             let moments = 
-                history.batches
+                history
                 |>Seq.map extensions.KeyValuePair.key
             (
                 moments|>Seq.min,
@@ -69,55 +69,49 @@ namespace rvinowise.ai
 
         let add_events_to_combined_history 
             (figure_history : Figure_history)
-            (combined_history: Combined_history)
+            (event_batches: Event_batches)
             = 
             figure_history.appearances
-            |>Seq.fold (fun combined interval->
-                {combined with 
-                    batches=
-                        if interval.start = interval.finish then
-                            add_signal_to_history
-                                figure_history.figure
-                                interval.start
-                                combined.batches
-                        else
-                            add_start_and_finish_to_history
-                                figure_history.figure
-                                interval
-                                combined.batches
-                }
-            ) combined_history
+            |>Seq.fold (fun batches interval->
+                if interval.start = interval.finish then
+                    add_signal_to_history
+                        figure_history.figure
+                        interval.start
+                        batches
+                else
+                    add_start_and_finish_to_history
+                        figure_history.figure
+                        interval
+                        batches
+                
+            ) event_batches
 
         let add_mood_to_combined_history 
             (mood_history: Map<Moment, Mood_state>) 
-            (combined_history: Combined_history)
+            (event_batches: Event_batches)
             = 
             mood_history
-            |>Seq.fold (fun combined moment_mood ->
-                {combined with 
-                    batches=
-                        let moment = moment_mood.Key
-                        let mood_change = moment_mood.Value.change
-                        let mood_value = moment_mood.Value.value
-                        combined.batches
-                        |>Map.add moment (
-                            let previous_batch = 
-                                combined.batches
-                                |>Map.getOrDefault moment Event_batch.empty
-                            {previous_batch with 
-                                mood=
-                                    {
-                                        change=mood_change
-                                        value=mood_value
-                                    }
+            |>Seq.fold (fun batches moment_mood ->
+                let moment = moment_mood.Key
+                let mood_change = moment_mood.Value.change
+                let mood_value = moment_mood.Value.value
+                batches
+                |>Map.add moment (
+                    let previous_batch = 
+                        batches
+                        |>Map.getOrDefault moment Event_batch.empty
+                    {previous_batch with 
+                        mood=
+                            {
+                                change=mood_change
+                                value=mood_value
                             }
-                        )
-                        
-                }
-            ) combined_history
+                    }
+                )
+            ) event_batches
 
-        let get_mood_history (combined_history: Combined_history) =
-            combined_history.batches
+        let get_mood_history (event_batches: Event_batches) =
+            event_batches
             |>Seq.map (fun moment_batch->
                 (moment_batch.Key, moment_batch.Value.mood)
             )
@@ -127,12 +121,11 @@ namespace rvinowise.ai
             (figure_histories : Figure_history seq)
             =
             figure_histories
-            |>Seq.fold (fun combined_history figure_history ->
-                add_events_to_combined_history figure_history combined_history
+            |>Seq.fold (fun event_batches figure_history ->
+                add_events_to_combined_history figure_history event_batches
             ) 
-                {
-                    Combined_history.batches=Map.empty
-                }
+                Map.empty
+                
 
         [<Fact>]
         let ``combine figure histories``()=
@@ -144,7 +137,6 @@ namespace rvinowise.ai
             ]
             [history_of_a; history_of_b]
             |>combine_figure_histories 
-            |>fun history->history.batches
             |>Map.toPairs
             |>Seq.map (fun (moment,batch) ->
                 moment, (batch.events|>Seq.sort)
@@ -169,12 +161,12 @@ namespace rvinowise.ai
 
         let add_mood_history 
             (mood_changes_history: Map<Moment, Mood>) 
-            (combined_history: Combined_history)
+            (event_batches: Event_batches)
             =
             ()
 
 
-namespace rvinowise.ai.combined_history
+namespace rvinowise.ai.event_batches
     open FsUnit
     open Xunit
 
@@ -188,16 +180,14 @@ namespace rvinowise.ai.combined_history
             start
             batches
             =
-            {
-                batches=
-                    batches
-                    |>Seq.mapi (fun index (fired_signals: string seq)->
-                        (
-                            start+index,
-                            Event_batch.ofSignalsWithMood fired_signals
-                        )
-                    )|>Map.ofSeq
-            }
+                batches
+                |>Seq.mapi (fun index (fired_signals: string seq)->
+                    (
+                        start+index,
+                        Event_batch.ofSignalsWithMood fired_signals
+                    )
+                )|>Map.ofSeq
+            
         
         [<Fact>]
         let ``construct combined history with mood``()=
@@ -247,11 +237,11 @@ namespace rvinowise.ai.combined_history
             |>Combined_history.add_mood_to_combined_history mood_history
         
         let to_figure_histories
-            combined_history
+            event_batches
             =
             let figure_appearances = 
                 Dictionary<Figure_id, ResizeArray<Interval>>()
-            combined_history.batches
+            event_batches
             |>extensions.Map.toPairs
             |>Seq.iter (fun ((moment:Moment), (batch: Event_batch)) ->
                 batch.events
@@ -279,7 +269,7 @@ namespace rvinowise.ai.combined_history
             )
 
         let from_combined_histories 
-            (histories: Combined_history seq)
+            (histories: Event_batches seq)
             =
             histories
             |>Seq.collect to_figure_histories
@@ -287,9 +277,9 @@ namespace rvinowise.ai.combined_history
         
         let add_figure_histories
             (figure_histories: Figure_history seq)
-            (combined_history: Combined_history)
+            (event_batches: Event_batches)
             =
-            combined_history
+            event_batches
             |>to_figure_histories 
             |>Seq.append figure_histories
             |>from_figure_histories

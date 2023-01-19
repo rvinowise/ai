@@ -19,10 +19,7 @@
         mood:Mood_state
     }
 
-    type Combined_history = {
-        //interval: Interval
-        batches: Map<Moment, Event_batch>
-    }
+    type Event_batches = Map<Moment, Event_batch>
 
 
     module Mood_state=

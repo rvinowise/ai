@@ -17,7 +17,7 @@ namespace rvinowise.ai.ui.painted
             {Figure_history.finish history}"
         
         let combined_history_description 
-            (history: Combined_history)
+            (history: Event_batches)
             =
             let border = 
                 history
@@ -28,9 +28,9 @@ namespace rvinowise.ai.ui.painted
 
         let add_event_batches 
             (receptacle: infrastructure.Node)
-            (combined_history: Combined_history)
+            (event_batches: Event_batches)
             =
-            combined_history.batches
+            event_batches
             |>Map.toPairs
             |>Seq.map (fun (moment, batch) ->
                 (
@@ -104,14 +104,14 @@ namespace rvinowise.ai.ui.painted
             
         
         let as_graph 
-            combined_history 
+            event_batches 
             =
             let graph=
-                combined_history
+                event_batches
                 |>combined_history_description
                 |>infrastructure.Graph.empty
                 
-            graph|>add_combined_history combined_history
+            graph|>add_combined_history event_batches
             graph
 
         

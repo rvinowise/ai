@@ -43,7 +43,7 @@ namespace rvinowise.ai.ui.painted
                     ai.figure_history.example.another_history_for_combining_togetner
                 ]
             )
-            ||>ai.combined_history.built.from_figure_and_mood_histories
+            ||>ai.event_batches.built.from_figure_and_mood_histories
             |>History.as_graph
             |>open_image_of_graph
         

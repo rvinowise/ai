@@ -16,7 +16,7 @@ module finding_sequences_in_history =
     [<Fact(Skip="ui")>] //
     let ``visualising stages of pattern finding``()=
         let signal_history =
-            combined_history.built.from_contingent_signals 0 [
+            event_batches.built.from_contingent_signals 0 [
                 ["a";"b"];
                 ["c"];
                 ["d";"b"];
@@ -56,7 +56,7 @@ module finding_sequences_in_history =
     [<Fact(Skip="ui")>] //
     let ``visualising stages of pattern finding, including all previous stages``()=
         let signal_history =
-            combined_history.built.from_contingent_signals 0 [
+            event_batches.built.from_contingent_signals 0 [
                 ["a";"b"];
                 ["c"];
                 ["d";"b"];
@@ -69,25 +69,25 @@ module finding_sequences_in_history =
             ]
         let step2_figure_histories =
             signal_history
-            |>combined_history.built.to_figure_histories
+            |>event_batches.built.to_figure_histories
             |>Finding_many_repetitions.many_repetitions
         let step2_combined_history =
             signal_history
-            |>combined_history.built.add_figure_histories step2_figure_histories
+            |>event_batches.built.add_figure_histories step2_figure_histories
 
         let step3_figure_histories =
             step2_figure_histories
             |>Finding_many_repetitions.many_repetitions
         let step3_combined_history =
             step2_combined_history
-            |>combined_history.built.add_figure_histories step3_figure_histories
+            |>event_batches.built.add_figure_histories step3_figure_histories
 
         let step4_figure_histories =
             step3_figure_histories
             |>Finding_many_repetitions.many_repetitions
         let step4_combined_history =
             step3_combined_history
-            |>combined_history.built.add_figure_histories step4_figure_histories
+            |>event_batches.built.add_figure_histories step4_figure_histories
 
         "stages of pattern search with previous stages"
         |>infrastructure.Graph.empty
@@ -104,7 +104,7 @@ module finding_sequences_in_history =
     [<Fact>] //(Skip="ui")
     let ``visualising stages of pattern finding, with mood``()=
         let signal_history =
-            combined_history.built.from_contingent_signals 0 [
+            event_batches.built.from_contingent_signals 0 [
                 ["a";"b"];
                 ["c"];
                 ["+1";"d";"b"];

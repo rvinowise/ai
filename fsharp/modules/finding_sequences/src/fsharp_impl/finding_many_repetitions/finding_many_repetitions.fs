@@ -27,19 +27,19 @@ module Finding_many_repetitions =
         |>Seq.filter Figure_history.has_repetitions
 
     let repetitions_in_combined_history
-        (combined_history:Combined_history)
+        (event_batches:Event_batches)
         =
-        combined_history
-        |>ai.combined_history.built.to_figure_histories
+        event_batches
+        |>ai.event_batches.built.to_figure_histories
         |>many_repetitions
-        |>ai.combined_history.built.from_figure_histories
+        |>ai.event_batches.built.from_figure_histories
         |>Combined_history.add_mood_to_combined_history
-            (Combined_history.get_mood_history combined_history)
+            (Combined_history.get_mood_history event_batches)
 
     
     [<Fact>]//(Skip="bug")
     let ``finding repetitions in simple combined history``()=
-        combined_history.built.from_contingent_signals 0 [
+        event_batches.built.from_contingent_signals 0 [
             ["a"];//0
             ["b"];//1
             ["c"];//2
@@ -49,7 +49,7 @@ module Finding_many_repetitions =
             ["a"];//6
             ["b"];//7
         ]
-        |>ai.combined_history.built.to_figure_histories
+        |>ai.event_batches.built.to_figure_histories
         |>many_repetitions
         |>Seq.sort
         |>should equal [
