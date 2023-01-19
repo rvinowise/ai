@@ -33,8 +33,8 @@ module Finding_many_repetitions =
         |>ai.event_batches.built.to_figure_histories
         |>many_repetitions
         |>ai.event_batches.built.from_figure_histories
-        |>Combined_history.add_mood_to_combined_history
-            (Combined_history.get_mood_history event_batches)
+        |>Event_batches.add_mood_to_combined_history
+            (Event_batches.get_mood_history event_batches)
 
     
     [<Fact>]//(Skip="bug")

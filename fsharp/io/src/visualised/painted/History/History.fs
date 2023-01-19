@@ -21,7 +21,7 @@ namespace rvinowise.ai.ui.painted
             =
             let border = 
                 history
-                |>Combined_history.interval
+                |>Event_batches.interval
 
             $"history from {border.start} to {border.finish}"
 

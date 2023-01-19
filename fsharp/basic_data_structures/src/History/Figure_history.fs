@@ -63,9 +63,6 @@ namespace rvinowise.ai
             ()
         
       
-
-
-
 namespace rvinowise.ai.figure_history
     open Xunit
     open FsUnit
@@ -107,7 +104,6 @@ namespace rvinowise.ai.figure_history
                 appearances=intervals
             }
         
-        
 
 
 namespace rvinowise.ai.mood_history
@@ -117,7 +113,6 @@ namespace rvinowise.ai.mood_history
     open rvinowise
 
     module built =
-        
 
         type Detailed_history={
             initial_mood:Mood
@@ -198,7 +193,6 @@ namespace rvinowise.ai.mood_history
                 17,-2;
                 20,3
             ]
-
 
      
         

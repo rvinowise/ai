@@ -28,9 +28,11 @@
     <Compile Include="src\Graph\Stencil\Stencil_type.fs" />
     <Compile Include="src\Graph\Stencil\Stencil_functions.fs" />
 
+    <!-- history of inputs -->
     <Compile Include="src\History\Figure_history.fs" />
     <Compile Include="src\History\Types.fs" />
-    <Compile Include="src\History\Combined_history.fs" />
+    
+    <Compile Include="src\History\Event_batches\Event_batches.fs" />
   </ItemGroup>
 
   <ItemGroup>
