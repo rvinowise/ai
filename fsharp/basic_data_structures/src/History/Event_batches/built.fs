@@ -258,17 +258,6 @@ module rvinowise.ai.built.Event_batches
                 built.Figure_history.from_moments "d" [1]
             ]
 
-    
-
-    
-
-    
-
-    
-
-    
-
-    
 
     let add_mood_history 
         (mood_changes_history: Map<Moment, Mood>) 
@@ -276,4 +265,9 @@ module rvinowise.ai.built.Event_batches
         =
         ()
     
-    
+    let remove_batches_without_actions (event_batches:Event_batches)=
+        event_batches
+        |>extensions.Map.toPairs
+        |>Seq.filter (fun (moment, batch)->
+            batch.events|>Seq.isEmpty|>not
+        )

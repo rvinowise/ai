@@ -56,6 +56,7 @@
             {
                 events=
                     signals
+                    |>Seq.filter (is_mood_string>>not)
                     |>Seq.map Signal
                 mood=
                 {

@@ -34,8 +34,8 @@ module Finding_many_repetitions =
         |>many_repetitions
         |>built.Event_batches.combine_figure_histories
         |>built.Event_batches.add_mood_to_combined_history
-            (Event_batches.get_mood_history event_batches)
-
+           (Event_batches.get_mood_history event_batches)
+        |>built.Event_batches.remove_batches_without_actions
     
     [<Fact>]//(Skip="bug")
     let ``finding repetitions in simple combined history``()=
