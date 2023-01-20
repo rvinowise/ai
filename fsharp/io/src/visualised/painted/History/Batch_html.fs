@@ -41,8 +41,8 @@ namespace rvinowise.ai.ui.painted
 
         let cells_of_mood (mood:Mood_state) =
             [
-            (cell_of_mood_change mood.change);
-            (cell_of_mood_value mood.value)
+            (cell_of_mood_change (Mood.value mood.change));
+            (cell_of_mood_value (Mood.value mood.value))
             ]|>Seq.choose id
 
         let cell_of_event 

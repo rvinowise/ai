@@ -269,5 +269,8 @@ module rvinowise.ai.built.Event_batches
         event_batches
         |>extensions.Map.toPairs
         |>Seq.filter (fun (moment, batch)->
-            batch.events|>Seq.isEmpty|>not
+            (batch.events|>Seq.isEmpty|>not)
+            ||
+            (batch.mood.change|>Mood.(<>) (Mood 0))
         )
+        |>Map.ofSeq

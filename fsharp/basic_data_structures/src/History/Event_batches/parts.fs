@@ -25,8 +25,8 @@
     module Mood_state=
         let empty=
             {
-                change=0
-                value=0
+                change=Mood 0
+                value=Mood 0
             }
 
     module Event_batch=
@@ -67,10 +67,10 @@
                         |>function
                         |Some mood_string->
                             match System.Int32.TryParse mood_string with
-                            | true,int -> int
-                            | _ -> 0
-                        |None->0
-                    value=0
+                            | true,int -> Mood int
+                            | _ -> Mood 0
+                        |None->Mood 0
+                    value=Mood 0
                 }
         }
 
