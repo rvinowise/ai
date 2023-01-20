@@ -34,18 +34,18 @@ namespace rvinowise.ai.ui.painted
 
         
         
-        [<Fact>]//(Skip="ui")
-        let ``visualise history``()=
-            (
-                mood_history.example.short_history_of_mood,
-                [
-                    ai.figure_history.example.short_history_with_some_repetitions;
-                    ai.figure_history.example.another_history_for_combining_togetner
-                ]
-            )
-            ||>ai.event_batches.built.from_figure_and_mood_histories
-            |>History.as_graph
-            |>open_image_of_graph
+        // [<Fact>]//(Skip="ui")
+        // let ``visualise history``()=
+        //     (
+        //         example.Mood_history.short_history_of_mood,
+        //         [
+        //             ai.example.Figure_history.short_history_with_some_repetitions;
+        //             ai.example.Figure_history.another_history_for_combining_togetner
+        //         ]
+        //     )
+        //     ||> built.Event_batches.from_figure_and_mood_histories
+        //     |>History.as_graph
+        //     |>open_image_of_graph
         
 
         [<Fact>]//(Skip="ui")

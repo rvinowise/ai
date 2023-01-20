@@ -1,8 +1,8 @@
-module module rvinowise.ai.event_batches.example=
-    open rvinowise.ai.event_batches
+module rvinowise.ai.example.Event_batches
+    open rvinowise.ai
     
     let short_history_with_some_repetitions=
-        built.from_contingent_signals 0 [
+        built.Event_batches.from_contingent_signals 0 [
                 ["a";"x"];
                 ["b";"y"];
                 ["a";"z";"x"];

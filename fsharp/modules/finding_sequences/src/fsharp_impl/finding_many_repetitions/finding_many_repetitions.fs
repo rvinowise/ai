@@ -30,16 +30,16 @@ module Finding_many_repetitions =
         (event_batches:Event_batches)
         =
         event_batches
-        |>ai.event_batches.built.to_figure_histories
+        |>built.Event_batches.to_figure_histories
         |>many_repetitions
-        |>ai.event_batches.built.from_figure_histories
-        |>Event_batches.add_mood_to_combined_history
+        |>built.Event_batches.combine_figure_histories
+        |>built.Event_batches.add_mood_to_combined_history
             (Event_batches.get_mood_history event_batches)
 
     
     [<Fact>]//(Skip="bug")
     let ``finding repetitions in simple combined history``()=
-        event_batches.built.from_contingent_signals 0 [
+        built.Event_batches.from_contingent_signals 0 [
             ["a"];//0
             ["b"];//1
             ["c"];//2
@@ -49,20 +49,20 @@ module Finding_many_repetitions =
             ["a"];//6
             ["b"];//7
         ]
-        |>ai.event_batches.built.to_figure_histories
+        |>built.Event_batches.to_figure_histories
         |>many_repetitions
         |>Seq.sort
         |>should equal [
-            figure_history.built.from_tuples "aa" [
+            built.Figure_history.from_tuples "aa" [
                 0,4; 4,6
             ]
-            figure_history.built.from_tuples "ab" [
+            built.Figure_history.from_tuples "ab" [
                 0,1; 6,7
             ]
-            figure_history.built.from_tuples "ac" [
+            built.Figure_history.from_tuples "ac" [
                 0,2; 4,5
             ]
-            figure_history.built.from_tuples "ca" [
+            built.Figure_history.from_tuples "ca" [
                 2,4; 5,6
             ]
         ]

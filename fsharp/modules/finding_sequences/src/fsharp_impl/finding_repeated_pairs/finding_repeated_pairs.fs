@@ -242,8 +242,8 @@ module Finding_repetitions =
         
         async { 
         
-            let signal1 = figure_history.built.from_moments "signal1" [0;5]
-            let signal2 = figure_history.built.from_moments "signal2" [1;6;7]
+            let signal1 = built.Figure_history.from_moments "signal1" [0;5]
+            let signal2 = built.Figure_history.from_moments "signal2" [1;6;7]
             repeated_pair
                 (signal1.appearances|>Array.ofSeq)
                 (signal2.appearances|>Array.ofSeq)
