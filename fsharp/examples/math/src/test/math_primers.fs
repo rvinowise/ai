@@ -32,7 +32,8 @@ module Math_primers=
             "1+1=2;×"; "1+2=3;×";
             "1+1=";
         ]
-        |>ai.Expecting_figures.desired
+        |>ai.Desiring_future.desired
         |>should equal [
-            build.Graph.simple 
+            ("2",";");
+            (";","×");
         ]

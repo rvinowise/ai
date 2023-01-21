@@ -1,9 +1,12 @@
-﻿namespace rvinowise.ai
+﻿namespace rvinowise.ai.figure_parts
+    open System.Collections.Generic
+    open rvinowise.ai
+    type Vertex_data = IDictionary<Vertex_id, Figure_id>
+
+namespace rvinowise.ai
     open System.Text
     open rvinowise.extensions
-    open System.Collections.Generic
-    
-    type Vertex_data = IDictionary<Vertex_id, Figure_id>
+    open rvinowise.ai.figure_parts
 
     type Figure = {
         graph: Graph

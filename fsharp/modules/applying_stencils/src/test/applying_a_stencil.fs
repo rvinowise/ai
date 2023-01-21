@@ -36,7 +36,7 @@ module ``application of stencils``=
         [<Fact>]
         member this.``normal case``()=    
             prolongate_mapping_with_subfigure
-                stencil.example.a_fitting_stencil
+                example.Stencil.a_fitting_stencil
                 example.Figure.a_high_level_relatively_simple_figure
                 this.figures.initial_useless_mapping
                 "f"
@@ -52,7 +52,7 @@ module ``application of stencils``=
         [<Fact>]
         member this.``empty sequence is returned, if a mapping can't be prolongated by this subfigure``()=    
             prolongate_mapping_with_subfigure
-                stencil.example.a_fitting_stencil
+                example.Stencil.a_fitting_stencil
                 example.Figure.a_high_level_relatively_simple_figure
                 this.figures.initial_mapping_without_prolongation
                 "f"
@@ -66,7 +66,7 @@ module ``application of stencils``=
         [<Fact>]
         member this.``impossible to prolongate, because of no matching following subfigures``()=
             prolongate_mapping 
-                stencil.example.a_fitting_stencil
+                example.Stencil.a_fitting_stencil
                 example.Figure.a_high_level_relatively_simple_figure
                 ["f"]
                 this.figures.initial_mapping_without_prolongation
@@ -76,7 +76,7 @@ module ``application of stencils``=
         [<Fact>]
         member this.``prolongation with a single following node``()=
             prolongate_mapping 
-                stencil.example.a_fitting_stencil
+                example.Stencil.a_fitting_stencil
                 example.Figure.a_high_level_relatively_simple_figure
                 ["f"]
                 this.figures.initial_useless_mapping
@@ -97,7 +97,7 @@ module ``application of stencils``=
         member this.``several mappings can be produced by one stencil application``()=
             let result =
                 map_stencil_onto_target
-                    stencil.example.a_fitting_stencil
+                    example.Stencil.a_fitting_stencil
                     example.Figure.a_high_level_relatively_simple_figure
                     |> Set.ofSeq
             let expected =
@@ -123,7 +123,7 @@ module ``application of stencils``=
         [<Fact>]
         member this.``a fitting stencil, applied to a figure, outputs subgraphs``()=
             let target = example.Figure.a_high_level_relatively_simple_figure
-            let stencil = stencil.example.a_fitting_stencil
+            let stencil = example.Stencil.a_fitting_stencil
             target
             |>results_of_stencil_application stencil
             |>should equal [
@@ -136,7 +136,7 @@ module ``application of stencils``=
             
             let subfigures_in_stencil, subfigures_in_target =
                 sorted_subfigures_to_map_first
-                    stencil.example.a_fitting_stencil
+                    example.Stencil.a_fitting_stencil
                     example.Figure.a_high_level_relatively_simple_figure
             
             let permutator_input = 
@@ -175,7 +175,7 @@ module ``application of stencils``=
         [<Fact>]
         member this.``mapping of first stencil subfigures onto target produces initial mapping``()=
             let figure = example.Figure.a_high_level_relatively_simple_figure
-            let stencil = stencil.example.a_fitting_stencil
+            let stencil = example.Stencil.a_fitting_stencil
             
             (
                 map_first_nodes 
@@ -207,7 +207,7 @@ module ``application of stencils``=
         [<Fact>]
         member this.``complete mapping of stencil onto target can be produced``()=
             let figure = example.Figure.a_high_level_relatively_simple_figure
-            let stencil = stencil.example.a_fitting_stencil
+            let stencil = example.Stencil.a_fitting_stencil
             
             (map_stencil_onto_target stencil figure)
             |> should equal
@@ -230,7 +230,7 @@ module ``application of stencils``=
         [<Fact>] //(Skip="ui")
         member this.``paint the target figure and the stencil``()=
             let figure = example.Figure.a_high_level_relatively_simple_figure
-            let stencil = stencil.example.a_fitting_stencil
+            let stencil = example.Stencil.a_fitting_stencil
 
             figure.graph.id
             |>infrastructure.Graph.empty

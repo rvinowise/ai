@@ -1,5 +1,7 @@
-﻿module rvinowise.ai.Graph
+﻿namespace rvinowise.ai
 
+[<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
+module Graph =
     open Xunit
     open FsUnit
 

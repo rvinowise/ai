@@ -1,7 +1,6 @@
 module rvinowise.ai.built.Graph
     open rvinowise.ai
 
-
     let simple (id:Figure_id) (edges:seq<Vertex_id*Vertex_id>) =
         {
             id=id;

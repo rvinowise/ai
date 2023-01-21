@@ -1,5 +1,8 @@
 ﻿namespace rvinowise.ai
+    open System.Text
+    
     open rvinowise.extensions
+
 
     type Graph = {
         id: Figure_id

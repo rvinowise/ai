@@ -5,11 +5,12 @@ module rvinowise.ai.built.Figure
     open System.Diagnostics.Contracts
     
     open rvinowise.ai
+    open rvinowise.ai.figure_parts
     open rvinowise.extensions
 
     let simple id (edges:seq<Vertex_id*Vertex_id>) =
         {
-            graph=graph.built.simple id edges
+            graph=built.Graph.simple id edges
             subfigures=
                 edges
                 |>Seq.map (fun(tail_id,head_id)->
@@ -81,7 +82,7 @@ module rvinowise.ai.built.Figure
         (id:Figure_id)
         (edges:seq<Vertex_id*Figure_id*Vertex_id*Figure_id>) =
         {
-            graph=graph.built.from_tuples id edges
+            graph=built.Graph.from_tuples id edges
             subfigures=vertex_data_from_tuples edges
         }
 

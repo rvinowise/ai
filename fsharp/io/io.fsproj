@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
     <GenerateProgramFile>true</GenerateProgramFile>
     <OutputType>Library</OutputType>
     <!-- because of graphviz graph visualisation -->
@@ -36,7 +36,7 @@
   <ItemGroup>
     <!-- unit testing -->
     <PackageReference Include="xUnit" Version="2.4.2" />
-    <PackageReference Include="fsunit" Version="5.1.0" />
+    <PackageReference Include="fsunit" Version="5.2.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.4.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

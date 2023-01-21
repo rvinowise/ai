@@ -42,7 +42,7 @@ module Applying_stencil =
     [<Fact>]
     let ``sorted subfigures to map first``()=
         let target = example.Figure.a_high_level_relatively_simple_figure
-        let stencil = stencil.example.a_fitting_stencil
+        let stencil = example.Stencil.a_fitting_stencil
 
         sorted_subfigures_to_map_first
             stencil
