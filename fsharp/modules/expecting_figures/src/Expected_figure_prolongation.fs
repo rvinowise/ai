@@ -1,6 +1,6 @@
 namespace rvinowise.ai
 
-open rvinowise.ai.figure
+open rvinowise.ai
 
 type Expected_figure_prolongation = {
     prolongated: Figure

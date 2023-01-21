@@ -5,16 +5,16 @@ namespace rvinowise.ai
 
     [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
     module Figure=
-        open rvinowise.ai.figure
+        open rvinowise.ai
         open rvinowise
         open rvinowise.extensions
         
         [<Fact>]
         let ``equality comparison``()=
-            let f1 = built.from_tuples "F" [
+            let f1 = ai.built.Figure.from_tuples "F" [
                 "a0","a","b0","b"
             ]
-            let f2 = built.from_tuples "F" [
+            let f2 = ai.built.Figure.from_tuples "F" [
                 "a0","a","b0","b"
             ]
             f1 |>should equal f2
@@ -24,7 +24,7 @@ namespace rvinowise.ai
         let ``vertices reacheble from others``()=
             Graph.vertices_reacheble_from_other_vertices
                 Graph.need_every_vertex
-                figure.example.a_high_level_relatively_simple_figure.graph
+                example.Figure.a_high_level_relatively_simple_figure.graph
                 ["b0";"b2"]
             |> should equal ["f1"]
 
@@ -32,7 +32,7 @@ namespace rvinowise.ai
         let ``vertices reaching others``()=
             Graph.vertices_reaching_other_vertices
                 Graph.need_every_vertex
-                figure.example.a_high_level_relatively_simple_figure.graph
+                example.Figure.a_high_level_relatively_simple_figure.graph
                 ["b1";"f1"]
             |> should equal ["b0"]
 
@@ -74,7 +74,7 @@ namespace rvinowise.ai
             =
             vertices
             |>Edges.edges_between_vertices original_figure.graph.edges
-            |>built.stencil_output original_figure
+            |>built.Figure.stencil_output original_figure
 
         let is_vertex_referencing_figure 
             owner_figure

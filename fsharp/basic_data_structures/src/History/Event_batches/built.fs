@@ -1,4 +1,5 @@
 module rvinowise.ai.built.Event_batches
+    open System
     open FsUnit
     open Xunit
     open System.Collections.Generic
@@ -75,7 +76,7 @@ module rvinowise.ai.built.Event_batches
     let from_text_blocks (text_blocks:string seq)=
         text_blocks
         |>Seq.collect id
-        |>string
+        |>String.Concat
         |>from_text
 
     [<Fact>]

@@ -4,7 +4,6 @@ open Xunit
 open FsUnit
 
 open rvinowise.ai
-open rvinowise.ai.figure
 open rvinowise.ai.Expecting_figures
 open rvinowise.ai.Expected_figure_prolongation
 open rvinowise.ai.ui.painted.Expected_figure_prolongation
@@ -14,7 +13,7 @@ open rvinowise.ui
 module ``expectation of prolongation of figures``=
     
     let a_high_level_relatively_simple_figure =
-        rvinowise.ai.figure.built.simple
+        rvinowise.ai.built.Figure.simple
             "F"
             [
                 "b","c";

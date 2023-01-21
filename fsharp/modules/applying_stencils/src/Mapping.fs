@@ -3,7 +3,6 @@ namespace rvinowise.ai.stencil
     open rvinowise.ai
     open System.Linq
     open System
-    open rvinowise.ai.figure
 
     type Mapped_vertex = KeyValuePair<Vertex_id,Vertex_id>
     type Mapping_dict = Dictionary<Vertex_id, Vertex_id>
@@ -99,7 +98,6 @@ namespace rvinowise.ai.stencil
 
     [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
     module Mapping=
-        open rvinowise.ai.figure
         open rvinowise.ai
         open rvinowise
         

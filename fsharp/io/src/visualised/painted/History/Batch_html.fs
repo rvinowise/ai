@@ -54,7 +54,7 @@ namespace rvinowise.ai.ui.painted
             |Finish (figure, _) -> 
                 tr [] [ td [_port $"{figure})"] [str $"{figure})" ]] 
             |Signal (figure) -> 
-                tr [] [ td [_port $"({figure})"] [str $"({figure})" ]] 
+                tr [] [ td [_port $"{figure}"] [str $"{figure}" ]] 
             
         let cell_for_moment moment =
             tr [] 

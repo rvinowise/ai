@@ -2,7 +2,6 @@ namespace rvinowise.ai
 
 
 module Expecting_figures = 
-    open rvinowise.ai.figure
     open rvinowise.ai
     open Expected_figure_prolongation
 

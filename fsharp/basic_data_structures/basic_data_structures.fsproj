@@ -19,14 +19,20 @@
     <Compile Include="src\identifiers_in_database.fs" />
     <Compile Include="src\Interval.fs" />
 
-    <Compile Include="src\Graph\components\Edge\Edge_type.fs" />
-    <Compile Include="src\Graph\components\Edge\Edge_functions.fs" />
-    <Compile Include="src\Graph\Graph_type.fs" />
-    <Compile Include="src\Graph\Graph_functions.fs" />
-    <Compile Include="src\Graph\Figure\Figure_type.fs" />
-    <Compile Include="src\Graph\Figure\Figure_functions.fs" />
-    <Compile Include="src\Graph\Stencil\Stencil_type.fs" />
-    <Compile Include="src\Graph\Stencil\Stencil_functions.fs" />
+    <Compile Include="src\Graphs\components\Edge\Edge_type.fs" />
+    <Compile Include="src\Graphs\components\Edge\Edge_functions.fs" />
+    
+    <Compile Include="src\Graphs\Graph\type.fs" />
+    <Compile Include="src\Graphs\Graph\built.fs" />
+    <Compile Include="src\Graphs\Graph\Graph.fs" />
+
+    <Compile Include="src\Graphs\Figure\types.fs" />
+    <Compile Include="src\Graphs\Figure\built.fs" />
+    <Compile Include="src\Graphs\Figure\example.fs" />
+    <Compile Include="src\Graphs\Figure\Figure.fs" />
+
+    <Compile Include="src\Graphs\Stencil\Stencil_type.fs" />
+    <Compile Include="src\Graphs\Stencil\Stencil_functions.fs" />
 
     <!-- History -->
     <Compile Include="src\History\Figure_history\Figure_history.fs" />

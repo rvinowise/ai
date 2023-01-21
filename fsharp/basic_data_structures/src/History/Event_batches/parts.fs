@@ -44,31 +44,35 @@
                     |>Seq.map Signal
             }
         
-        let ofSignalsWithMood signals =
-            let is_mood_string (text:string)=
+        let is_mood_string (text:string)=
                 match (text|>Seq.head) with
                 |'+'|'-'->true
                 |_->false
-            let (|Int|_|) (str:string) =
-                match System.Int32.TryParse str with
-                | true,int -> Some int
+
+        let mood_change_from_string (text:string)=
+            match (text|>Seq.head) with
+            |'+'|'-'->
+                match System.Int32.TryParse text with
+                | true,int -> Some (Mood int)
                 | _ -> None
+            |_->None
+
+        let ofSignalsWithMood signals =
             {
                 events=
                     signals
-                    |>Seq.filter (is_mood_string>>not)
+                    |>Seq.filter (fun signal->
+                        mood_change_from_string signal = None
+                    )
                     |>Seq.map Signal
                 mood=
                 {
                     change=
                         signals
-                        |>Seq.filter is_mood_string
+                        |>Seq.choose mood_change_from_string
                         |>Seq.tryHead
                         |>function
-                        |Some mood_string->
-                            match System.Int32.TryParse mood_string with
-                            | true,int -> Mood int
-                            | _ -> Mood 0
+                        |Some mood->mood
                         |None->Mood 0
                     value=Mood 0
                 }

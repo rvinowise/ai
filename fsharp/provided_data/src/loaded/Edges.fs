@@ -4,7 +4,6 @@ open Dapper
 
 open rvinowise
 open rvinowise.ai
-open rvinowise.ai.figure
 
 
 type Edge = {
