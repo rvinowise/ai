@@ -18,7 +18,7 @@ module rvinowise.ai.built.Event_batches
                 Event_batch.ofSignalsWithMood fired_signals
             )
         )|>Map.ofSeq
-        
+    
     
     [<Fact>]
     let ``construct combined history with mood``()=
@@ -53,6 +53,40 @@ module rvinowise.ai.built.Event_batches
         |>should equal
             (Interval.regular 0 7)
 
+    let from_text (text:string)=
+        text
+        |>Seq.map (fun symbol->
+            match symbol with
+            |'×'->seq{"+1"}
+            |symbol -> seq{string symbol}
+        )
+        |>from_contingent_signals 0
+
+    [<Fact>]
+    let ``from text``()=
+        "1+2=3×"
+        |>from_text
+        |>should equal (
+            from_contingent_signals 0 [
+                ["1"];["+"];["2"];["="];["3"];["+1"];
+            ]
+        )
+
+    let from_text_blocks (text_blocks:string seq)=
+        text_blocks
+        |>Seq.collect id
+        |>string
+        |>from_text
+
+    [<Fact>]
+    let ``from text blocks``()=
+        ["1+2=3";"1"]
+        |>from_text_blocks
+        |>should equal (
+            from_contingent_signals 0 [
+                ["1"];["+"];["2"];["="];["3"];["1"]
+            ]
+        )
 
     let add_signal_to_history 
         figure
