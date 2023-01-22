@@ -30,7 +30,7 @@ module rvinowise.ai.built.Mood_history
                         ) ->
                         let mood_change = start.Value
                         let amount_of_moments = finish.Key-start.Key
-                        let new_mood = Mood.(+) history.initial_mood mood_change
+                        let new_mood =history.initial_mood + mood_change
                         {
                             initial_mood=new_mood
                             mood_at_moments=
@@ -55,7 +55,7 @@ module rvinowise.ai.built.Mood_history
                             |>fun last_mood_change->
                                 mood_at_moments
                                 |>Seq.last
-                                |>Mood.(+) last_mood_change
+                                |>(+) last_mood_change
                         ]
 
         }

@@ -59,6 +59,7 @@ module rvinowise.ai.built.Event_batches
         |>Seq.map (fun symbol->
             match symbol with
             |'×'->seq{"+1"}
+            |'÷'->seq{"-1"}
             |symbol -> seq{string symbol}
         )
         |>from_contingent_signals 0
@@ -306,6 +307,6 @@ module rvinowise.ai.built.Event_batches
         |>Seq.filter (fun (moment, batch)->
             (batch.events|>Seq.isEmpty|>not)
             ||
-            (batch.mood.change|>Mood.(<>) (Mood 0))
+            (batch.mood.change <> (Mood 0))
         )
         |>Map.ofSeq
