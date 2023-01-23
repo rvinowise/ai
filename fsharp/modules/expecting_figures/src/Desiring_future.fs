@@ -33,7 +33,7 @@ namespace rvinowise.ai
                 changes
                 |>Seq.
             )
-            
+            let next_mood_change_interval
 
         [<Fact>]
         ``intervals_changing_mood``()=
