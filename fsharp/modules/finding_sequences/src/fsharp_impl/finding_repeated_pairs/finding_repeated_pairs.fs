@@ -186,7 +186,6 @@ module Finding_repetitions =
         (previous_iteration: Iteration_state_of_searching_pairs)
         (found_pairs: Interval ResizeArray)
         =
-        
         if (not previous_iteration.has_failed_to_find_pair) then
             found_pairs.Add(Iteration_state_of_searching_pairs.found_pair previous_iteration)
             let iteration = 

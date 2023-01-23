@@ -296,7 +296,7 @@ module rvinowise.ai.built.Event_batches
 
 
     let add_mood_history 
-        (mood_changes_history: Map<Moment, Mood>) 
+        (mood_changes_history: Mood_changes_history) 
         (event_batches: Event_batches)
         =
         ()
