@@ -1,6 +1,7 @@
 namespace rvinowise.ai
     open FsUnit
     open Xunit
+    open rvinowise
 
     type Mood_change_interval = {
         interval: Interval
@@ -21,7 +22,17 @@ namespace rvinowise.ai
         open rvinowise.ai
 
 
-        let intervals_changing_mood history=
+        let intervals_changing_mood (mood_changes_history:Mood_changes_history)=
+            let changes =
+                mood_changes_history
+                |>extensions.Map.toPairs
+                |>Array.ofSeq
+            changes
+            |>Seq.collecti (fun (previous_moment, mood)->
+                let start_moment = previous_moment+1
+                changes
+                |>Seq.
+            )
             
 
         [<Fact>]
