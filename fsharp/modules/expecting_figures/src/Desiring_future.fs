@@ -1,6 +1,7 @@
 namespace rvinowise.ai
     open FsUnit
     open Xunit
+    open FSharpx.Collections
     open rvinowise
 
     type Mood_change_interval = {
@@ -49,27 +50,39 @@ namespace rvinowise.ai
                 (finish_index:int)
                 (Mood 0)
 
-        let mood_changes_starting_from_index
+        let rec mood_changes_starting_from_index
             (changes: (Moment*Mood) array)
             (start_index:int)
-            (found_intervals: ResizeArray<(Interval*Mood)> )
+            //(found_intervals: ResizeArray<(Interval*Mood)> )
             =
-            if start_index<changes.Length then
-                found_intervals.Add(
-                    (Interval.regular start_index finish_index),
-                    (
-                        mood_change_from_start_to_finish
-                            changes
-                            start_index
-                            finish_index
+            let rec mood_changes_for_all_final_moments
+                (changes: (Moment*Mood) array)
+                (found_intervals: ResizeArray<(Interval*Mood)> )
+                (start_index:int)
+                (finish_index:int)
+                =
+                if finish_index<changes.Length then
+                    found_intervals.Add(
+                        (Interval.regular start_index finish_index),
+                        (
+                            mood_change_from_start_to_finish
+                                changes
+                                start_index
+                                finish_index
+                        )
                     )
-                )
-                mood_changes_starting_from_index
-                    changes
-                    (start_index+1)
+                    mood_changes_for_all_final_moments
+                        changes
+                        found_intervals
+                        start_index
+                        (finish_index+1)
+                else
                     found_intervals
-            else
-                found_intervals
+            mood_changes_for_all_final_moments
+                changes
+                (ResizeArray<(Interval*Mood)>())
+                start_index
+                (start_index+1)
 
 
         let intervals_changing_mood (mood_changes_history:Mood_changes_history)=
@@ -78,27 +91,20 @@ namespace rvinowise.ai
                 |>extensions.Map.toPairs
                 |>Array.ofSeq
             
-            let rec loop_intervals_changing_mood
-                (changes: (Moment*Mood) array)
-                (start_index:int)
-                (finish_index:int)
-                =
-                if start_index<changes.Length then
-
-            loop_intervals_changing_mood
-                changes
-                0
-                0
+            changes
+            |>Seq.mapi (fun index _ ->
+                mood_changes_starting_from_index
+                    changes
+                    index
+            )
+            |>Seq.collect (ResizeArray.toArray)
             
             
-            
-
-
 
 
         [<Fact>]
-        ``intervals_changing_mood``()=
-            ["1×23×45¬¬67"]
+        let ``intervals_changing_mood``()=
+            "1×23×45¬¬67"
             //0123456789 <-moments
             |>built.Event_batches.from_text
             |>built.Event_batches.to_figure_histories
