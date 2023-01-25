@@ -30,7 +30,8 @@ module Finding_many_repetitions =
         (event_batches:Event_batches)
         =
         event_batches
-        |>built.Event_batches.to_figure_histories
+        |>built.Event_batches.to_separate_histories
+        |>Separate_histories.figure_histories
         |>many_repetitions
         |>built.Event_batches.combine_figure_histories
         |>built.Event_batches.add_mood_to_combined_history
@@ -49,7 +50,8 @@ module Finding_many_repetitions =
             ["a"];//6
             ["b"];//7
         ]
-        |>built.Event_batches.to_figure_histories
+        |>built.Event_batches.to_separate_histories
+        |>Separate_histories.figure_histories
         |>many_repetitions
         |>Seq.sort
         |>should equal [

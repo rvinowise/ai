@@ -228,11 +228,13 @@ module rvinowise.ai.built.Event_batches
         |>combine_figure_histories
         |>add_mood_to_combined_history mood_history
     
-    let to_figure_histories
+    let to_separate_histories
         event_batches
         =
         let figure_appearances = 
             Dictionary<Figure_id, ResizeArray<Interval>>()
+        let mutable mood_changes: Mood_changes_history = Map.empty
+        
         event_batches
         |>extensions.Map.toPairs
         |>Seq.iter (fun ((moment:Moment), (batch: Event_batch)) ->
@@ -254,17 +256,30 @@ module rvinowise.ai.built.Event_batches
                     figure_appearances[figure]<- old_appearances
                 |_ ->()
             )
+            if batch.mood.change <> Mood 0 then 
+                mood_changes <- mood_changes.Add(moment, batch.mood.change)
+            else
+                ()
         )
-        figure_appearances
-        |>Seq.map (fun pair ->
-            built.Figure_history.from_intervals pair.Key (pair.Value.ToArray())
-        )
+        
+        {
+            Separate_histories.figure_histories=
+                figure_appearances
+                |>Seq.map (fun pair ->
+                    built.Figure_history.from_intervals pair.Key (pair.Value.ToArray())
+                )
+            mood_change_history=mood_changes
+        }
+
+
+
 
     let from_combined_histories 
         (histories: Event_batches seq)
         =
         histories
-        |>Seq.collect to_figure_histories
+        |>Seq.collect to_separate_histories
+        |>Separate_histories.figure_histories
         |>combine_figure_histories
     
     let add_figure_histories
@@ -272,7 +287,8 @@ module rvinowise.ai.built.Event_batches
         (event_batches: Event_batches)
         =
         event_batches
-        |>to_figure_histories 
+        |>to_separate_histories
+        |>Separate_histories.figure_histories
         |>Seq.append figure_histories
         |>combine_figure_histories
 
@@ -286,7 +302,8 @@ module rvinowise.ai.built.Event_batches
                 ["a"]//2
                 ["b"]//3
             ]
-            |>to_figure_histories
+            |>to_separate_histories
+            |>Separate_histories.figure_histories
             |>should equal [
                 built.Figure_history.from_moments "a" [0;2]
                 built.Figure_history.from_moments "b" [0;3]

@@ -107,7 +107,7 @@ namespace rvinowise.ai
             "1×23×45¬¬67"
             //0123456789 <-moments
             |>built.Event_batches.from_text
-            |>built.Event_batches.to_figure_histories
+            |>built.Event_batches.to_mood_changes_history
             |>intervals_changing_mood
             |>should equal [
                 0,1,+1; 

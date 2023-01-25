@@ -69,7 +69,8 @@ module finding_sequences_in_history =
             ]
         let step2_figure_histories =
             signal_history
-            |>built.Event_batches.to_figure_histories
+            |>built.Event_batches.to_separate_histories
+            |>Separate_histories.figure_histories
             |>Finding_many_repetitions.many_repetitions
         let step2_combined_history =
             signal_history
