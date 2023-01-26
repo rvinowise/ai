@@ -229,7 +229,7 @@ module rvinowise.ai.built.Event_batches
         |>add_mood_to_combined_history mood_history
     
     let to_separate_histories
-        event_batches
+        (event_batches: Event_batches)
         =
         let figure_appearances = 
             Dictionary<Figure_id, ResizeArray<Interval>>()
@@ -278,8 +278,8 @@ module rvinowise.ai.built.Event_batches
         (histories: Event_batches seq)
         =
         histories
-        |>Seq.collect to_separate_histories
-        |>Separate_histories.figure_histories
+        |>Seq.map to_separate_histories
+        |>Seq.collect Separate_histories.figure_histories
         |>combine_figure_histories
     
     let add_figure_histories

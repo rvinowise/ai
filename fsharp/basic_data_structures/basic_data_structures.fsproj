@@ -45,7 +45,7 @@
     <Compile Include="src\History\Mood_history\built.fs" />
     <Compile Include="src\History\Mood_history\examples.fs" />
     
-    <Compile Include="src\History\Separate_histoies\Separate_histoies.fs" />
+    <Compile Include="src\History\Separate_histories\Separate_histories.fs" />
     
     <Compile Include="src\History\Event_batches\parts.fs" />
     <Compile Include="src\History\Event_batches\Event_batches.fs" />

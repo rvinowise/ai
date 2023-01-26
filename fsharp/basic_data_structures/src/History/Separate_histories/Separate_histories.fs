@@ -5,9 +5,10 @@ namespace rvinowise.ai
         mood_change_history: Mood_changes_history
     }
 
+    [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
     module Separate_histories =
         let figure_histories histories=
             histories.figure_histories
         
-        let mood_change_histories histories=
+        let mood_change_history histories=
             histories.mood_change_history
