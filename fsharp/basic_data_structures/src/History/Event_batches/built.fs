@@ -7,6 +7,7 @@ module rvinowise.ai.built.Event_batches
     open rvinowise.ai
     open rvinowise 
 
+    
         
     let from_contingent_signals 
         start
@@ -56,11 +57,12 @@ module rvinowise.ai.built.Event_batches
 
     let from_text (text:string)=
         text
-        |>Seq.map (fun symbol->
-            match symbol with
-            |'×'->seq{"+1"}
-            |'÷'->seq{"-1"}
-            |symbol -> seq{string symbol}
+        |>extensions.String.split_into_same_symbols
+        |>Seq.map (fun group->
+            match Seq.head group with
+            |'×'-> seq{$"+{Seq.length group}"}
+            |'¬'-> seq{$"-{Seq.length group}"}
+            |signal -> group|> Seq.map string
         )
         |>from_contingent_signals 0
 
@@ -271,7 +273,18 @@ module rvinowise.ai.built.Event_batches
             mood_change_history=mood_changes
         }
 
-
+    [<Fact>]
+    let ``to mood changes history``()=
+        "1×23×45¬¬67"
+       //01234567 89 <-moments
+        |>from_text
+        |>to_separate_histories
+        |>Separate_histories.mood_change_history
+        |>should equal (dict [
+            1,Mood +1;
+            4,Mood +1;
+            7,Mood -2;
+        ])
 
 
     let from_combined_histories 

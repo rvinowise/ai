@@ -164,7 +164,12 @@ module String =
     let remove_number label =
         Regex.Replace(label, @"[^a-zA-Z]", "")
 
-
+    let split_into_same_symbols s =
+        Regex("""(.)\1*""").Matches(s)
+        |> Seq.cast<Match> 
+        |> Seq.map (fun m -> m.Value)
+        //|> Seq.toList
+    
 module Map =
 
     let add_by_key 
@@ -197,4 +202,3 @@ module Option=
         match option with
         |Some value -> value
         |None -> raise (LackingDataException "the option must have a value, but it's None") 
-
