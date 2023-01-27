@@ -58,11 +58,13 @@ module rvinowise.ai.built.Event_batches
     let from_text (text:string)=
         text
         |>extensions.String.split_into_same_symbols
-        |>Seq.map (fun group->
+        |>Seq.collect (fun group->
             match Seq.head group with
-            |'×'-> seq{$"+{Seq.length group}"}
-            |'¬'-> seq{$"-{Seq.length group}"}
-            |signal -> group|> Seq.map string
+            |'×'-> seq{seq{$"+{Seq.length group}"}}
+            |'¬'-> seq{seq{$"-{Seq.length group}"}}
+            |signal ->
+                group
+                |> Seq.map (string>>Seq.singleton)
         )
         |>from_contingent_signals 0
 
@@ -284,6 +286,18 @@ module rvinowise.ai.built.Event_batches
             1,Mood +1;
             4,Mood +1;
             7,Mood -2;
+        ])
+    [<Fact>]
+    let ``to mood changes history2``()=
+        "00¬¬¬223××4¬¬"
+       //012  3456 78 9 <-moments
+        |>from_text
+        |>to_separate_histories
+        |>Separate_histories.mood_change_history
+        |>should equal (dict [
+            2,Mood -3;
+            6,Mood +2;
+            8,Mood -2;
         ])
 
 

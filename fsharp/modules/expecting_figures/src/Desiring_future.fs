@@ -132,7 +132,7 @@ namespace rvinowise.ai
             ]
             
         [<Fact>]
-        let ``intervals changing mood2``()=
+        let ``intervals changing mood, with repeated signals``()=
             "00¬¬¬223××4¬¬"
            //012  3456 78 9 <-moments
             |>built.Event_batches.from_text
