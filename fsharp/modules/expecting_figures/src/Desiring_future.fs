@@ -102,7 +102,6 @@ namespace rvinowise.ai
                 |>Seq.append [(-1,Mood 0)]//initial mood before the first change
                 |>Array.ofSeq
                 
-            
             changes
             |>Seq.mapi (fun index _ ->
                 mood_changes_starting_from_index
@@ -148,5 +147,25 @@ namespace rvinowise.ai
                 (Interval.regular 7 8), Mood -2;
             ]
 
+        let commonalities_in_history_intervals
+            (is_interval_needed: Mood -> bool)
+            (history: Figure_history seq)
+            (intervals)
+            =()
+
+        let good_commonalities (history: Figure_history seq)=
+            commonalities_in_history_intervals
+                Mood.is_good
+                history
+
         let desired history=
-            ()
+            let separate_histories=
+                history
+                |>built.Event_batches.to_separate_histories
+            let mood_intervals = 
+                separate_histories
+                |>Separate_histories.mood_change_history
+                |>intervals_changing_mood
+            let good_commonalities =
+                separate_histories
+                |>
