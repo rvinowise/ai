@@ -140,8 +140,8 @@
 </hook>
 <node TEXT="type: project" POSITION="left" ID="ID_683065071" CREATED="1631768151045" MODIFIED="1632652341983"/>
 <node TEXT="bookmarks: done" STYLE_REF="done" POSITION="left" ID="ID_1334217373" CREATED="1632064659870" MODIFIED="1632136937093"/>
-<node TEXT="process" POSITION="right" ID="ID_393996128" CREATED="1633181155567" MODIFIED="1633181347389" COLOR="#7f7f7f">
-<font BOLD="true"/>
+<node TEXT="process" LOCALIZED_STYLE_REF="default" POSITION="right" ID="ID_393996128" CREATED="1633181155567" MODIFIED="1675042940494" COLOR="#000000" BACKGROUND_COLOR="#eeeeee">
+<icon BUILTIN="group"/>
 <node STYLE_REF="list item" ID="ID_913201831" CREATED="1633181351387" MODIFIED="1633221846453" COLOR="#000000" BACKGROUND_COLOR="#ffffff"><richcontent TYPE="NODE">
 
 <html>
@@ -236,7 +236,6 @@
     </p>
   </body>
 </html>
-
 </richcontent>
 </node>
 </node>
@@ -298,7 +297,6 @@
     </p>
   </body>
 </html>
-
 </richcontent>
 <node ID="ID_488025138" CREATED="1633218781284" MODIFIED="1633221329946"><richcontent TYPE="NODE">
 
@@ -346,7 +344,8 @@
 </node>
 </node>
 </node>
-<node TEXT="modules" STYLE_REF="topic" POSITION="right" ID="ID_303254332" CREATED="1632652373243" MODIFIED="1632652498554">
+<node TEXT="modules" LOCALIZED_STYLE_REF="default" POSITION="right" ID="ID_303254332" CREATED="1632652373243" MODIFIED="1675042940493" COLOR="#000000" BACKGROUND_COLOR="#eeeeee">
+<icon BUILTIN="group"/>
 <node TEXT="input_receiver" ID="ID_1728916427" CREATED="1633179805199" MODIFIED="1633179825519">
 <icon BUILTIN="present"/>
 <node TEXT="sensory data from the environment" ID="ID_1098000367" CREATED="1633180434047" MODIFIED="1633180487255">
@@ -401,7 +400,6 @@
     </p>
   </body>
 </html>
-
 </richcontent>
 <node TEXT="what&apos;s common between two given intervals?" LOCALIZED_STYLE_REF="default" ID="ID_919990037" CREATED="1633143062613" MODIFIED="1633179078696" COLOR="#000000" BACKGROUND_COLOR="#ffffff"/>
 </node>
@@ -457,7 +455,6 @@
     </p>
   </body>
 </html>
-
 </richcontent>
 <node TEXT="finding what&apos;s common between two given intervals" LOCALIZED_STYLE_REF="default" ID="ID_749870449" CREATED="1633143062613" MODIFIED="1633143315656" COLOR="#000000" BACKGROUND_COLOR="#ffffff">
 <icon BUILTIN="cog"/>
@@ -604,7 +601,8 @@
 </node>
 </node>
 </node>
-<node TEXT="objects" STYLE_REF="topic" POSITION="right" ID="ID_1902469308" CREATED="1632652416117" MODIFIED="1632652499107">
+<node TEXT="objects" LOCALIZED_STYLE_REF="default" FOLDED="true" POSITION="right" ID="ID_1902469308" CREATED="1632652416117" MODIFIED="1675042940490" COLOR="#000000" BACKGROUND_COLOR="#eeeeee">
+<icon BUILTIN="group"/>
 <node TEXT="history" LOCALIZED_STYLE_REF="default" ID="ID_74294546" CREATED="1632652535678" MODIFIED="1673056196000">
 <icon BUILTIN="present"/>
 <node TEXT="stores all inputs and outputs" LOCALIZED_STYLE_REF="default" ID="ID_1764693530" CREATED="1632652563385" MODIFIED="1652654241241">
@@ -880,7 +878,7 @@
 </node>
 </node>
 </node>
-<node TEXT="legend" POSITION="right" ID="ID_49802336" CREATED="1632692624170" MODIFIED="1672994032199" BACKGROUND_COLOR="#eeeeee">
+<node TEXT="legend" FOLDED="true" POSITION="right" ID="ID_49802336" CREATED="1632692624170" MODIFIED="1672994032199" BACKGROUND_COLOR="#eeeeee">
 <icon BUILTIN="group"/>
 <node TEXT="icons" ID="ID_143750967" CREATED="1632698164973" MODIFIED="1632698166792">
 <node TEXT="what it is" ID="ID_643462232" CREATED="1632844495015" MODIFIED="1633006313614">
