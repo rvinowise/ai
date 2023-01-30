@@ -149,14 +149,19 @@ namespace rvinowise.ai
 
         let commonalities_in_history_intervals
             (is_interval_needed: Mood -> bool)
+            (mood_intervals: (Interval*Mood) seq)
             (history: Figure_history seq)
-            (intervals)
             =()
 
-        let good_commonalities (history: Figure_history seq)=
+        let good_commonalities 
+            (mood_intervals: (Interval*Mood) seq)
+            (history: Figure_history seq)
+            =
             commonalities_in_history_intervals
                 (Mood.is_good)
+                mood_intervals
                 history
+
 
         let desired history=
             let separate_histories=
@@ -168,4 +173,5 @@ namespace rvinowise.ai
                 |>intervals_changing_mood
             let good_commonalities =
                 separate_histories
-                |>good_commonalities
+                |>good_commonalities mood_intervals
+                    
