@@ -159,7 +159,7 @@ module rvinowise.ai.built.Event_batches
             
         ) event_batches
 
-    let combine_figure_histories 
+    let from_figure_histories 
         (figure_histories : Figure_history seq)
         =
         figure_histories
@@ -177,7 +177,7 @@ module rvinowise.ai.built.Event_batches
             0,2; 4,4
         ]
         [history_of_a; history_of_b]
-        |>combine_figure_histories 
+        |>from_figure_histories 
         |>extensions.Map.toPairs
         |>Seq.map (fun (moment,batch) ->
             moment, (batch.events|>Seq.sort)
@@ -229,7 +229,7 @@ module rvinowise.ai.built.Event_batches
         figure_histories
         =
         figure_histories
-        |>combine_figure_histories
+        |>from_figure_histories
         |>add_mood_to_combined_history mood_history
     
     let to_separate_histories
@@ -307,7 +307,7 @@ module rvinowise.ai.built.Event_batches
         histories
         |>Seq.map to_separate_histories
         |>Seq.collect Separate_histories.figure_histories
-        |>combine_figure_histories
+        |>from_figure_histories
     
     let add_figure_histories
         (figure_histories: Figure_history seq)
@@ -317,7 +317,7 @@ module rvinowise.ai.built.Event_batches
         |>to_separate_histories
         |>Separate_histories.figure_histories
         |>Seq.append figure_histories
-        |>combine_figure_histories
+        |>from_figure_histories
 
 
     [<Fact>]

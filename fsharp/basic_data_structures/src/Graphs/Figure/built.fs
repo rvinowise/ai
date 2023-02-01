@@ -90,3 +90,9 @@ module rvinowise.ai.built.Figure
         from_edges_of_figure "out" figure edges
 
     let empty id = from_tuples id []
+
+    let sequential_pair 
+        (a_figure: Figure)
+        (b_figure: Figure)
+        =
+        

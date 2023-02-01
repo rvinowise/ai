@@ -7,7 +7,10 @@ namespace rvinowise.ai
     open System.Text
     open rvinowise.extensions
     open rvinowise.ai.figure_parts
+    open System
+    open System.Linq
 
+    [<CustomEquality; NoComparison>]
     type Figure = {
         graph: Graph
         subfigures: Vertex_data
@@ -28,9 +31,20 @@ namespace rvinowise.ai
             result+=")"
             result.ToString()
 
+        override this.Equals(other) =
+            match other with
+            | :? Figure as other ->
+                this.graph = other.graph
+                && 
+                Enumerable.SequenceEqual(this.subfigures, other.subfigures)
+            | _ -> false
+        
+        override this.GetHashCode() =
+            this.graph.GetHashCode() ^^^ this.subfigures.GetHashCode()
 
-
-
+        interface IEquatable<Figure> with   
+            member this.Equals other =
+                this.Equals other
         
 
 

@@ -171,7 +171,8 @@ namespace rvinowise.ai
                 separate_histories
                 |>Separate_histories.mood_change_history
                 |>intervals_changing_mood
-            let good_commonalities =
-                separate_histories
-                |>good_commonalities mood_intervals
+            // let good_commonalities =
+            //     separate_histories
+            //     |>good_commonalities mood_intervals
                     
+            ()

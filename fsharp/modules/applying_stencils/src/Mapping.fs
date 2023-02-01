@@ -32,10 +32,6 @@ namespace rvinowise.ai.stencil
             
             member this.CompareTo other =
                 
-                let tail_of_mapped_node (pair:Mapped_vertex) =
-                    pair.Key
-                let target_of_mapped_node (pair:Mapped_vertex) =
-                    pair.Value
                 let compare_mapped_nodes
                     (this:Mapping) 
                     (other:Mapping) 

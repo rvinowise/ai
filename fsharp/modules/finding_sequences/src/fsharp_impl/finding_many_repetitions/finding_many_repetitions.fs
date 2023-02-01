@@ -9,20 +9,33 @@ open rvinowise
 
 module Finding_many_repetitions =
 
-    let is_possible_pair
-        (a_history,b_history)
+    type Known_figures = Map<Figure_id, Figure>
+    type Known_figures_set = Set<Figure>
+
+    let is_needed_pair 
+        (figure_graphs: Known_figures)
+        a_figure_id
+        b_figure_id
         =
-        if a_history.figure = b_history.figure then
-            false
-        else
-            true
+        let a_figure_graph = 
+            Map.tryFind a_figure_id
+        let b_figure_graph = 
+            Map.tryFind b_figure_id
+        let ab_figure_graph =
+            Figure.built.pair
+                a_figure_graph
+                b_figure_graph
+        
 
     let many_repetitions
         (figure_histories: seq<Figure_history>)
+        (figure_graphs: Known_figures)
         =
         (figure_histories,figure_histories)
         ||>Seq.allPairs
-        //|>Seq.filter is_possible_pair
+        |>Seq.filter (fun (a_history,b_history)->
+            is_needed_pair a_history.figure b_history.figure
+        )
         |>Seq.map Finding_repetitions.repeated_pair_with_histories
         |>Seq.filter Figure_history.has_repetitions
 
@@ -33,7 +46,7 @@ module Finding_many_repetitions =
         |>built.Event_batches.to_separate_histories
         |>Separate_histories.figure_histories
         |>many_repetitions
-        |>built.Event_batches.combine_figure_histories
+        |>built.Event_batches.from_figure_histories
         |>built.Event_batches.add_mood_to_combined_history
            (Event_batches.get_mood_history event_batches)
         |>built.Event_batches.remove_batches_without_actions
