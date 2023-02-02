@@ -12,15 +12,17 @@ module Finding_many_repetitions =
     type Known_sequences = Set<Figure_id>
 
     let is_needed_pair 
-        (known_sequence_ids: Known_sequences)
+        (known_sequences: Known_sequences)
         a_figure_id
         b_figure_id
         =
-        let ab_figure_id =
-            a_figure_id + b_figure_id
+        let ab_figure =
+            built.Figure.sequential_pair
+                a_figure_id
+                b_figure_id
         
-        known_sequence_ids
-        |>Set.contains ab_figure_id 
+        known_sequences
+        |>Set.contains ab_figure 
         |>not
 
     let many_repetitions

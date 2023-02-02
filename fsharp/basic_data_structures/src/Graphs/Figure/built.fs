@@ -20,7 +20,7 @@ module rvinowise.ai.built.Figure
                     ]
                 )
                 |>Seq.concat
-                |>dict 
+                |>Map.ofSeq 
         }
     
     let vertex_data_from_edges_of_figure (vertex_data:Vertex_data) (edges:Edge seq) =
@@ -45,7 +45,7 @@ module rvinowise.ai.built.Figure
     let ``contract violation accessing verticex of a figure``()=
         Assert.Throws<System.ArgumentException>(fun()->
             vertex_data_from_edges_of_figure
-                (dict ["a0","a";"b1","b"])
+                (Map.ofSeq ["a0","a";"b1","b"])
                 [
                     Edge("a0","b1");
                     Edge("b1","a1")
@@ -90,4 +90,12 @@ module rvinowise.ai.built.Figure
         (a_figure: Figure)
         (b_figure: Figure)
         =
-        ()
+        {
+            edges=
+                a_figure.edges
+                |>Seq.append b_figure.edges
+            
+            subfigures=
+                a_figure.subfigures
+                |>Seq.append b_figure.subfigures
+        }
