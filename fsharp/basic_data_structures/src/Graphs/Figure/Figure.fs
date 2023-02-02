@@ -11,10 +11,10 @@ namespace rvinowise.ai
         
         [<Fact>]
         let ``equality comparison``()=
-            let f1 = ai.built.Figure.from_tuples "F" [
+            let f1 = ai.built.Figure.from_tuples [
                 "a0","a","b0","b"
             ]
-            let f2 = ai.built.Figure.from_tuples "F" [
+            let f2 = ai.built.Figure.from_tuples [
                 "a0","a","b0","b"
             ]
             f1 |>should equal f2
@@ -22,17 +22,17 @@ namespace rvinowise.ai
 
         [<Fact>]
         let ``vertices reacheble from others``()=
-            Graph.vertices_reacheble_from_other_vertices
-                Graph.need_every_vertex
-                example.Figure.a_high_level_relatively_simple_figure.graph
+            Edges.vertices_reacheble_from_other_vertices
+                (fun _->true)
+                example.Figure.a_high_level_relatively_simple_figure.edges
                 ["b0";"b2"]
             |> should equal ["f1"]
 
         [<Fact>]
         let ``vertices reaching others``()=
-            Graph.vertices_reaching_other_vertices
-                Graph.need_every_vertex
-                example.Figure.a_high_level_relatively_simple_figure.graph
+            Edges.vertices_reaching_other_vertices
+                (fun _->true)
+                example.Figure.a_high_level_relatively_simple_figure.edges
                 ["b1";"f1"]
             |> should equal ["b0"]
 
@@ -73,7 +73,7 @@ namespace rvinowise.ai
             (vertices:Set<Vertex_id>)
             =
             vertices
-            |>Edges.edges_between_vertices original_figure.graph.edges
+            |>Edges.edges_between_vertices original_figure.edges
             |>built.Figure.stencil_output original_figure
 
         let is_vertex_referencing_figure 
@@ -90,17 +90,17 @@ namespace rvinowise.ai
             figure_referenced_by_needed_subfigures
             subfigures_before_goals
             =
-            Graph.vertices_reacheble_from_other_vertices
+            Edges.vertices_reacheble_from_other_vertices
                 (
                     is_vertex_referencing_figure 
                         owner_figure 
                         figure_referenced_by_needed_subfigures
                     )
-                owner_figure.graph
+                owner_figure.edges
                 subfigures_before_goals
 
         let has_edges (figure:Figure) =
-            figure.graph.edges
+            figure.edges
             |>Seq.isEmpty|>not
 
         

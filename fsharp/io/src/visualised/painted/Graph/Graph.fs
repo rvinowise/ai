@@ -8,10 +8,10 @@ namespace rvinowise.ai.ui.painted
         open rvinowise
 
         let add_graph
-            (added_graph: ai.Graph)
+            (edges: ai.Edge seq)
             (to_node: infrastructure.Node)
             =
-            added_graph.edges
+            edges
             |> Seq.iter (
                 fun edge -> 
                     let tail = 

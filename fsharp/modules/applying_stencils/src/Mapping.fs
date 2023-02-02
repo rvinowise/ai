@@ -113,7 +113,7 @@ namespace rvinowise.ai.stencil
                 mapping[subfigure]
             )
 
-        let retrieve_result stencil target mapping =
+        let retrieve_result stencil (target:Figure) mapping =
             //i don't know how to handle stencils with multiple outputs. assume it's one for now
             let output_node = 
                 stencil
@@ -122,20 +122,20 @@ namespace rvinowise.ai.stencil
 
             let output_beginning =
                 output_node
-                |>Graph.previous_vertices stencil.graph
+                |>Edges.previous_vertices stencil.edges
                 |>targets_of_mapping mapping
                 |>Edges.vertices_reacheble_from_other_vertices
-                    Graph.need_every_vertex
-                    target.graph.edges
+                    (fun _->true)
+                    target.edges
                 |>Set.ofSeq
 
             let output_ending =
                 output_node
-                |>Graph.next_vertices stencil.graph
+                |>Edges.next_vertices stencil.edges
                 |>targets_of_mapping mapping
                 |>Edges.vertices_reaching_other_vertices
-                    Graph.need_every_vertex
-                    target.graph.edges
+                    (fun _->true)
+                    target.edges
                 |>Set.ofSeq
             
             output_beginning

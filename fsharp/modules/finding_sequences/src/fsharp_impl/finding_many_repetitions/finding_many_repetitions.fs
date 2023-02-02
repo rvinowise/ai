@@ -9,32 +9,35 @@ open rvinowise
 
 module Finding_many_repetitions =
 
-    type Known_figures = Map<Figure_id, Figure>
-    type Known_figures_set = Set<Figure>
+    type Known_sequences = Set<Figure_id>
 
     let is_needed_pair 
-        (figure_graphs: Known_figures)
+        (known_sequence_ids: Known_sequences)
         a_figure_id
         b_figure_id
         =
-        let a_figure_graph = 
-            Map.tryFind a_figure_id
-        let b_figure_graph = 
-            Map.tryFind b_figure_id
-        let ab_figure_graph =
-            Figure.built.pair
-                a_figure_graph
-                b_figure_graph
+        let ab_figure_id =
+            a_figure_id + b_figure_id
         
+        known_sequence_ids
+        |>Set.contains ab_figure_id 
+        |>not
 
     let many_repetitions
         (figure_histories: seq<Figure_history>)
-        (figure_graphs: Known_figures)
         =
+        let known_sequence_ids = 
+            figure_histories
+            |>Seq.map Figure_history.figure
+            |>Set.ofSeq
+        
         (figure_histories,figure_histories)
         ||>Seq.allPairs
         |>Seq.filter (fun (a_history,b_history)->
-            is_needed_pair a_history.figure b_history.figure
+            is_needed_pair 
+                known_sequence_ids
+                a_history.figure
+                b_history.figure
         )
         |>Seq.map Finding_repetitions.repeated_pair_with_histories
         |>Seq.filter Figure_history.has_repetitions

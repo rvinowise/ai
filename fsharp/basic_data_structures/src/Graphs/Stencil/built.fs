@@ -21,7 +21,7 @@ module rvinowise.ai.built.Stencil
 
     let simple id (edges:seq<string*string>) =
         {
-            graph=built.Graph.simple id edges
+            edges=built.Graph.simple edges
             nodes=edges
                 |>Seq.map (fun(tail_id,head_id)->
                     [
@@ -44,9 +44,8 @@ module rvinowise.ai.built.Stencil
         }
 
     let from_tuples
-        (id:Figure_id)
         (edges:seq<Vertex_id*string*Vertex_id*string>) =
         {
-            graph=built.Graph.from_tuples id edges
+            edges=built.Graph.from_tuples edges
             nodes=vertex_data_from_tuples edges
         }

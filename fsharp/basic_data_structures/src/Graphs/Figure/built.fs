@@ -8,9 +8,9 @@ module rvinowise.ai.built.Figure
     open rvinowise.ai.figure_parts
     open rvinowise.extensions
 
-    let simple id (edges:seq<Vertex_id*Vertex_id>) =
+    let simple (edges:seq<Vertex_id*Vertex_id>) =
         {
-            graph=built.Graph.simple id edges
+            edges=built.Graph.simple edges
             subfigures=
                 edges
                 |>Seq.map (fun(tail_id,head_id)->
@@ -66,33 +66,28 @@ module rvinowise.ai.built.Figure
         |>dict 
 
     let from_edges_of_figure
-        id
         (figure:Figure)
         (edges:Edge seq) =
         {
-            graph={
-                id=id;
-                edges=edges
-            }
+            edges=edges
             subfigures=vertex_data_from_edges_of_figure figure.subfigures edges
 
         }
 
     let from_tuples 
-        (id:Figure_id)
         (edges:seq<Vertex_id*Figure_id*Vertex_id*Figure_id>) =
         {
-            graph=built.Graph.from_tuples id edges
+            edges=built.Graph.from_tuples edges
             subfigures=vertex_data_from_tuples edges
         }
 
     let stencil_output figure (edges:Edge seq)=
-        from_edges_of_figure "out" figure edges
+        from_edges_of_figure figure edges
 
-    let empty id = from_tuples id []
+    let empty = from_tuples []
 
     let sequential_pair 
         (a_figure: Figure)
         (b_figure: Figure)
         =
-        
+        ()

@@ -3,7 +3,6 @@ module rvinowise.ai.example.Figure
 
     let a_high_level_relatively_simple_figure = 
         built.Figure.simple 
-            "F" 
             [
                 ("b0","c");
                 ("b0","d");

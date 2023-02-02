@@ -12,15 +12,15 @@ namespace rvinowise.ai
 
     [<CustomEquality; NoComparison>]
     type Figure = {
-        graph: Graph
+        edges: Edge seq
         subfigures: Vertex_data
     }
     with 
         override this.ToString() =
             let result = StringBuilder()
             result 
-            += $"Figure_{this.graph.id}( "
-            this.graph.edges
+            += $"Figure( "
+            this.edges
             |>Seq.iter(fun edge ->
                 result 
                 ++ edge.tail
@@ -34,13 +34,13 @@ namespace rvinowise.ai
         override this.Equals(other) =
             match other with
             | :? Figure as other ->
-                this.graph = other.graph
+                Enumerable.SequenceEqual(this.edges, other.edges)
                 && 
                 Enumerable.SequenceEqual(this.subfigures, other.subfigures)
             | _ -> false
         
         override this.GetHashCode() =
-            this.graph.GetHashCode() ^^^ this.subfigures.GetHashCode()
+            this.edges.GetHashCode() ^^^ this.subfigures.GetHashCode()
 
         interface IEquatable<Figure> with   
             member this.Equals other =

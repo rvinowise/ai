@@ -21,15 +21,15 @@ namespace rvinowise.ai
     open rvinowise.extensions
 
     type Stencil = {
-        graph: Graph
+        edges: Edge seq
         nodes: Vertex_data
     }
     with 
         override this.ToString() =
             let result = StringBuilder()
             result 
-            += $"Stencil_{this.graph.id}( "
-            this.graph.edges
+            += $"Stencil( "
+            this.edges
             |>Seq.iter(fun edge ->
                 result 
                 ++ edge.tail

@@ -23,9 +23,8 @@ module ``application of stencils``=
             
         member _.result_of_fruitful_stencil_application =
             built.Figure.simple
-                "out"
                 [
-                        "d","e"
+                    "d","e"
                 ]
             
 
@@ -232,13 +231,13 @@ module ``application of stencils``=
             let figure = example.Figure.a_high_level_relatively_simple_figure
             let stencil = example.Stencil.a_fitting_stencil
 
-            figure.graph.id
+            "F"
             |>infrastructure.Graph.empty
             |>infrastructure.Graph.with_circle_vertices
             |>infrastructure.Graph.with_filled_vertex "target figure" 
-                (painted.Graph.add_graph figure.graph)
+                (painted.Graph.add_graph figure.edges)
             |>infrastructure.Graph.with_filled_vertex "stencil"
-                (painted.Graph.add_graph stencil.graph)
+                (painted.Graph.add_graph stencil.edges)
             |>painted.image.open_image_of_graph
 
         

@@ -14,7 +14,6 @@ module ``expectation of prolongation of figures``=
     
     let a_high_level_relatively_simple_figure =
         rvinowise.ai.built.Figure.simple
-            "F"
             [
                 "b","c";
                 "b","d";
@@ -67,7 +66,7 @@ module ``expectation of prolongation of figures``=
         let expectation_after_d = 
             prolongate_expectation_with_an_input_figure "d" expectation_after_b
         
-        high_figure.graph.id
+        "F"
         |>infrastructure.Graph.empty
         |>infrastructure.Graph.with_circle_vertices
         |>with_expected_prolongation "initial_expectation" initial_expectation

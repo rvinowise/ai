@@ -14,8 +14,8 @@ module Expected_figure_prolongation =
     let from_figure (figure: Figure) =
         {
             prolongated=figure;
-            expected=figure.graph
-                |>Graph.first_vertices 
+            expected=figure.edges
+                |>Edges.first_vertices 
                 |>Set.ofSeq
         }
 

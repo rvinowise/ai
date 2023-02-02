@@ -22,9 +22,9 @@
     <Compile Include="src\Graphs\components\Edge\Edge_type.fs" />
     <Compile Include="src\Graphs\components\Edge\Edge_functions.fs" />
     
-    <Compile Include="src\Graphs\Graph\type.fs" />
+    <!-- <Compile Include="src\Graphs\Graph\type.fs" /> -->
     <Compile Include="src\Graphs\Graph\built.fs" />
-    <Compile Include="src\Graphs\Graph\Graph.fs" />
+    <!-- <Compile Include="src\Graphs\Graph\Graph.fs" /> -->
 
     <Compile Include="src\Graphs\Figure\types.fs" />
     <Compile Include="src\Graphs\Figure\built.fs" />

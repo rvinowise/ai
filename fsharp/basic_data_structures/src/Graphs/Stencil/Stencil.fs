@@ -34,7 +34,7 @@ module Stencil=
 
     let next_subfigures subfigures (stencil: Stencil)=
         subfigures
-        |>Seq.collect (Edges.next_vertices stencil.graph.edges)
+        |>Seq.collect (Edges.next_vertices stencil.edges)
         |>Seq.distinct
         |>only_subfigures stencil
 
@@ -43,10 +43,10 @@ module Stencil=
         vertex 
         =
         vertex
-        |>Edges.incoming_edges stencil.graph.edges
+        |>Edges.incoming_edges stencil.edges
         |>Seq.collect (fun edge->
             if is_output stencil edge.tail then
-                Edges.previous_vertices stencil.graph.edges edge.tail
+                Edges.previous_vertices stencil.edges edge.tail
             else
                 Seq.ofList [edge.tail]
         )
@@ -89,12 +89,12 @@ module Stencil=
         |>Seq.choose (Dictionary.some_value owner_stencil.nodes)
 
     let first_subfigures stencil=
-        stencil.graph
-        |>Graph.first_vertices 
+        stencil.edges
+        |>Edges.first_vertices 
         |>Seq.filter (is_subfigure stencil)
 
     let first_referenced_figures stencil=
-        Graph.first_vertices stencil.graph
+        Edges.first_vertices stencil.edges
         |>Seq.map (referenced_node stencil)
         |>Seq.choose (function
             |Node_reference.Lower_figure referenced_figure -> Some referenced_figure

@@ -42,13 +42,14 @@ let with_expected_prolongation
 
 
 
-let visualise_prolongation 
+let visualise_prolongation
+    id
     (prolongation:Expected_figure_prolongation) 
     =
-    prolongation.prolongated.graph.id
+    id
     |>infrastructure.Graph.empty
     |>with_expected_prolongation 
-        prolongation.prolongated.graph.id
+        id
         prolongation
     |>image.open_image_of_graph
     |>ignore

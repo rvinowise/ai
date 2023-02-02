@@ -13,7 +13,7 @@ namespace rvinowise.ai.ui.painted
             (figure: ai.Figure)
             (to_node: infrastructure.Node)
             =
-            figure.graph.edges
+            figure.edges
             |> Seq.iter (fun edge -> 
                 let tail =
                     to_node
