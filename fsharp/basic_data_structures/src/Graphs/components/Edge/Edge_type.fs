@@ -14,3 +14,7 @@ namespace rvinowise.ai
         end
         
          
+    module Edge=
+
+        let ofPair pair =
+            Edge(fst pair, snd pair)

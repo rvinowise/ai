@@ -72,7 +72,21 @@ namespace rvinowise.ai
             |>Seq.filter (is_first_vertex edges)
             |>Seq.distinct
 
-        
+        let is_last_vertex
+            (edges: seq<Edge> )
+            vertex
+            =
+            edges
+            |> Seq.exists (fun edge-> edge.tail = vertex)
+            |> not
+
+        let last_vertices
+            (edges: seq<Edge>)
+            =
+            edges
+            |>all_vertices
+            |>Seq.filter (is_last_vertex edges)
+            |>Seq.distinct
         
         let rec private all_vertices_reacheble_from_vertices
             (is_needed:Vertex_id->bool)

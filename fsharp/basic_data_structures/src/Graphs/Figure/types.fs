@@ -5,12 +5,13 @@
 
 namespace rvinowise.ai
     open System.Text
+    open rvinowise
     open rvinowise.extensions
     open rvinowise.ai.figure_parts
     open System
     open System.Linq
 
-    [<CustomEquality; NoComparison>]
+    [<CustomEquality; CustomComparison>]
     type Figure = {
         edges: Edge seq
         subfigures: Vertex_data
@@ -46,8 +47,26 @@ namespace rvinowise.ai
             member this.Equals other =
                 this.Equals other
         
-
-
+        member this.compare (other:Figure) =
+            let subfigures_diff = 
+                this.subfigures
+                |>extensions.Map.compareWith other.subfigures
+            if (subfigures_diff = 0) then
+                this.edges
+                |>Seq.compareWith Operators.compare other.edges
+            else
+                subfigures_diff
+        
+        interface IComparable with
+            member this.CompareTo other =
+                match other with
+                | :? Figure as other ->
+                    this.compare other
+                | _ -> invalidArg "other" "cannot compare value of different types"
+        
+        interface IComparable<Figure> with
+            member this.CompareTo other =
+                this.compare other
 
 
 

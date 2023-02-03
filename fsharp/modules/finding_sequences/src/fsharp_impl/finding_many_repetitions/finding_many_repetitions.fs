@@ -9,10 +9,15 @@ open rvinowise
 
 module Finding_many_repetitions =
 
-    type Known_sequences = Set<Figure_id>
+    // type Figure_history = {
+    //     figure: Figure
+    //     appearances: array<Interval>
+    // }
+
+    type Known_figures = Set<Figure>
 
     let is_needed_pair 
-        (known_sequences: Known_sequences)
+        (known_sequences: Known_figures)
         a_figure_id
         b_figure_id
         =
@@ -28,16 +33,16 @@ module Finding_many_repetitions =
     let many_repetitions
         (figure_histories: seq<Figure_history>)
         =
-        let known_sequence_ids = 
+        let known_sequences = 
             figure_histories
             |>Seq.map Figure_history.figure
-            |>Set.ofSeq
+            |>Seq.map built.Figure.signal
         
         (figure_histories,figure_histories)
         ||>Seq.allPairs
         |>Seq.filter (fun (a_history,b_history)->
             is_needed_pair 
-                known_sequence_ids
+                known_sequences
                 a_history.figure
                 b_history.figure
         )

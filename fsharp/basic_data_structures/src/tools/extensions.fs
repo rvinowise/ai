@@ -195,6 +195,29 @@ module Map =
         map
         |>Seq.map(fun pair -> pair.Key, pair.Value)
 
+    let add_map 
+        (map1: Map<'Key, 'Value>)
+        (map2: Map<'Key, 'Value>)
+        = 
+        map1
+        |>Seq.append map2
+        |>Seq.map(fun pair->pair.Key,pair.Value)
+        |>Map.ofSeq
+    
+    let compareWith<'Key, 'Value when 'Key: comparison and 'Value: comparison>  
+        (map1: Map<'Key, 'Value>)
+        (map2: Map<'Key, 'Value>)
+        =
+        map1
+        |>Seq.compareWith (fun pair1 pair2->
+                let key_diff = compare pair1.Key pair2.Key
+                if key_diff = 0 then
+                    compare pair1.Value pair2.Value
+                else
+                    key_diff
+            ) 
+            map2
+
 module Option=
     exception LackingDataException of string
     
