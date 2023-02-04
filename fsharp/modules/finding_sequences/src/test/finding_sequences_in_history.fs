@@ -9,7 +9,7 @@ open BenchmarkDotNet.Running
 
 
 module finding_sequences_in_history =
-    open rvinowise.ai.fsharp_impl
+    open rvinowise.ai
     open rvinowise.ai
     open rvinowise.ui
 
@@ -70,25 +70,26 @@ module finding_sequences_in_history =
         let step2_figure_histories =
             signal_history
             |>built.Event_batches.to_separate_histories
-            |>Separate_histories.figure_histories
+            |>Separate_histories.figure_id_appearances
+            |>Seq.map built.Figure_appearances.from_figure_id_appearances
             |>Finding_many_repetitions.many_repetitions
         let step2_combined_history =
             signal_history
-            |>built.Event_batches.add_figure_histories step2_figure_histories
+            |>built.Event_batches.add_figure_appearances step2_figure_histories
 
         let step3_figure_histories =
             step2_figure_histories
             |>Finding_many_repetitions.many_repetitions
         let step3_combined_history =
             step2_combined_history
-            |>built.Event_batches.add_figure_histories step3_figure_histories
+            |>built.Event_batches.add_figure_appearances step3_figure_histories
 
         let step4_figure_histories =
             step3_figure_histories
             |>Finding_many_repetitions.many_repetitions
         let step4_combined_history =
             step3_combined_history
-            |>built.Event_batches.add_figure_histories step4_figure_histories
+            |>built.Event_batches.add_figure_appearances step4_figure_histories
 
         "stages of pattern search with previous stages"
         |>infrastructure.Graph.empty
@@ -119,7 +120,8 @@ module finding_sequences_in_history =
         let step1_figure_histories = 
             signal_history
             |>built.Event_batches.to_separate_histories
-            |>Separate_histories.figure_histories
+            |>Separate_histories.figure_id_appearances
+            |>Seq.map built.Figure_appearances.from_figure_id_appearances
 
         let step2_figure_histories =
             step1_figure_histories
@@ -127,7 +129,7 @@ module finding_sequences_in_history =
             |>Seq.append step1_figure_histories
         let step2_combined_history =
             step2_figure_histories
-            |>built.Event_batches.from_figure_histories 
+            |>built.Event_batches.from_figure_appearances 
 
         let step3_figure_histories =
             step2_figure_histories
@@ -135,7 +137,7 @@ module finding_sequences_in_history =
             |>Seq.append step2_figure_histories
         let step3_combined_history =
             step3_figure_histories
-            |>built.Event_batches.from_figure_histories
+            |>built.Event_batches.from_figure_appearances
 
         let step4_figure_histories =
             step3_figure_histories
@@ -143,7 +145,7 @@ module finding_sequences_in_history =
             |>Seq.append step3_figure_histories
         let step4_combined_history =
             step4_figure_histories
-            |>built.Event_batches.from_figure_histories
+            |>built.Event_batches.from_figure_appearances
 
         "stages of pattern search mixing all layers of abstraction"
         |>infrastructure.Graph.empty

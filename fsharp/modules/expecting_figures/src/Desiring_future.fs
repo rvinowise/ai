@@ -150,12 +150,12 @@ namespace rvinowise.ai
         let commonalities_in_history_intervals
             (is_interval_needed: Mood -> bool)
             (mood_intervals: (Interval*Mood) seq)
-            (history: Figure_history seq)
+            (history: Figure_id_appearances seq)
             =()
 
         let good_commonalities 
             (mood_intervals: (Interval*Mood) seq)
-            (history: Figure_history seq)
+            (history: Figure_id_appearances seq)
             =
             commonalities_in_history_intervals
                 (Mood.is_good)

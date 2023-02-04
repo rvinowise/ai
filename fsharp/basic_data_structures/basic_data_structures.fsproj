@@ -37,9 +37,11 @@
     <Compile Include="src\Graphs\Stencil\Stencil.fs" />
 
     <!-- History -->
-    <Compile Include="src\History\Figure_history\Figure_history.fs" />
-    <Compile Include="src\History\Figure_history\built.fs" />
-    <Compile Include="src\History\Figure_history\examples.fs" />
+    <Compile Include="src\History\Figure_history\Figure_id_appearances\Figure_id_appearances.fs" />
+    <Compile Include="src\History\Figure_history\Figure_id_appearances\built.fs" />
+    <Compile Include="src\History\Figure_history\Figure_id_appearances\examples.fs" />
+    <Compile Include="src\History\Figure_history\Figure_appearances\Figure_appearances.fs" />
+    <Compile Include="src\History\Figure_history\Figure_appearances\built.fs" />
 
     <Compile Include="src\History\Mood_history\Mood_history.fs" />
     <Compile Include="src\History\Mood_history\built.fs" />

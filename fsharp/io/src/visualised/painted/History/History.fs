@@ -11,10 +11,10 @@ namespace rvinowise.ai.ui.painted
     open rvinowise.ai
 
     module History=
-        let figure_history_description (history:Figure_history)=
+        let figure_history_description (history:Figure_id_appearances)=
             $"appearances of {history.figure} from 
-            {Figure_history.start history} to 
-            {Figure_history.finish history}"
+            {Figure_id_appearances.start history} to 
+            {Figure_id_appearances.finish history}"
         
         let combined_history_description 
             (history: Event_batches)

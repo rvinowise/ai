@@ -103,4 +103,49 @@ namespace rvinowise.ai
             figure.edges
             |>Seq.isEmpty|>not
 
+        let private id_from_a_sequence_of_edges (edges: Edge seq) =
+            let first_vertex =
+                edges
+                |>Edges.first_vertices
+                |>Seq.head
+            
+            let rec build_id 
+                (edges : Edge seq)
+                id
+                (vertex:Figure_id)
+                =
+                let updated_id = id+String.remove_number vertex
+                vertex
+                |>Edges.next_vertices edges
+                |>Seq.tryHead
+                |>function
+                |None->updated_id
+                |Some next_vertex ->
+                    build_id
+                        edges
+                        updated_id
+                        next_vertex
+            build_id edges "" first_vertex
+
+        let id_from_sequence (figure:Figure) =
+            if Seq.isEmpty figure.edges then 
+                figure.subfigures
+                |>Seq.head
+                |>extensions.KeyValuePair.key
+            else
+                id_from_a_sequence_of_edges figure.edges
+
+        [<Fact>]
+        let ``try id_from_sequence``()=
+            ["a1","b";"b","a2";"a2","c"]
+            |>built.Figure.simple
+            |>id_from_sequence
+            |>should equal "abac"
         
+        
+        [<Fact>]
+        let ``try id_from_sequence for a signal``()=
+            "a"
+            |>built.Figure.signal
+            |>id_from_sequence
+            |>should equal "a"

@@ -1,4 +1,4 @@
-module rvinowise.ai.built.Figure_history
+module rvinowise.ai.built.Figure_id_appearances
     open Xunit
     open FsUnit
     open rvinowise.ai
@@ -8,7 +8,7 @@ module rvinowise.ai.built.Figure_history
         intervals
         =
         {
-            figure=figure
+            Figure_id_appearances.figure=figure
             appearances=intervals
         }
     
@@ -36,5 +36,6 @@ module rvinowise.ai.built.Figure_history
             figure=figure
             appearances=intervals
         }
+    
     
 

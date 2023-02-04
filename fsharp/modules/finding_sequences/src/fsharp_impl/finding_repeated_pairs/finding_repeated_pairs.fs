@@ -1,10 +1,11 @@
-namespace rvinowise.ai.fsharp_impl
+namespace rvinowise.ai
 
 open System
 open rvinowise.ai
 
 open FsUnit
 open Xunit
+
 
 module Finding_repetitions =
     (* figure "a" is the beginning of the found pair, 
@@ -223,11 +224,14 @@ module Finding_repetitions =
         
         
     let repeated_pair_with_histories
-        (a_history: Figure_history,
-        b_history: Figure_history)
+        (a_history: Figure_appearances,
+        b_history: Figure_appearances)
         =
         {
-            figure=a_history.figure+b_history.figure
+            Figure_appearances.figure=
+                built.Figure.sequential_pair
+                    a_history.figure
+                    b_history.figure
             appearances=
                 (repeated_pair 
                     (a_history.appearances)
@@ -241,8 +245,8 @@ module Finding_repetitions =
         
         async { 
         
-            let signal1 = built.Figure_history.from_moments "signal1" [0;5]
-            let signal2 = built.Figure_history.from_moments "signal2" [1;6;7]
+            let signal1 = built.Figure_id_appearances.from_moments "signal1" [0;5]
+            let signal2 = built.Figure_id_appearances.from_moments "signal2" [1;6;7]
             repeated_pair
                 (signal1.appearances|>Array.ofSeq)
                 (signal2.appearances|>Array.ofSeq)

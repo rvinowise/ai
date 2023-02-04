@@ -141,7 +141,7 @@ module rvinowise.ai.built.Event_batches
         )
 
     let add_events_to_combined_history 
-        (figure_history : Figure_history)
+        (figure_history : Figure_id_appearances)
         (event_batches: Event_batches)
         = 
         figure_history.appearances
@@ -159,25 +159,32 @@ module rvinowise.ai.built.Event_batches
             
         ) event_batches
 
-    let from_figure_histories 
-        (figure_histories : Figure_history seq)
+    let from_figure_id_appearances 
+        (figure_histories : Figure_id_appearances seq)
         =
         figure_histories
         |>Seq.fold (fun event_batches figure_history ->
             add_events_to_combined_history figure_history event_batches
         ) 
             Map.empty
+    
+    let from_figure_appearances 
+        (figure_histories : Figure_appearances seq)
+        =
+        figure_histories
+        |>Seq.map built.Figure_appearances.to_figure_id_appearances
+        |>from_figure_id_appearances
             
     [<Fact>]
     let ``combine figure histories``()=
-        let history_of_a = built.Figure_history.from_tuples "a" [
+        let history_of_a = built.Figure_id_appearances.from_tuples "a" [
             0,1; 2,4
         ]
-        let history_of_b = built.Figure_history.from_tuples "b" [
+        let history_of_b = built.Figure_id_appearances.from_tuples "b" [
             0,2; 4,4
         ]
         [history_of_a; history_of_b]
-        |>from_figure_histories 
+        |>from_figure_id_appearances 
         |>extensions.Map.toPairs
         |>Seq.map (fun (moment,batch) ->
             moment, (batch.events|>Seq.sort)
@@ -229,7 +236,7 @@ module rvinowise.ai.built.Event_batches
         figure_histories
         =
         figure_histories
-        |>from_figure_histories
+        |>from_figure_id_appearances
         |>add_mood_to_combined_history mood_history
     
     let to_separate_histories
@@ -267,10 +274,10 @@ module rvinowise.ai.built.Event_batches
         )
         
         {
-            Separate_histories.figure_histories=
+            Separate_histories.figure_apperances=
                 figure_appearances
                 |>Seq.map (fun pair ->
-                    built.Figure_history.from_intervals pair.Key (pair.Value.ToArray())
+                    built.Figure_id_appearances.from_intervals pair.Key (pair.Value.ToArray())
                 )
             mood_change_history=mood_changes
         }
@@ -306,18 +313,28 @@ module rvinowise.ai.built.Event_batches
         =
         histories
         |>Seq.map to_separate_histories
-        |>Seq.collect Separate_histories.figure_histories
-        |>from_figure_histories
+        |>Seq.collect Separate_histories.figure_id_appearances
+        |>from_figure_id_appearances
     
-    let add_figure_histories
-        (figure_histories: Figure_history seq)
+    let add_figure_id_appearances
+        (figure_id_appearances: Figure_id_appearances seq)
         (event_batches: Event_batches)
         =
         event_batches
         |>to_separate_histories
-        |>Separate_histories.figure_histories
-        |>Seq.append figure_histories
-        |>from_figure_histories
+        |>Separate_histories.figure_id_appearances
+        |>Seq.append figure_id_appearances
+        |>from_figure_id_appearances
+
+    let add_figure_appearances
+        (figure_appearances: Figure_appearances seq)
+        (event_batches: Event_batches)
+        =
+        event_batches
+        |>add_figure_id_appearances (
+            figure_appearances
+            |>Seq.map built.Figure_appearances.to_figure_id_appearances
+        )
 
 
     [<Fact>]
@@ -330,12 +347,12 @@ module rvinowise.ai.built.Event_batches
                 ["b"]//3
             ]
             |>to_separate_histories
-            |>Separate_histories.figure_histories
+            |>Separate_histories.figure_id_appearances
             |>should equal [
-                built.Figure_history.from_moments "a" [0;2]
-                built.Figure_history.from_moments "b" [0;3]
-                built.Figure_history.from_moments "c" [1]
-                built.Figure_history.from_moments "d" [1]
+                built.Figure_id_appearances.from_moments "a" [0;2]
+                built.Figure_id_appearances.from_moments "b" [0;3]
+                built.Figure_id_appearances.from_moments "c" [1]
+                built.Figure_id_appearances.from_moments "d" [1]
             ]
 
 

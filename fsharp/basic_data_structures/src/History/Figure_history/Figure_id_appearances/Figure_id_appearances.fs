@@ -4,14 +4,14 @@ namespace rvinowise.ai
     open FsUnit
     open Xunit
  
-    type Figure_history = {
+    type Figure_id_appearances = {
         figure: Figure_id
         appearances: array<Interval>
     }
 
 
     [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
-    module Figure_history=
+    module Figure_id_appearances=
         open rvinowise.ai
         open FsUnit
         open Xunit

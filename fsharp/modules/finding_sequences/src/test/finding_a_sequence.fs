@@ -36,14 +36,14 @@ module finding_sequences =
             cpp_impl.Finding_repetitions.repeated_pair this.heads this.heads
         [<Benchmark>]
         member this.fsharp_search_in_big_sequences()=
-            fsharp_impl.Finding_repetitions.repeated_pair this.heads this.heads
+            Finding_repetitions.repeated_pair this.heads this.heads
 
     type ``invoking native methods``(output: ITestOutputHelper)=
         let output = output
 
         [<Fact>]
         member this.``f# finding repeated pair in tiny intricate sequences``()=
-            fsharp_impl.Finding_repetitions.repeated_pair
+            Finding_repetitions.repeated_pair
                 [|
                     Interval.from_int 0 1;
                     Interval.from_int 2 3;
@@ -59,7 +59,7 @@ module finding_sequences =
                     Interval.from_int 0 3 ;
                     Interval.from_int 2 5 ;
                 |]
-        [<Fact>] //(Skip="c++")
+        [<Fact(Skip="c++")>] //
         member this.``c++ finding repeated pair in tiny intricate sequences``()=
             cpp_impl.Finding_repetitions.repeated_pair
                 [|
@@ -91,14 +91,14 @@ module finding_sequences =
                     Interval.from_int i (i+1) 
             |]
             
-            fsharp_impl.Finding_repetitions.repeated_pair heads tails
+            Finding_repetitions.repeated_pair heads tails
             |>should equal 
                 [|
                     for i in 0..items_amount-2 ->
                         Interval.from_int i (i+3)
                 |]
         
-        [<Fact>] //(Skip="c++")
+        [<Fact(Skip="c++")>] //
         member this.``c++ finding repeated pairs in big sequences``()=
             let items_amount = 100
             
