@@ -221,7 +221,22 @@ module Finding_repetitions =
             b_appearances
             iteration
             found_pairs
-        
+       
+    [<Fact(Timeout=1000)>]
+    let ``finding repetitions, when the last A-figure is taken, but there's still B-figures left ``()=
+        async { 
+            let signal1 = built.Figure_id_appearances.from_moments "signal1" [0;5]
+            let signal2 = built.Figure_id_appearances.from_moments "signal2" [1;6;7]
+            repeated_pair
+                (signal1.appearances|>Array.ofSeq)
+                (signal2.appearances|>Array.ofSeq)
+            |>should equal (
+                [
+                    0,1; 5,6
+                ]
+                |>Seq.map Interval.ofPair
+            )
+        }
         
     let repeated_pair_with_histories
         (a_history: Figure_appearances,
@@ -240,22 +255,31 @@ module Finding_repetitions =
         }
 
 
-    [<Fact(Timeout=1000)>]
-    let ``finding repetitions, when the last A-figure is taken, but there's still B-figures left ``()=
-        
-        async { 
-        
-            let signal1 = built.Figure_id_appearances.from_moments "signal1" [0;5]
-            let signal2 = built.Figure_id_appearances.from_moments "signal2" [1;6;7]
-            repeated_pair
-                (signal1.appearances|>Array.ofSeq)
-                (signal2.appearances|>Array.ofSeq)
-            |>should equal (
-                [
-                    0,1; 5,6
-                ]
-                |>Seq.map Interval.ofPair
-            )
-                
-        }
-            
+    [<Fact>]
+    let ``try repeated_pair_with_histories``()=
+        let a_history =
+            built.Figure_id_appearances.from_moments "a" [0;5]
+            |>built.Figure_appearances.from_figure_id_appearances
+        let b_history =
+            built.Figure_id_appearances.from_moments "b" [1;7]
+            |>built.Figure_appearances.from_figure_id_appearances
+                            
+        repeated_pair_with_histories
+            (a_history,b_history)
+        |>should equal
+            {
+                Figure_appearances.figure={
+                    edges=
+                        ["a","b"]
+                        |>Seq.map Edge.ofPair
+                    subfigures=
+                        ["a","a"; "b","b"]
+                        |>Map.ofSeq
+                }
+                appearances=
+                    [
+                        0,1; 5,7
+                    ]
+                    |>Seq.map Interval.ofPair
+                    |>Array.ofSeq
+            }
