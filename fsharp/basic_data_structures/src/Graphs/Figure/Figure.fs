@@ -9,33 +9,6 @@ namespace rvinowise.ai
         open rvinowise
         open rvinowise.extensions
         
-        [<Fact>]
-        let ``equality comparison``()=
-            let f1 = ai.built.Figure.from_tuples [
-                "a0","a","b0","b"
-            ]
-            let f2 = ai.built.Figure.from_tuples [
-                "a0","a","b0","b"
-            ]
-            f1 |>should equal f2
-
-
-        [<Fact>]
-        let ``vertices reacheble from others``()=
-            Edges.vertices_reacheble_from_other_vertices
-                (fun _->true)
-                example.Figure.a_high_level_relatively_simple_figure.edges
-                ["b0";"b2"]
-            |> should equal ["f1"]
-
-        [<Fact>]
-        let ``vertices reaching others``()=
-            Edges.vertices_reaching_other_vertices
-                (fun _->true)
-                example.Figure.a_high_level_relatively_simple_figure.edges
-                ["b1";"f1"]
-            |> should equal ["b0"]
-
         
         let need_vertex_referencing_figure 
             (owner_figure:Figure)
@@ -68,13 +41,7 @@ namespace rvinowise.ai
             subfigures
             |>Seq.choose (Dictionary.some_value owner_figure.subfigures)
 
-        let subgraph_with_vertices 
-            original_figure 
-            (vertices:Set<Vertex_id>)
-            =
-            vertices
-            |>Edges.edges_between_vertices original_figure.edges
-            |>built.Figure.stencil_output original_figure
+        
 
         let is_vertex_referencing_figure 
             owner_figure
@@ -103,7 +70,7 @@ namespace rvinowise.ai
             figure.edges
             |>Seq.isEmpty|>not
 
-        let private id_from_a_sequence_of_edges (edges: Edge seq) =
+        let private id_of_a_sequence_from_edges (edges: Edge seq) =
             let first_vertex =
                 edges
                 |>Edges.first_vertices
@@ -127,25 +94,30 @@ namespace rvinowise.ai
                         next_vertex
             build_id edges "" first_vertex
 
-        let id_from_sequence (figure:Figure) =
+        let id_of_a_sequence (figure:Figure) =
             if Seq.isEmpty figure.edges then 
                 figure.subfigures
                 |>Seq.head
                 |>extensions.KeyValuePair.key
             else
-                id_from_a_sequence_of_edges figure.edges
+                id_of_a_sequence_from_edges figure.edges
 
-        [<Fact>]
-        let ``try id_from_sequence``()=
-            ["a1","b";"b","a2";"a2","c"]
-            |>built.Figure.simple
-            |>id_from_sequence
-            |>should equal "abac"
         
         
-        [<Fact>]
-        let ``try id_from_sequence for a signal``()=
-            "a"
-            |>built.Figure.signal
-            |>id_from_sequence
-            |>should equal "a"
+        let private the_only_vertex figure =
+            figure.subfigures
+            |>Seq.head 
+            |>KeyValuePair.key
+            |>Seq.singleton
+
+        let first_vertices figure =
+            if Seq.isEmpty figure.edges then
+                the_only_vertex figure
+            else
+                Edges.first_vertices figure.edges
+
+        let last_vertices figure =
+            if Seq.isEmpty figure.edges then
+                the_only_vertex figure
+            else
+                Edges.last_vertices figure.edges

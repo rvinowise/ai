@@ -10,7 +10,9 @@ namespace rvinowise.ai
 
             new (tail, head) =
                 {tail = tail; head = head;}
-
+            
+            override this.ToString() =
+                $"Edge({this.tail}->{this.head})"
         end
         
          

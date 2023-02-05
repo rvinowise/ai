@@ -147,18 +147,21 @@ module rvinowise.ai.built.Figure
                     |>function
                     |Some renamed -> renamed
                     |None -> edge.tail
-                (new_head, new_tail)
+                (new_tail, new_head)
             )
             |>Seq.map Edge.ofPair
 
         let edges_inbetween =
             let last_vertices =
-                a_figure.edges
-                |>Edges.last_vertices
+                a_figure
+                |>Figure.last_vertices
             let first_vertices =
-                b_edges_with_renamed_subfigures
-                |>Edges.first_vertices
-            Seq.allPairs first_vertices last_vertices
+                {
+                    edges=b_edges_with_renamed_subfigures
+                    subfigures=renamed_b_subfigures
+                }
+                |>Figure.first_vertices
+            Seq.allPairs last_vertices first_vertices 
             |>Seq.map Edge.ofPair
 
         {
@@ -172,44 +175,53 @@ module rvinowise.ai.built.Figure
                 |>extensions.Map.add_map renamed_b_subfigures
         }
 
-        // [<Fact>]
-        // let ``sequential pair``()=
-        //     let a_figure = simple ["a1","b1";"b1","a2";"b1","c1"]
-        //     let b_figure = simple ["a1","b1";"e1","b1";"b1","a2"]
-        //     let expected_ab_figure = {
-        //         edges=[
-        //             "a1","b1";"b1","a2";"b1","c1";
-        //             "a1","b1";"e1","b1";"b1","a2";
-        //             //edges between glued graphs:
-        //             "a2","a1'";
-        //             "a2","e1";
-        //             "c1","a1'";
-        //             "c1","e1"
+    [<Fact>]
+    let ``try sequential_pair``()=
+        let a_figure = simple ["a1","b1";"b1","a2";"b1","c1"]
+        let b_figure = simple ["a1","b1";"e1","b1";"b1","a2"]
+        let expected_ab_figure = {
+            edges=[
+                "a1","b1"; "b1","a2"; "b1","c1";
+                "a1'","b1'"; "e1","b1'"; "b1'","a2'";
+                //edges between glued graphs:
+                "a2","a1'";
+                "a2","e1";
+                "c1","a1'";
+                "c1","e1"
 
-        //         ]
-        //         |>Seq.map Edge.ofPair
-        //         |>Seq.sort
-                
-        //         subfigures=[
-        //                 "a1","a";
-        //                 "a1'","a";
-        //                 "a2","a";
-        //                 "a2'","a";
-        //                 "b1","b";
-        //                 "b1'","b";
-        //                 "c1","c";
-        //                 "e1","e";
-        //             ]
-        //             |>Map.ofSeq
-        //     }
-        //     let real_ab_figure = 
-        //         sequential_pair
-        //             a_figure
-        //             b_figure
-        //     real_ab_figure.edges
-        //     |>Seq.sort
-        //     |>should equal expected_ab_figure.edges
+            ]
+            |>Seq.map Edge.ofPair
+            |>Seq.sort
+            
+            subfigures=[
+                    "a1","a";
+                    "a1'","a";
+                    "a2","a";
+                    "a2'","a";
+                    "b1","b";
+                    "b1'","b";
+                    "c1","c";
+                    "e1","e";
+                ]
+                |>Map.ofSeq
+        }
+        let real_ab_figure = 
+            sequential_pair
+                a_figure
+                b_figure
+        real_ab_figure.edges
+        |>Seq.sort
+        |>should equal expected_ab_figure.edges
 
-        //     real_ab_figure.subfigures
-        //     |>should equal expected_ab_figure.subfigures
-                
+        real_ab_figure.subfigures
+        |>should equal expected_ab_figure.subfigures
+        
+
+
+    let subgraph_with_vertices 
+        original_figure 
+        (vertices:Set<Vertex_id>)
+        =
+        vertices
+        |>Edges.edges_between_vertices original_figure.edges
+        |>stencil_output original_figure

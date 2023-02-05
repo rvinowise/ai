@@ -17,6 +17,6 @@ module rvinowise.ai.built.Figure_appearances
         =
         {
             Figure_id_appearances.figure=
-                Figure.id_from_sequence figure_appearances.figure
+                Figure.id_of_a_sequence figure_appearances.figure
             appearances=figure_appearances.appearances
         }

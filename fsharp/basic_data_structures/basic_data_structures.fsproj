@@ -27,9 +27,10 @@
     <!-- <Compile Include="src\Graphs\Graph\Graph.fs" /> -->
 
     <Compile Include="src\Graphs\Figure\types.fs" />
+    <Compile Include="src\Graphs\Figure\Figure.fs" />
     <Compile Include="src\Graphs\Figure\built.fs" />
     <Compile Include="src\Graphs\Figure\example.fs" />
-    <Compile Include="src\Graphs\Figure\Figure.fs" />
+    <Compile Include="src\Graphs\Figure\tests.fs" />
 
     <Compile Include="src\Graphs\Stencil\types.fs" />
     <Compile Include="src\Graphs\Stencil\built.fs" />
