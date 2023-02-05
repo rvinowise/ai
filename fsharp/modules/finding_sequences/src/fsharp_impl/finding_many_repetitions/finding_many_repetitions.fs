@@ -19,7 +19,7 @@ module Finding_many_repetitions =
     type Known_figures = Set<Figure>
 
 
-    let is_needed_pair 
+    let will_this_pair_give_already_found_sequence 
         (known_sequences: Known_figures)
         a_figure_id
         b_figure_id
@@ -31,7 +31,6 @@ module Finding_many_repetitions =
         
         known_sequences
         |>Set.contains ab_figure 
-        |>not
 
     let many_repetitions
         (figure_appearances: seq<Figure_appearances>)
@@ -43,14 +42,32 @@ module Finding_many_repetitions =
         
         (figure_appearances,figure_appearances)
         ||>Seq.allPairs
-        |>Seq.filter (fun (a_history,b_history)->
-            is_needed_pair 
+        |>Seq.fold (
+            fun 
+                (known_sequences, found_pairs)
+                (a_history,b_history) 
+                ->
+            if will_this_pair_give_already_found_sequence 
                 known_sequences
                 a_history.figure
                 b_history.figure
-        )
-        |>Seq.map Finding_repetitions.repeated_pair_with_histories
-        |>Seq.filter Figure_appearances.has_repetitions
+            then
+                known_sequences,found_pairs
+            else
+                let found_pair = 
+                    (a_history, b_history)
+                    |>Finding_repetitions.repeated_pair_with_histories
+                if Figure_appearances.has_repetitions found_pair then
+                    (
+                        known_sequences
+                        |>Set.add found_pair.figure
+                    ),
+                    found_pair::found_pairs
+                else
+                    known_sequences,found_pairs
+            )
+            (known_sequences,[])
+        |>snd
 
     let repetitions_in_combined_history
         (event_batches:Event_batches)
