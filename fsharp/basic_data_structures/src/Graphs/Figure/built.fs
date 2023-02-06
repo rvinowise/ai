@@ -153,7 +153,6 @@ module rvinowise.ai.built.Figure
         (a_figure: Figure)
         (b_figure: Figure)
         =
-        let renamed_subfigures = Map.empty
         b_figure.subfigures
         |>Seq.choose (fun pair->
             let b_vertex = pair.Key

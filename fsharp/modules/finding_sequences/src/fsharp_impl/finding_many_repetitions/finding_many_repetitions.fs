@@ -142,6 +142,7 @@ module Finding_many_repetitions =
                 2,5; 6,8
             |]|>Array.map Interval.ofPair
         }
+        let test_ada = built.Figure.sequence_from_text "ada"
         let ada_appearances =
             [ad_appearances;a_appearances;da_appearances]
             |>many_repetitions
