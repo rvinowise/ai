@@ -47,6 +47,14 @@ module Finding_many_repetitions =
                 (known_sequences, found_pairs)
                 (a_history,b_history) 
                 ->
+            //test
+            if a_history.figure|>Figure.id_of_a_sequence = "a" &&
+               b_history.figure|>Figure.id_of_a_sequence = "da"
+            then
+                () 
+            else
+                () 
+            ////test
             if will_this_pair_give_already_found_sequence 
                 known_sequences
                 a_history.figure
@@ -110,3 +118,43 @@ module Finding_many_repetitions =
                 2,4; 5,6
             ]
         ]
+    
+    [<Fact>]
+    let ``try finding many_repetitions, when duplicating sequences are possible``()=
+        let ad_figure = built.Figure.sequence_from_text "ad"
+        let a_figure = built.Figure.signal "a"
+        let da_figure = built.Figure.sequence_from_text "da"
+        let ad_appearances = {
+            Figure_appearances.figure=ad_figure
+            appearances=[|
+                0,2; 5,6
+            |]|>Array.map Interval.ofPair
+        }
+        let a_appearances = {
+            Figure_appearances.figure=a_figure
+            appearances=[|
+                0;5;8
+            |]|>Array.map Interval.moment
+        }
+        let da_appearances = {
+            Figure_appearances.figure=a_figure
+            appearances=[|
+                2,5; 6,8
+            |]|>Array.map Interval.ofPair
+        }
+        let ada_appearances =
+            [ad_appearances;a_appearances;da_appearances]
+            |>many_repetitions
+            |>Seq.filter (fun figure_appearances ->
+                figure_appearances.figure = built.Figure.sequence_from_text "ada"
+            )
+        ada_appearances
+        |>Seq.length
+        |>should equal 1
+
+        ada_appearances
+        |>Seq.head
+        |>(fun appearances -> appearances.appearances)
+        |>should equal ([
+            0,5; 5,8
+        ]|>Seq.map Interval.ofPair)

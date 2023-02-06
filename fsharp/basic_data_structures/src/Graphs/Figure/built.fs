@@ -24,6 +24,61 @@ module rvinowise.ai.built.Figure
                 |>Map.ofSeq 
         }
     
+    let sequence_from_text (text:string) =
+        let _, (subfigures_sequence: (Vertex_id*Figure_id) list) = 
+            text
+            |>Seq.fold (
+                fun 
+                    (referenced_figures_to_last_number,subfigures_sequence)
+                    symbol
+                    ->
+                let referenced_figure = string symbol
+                let last_number = 
+                    referenced_figures_to_last_number
+                    |>Map.tryFind referenced_figure
+                    |>function
+                    |None -> 0
+                    |Some number -> number
+                let this_number = last_number+1
+
+                (
+                    referenced_figures_to_last_number
+                    |>Map.add referenced_figure this_number
+                    ,
+                    subfigures_sequence @
+                    [
+                        referenced_figure+string this_number ,
+                        referenced_figure
+                    ]
+                    
+                )
+            )
+                (Map.empty,[])
+        {
+            edges=
+                subfigures_sequence
+                |>Seq.map fst
+                |>Seq.pairwise
+                |>Seq.map Edge.ofPair
+            subfigures=
+                subfigures_sequence
+                |>Map.ofSeq
+        }
+
+    [<Fact>]
+    let ``try sequence_from_text``()=
+        "abba"
+        |>sequence_from_text
+        |>should equal
+            {
+                edges=
+                    ["a1","b1";"b1","b2";"b2","a2"]
+                    |>Seq.map Edge.ofPair
+                subfigures=
+                    ["a1","a";"a2","a";"b1","b";"b2","b"]
+                    |>Map.ofSeq
+            }
+
     let signal (id:Figure_id) =
         {
             edges=[]
