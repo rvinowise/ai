@@ -166,7 +166,43 @@ module rvinowise.ai.built.Figure
         )
         |>Map.ofSeq
     
-    let renamed_vertices_for_fusing_figures
+    let private vertices_referencing_figure 
+        referenced_figure 
+        all_vertices
+        =
+        all_vertices
+        |>Map.tryFind referenced_figure
+        |>function
+        |None->[]
+        |Some vertices ->vertices
+
+    let private assign_numbers_to_vertices 
+        base_name
+        starting_number
+        vertices
+        =
+        let renamed =
+            vertices
+            |>Seq.fold(
+                fun 
+                    (renamed_vertices, last_number) 
+                    vertex
+                    ->
+                let new_vertex = base_name+string last_number
+                (
+                    renamed_vertices@[new_vertex]
+                    ,
+                    last_number+1
+                )
+            ) ([],starting_number)
+        
+        vertices
+        |>Seq.zip (fst renamed)
+        |>Map.ofSeq
+        ,
+        (snd renamed)
+
+    let private renamed_vertices_for_fusing_figures
         (a_figure: Figure)
         (b_figure: Figure)
         =
@@ -188,56 +224,59 @@ module rvinowise.ai.built.Figure
             |>Set.ofSeq
         
         all_referenced_figures
-        |>Seq.map (fun figure ->
-            let a_vertices = 
+        |>Seq.map (fun referenced_figure ->
+            
+            let renamed_a_vertices, last_number =
                 a_vertices
-                |>Map.tryFind figure
-                |>function
-                |None->[]
-                |Some vertices ->vertices
-            let b_vertices = 
+                |>vertices_referencing_figure referenced_figure
+                |>assign_numbers_to_vertices
+                    referenced_figure 0
+            let renamed_b_vertices, _ =
                 b_vertices
-                |>Map.tryFind figure
-                |>function
-                |None->[]
-                |Some vertices ->vertices
-            let renamed_a_vertices =
-                a_vertices
-                |>Seq.map(
-                    
-                )
+                |>vertices_referencing_figure referenced_figure
+                |>assign_numbers_to_vertices
+                    referenced_figure last_number
             (
-                figure, 
-                (a_vertices, b_vertices)
+                referenced_figure, 
+                [
+                    a_figure, renamed_a_vertices; 
+                    b_figure, renamed_b_vertices
+                ]|>Map.ofList
             )
         )|>Map.ofSeq
-        
-        a_vertices
-        |>Map.map (fun figure vertices ->
-            vertices
-            |>Seq.map (fun old_vertex->
-                let new_vertex = figure
-                (old_vertex, new_vertex)
-            )
+    
+    let extract_renamed_subfigures
+        renamed_subfigures
+        parent_figure
+        subfigures
+        =
+        subfigures
+        |>Seq.map (fun pair->
+            let old_name = pair.Key
+            let referenced_figure = pair.Value
+            let new_name = 
+                renamed_vertices
+                |>Map.find old_name
         )
+        |>Map.ofSeq
 
     let sequential_pair 
         (a_figure: Figure)
         (b_figure: Figure)
         =
-        //let renamed_vertices =
+        let renamed_vertices =
+            renamed_vertices_for_fusing_figures
+                a_figure b_figure
 
-
-        let renamed_b_vertices = 
-            rename_duplicating_vertices
-                a_figure
-                b_figure
         let renamed_b_subfigures = 
             b_figure.subfigures
             |>Seq.map (fun pair->
                 let old_name = pair.Key
                 let referenced_figure = pair.Value
-                let new_name = renamed_b_vertices|>Map.tryFind old_name
+                let new_name = 
+                    renamed_vertices
+                    |>Map.find old_name
+
                 match new_name with
                 |Some name -> (name,referenced_figure)
                 |None -> (old_name,referenced_figure)
