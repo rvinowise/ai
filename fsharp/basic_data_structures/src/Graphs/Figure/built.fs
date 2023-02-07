@@ -166,10 +166,68 @@ module rvinowise.ai.built.Figure
         )
         |>Map.ofSeq
     
+    let renamed_vertices_for_fusing_figures
+        (a_figure: Figure)
+        (b_figure: Figure)
+        =
+
+        let a_vertices = 
+            a_figure.subfigures
+            |>extensions.Map.reverse_with_list_of_keys
+        let b_vertices = 
+            b_figure.subfigures
+            |>extensions.Map.reverse_with_list_of_keys
+        
+        let all_referenced_figures=
+            a_figure.subfigures
+            |>Seq.map (fun key_value -> key_value.Value)
+            |>Seq.append (
+                b_figure.subfigures
+                |>Seq.map (fun key_value -> key_value.Value)
+            )
+            |>Set.ofSeq
+        
+        all_referenced_figures
+        |>Seq.map (fun figure ->
+            let a_vertices = 
+                a_vertices
+                |>Map.tryFind figure
+                |>function
+                |None->[]
+                |Some vertices ->vertices
+            let b_vertices = 
+                b_vertices
+                |>Map.tryFind figure
+                |>function
+                |None->[]
+                |Some vertices ->vertices
+            let renamed_a_vertices =
+                a_vertices
+                |>Seq.map(
+                    
+                )
+            (
+                figure, 
+                (a_vertices, b_vertices)
+            )
+        )|>Map.ofSeq
+        
+        a_vertices
+        |>Map.map (fun figure vertices ->
+            vertices
+            |>Seq.map (fun old_vertex->
+                let new_vertex = figure
+                (old_vertex, new_vertex)
+            )
+        )
+
     let sequential_pair 
         (a_figure: Figure)
         (b_figure: Figure)
         =
+        //let renamed_vertices =
+
+
         let renamed_b_vertices = 
             rename_duplicating_vertices
                 a_figure

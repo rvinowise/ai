@@ -218,6 +218,37 @@ module Map =
             ) 
             map2
 
+    let reverse_with_list_of_keys 
+        (map: Map<'Key,'Value>) 
+        :Map<'Value, 'Key list>
+        = 
+        Map.fold (fun (map: Map<'Value, 'Key list>) orig_key orig_value -> 
+            let existing_keys = 
+                map
+                |>Map.tryFind orig_value
+                |>function
+                |None->[]
+                |Some list -> list
+
+            map.Add(orig_value,existing_keys@[orig_key])
+        ) Map.empty map
+
+    [<Fact>]
+    let ``try reverse_with_list_of_keys``()=
+        [
+            "a1","a"; "a2","a"; "b1","b"; "b2","b";
+        ]
+        |>Map.ofList
+        |>reverse_with_list_of_keys
+        |>should equal (
+            [
+                "a",["a1";"a2"];
+                "b",["b1";"b2"];
+            ]|>Map.ofList
+        )
+
+
+
 module Option=
     exception LackingDataException of string
     
