@@ -244,7 +244,7 @@ module Finding_repetitions =
         =
         {
             Figure_appearances.figure=
-                built.Figure.sequential_pair
+                built.Fusing_figures_into_sequence.sequential_pair
                     a_history.figure
                     b_history.figure
             appearances=

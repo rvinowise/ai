@@ -237,11 +237,11 @@ module rvinowise.ai.built.Fusing_figures_into_sequence
         let expected_ab_figure = {
             edges=[
                 "a1","b1"; "b1","a2"; "b1","c1";
-                "a1'","b1'"; "e1","b1'"; "b1'","a2'";
+                "a3","b2"; "e1","b2"; "b2","a4";
                 //edges between glued graphs:
-                "a2","a1'";
+                "a2","a3";
                 "a2","e1";
-                "c1","a1'";
+                "c1","a3";
                 "c1","e1"
 
             ]
@@ -249,16 +249,16 @@ module rvinowise.ai.built.Fusing_figures_into_sequence
             |>Seq.sort
             
             subfigures=[
-                    "a1","a";
-                    "a1'","a";
-                    "a2","a";
-                    "a2'","a";
-                    "b1","b";
-                    "b1'","b";
-                    "c1","c";
-                    "e1","e";
-                ]
-                |>Map.ofSeq
+                "a1","a";
+                "a3","a";
+                "a2","a";
+                "a4","a";
+                "b1","b";
+                "b2","b";
+                "c1","c";
+                "e1","e";
+            ]
+            |>Map.ofSeq
         }
         let real_ab_figure = 
             sequential_pair

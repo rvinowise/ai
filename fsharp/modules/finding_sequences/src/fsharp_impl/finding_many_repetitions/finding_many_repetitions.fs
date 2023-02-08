@@ -25,7 +25,7 @@ module Finding_many_repetitions =
         b_figure_id
         =
         let ab_figure =
-            built.Figure.sequential_pair
+            built.Fusing_figures_into_sequence.sequential_pair
                 a_figure_id
                 b_figure_id
         
