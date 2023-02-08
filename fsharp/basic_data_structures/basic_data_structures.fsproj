@@ -28,7 +28,8 @@
 
     <Compile Include="src\Graphs\Figure\types.fs" />
     <Compile Include="src\Graphs\Figure\Figure.fs" />
-    <Compile Include="src\Graphs\Figure\built.fs" />
+    <Compile Include="src\Graphs\Figure\built\built.fs" />
+    <Compile Include="src\Graphs\Figure\built\fusing_figures_into_a_sequence.fs" />
     <Compile Include="src\Graphs\Figure\example.fs" />
     <Compile Include="src\Graphs\Figure\tests.fs" />
 

@@ -1,0 +1,272 @@
+module rvinowise.ai.built.Fusing_figures_into_sequence
+    
+    open Xunit
+    open FsUnit
+    
+    open rvinowise.ai
+    open rvinowise.ai.figure_parts
+    open rvinowise.extensions
+    open rvinowise
+
+    let private rename_duplicating_vertices
+        (a_figure: Figure)
+        (b_figure: Figure)
+        =
+        b_figure.subfigures
+        |>Seq.choose (fun pair->
+            let b_vertex = pair.Key
+            if 
+                a_figure.subfigures|>Map.containsKey b_vertex
+            then
+                Some (b_vertex, b_vertex+"'")
+            else
+                None
+
+        )
+        |>Map.ofSeq
+    
+    let private vertices_referencing_figure 
+        referenced_figure 
+        all_vertices
+        =
+        all_vertices
+        |>Map.tryFind referenced_figure
+        |>function
+        |None->[]
+        |Some vertices ->vertices
+
+    let private assign_numbers_to_vertices 
+        base_name
+        starting_number
+        vertices
+        =
+        let renamed =
+            vertices
+            |>Seq.fold(
+                fun 
+                    (renamed_vertices, last_number) _
+                    ->
+                let new_vertex = base_name+string last_number
+                (
+                    renamed_vertices@[new_vertex]
+                    ,
+                    last_number+1
+                )
+            ) ([],starting_number)
+        
+        renamed
+        |>fst
+        |>Seq.zip (vertices)
+        |>Map.ofSeq
+        ,
+        (snd renamed)
+
+    type Renamed_subfigures = 
+        Map<Figure_id, //figure, referenced by renamed vertices 
+            Map<Figure, //owner figure which has the renamed verticex
+                Map<
+                    Vertex_id, //old name of a vertex
+                    Vertex_id>>> //new name of a vertex
+
+    let private renamed_vertices_for_fusing_figures
+        (a_figure: Figure)
+        (b_figure: Figure)
+        :Renamed_subfigures
+        =
+
+        let a_vertices = 
+            a_figure.subfigures
+            |>extensions.Map.reverse_with_list_of_keys
+        let b_vertices = 
+            b_figure.subfigures
+            |>extensions.Map.reverse_with_list_of_keys
+        
+        let all_referenced_figures =
+            a_figure.subfigures
+            |>Seq.map (fun key_value -> key_value.Value)
+            |>Seq.append (
+                b_figure.subfigures
+                |>Seq.map (fun key_value -> key_value.Value)
+            )
+            |>Set.ofSeq
+        
+        all_referenced_figures
+        |>Seq.map (fun referenced_figure ->
+            
+            let renamed_a_vertices, last_number =
+                a_vertices
+                |>vertices_referencing_figure referenced_figure
+                |>assign_numbers_to_vertices
+                    referenced_figure 1
+            let renamed_b_vertices, _ =
+                b_vertices
+                |>vertices_referencing_figure referenced_figure
+                |>assign_numbers_to_vertices
+                    referenced_figure last_number
+            (
+                referenced_figure, 
+                [
+                    a_figure, renamed_a_vertices; 
+                    b_figure, renamed_b_vertices
+                ]|>Map.ofList
+            )
+        )|>Map.ofSeq
+    
+    let all_renamed_subfigures
+        (renamed_subfigures: Renamed_subfigures)
+        =
+        renamed_subfigures
+        |>Seq.collect (fun pair->
+            let referenced_figure = pair.Key
+            let owner_figures = pair.Value
+            owner_figures
+            |>Seq.collect(fun pair->
+                let vertex_names = pair.Value
+                vertex_names
+                |>Seq.map(fun pair->
+                    (pair.Value, referenced_figure) 
+                )
+            )
+        )
+        |>Map.ofSeq
+
+    let private map_from_old_to_new_vertex_names
+        (renamed_subfigures: Renamed_subfigures)
+        (owner_figure: Figure)
+        =
+        renamed_subfigures
+        |>Seq.collect (fun pair->
+            let referenced_figure = pair.Key
+            let owner_figures = pair.Value
+            owner_figures[owner_figure]
+            |>extensions.Map.toPairs
+        )
+        |>Map.ofSeq
+
+    let renamed_edges
+        (old_to_new_names: Map<Vertex_id, Vertex_id>)
+        (edges: Edge seq)
+        =
+        edges
+        |>Seq.map (fun edge->
+            let new_tail =
+                old_to_new_names[edge.tail]
+            let new_head =
+                old_to_new_names
+                |>Map.tryFind edge.head
+                |>function
+                |None -> "test"
+                |Some head -> head
+            Edge(new_tail, new_head)
+        )
+
+    let renamed_subfigures_of_figure 
+        (old_to_new_names: Map<Vertex_id, Vertex_id>)
+        (subfigures: Vertex_data)
+        =
+        subfigures
+        |>Seq.map(fun pair->
+            old_to_new_names[pair.Key],
+            pair.Value
+        )|>Map.ofSeq
+
+    let sequential_pair 
+        (a_figure: Figure)
+        (b_figure: Figure)
+        =
+        let renamed_subfigures =
+            renamed_vertices_for_fusing_figures
+                a_figure b_figure
+
+        let old_to_new_vertices_of_a = 
+            map_from_old_to_new_vertex_names
+                renamed_subfigures
+                a_figure
+        let old_to_new_vertices_of_b = 
+            map_from_old_to_new_vertex_names
+                renamed_subfigures
+                b_figure
+
+        let renamed_a_edges =
+            a_figure.edges
+            |>renamed_edges old_to_new_vertices_of_a
+        
+        let renamed_b_edges =
+            b_figure.edges
+            |>renamed_edges old_to_new_vertices_of_b
+        
+        let renamed_a_subfigures =
+            a_figure.subfigures
+            |>renamed_subfigures_of_figure old_to_new_vertices_of_a
+        
+        let renamed_b_subfigures =
+            b_figure.subfigures
+            |>renamed_subfigures_of_figure old_to_new_vertices_of_b
+
+        let edges_inbetween =
+            let last_vertices_of_a =
+                {
+                    edges=renamed_a_edges
+                    subfigures=renamed_a_subfigures
+                }
+                |>Figure.last_vertices
+            let first_vertices_of_b =
+                {
+                    edges=renamed_b_edges
+                    subfigures=renamed_b_subfigures
+                }
+                |>Figure.first_vertices
+            Seq.allPairs last_vertices_of_a first_vertices_of_b 
+            |>Seq.map Edge.ofPair
+
+        {
+            edges=
+                renamed_a_edges
+                |>Seq.append renamed_b_edges
+                |>Seq.append edges_inbetween
+            
+            subfigures=
+                all_renamed_subfigures
+                    renamed_subfigures
+        }
+
+    [<Fact>]
+    let ``try sequential_pair``()=
+        let a_figure = built.Figure.simple ["a1","b1";"b1","a2";"b1","c1"]
+        let b_figure = built.Figure.simple ["a1","b1";"e1","b1";"b1","a2"]
+        let expected_ab_figure = {
+            edges=[
+                "a1","b1"; "b1","a2"; "b1","c1";
+                "a1'","b1'"; "e1","b1'"; "b1'","a2'";
+                //edges between glued graphs:
+                "a2","a1'";
+                "a2","e1";
+                "c1","a1'";
+                "c1","e1"
+
+            ]
+            |>Seq.map Edge.ofPair
+            |>Seq.sort
+            
+            subfigures=[
+                    "a1","a";
+                    "a1'","a";
+                    "a2","a";
+                    "a2'","a";
+                    "b1","b";
+                    "b1'","b";
+                    "c1","c";
+                    "e1","e";
+                ]
+                |>Map.ofSeq
+        }
+        let real_ab_figure = 
+            sequential_pair
+                a_figure
+                b_figure
+        real_ab_figure.edges
+        |>Seq.sort
+        |>should equal expected_ab_figure.edges
+
+        real_ab_figure.subfigures
+        |>should equal expected_ab_figure.subfigures
