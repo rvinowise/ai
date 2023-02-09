@@ -270,10 +270,10 @@ module Finding_repetitions =
             {
                 Figure_appearances.figure={
                     edges=
-                        ["a","b"]
+                        ["a1","b1"]
                         |>Seq.map Edge.ofPair
                     subfigures=
-                        ["a","a"; "b","b"]
+                        ["a1","a"; "b1","b"]
                         |>Map.ofSeq
                 }
                 appearances=

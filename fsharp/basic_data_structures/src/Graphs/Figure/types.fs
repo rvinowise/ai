@@ -11,17 +11,12 @@ namespace rvinowise.ai
     open System
     open System.Linq
 
-    [<CustomEquality; CustomComparison>]
-    type Figure = {
-        edges: Edge seq
-        subfigures: Vertex_data
-    }
-    with 
-        override this.ToString() =
+    module Figure_helpers=
+        let edges_to_string (edges:Edge seq) =
             let result = StringBuilder()
             result 
-            += $"Figure( "
-            this.edges
+            += "Figure( "
+            edges
             |>Seq.iter(fun edge ->
                 result 
                 ++ edge.tail
@@ -31,6 +26,26 @@ namespace rvinowise.ai
             )
             result+=")"
             result.ToString()
+           
+        let signal_to_string (subfigures:Vertex_data) =
+            let signal =
+                subfigures
+                |>Seq.head
+            $"Signal({signal.Key}={signal.Value})"
+            
+            
+    [<CustomEquality; CustomComparison>]
+    type Figure = {
+        edges: Edge seq
+        subfigures: Vertex_data
+    }
+    with 
+        override this.ToString() =
+            if (Seq.isEmpty this.edges) then
+                this.subfigures
+                |>Figure_helpers.signal_to_string     
+            else
+                Figure_helpers.edges_to_string this.edges    
 
         override this.Equals(other) =
             match other with

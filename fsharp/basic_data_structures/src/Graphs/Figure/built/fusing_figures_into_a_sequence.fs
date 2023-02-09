@@ -63,10 +63,12 @@ module rvinowise.ai.built.Fusing_figures_into_sequence
 
     type Renamed_subfigures = 
         Map<Figure_id, //figure, referenced by renamed vertices 
-            Map<Figure, //owner figure which has the renamed verticex
-                Map<
-                    Vertex_id, //old name of a vertex
-                    Vertex_id>>> //new name of a vertex
+                list< //owner figure which has the renamed verticex
+                    Map<
+                        Vertex_id, //old name of a vertex
+                        Vertex_id> //new name of a vertex
+                    >
+            >
 
     let private renamed_vertices_for_fusing_figures
         (a_figure: Figure)
@@ -106,9 +108,9 @@ module rvinowise.ai.built.Fusing_figures_into_sequence
             (
                 referenced_figure, 
                 [
-                    a_figure, renamed_a_vertices; 
-                    b_figure, renamed_b_vertices
-                ]|>Map.ofList
+                    renamed_a_vertices;
+                    renamed_b_vertices
+                ]
             )
         )|>Map.ofSeq
     
@@ -118,10 +120,9 @@ module rvinowise.ai.built.Fusing_figures_into_sequence
         renamed_subfigures
         |>Seq.collect (fun pair->
             let referenced_figure = pair.Key
-            let owner_figures = pair.Value
-            owner_figures
-            |>Seq.collect(fun pair->
-                let vertex_names = pair.Value
+            let vertex_names_of_owner_figures = pair.Value
+            vertex_names_of_owner_figures
+            |>Seq.collect(fun vertex_names->
                 vertex_names
                 |>Seq.map(fun pair->
                     (pair.Value, referenced_figure) 
@@ -132,13 +133,13 @@ module rvinowise.ai.built.Fusing_figures_into_sequence
 
     let private map_from_old_to_new_vertex_names
         (renamed_subfigures: Renamed_subfigures)
-        (owner_figure: Figure)
+        figure_index
         =
         renamed_subfigures
         |>Seq.collect (fun pair->
             let referenced_figure = pair.Key
             let owner_figures = pair.Value
-            owner_figures[owner_figure]
+            owner_figures[figure_index]
             |>extensions.Map.toPairs
         )
         |>Map.ofSeq
@@ -181,11 +182,11 @@ module rvinowise.ai.built.Fusing_figures_into_sequence
         let old_to_new_vertices_of_a = 
             map_from_old_to_new_vertex_names
                 renamed_subfigures
-                a_figure
+                0
         let old_to_new_vertices_of_b = 
             map_from_old_to_new_vertex_names
                 renamed_subfigures
-                b_figure
+                1
 
         let renamed_a_edges =
             a_figure.edges
@@ -224,6 +225,7 @@ module rvinowise.ai.built.Fusing_figures_into_sequence
                 renamed_a_edges
                 |>Seq.append renamed_b_edges
                 |>Seq.append edges_inbetween
+                |>Set.ofSeq
             
             subfigures=
                 all_renamed_subfigures
@@ -270,3 +272,14 @@ module rvinowise.ai.built.Fusing_figures_into_sequence
 
         real_ab_figure.subfigures
         |>should equal expected_ab_figure.subfigures
+
+    [<Fact>]
+    let ``sequential_pair with the same figure generates different subfigure ids``()=
+        let figure = built.Figure.signal "a"
+        let pair = sequential_pair figure figure
+        pair.subfigures
+        |>Map.keys
+        |>Seq.distinct
+        |>List.ofSeq
+        |>should haveLength 2
+        

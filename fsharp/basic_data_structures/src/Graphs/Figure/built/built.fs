@@ -61,6 +61,7 @@ module rvinowise.ai.built.Figure
                 |>Seq.map fst
                 |>Seq.pairwise
                 |>Seq.map Edge.ofPair
+                |>Set.ofSeq
             subfigures=
                 subfigures_sequence
                 |>Map.ofSeq

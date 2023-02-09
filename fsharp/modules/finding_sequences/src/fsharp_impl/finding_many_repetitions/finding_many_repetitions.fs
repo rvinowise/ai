@@ -50,6 +50,9 @@ module Finding_many_repetitions =
             //test
             if a_history.figure|>Figure.id_of_a_sequence = "a" &&
                b_history.figure|>Figure.id_of_a_sequence = "da"
+               ||
+               a_history.figure|>Figure.id_of_a_sequence = "ad" &&
+               b_history.figure|>Figure.id_of_a_sequence = "a"
             then
                 () 
             else
@@ -137,7 +140,7 @@ module Finding_many_repetitions =
             |]|>Array.map Interval.moment
         }
         let da_appearances = {
-            Figure_appearances.figure=a_figure
+            Figure_appearances.figure=da_figure
             appearances=[|
                 2,5; 6,8
             |]|>Array.map Interval.ofPair
@@ -150,8 +153,8 @@ module Finding_many_repetitions =
                 figure_appearances.figure = built.Figure.sequence_from_text "ada"
             )
         ada_appearances
-        |>Seq.length
-        |>should equal 1
+        |>List.ofSeq
+        |>should haveLength 1
 
         ada_appearances
         |>Seq.head
