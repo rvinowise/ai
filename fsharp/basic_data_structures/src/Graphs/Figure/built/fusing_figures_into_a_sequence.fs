@@ -248,7 +248,7 @@ module rvinowise.ai.built.Fusing_figures_into_sequence
 
             ]
             |>Seq.map Edge.ofPair
-            |>Seq.sort
+            |>Set.ofSeq
             
             subfigures=[
                 "a1","a";

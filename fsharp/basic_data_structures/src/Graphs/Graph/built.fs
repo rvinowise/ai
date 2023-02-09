@@ -7,7 +7,7 @@ module rvinowise.ai.built.Graph
             Edge(
                 tail_id, head_id
             );
-        )
+        )|>Set.ofSeq
 
     let from_tuples raw_edges =
         raw_edges
@@ -15,4 +15,4 @@ module rvinowise.ai.built.Graph
             Edge(
                 tail_id, head_id
             );
-        )
+        )|>Set.ofSeq

@@ -76,6 +76,7 @@ module rvinowise.ai.built.Figure
                 edges=
                     ["a1","b1";"b1","b2";"b2","a2"]
                     |>Seq.map Edge.ofPair
+                    |>Set.ofSeq
                 subfigures=
                     ["a1","a";"a2","a";"b1","b";"b2","b"]
                     |>Map.ofSeq
