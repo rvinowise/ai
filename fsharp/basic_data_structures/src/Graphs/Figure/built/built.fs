@@ -152,10 +152,6 @@ module rvinowise.ai.built.Figure
     let empty = from_tuples []
 
     
-    
-        
-
-
     let subgraph_with_vertices 
         original_figure 
         (vertices:Set<Vertex_id>)

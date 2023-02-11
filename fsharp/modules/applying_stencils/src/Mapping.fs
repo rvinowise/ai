@@ -140,4 +140,4 @@ namespace rvinowise.ai.stencil
             
             output_beginning
             |>Set.intersect output_ending
-            |>Figure.subgraph_with_vertices target
+            |>built.Figure.subgraph_with_vertices target
