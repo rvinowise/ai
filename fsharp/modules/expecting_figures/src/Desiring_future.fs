@@ -147,11 +147,23 @@ namespace rvinowise.ai
                 (Interval.regular 7 8), Mood -2;
             ]
 
+        let commonalities_between_two_intervals
+            (interval1: Interval)
+            (interval2: Interval)
+            (figure_appearances: Figure_id_appearances seq)
+            =
+            figure_appearances
+            |>Seq.map(fun figure_appearance->
+                figure_appearance.appearances
+
+            )
+
         let commonalities_in_history_intervals
             (is_interval_needed: Mood -> bool)
             (mood_intervals: (Interval*Mood) seq)
             (history: Figure_id_appearances seq)
-            =()
+            =
+
 
         let good_commonalities 
             (mood_intervals: (Interval*Mood) seq)
