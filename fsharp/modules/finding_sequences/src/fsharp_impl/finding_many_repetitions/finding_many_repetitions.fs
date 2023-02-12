@@ -10,16 +10,10 @@ open rvinowise
 module Finding_many_repetitions =
     
 
-    let event_batches_to_signal_histories event_batches =
-        event_batches
-        |>built.Event_batches.to_separate_histories
-        |>Separate_histories.figure_id_appearances
-        |>Seq.map built.Figure_appearances.from_figure_id_appearances
-
     type Known_figures = Set<Figure>
 
 
-    let will_this_pair_give_already_found_sequence 
+    let private will_this_pair_give_already_found_sequence 
         (known_sequences: Known_figures)
         a_figure_id
         b_figure_id
@@ -84,7 +78,7 @@ module Finding_many_repetitions =
         (event_batches:Event_batches)
         =
         event_batches
-        |>event_batches_to_signal_histories
+        |>built.Event_batches.to_figure_appearances
         |>many_repetitions
         |>built.Event_batches.from_figure_appearances
         |>built.Event_batches.add_mood_to_combined_history
@@ -92,7 +86,7 @@ module Finding_many_repetitions =
         |>built.Event_batches.remove_batches_without_actions
     
     [<Fact>]
-    let ``finding repetitions in simple combined history``()=
+    let ``try finding many_repetitions, in simple combined history``()=
         built.Event_batches.from_contingent_signals 0 [
             ["a"];//0
             ["b"];//1
@@ -103,7 +97,7 @@ module Finding_many_repetitions =
             ["a"];//6
             ["b"];//7
         ]
-        |>event_batches_to_signal_histories
+        |>built.Event_batches.to_figure_appearances
         |>many_repetitions
         |>Seq.map built.Figure_appearances.to_figure_id_appearances
         |>Seq.sort
@@ -162,3 +156,67 @@ module Finding_many_repetitions =
         |>should equal ([
             0,5; 5,8
         ]|>Seq.map Interval.ofPair)
+
+
+    let all_repetitions 
+        (figure_appearances: seq<Figure_appearances>)
+        =
+        let rec steps_of_finding_repetitions
+            (all_sequences: seq<Figure_appearances>)
+            (sequences_of_previous_step: seq<Figure_appearances>)
+            =
+            if Seq.isEmpty sequences_of_previous_step then
+                all_sequences
+            else
+                sequences_of_previous_step
+                |>many_repetitions
+                |>steps_of_finding_repetitions (
+                    all_sequences
+                    |>Seq.append sequences_of_previous_step    
+                )
+        
+        steps_of_finding_repetitions
+            figure_appearances
+            []
+
+    [<Fact>]
+    let ``try finding all_repetitions (several levels of abstraction)``()=
+        let ab_history = {
+            Figure_appearances.figure=built.Figure.sequence_from_text "ab"
+            appearances=[|
+                0,2; 6,9
+            |]|>Array.map Interval.ofPair
+        }
+        let ac_history = {
+            Figure_appearances.figure=built.Figure.sequence_from_text "ac"
+            appearances=[|
+                0,4; 6,10
+            |]|>Array.map Interval.ofPair
+        }
+        let bc_history = {
+            Figure_appearances.figure=built.Figure.sequence_from_text "bc"
+            appearances=[|
+                2,4; 9,10
+            |]|>Array.map Interval.ofPair
+        }
+        let abc_history = {
+            Figure_appearances.figure=built.Figure.sequence_from_text "abc"
+            appearances=[|
+                0,4; 6,10
+            |]|>Array.map Interval.ofPair
+        }
+        let expected_sequences = 
+            Set.ofList [
+                ab_history;ac_history;bc_history;abc_history
+            ]
+        
+        "a1b2c3a45bc"
+//       a b c
+//             a  bc
+//mom:   0123456789¹1
+        |>built.Event_batches.from_text
+        |>built.Event_batches.to_figure_appearances
+        |>all_repetitions
+        |>Set.ofSeq
+        |>Set.intersect expected_sequences
+        |>should equal expected_sequences

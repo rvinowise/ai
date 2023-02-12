@@ -69,9 +69,7 @@ module finding_sequences_in_history =
             ]
         let step2_figure_histories =
             signal_history
-            |>built.Event_batches.to_separate_histories
-            |>Separate_histories.figure_id_appearances
-            |>Seq.map built.Figure_appearances.from_figure_id_appearances
+            |>built.Event_batches.to_figure_appearances
             |>Finding_many_repetitions.many_repetitions
         let step2_combined_history =
             signal_history
@@ -119,9 +117,7 @@ module finding_sequences_in_history =
             ]
         let step1_figure_histories = 
             signal_history
-            |>built.Event_batches.to_separate_histories
-            |>Separate_histories.figure_id_appearances
-            |>Seq.map built.Figure_appearances.from_figure_id_appearances
+            |>built.Event_batches.to_figure_appearances
 
         let step2_figure_histories =
             step1_figure_histories
@@ -197,3 +193,27 @@ module finding_sequences_in_history =
         |>infrastructure.Graph.with_filled_vertex "step 4"
             (ui.painted.History.add_combined_history step4_history)
         |>ui.painted.image.open_image_of_graph
+
+    [<Fact>]
+    let ``finding long overlaid sequences``()=
+        let original_signals =
+            "a1bc2d31a2ef4bg3c54de6fh5g6h"
+    //seq1:  a bc d    ef  g
+    //seq2:   1  2 3     4    5   6  
+    //seq3:          a    b  c  de f  g h         
+    //seq4:         1 2     3  4     5 6  
+    //mom:   123456789¹123456789²123456789³
+            |>built.Event_batches.from_text
+        
+        let found_sequences =
+            original_signals 
+            |>built.Event_batches.to_figure_appearances
+            |>Finding_many_repetitions.all_repetitions
+
+
+        "finding long overlaid sequences"
+        |>infrastructure.Graph.empty
+        |>infrastructure.Graph.with_filled_vertex "original signals"
+            (ui.painted.History.add_combined_history original_signals)
+        |>infrastructure.Graph.with_filled_vertex "found sequences"
+            (ui.painted.History.add_combined_history found_sequences)

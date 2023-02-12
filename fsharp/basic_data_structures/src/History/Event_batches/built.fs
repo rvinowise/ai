@@ -371,3 +371,9 @@ module rvinowise.ai.built.Event_batches
             (batch.mood.change <> (Mood 0))
         )
         |>Map.ofSeq
+
+    let to_figure_appearances event_batches =
+        event_batches
+        |>to_separate_histories
+        |>Separate_histories.figure_id_appearances
+        |>Seq.map built.Figure_appearances.from_figure_id_appearances
