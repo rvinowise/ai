@@ -220,3 +220,4 @@ module finding_sequences_in_history =
             (ui.painted.History.add_combined_history original_signals)
         |>infrastructure.Graph.with_filled_vertex "found sequences"
             (ui.painted.History.add_combined_history combined_found_sequences)
+        |>ui.painted.image.open_image_of_graph
