@@ -168,16 +168,18 @@ module Finding_many_repetitions =
             if Seq.isEmpty sequences_of_previous_step then
                 all_sequences
             else
-                sequences_of_previous_step
+                let all_sequences =
+                    all_sequences
+                    |>Seq.append sequences_of_previous_step
+                all_sequences
                 |>many_repetitions
                 |>steps_of_finding_repetitions (
                     all_sequences
-                    |>Seq.append sequences_of_previous_step    
                 )
         
         steps_of_finding_repetitions
-            figure_appearances
             []
+            figure_appearances
 
     [<Fact>]
     let ``try finding all_repetitions (several levels of abstraction)``()=
