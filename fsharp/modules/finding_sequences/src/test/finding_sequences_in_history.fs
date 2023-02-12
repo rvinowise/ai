@@ -209,6 +209,9 @@ module finding_sequences_in_history =
             original_signals 
             |>built.Event_batches.to_figure_appearances
             |>Finding_many_repetitions.all_repetitions
+        let combined_found_sequences =
+            found_sequences
+            |>built.Event_batches.from_figure_appearances
 
 
         "finding long overlaid sequences"
@@ -216,4 +219,4 @@ module finding_sequences_in_history =
         |>infrastructure.Graph.with_filled_vertex "original signals"
             (ui.painted.History.add_combined_history original_signals)
         |>infrastructure.Graph.with_filled_vertex "found sequences"
-            (ui.painted.History.add_combined_history found_sequences)
+            (ui.painted.History.add_combined_history combined_found_sequences)
