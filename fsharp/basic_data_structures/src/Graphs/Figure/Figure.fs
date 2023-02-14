@@ -70,29 +70,7 @@ namespace rvinowise.ai
             figure.edges
             |>Seq.isEmpty|>not
 
-        let private id_of_a_sequence_from_edges (edges: Edge seq) =
-            let first_vertex =
-                edges
-                |>Edges.first_vertices
-                |>Seq.head
-            
-            let rec build_id 
-                (edges : Edge seq)
-                id
-                (vertex:Figure_id)
-                =
-                let updated_id = id+String.remove_number vertex
-                vertex
-                |>Edges.next_vertices edges
-                |>Seq.tryHead
-                |>function
-                |None->updated_id
-                |Some next_vertex ->
-                    build_id
-                        edges
-                        updated_id
-                        next_vertex
-            build_id edges "" first_vertex
+        
 
         let id_of_a_sequence (figure:Figure) =
             if Seq.isEmpty figure.edges then 
@@ -100,7 +78,7 @@ namespace rvinowise.ai
                 |>Seq.head
                 |>extensions.KeyValuePair.key
             else
-                id_of_a_sequence_from_edges figure.edges
+                printed.Figure.id_of_a_sequence_from_edges figure.edges figure.subfigures
 
         
         
@@ -121,3 +99,8 @@ namespace rvinowise.ai
                 the_only_vertex figure
             else
                 Edges.last_vertices figure.edges
+
+        
+        
+
+        

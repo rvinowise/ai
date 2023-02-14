@@ -23,11 +23,11 @@
     
     <Compile Include="src\visualised\painted\painted_image.fs" />
 
-    <Compile Include="src\visualised\printed\Figure_appearance.fs" />
-    <Compile Include="src\visualised\printed\Figure.fs" />
+    
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\basic_data_structures\basic_data_structures.fsproj" />
     <ProjectReference Include="..\provided_data\provided_data.fsproj" />
     
     <ProjectReference Include="..\..\..\DotNetGraph\Sources\DotNetGraph\DotNetGraph.csproj" />

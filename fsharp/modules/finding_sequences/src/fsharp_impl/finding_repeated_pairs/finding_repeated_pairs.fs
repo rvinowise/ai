@@ -243,8 +243,8 @@ module Finding_repetitions =
         b_history: Figure_appearances)
         =
         {
-            Figure_appearances.figure=
-                built.Fusing_figures_into_sequence.sequential_pair
+            Appearances.figure=
+                built.Fusing_figures_into_sequence.sequential_pair //heavy
                     a_history.figure
                     b_history.figure
             appearances=
@@ -268,7 +268,7 @@ module Finding_repetitions =
             (a_history,b_history)
         |>should equal
             {
-                Figure_appearances.figure={
+                Appearances.figure={
                     edges=
                         ["a1","b1"]
                         |>Seq.map Edge.ofPair

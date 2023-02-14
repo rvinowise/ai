@@ -4,14 +4,23 @@ namespace rvinowise.ai
     open FsUnit
     open Xunit
 
+    
+
     type Figure_appearances = {
         figure: Figure
         appearances: array<Interval>
-    }
-
-    module Figure_appearances =
+    } with
+        override this.ToString()=
+            printed.Figure_appearances.to_string this.figure this.appearances
         
-        let has_repetitions history =
-            Seq.length history.appearances > 1
+    type Sequence_appearances = {
+        sequence: Figure_id array
+        appearances: array<Interval>
+    } 
+
+    module Appearances =
+        
+        let has_repetitions (appearances: Interval seq) =
+            Seq.length appearances > 1
         
         

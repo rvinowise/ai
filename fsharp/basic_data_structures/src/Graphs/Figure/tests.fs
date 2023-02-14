@@ -49,3 +49,21 @@ namespace rvinowise.ai
             |>built.Figure.signal
             |>ai.Figure.id_of_a_sequence
             |>should equal "a"
+        
+
+        [<Fact>]
+        let ``try is_sequence``()=
+            "abcde"
+            |>built.Figure.sequence_from_text
+            |>(fun f->f.edges)
+            |>Edges.is_sequence
+            |>should equal true
+
+            [
+                "a","b";"b","x1";
+                        "b","y1";"x1","c";
+                                 "y1","c"]
+            |>built.Figure.simple
+            |>(fun f->f.edges)
+            |>Edges.is_sequence
+            |>should equal false

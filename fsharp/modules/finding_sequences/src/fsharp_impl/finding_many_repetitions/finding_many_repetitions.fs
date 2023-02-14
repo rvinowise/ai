@@ -52,7 +52,7 @@ module Finding_many_repetitions =
             else
                 () 
             ////test
-            if will_this_pair_give_already_found_sequence 
+            if will_this_pair_give_already_found_sequence //heavy
                 known_sequences
                 a_history.figure
                 b_history.figure
@@ -61,8 +61,8 @@ module Finding_many_repetitions =
             else
                 let found_pair = 
                     (a_history, b_history)
-                    |>Finding_repetitions.repeated_pair_with_histories
-                if Figure_appearances.has_repetitions found_pair then
+                    |>Finding_repetitions.repeated_pair_with_histories //heavy
+                if Appearances.has_repetitions found_pair then
                     (
                         known_sequences
                         |>Set.add found_pair.figure
@@ -122,19 +122,19 @@ module Finding_many_repetitions =
         let a_figure = built.Figure.signal "a"
         let da_figure = built.Figure.sequence_from_text "da"
         let ad_appearances = {
-            Figure_appearances.figure=ad_figure
+            Appearances.figure=ad_figure
             appearances=[|
                 0,2; 5,6
             |]|>Array.map Interval.ofPair
         }
         let a_appearances = {
-            Figure_appearances.figure=a_figure
+            Appearances.figure=a_figure
             appearances=[|
                 0;5;8
             |]|>Array.map Interval.moment
         }
         let da_appearances = {
-            Figure_appearances.figure=da_figure
+            Appearances.figure=da_figure
             appearances=[|
                 2,5; 6,8
             |]|>Array.map Interval.ofPair
@@ -184,25 +184,25 @@ module Finding_many_repetitions =
     [<Fact>]
     let ``try finding all_repetitions (several levels of abstraction)``()=
         let ab_history = {
-            Figure_appearances.figure=built.Figure.sequence_from_text "ab"
+            Appearances.figure=built.Figure.sequence_from_text "ab"
             appearances=[|
                 0,2; 6,9
             |]|>Array.map Interval.ofPair
         }
         let ac_history = {
-            Figure_appearances.figure=built.Figure.sequence_from_text "ac"
+            Appearances.figure=built.Figure.sequence_from_text "ac"
             appearances=[|
                 0,4; 6,10
             |]|>Array.map Interval.ofPair
         }
         let bc_history = {
-            Figure_appearances.figure=built.Figure.sequence_from_text "bc"
+            Appearances.figure=built.Figure.sequence_from_text "bc"
             appearances=[|
                 2,4; 9,10
             |]|>Array.map Interval.ofPair
         }
         let abc_history = {
-            Figure_appearances.figure=built.Figure.sequence_from_text "abc"
+            Appearances.figure=built.Figure.sequence_from_text "abc"
             appearances=[|
                 0,4; 6,10
             |]|>Array.map Interval.ofPair

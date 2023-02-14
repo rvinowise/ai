@@ -195,14 +195,42 @@ module finding_sequences_in_history =
         |>ui.painted.image.open_image_of_graph
 
     [<Fact>]
-    let ``finding long overlaid sequences``()=
+    let ``finding long overlaid sequences, performance heavy``()=
         let original_signals =
             "a1bc2d31a2ef4bg3c54de6fh5g6h"
+    //test1: a  c        4    5
+    //test2:         a       c 4     5
     //seq1:  a bc d    ef  g
     //seq2:   1  2 3     4    5   6  
     //seq3:          a    b  c  de f  g h         
     //seq4:         1 2     3  4     5 6  
-    //mom:   123456789¹123456789²123456789³
+    //mom:   0123456789¹123456789²123456789³
+            |>built.Event_batches.from_text
+        
+        let found_sequences =
+            original_signals 
+            |>built.Event_batches.to_figure_appearances
+            |>Finding_many_repetitions.all_repetitions
+        let combined_found_sequences =
+            found_sequences
+            |>built.Event_batches.from_figure_appearances
+
+
+        "finding long overlaid sequences"
+        |>infrastructure.Graph.empty
+        |>infrastructure.Graph.with_filled_vertex "original signals"
+            (ui.painted.History.add_combined_history original_signals)
+        |>infrastructure.Graph.with_filled_vertex "found sequences"
+            (ui.painted.History.add_combined_history combined_found_sequences)
+        |>ui.painted.image.open_image_of_graph
+        
+    [<Fact>]
+    let ``finding long overlaid sequences, not performance heavy``()=
+        let original_signals =
+            "abcdaefbgcdefg"
+    //seq1:  abcd ef g
+    //seq3:      a  b cdefg
+    //mom:   0123456789¹123456789²123456789³
             |>built.Event_batches.from_text
         
         let found_sequences =

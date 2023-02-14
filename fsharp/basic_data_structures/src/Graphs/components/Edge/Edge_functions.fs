@@ -169,7 +169,23 @@ namespace rvinowise.ai
             )
 
     
-
+        let is_sequence (edges: Edge seq) =
+            let rec only_one_next_vertex_exist
+                edges 
+                (vertices: Vertex_id seq) 
+                =
+                if Seq.length vertices = 1 then
+                    vertices
+                    |>Seq.head
+                    |>next_vertices edges
+                    |>only_one_next_vertex_exist edges 
+                else if Seq.isEmpty vertices then
+                    true
+                else
+                    false
+            edges
+            |>first_vertices
+            |>only_one_next_vertex_exist edges
 
         
 

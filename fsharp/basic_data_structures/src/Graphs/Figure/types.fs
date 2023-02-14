@@ -1,7 +1,4 @@
-﻿namespace rvinowise.ai.figure_parts
-    open System.Collections.Generic
-    open rvinowise.ai
-    type Vertex_data = Map<Vertex_id, Figure_id>
+﻿
 
 namespace rvinowise.ai
     open System.Text
@@ -11,28 +8,7 @@ namespace rvinowise.ai
     open System
     open System.Linq
 
-    module Figure_helpers=
-        let edges_to_string (edges:Edge seq) =
-            let result = StringBuilder()
-            result 
-            += "Figure( "
-            edges
-            |>Seq.iter(fun edge ->
-                result 
-                ++ edge.tail
-                ++"->"
-                ++ edge.head
-                +=" "
-            )
-            result+=")"
-            result.ToString()
-           
-        let signal_to_string (subfigures:Vertex_data) =
-            let signal =
-                subfigures
-                |>Seq.head
-            $"Signal({signal.Key}={signal.Value})"
-            
+
             
     [<CustomEquality; CustomComparison>]
     type Figure = {
@@ -40,13 +16,9 @@ namespace rvinowise.ai
         subfigures: Vertex_data
     }
     with 
-        override this.ToString() =
-            if (Seq.isEmpty this.edges) then
-                this.subfigures
-                |>Figure_helpers.signal_to_string     
-            else
-                Figure_helpers.edges_to_string this.edges    
-
+        override this.ToString()=
+            printed.Figure.to_string this.edges this.subfigures
+        
         override this.Equals(other) =
             match other with
             | :? Figure as other ->
