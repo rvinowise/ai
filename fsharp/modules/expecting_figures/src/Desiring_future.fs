@@ -147,6 +147,10 @@ namespace rvinowise.ai
                 (Interval.regular 7 8), Mood -2;
             ]
 
+
+        
+            
+
         let commonalities_between_two_intervals
             (interval1: Interval)
             (interval2: Interval)

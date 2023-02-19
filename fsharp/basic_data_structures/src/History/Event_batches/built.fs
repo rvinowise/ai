@@ -174,7 +174,14 @@ module rvinowise.ai.built.Event_batches
         figure_histories
         |>Seq.map built.Figure_appearances.to_figure_id_appearances
         |>from_figure_id_appearances
-            
+
+    let from_sequence_appearances 
+        (sequence_histories : Sequence_appearances seq)
+        =
+        sequence_histories
+        |>Seq.map built.Sequence_appearances.to_figure_id_appearances
+        |>from_figure_id_appearances
+
     [<Fact>]
     let ``combine figure histories``()=
         let history_of_a = built.Figure_id_appearances.from_tuples "a" [
@@ -335,7 +342,15 @@ module rvinowise.ai.built.Event_batches
             figure_appearances
             |>Seq.map built.Figure_appearances.to_figure_id_appearances
         )
-
+    let add_sequence_appearances
+        (sequence_appearances: Sequence_appearances seq)
+        (event_batches: Event_batches)
+        =
+        event_batches
+        |>add_figure_id_appearances (
+            sequence_appearances
+            |>Seq.map built.Sequence_appearances.to_figure_id_appearances
+        )
 
     [<Fact>]
     let ``turn a combined history into separate figure histories``()=
@@ -377,3 +392,9 @@ module rvinowise.ai.built.Event_batches
         |>to_separate_histories
         |>Separate_histories.figure_id_appearances
         |>Seq.map built.Figure_appearances.from_figure_id_appearances
+
+    let to_sequence_appearances event_batches =
+        event_batches
+        |>to_separate_histories
+        |>Separate_histories.figure_id_appearances
+        |>Seq.map built.Sequence_appearances.from_figure_id_appearances

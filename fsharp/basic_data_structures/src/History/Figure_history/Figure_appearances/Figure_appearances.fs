@@ -13,10 +13,6 @@ namespace rvinowise.ai
         override this.ToString()=
             printed.Figure_appearances.to_string this.figure this.appearances
         
-    type Sequence_appearances = {
-        sequence: Figure_id array
-        appearances: array<Interval>
-    } 
 
     module Appearances =
         

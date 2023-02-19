@@ -601,7 +601,7 @@
 </node>
 </node>
 </node>
-<node TEXT="objects" LOCALIZED_STYLE_REF="default" FOLDED="true" POSITION="right" ID="ID_1902469308" CREATED="1632652416117" MODIFIED="1675042940490" COLOR="#000000" BACKGROUND_COLOR="#eeeeee">
+<node TEXT="objects" LOCALIZED_STYLE_REF="default" POSITION="right" ID="ID_1902469308" CREATED="1632652416117" MODIFIED="1675042940490" COLOR="#000000" BACKGROUND_COLOR="#eeeeee">
 <icon BUILTIN="group"/>
 <node TEXT="history" LOCALIZED_STYLE_REF="default" ID="ID_74294546" CREATED="1632652535678" MODIFIED="1673056196000">
 <icon BUILTIN="present"/>
@@ -756,13 +756,46 @@
 </node>
 </node>
 </node>
-<node TEXT="repeated pair" ID="ID_424221858" CREATED="1673060853045" MODIFIED="1673060873520">
+<node TEXT="sequence" ID="ID_424221858" CREATED="1673060853045" MODIFIED="1676742842360">
+<icon BUILTIN="control/type_of_parent"/>
+<node TEXT="repeated pair" ID="ID_210171319" CREATED="1676742860712" MODIFIED="1676742865947">
 <icon BUILTIN="control/type_of_parent"/>
 <node TEXT="minimally valuable figure" ID="ID_1497797221" CREATED="1673060875550" MODIFIED="1673060901335">
 <icon BUILTIN="box_inscribed"/>
 </node>
+</node>
 <node TEXT="produced by the sequence finder" ID="ID_1933016781" CREATED="1673060902228" MODIFIED="1673061067747">
 <icon BUILTIN="puzzle_piece"/>
+</node>
+<node TEXT="just an implementation optimisation" ID="ID_1268857083" CREATED="1673060954459" MODIFIED="1673060986597">
+<icon BUILTIN="bad"/>
+<icon BUILTIN="box_inscribed"/>
+<node TEXT="can be substituted by a complex figure" ID="ID_1871980201" CREATED="1673060966279" MODIFIED="1673061010636"/>
+<node TEXT="raw input/output" LOCALIZED_STYLE_REF="default" ID="ID_973109195" CREATED="1633007976220" MODIFIED="1633008284610" COLOR="#000000" BACKGROUND_COLOR="#ffffff">
+<icon BUILTIN="box_inscribed"/>
+</node>
+<node TEXT="a sequence of actions as a figure" LOCALIZED_STYLE_REF="default" ID="ID_1829914945" CREATED="1632652612940" MODIFIED="1633003600645">
+<icon BUILTIN="box_inscribed"/>
+</node>
+</node>
+<node TEXT="stores newly found consequences" LOCALIZED_STYLE_REF="default" ID="ID_1797044550" CREATED="1632660876585" MODIFIED="1632843447303">
+<icon BUILTIN="cog"/>
+</node>
+<node TEXT="impl" ID="ID_1126502242" CREATED="1672996604232" MODIFIED="1672996606694">
+<icon BUILTIN="present"/>
+<node TEXT="unity" LOCALIZED_STYLE_REF="default" ID="ID_1322309816" CREATED="1632857904649" MODIFIED="1652393054346" LINK="../Assets/scripts/unity_ai/Node/Figure" COLOR="#000000" BACKGROUND_COLOR="#ffffff">
+<icon BUILTIN="present"/>
+<node TEXT="pairs of pairs etc..." ID="ID_843370968" CREATED="1633029120331" MODIFIED="1633029203942">
+<icon BUILTIN="box_inscribed"/>
+<node TEXT="for debugging" ID="ID_140862798" CREATED="1633029442742" MODIFIED="1673061425485"/>
+</node>
+<node TEXT="a text string with names of Base_signals" ID="ID_938368443" CREATED="1633029241175" MODIFIED="1633029292263">
+<icon BUILTIN="box_inscribed"/>
+</node>
+</node>
+<node TEXT="f#" ID="ID_835092495" CREATED="1672996565724" MODIFIED="1673061096867">
+<icon BUILTIN="useless"/>
+</node>
 </node>
 </node>
 <node TEXT="complex figure" LOCALIZED_STYLE_REF="default" ID="ID_456447488" CREATED="1632652436242" MODIFIED="1652344814357" COLOR="#000000" BACKGROUND_COLOR="#ffffff">
@@ -806,9 +839,6 @@
 <icon BUILTIN="puzzle_piece"/>
 <font ITALIC="true"/>
 </node>
-<node TEXT="unity" ID="ID_736081269" CREATED="1633005654229" MODIFIED="1633005795006" LINK="file:/D:/prj/unity_ai/Assets/scripts/unity_ai/Figure/Subfigure.cs">
-<icon BUILTIN="present"/>
-</node>
 </node>
 </node>
 <node TEXT="stores important consequences" LOCALIZED_STYLE_REF="default" ID="ID_560309985" CREATED="1632660876585" MODIFIED="1632843447301">
@@ -823,39 +853,6 @@
 <icon BUILTIN="book_open"/>
 <node TEXT="general" ID="ID_1749796058" CREATED="1632857632311" MODIFIED="1667818325181" LINK="Figures/"/>
 <node TEXT="unity" ID="ID_773007300" CREATED="1632857704205" MODIFIED="1652392844316" LINK="../Assets/scripts/unity_ai/Node/Figure/doc/Figure_imp.bmp"/>
-</node>
-</node>
-<node TEXT="sequential figure" LOCALIZED_STYLE_REF="default" ID="ID_1800053006" CREATED="1632668003992" MODIFIED="1652344814355" COLOR="#000000" BACKGROUND_COLOR="#ffffff">
-<icon BUILTIN="control/type_of_parent"/>
-<node TEXT="just an implementation optimisation" ID="ID_1268857083" CREATED="1673060954459" MODIFIED="1673060986597">
-<icon BUILTIN="bad"/>
-<icon BUILTIN="box_inscribed"/>
-<node TEXT="can be substituted by a complex figure" ID="ID_1871980201" CREATED="1673060966279" MODIFIED="1673061010636"/>
-<node TEXT="raw input/output" LOCALIZED_STYLE_REF="default" ID="ID_973109195" CREATED="1633007976220" MODIFIED="1633008284610" COLOR="#000000" BACKGROUND_COLOR="#ffffff">
-<icon BUILTIN="box_inscribed"/>
-</node>
-<node TEXT="a sequence of actions as a figure" LOCALIZED_STYLE_REF="default" ID="ID_1829914945" CREATED="1632652612940" MODIFIED="1633003600645">
-<icon BUILTIN="box_inscribed"/>
-</node>
-</node>
-<node TEXT="stores newly found consequences" LOCALIZED_STYLE_REF="default" ID="ID_1797044550" CREATED="1632660876585" MODIFIED="1632843447303">
-<icon BUILTIN="cog"/>
-</node>
-<node TEXT="impl" ID="ID_1126502242" CREATED="1672996604232" MODIFIED="1672996606694">
-<icon BUILTIN="present"/>
-<node TEXT="unity" LOCALIZED_STYLE_REF="default" ID="ID_1322309816" CREATED="1632857904649" MODIFIED="1652393054346" LINK="../Assets/scripts/unity_ai/Node/Figure" COLOR="#000000" BACKGROUND_COLOR="#ffffff">
-<icon BUILTIN="present"/>
-<node TEXT="pairs of pairs etc..." ID="ID_843370968" CREATED="1633029120331" MODIFIED="1633029203942">
-<icon BUILTIN="box_inscribed"/>
-<node TEXT="for debugging" ID="ID_140862798" CREATED="1633029442742" MODIFIED="1673061425485"/>
-</node>
-<node TEXT="a text string with names of Base_signals" ID="ID_938368443" CREATED="1633029241175" MODIFIED="1633029292263">
-<icon BUILTIN="box_inscribed"/>
-</node>
-</node>
-<node TEXT="f#" ID="ID_835092495" CREATED="1672996565724" MODIFIED="1673061096867">
-<icon BUILTIN="useless"/>
-</node>
 </node>
 </node>
 </node>
