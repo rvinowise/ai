@@ -167,6 +167,7 @@ namespace rvinowise.ai
             (mood_intervals: (Interval*Mood) seq)
             (history: Figure_id_appearances seq)
             =
+            ()
 
 
         let good_commonalities 
@@ -190,5 +191,4 @@ namespace rvinowise.ai
             // let good_commonalities =
             //     separate_histories
             //     |>good_commonalities mood_intervals
-                    
             ()
