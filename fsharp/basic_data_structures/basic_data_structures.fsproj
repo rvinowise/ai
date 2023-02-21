@@ -67,6 +67,7 @@
     <Compile Include="src\History\Event_batches\parts.fs" />
     <Compile Include="src\History\Event_batches\Event_batches.fs" />
     <Compile Include="src\History\Event_batches\built.fs" />
+    <Compile Include="src\History\Event_batches\convert_to_figure.fs" />
     <Compile Include="src\History\Event_batches\example.fs" />
   </ItemGroup>
 
