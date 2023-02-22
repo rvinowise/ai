@@ -12,7 +12,7 @@ namespace rvinowise.ai
             
     [<CustomEquality; CustomComparison>]
     type Figure = {
-        edges: Edge seq
+        edges: Edge Set
         subfigures: Vertex_data
     }
     with 
