@@ -4,7 +4,6 @@ module rvinowise.ai.example.Stencil
 
     let a_fitting_stencil =
         built.Stencil.simple
-            "S"
             [
                 "b","out1";
                 "out1","f";

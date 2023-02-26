@@ -207,13 +207,13 @@ module rvinowise.ai.built.Fusing_figures_into_sequence
         let edges_inbetween =
             let last_vertices_of_a =
                 {
-                    edges=renamed_a_edges
+                    edges=renamed_a_edges|>Set.ofSeq
                     subfigures=renamed_a_subfigures
                 }
                 |>Figure.last_vertices
             let first_vertices_of_b =
                 {
-                    edges=renamed_b_edges
+                    edges=renamed_b_edges|>Set.ofSeq
                     subfigures=renamed_b_subfigures
                 }
                 |>Figure.first_vertices

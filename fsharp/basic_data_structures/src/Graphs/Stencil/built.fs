@@ -19,7 +19,7 @@ module rvinowise.ai.built.Stencil
         |>Seq.concat
         |>dict 
 
-    let simple id (edges:seq<string*string>) =
+    let simple (edges:seq<string*string>) =
         {
             edges=built.Graph.simple edges
             nodes=edges

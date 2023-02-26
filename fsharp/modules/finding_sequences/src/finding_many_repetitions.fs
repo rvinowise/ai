@@ -206,3 +206,26 @@ module Finding_many_repetitions =
         |>Set.ofSeq
         |>Set.intersect expected_sequences
         |>should equal expected_sequences
+
+
+    let all_repetitions_with_concepts
+        (known_sequences: Sequence_appearances seq)
+        (known_concepts: Stencil seq)
+        =
+        let rec steps_of_finding_repetitions
+            (all_sequences: seq<Sequence_appearances>)
+             (sequences_of_previous_step: seq<Sequence_appearances>)
+            =
+            if Seq.isEmpty sequences_of_previous_step then
+                all_sequences
+            else
+                let all_sequences =
+                    all_sequences
+                    |>Seq.append sequences_of_previous_step
+                all_sequences
+                |>many_repetitions
+                |>steps_of_finding_repetitions all_sequences
+                
+        steps_of_finding_repetitions
+            []
+            known_sequences
