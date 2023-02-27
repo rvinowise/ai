@@ -14,9 +14,17 @@ module finding_sequences_with_concepts =
     let ``try finding sequences with a number concept``()=
         let number_concept = 
             built.Stencil.simple [
-                "numbers:","out1";
-                ",","out1";
-                "out1",",";
-                "out1",";";
+                "N","out";
+                ",1","out";
+                "out",",2";
+                "out",";";
             ]
-    
+        let history =
+            "N1,2,3,4,5,6;";
+            "1+2=3;2+2=4"
+            |>built.Event_batches.from_text_blocks
+            |>built.Event_batches.to_sequence_appearances
+        Finding_many_repetitions.all_repetitions_with_concepts
+            history
+            [number_concept]
+        |>should 
