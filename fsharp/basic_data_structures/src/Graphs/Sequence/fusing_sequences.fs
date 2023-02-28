@@ -4,7 +4,6 @@ module rvinowise.ai.built.fusing_sequences
     open FsUnit
     
     open rvinowise.ai
-    open rvinowise.ai.figure_parts
     open rvinowise.extensions
     open rvinowise
 

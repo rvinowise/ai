@@ -4,7 +4,6 @@ module rvinowise.ai.built.Fusing_figures_into_sequence
     open FsUnit
     
     open rvinowise.ai
-    open rvinowise.ai.figure_parts
     open rvinowise.extensions
     open rvinowise
 
@@ -163,7 +162,7 @@ module rvinowise.ai.built.Fusing_figures_into_sequence
 
     let renamed_subfigures_of_figure 
         (old_to_new_names: Map<Vertex_id, Vertex_id>)
-        (subfigures: Vertex_data)
+        (subfigures: Figure_vertex_data)
         =
         subfigures
         |>Seq.map(fun pair->

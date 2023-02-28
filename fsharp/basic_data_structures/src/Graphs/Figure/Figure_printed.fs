@@ -2,10 +2,10 @@ module rvinowise.ai.printed.Figure
 
 open rvinowise
 open rvinowise.ai
-open rvinowise.ai.figure_parts
 open System.Text
 open rvinowise.extensions
 open System.Diagnostics.Contracts
+
 
 let private branching_edges_to_string (edges:Edge seq) =
     let result = StringBuilder()
@@ -25,7 +25,7 @@ let private branching_edges_to_string (edges:Edge seq) =
 
 let id_of_a_sequence_from_edges
     (edges: Edge seq) 
-    (subfigures: Vertex_data) 
+    (subfigures: Figure_vertex_data) 
     =
     let first_vertex =
         edges
@@ -34,11 +34,11 @@ let id_of_a_sequence_from_edges
     
     let rec build_id 
         (edges : Edge seq)
-        (subfigures: Vertex_data) 
+        (subfigures: Figure_vertex_data) 
         id
         (vertex:Vertex_id)
         =
-        let updated_id = id+subfigures[vertex]
+        let updated_id = id+ Figure_node.to_string subfigures[vertex]
         vertex
         |>Edges.next_vertices edges
         |>Seq.tryHead
@@ -54,20 +54,20 @@ let id_of_a_sequence_from_edges
 
 let private sequential_edges_to_string 
     (edges:Edge seq)
-    (subfigures: Vertex_data) 
+    (subfigures: Figure_vertex_data) 
     =
     id_of_a_sequence_from_edges edges subfigures
 
 let private edges_to_string 
     (edges:Edge seq)
-    (subfigures: Vertex_data) 
+    (subfigures: Figure_vertex_data) 
     =
     if Edges.is_sequence edges then
         sequential_edges_to_string edges subfigures
     else 
         branching_edges_to_string edges
 
-let private signal_to_string (subfigures:Vertex_data) =
+let private signal_to_string (subfigures:Figure_vertex_data) =
     Contract.Assume(Seq.length subfigures = 1)
     let signal =
         subfigures

@@ -4,16 +4,14 @@ namespace rvinowise.ai
     open System.Text
     open rvinowise
     open rvinowise.extensions
-    open rvinowise.ai.figure_parts
     open System
     open System.Linq
-
 
             
     [<CustomEquality; CustomComparison>]
     type Figure = {
         edges: Edge Set
-        subfigures: Vertex_data
+        subfigures: Figure_vertex_data
     }
     with 
         override this.ToString()=
