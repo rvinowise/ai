@@ -33,7 +33,7 @@
     <Compile Include="src\Graphs\Figure\Figure_types.fs" />
     <Compile Include="src\Graphs\Figure\Figure.fs" />
     <Compile Include="src\Graphs\Figure\built\Figure_built.fs" />
-    <Compile Include="src\Graphs\Figure\built\fusing_figures_into_a_sequence.fs" />
+    <!-- <Compile Include="src\Graphs\Figure\built\fusing_figures_into_a_sequence.fs" /> -->
     <Compile Include="src\Graphs\Figure\Figure_example.fs" />
     <Compile Include="src\Graphs\Figure\Figure_tests.fs" />
 

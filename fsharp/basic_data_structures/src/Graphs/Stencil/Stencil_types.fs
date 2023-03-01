@@ -2,7 +2,7 @@ namespace rvinowise.ai
     open rvinowise.ai
 
     [<Struct>]
-    type Figure_node =
+    type Stencil_node =
     | Lower_figure of Figure_id
     | Stencil_output
 
@@ -14,7 +14,7 @@ namespace rvinowise.ai
     open rvinowise.ai
     open rvinowise.extensions
 
-    type Figure_vertex_data = IDictionary<Vertex_id, Figure_node>
+    type Figure_vertex_data = IDictionary<Vertex_id, Stencil_node>
 
     type Stencil = {
         edges: Edge seq

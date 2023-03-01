@@ -10,14 +10,14 @@ namespace rvinowise.ai
         open rvinowise.extensions
         
         
-        let need_vertex_referencing_figure 
+        let need_vertex_referencing_element 
             (owner_figure:Figure)
-            (referenced_figure:Figure_id)
+            (referenced_element:string)
             (checked_vertex) =
             let (exist,reference) = owner_figure.subfigures.TryGetValue(checked_vertex)
-            exist && reference=referenced_figure
+            exist && reference=(referenced_element|>Figure_node.ofString)
 
-        let nonexistent_vertex = Figure_id "0" 
+        let nonexistent_vertex:Figure_node = Figure_node.Lower_figure "" 
 
         let reference_of_vertex 
             owner_figure 
