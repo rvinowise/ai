@@ -2,10 +2,10 @@ namespace rvinowise.ai
     open FsUnit
     open Xunit
 
-    //[<Struct>]
+    [<Struct>]
     type Figure_node =
-    | Lower_figure of Figure_id
-    | Concept of Figure_id
+    | Lower_figure of Lower_figure: Figure_id
+    | Concept of Concept: Figure_id
     // with 
     //     override this.ToString()=
     //         printed.Figure.to_string this.edges this.subfigures
@@ -24,7 +24,7 @@ namespace rvinowise.ai
                 match (Seq.head name, Seq.last name) with
                 |('[',']') -> 
                     Concept (
-                        name.[1..Seq.length name-1]
+                        name.[1..Seq.length name-2]
                     )
                 |_->Lower_figure name
             else 

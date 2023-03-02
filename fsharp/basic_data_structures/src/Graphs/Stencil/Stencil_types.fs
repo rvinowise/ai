@@ -14,11 +14,11 @@ namespace rvinowise.ai
     open rvinowise.ai
     open rvinowise.extensions
 
-    type Figure_vertex_data = IDictionary<Vertex_id, Stencil_node>
+    type Stencil_vertex_data = IDictionary<Vertex_id, Stencil_node>
 
     type Stencil = {
         edges: Edge seq
-        nodes: Figure_vertex_data
+        nodes: Stencil_vertex_data
     }
     with 
         override this.ToString() =

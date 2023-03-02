@@ -22,11 +22,25 @@ module finding_sequences_with_concepts =
                 "out",";";
             ]
         let history =
-            "N1,2,3,4,5,6;";
-            "1+2=3;2+2=4"
+            "N1,2,3,4;";"1+2=3;2+2=4"
+    //mom:   012345678   9¹123456789
             |>built.Event_batches.from_text_blocks
             |>built.Event_batches.to_sequence_appearances
         Finding_many_repetitions.all_repetitions_with_concepts
             history
             [number_concept]
-        |>should 
+        |>Set.ofSeq
+        |>Set.isSubset (
+            [
+                {
+                    sequence=
+                        ["[number]";"+";"[number]";"=";"[number]"]
+                        |>Seq.map Figure_node.ofString
+                    appearances=
+                        [9,13; 15,19]
+                        |>Seq.map Interval.ofPair
+
+                };
+            ]|>Set.ofSeq
+        )
+        |>should equal true
