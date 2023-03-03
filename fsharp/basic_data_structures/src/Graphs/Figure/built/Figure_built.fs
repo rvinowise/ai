@@ -95,7 +95,7 @@ module rvinowise.ai.built.Figure
     let signal (id:Figure_id) =
         {
             edges=Set.empty
-            subfigures=[id,Lower_figure id]|>Map.ofSeq
+            subfigures=[id,Constant id]|>Map.ofSeq
         }
 
     let vertex_data_from_edges_of_figure (vertex_data:Figure_vertex_data) (edges:Edge seq) =

@@ -207,14 +207,24 @@ module Finding_many_repetitions =
         |>Set.intersect expected_sequences
         |>should equal expected_sequences
 
+    (* 
+    Sequence: all subfigures are signals (taking one moment), no parallel signals (e.g. math primers)
+
+    Figure: subfigures have a span (from-to), and can overlap each other
+    *)
 
     let all_repetitions_with_concepts
-        (known_sequences: Sequence_appearances seq)
+        (full_history: Figure_id seq)
         (known_concepts: Stencil seq)
         =
+        let concept_appearances = 
+            results_of_stencil_application
+                full_history
+                known_concepts
+        
         let rec steps_of_finding_repetitions
             (all_sequences: seq<Sequence_appearances>)
-             (sequences_of_previous_step: seq<Sequence_appearances>)
+            (sequences_of_previous_step: seq<Sequence_appearances>)
             =
             if Seq.isEmpty sequences_of_previous_step then
                 all_sequences

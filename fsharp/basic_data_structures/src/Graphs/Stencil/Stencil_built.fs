@@ -6,7 +6,7 @@ module rvinowise.ai.built.Stencil
     let node_reference_from_string name=
         match name with
         | "out" -> Stencil_output
-        | subfigure -> Lower_figure subfigure
+        | subfigure -> Stencil_node.Lower_figure (subfigure|>Figure_node.ofString)
 
     let vertex_data_from_tuples edges =
         edges

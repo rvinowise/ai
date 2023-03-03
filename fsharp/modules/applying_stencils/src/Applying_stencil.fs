@@ -1,4 +1,4 @@
-namespace rvinowise.ai.figure
+namespace rvinowise.ai
 open Xunit
 open FsUnit
 
@@ -8,7 +8,6 @@ module Applying_stencil =
     open Rubjerg.Graphviz
     open rvinowise.ai.mapping_stencils
     open rvinowise.ai.stencil
-    open rvinowise.ai
     open rvinowise
 
     
@@ -21,7 +20,7 @@ module Applying_stencil =
         
         let figures_to_map = 
             stencil
-            |>Stencil.first_referenced_figures
+            |>Stencil.first_referenced_elements
             
 
         let subfigures_in_stencil = 
@@ -122,7 +121,7 @@ module Applying_stencil =
         stencil
         target
         =
-        let first_subfigures_of_stencil = Stencil.first_referenced_figures stencil
+        let first_subfigures_of_stencil = Stencil.first_referenced_elements stencil
         let subfigures_in_stencil,
             subfigures_in_target =
                 sorted_subfigures_to_map_first stencil target
@@ -234,7 +233,7 @@ module Applying_stencil =
         |>prolongate_mappings
             stencil 
             target
-            (Stencil.first_referenced_figures stencil)
+            (Stencil.first_referenced_elements stencil)
             
         
     let results_of_stencil_application

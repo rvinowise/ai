@@ -2,9 +2,6 @@ namespace rvinowise.ai.test
 
 open Xunit
 
-open rvinowise
-open rvinowise.ai
-open rvinowise.ai.stencil
         
 module ``the mapping type``=
     open FsUnit
@@ -12,8 +9,6 @@ module ``the mapping type``=
     open rvinowise.ai
     open System.Collections.Generic
     
-
-        
 
     type ``comparing mappings with each other``()=
         

@@ -4,7 +4,7 @@ open Xunit
 open FsUnit
 
 open rvinowise.ai
-open rvinowise.ai.figure.Applying_stencil
+open rvinowise.ai.Applying_stencil
 open rvinowise.ai.ui
 open rvinowise.ai.mapping_stencils
 
@@ -191,14 +191,14 @@ module ``application of stencils``=
         member this.``finding following subfigures referencing a specific figure``()=
             (Figure.subfigures_after_other_subfigures
                 example.Figure.a_high_level_relatively_simple_figure
-                "f"
+                (Figure_node.ofString "f")
                 ["b0"]
             )|> should equal
                 ["f0";"f1"]
 
             (Figure.subfigures_after_other_subfigures
                 example.Figure.a_high_level_relatively_simple_figure
-                "f"
+                (Figure_node.ofString "f")
                 ["d";"b2"]
             )|> should equal
                 ["f1"]

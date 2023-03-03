@@ -3,7 +3,7 @@ namespace rvinowise.ai
 
     [<Struct>]
     type Stencil_node =
-    | Lower_figure of Figure_id
+    | Lower_figure of Lower_figure: Figure_node
     | Stencil_output
 
 

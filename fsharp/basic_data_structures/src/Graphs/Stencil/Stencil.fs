@@ -53,12 +53,12 @@ module Stencil=
     
     let is_vertex_referencing_figure
         owner_stencil 
-        referenced_figure
+        (referenced_figure: Figure_id)
         checked_vertex
         =
         checked_vertex
         |>Dictionary.some_value owner_stencil.nodes
-            = Some (Lower_figure referenced_figure)
+            = Some (Constant referenced_figure)
 
     let vertices_referencing_figure 
         owner_stencil
@@ -72,7 +72,7 @@ module Stencil=
                 referenced_figure
         )
     
-    let nonexistent_vertex = Lower_figure "0" 
+    let nonexistent_vertex = Constant "0" 
 
     let referenced_node stencil vertex_id =
         vertex_id
@@ -93,11 +93,12 @@ module Stencil=
         |>Edges.first_vertices 
         |>Seq.filter (is_subfigure stencil)
 
-    let first_referenced_figures stencil=
+    let first_referenced_elements stencil=
         Edges.first_vertices stencil.edges
         |>Seq.map (referenced_node stencil)
         |>Seq.choose (function
-            |Stencil_node.Lower_figure referenced_figure -> Some referenced_figure
+            |Stencil_node.Constant name -> Some (Constant name)
+            |Stencil_node.Concept name -> Some (Concept name)
             |_->None
         )
         |>Seq.distinct

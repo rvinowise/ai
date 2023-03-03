@@ -5,9 +5,8 @@
     type Sequence = Figure_id array
         
        
-    module Sequence=
+    module Sequence=()
         
-        let ofString text =
             
 
 

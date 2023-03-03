@@ -33,9 +33,18 @@ module finding_sequences_with_concepts =
         |>Set.isSubset (
             [
                 {
-                    sequence=
-                        ["[number]";"+";"[number]";"=";"[number]"]
-                        |>Seq.map Figure_node.ofString
+                    Sequence_appearances.sequence=
+                        [|"[number]";"+";"[number]";"=";"[number]"|]
+                        |>Array.map Figure_node.ofString
+                    appearances=
+                        [9,13; 15,19]
+                        |>Seq.map Interval.ofPair
+
+                };
+                {
+                    Sequence_appearances.sequence=
+                        [|"[number]";"+";"2";"=";"[number]"|]
+                        |>Array.map Figure_node.ofString
                     appearances=
                         [9,13; 15,19]
                         |>Seq.map Interval.ofPair
