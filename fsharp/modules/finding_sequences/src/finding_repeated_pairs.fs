@@ -239,7 +239,7 @@ module Finding_repetitions =
         }
         
     let repeated_pair_with_histories
-        (sequence: Sequence)
+        (sequence: Figure_id array)
         (a_appearances: Interval array,
         b_appearances:  Interval array)
         =

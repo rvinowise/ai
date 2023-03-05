@@ -19,12 +19,10 @@ module rvinowise.ai.built.Figure
                         (tail_id,  
                         tail_id
                         |>String.remove_number
-                        |>Figure_node.ofString
                         );
                         (head_id,
                         head_id 
                         |>String.remove_number
-                        |>Figure_node.ofString
                         )
                     ]
                 )
@@ -32,9 +30,9 @@ module rvinowise.ai.built.Figure
                 |>Map.ofSeq 
         }
     
-    let sequence_from_text (text:string) =
-        let _, (subfigures_sequence: (Vertex_id*Figure_node) list) = 
-            text
+    let from_sequence (subfigures: Figure_id seq) =
+        let _, (subfigures_sequence: (Vertex_id*Figure_id) list) = 
+            subfigures
             |>Seq.fold (
                 fun 
                     (referenced_figures_to_last_number,subfigures_sequence)
@@ -56,7 +54,7 @@ module rvinowise.ai.built.Figure
                     subfigures_sequence @
                     [
                         referenced_figure+string this_number ,
-                        referenced_figure|>Figure_node.ofString
+                        referenced_figure
                     ]
                     
                 )
@@ -74,6 +72,12 @@ module rvinowise.ai.built.Figure
                 |>Map.ofSeq
         }
 
+    let sequence_from_text (text:string) =
+        text
+        |>Seq.map string
+        |>Array.ofSeq
+        |>from_sequence
+
     [<Fact>]
     let ``try sequence_from_text``()=
         "abba"
@@ -87,18 +91,16 @@ module rvinowise.ai.built.Figure
                 subfigures=
                     ["a1","a";"a2","a";"b1","b";"b2","b"]
                     |>Map.ofSeq
-                    |>Map.map (fun _ value ->
-                        Figure_node.ofString value
-                    )
+                    |>Map.map (fun _ value ->value)
             }
 
     let signal (id:Figure_id) =
         {
             edges=Set.empty
-            subfigures=[id,Constant id]|>Map.ofSeq
+            subfigures=[id, id]|>Map.ofSeq
         }
 
-    let vertex_data_from_edges_of_figure (vertex_data:Figure_vertex_data) (edges:Edge seq) =
+    let vertex_data_from_edges_of_figure (vertex_data: Map<Vertex_id, Figure_id>) (edges:Edge seq) =
         edges
         |>Edges.all_vertices
         |>Seq.map (fun vertex->
@@ -123,9 +125,7 @@ module rvinowise.ai.built.Figure
                 (
                     ["a0","a";"b1","b"]
                     |>Map.ofSeq
-                    |>Map.map (fun _ value ->
-                        Figure_node.ofString value
-                    )
+                    |>Map.map (fun _ value ->value)
                 )
                 [
                     Edge("a0","b1");
@@ -139,8 +139,8 @@ module rvinowise.ai.built.Figure
         edges
         |>Seq.map (fun(tail_id,tail_ref,head_id,head_ref)->
             [
-                (tail_id, tail_ref|>Figure_node.ofString);
-                (head_id, head_ref|>Figure_node.ofString)
+                (tail_id, tail_ref);
+                (head_id, head_ref)
             ]
         )
         |>Seq.concat

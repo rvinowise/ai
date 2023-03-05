@@ -8,7 +8,6 @@ open BenchmarkDotNet.Attributes
 open BenchmarkDotNet.Running
 open rvinowise.ai
 
-type Sequence =  array
 
 module finding_sequences_with_concepts =
     open rvinowise.ai

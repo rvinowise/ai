@@ -3,7 +3,7 @@ namespace rvinowise.ai
 
     [<Struct>]
     type Stencil_node =
-    | Lower_figure of Lower_figure: Figure_node
+    | Lower_figure of Lower_figure: Figure_id
     | Stencil_output
 
 
@@ -14,11 +14,10 @@ namespace rvinowise.ai
     open rvinowise.ai
     open rvinowise.extensions
 
-    type Stencil_vertex_data = IDictionary<Vertex_id, Stencil_node>
 
     type Stencil = {
         edges: Edge seq
-        nodes: Stencil_vertex_data
+        nodes: IDictionary<Vertex_id, Stencil_node>
     }
     with 
         override this.ToString() =

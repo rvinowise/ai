@@ -9,8 +9,8 @@ module rvinowise.ai.built.fusing_sequences
 
 
     let sequential_pair 
-        (a_sequence: Sequence)
-        (b_sequence: Sequence)
+        (a_sequence: Figure_id array)
+        (b_sequence: Figure_id array)
         =
         Array.append a_sequence b_sequence
 

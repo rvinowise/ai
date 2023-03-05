@@ -7,7 +7,7 @@ open System
 
 
 let to_string 
-    (sequence: Sequence)
+    (sequence: Figure_id seq)
     (appearances: Interval seq) =
     let str_sequence= sequence|>String.concat "" 
     let str_appearances = printed.Interval.sequence_to_string appearances

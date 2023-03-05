@@ -28,7 +28,6 @@
     <!-- <Compile Include="src\Graphs\Graph\Graph.fs" /> -->
 
 
-    <Compile Include="src\Graphs\Figure\Figure_parts.fs" />
     <Compile Include="src\Graphs\Figure\Figure_printed.fs" />
     <Compile Include="src\Graphs\Figure\Figure_types.fs" />
     <Compile Include="src\Graphs\Figure\Figure.fs" />

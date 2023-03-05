@@ -11,7 +11,7 @@ namespace rvinowise.ai
     [<CustomEquality; CustomComparison>]
     type Figure = {
         edges: Edge Set
-        subfigures: Figure_vertex_data
+        subfigures: Map<Vertex_id, Figure_id>
     }
     with 
         override this.ToString()=

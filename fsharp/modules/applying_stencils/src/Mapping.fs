@@ -132,7 +132,7 @@ namespace rvinowise.ai.stencil
             let output_ending =
                 output_node
                 |>Edges.next_vertices stencil.edges
-                |>targets_of_mapping mapping
+                |>targets_of_mapping mapping //bug
                 |>Edges.vertices_reaching_other_vertices
                     (fun _->true)
                     target.edges

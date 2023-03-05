@@ -10,6 +10,7 @@
   <ItemGroup>
     <Compile Include="src\finding_repeated_pairs.fs" />
     <Compile Include="src\finding_many_repetitions.fs" />
+    <Compile Include="src\finding_repetitions_with_concepts.fs" />
     <!-- tests -->
     <Compile Include="src\test\finding_a_sequence.fs" />
     <Compile Include="src\test\finding_sequences_in_history.fs" />
@@ -19,6 +20,8 @@
     <ProjectReference Include="..\..\provided_data\provided_data.fsproj" />
     <ProjectReference Include="..\..\basic_data_structures\basic_data_structures.fsproj" />
     <ProjectReference Include="..\..\io\io.fsproj" />
+    <ProjectReference Include="..\applying_stencils\applying_stencils.fsproj" />
+
   </ItemGroup>
 
   <ItemGroup>

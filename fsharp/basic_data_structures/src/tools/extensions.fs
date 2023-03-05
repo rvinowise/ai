@@ -162,7 +162,7 @@ module String =
     open System.Text.RegularExpressions
     
     let remove_number label =
-        Regex.Replace(label, @"[^a-zA-Z]", "")
+        Regex.Replace(label, @"[0-9]", "")
 
     let split_into_same_symbols s =
         Regex("""(.)\1*""").Matches(s)
