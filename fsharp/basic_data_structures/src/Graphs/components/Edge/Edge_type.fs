@@ -10,7 +10,8 @@ namespace rvinowise.ai
 
             new (tail, head) =
                 {tail = tail; head = head;}
-            
+            new (tail, head) =
+                {tail = Vertex_id tail; head = Vertex_id head;}
             override this.ToString() =
                 $"Edge({this.tail}->{this.head})"
         end
@@ -18,5 +19,8 @@ namespace rvinowise.ai
          
     module Edge=
 
-        let ofPair pair =
+        let ofPair (pair: Vertex_id*Vertex_id) =
+            Edge(fst pair, snd pair)
+
+        let ofStringPair (pair: string*string) =
             Edge(fst pair, snd pair)

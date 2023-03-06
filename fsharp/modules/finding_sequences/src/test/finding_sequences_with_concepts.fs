@@ -14,10 +14,10 @@ module finding_sequences_with_concepts =
 
     let ``try finding sequences with a number concept``()=
         let number_concept = 
-            built.Stencil.simple [
+            built.Stencil.simple_with_separator [
                 "N","out";
-                ",1","out";
-                "out",",2";
+                ",#1","out";
+                "out",",#2";
                 "out",";";
             ]
         let history =

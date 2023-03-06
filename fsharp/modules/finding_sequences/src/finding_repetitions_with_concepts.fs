@@ -58,10 +58,10 @@ module Finding_repetitions_with_concepts =
         
         
         member _.number_concept = 
-            built.Stencil.simple [
+            built.Stencil.simple_with_separator [
                 "N","out";
-                ",1","out";
-                "out",",2";
+                ",#1","out";
+                "out",",#2";
                 "out",";";
             ]
 

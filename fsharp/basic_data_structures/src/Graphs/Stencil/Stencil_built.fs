@@ -19,7 +19,12 @@ module rvinowise.ai.built.Stencil
         |>Seq.concat
         |>dict 
 
-    let simple (edges:seq<string*string>) =
+    
+
+    let simple 
+        (turn_vertex_id_into_figure_id: string->string)
+        (edges:seq<string*string>) 
+        =
         {
             edges=built.Graph.simple edges
             nodes=edges
@@ -28,13 +33,13 @@ module rvinowise.ai.built.Stencil
                         (
                             tail_id, 
                             tail_id
-                            |>String.remove_number 
+                            |>turn_vertex_id_into_figure_id
                             |>node_reference_from_string
                         );
                         (
                             head_id,
                             head_id
-                            |>String.remove_number 
+                            |>turn_vertex_id_into_figure_id
                             |>node_reference_from_string
                         );
                     ]
@@ -42,6 +47,12 @@ module rvinowise.ai.built.Stencil
                 |>Seq.concat
                 |>dict 
         }
+
+    let simple_without_separator (edges:seq<string*string>) =
+         simple String.remove_number edges
+
+    let simple_with_separator (edges:seq<string*string>) =
+        simple String.remove_number_with_hash edges
 
     let from_tuples
         (edges:seq<Vertex_id*string*Vertex_id*string>) =

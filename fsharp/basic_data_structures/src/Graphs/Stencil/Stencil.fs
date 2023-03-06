@@ -32,10 +32,14 @@ module Stencil=
         vertices
         |>Seq.filter (is_subfigure stencil)
 
-    let next_subfigures subfigures (stencil: Stencil)=
-        subfigures
+    let next_vertices vertices (stencil: Stencil)=
+        vertices
         |>Seq.collect (Edges.next_vertices stencil.edges)
         |>Seq.distinct
+
+    let next_subfigures vertices (stencil: Stencil)=
+        stencil
+        |>next_vertices vertices
         |>only_subfigures stencil
 
     let previous_subfigures_jumping_over_outputs

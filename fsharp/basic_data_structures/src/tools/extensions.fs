@@ -163,6 +163,8 @@ module String =
     
     let remove_number label =
         Regex.Replace(label, @"[0-9]", "")
+    let remove_number_with_hash label =
+        Regex.Replace(label, @"#[0-9]", "")
 
     let split_into_same_symbols s =
         Regex("""(.)\1*""").Matches(s)

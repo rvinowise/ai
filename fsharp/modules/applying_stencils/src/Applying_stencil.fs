@@ -202,26 +202,35 @@ module Applying_stencil =
     let rec prolongate_mappings 
         stencil
         target 
-        (last_mapped_subfigures: Vertex_id seq )
+        (last_mapped_vertices: Vertex_id seq )
         (mappings: Mapping seq)
         =
-        let next_subfigures_to_map = 
+        let next_vertices_to_map = 
             stencil
-            |>Stencil.next_subfigures last_mapped_subfigures
+            |>Stencil.next_vertices last_mapped_vertices
+        
 
-        match next_subfigures_to_map with
-        | Seq [] -> 
-            mappings
-        | _ ->
-            let (mappings:Mapping seq) = 
+        let (mappings:Mapping seq) =
+            let next_subfigures_to_map =
+                next_vertices_to_map
+                |>Stencil.only_subfigures stencil
+            match next_subfigures_to_map with
+            | Seq [] -> mappings
+            |_->
                 mappings
                 |>Seq.collect 
                     (prolongate_mapping stencil target next_subfigures_to_map)
+        
+        match next_vertices_to_map with
+        | Seq [] -> 
+            mappings
+        | _ ->
             prolongate_mappings
                 stencil 
                 target 
-                next_subfigures_to_map
+                next_vertices_to_map
                 mappings
+        
         
 
     let map_stencil_onto_target
@@ -233,7 +242,7 @@ module Applying_stencil =
         |>prolongate_mappings
             stencil 
             target
-            (Stencil.first_referenced_figures stencil)
+            (Stencil.first_subfigures stencil)
             
         
     let results_of_stencil_application

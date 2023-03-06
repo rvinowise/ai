@@ -104,8 +104,37 @@ module ``application of stencils``=
             ])
         ()
 
-    
+    [<Fact>]
+    let ``a full mapping can be produced if the stencil has only "out" in the middle``()=
+        let stencil = 
+            built.Stencil.simple_with_separator [
+                "N","out";
+                ",#1","out";
+                "out",",#2";
+                "out",";";
+            ]
+
+        let target =
+            "N0,1,2,3,4,5,6,7,8,9;"
+    //mom:   0123456789¹123456789²
+            |>built.Figure.sequence_from_text
    
+        let mappings =
+            map_stencil_onto_target
+                stencil
+                target
+                |>Set.ofSeq
+        
+        mappings
+        |>Seq.iter (fun mapping->
+            mapping
+            |>Seq.map (fun pair->pair.Key)
+            |>Set.ofSeq
+            |>should equal (
+                ["N";",#1";",#2";";"]
+                |>Set.ofSeq
+            )
+        )
 
     [<Fact>]
     let ``a fitting stencil, applied to a figure, outputs subgraphs``()=
@@ -234,10 +263,10 @@ module ``application of stencils``=
     [<Fact>]
     let ``apply stencil to a long sequence``()=
         let number_concept = 
-            built.Stencil.simple [
+            built.Stencil.simple_with_separator [
                 "N","out";
-                ",1","out";
-                "out",",2";
+                ",#1","out";
+                "out",",#2";
                 "out",";";
             ]
 
@@ -255,3 +284,5 @@ module ``application of stencils``=
             |>Seq.map built.Figure.signal
             |>Set.ofSeq
         )|>should equal true
+
+    

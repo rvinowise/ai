@@ -50,13 +50,14 @@ let id_of_a_sequence_from_edges
                 subfigures
                 updated_id
                 next_vertex
-    build_id edges subfigures "" first_vertex
+    build_id edges subfigures (Figure_id "") first_vertex
 
 let private sequential_edges_to_string 
     (edges:Edge seq)
     (subfigures) 
     =
     id_of_a_sequence_from_edges edges subfigures
+    |>Figure_id.value
 
 let private edges_to_string 
     (edges:Edge seq)

@@ -18,11 +18,15 @@ module rvinowise.ai.built.Figure
                     [
                         (tail_id,  
                         tail_id
-                        |>String.remove_number
+                        |>Vertex_id.remove_number
+                        |>Vertex_id.value
+                        |>Figure_id
                         );
                         (head_id,
                         head_id 
-                        |>String.remove_number
+                        |>Vertex_id.remove_number
+                        |>Vertex_id.value
+                        |>Figure_id
                         )
                     ]
                 )
@@ -31,6 +35,7 @@ module rvinowise.ai.built.Figure
         }
     
     let from_sequence (subfigures: Figure_id seq) =
+        let separator = "#"
         let _, (subfigures_sequence: (Vertex_id*Figure_id) list) = 
             subfigures
             |>Seq.fold (
@@ -53,8 +58,8 @@ module rvinowise.ai.built.Figure
                     ,
                     subfigures_sequence @
                     [
-                        referenced_figure+string this_number ,
-                        referenced_figure
+                        referenced_figure+separator+string this_number |> Vertex_id,
+                        referenced_figure |> Figure_id
                     ]
                     
                 )
@@ -74,7 +79,7 @@ module rvinowise.ai.built.Figure
 
     let sequence_from_text (text:string) =
         text
-        |>Seq.map string
+        |>Seq.map (string>>Figure_id)
         |>Array.ofSeq
         |>from_sequence
 
@@ -85,11 +90,12 @@ module rvinowise.ai.built.Figure
         |>should equal
             {
                 edges=
-                    ["a1","b1";"b1","b2";"b2","a2"]
-                    |>Seq.map Edge.ofPair
+                    ["a#1","b#1";"b#1","b#2";"b#2","a#2"]
+                    |>Seq.map Edge.ofStringPair
                     |>Set.ofSeq
                 subfigures=
-                    ["a1","a";"a2","a";"b1","b";"b2","b"]
+                    ["a#1","a";"a#2","a";"b#1","b";"b#2","b"]
+                    |>Seq.map (fun (tail,head) -> Vertex_id tail, Figure_id head)
                     |>Map.ofSeq
                     |>Map.map (fun _ value ->value)
             }
@@ -97,23 +103,23 @@ module rvinowise.ai.built.Figure
     let signal (id:Figure_id) =
         {
             edges=Set.empty
-            subfigures=[id, id]|>Map.ofSeq
+            subfigures=[id|>Vertex_id.ofFigure_id, id]|>Map.ofSeq
         }
 
     let vertex_data_from_edges_of_figure (vertex_data: Map<Vertex_id, Figure_id>) (edges:Edge seq) =
         edges
         |>Edges.all_vertices
         |>Seq.map (fun vertex->
-            let vertex_data = vertex_data.TryFind(vertex)
+            let referenced_element = vertex_data.TryFind(vertex)
             Contract.Assume(
-                (vertex_data <> None), 
+                (referenced_element <> None), 
                 "the taken edges of the provided figure must not have verticex, which are not in that figure"
             )
-            match vertex_data with
+            match referenced_element with
             |Some referenced_figure -> (vertex,referenced_figure)
             |None->
                 invalidArg 
-                    (nameof edges + " or " + nameof vertex_data)
+                    (nameof edges + " or " + nameof referenced_element)
                     "the taken edges of the provided figure must not have verticex, which are not in that figure"
         )
         |>Map.ofSeq
