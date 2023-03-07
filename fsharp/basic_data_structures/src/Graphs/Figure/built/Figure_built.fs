@@ -39,9 +39,8 @@ module rvinowise.ai.built.Figure
             |>Seq.fold (
                 fun 
                     (referenced_figures_to_last_number,subfigures_sequence)
-                    symbol
+                    referenced_figure
                     ->
-                let referenced_figure = string symbol
                 let last_number = 
                     referenced_figures_to_last_number
                     |>Map.tryFind referenced_figure
@@ -56,8 +55,8 @@ module rvinowise.ai.built.Figure
                     ,
                     subfigures_sequence @
                     [
-                        referenced_figure+separator+string this_number |> Vertex_id,
-                        referenced_figure |> Figure_id
+                        (Figure_id.value referenced_figure+separator+string this_number) |> Vertex_id,
+                        referenced_figure
                     ]
                     
                 )
