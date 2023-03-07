@@ -6,14 +6,18 @@ module rvinowise.ai.built.Stencil
     let node_reference_from_string name=
         match name with
         | "out" -> Stencil_output
-        | subfigure -> Stencil_node.Lower_figure subfigure
+        | subfigure -> 
+            subfigure
+            |>Figure_id
+            |>Stencil_node.Lower_figure 
 
-    let vertex_data_from_tuples edges =
+    let vertex_data_from_tuples 
+        (edges: seq<string*string*string*string>) =
         edges
         |>Seq.map (fun(tail_id,tail,head_id,head)->
             [
-                (tail_id, node_reference_from_string tail);
-                (head_id, node_reference_from_string head)
+                (Vertex_id tail_id, node_reference_from_string tail);
+                (Vertex_id head_id, node_reference_from_string head)
             ]
         )
         |>Seq.concat
@@ -31,13 +35,13 @@ module rvinowise.ai.built.Stencil
                 |>Seq.map (fun(tail_id,head_id)->
                     [
                         (
-                            tail_id, 
+                            tail_id|>Vertex_id, 
                             tail_id
                             |>turn_vertex_id_into_figure_id
                             |>node_reference_from_string
                         );
                         (
-                            head_id,
+                            head_id|>Vertex_id,
                             head_id
                             |>turn_vertex_id_into_figure_id
                             |>node_reference_from_string
@@ -55,7 +59,7 @@ module rvinowise.ai.built.Stencil
         simple String.remove_number_with_hash edges
 
     let from_tuples
-        (edges:seq<Vertex_id*string*Vertex_id*string>) =
+        (edges:seq<string*string*string*string>) =
         {
             edges=built.Graph.from_tuples edges
             nodes=vertex_data_from_tuples edges

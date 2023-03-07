@@ -8,7 +8,7 @@ module rvinowise.ai.built.Figure_appearances
         =
         {
             Figure_appearances.figure=
-                built.Figure.signal figure_id_appearances.figure
+                built.Figure.signal (figure_id_appearances.figure|>Figure_id.value)
             appearances=figure_id_appearances.appearances
         }
     

@@ -64,7 +64,7 @@
                     |>Seq.filter (fun signal->
                         mood_change_from_string signal = None
                     )
-                    |>Seq.map Signal
+                    |>Seq.map (Figure_id>>Signal)
                 mood=
                 {
                     change=

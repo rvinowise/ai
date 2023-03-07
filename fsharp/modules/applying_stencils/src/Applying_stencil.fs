@@ -180,7 +180,9 @@ module Applying_stencil =
         |>Mapping.targets_of_mapping mapping
         |>Figure.subfigures_after_other_subfigures
             target
-            prolongating_stencil_subfigure
+            (
+                prolongating_stencil_subfigure
+            )
         |>mapping_prolongated_by_subfigures
             mapping
             prolongating_stencil_subfigure

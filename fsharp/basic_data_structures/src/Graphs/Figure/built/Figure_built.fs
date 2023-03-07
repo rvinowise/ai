@@ -9,23 +9,21 @@ module rvinowise.ai.built.Figure
     open rvinowise.extensions
     open rvinowise
 
-    let simple (edges:seq<Vertex_id*Vertex_id>) =
+    let simple (edges:seq<string*string>) =
         {
             edges=built.Graph.simple edges
             subfigures=
                 edges
                 |>Seq.map (fun(tail_id,head_id)->
                     [
-                        (tail_id,  
+                        (Vertex_id tail_id,  
                         tail_id
-                        |>Vertex_id.remove_number
-                        |>Vertex_id.value
+                        |>String.remove_number
                         |>Figure_id
                         );
-                        (head_id,
+                        (Vertex_id head_id,
                         head_id 
-                        |>Vertex_id.remove_number
-                        |>Vertex_id.value
+                        |>String.remove_number
                         |>Figure_id
                         )
                     ]
@@ -100,10 +98,10 @@ module rvinowise.ai.built.Figure
                     |>Map.map (fun _ value ->value)
             }
 
-    let signal (id:Figure_id) =
+    let signal (id:string) =
         {
             edges=Set.empty
-            subfigures=[id|>Vertex_id.ofFigure_id, id]|>Map.ofSeq
+            subfigures=[id|>Vertex_id, id|>Figure_id]|>Map.ofSeq
         }
 
     let vertex_data_from_edges_of_figure (vertex_data: Map<Vertex_id, Figure_id>) (edges:Edge seq) =
@@ -124,29 +122,16 @@ module rvinowise.ai.built.Figure
         )
         |>Map.ofSeq
         
-    [<Fact>]
-    let ``contract violation accessing verticex of a figure``()=
-        Assert.Throws<System.ArgumentException>(fun()->
-            vertex_data_from_edges_of_figure
-                (
-                    ["a0","a";"b1","b"]
-                    |>Map.ofSeq
-                    |>Map.map (fun _ value ->value)
-                )
-                [
-                    Edge("a0","b1");
-                    Edge("b1","a1")
-                ]
-            |>ignore
-        )
 
 
-    let vertex_data_from_tuples edges=
+    let vertex_data_from_tuples 
+        (edges:seq<string*string*string*string>) 
+        =
         edges
         |>Seq.map (fun(tail_id,tail_ref,head_id,head_ref)->
             [
-                (tail_id, tail_ref);
-                (head_id, head_ref)
+                (Vertex_id tail_id, Figure_id tail_ref);
+                (Vertex_id head_id, Figure_id head_ref)
             ]
         )
         |>Seq.concat
@@ -162,7 +147,7 @@ module rvinowise.ai.built.Figure
         }
 
     let from_tuples 
-        (edges:seq<Vertex_id*string*Vertex_id*string>) =
+        (edges:seq<string*string*string*string>) =
         {
             edges=built.Graph.from_tuples edges
             subfigures=vertex_data_from_tuples edges

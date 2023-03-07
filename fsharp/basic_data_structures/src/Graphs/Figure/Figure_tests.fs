@@ -24,7 +24,7 @@ namespace rvinowise.ai
             Edges.vertices_reacheble_from_other_vertices
                 (fun _->true)
                 example.Figure.a_high_level_relatively_simple_figure.edges
-                ["b0";"b2"]
+                (["b0";"b2"]|>Seq.map Vertex_id)
             |> should equal ["f1"]
 
         [<Fact>]
@@ -32,7 +32,7 @@ namespace rvinowise.ai
             Edges.vertices_reaching_other_vertices
                 (fun _->true)
                 example.Figure.a_high_level_relatively_simple_figure.edges
-                ["b1";"f1"]
+                (["b1";"f1"]|>Seq.map Vertex_id)
             |> should equal ["b0"]
 
         [<Fact>]

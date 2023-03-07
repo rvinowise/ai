@@ -198,19 +198,19 @@ module rvinowise.ai.built.Event_batches
         )
         |>should equal [
             0,[
-                Start "a";
-                Start "b"
+                "a"|>Figure_id|>Start;
+                "b"|>Figure_id|>Start
             ];
             1,[
-                Finish ("a",0)
+                Finish ("a"|>Figure_id,0)
             ];
             2,[
-                Start "a";
-                Finish ("b",0)
+                "a"|>Figure_id|>Start;
+                Finish ("b"|>Figure_id,0)
             ];
             4,[
-                Finish ("a",2);
-                Signal "b"
+                Finish ("a"|>Figure_id,2);
+                "b"|>Figure_id|>Start
             ]
         ]
 
@@ -284,7 +284,9 @@ module rvinowise.ai.built.Event_batches
             Separate_histories.figure_apperances=
                 figure_appearances
                 |>Seq.map (fun pair ->
-                    built.Figure_id_appearances.from_intervals pair.Key (pair.Value.ToArray())
+                    built.Figure_id_appearances.from_intervals 
+                        (pair.Key |>Figure_id.value)
+                        (pair.Value.ToArray())
                 )
             mood_change_history=mood_changes
         }

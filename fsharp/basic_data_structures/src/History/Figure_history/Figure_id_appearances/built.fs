@@ -4,16 +4,16 @@ module rvinowise.ai.built.Figure_id_appearances
     open rvinowise.ai
 
     let from_intervals 
-        figure
+        (figure:string)
         intervals
         =
         {
-            Figure_id_appearances.figure=figure
+            Figure_id_appearances.figure=figure|>Figure_id
             appearances=intervals
         }
     
     let from_tuples 
-        figure
+        (figure:string)
         tuples
         =
         from_intervals 
@@ -25,7 +25,7 @@ module rvinowise.ai.built.Figure_id_appearances
             )
         
     let from_moments 
-        figure
+        (figure:string)
         moments
         =
         let intervals = 
@@ -33,7 +33,7 @@ module rvinowise.ai.built.Figure_id_appearances
             |>Seq.map Interval.moment
             |>Array.ofSeq
         {
-            figure=figure
+            figure=Figure_id figure
             appearances=intervals
         }
     

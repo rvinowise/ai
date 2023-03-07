@@ -16,8 +16,8 @@ module rvinowise.ai.built.fusing_sequences
 
     [<Fact>]
     let ``try sequential_pair``()=
-        let a_sequence = [|"a";"ab";"b"|]
-        let b_sequence = [|"a";"bb";"e"|]
+        let a_sequence = [|"a";"ab";"b"|]|>Array.map Figure_id
+        let b_sequence = [|"a";"bb";"e"|]|>Array.map Figure_id
           
         let real_ab_sequence = 
             sequential_pair
@@ -25,6 +25,7 @@ module rvinowise.ai.built.fusing_sequences
                 b_sequence
         
         [|"a";"ab";"b";"a";"bb";"e"|]
+        |>Array.map Figure_id
         |>should equal real_ab_sequence
             
         

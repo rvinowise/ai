@@ -1,7 +1,7 @@
 module rvinowise.ai.built.Graph
     open rvinowise.ai
 
-    let simple (raw_edges:seq<Vertex_id*Vertex_id>) =
+    let simple (raw_edges:seq<string*string>) =
         raw_edges
         |>Seq.map (fun (tail_id, head_id)->
             Edge(
@@ -9,7 +9,9 @@ module rvinowise.ai.built.Graph
             );
         )|>Set.ofSeq
 
-    let from_tuples raw_edges =
+    let from_tuples 
+        (raw_edges:seq<string*string*string*string>)
+        =
         raw_edges
         |>Seq.map (fun (tail_id, _, head_id,_)->
             Edge(

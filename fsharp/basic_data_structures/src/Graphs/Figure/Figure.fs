@@ -76,7 +76,7 @@ namespace rvinowise.ai
             if Seq.isEmpty figure.edges then 
                 figure.subfigures
                 |>Seq.head
-                |>extensions.KeyValuePair.key
+                |>extensions.KeyValuePair.value
             else
                 printed.Figure.id_of_a_sequence_from_edges figure.edges figure.subfigures
 

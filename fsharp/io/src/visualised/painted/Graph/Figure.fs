@@ -17,11 +17,11 @@ namespace rvinowise.ai.ui.painted
             |> Seq.iter (fun edge -> 
                 let tail =
                     to_node
-                    |>infrastructure.Graph.provide_vertex (edge.tail)
+                    |>infrastructure.Graph.provide_vertex (edge.tail|>Vertex_id.value)
                 
                 let head = 
                     to_node
-                    |>infrastructure.Graph.provide_vertex (edge.head)
+                    |>infrastructure.Graph.provide_vertex (edge.head|>Vertex_id.value)
 
                 tail
                 |>infrastructure.Graph.with_edge head
