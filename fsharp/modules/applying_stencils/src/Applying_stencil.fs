@@ -49,12 +49,12 @@ module Applying_stencil =
         |>should equal
             (
                 [
-                    ["b"];
-                    ["h"]
+                    [Vertex_id "b"];
+                    [Vertex_id "h"]
                 ],
                 [
-                    [|"b0";"b1";"b2"|];
-                    [|"h"|]
+                    ["b0";"b1";"b2"]|>Seq.map Vertex_id;
+                    [Vertex_id "h"]
                 ]
             )
 
@@ -173,24 +173,24 @@ module Applying_stencil =
         stencil
         target
         mapping  
-        (prolongating_stencil_subfigure: Vertex_id)
+        (prolongating_stencil_subfigure: Vertex_id*Figure_id)
         =
-        prolongating_stencil_subfigure
+        let prolongating_vertex = prolongating_stencil_subfigure|>fst
+        let prolongating_figure = prolongating_stencil_subfigure|>snd
+        prolongating_vertex
         |>Stencil.previous_subfigures_jumping_over_outputs stencil
         |>Mapping.targets_of_mapping mapping
         |>Figure.subfigures_after_other_subfigures
             target
-            (
-                prolongating_stencil_subfigure
-            )
+            prolongating_figure
         |>mapping_prolongated_by_subfigures
             mapping
-            prolongating_stencil_subfigure
+            prolongating_vertex
 
     let prolongate_mapping 
         stencil
         target
-        next_subfigures_to_map
+        (next_subfigures_to_map: seq<Vertex_id*Figure_id>)
         mapping
         =
         next_subfigures_to_map
@@ -215,7 +215,7 @@ module Applying_stencil =
         let (mappings:Mapping seq) =
             let next_subfigures_to_map =
                 next_vertices_to_map
-                |>Stencil.only_subfigures stencil
+                |>Stencil.only_subfigures_with_figures stencil
             match next_subfigures_to_map with
             | Seq [] -> mappings
             |_->

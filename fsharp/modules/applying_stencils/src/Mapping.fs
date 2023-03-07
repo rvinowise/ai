@@ -141,3 +141,11 @@ namespace rvinowise.ai.stencil
             output_beginning
             |>Set.intersect output_ending
             |>built.Figure.subgraph_with_vertices target
+
+        let ofStringPairs (pairs: seq<string*string>) =
+            pairs
+            |>Seq.map (fun (stencil_vertex, target_vertex) ->
+                stencil_vertex|>Vertex_id,
+                target_vertex|>Vertex_id
+            )
+            |>Mapping

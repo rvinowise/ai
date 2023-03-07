@@ -16,9 +16,9 @@ module ``application of stencils``=
     open rvinowise.ui
     
         
-    let initial_mapping_without_prolongation = Mapping ["b","b1";"h","h"]
-    let initial_fruitful_mapping = Mapping ["b","b0";"h","h"]
-    let initial_useless_mapping = Mapping ["b","b2";"h","h"]
+    let initial_mapping_without_prolongation = Mapping.ofStringPairs ["b","b1";"h","h"]
+    let initial_fruitful_mapping = Mapping.ofStringPairs ["b","b0";"h","h"]
+    let initial_useless_mapping = Mapping.ofStringPairs ["b","b2";"h","h"]
         
     let result_of_fruitful_stencil_application =
         built.Figure.simple
@@ -33,10 +33,10 @@ module ``application of stencils``=
             example.Stencil.a_fitting_stencil
             example.Figure.a_high_level_relatively_simple_figure
             initial_useless_mapping
-            "f"
+            (Vertex_id "f", Figure_id "f")
         |> should equal
             [
-                Mapping [
+                Mapping.ofStringPairs [
                     "b","b2";
                     "h","h";
                     "f","f1"
@@ -49,7 +49,7 @@ module ``application of stencils``=
             example.Stencil.a_fitting_stencil
             example.Figure.a_high_level_relatively_simple_figure
             initial_mapping_without_prolongation
-            "f"
+            (Vertex_id "f", Figure_id "f")
         |> should equal
             []
                 
@@ -59,7 +59,7 @@ module ``application of stencils``=
         prolongate_mapping 
             example.Stencil.a_fitting_stencil
             example.Figure.a_high_level_relatively_simple_figure
-            ["f"]
+            [(Vertex_id "f", Figure_id "f")]
             initial_mapping_without_prolongation
         |> should equal
             []
@@ -69,11 +69,11 @@ module ``application of stencils``=
         prolongate_mapping 
             example.Stencil.a_fitting_stencil
             example.Figure.a_high_level_relatively_simple_figure
-            ["f"]
+            [(Vertex_id "f", Figure_id "f")]
             initial_useless_mapping
         |> should equal
             [
-                Mapping [
+                Mapping.ofStringPairs [
                     "b","b2";
                     "h","h";
                     "f","f1"
@@ -91,12 +91,12 @@ module ``application of stencils``=
                 |> Set.ofSeq
         let expected =
             (Set.ofSeq [
-                Mapping [
+                Mapping.ofStringPairs [
                     "b","b0";
                     "h","h";
                     "f","f1"
                 ];
-                Mapping [
+                Mapping.ofStringPairs [
                     "b","b2";
                     "h","h";
                     "f","f1"
@@ -132,6 +132,7 @@ module ``application of stencils``=
             |>Set.ofSeq
             |>should equal (
                 ["N";",#1";",#2";";"]
+                |>Seq.map Vertex_id
                 |>Set.ofSeq
             )
         )
@@ -202,26 +203,26 @@ module ``application of stencils``=
                 figure
         )
         |> should equal
-            [   Mapping ["b","b0";"h","h"];
-                Mapping ["b","b1";"h","h"];
-                Mapping ["b","b2";"h","h"]
+            [   Mapping.ofStringPairs ["b","b0";"h","h"];
+                Mapping.ofStringPairs ["b","b1";"h","h"];
+                Mapping.ofStringPairs ["b","b2";"h","h"]
             ]
         
     [<Fact>]
     let ``finding following subfigures referencing a specific figure``()=
         (Figure.subfigures_after_other_subfigures
             example.Figure.a_high_level_relatively_simple_figure
-            "f"
-            ["b0"]
+            (Figure_id "f")
+            [Vertex_id "b0"]
         )|> should equal
-            ["f0";"f1"]
+            [Vertex_id "f0";Vertex_id "f1"]
 
         (Figure.subfigures_after_other_subfigures
             example.Figure.a_high_level_relatively_simple_figure
-            "f"
-            ["d";"b2"]
+            (Figure_id "f")
+            [Vertex_id "d";Vertex_id "b2"]
         )|> should equal
-            ["f1"]
+            [Vertex_id "f1"]
     
     [<Fact>]
     let ``complete mapping of stencil onto target can be produced``()=
@@ -231,12 +232,12 @@ module ``application of stencils``=
         (map_stencil_onto_target stencil figure)
         |> should equal
             [
-                Mapping [
+                Mapping.ofStringPairs [
                     "b","b0";
                     "h","h";
                     "f","f1"; 
                 ];
-                Mapping [
+                Mapping.ofStringPairs [
                     "b","b2";
                     "h","h";
                     "f","f1";

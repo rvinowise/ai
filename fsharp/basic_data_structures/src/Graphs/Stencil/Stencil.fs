@@ -19,7 +19,7 @@ module Stencil=
         |>Dictionary.some_value stencil.nodes
         |>function
         |None -> false
-        |Some node -> node=Stencil_node.Stencil_output
+        |Some node -> node=Stencil_output
 
     let is_subfigure stencil vertex =
         vertex
@@ -28,9 +28,22 @@ module Stencil=
 
     
 
-    let only_subfigures stencil vertices=
+    let only_subfigures stencil vertices =
         vertices
         |>Seq.filter (is_subfigure stencil)
+
+    let only_subfigures_with_figures stencil vertices =
+        vertices
+        |>Seq.choose (fun vertex->
+            vertex
+            |>Dictionary.some_value stencil.nodes
+            |>function
+            |None -> None
+            |Some node ->
+                match node with
+                |Lower_figure figure->Some (vertex,figure)
+                |Stencil_output _ -> None
+        )
 
     let next_vertices vertices (stencil: Stencil)=
         vertices
