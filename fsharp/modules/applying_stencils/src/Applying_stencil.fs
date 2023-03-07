@@ -212,7 +212,7 @@ module Applying_stencil =
             |>Stencil.next_vertices last_mapped_vertices
         
 
-        let (mappings:Mapping seq) =
+        let mappings =
             let next_subfigures_to_map =
                 next_vertices_to_map
                 |>Stencil.only_subfigures_with_figures stencil
