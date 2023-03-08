@@ -169,7 +169,7 @@ module Applying_stencil =
             copy_of_mapping_with_prolongation mapping stencil_subfigure
         )
 
-    let prolongate_mapping_with_subfigure
+    let mappings_of_next_subfigure
         stencil
         target
         mapping  
@@ -187,21 +187,72 @@ module Applying_stencil =
             mapping
             prolongating_vertex
 
-    let prolongate_mapping 
+    let all_combinations_of_next_mappings mappings =
+        ()
+
+    let prolongate_mapping_with_next_mapped_subfigures 
+        (base_mapping: Mapping)
+        (added_mappings: seq<Map<Vertex_id, Vertex_id>>)
+        =
+        added_mappings
+        |>Seq.map
+
+    let all_next_subfigures_are_mapped
+        subfigures_to_map 
+        mapped_subfigures
+        =
+
+    let find_possible_next_mappings
         stencil
         target
-        (next_subfigures_to_map: seq<Vertex_id*Figure_id>)
+        next_subfigures_to_map
         mapping
         =
+        let rec mappings_of_next_subfigure
+            (stencil:Stencil)
+            (target:Figure)
+            (next_subfigures_to_map:  seq<Vertex_id*Figure_id>)
+            (mapping:Mapping)
+            (found_next_mappings: Map<Vertex_id, seq<Vertex_id>>)
+            =()
+        
+        mappings_of_next_subfigure
+            stencil
+            target
+            next_subfigures_to_map
+            mapping
+            Map.empty
+
         next_subfigures_to_map
-        |>Seq.collect (
-            prolongate_mapping_with_subfigure
+        |>Seq.map (
+            mappings_of_next_subfigure
                 stencil
                 target
                 mapping
         )
 
-    let rec prolongate_mappings 
+    let prolongate_one_mapping_with_next_subfigures 
+        stencil
+        target
+        (next_subfigures_to_map: seq<Vertex_id*Figure_id>)
+        mapping
+        =
+        let possible_next_mappings =
+            find_possible_next_mappings
+                stencil
+                target
+                next_subfigures_to_map
+                mapping
+
+        match possible_next_mappings with
+        |Some next_mappings ->
+            possible_next_mappings
+            |>all_combinations_of_next_mappings
+            |>prolongate_mapping_with_next_mapped_subfigures mapping
+        |None
+            []
+
+    let rec prolongate_all_mappings 
         stencil
         target 
         (last_mapped_vertices: Vertex_id seq )
@@ -221,13 +272,13 @@ module Applying_stencil =
             |_->
                 mappings
                 |>Seq.collect 
-                    (prolongate_mapping stencil target next_subfigures_to_map)
+                    (prolongate_one_mapping_with_next_subfigures stencil target next_subfigures_to_map)
         
         match next_vertices_to_map with
         | Seq [] -> 
             mappings
         | _ ->
-            prolongate_mappings
+            prolongate_all_mappings
                 stencil 
                 target 
                 next_vertices_to_map
@@ -241,7 +292,7 @@ module Applying_stencil =
         =
         target
         |>map_first_nodes stencil
-        |>prolongate_mappings
+        |>prolongate_all_mappings
             stencil 
             target
             (Stencil.first_subfigures stencil)

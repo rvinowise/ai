@@ -29,7 +29,7 @@ module ``application of stencils``=
         
     [<Fact>]
     let ``normal case``()=    
-        prolongate_mapping_with_subfigure
+        mappings_of_next_subfigure
             example.Stencil.a_fitting_stencil
             example.Figure.a_high_level_relatively_simple_figure
             initial_useless_mapping
@@ -45,7 +45,7 @@ module ``application of stencils``=
             
     [<Fact>]
     let``empty sequence is returned, if a mapping can't be prolongated by this subfigure``()=    
-        prolongate_mapping_with_subfigure
+        mappings_of_next_subfigure
             example.Stencil.a_fitting_stencil
             example.Figure.a_high_level_relatively_simple_figure
             initial_mapping_without_prolongation
@@ -56,7 +56,7 @@ module ``application of stencils``=
 
     [<Fact>]
     let ``impossible to prolongate, because of no matching following subfigures``()=
-        prolongate_mapping 
+        prolongate_one_mapping_with_next_subfigures 
             example.Stencil.a_fitting_stencil
             example.Figure.a_high_level_relatively_simple_figure
             [(Vertex_id "f", Figure_id "f")]
@@ -66,7 +66,7 @@ module ``application of stencils``=
     
     [<Fact>]
     let``prolongation with a single following node``()=
-        prolongate_mapping 
+        prolongate_one_mapping_with_next_subfigures 
             example.Stencil.a_fitting_stencil
             example.Figure.a_high_level_relatively_simple_figure
             [(Vertex_id "f", Figure_id "f")]
