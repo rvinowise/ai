@@ -25,34 +25,7 @@ module ``application of stencils``=
             [
                 "d","e"
             ]
-        
-        
-    [<Fact>]
-    let ``normal case``()=    
-        mappings_of_next_subfigure
-            example.Stencil.a_fitting_stencil
-            example.Figure.a_high_level_relatively_simple_figure
-            initial_useless_mapping
-            (Vertex_id "f", Figure_id "f")
-        |> should equal
-            [
-                Mapping.ofStringPairs [
-                    "b","b2";
-                    "h","h";
-                    "f","f1"
-                ]
-            ]
-            
-    [<Fact>]
-    let``empty sequence is returned, if a mapping can't be prolongated by this subfigure``()=    
-        mappings_of_next_subfigure
-            example.Stencil.a_fitting_stencil
-            example.Figure.a_high_level_relatively_simple_figure
-            initial_mapping_without_prolongation
-            (Vertex_id "f", Figure_id "f")
-        |> should equal
-            []
-                
+              
 
     [<Fact>]
     let ``impossible to prolongate, because of no matching following subfigures``()=

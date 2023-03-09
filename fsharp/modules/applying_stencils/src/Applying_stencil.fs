@@ -194,8 +194,7 @@ module Applying_stencil =
         (base_mapping: Mapping)
         (added_mappings: seq<Map<Vertex_id, Vertex_id>>)
         =
-        added_mappings
-        |>Seq.map
+        []
 
 
     let find_possible_next_mappings
@@ -245,10 +244,10 @@ module Applying_stencil =
             Map.empty
 
     let prolongate_one_mapping_with_next_subfigures 
-        stencil
-        target
+        (stencil:Stencil)
+        (target:Figure)
         (next_subfigures_to_map: seq<Vertex_id*Figure_id>)
-        mapping
+        (mapping:Mapping)
         =
         let possible_next_mappings =
             find_possible_next_mappings
@@ -258,15 +257,16 @@ module Applying_stencil =
                 (List.ofSeq next_subfigures_to_map)
 
         if possible_next_mappings.IsEmpty then
-            []
+            mapping
         else
             possible_next_mappings
             |>all_combinations_of_next_mappings
-            |>prolongate_mapping_with_next_mapped_subfigures mapping
+            //|>prolongate_mapping_with_next_mapped_subfigures mapping
+            mapping
 
     let rec prolongate_all_mappings 
-        stencil
-        target 
+        (stencil:Stencil)
+        (target:Figure)
         (last_mapped_vertices: Vertex_id seq )
         (mappings: Mapping seq)
         =
