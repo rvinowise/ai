@@ -169,7 +169,8 @@ module Applying_stencil =
             copy_of_mapping_with_prolongation mapping stencil_subfigure
         )
 
-    let mappings_of_next_subfigure
+    
+    let all_possible_mappings_of_one_next_subfigure
         stencil
         target
         mapping  
@@ -183,11 +184,10 @@ module Applying_stencil =
         |>Figure.subfigures_after_other_subfigures
             target
             prolongating_figure
-        |>mapping_prolongated_by_subfigures
-            mapping
-            prolongating_vertex
 
-    let all_combinations_of_next_mappings mappings =
+    let all_combinations_of_next_mappings 
+        (mappings: Map<Vertex_id, seq<Vertex_id>>) 
+        =
         ()
 
     let prolongate_mapping_with_next_mapped_subfigures 
@@ -197,39 +197,52 @@ module Applying_stencil =
         added_mappings
         |>Seq.map
 
-    let all_next_subfigures_are_mapped
-        subfigures_to_map 
-        mapped_subfigures
-        =
 
     let find_possible_next_mappings
         stencil
         target
+        base_mapping
         next_subfigures_to_map
-        mapping
         =
         let rec mappings_of_next_subfigure
             (stencil:Stencil)
             (target:Figure)
-            (next_subfigures_to_map:  seq<Vertex_id*Figure_id>)
             (mapping:Mapping)
+            (left_subfigures_to_map:  list<Vertex_id*Figure_id>)
             (found_next_mappings: Map<Vertex_id, seq<Vertex_id>>)
-            =()
+            =
+
+            match left_subfigures_to_map with
+            | [] -> found_next_mappings
+            | current_subfigure_to_map::left_subfigures_to_map ->
+                let mappings = 
+                    all_possible_mappings_of_one_next_subfigure
+                        stencil
+                        target
+                        base_mapping
+                        current_subfigure_to_map
+                        
+                if mappings.Count = 0 then 
+                    //if at least one vertex can't be mapped -- 
+                    //the whole mapping should be discarded
+                    Map.empty
+                else
+                    let updated_mappings =
+                        found_next_mappings
+                        |>Map.add (fst current_subfigure_to_map) mappings
+                    mappings_of_next_subfigure
+                        stencil
+                        target
+                        mapping
+                        left_subfigures_to_map
+                        updated_mappings
         
         mappings_of_next_subfigure
             stencil
             target
+            base_mapping
             next_subfigures_to_map
-            mapping
             Map.empty
-
-        next_subfigures_to_map
-        |>Seq.map (
-            mappings_of_next_subfigure
-                stencil
-                target
-                mapping
-        )
 
     let prolongate_one_mapping_with_next_subfigures 
         stencil
@@ -241,16 +254,15 @@ module Applying_stencil =
             find_possible_next_mappings
                 stencil
                 target
-                next_subfigures_to_map
                 mapping
+                (List.ofSeq next_subfigures_to_map)
 
-        match possible_next_mappings with
-        |Some next_mappings ->
+        if possible_next_mappings.IsEmpty then
+            []
+        else
             possible_next_mappings
             |>all_combinations_of_next_mappings
             |>prolongate_mapping_with_next_mapped_subfigures mapping
-        |None
-            []
 
     let rec prolongate_all_mappings 
         stencil
