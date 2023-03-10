@@ -12,11 +12,7 @@ namespace rvinowise.ai.mapping_stencils {
     (with Reset and MoveNext methods) 
     */
 
-public class Generator_of_order_sequences_integer: Generator_of_order_sequences<int[]> {
-    public void add_order(Generator_of_mappings in_order) {
-        base.add_order(in_order);
-    }
-}
+
 public class Generator_of_order_sequences<T>:
     IEnumerable<T[]>
 {
