@@ -8,19 +8,60 @@ namespace rvinowise.ai
     
 
 
-    type Generator_of_mappings_enumerator<'Mapped, 'Target> when 'Mapped: comparison
-        (targets: Map<'Mapped, seq<'Target>>) 
+    type Generator_of_mappings_enumerator<'Mapped, 'Target> when 
+        'Mapped: comparison and 
+        'Target: equality and 'Target: comparison
+        (available_targets: Map<'Mapped, array<'Target>>) 
         =
-        
+        // let occupied_targets = 
+        //     available_targets
+        //     |>Seq.collect (fun pair->
+        //         pair.Value
+        //     )
+        //     |>Seq.distinct
+        //     |>Seq.map (fun target -> (target,false))
+        //     |>Map.ofSeq
+
+        let mutable occupied_targets = Set.empty
+
+        let first_free_target 
+            (possible_targets: 'Target list)
+            =
+            let try_next_target 
+                (possible_targets: 'Target list) 
+                =
+                match possible_targets with
+                |this_target::left_targets ->
+                    match occupied_targets|>Set.exists target with
+                    |false -> this_target
+                    |true -> try_next_target left_targets
+                | [] -> 
+                
+            try_next_target possible_targets
+                
+
+
+        let mutable current_combination:list<'Mapped*'Target> = 
+            available_targets
+            |>Seq.map (fun pair->
+                let mapped = pair.Key
+                let possible_targets = pair.Value
+                (
+                    mapped,
+                    (first_free_target possible_targets)
+                )
+            )
+            
+
         interface IEnumerator<seq<'Mapped*'Target>> with
             member this.Dispose() =()
-            
+        
             member this.Current: seq<'Mapped*'Target> =
-                []
+                current_combination
 
         interface IEnumerator with
             member this.MoveNext():bool = 
-                false
+                current_combination
             
             member this.Reset() =()
             
@@ -29,7 +70,9 @@ namespace rvinowise.ai
             )
 
 
-    type Generator_of_mappings<'Mapped, 'Target> when 'Mapped: comparison 
+    type Generator_of_mappings<'Mapped, 'Target> when 
+        'Mapped: comparison and
+        'Target: comparison
         (targets: Map<'Mapped, seq<'Target>> ) 
         =
         interface IEnumerable< seq<'Mapped*'Target> > with
