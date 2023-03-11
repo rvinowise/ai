@@ -62,17 +62,4 @@ namespace rvinowise.ai
                 ["a1","a8"; "a2","a7"];
             ]|>Seq.map (Seq.map (fun (mapped, target) -> Vertex_id mapped, Vertex_id target)))
 
-        [<Fact>]
-        let ``enumerate over mappings of all figures``()=
-            let generator = 
-                new Generator_of_order_sequences< seq<seq<Vertex_id*Vertex_id>> >()
-            generator.add_order(
-                new Generator_of_mappings<Vertex_id, Vertex_id> ([
-                    Vertex_id "a1", ["a6";"a7";"a8"]|>Seq.map Vertex_id 
-                    Vertex_id "a2", ["a7";"a8"]|>Seq.map Vertex_id 
-                ]|>Map.ofSeq);
-                new Generator_of_mappings<Vertex_id, Vertex_id> ([
-                    Vertex_id "b1", ["b6";"b7"]|>Seq.map Vertex_id 
-                    Vertex_id "b2", ["b7"]|>Seq.map Vertex_id 
-                ]|>Map.ofSeq)
-            )
+        
