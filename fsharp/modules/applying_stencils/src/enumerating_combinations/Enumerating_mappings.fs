@@ -8,55 +8,66 @@ namespace rvinowise.ai
     
 
 
-    type Generator_of_mappings_enumerator<'Mapped, 'Target> when 
-        'Mapped: comparison and 
+    type Generator_of_mappings_enumerator<'Element, 'Target> when 
+        'Element: comparison and 
         'Target: equality and 'Target: comparison
-        (available_targets: Map<'Mapped, array<'Target>>) 
+        (elements_to_targets: Map<'Element, list<'Target>>) 
         =
-        // let occupied_targets = 
-        //     available_targets
-        //     |>Seq.collect (fun pair->
-        //         pair.Value
-        //     )
-        //     |>Seq.distinct
-        //     |>Seq.map (fun target -> (target,false))
-        //     |>Map.ofSeq
 
         let mutable occupied_targets = Set.empty
 
-        let first_free_target 
+        
+        let rec occupy_next_free_target 
+            (occupied_targets: Set<'Target>) 
             (possible_targets: 'Target list)
             =
-            let try_next_target 
-                (possible_targets: 'Target list) 
+            match possible_targets with
+            |this_target::left_targets ->
+                match occupied_targets|>Set.contains this_target with
+                |false -> 
+                    Some this_target, 
+                    occupied_targets|>Set.add this_target
+                |true -> occupy_next_free_target occupied_targets left_targets 
+            | [] -> None, occupied_targets
+
+        
+        let mutable current_combination:list<'Element*'Target> = 
+            
+            let rec map_next_element 
+                (occupied_targets: Set<'Target>) 
+                (elements_to_targets_left: ('Element*'Target list) list)
+                (mapped_elements: ('Element*'Target) list)
                 =
-                match possible_targets with
-                |this_target::left_targets ->
-                    match occupied_targets|>Set.exists target with
-                    |false -> this_target
-                    |true -> try_next_target left_targets
-                | [] -> 
-                
-            try_next_target possible_targets
-                
+                match elements_to_targets_left with
+                |[]->mapped_elements
+                |(element, possible_targets)::rest_elements_to_map ->
+                    let target,occupied_targets =
+                        occupy_next_free_target
+                            occupied_targets
+                            possible_targets
 
+                    match target with
+                    |None -> []
+                    |Some target ->
+                        map_next_element
+                            occupied_targets
+                            rest_elements_to_map
+                            ((element,target)::mapped_elements)
 
-        let mutable current_combination:list<'Mapped*'Target> = 
-            available_targets
-            |>Seq.map (fun pair->
-                let mapped = pair.Key
-                let possible_targets = pair.Value
+            map_next_element
+                Set.empty
                 (
-                    mapped,
-                    (first_free_target possible_targets)
+                    elements_to_targets
+                    |>Seq.map (fun pair->pair.Key, pair.Value)
+                    |>List.ofSeq
                 )
-            )
+                []
             
 
-        interface IEnumerator<seq<'Mapped*'Target>> with
+        interface IEnumerator<seq<'Element*'Target>> with
             member this.Dispose() =()
         
-            member this.Current: seq<'Mapped*'Target> =
+            member this.Current: seq<'Element*'Target> =
                 current_combination
 
         interface IEnumerator with
@@ -66,7 +77,7 @@ namespace rvinowise.ai
             member this.Reset() =()
             
             member this.Current: obj = box (
-                (this:>IEnumerator<seq<'Mapped*'Target>>).Current
+                (this:>IEnumerator<seq<'Element*'Target>>).Current
             )
 
 
