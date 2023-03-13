@@ -14,7 +14,7 @@ namespace rvinowise.ai
         (elements_to_targets: Map<'Element, list<'Target>>) 
         =
 
-        let mutable occupied_targets = Set.empty
+        
 
         let rec occupy_next_free_target 
             (occupied_targets: Set<'Target>) 
@@ -30,11 +30,11 @@ namespace rvinowise.ai
             | None -> [], occupied_targets
 
         (* the head of the Value is the currently mapped target, and the tail is the next possible targets *)
-        let mutable current_state:Map<'Element, list<'Target>> = 
+        let mutable current_combination: list<'Element*list<'Target>> = 
             let rec map_next_element 
                 (occupied_targets: Set<'Target>) 
                 (elements_to_targets_left: ('Element*'Target list) list)
-                (mapped_elements: Map<'Element, list<'Target>>)
+                (mapped_elements: list<'Element*list<'Target>>)
                 =
                 match elements_to_targets_left with
                 |[]->mapped_elements
@@ -45,12 +45,12 @@ namespace rvinowise.ai
                             possible_targets
 
                     match targets with
-                    |[] -> Map.empty
+                    |[] -> []
                     |targets ->
                         map_next_element
                             occupied_targets
                             rest_elements_to_map
-                            (mapped_elements|>Map.add element targets)
+                            ((element, targets)::mapped_elements )
 
             map_next_element
                 Set.empty
@@ -59,22 +59,26 @@ namespace rvinowise.ai
                     |>Seq.map (fun pair->pair.Key, pair.Value)
                     |>List.ofSeq
                 )
-                Map.empty
+                []
 
-        let next_state 
+        let next_combination 
             (occupied_targets: Set<'Target>) 
-            (state:list<'Element* list<'Target>>)
+            (base_combination:list<'Element* list<'Target>>)
             =
-            let shift_orders_forward 
+            let rec shift_orders_forward 
                 (occupied_targets: Set<'Target>) 
                 (next_orders: list<'Element* list<'Target>>)
-                (shifted_orders: list<'Element* list<'Target>>)
+                (reset_orders: list<'Element* list<'Target>>)
                 =
                 match next_orders with
-                |[] ->shifted_orders
+                |[] ->occupied_targets, []
                 |this_order::orders_left ->
 
                     let element = fst this_order
+                    let current_occupied_target = 
+                        this_order
+                        |>snd
+                        |>List.head
                     let next_possible_targets = 
                         this_order
                         |>snd
@@ -85,34 +89,45 @@ namespace rvinowise.ai
                             next_possible_targets
                     match updated_targets with
                     |[]->
+                        let all_possible_targets = elements_to_targets[element]
                         shift_orders_forward
+                            (occupied_targets|>Set.remove current_occupied_target)
+                            orders_left
+                            ((element, all_possible_targets)::reset_orders)
 
                     |found_targets -> 
-                        shifted_orders @ (element, found_targets)::orders_left
+                        occupied_targets,
+                        (reset_orders|>List.rev) @ (element, found_targets)::orders_left
 
             shift_orders_forward
                 occupied_targets
-                state
+                base_combination
                 []
 
-        let combination_from_state (state: Map<'Element, list<'Target>>)
+        let simplified_combination (combination: list<'Element*list<'Target>>)
             =
-            state
-            |>Seq.map (fun pair ->
-                pair.Key,
-                pair.Value|>Seq.head
+            combination
+            |>Seq.map (fun (element, targets) ->
+                element,
+                targets|>Seq.head
             )
             
+        let mutable occupied_targets = Set.empty
 
         interface IEnumerator<seq<'Element*'Target>> with
             member this.Dispose() =()
         
             member this.Current: seq<'Element*'Target> =
-                combination_from_state current_state
+                simplified_combination current_combination
 
         interface IEnumerator with
             member this.MoveNext():bool = 
-                current_state <- next_state current_state
+                (occupied_targets, current_combination) <- 
+                    next_combination occupied_targets current_combination
+                if current_combination=[] then
+                    false
+                else
+                    true
             
             member this.Reset() =()
             
