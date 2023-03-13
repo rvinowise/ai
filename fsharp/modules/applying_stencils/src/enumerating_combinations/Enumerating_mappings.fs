@@ -29,15 +29,16 @@ namespace rvinowise.ai
                 |true -> occupy_next_free_target occupied_targets (possible_targets|>List.tail) 
             | None -> [], occupied_targets
 
-        (* the head of the Value is the currently mapped target, and the tail is the next possible targets *)
-        let mutable current_combination: list<'Element*list<'Target>> = 
+        let first_combination ()
+            //(elements_to_targets: Map<'Element, list<'Target>>)
+            =
             let rec map_next_element 
                 (occupied_targets: Set<'Target>) 
                 (elements_to_targets_left: ('Element*'Target list) list)
                 (mapped_elements: list<'Element*list<'Target>>)
                 =
                 match elements_to_targets_left with
-                |[]->mapped_elements
+                |[]->occupied_targets, mapped_elements
                 |(element, possible_targets)::rest_elements_to_map ->
                     let targets,occupied_targets =
                         occupy_next_free_target
@@ -45,7 +46,7 @@ namespace rvinowise.ai
                             possible_targets
 
                     match targets with
-                    |[] -> []
+                    |[] -> occupied_targets, []
                     |targets ->
                         map_next_element
                             occupied_targets
@@ -60,6 +61,10 @@ namespace rvinowise.ai
                     |>List.ofSeq
                 )
                 []
+        
+        (* the head of the Value is the currently mapped target, and the tail is the next possible targets *)
+        let mutable current_combination: list<'Element*list<'Target>> = []
+            
 
         let next_combination 
             (occupied_targets: Set<'Target>) 
@@ -122,8 +127,14 @@ namespace rvinowise.ai
 
         interface IEnumerator with
             member this.MoveNext():bool = 
-                (occupied_targets, current_combination) <- 
-                    next_combination occupied_targets current_combination
+                let (new_occupied_targets, new_current_combination) =
+                    match current_combination with
+                    |[]->
+                        first_combination()
+                    |_->
+                        next_combination occupied_targets current_combination
+                occupied_targets <- new_occupied_targets
+                current_combination <- new_current_combination
                 if current_combination=[] then
                     false
                 else
@@ -139,7 +150,7 @@ namespace rvinowise.ai
     type Generator_of_mappings<'Mapped, 'Target> when 
         'Mapped: comparison and
         'Target: comparison
-        (targets: Map<'Mapped, seq<'Target>> ) 
+        (targets: Map<'Mapped, list<'Target>> ) 
         =
         interface IEnumerable< seq<'Mapped*'Target> > with
             member this.GetEnumerator () =
@@ -160,9 +171,12 @@ namespace rvinowise.ai
         let ``enumerate over mappings of one figure``()=
             let generator = 
                 new Generator_of_mappings<Vertex_id, Vertex_id> ([
-                    Vertex_id "a1", ["a6";"a7";"a8"]|>Seq.map Vertex_id 
-                    Vertex_id "a2", ["a7";"a8"]|>Seq.map Vertex_id 
+                    Vertex_id "a1", ["a6";"a7";"a8"]|>List.map Vertex_id 
+                    Vertex_id "a2", ["a7";"a8"]|>List.map Vertex_id 
                 ]|>Map.ofSeq)
+            
+            generator
+            |>Seq.iter ignore
             
             generator
             |>should equal ([
