@@ -25,7 +25,8 @@ namespace rvinowise.ai
                 match occupied_targets|>Set.contains this_target with
                 |false -> 
                     possible_targets, 
-                    occupied_targets|>Set.add this_target
+                    occupied_targets
+                    |>Set.add this_target
                 |true -> occupy_next_free_target occupied_targets (possible_targets|>List.tail) 
             | None -> [], occupied_targets
 
@@ -88,15 +89,17 @@ namespace rvinowise.ai
                         this_order
                         |>snd
                         |>List.tail
+                    let occupied_targets_wihout_current =
+                        (occupied_targets|>Set.remove current_occupied_target)
                     let updated_targets, occupied_targets = 
                         occupy_next_free_target
-                            occupied_targets
+                            occupied_targets_wihout_current
                             next_possible_targets
                     match updated_targets with
                     |[]->
                         let all_possible_targets = elements_to_targets[element]
                         shift_orders_forward
-                            (occupied_targets|>Set.remove current_occupied_target)
+                            occupied_targets_wihout_current
                             orders_left
                             ((element, all_possible_targets)::reset_orders)
 
@@ -170,7 +173,7 @@ namespace rvinowise.ai
         [<Fact>]
         let ``enumerate over mappings of one figure``()=
             let generator = 
-                new Generator_of_mappings<Vertex_id, Vertex_id> ([
+                Generator_of_mappings<Vertex_id, Vertex_id> ([
                     Vertex_id "a1", ["a6";"a7";"a8"]|>List.map Vertex_id 
                     Vertex_id "a2", ["a7";"a8"]|>List.map Vertex_id 
                 ]|>Map.ofSeq)
