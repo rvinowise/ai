@@ -29,6 +29,20 @@ namespace rvinowise.ai
                     |>Set.add this_target
                 |true -> occupy_next_free_target occupied_targets (possible_targets|>List.tail) 
             | None -> [], occupied_targets
+            
+        let rec occupy_first_free_target
+            (occupied_targets: Set<'Target>) 
+            (possible_targets: 'Target list)
+            =
+            match possible_targets|>List.tryHead with
+            |Some this_target ->
+                match occupied_targets|>Set.contains this_target with
+                |false -> 
+                    possible_targets, 
+                    occupied_targets
+                    |>Set.add this_target
+                |true -> occupy_next_free_target occupied_targets (possible_targets|>List.tail) 
+            | None -> [], occupied_targets
 
         let first_combination ()
             //(elements_to_targets: Map<'Element, list<'Target>>)
@@ -98,10 +112,15 @@ namespace rvinowise.ai
                     match updated_targets with
                     |[]->
                         let all_possible_targets = elements_to_targets[element]
+                        let updated_targets, occupied_targets = 
+                            occupy_next_free_target
+                                occupied_targets_wihout_current
+                                all_possible_targets
+                       
                         shift_orders_forward
                             occupied_targets_wihout_current
                             orders_left
-                            ((element, all_possible_targets)::reset_orders)
+                            ((element, updated_targets)::reset_orders)
 
                     |found_targets -> 
                         occupied_targets,
@@ -145,9 +164,7 @@ namespace rvinowise.ai
             
             member this.Reset() =()
             
-            member this.Current: obj = box (
-                (this:>IEnumerator<seq<'Element*'Target>>).Current
-            )
+            member this.Current: obj = box (this:>IEnumerator<seq<'Element*'Target>>).Current
 
 
     type Generator_of_mappings<'Mapped, 'Target> when 
