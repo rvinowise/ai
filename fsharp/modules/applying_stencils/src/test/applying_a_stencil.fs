@@ -145,7 +145,7 @@ module ``application of stencils``=
     [<Fact>]
     let ``generator of initial mappings returns combinations``()=
         
-        let generator = Generator_of_order_sequences<int[]>()
+        let generator = Generator_of_orders<int[]>()
     
         generator.add_order(Generator_of_mappings(1, 3))
         let enumerator = generator.GetEnumerator()

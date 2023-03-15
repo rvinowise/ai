@@ -27,7 +27,7 @@ public partial class regular_loop_over_combinations_can_be_done {
 }
 
 [TestFixture]
-public class not_enough_occurances_of_figure {
+public class not_enough_occurences_of_figure {
     private const int taken_amount = 6;
     private const int available_amount = 2;
     
@@ -40,8 +40,25 @@ public class not_enough_occurances_of_figure {
         );
         //Assert.IsEmpty(generator);
     }
+}
 
 
+[TestFixture]
+public partial class different_amounts_of_possible_targets_for_elements {
+    private const int taken_amount = 3;
+    private const int available_amount = 5;
+    
+    [Test]
+    public void all_combinations_are_provided_in_a_loop() {
+        Generator_of_mappings generator = new Generator_of_mappings(
+            taken_amount, available_amount 
+        );
+        int i_combination = 0;
+        foreach (int[] combination in generator) {
+            
+        }
+
+    }
 }
 
 

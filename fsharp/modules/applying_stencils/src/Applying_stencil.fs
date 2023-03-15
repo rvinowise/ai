@@ -75,7 +75,7 @@ module Applying_stencil =
         subfigures_in_stencil
         subfigures_in_target
         =
-        let generator = Generator_of_order_sequences<int[]>()
+        let generator = Generator_of_orders<int[]>()
         
         (input_for_first_mappings_permutators subfigures_in_stencil subfigures_in_target)
         |>Seq.map Generator_of_mappings

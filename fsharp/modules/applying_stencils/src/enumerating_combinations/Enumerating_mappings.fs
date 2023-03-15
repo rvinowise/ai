@@ -14,8 +14,6 @@ namespace rvinowise.ai
         (elements_to_targets: Map<'Element, list<'Target>>) 
         =
 
-        
-
         let rec occupy_next_free_target 
             (occupied_targets: Set<'Target>) 
             (possible_targets: 'Target list)
@@ -45,7 +43,6 @@ namespace rvinowise.ai
             | None -> [], occupied_targets
 
         let first_combination ()
-            //(elements_to_targets: Map<'Element, list<'Target>>)
             =
             let rec map_next_element 
                 (occupied_targets: Set<'Target>) 
@@ -61,8 +58,8 @@ namespace rvinowise.ai
                             possible_targets
 
                     match targets with
-                    |[] -> occupied_targets, []
-                    |targets ->
+                    |[] -> occupied_targets, [] //impossible to map every element -- return empty list
+                    |_ ->
                         map_next_element
                             occupied_targets
                             rest_elements_to_map
@@ -149,7 +146,10 @@ namespace rvinowise.ai
 
         interface IEnumerator with
             member this.MoveNext():bool = 
-                let (new_occupied_targets, new_current_combination) =
+                let (
+                        new_occupied_targets, 
+                        new_current_combination
+                    ) =
                     match current_combination with
                     |[]->
                         first_combination()

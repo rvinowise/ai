@@ -10,19 +10,19 @@ namespace rvinowise.ai.mapping_stencils {
 public class Generator_of_mappings:
     IEnumerable<int[]> {
     
-    public readonly int taken_amount;
-    public readonly int available_amount;
+    public readonly int elements_number;
+    public readonly int targets_number;
 
     public Generator_of_mappings(
-        int taken_amount,
-        int available_amount
+        int elements_number,
+        int targets_number
     ) {
         contracts.Contract.Requires<ArgumentException>(
-            taken_amount <= available_amount,
+            elements_number <= targets_number,
             "impossible to provide any combinations with so few figure occurences"
         );
-        this.taken_amount = taken_amount;
-        this.available_amount = available_amount;
+        this.elements_number = elements_number;
+        this.targets_number = targets_number;
 
     }
 
@@ -47,19 +47,14 @@ public class Generator_of_mappings_enumerator : IEnumerator<int[]>
     private readonly int[] combination;
     private readonly ISet<int> unassigned_orders = new SortedSet<int>();
 
-    private readonly Generator_of_mappings generator;
-    private int available_amount => generator.available_amount;
-
-    private int get_needed_amount() {
-        return combination.Length;
+    private int targets_number;
+    private int elements_number {
+        get => combination.Length;
     }
-    
-
-    
 
     public Generator_of_mappings_enumerator(Generator_of_mappings generator) {
-        this.generator = generator;
-        combination = new int[generator.taken_amount];
+        combination = new int[generator.elements_number];
+        targets_number = generator.targets_number;
         Reset();
     }
 
@@ -68,7 +63,7 @@ public class Generator_of_mappings_enumerator : IEnumerator<int[]>
     public bool MoveNext()
     {
         int i_order = 0;
-        while (!has_next_free_occurances(i_order)) 
+        while (!has_next_free_targets(i_order)) 
         {
             if (its_last_order(i_order)) {
                 return false;
@@ -105,7 +100,7 @@ public class Generator_of_mappings_enumerator : IEnumerator<int[]>
 
     private void set_to_first() {
         var occurences = Enumerable.Range(
-            0, get_needed_amount()
+            0, elements_number
         ).Reverse().ToArray();
         occupy_occurences_with_all_orders(occurences);
     }
@@ -113,48 +108,48 @@ public class Generator_of_mappings_enumerator : IEnumerator<int[]>
 
     private void occupy_occurences_with_all_orders(int[] occurences) {
         //contracts.Contract.Requires(occurences.Length == get_needed_amount());
-        for (int order=0; order<get_needed_amount(); order++) {
+        for (int order=0; order<elements_number; order++) {
             occupy_occurence_with_order(order, occurences[order]);
         }
     }
     
     
     
-    private bool has_next_free_occurances(int order) {
-        int current_occurance_occupied_by_order = combination[order];
-        if (current_occurance_occupied_by_order == -1) {
-            return true; // only one occurance is needed - nothing else is occupied
+    private bool has_next_free_targets(int order) {
+        int current_target_occupied_by_order = combination[order];
+        if (current_target_occupied_by_order == -1) {
+            return true; // only one occurence is needed - nothing else is occupied
         }
-        int next_free_occurance = get_next_free_occurance(
-            current_occurance_occupied_by_order
+        int next_free_occurence = get_next_free_occurence(
+            current_target_occupied_by_order
         );
-        return next_free_occurance >= 0;
+        return next_free_occurence >= 0;
     }
 
-    private int get_next_free_occurance(int previous_occurance) {
-        bool[] free_occurances = get_free_occurances();
-        for (int i=previous_occurance+1; i< free_occurances.Length; i++) {
-            if (free_occurances[i]) {
+    private int get_next_free_occurence(int previous_occurence) {
+        bool[] free_occurences = get_free_occurences();
+        for (int i=previous_occurence+1; i< free_occurences.Length; i++) {
+            if (free_occurences[i]) {
                 return i;
             }
         }
         return -1;
     }
 
-    private bool[] get_free_occurances() {
-        bool[] free_occurances = Enumerable.Repeat(true, available_amount).ToArray();
-        for (int order = 0; order < get_needed_amount(); order++) {
+    private bool[] get_free_occurences() {
+        bool[] free_occurences = Enumerable.Repeat(true, targets_number).ToArray();
+        for (int order = 0; order < elements_number; order++) {
             if (!unassigned_orders.Contains(order)) {
-                if (combination[order] >= 0) { // this condition is needed only if one occurance is needed
-                    free_occurances[combination[order]] = false;
+                if (combination[order] >= 0) { // this condition is needed only if one occurence is needed
+                    free_occurences[combination[order]] = false;
                 }
             }
         }
-        return free_occurances;
+        return free_occurences;
     }
 
     private bool its_last_order(int order) {
-        return order == get_needed_amount()-1;
+        return order == elements_number-1;
     }
 
     private void prepare_order_for_resetting(int order) {
@@ -162,8 +157,8 @@ public class Generator_of_mappings_enumerator : IEnumerator<int[]>
     }
 
     private void move_one_step_forward(int order) {
-        int current_occurance_occupied_by_order = combination[order];
-        combination[order] = get_next_free_occurance(current_occurance_occupied_by_order);
+        int current_occurence_occupied_by_order = combination[order];
+        combination[order] = get_next_free_occurence(current_occurence_occupied_by_order);
     }
     
 
@@ -175,14 +170,14 @@ public class Generator_of_mappings_enumerator : IEnumerator<int[]>
         foreach (int reset_order in unassigned_orders.Reverse()) {
             occupy_occurence_with_order(
                 reset_order, 
-                get_next_free_occurance(-1)
+                get_next_free_occurence(-1)
             );
             unassigned_orders.Remove(reset_order);
         }
     }
 
-    private void occupy_occurence_with_order(int order, int occurance) {
-        combination[order] = occurance;
+    private void occupy_occurence_with_order(int order, int occurence) {
+        combination[order] = occurence;
     }
 
     
