@@ -45,7 +45,7 @@ public class Generator_of_mappings_enumerator : IEnumerator<int[]>
 {
 
     private readonly int[] combination;
-    private readonly ISet<int> unassigned_orders = new SortedSet<int>();
+    private readonly ISet<int> unassigned_elements = new SortedSet<int>();
 
     private int targets_number;
     private int elements_number {
@@ -62,19 +62,19 @@ public class Generator_of_mappings_enumerator : IEnumerator<int[]>
     #region IEnumerator
     public bool MoveNext()
     {
-        int i_order = 0;
-        while (!has_next_free_targets(i_order)) 
+        int i_element = 0;
+        while (!has_next_free_targets(i_element)) 
         {
-            if (its_last_order(i_order)) {
+            if (its_last_element(i_element)) {
                 return false;
             }
-            prepare_order_for_resetting(i_order++);
+            prepare_element_for_resetting(i_element++);
         }
             
-        move_one_step_forward(i_order);
+        move_one_step_forward(i_element);
 
-        if (some_orders_are_resetting()) {
-            settle_orders_at_the_beginning();
+        if (some_elements_are_resetting()) {
+            settle_elements_at_the_beginning();
         }
         return true;
     }
@@ -99,85 +99,84 @@ public class Generator_of_mappings_enumerator : IEnumerator<int[]>
     #endregion IEnumerator
 
     private void set_to_first() {
-        var occurences = Enumerable.Range(
+        var targets = Enumerable.Range(
             0, elements_number
         ).Reverse().ToArray();
-        occupy_occurences_with_all_orders(occurences);
+        occupy_targets_with_all_elements(targets);
     }
 
 
-    private void occupy_occurences_with_all_orders(int[] occurences) {
-        //contracts.Contract.Requires(occurences.Length == get_needed_amount());
-        for (int order=0; order<elements_number; order++) {
-            occupy_occurence_with_order(order, occurences[order]);
+    private void occupy_targets_with_all_elements(int[] targets) {
+        for (int element=0; element<elements_number; element++) {
+            map_element_onto_target(element, targets[element]);
         }
     }
     
     
     
-    private bool has_next_free_targets(int order) {
-        int current_target_occupied_by_order = combination[order];
-        if (current_target_occupied_by_order == -1) {
-            return true; // only one occurence is needed - nothing else is occupied
+    private bool has_next_free_targets(int element) {
+        int current_target_occupied_by_element = combination[element];
+        if (current_target_occupied_by_element == -1) {
+            return true; // only one target is needed - nothing else is occupied
         }
-        int next_free_occurence = get_next_free_occurence(
-            current_target_occupied_by_order
+        int next_free_target = get_next_free_target(
+            current_target_occupied_by_element
         );
-        return next_free_occurence >= 0;
+        return next_free_target >= 0;
     }
 
-    private int get_next_free_occurence(int previous_occurence) {
-        bool[] free_occurences = get_free_occurences();
-        for (int i=previous_occurence+1; i< free_occurences.Length; i++) {
-            if (free_occurences[i]) {
+    private int get_next_free_target(int previous_target) {
+        bool[] free_targets = get_free_targets();
+        for (int i=previous_target+1; i< free_targets.Length; i++) {
+            if (free_targets[i]) {
                 return i;
             }
         }
         return -1;
     }
 
-    private bool[] get_free_occurences() {
-        bool[] free_occurences = Enumerable.Repeat(true, targets_number).ToArray();
-        for (int order = 0; order < elements_number; order++) {
-            if (!unassigned_orders.Contains(order)) {
-                if (combination[order] >= 0) { // this condition is needed only if one occurence is needed
-                    free_occurences[combination[order]] = false;
+    private bool[] get_free_targets() {
+        bool[] free_targets = Enumerable.Repeat(true, targets_number).ToArray();
+        for (int element = 0; element < elements_number; element++) {
+            if (!unassigned_elements.Contains(element)) {
+                if (combination[element] >= 0) { // this condition is needed only if one target is needed
+                    free_targets[combination[element]] = false;
                 }
             }
         }
-        return free_occurences;
+        return free_targets;
     }
 
-    private bool its_last_order(int order) {
-        return order == elements_number-1;
+    private bool its_last_element(int element) {
+        return element == elements_number-1;
     }
 
-    private void prepare_order_for_resetting(int order) {
-        unassigned_orders.Add(order);
+    private void prepare_element_for_resetting(int element) {
+        unassigned_elements.Add(element);
     }
 
-    private void move_one_step_forward(int order) {
-        int current_occurence_occupied_by_order = combination[order];
-        combination[order] = get_next_free_occurence(current_occurence_occupied_by_order);
+    private void move_one_step_forward(int element) {
+        int current_target_occupied_by_order = combination[element];
+        combination[element] = get_next_free_target(current_target_occupied_by_order);
     }
     
 
-    private bool some_orders_are_resetting() {
-        return unassigned_orders.Any();
+    private bool some_elements_are_resetting() {
+        return unassigned_elements.Any();
     }
 
-    private void settle_orders_at_the_beginning() {
-        foreach (int reset_order in unassigned_orders.Reverse()) {
-            occupy_occurence_with_order(
-                reset_order, 
-                get_next_free_occurence(-1)
+    private void settle_elements_at_the_beginning() {
+        foreach (int reset_element in unassigned_elements.Reverse()) {
+            map_element_onto_target(
+                reset_element, 
+                get_next_free_target(-1)
             );
-            unassigned_orders.Remove(reset_order);
+            unassigned_elements.Remove(reset_element);
         }
     }
 
-    private void occupy_occurence_with_order(int order, int occurence) {
-        combination[order] = occurence;
+    private void map_element_onto_target(int element, int target) {
+        combination[element] = target;
     }
 
     
