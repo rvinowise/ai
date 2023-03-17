@@ -1,4 +1,4 @@
-﻿namespace rvinowise.ai.unit_tests.generator_of_order_sequences {
+﻿namespace rvinowise.ai.test.generator_of_order_sequences {
 
 
 public partial class initialised_correctly_for_generation {

@@ -42,7 +42,8 @@ public class Generator_of_individualised_mappings_enumerator<Element, Target>
     where Element: notnull
 {
 
-    private SortedDictionary<Element, Target> combination = new SortedDictionary<Element, Target>();
+    private SortedDictionary<Element, Target> combination = 
+        new SortedDictionary<Element, Target>();
     private readonly SortedDictionary<Element, List<Target>> elements_to_targets;
     private readonly ISet<int> unassigned_elements = new SortedSet<int>();
 
@@ -50,16 +51,50 @@ public class Generator_of_individualised_mappings_enumerator<Element, Target>
     private int elements_number {
         get => elements_to_targets.Count;
     }
-
+    private SortedDictionary<Element,List<Target>.Enumerator> elements_to_enumerators;
     public Generator_of_individualised_mappings_enumerator(
         SortedDictionary<Element, List<Target>> elements_to_targets
     ) {
         this.elements_to_targets = elements_to_targets;
+        elements_to_enumerators = 
+            new SortedDictionary<Element, List<Target>.Enumerator>();
+        foreach(var pair in elements_to_targets) {
+            elements_to_enumerators.Add(
+                pair.Key,
+                pair.Value.GetEnumerator()
+            );
+        }
         Reset();
     }
 
-    private bool first_combination() {
+    private void set_combination_to_current_enumerators() {
+        foreach(var element_to_enumerator in elements_to_enumerators) {
+            var element = element_to_enumerator.Key;
 
+            var current_target = 
+                element_to_enumerator.Value.Current;
+
+            combination.Add(element, current_target);
+        }
+    }
+    
+    private void set_all_enumerators_to_first() {
+        foreach(var element_to_enumerator in elements_to_enumerators) {
+            element_to_enumerator.Value.SetToFirst();
+        }
+    }
+    private bool first_combination() {
+        set_all_enumerators_to_first();
+        bool next_combination_exists = true;
+        while (
+            mapping_has_shared_targets()
+            &&
+            next_combination_exists
+            ) {
+            next_combination_exists = next_combination();
+        }
+
+        return next_combination_exists;
     }
 
     private bool mapping_has_shared_targets() {
@@ -67,22 +102,18 @@ public class Generator_of_individualised_mappings_enumerator<Element, Target>
     }
 
     private bool next_combination() {
-        int i_element = 0;
-        while (!has_next_free_targets(i_element)) 
-        {
-            if (its_last_element(i_element)) {
+        var all_enumerators = elements_to_enumerators.GetEnumerator();
+        while (!all_enumerators.Current.Value.MoveNext()) {
+            all_enumerators.Current.Value.SetToFirst();
+            if (!all_enumerators.MoveNext()) {
                 return false;
             }
-            prepare_element_for_resetting(i_element++);
+            all_enumerators.MoveNext();
         }
             
-        move_one_step_forward(i_element);
-
-        if (some_elements_are_resetting()) {
-            settle_elements_at_the_beginning();
-        }
         return true;
     }
+
 
     #region IEnumerator
     public bool MoveNext()
@@ -122,86 +153,7 @@ public class Generator_of_individualised_mappings_enumerator<Element, Target>
     
     #endregion IEnumerator
 
-    private void set_to_first() {
-        var targets = Enumerable.Range(
-            0, elements_number
-        ).Reverse().ToArray();
-        occupy_targets_with_all_elements(targets);
-    }
-
-
-    private void occupy_targets_with_all_elements(int[] targets) {
-        for (int element=0; element<elements_number; element++) {
-            map_element_onto_target(element, targets[element]);
-        }
-    }
     
-    
-    
-    private bool has_next_free_targets(int element) {
-        int current_target_occupied_by_element = combination[element];
-        if (current_target_occupied_by_element == -1) {
-            return true; // only one target is needed - nothing else is occupied
-        }
-        int next_free_target = get_next_free_target(
-            current_target_occupied_by_element
-        );
-        return next_free_target >= 0;
-    }
-
-    private int get_next_free_target(int previous_target) {
-        bool[] free_targets = get_free_targets();
-        for (int i=previous_target+1; i< free_targets.Length; i++) {
-            if (free_targets[i]) {
-                return i;
-            }
-        }
-        return -1;
-    }
-
-    private bool[] get_free_targets() {
-        bool[] free_targets = Enumerable.Repeat(true, targets_number).ToArray();
-        for (int element = 0; element < elements_number; element++) {
-            if (!unassigned_elements.Contains(element)) {
-                if (combination[element] >= 0) { // this condition is needed only if one target is needed
-                    free_targets[combination[element]] = false;
-                }
-            }
-        }
-        return free_targets;
-    }
-
-    private bool its_last_element(int element) {
-        return element == elements_number-1;
-    }
-
-    private void prepare_element_for_resetting(int element) {
-        unassigned_elements.Add(element);
-    }
-
-    private void move_one_step_forward(int element) {
-        int current_target_occupied_by_order = combination[element];
-        combination[element] = get_next_free_target(current_target_occupied_by_order);
-    }
-    
-
-    private bool some_elements_are_resetting() {
-        return unassigned_elements.Any();
-    }
-
-    private void settle_elements_at_the_beginning() {
-        foreach (int reset_element in unassigned_elements.Reverse()) {
-            map_element_onto_target(
-                reset_element, 
-                get_next_free_target(-1)
-            );
-            unassigned_elements.Remove(reset_element);
-        }
-    }
-
-    private void map_element_onto_target(int element, int target) {
-        combination[element] = target;
-    }
 
     
 }

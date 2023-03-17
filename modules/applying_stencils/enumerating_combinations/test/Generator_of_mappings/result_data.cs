@@ -1,4 +1,4 @@
-namespace rvinowise.ai.unit_tests.generator_of_mappings {
+namespace rvinowise.ai.test.generator_of_mappings {
 
 
 public partial class regular_loop_over_combinations_can_be_done {

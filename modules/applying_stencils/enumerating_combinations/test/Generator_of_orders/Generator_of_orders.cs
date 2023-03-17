@@ -2,7 +2,7 @@ using NUnit.Framework;
 using rvinowise.ai.mapping_stencils;
 using rvinowise.contracts;
 
-namespace rvinowise.ai.unit_tests.generator_of_order_sequences {
+namespace rvinowise.ai.test.generator_of_order_sequences {
 
 [TestFixture]
 public partial class initialised_correctly_for_generation {
