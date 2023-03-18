@@ -98,7 +98,7 @@ public class Generator_of_individualised_mappings_enumerator<Element, Target>
     }
 
     private bool mapping_has_shared_targets() {
-        return combination.Values.Distinct().Count() < combination.Count()
+        return combination.Values.Distinct().Count() < combination.Count();
     }
 
     private bool next_combination() {

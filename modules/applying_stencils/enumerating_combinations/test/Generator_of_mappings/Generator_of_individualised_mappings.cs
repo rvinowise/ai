@@ -33,7 +33,7 @@ public partial class regular_loop_over_combinations_can_be_done {
             result_combinations,
             generator
         );
-
+ 
     }
 }
 
