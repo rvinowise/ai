@@ -11,10 +11,10 @@ public partial class regular_loop_over_combinations_can_be_done {
     public void all_combinations_are_provided_in_a_loop() {
         Generator_of_individualised_mappings<string, string> generator = 
             new Generator_of_individualised_mappings<string, string>(
-                new SortedDictionary<string, List<string>> {
-                    {"A1", new List<string>{"a1","a2","a3","a4"}},
-                    {"A2", new List<string>{"a1","a2","a3"}},
-                    {"A3", new List<string>{"a1","a2"}}
+                new List<Element_to_targets<string, string>> {
+                    new Element_to_targets<string, string>("A1", new List<string>{"a1","a2","a3","a4"}),
+                    new Element_to_targets<string, string>("A2", new List<string>{"a1","a2","a3"}),
+                    new Element_to_targets<string, string>("A3", new List<string>{"a1","a2"}),
                 }
             );
 

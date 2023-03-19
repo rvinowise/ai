@@ -9,6 +9,10 @@ namespace rvinowise.ai.mapping_stencils {
 public struct Element_to_targets<Element, Target> {
     public Element element;
     public List<Target> targets;
+    public Element_to_targets(Element element, List<Target> targets) {
+        this.element = element;
+        this.targets = targets;
+    }
 }
 public struct Element_to_target<Element, Target> {
     public Element element;
@@ -126,15 +130,19 @@ public class Generator_of_individualised_mappings_enumerator<Element, Target>
 
     private bool correct_combination() { 
         set_combination_to_current_targets();
-        return combination.Values.Distinct().Count() == combination.Count;
+        var all_targets = new HashSet<Target>(); 
+        foreach(var pair in combination) {
+            all_targets.Add(pair.target);
+        }
+        return all_targets.Count() == combination.Count;
     }
 
     private bool next_mapping() {
         using var all_elements = elements_to_targets.GetEnumerator();
         all_elements.MoveNext();
 
-        while (!all_elements.Current.Value.MoveNext()) {
-            all_elements.Current.Value.SetToFirst();
+        while (!all_elements.Current.Item2.MoveNext()) {
+            all_elements.Current.Item2.SetToFirst();
             if (!all_elements.MoveNext()) {
                 return false;
             }
@@ -169,7 +177,8 @@ public class Generator_of_individualised_mappings_enumerator<Element, Target>
         combination.Clear();
     }
 
-    SortedDictionary<Element, Target> IEnumerator<SortedDictionary<Element, Target>>.Current {
+    List<Element_to_target<Element, Target>> 
+    IEnumerator<List<Element_to_target<Element, Target>>>.Current {
         get { return combination; }
     }
 
