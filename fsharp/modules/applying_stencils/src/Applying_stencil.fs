@@ -121,7 +121,24 @@ module Applying_stencil =
         stencil
         target
         =
-        let first_subfigures_of_stencil = Stencil.first_referenced_figures stencil
+        let subfigures_in_stencil,
+            subfigures_in_target =
+                sorted_subfigures_to_map_first stencil target
+        
+        let generator = 
+            (prepared_generator_of_first_mappings subfigures_in_stencil subfigures_in_target)
+        
+        generator
+        |>Seq.map (
+            mapping_from_generator_output 
+                subfigures_in_stencil 
+                subfigures_in_target
+        )
+    
+    let map_first_nodes_with_generic_generator
+        stencil
+        target
+        =
         let subfigures_in_stencil,
             subfigures_in_target =
                 sorted_subfigures_to_map_first stencil target
@@ -136,11 +153,28 @@ module Applying_stencil =
                 subfigures_in_target
         )
 
+        let figures_to_map = 
+            stencil
+            |>Stencil.first_referenced_figures
+            
+        let first_subfigures_of_stencil = 
+            Stencil.first_subfigures stencil
 
-    let next_unmapped_subfigures stencil mapped_nodes =
-        []
+        let subfigures_in_stencil = 
+            figures_to_map
+            |>Seq.map (
+                Stencil.vertices_referencing_figure 
+                    stencil
+                    first_subfigures_of_stencil
+                )
+            
+        let subfigures_in_target = 
+            figures_to_map
+            |>Seq.map (Figure.vertices_referencing_lower_figure target)
 
-    
+        let elements_to_targets =
+            
+
         
     let (|Seq|_|) test input =
         if Seq.compareWith Operators.compare input test = 0

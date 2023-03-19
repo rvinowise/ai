@@ -6,25 +6,37 @@ using System.Linq;
 
 namespace rvinowise.ai.mapping_stencils {
 
+public struct Element_to_targets<Element, Target> {
+    public Element element;
+    public List<Target> targets;
+}
+public struct Element_to_target<Element, Target> {
+    public Element element;
+    public Target target;
+
+    public Element_to_target(Element element, Target target) {
+        this.element = element;
+        this.target = target;
+    }
+}
 /* same as Generator_of_mappings, but with different possible targets for every element */
 public class Generator_of_individualised_mappings<Element, Target>
-    :IEnumerable<SortedDictionary<Element, Target>>
+    :IEnumerable<List<Element_to_target<Element, Target>>>
     where Element: notnull 
-    {
-    
+{
 
-    private readonly SortedDictionary<Element, List<Target>> elements_to_targets = 
-        new SortedDictionary<Element, List<Target>>();
+    private readonly List<Element_to_targets<Element,Target>> elements_to_targets = 
+        new List<Element_to_targets<Element, Target>>();
 
     public Generator_of_individualised_mappings(
-        SortedDictionary<Element, List<Target>> elements_to_targets
+        List<Element_to_targets<Element, Target>> elements_to_targets
     ) {
         this.elements_to_targets = elements_to_targets;
     }
 
     #region IEnumerable
 
-    public IEnumerator<SortedDictionary<Element, Target>> GetEnumerator() {
+    public IEnumerator<List<Element_to_target<Element, Target>>> GetEnumerator() {
         return new Generator_of_individualised_mappings_enumerator<Element, Target>(elements_to_targets);
     }
 
@@ -36,79 +48,96 @@ public class Generator_of_individualised_mappings<Element, Target>
     
 }
 
+class Target_counter<Target> {
+    public int current =0;
+    public List<Target> targets;
+
+    public Target_counter(List<Target> targets) {
+        contracts.Contract.Requires(targets.Any(), 
+            "every mapped element should have at least one possible target");
+        this.targets = targets;
+    }
+
+    public bool MoveNext() {
+        current++;
+        if (current >= targets.Count) {
+            return false;
+        }
+        return true;
+    }
+    public void SetToFirst() {
+        current=0;
+    }
+
+    public Target current_target() {
+        return targets[current];
+    }
+
+}
 
 public class Generator_of_individualised_mappings_enumerator<Element, Target>
-    :IEnumerator<SortedDictionary<Element, Target>>
+    :IEnumerator<List<Element_to_target<Element, Target>>>
     where Element: notnull
 {
 
-    private SortedDictionary<Element, Target> combination = 
-        new SortedDictionary<Element, Target>();
-    private readonly SortedDictionary<Element, List<Target>> elements_to_targets;
-    private readonly ISet<int> unassigned_elements = new SortedSet<int>();
+    private readonly List<Element_to_target<Element, Target>> combination = new();
 
-    private int targets_number;
-    private int elements_number {
-        get => elements_to_targets.Count;
-    }
-    private SortedDictionary<Element,List<Target>.Enumerator> elements_to_enumerators;
+    private readonly List<Tuple<Element, Target_counter<Target>>> elements_to_targets;
     public Generator_of_individualised_mappings_enumerator(
-        SortedDictionary<Element, List<Target>> elements_to_targets
+        List<Element_to_targets<Element, Target>> elements_to_targets
     ) {
-        this.elements_to_targets = elements_to_targets;
-        elements_to_enumerators = 
-            new SortedDictionary<Element, List<Target>.Enumerator>();
-        foreach(var pair in elements_to_targets) {
-            elements_to_enumerators.Add(
-                pair.Key,
-                pair.Value.GetEnumerator()
+        this.elements_to_targets = 
+            new List<Tuple<Element, Target_counter<Target>>>();
+        foreach(var element_to_targets in elements_to_targets) {
+            this.elements_to_targets.Add(
+                Tuple.Create(
+                    element_to_targets.element,
+                    new Target_counter<Target>(element_to_targets.targets)
+                )
             );
         }
         Reset();
     }
 
-    private void set_combination_to_current_enumerators() {
-        foreach(var element_to_enumerator in elements_to_enumerators) {
-            var element = element_to_enumerator.Key;
+    private void set_combination_to_current_targets() {
+        foreach(var element_to_target in elements_to_targets) {
+            var element = element_to_target.Item1;
 
-            var current_target = 
-                element_to_enumerator.Value.Current;
+            var current_target =
+                element_to_target.Item2.current_target();
 
-            combination.Add(element, current_target);
+            combination.Add(new Element_to_target<Element, Target>(element, current_target));
         }
     }
     
-    private void set_all_enumerators_to_first() {
-        foreach(var element_to_enumerator in elements_to_enumerators) {
-            element_to_enumerator.Value.SetToFirst();
-        }
-    }
+  
     private bool first_combination() {
-        set_all_enumerators_to_first();
         bool next_combination_exists = true;
         while (
-            mapping_has_shared_targets()
+            !correct_combination()
             &&
             next_combination_exists
-            ) {
-            next_combination_exists = next_combination();
+        ) {
+            next_combination_exists = next_mapping();
         }
 
         return next_combination_exists;
     }
 
-    private bool mapping_has_shared_targets() {
-        return combination.Values.Distinct().Count() < combination.Count();
+    private bool correct_combination() { 
+        set_combination_to_current_targets();
+        return combination.Values.Distinct().Count() == combination.Count;
     }
 
-    private bool next_combination() {
-        var all_enumerators = elements_to_enumerators.GetEnumerator();
-        while (!all_enumerators.Current.Value.MoveNext()) {
-            all_enumerators.Current.Value.SetToFirst();
-            if (!all_enumerators.MoveNext()) {
+    private bool next_mapping() {
+        using var all_elements = elements_to_targets.GetEnumerator();
+        all_elements.MoveNext();
+
+        while (!all_elements.Current.Value.MoveNext()) {
+            all_elements.Current.Value.SetToFirst();
+            if (!all_elements.MoveNext()) {
                 return false;
             }
-            all_enumerators.MoveNext();
         }
             
         return true;
@@ -122,15 +151,15 @@ public class Generator_of_individualised_mappings_enumerator<Element, Target>
         if (!combination.Any()) {
             exist = first_combination();
         } else {
-            exist = next_combination();
+            exist = next_mapping();
         }
 
         while (
-            mapping_has_shared_targets()
+            !correct_combination()
             &&
             exist
         ) {
-            exist = next_combination();
+            exist = next_mapping();
         }
         return exist;
     }

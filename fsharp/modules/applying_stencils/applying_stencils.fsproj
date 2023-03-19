@@ -12,11 +12,10 @@
     <Compile Include="src\Mapping.fs" />
     <Compile Include="src\Applying_stencil.fs" />
     
-    <Compile Include="src\enumerating_combinations\Enumerating_mappings.fs" />
-
     <Compile Include="src\painted\applying_stencil.fs" />
     <Compile Include="src\test\applying_a_stencil.fs" />
     <Compile Include="src\test\the_mapping_type.fs" />
+    <Compile Include="src\test\enumerating_combinations_benchmark.fs" />
   </ItemGroup>
 
   <ItemGroup>

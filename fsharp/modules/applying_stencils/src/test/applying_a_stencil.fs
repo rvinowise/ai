@@ -167,20 +167,40 @@ module ``application of stencils``=
     
     [<Fact>]
     let ``mapping of first stencil subfigures onto target produces initial mapping``()=
-        let figure = example.Figure.a_high_level_relatively_simple_figure
-        let stencil = example.Stencil.a_fitting_stencil
-        
-        (
-            map_first_nodes 
-                stencil
-                figure
-        )
+        map_first_nodes 
+            example.Stencil.a_fitting_stencil
+            example.Figure.a_high_level_relatively_simple_figure
         |> should equal
             [   Mapping.ofStringPairs ["b","b0";"h","h"];
                 Mapping.ofStringPairs ["b","b1";"h","h"];
                 Mapping.ofStringPairs ["b","b2";"h","h"]
             ]
-        
+    
+    [<Fact>]
+    let ``producing initial mapping (with a generic generator yielding objects)``()=
+        map_first_nodes_with_generic_generator
+            example.Stencil.a_fitting_stencil
+            example.Figure.a_high_level_relatively_simple_figure
+        |> should equal
+            [   Mapping.ofStringPairs ["b","b0";"h","h"];
+                Mapping.ofStringPairs ["b","b1";"h","h"];
+                Mapping.ofStringPairs ["b","b2";"h","h"]
+            ]
+            
+    [<Fact>]
+    let ``initial mapping when the target lacks some figures``()=
+        map_first_nodes 
+            (
+                built.Stencil.simple_without_separator [
+                    "b","out1";
+                    "out1","f";
+                    "h","f";
+                    "x","f";
+                ]
+            )
+            example.Figure.a_high_level_relatively_simple_figure
+        |> should equal []
+
     [<Fact>]
     let ``finding following subfigures referencing a specific figure``()=
         (Figure.subfigures_after_other_subfigures
