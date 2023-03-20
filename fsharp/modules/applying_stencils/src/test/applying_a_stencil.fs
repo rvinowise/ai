@@ -145,9 +145,10 @@ module ``application of stencils``=
     [<Fact>]
     let ``generator of initial mappings returns combinations``()=
         
-        let generator = Generator_of_orders<int[]>()
+        let generator = Generator_of_orders<int[]>[
+            Generator_of_mappings(1, 3)
+        ]
     
-        generator.add_order(Generator_of_mappings(1, 3))
         let enumerator = generator.GetEnumerator()
         enumerator.MoveNext()
         |> should equal true
@@ -178,7 +179,7 @@ module ``application of stencils``=
     
     [<Fact>]
     let ``producing initial mapping (with a generic generator yielding objects)``()=
-        map_first_nodes_with_generic_generator
+        ``map_first_nodes (generic)``
             example.Stencil.a_fitting_stencil
             example.Figure.a_high_level_relatively_simple_figure
         |> should equal

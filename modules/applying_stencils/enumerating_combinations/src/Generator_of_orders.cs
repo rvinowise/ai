@@ -14,18 +14,13 @@ namespace rvinowise.ai.mapping_stencils {
 
 
 public class Generator_of_orders<T>:
-    IEnumerable<T[]>
+    IEnumerable<IEnumerable<T>>
 {
-    public List<IEnumerable<T>> orders = 
-        new List<IEnumerable<T>>();
+    private readonly List<IEnumerable<T>> orders;
 
-    
-
-    public void add_order(IEnumerable<T> in_order) {
-        orders.Add(in_order);
+    public Generator_of_orders(IEnumerable<IEnumerable<T>> orders) {
+        this.orders = new List<IEnumerable<T>>(orders);
     }
-    
-    
 
     public T[] get_combination_as_indexes(
         IEnumerable<IEnumerator<T>> mapping_enumerators
@@ -42,7 +37,7 @@ public class Generator_of_orders<T>:
     
     #region IEnumerable
 
-    public IEnumerator<T[]> GetEnumerator() {
+    public IEnumerator<IEnumerable<T>> GetEnumerator() {
         if (!orders.Any()) {
             throw new Broken_contract_exception("enumerable orders should be added to the generator before enumerating it");
         }
@@ -71,9 +66,8 @@ public class Generator_of_orders<T>:
         foreach (IEnumerator enumerator in enumerators) {
             if (enumerator.MoveNext()) {
                 return true;
-            } else {
-                enumerator.SetToFirst();
             }
+            enumerator.SetToFirst();
         }
         return false;
     }

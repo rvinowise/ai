@@ -75,13 +75,11 @@ module Applying_stencil =
         subfigures_in_stencil
         subfigures_in_target
         =
-        let generator = Generator_of_orders<int[]>()
-        
         (input_for_first_mappings_permutators subfigures_in_stencil subfigures_in_target)
         |>Seq.map Generator_of_mappings
-        |>Seq.iter generator.add_order
+        |>Seq.cast 
+        |>Generator_of_orders<int[]>
         
-        generator
         
     
     let mapping_of_subfigure
@@ -135,24 +133,21 @@ module Applying_stencil =
                 subfigures_in_target
         )
     
-    let map_first_nodes_with_generic_generator
+    let ``mapping_from_generator_output (generic)``
+        (chosen_targets: seq<Element_to_target<Vertex_id,Vertex_id>>)
+        =
+        let mapping = Mapping.empty()
+        
+        chosen_targets
+        |>Seq.iter (fun pair ->
+            mapping.Add(pair.element, pair.target)    
+        )
+        
+        mapping
+    let ``map_first_nodes (generic)``
         stencil
         target
         =
-        let subfigures_in_stencil,
-            subfigures_in_target =
-                sorted_subfigures_to_map_first stencil target
-        
-        let generator = 
-            (prepared_generator_of_first_mappings subfigures_in_stencil subfigures_in_target)
-        
-        generator
-        |>Seq.map (
-            mapping_from_generator_output 
-                subfigures_in_stencil 
-                subfigures_in_target
-        )
-
         let figures_to_map = 
             stencil
             |>Stencil.first_referenced_figures
@@ -160,21 +155,25 @@ module Applying_stencil =
         let first_subfigures_of_stencil = 
             Stencil.first_subfigures stencil
 
-        let subfigures_in_stencil = 
-            figures_to_map
-            |>Seq.map (
-                Stencil.vertices_referencing_figure 
+        figures_to_map
+        |>Seq.map (fun figure->
+            let subfigures_in_target =
+                Figure.vertices_referencing_lower_figure target figure
+            figure
+            |>Stencil.vertices_referencing_figure 
                     stencil
                     first_subfigures_of_stencil
-                )
-            
-        let subfigures_in_target = 
-            figures_to_map
-            |>Seq.map (Figure.vertices_referencing_lower_figure target)
-
-        let elements_to_targets =
-            
-
+            |>Seq.map (fun subfigure_in_stencil->
+                Element_to_targets<Vertex_id,Vertex_id> (subfigure_in_stencil,subfigures_in_target);
+            )
+            |>Generator_of_individualised_mappings<Vertex_id, Vertex_id>
+        )
+        |>Seq.cast
+        |>Generator_of_orders<IEnumerable<Element_to_target<Vertex_id,Vertex_id>>>
+        |>Seq.collect id
+        |>Seq.map ``mapping_from_generator_output (generic)`` 
+        
+       
         
     let (|Seq|_|) test input =
         if Seq.compareWith Operators.compare input test = 0

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 
 namespace rvinowise.ai.mapping_stencils {
@@ -9,9 +10,9 @@ namespace rvinowise.ai.mapping_stencils {
 public struct Element_to_targets<Element, Target> {
     public Element element;
     public List<Target> targets;
-    public Element_to_targets(Element element, List<Target> targets) {
+    public Element_to_targets(Element element, IEnumerable<Target> targets) {
         this.element = element;
-        this.targets = targets;
+        this.targets = new List<Target>(targets);
     }
 }
 public struct Element_to_target<Element, Target> {
@@ -22,25 +23,28 @@ public struct Element_to_target<Element, Target> {
         this.element = element;
         this.target = target;
     }
+
+    public override string ToString() {
+        return $"{element}-{target}";
+    }
 }
 /* same as Generator_of_mappings, but with different possible targets for every element */
 public class Generator_of_individualised_mappings<Element, Target>
-    :IEnumerable<List<Element_to_target<Element, Target>>>
+    :IEnumerable<IEnumerable<Element_to_target<Element, Target>>>
     where Element: notnull 
 {
 
-    private readonly List<Element_to_targets<Element,Target>> elements_to_targets = 
-        new List<Element_to_targets<Element, Target>>();
+    private readonly List<Element_to_targets<Element,Target>> elements_to_targets;
 
     public Generator_of_individualised_mappings(
-        List<Element_to_targets<Element, Target>> elements_to_targets
+        IEnumerable<Element_to_targets<Element, Target>> elements_to_targets
     ) {
-        this.elements_to_targets = elements_to_targets;
+        this.elements_to_targets = new List<Element_to_targets<Element,Target>>(elements_to_targets);
     }
 
     #region IEnumerable
 
-    public IEnumerator<List<Element_to_target<Element, Target>>> GetEnumerator() {
+    public IEnumerator<IEnumerable<Element_to_target<Element, Target>>> GetEnumerator() {
         return new Generator_of_individualised_mappings_enumerator<Element, Target>(elements_to_targets);
     }
 
@@ -53,7 +57,7 @@ public class Generator_of_individualised_mappings<Element, Target>
 }
 
 class Target_counter<Target> {
-    public int current =0;
+    public int current;
     public List<Target> targets;
 
     public Target_counter(List<Target> targets) {
@@ -64,10 +68,7 @@ class Target_counter<Target> {
 
     public bool MoveNext() {
         current++;
-        if (current >= targets.Count) {
-            return false;
-        }
-        return true;
+        return current < targets.Count;
     }
     public void SetToFirst() {
         current=0;
@@ -77,6 +78,17 @@ class Target_counter<Target> {
         return targets[current];
     }
 
+    public override string ToString() {
+        var str = new StringBuilder();
+        for (int i=0;i<current;i++) {
+            str.Append($"{targets[i]},");
+        }
+        str.Append($"({targets[current]})");
+        for (int i=current+1;i<targets.Count;i++) {
+            str.Append($",{targets[i]}");
+        }
+        return str.ToString();
+    }
 }
 
 public class Generator_of_individualised_mappings_enumerator<Element, Target>
@@ -104,6 +116,7 @@ public class Generator_of_individualised_mappings_enumerator<Element, Target>
     }
 
     private void set_combination_to_current_targets() {
+        combination.Clear();
         foreach(var element_to_target in elements_to_targets) {
             var element = element_to_target.Item1;
 

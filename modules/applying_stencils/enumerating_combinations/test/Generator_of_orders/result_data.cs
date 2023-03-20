@@ -1,7 +1,7 @@
 ﻿namespace rvinowise.ai.test.generator_of_order_sequences {
 
 
-public partial class initialised_correctly_for_generation {
+public partial class filling_generator_or_orders_with_orders {
 
 
     /* outer array - combinations;

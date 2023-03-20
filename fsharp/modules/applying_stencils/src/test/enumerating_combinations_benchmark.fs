@@ -24,7 +24,7 @@ module enumerating_combinations_benchmark =
                 example.Figure.a_high_level_relatively_simple_figure
             
         [<Benchmark>]
-        member this.generator_of_mappings_with_objects()=
+        member this.generator_of_mappings_with_objects()=()
             
 
 
