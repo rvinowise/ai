@@ -8,132 +8,11 @@ module Applying_stencil =
     open Rubjerg.Graphviz
     open rvinowise.ai.mapping_stencils
     open rvinowise.ai.stencil
-    open rvinowise
+    open rvinowise   
 
-    
-    let sorted_subfigures_to_map_first 
-        stencil
-        target 
-        =
-        let first_subfigures_of_stencil = 
-            Stencil.first_subfigures stencil
-        
-        let figures_to_map = 
-            stencil
-            |>Stencil.first_referenced_figures
-            
-
-        let subfigures_in_stencil = 
-            figures_to_map
-            |>Seq.map (
-                Stencil.vertices_referencing_figure 
-                    stencil
-                    first_subfigures_of_stencil
-                )
-            
-        let subfigures_in_target = 
-            figures_to_map
-            |>Seq.map (Figure.vertices_referencing_lower_figure target)
-            |>Seq.map Array.ofSeq
-            
-        (subfigures_in_stencil, subfigures_in_target )
-
-    [<Fact>]
-    let ``sorted subfigures to map first``()=
-        let target = example.Figure.a_high_level_relatively_simple_figure
-        let stencil = example.Stencil.a_fitting_stencil
-
-        sorted_subfigures_to_map_first
-            stencil
-            target
-        |>should equal
-            (
-                [
-                    [Vertex_id "b"];
-                    [Vertex_id "h"]
-                ],
-                [
-                    ["b0";"b1";"b2"]|>Seq.map Vertex_id;
-                    [Vertex_id "h"]
-                ]
-            )
-
-    let input_for_first_mappings_permutators subfigures_in_stencil subfigures_in_target =
-        
-        let amounts_in_stencil = 
-            subfigures_in_stencil
-            |>Seq.map Seq.length
-
-        let amounts_in_target = 
-            subfigures_in_target
-            |>Seq.map Seq.length
-
-        Seq.zip amounts_in_stencil amounts_in_target
-
-           
-    let prepared_generator_of_first_mappings
-        subfigures_in_stencil
-        subfigures_in_target
-        =
-        (input_for_first_mappings_permutators subfigures_in_stencil subfigures_in_target)
-        |>Seq.map Generator_of_mappings
-        |>Seq.cast 
-        |>Generator_of_orders<int[]>
-        
-        
-    
-    let mapping_of_subfigure
-        (mapping: Mapping)
-        (target_subfigures:Vertex_id[])
-        target_subfigure_index
-        subfigure_of_stencil
-        =
-        mapping.Add(subfigure_of_stencil, target_subfigures[target_subfigure_index])
-        
-    let mappings_of_figure
-        mapping
-        (used_occurances,
-        subfigures_chosen_by_stencil,
-        subfigures_available_in_target)
-        =
-        (used_occurances, subfigures_chosen_by_stencil)
-        ||>Seq.iter2 (mapping_of_subfigure mapping subfigures_available_in_target)
-        
-        
+ 
+   
     let mapping_from_generator_output
-        subfigures_in_stencil
-        subfigures_in_target
-        indices
-        =
-        Contract.Requires ((Seq.length subfigures_in_stencil) = (Seq.length subfigures_in_target))
-        let mapping = Mapping.empty()
-        
-        (indices, subfigures_in_stencil, subfigures_in_target)
-        |||>Seq.zip3
-        |>Seq.iter (mappings_of_figure mapping)
-        
-        mapping
-        
-
-    let map_first_nodes
-        stencil
-        target
-        =
-        let subfigures_in_stencil,
-            subfigures_in_target =
-                sorted_subfigures_to_map_first stencil target
-        
-        let generator = 
-            (prepared_generator_of_first_mappings subfigures_in_stencil subfigures_in_target)
-        
-        generator
-        |>Seq.map (
-            mapping_from_generator_output 
-                subfigures_in_stencil 
-                subfigures_in_target
-        )
-    
-    let ``mapping_from_generator_output (generic)``
         (chosen_targets: seq<Element_to_target<Vertex_id,Vertex_id>>)
         =
         let mapping = Mapping.empty()
@@ -142,9 +21,9 @@ module Applying_stencil =
         |>Seq.iter (fun pair ->
             mapping.Add(pair.element, pair.target)    
         )
-        
         mapping
-    let ``map_first_nodes (generic)``
+
+    let map_first_nodes
         stencil
         target
         =
@@ -170,8 +49,8 @@ module Applying_stencil =
         )
         |>Seq.cast
         |>Generator_of_orders<IEnumerable<Element_to_target<Vertex_id,Vertex_id>>>
-        |>Seq.collect id
-        |>Seq.map ``mapping_from_generator_output (generic)`` 
+        |>Seq.map (Seq.collect id)
+        |>Seq.map mapping_from_generator_output
         
        
         
@@ -182,28 +61,19 @@ module Applying_stencil =
 
     
 
-    let copy_of_mapping_with_prolongation
-        (mapping:Mapping)
-        stencil_subfigure
-        target_subfigure
+    let copied_mapping_with_prolongation
+        mapping
+        (added_mappings: seq<Element_to_target<Vertex_id, Vertex_id>>)
         =
         let mapping = Mapping.copy mapping
-        mapping[stencil_subfigure] <- target_subfigure
-        mapping
-
-
-    let mapping_prolongated_by_subfigures
-        mapping
-        stencil_subfigure
-        target_subfigures
-        =
-        target_subfigures
-        |>Seq.map (
-            copy_of_mapping_with_prolongation mapping stencil_subfigure
+        added_mappings
+        |>Seq.iter (fun added_mapping ->
+            mapping[added_mapping.element] <- added_mapping.target
         )
+        mapping
 
     
-    let all_possible_mappings_of_one_next_subfigure
+    let possible_targets_for_mapped_subfigure
         stencil
         target
         mapping  
@@ -219,15 +89,16 @@ module Applying_stencil =
             prolongating_figure
 
     let all_combinations_of_next_mappings 
-        (mappings: Map<Vertex_id, seq<Vertex_id>>) 
+        (mappings: (Vertex_id*(Vertex_id seq)) seq) 
         =
         ()
 
     let prolongate_mapping_with_next_mapped_subfigures 
         (base_mapping: Mapping)
-        (added_mappings: seq<Map<Vertex_id, Vertex_id>>)
+        (added_mappings: seq<seq<Element_to_target<Vertex_id, Vertex_id>>>)
         =
-        []
+        added_mappings
+        |>Seq.map (copied_mapping_with_prolongation base_mapping)
 
 
     let find_possible_next_mappings
@@ -241,40 +112,35 @@ module Applying_stencil =
             (target:Figure)
             (mapping:Mapping)
             (left_subfigures_to_map:  list<Vertex_id*Figure_id>)
-            (found_next_mappings: Map<Vertex_id, seq<Vertex_id>>)
+            (found_next_mappings: list<(Vertex_id*seq<Vertex_id>)>)
             =
 
             match left_subfigures_to_map with
             | [] -> found_next_mappings
             | current_subfigure_to_map::left_subfigures_to_map ->
-                let mappings = 
-                    all_possible_mappings_of_one_next_subfigure
+                let targets = 
+                    possible_targets_for_mapped_subfigure
                         stencil
                         target
                         base_mapping
                         current_subfigure_to_map
                         
-                if mappings.Count = 0 then 
-                    //if at least one vertex can't be mapped -- 
-                    //the whole mapping should be discarded
-                    Map.empty
+                if targets.Count = 0 then 
+                    []
                 else
-                    let updated_mappings =
-                        found_next_mappings
-                        |>Map.add (fst current_subfigure_to_map) mappings
                     mappings_of_next_subfigure
                         stencil
                         target
                         mapping
                         left_subfigures_to_map
-                        updated_mappings
+                        ((current_subfigure_to_map|>fst, targets)::found_next_mappings)
         
         mappings_of_next_subfigure
             stencil
             target
             base_mapping
             next_subfigures_to_map
-            Map.empty
+            []
 
     let prolongate_one_mapping_with_next_subfigures 
         (stencil:Stencil)
@@ -290,12 +156,11 @@ module Applying_stencil =
                 (List.ofSeq next_subfigures_to_map)
 
         if possible_next_mappings.IsEmpty then
-            mapping
+            Seq.singleton mapping
         else
             possible_next_mappings
             |>all_combinations_of_next_mappings
-            //|>prolongate_mapping_with_next_mapped_subfigures mapping
-            mapping
+            |>prolongate_mapping_with_next_mapped_subfigures mapping
 
     let rec prolongate_all_mappings 
         (stencil:Stencil)
@@ -316,8 +181,9 @@ module Applying_stencil =
             | Seq [] -> mappings
             |_->
                 mappings
-                //|>Seq.collect 
-                //    (prolongate_one_mapping_with_next_subfigures stencil target next_subfigures_to_map)
+                |>Seq.collect (
+                    prolongate_one_mapping_with_next_subfigures stencil target next_subfigures_to_map
+                )
         
         match next_vertices_to_map with
         | Seq [] -> 
