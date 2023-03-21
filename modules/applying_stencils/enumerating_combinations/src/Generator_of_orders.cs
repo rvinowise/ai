@@ -22,7 +22,7 @@ public class Generator_of_orders<T>:
         this.orders = new List<IEnumerable<T>>(orders);
     }
 
-    public T[] get_combination_as_indexes(
+    private IEnumerable<T> get_combination_as_indexes(
         IEnumerable<IEnumerator<T>> mapping_enumerators
     ) {
         T[] result_orders = new T[mapping_enumerators.Count()];
