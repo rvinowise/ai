@@ -23,16 +23,27 @@ module Applying_stencil =
         )
         mapping
 
+    type Generator_of_stencil_mappings = 
+        Generator_of_orders<IEnumerable<Element_to_target<Vertex_id,Vertex_id>>>
+
     let map_first_nodes
-        stencil
+        (stencil: Stencil)
         target
         =
-        let figures_to_map = 
-            stencil
-            |>Stencil.first_referenced_figures
-            
+
+        let first_stencil_subfigures_with_figures =
+            stencil.edges
+            |>Edges.first_vertices
+            |>Stencil.only_subfigures_with_figures stencil
+
         let first_subfigures_of_stencil = 
-            Stencil.first_subfigures stencil
+            first_stencil_subfigures_with_figures
+            |>Seq.map fst
+
+        let figures_to_map = 
+            first_stencil_subfigures_with_figures
+            |>Seq.map snd
+            |>Seq.distinct
 
         figures_to_map
         |>Seq.map (fun figure->
@@ -73,7 +84,7 @@ module Applying_stencil =
         mapping
 
     
-    let possible_targets_for_mapped_subfigure
+    let possible_targets_for_mapping_subfigure
         stencil
         target
         mapping  
@@ -101,13 +112,13 @@ module Applying_stencil =
         |>Seq.map (copied_mapping_with_prolongation base_mapping)
 
 
-    let find_possible_next_mappings
+    let next_mapping_targets_for_stencil_subfigures
         stencil
         target
         base_mapping
         next_subfigures_to_map
         =
-        let rec mappings_of_next_subfigure
+        let rec mapping_targets_for_next_subfigure
             (stencil:Stencil)
             (target:Figure)
             (mapping:Mapping)
@@ -119,7 +130,7 @@ module Applying_stencil =
             | [] -> found_next_mappings
             | current_subfigure_to_map::left_subfigures_to_map ->
                 let targets = 
-                    possible_targets_for_mapped_subfigure
+                    possible_targets_for_mapping_subfigure
                         stencil
                         target
                         base_mapping
@@ -128,14 +139,14 @@ module Applying_stencil =
                 if targets.Count = 0 then 
                     []
                 else
-                    mappings_of_next_subfigure
+                    mapping_targets_for_next_subfigure
                         stencil
                         target
                         mapping
                         left_subfigures_to_map
                         ((current_subfigure_to_map|>fst, targets)::found_next_mappings)
         
-        mappings_of_next_subfigure
+        mapping_targets_for_next_subfigure
             stencil
             target
             base_mapping
@@ -149,7 +160,7 @@ module Applying_stencil =
         (mapping:Mapping)
         =
         let possible_next_mappings =
-            find_possible_next_mappings
+            next_mapping_targets_for_stencil_subfigures
                 stencil
                 target
                 mapping

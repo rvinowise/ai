@@ -14,7 +14,7 @@ open rvinowise.ai.mapping_stencils
 
 
 
-module enumerating_combinations_benchmark =
+module enumerating_combinations =
 
     type Benchmarking_enumerating_combinations() =
 
@@ -27,7 +27,7 @@ module enumerating_combinations_benchmark =
   
 
     [<Fact>] //(Skip="slow")
-    let benchmark()=
+    let run_benchmark()=
 
         let config = 
             DefaultConfig.Instance.
