@@ -1,5 +1,6 @@
 namespace rvinowise.ai.test
 
+open BenchmarkDotNet.Engines
 open Xunit
 open FsUnit
 
@@ -22,11 +23,8 @@ module enumerating_combinations_benchmark =
             Applying_stencil.map_first_nodes 
                 example.Stencil.a_fitting_stencil
                 example.Figure.a_high_level_relatively_simple_figure
-            
-        [<Benchmark>]
-        member this.generator_of_mappings_with_objects()=()
-            
-
+            |> Consumer().Consume
+  
 
     [<Fact>] //(Skip="slow")
     let benchmark()=
@@ -36,3 +34,4 @@ module enumerating_combinations_benchmark =
                 WithOptions(ConfigOptions.DisableOptimizationsValidator)
 
         BenchmarkRunner.Run<Benchmarking_enumerating_combinations>(config) |> ignore
+

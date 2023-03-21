@@ -14,15 +14,17 @@ namespace rvinowise.ai.mapping_stencils {
 
 
 public class Generator_of_orders<T>:
-    IEnumerable<IEnumerable<T>>
+//  states       orders       single_order_state
+    IEnumerable< IEnumerable< T                 > >
 {
     private readonly List<IEnumerable<T>> orders;
 
-    public Generator_of_orders(IEnumerable<IEnumerable<T>> orders) {
+    //                          orders       order_states(generator)  single_order_state
+    public Generator_of_orders( IEnumerable< IEnumerable            < T                 > > orders) {
         this.orders = new List<IEnumerable<T>>(orders);
     }
 
-    public T[] get_combination_as_indexes(
+    private static IEnumerable<T> get_combination_as_indexes(
         IEnumerable<IEnumerator<T>> mapping_enumerators
     ) {
         T[] result_orders = new T[mapping_enumerators.Count()];

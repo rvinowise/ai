@@ -125,24 +125,6 @@ module ``application of stencils``=
 
 
     [<Fact>]
-    let ``preparing inputs for permutators, which map initial nodes``()=
-        
-        let subfigures_in_stencil, subfigures_in_target =
-            sorted_subfigures_to_map_first
-                example.Stencil.a_fitting_stencil
-                example.Figure.a_high_level_relatively_simple_figure
-        
-        let permutator_input = 
-            input_for_first_mappings_permutators 
-                subfigures_in_stencil
-                subfigures_in_target
-                                
-        permutator_input |> should equal [|
-            (* b *)(1,3) ;
-            (* h *)(1,1) ;
-        |]
-
-    [<Fact>]
     let ``generator of initial mappings returns combinations``()=
         
         let generator = Generator_of_orders<int[]>[
@@ -177,17 +159,6 @@ module ``application of stencils``=
                 Mapping.ofStringPairs ["b","b2";"h","h"]
             ]
     
-    [<Fact>]
-    let ``producing initial mapping (with a generic generator yielding objects)``()=
-        ``map_first_nodes (generic)``
-            example.Stencil.a_fitting_stencil
-            example.Figure.a_high_level_relatively_simple_figure
-        |> should equal
-            [   Mapping.ofStringPairs ["b","b0";"h","h"];
-                Mapping.ofStringPairs ["b","b1";"h","h"];
-                Mapping.ofStringPairs ["b","b2";"h","h"]
-            ]
-            
     [<Fact>]
     let ``initial mapping when the target lacks some figures``()=
         map_first_nodes 
