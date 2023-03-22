@@ -94,8 +94,6 @@ namespace rvinowise.ai.stencil
 
     [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
     module Mapping=
-        open rvinowise.ai
-        open rvinowise
         
         let copy (copied:Mapping) =
             Mapping(copied)

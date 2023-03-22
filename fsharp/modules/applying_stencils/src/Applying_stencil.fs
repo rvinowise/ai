@@ -1,14 +1,9 @@
 namespace rvinowise.ai
-open Xunit
-open FsUnit
 
 module Applying_stencil = 
     open System.Collections.Generic
-    open System.Diagnostics.Contracts
-    open Rubjerg.Graphviz
     open rvinowise.ai.mapping_stencils
     open rvinowise.ai.stencil
-    open rvinowise   
 
  
    
@@ -30,20 +25,12 @@ module Applying_stencil =
         (stencil: Stencil)
         target
         =
-
-        let first_stencil_subfigures_with_figures =
-            stencil.edges
-            |>Edges.first_vertices
-            |>Stencil.only_subfigures_with_figures stencil
-
-        let first_subfigures_of_stencil = 
-            first_stencil_subfigures_with_figures
-            |>Seq.map fst
-
         let figures_to_map = 
-            first_stencil_subfigures_with_figures
-            |>Seq.map snd
-            |>Seq.distinct
+            stencil
+            |>Stencil.first_referenced_figures
+            
+        let first_subfigures_of_stencil = 
+            Stencil.first_subfigures stencil
 
         figures_to_map
         |>Seq.map (fun figure->
@@ -63,13 +50,11 @@ module Applying_stencil =
         |>Seq.map (Seq.collect id)
         |>Seq.map mapping_from_generator_output
         
-       
-        
+
     let (|Seq|_|) test input =
         if Seq.compareWith Operators.compare input test = 0
             then Some ()
             else None
-
     
 
     let copied_mapping_with_prolongation
@@ -169,9 +154,10 @@ module Applying_stencil =
         if possible_next_mappings.IsEmpty then
             Seq.singleton mapping
         else
-            possible_next_mappings
-            |>all_combinations_of_next_mappings
-            |>prolongate_mapping_with_next_mapped_subfigures mapping
+            Seq.singleton mapping //todo
+            //possible_next_mappings
+            //|>all_combinations_of_next_mappings
+            //|>prolongate_mapping_with_next_mapped_subfigures mapping
 
     let rec prolongate_all_mappings 
         (stencil:Stencil)

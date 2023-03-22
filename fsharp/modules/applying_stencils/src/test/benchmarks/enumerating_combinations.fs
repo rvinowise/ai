@@ -2,15 +2,12 @@ namespace rvinowise.ai.test
 
 open BenchmarkDotNet.Engines
 open Xunit
-open FsUnit
 
 open BenchmarkDotNet.Configs
 open BenchmarkDotNet.Attributes
 open BenchmarkDotNet.Running
 
 open rvinowise.ai
-open rvinowise.ai.ui
-open rvinowise.ai.mapping_stencils
 
 
 
@@ -26,7 +23,7 @@ module enumerating_combinations =
             |> Consumer().Consume
   
 
-    [<Fact>] //(Skip="slow")
+    [<Fact(Skip="slow")>] //
     let run_benchmark()=
 
         let config = 

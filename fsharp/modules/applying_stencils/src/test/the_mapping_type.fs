@@ -7,7 +7,6 @@ module ``the mapping type``=
     open FsUnit
     open rvinowise.ai.stencil
     open rvinowise.ai
-    open System.Collections.Generic
     
 
         
