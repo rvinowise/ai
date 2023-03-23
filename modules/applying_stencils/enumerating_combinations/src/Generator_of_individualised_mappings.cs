@@ -41,6 +41,15 @@ public class Generator_of_individualised_mappings<Element, Target>
     ) {
         this.elements_to_targets = new List<Element_to_targets<Element,Target>>(elements_to_targets);
     }
+    public Generator_of_individualised_mappings(
+        IEnumerable<(Element, IEnumerable<Target>)> elements_to_targets
+    ) {
+        this.elements_to_targets = new List<Element_to_targets<Element,Target>>();
+        foreach(var element_to_targets in elements_to_targets) {
+            (Element element, IEnumerable<Target> targets) = element_to_targets;
+            this.elements_to_targets.Add(new Element_to_targets<Element, Target>(element, targets));
+        }
+    }
 
     #region IEnumerable
 
