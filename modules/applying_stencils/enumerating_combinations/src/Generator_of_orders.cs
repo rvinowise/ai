@@ -24,7 +24,7 @@ public class Generator_of_orders<T>:
         this.orders = new List<IEnumerable<T>>(orders);
     }
 
-    private static IEnumerable<T> get_combination_as_indexes(
+    private static IEnumerable<T> get_combination(
         IEnumerable<IEnumerator<T>> mapping_enumerators
     ) {
         T[] result_orders = new T[mapping_enumerators.Count()];
@@ -50,9 +50,9 @@ public class Generator_of_orders<T>:
         foreach(var enumerator in order_enumerators) {
             enumerator.SetToFirst();
         }
-        yield return get_combination_as_indexes(order_enumerators);
+        yield return get_combination(order_enumerators);
         while (set_next_iteration(order_enumerators)) {
-            yield return get_combination_as_indexes(order_enumerators);
+            yield return get_combination(order_enumerators);
         }
     }
 

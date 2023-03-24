@@ -15,6 +15,7 @@
     <Compile Include="src\painted\applying_stencil.fs" />
     <Compile Include="src\test\applying_a_stencil.fs" />
     <Compile Include="src\test\the_mapping_type.fs" />
+    <Compile Include="src\test\generator_of_orders.fs" />
     <Compile Include="src\test\benchmarks\enumerating_combinations.fs" />
     <Compile Include="src\test\benchmarks\querying_stencil.fs" />
   </ItemGroup>

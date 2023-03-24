@@ -85,11 +85,13 @@ module Applying_stencil =
             prolongating_figure
 
     let all_combinations_of_next_mappings 
-        (mappings: Map<Figure_id, struct (Vertex_id*HashSet<Vertex_id>) seq>) 
+        (mappings: Map<Figure_id, struct (Vertex_id*seq<Vertex_id>) list>) 
         =
         mappings
         |>Seq.map (fun pair->
-            Generator_of_individualised_mappings<Vertex_id,Vertex_id> pair.Value
+            Generator_of_individualised_mappings<Vertex_id,Vertex_id> (
+                Seq.cast<struct (Vertex_id*seq<Vertex_id>)> pair.Value
+            )
         )
         |>Seq.cast
         |>Generator_of_orders<IEnumerable<Element_to_target<Vertex_id,Vertex_id>>>
@@ -113,8 +115,8 @@ module Applying_stencil =
             (target:Figure)
             (mapping:Mapping)
             (left_subfigures_to_map:  list<Vertex_id*Figure_id>)
-            //                   mepping_generator  stencil_vertex possible_targets
-            (found_mappings: Map<Figure_id,        (Vertex_id   *  HashSet<Vertex_id>)  list>)
+            //                   mapping_generator  stencil_vertex possible_targets
+            (found_mappings: Map<Figure_id,  struct(Vertex_id   *  seq<Vertex_id>)  list>)
             =
 
             match left_subfigures_to_map with
@@ -126,6 +128,7 @@ module Applying_stencil =
                         target
                         base_mapping
                         current_subfigure_to_map
+                    
                         
                 if targets.Count = 0 then 
                     Map.empty
@@ -133,7 +136,7 @@ module Applying_stencil =
                     let updated_mappings =
                         let figure = snd current_subfigure_to_map
                         let updated_targets =
-                            (current_subfigure_to_map|>fst, targets)
+                            struct(current_subfigure_to_map|>fst, targets|>Seq.cast)
                             ::
                             (found_mappings
                             |>extensions.Map.getOrDefault figure [])
@@ -169,9 +172,9 @@ module Applying_stencil =
         if possible_next_mappings.IsEmpty then
             Seq.singleton mapping
         else
-            //Seq.singleton mapping //todo
             possible_next_mappings
             |>all_combinations_of_next_mappings
+            |>Seq.cast
             |>prolongate_mapping_with_next_mapped_subfigures mapping
 
     let rec prolongate_all_mappings 

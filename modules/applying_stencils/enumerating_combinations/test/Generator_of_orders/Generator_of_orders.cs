@@ -121,8 +121,8 @@ public partial class filling_generator_or_orders_with_orders {
             }
         );
         
-        
-        List<List<List<Element_to_target<string, string>>>> result_combinations = 
+    //  states      figures     elements
+        IEnumerable<IEnumerable<IEnumerable<Element_to_target<string, string>>>> result_combinations = 
             new List<List<List<Element_to_target<string, string>>>> {
                 //1st iteration of the 2nd order
                 new(){
