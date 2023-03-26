@@ -43,7 +43,7 @@ module Applying_stencil =
             |>Seq.map (fun subfigure_in_stencil->
                 Element_to_targets<Vertex_id,Vertex_id> (subfigure_in_stencil,subfigures_in_target);
             )
-            |>Generator_of_individualised_mappings<Vertex_id, Vertex_id>
+            |>Generator_of_mappings<Vertex_id, Vertex_id>
         )
         |>Seq.cast
         |>Generator_of_orders<IEnumerable<Element_to_target<Vertex_id,Vertex_id>>>
@@ -89,12 +89,10 @@ module Applying_stencil =
         =
         mappings
         |>Seq.map (fun pair->
-            Generator_of_individualised_mappings<Vertex_id,Vertex_id> (
-                Seq.cast<struct (Vertex_id*seq<Vertex_id>)> pair.Value
-            )
+            Generator_of_mappings<Vertex_id,Vertex_id> pair.Value
         )
-        |>Seq.cast
-        |>Generator_of_orders<IEnumerable<Element_to_target<Vertex_id,Vertex_id>>>
+        |>Seq.cast<Element_to_target<Vertex_id,Vertex_id>seq seq>
+        |>Generator_of_orders<seq<Element_to_target<Vertex_id, Vertex_id>>>
 
     let prolongate_mapping_with_next_mapped_subfigures 
         (base_mapping: Mapping)

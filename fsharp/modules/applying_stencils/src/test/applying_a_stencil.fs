@@ -57,25 +57,26 @@ module ``application of stencils``=
     
     [<Fact>]
     let ``several mappings can be produced by one stencil application``()=
-        let result =
-            map_stencil_onto_target
+        
+        (
+             map_stencil_onto_target
                 example.Stencil.a_fitting_stencil
                 example.Figure.a_high_level_relatively_simple_figure
                 |> Set.ofSeq
-        let expected =
-            (Set.ofSeq [
-                Mapping.ofStringPairs [
-                    "b","b0";
-                    "h","h";
-                    "f","f1"
-                ];
-                Mapping.ofStringPairs [
-                    "b","b2";
-                    "h","h";
-                    "f","f1"
-                ]
-            ])
-        ()
+        )
+        |>should equal
+        (Set.ofSeq [
+            Mapping.ofStringPairs [
+                "b","b0";
+                "h","h";
+                "f","f1"
+            ];
+            Mapping.ofStringPairs [
+                "b","b2";
+                "h","h";
+                "f","f1"
+            ]
+        ])
 
     [<Fact>]
     let ``a full mapping can be produced if the stencil has only "out" in the middle``()=
@@ -122,30 +123,6 @@ module ``application of stencils``=
                     "d","e"
                 ]
         ]
-
-
-    [<Fact>]
-    let ``generator of initial mappings returns combinations``()=
-        
-        let generator = Generator_of_orders<int[]>[
-            Generator_of_mappings(1, 3)
-        ]
-    
-        let enumerator = generator.GetEnumerator()
-        enumerator.MoveNext()
-        |> should equal true
-        enumerator.Current
-        |> should equal [| [|0|] |]
-        enumerator.MoveNext()
-        |> should equal true
-        enumerator.Current
-        |> should equal [| [|1|] |]
-        enumerator.MoveNext()
-        |> should equal true
-        enumerator.Current
-        |> should equal [| [|2|] |]
-        enumerator.MoveNext()
-        |> should equal false
 
     
     [<Fact>]

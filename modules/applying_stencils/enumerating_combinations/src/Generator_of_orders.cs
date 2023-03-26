@@ -40,10 +40,6 @@ public class Generator_of_orders<T>:
     #region IEnumerable
 
     public IEnumerator<IEnumerable<T>> GetEnumerator() {
-        if (!orders.Any()) {
-            throw new Broken_contract_exception("enumerable orders should be added to the generator before enumerating it");
-        }
-        
         IList<IEnumerator<T>> order_enumerators = orders.Select(
             order => order.GetEnumerator()
         ).ToList();
