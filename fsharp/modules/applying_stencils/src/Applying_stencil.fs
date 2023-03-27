@@ -45,7 +45,7 @@ module Applying_stencil =
             )
             |>Generator_of_mappings<Vertex_id, Vertex_id>
         )
-        |>Seq.cast
+        |>Seq.cast<Element_to_target<Vertex_id, Vertex_id> seq seq>
         |>Generator_of_orders<IEnumerable<Element_to_target<Vertex_id,Vertex_id>>>
         |>Seq.map (Seq.collect id)
         |>Seq.map mapping_from_generator_output
@@ -172,7 +172,7 @@ module Applying_stencil =
         else
             possible_next_mappings
             |>all_combinations_of_next_mappings
-            |>Seq.cast
+            |>Seq.cast<Element_to_target<Vertex_id, Vertex_id> seq>
             |>prolongate_mapping_with_next_mapped_subfigures mapping
 
     let rec prolongate_all_mappings 
