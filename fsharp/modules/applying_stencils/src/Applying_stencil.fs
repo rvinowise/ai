@@ -84,6 +84,13 @@ module Applying_stencil =
             target
             prolongating_figure
 
+    let remove_distinction_between_figures
+    //                                                        vertices_of_figure all_orders(figures) all_iterations
+        (generations: Element_to_target<Vertex_id, Vertex_id> seq                seq                 seq)
+        =
+        generations
+        |>Seq.map (Seq.collect id)
+
     let all_combinations_of_next_mappings 
         (mappings: Map<Figure_id, struct (Vertex_id*seq<Vertex_id>) list>) 
         =
@@ -91,12 +98,18 @@ module Applying_stencil =
         |>Seq.map (fun pair->
             Generator_of_mappings<Vertex_id,Vertex_id> pair.Value
         )
-        |>Seq.cast<Element_to_target<Vertex_id,Vertex_id>seq seq>
+        //all_generators                                   vertices_of_generator(for_one_figure) iterations_of_generator
+        |>Seq.cast<  Element_to_target<Vertex_id,Vertex_id>seq                                   seq>
+        //                    type_of_every_order(digit)
         |>Generator_of_orders<seq<Element_to_target<Vertex_id, Vertex_id>>>
-
+        //all_iterations                                         vertices_of_figure all_orders(figures)
+        |>Seq.cast<      Element_to_target<Vertex_id, Vertex_id> seq                seq>
+        |>remove_distinction_between_figures
+        
     let prolongate_mapping_with_next_mapped_subfigures 
         (base_mapping: Mapping)
-        (added_mappings: seq<seq<Element_to_target<Vertex_id, Vertex_id>>>)
+        //                                                       all_vertices   combinations               
+        (added_mappings: Element_to_target<Vertex_id, Vertex_id> seq            seq         )
         =
         added_mappings
         |>Seq.map (copied_mapping_with_prolongation base_mapping)
@@ -172,7 +185,6 @@ module Applying_stencil =
         else
             possible_next_mappings
             |>all_combinations_of_next_mappings
-            |>Seq.cast<Element_to_target<Vertex_id, Vertex_id> seq>
             |>prolongate_mapping_with_next_mapped_subfigures mapping
 
     let rec prolongate_all_mappings 

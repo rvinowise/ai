@@ -64,19 +64,19 @@ module ``application of stencils``=
                 example.Figure.a_high_level_relatively_simple_figure
                 |> Set.ofSeq
         )
-        |>should equal
-        (Set.ofSeq [
-            Mapping.ofStringPairs [
-                "b","b0";
-                "h","h";
-                "f","f1"
-            ];
-            Mapping.ofStringPairs [
-                "b","b2";
-                "h","h";
-                "f","f1"
-            ]
-        ])
+        |>should equal (
+            Set.ofSeq [
+                Mapping.ofStringPairs [
+                    "b","b0";
+                    "h","h";
+                    "f","f1"
+                ];
+                Mapping.ofStringPairs [
+                    "b","b2";
+                    "h","h";
+                    "f","f1"
+                ]
+            ])
 
     [<Fact>]
     let ``a full mapping can be produced if the stencil has only "out" in the middle``()=
