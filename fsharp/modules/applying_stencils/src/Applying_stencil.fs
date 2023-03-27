@@ -21,6 +21,16 @@ module Applying_stencil =
     type Generator_of_stencil_mappings = 
         Generator_of_orders<IEnumerable<Element_to_target<Vertex_id,Vertex_id>>>
 
+    let mapping_combinations_from_generators
+        (generators: Generator_of_mappings<Vertex_id, Vertex_id> seq)
+        =
+        generators
+        //all_generators                                   vertices_of_generator(for_one_figure) iterations_of_generator
+        |>Seq.cast<  Element_to_target<Vertex_id,Vertex_id>seq                                   seq>
+        //                    type_of_every_order(digit)
+        |>Generator_of_orders<seq<Element_to_target<Vertex_id, Vertex_id>>>
+        |>Seq.map (Seq.collect id)
+
     let map_first_nodes
         (stencil: Stencil)
         target
@@ -45,11 +55,18 @@ module Applying_stencil =
             )
             |>Generator_of_mappings<Vertex_id, Vertex_id>
         )
-        |>Seq.cast<Element_to_target<Vertex_id, Vertex_id> seq seq>
-        |>Generator_of_orders<IEnumerable<Element_to_target<Vertex_id,Vertex_id>>>
-        |>Seq.map (Seq.collect id)
+        |>mapping_combinations_from_generators
         |>Seq.map mapping_from_generator_output
-        
+    
+    let all_combinations_of_next_mappings 
+        (mappings: Map<Figure_id, struct (Vertex_id*seq<Vertex_id>) list>) 
+        =
+        mappings
+        |>Seq.map (fun pair->
+            Generator_of_mappings<Vertex_id,Vertex_id> pair.Value
+        )
+        |>mapping_combinations_from_generators
+
 
     let (|Seq|_|) test input =
         if Seq.compareWith Operators.compare input test = 0
@@ -84,27 +101,6 @@ module Applying_stencil =
             target
             prolongating_figure
 
-    let remove_distinction_between_figures
-    //                                                        vertices_of_figure all_orders(figures) all_iterations
-        (generations: Element_to_target<Vertex_id, Vertex_id> seq                seq                 seq)
-        =
-        generations
-        |>Seq.map (Seq.collect id)
-
-    let all_combinations_of_next_mappings 
-        (mappings: Map<Figure_id, struct (Vertex_id*seq<Vertex_id>) list>) 
-        =
-        mappings
-        |>Seq.map (fun pair->
-            Generator_of_mappings<Vertex_id,Vertex_id> pair.Value
-        )
-        //all_generators                                   vertices_of_generator(for_one_figure) iterations_of_generator
-        |>Seq.cast<  Element_to_target<Vertex_id,Vertex_id>seq                                   seq>
-        //                    type_of_every_order(digit)
-        |>Generator_of_orders<seq<Element_to_target<Vertex_id, Vertex_id>>>
-        //all_iterations                                         vertices_of_figure all_orders(figures)
-        |>Seq.cast<      Element_to_target<Vertex_id, Vertex_id> seq                seq>
-        |>remove_distinction_between_figures
         
     let prolongate_mapping_with_next_mapped_subfigures 
         (base_mapping: Mapping)
@@ -140,7 +136,6 @@ module Applying_stencil =
                         base_mapping
                         current_subfigure_to_map
                     
-                        
                 if targets.Count = 0 then 
                     Map.empty
                 else
@@ -181,7 +176,7 @@ module Applying_stencil =
                 (List.ofSeq next_subfigures_to_map)
 
         if possible_next_mappings.IsEmpty then
-            Seq.singleton mapping
+            Seq.empty
         else
             possible_next_mappings
             |>all_combinations_of_next_mappings
