@@ -16,7 +16,7 @@ module querying_stencil =
     type Benchmarking_querying_stencil() =
 
         member this.stencil = example.Stencil.a_fitting_stencil
-        member this.figure = example.Figure.a_high_level_relatively_simple_figure
+        member this.figure = example.Figure.a_figure_with_huge_beginning
 
         [<Benchmark>]
         member this.map_first_nodes__double_query()=
@@ -36,7 +36,7 @@ module querying_stencil =
     [<Fact>]
     let profile()=
         let stencil = example.Stencil.a_fitting_stencil
-        let figure = example.Figure.a_high_level_relatively_simple_figure
+        let figure = example.Figure.a_figure_with_huge_beginning
         
         Applying_stencil.map_first_nodes stencil figure
         |>Consumer().Consume

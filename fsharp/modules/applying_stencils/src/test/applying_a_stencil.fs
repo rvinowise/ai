@@ -6,7 +6,7 @@ open FsUnit
 open rvinowise.ai
 open rvinowise.ai.Applying_stencil
 open rvinowise.ai.ui
-open rvinowise.ai.mapping_stencils
+open rvinowise.ai.generating_combinations
 
 
         
@@ -31,7 +31,7 @@ module ``application of stencils``=
     let ``impossible to prolongate, because of no matching following subfigures``()=
         prolongate_one_mapping_with_next_subfigures 
             example.Stencil.a_fitting_stencil
-            example.Figure.a_high_level_relatively_simple_figure
+            example.Figure.a_figure_with_huge_beginning
             [(Vertex_id "f", Figure_id "f")]
             initial_mapping_without_prolongation
         |> should equal
@@ -41,7 +41,7 @@ module ``application of stencils``=
     let``prolongation with a single following node``()=
         prolongate_one_mapping_with_next_subfigures 
             example.Stencil.a_fitting_stencil
-            example.Figure.a_high_level_relatively_simple_figure
+            example.Figure.a_figure_with_huge_beginning
             [(Vertex_id "f", Figure_id "f")]
             initial_useless_mapping
         |> should equal
@@ -61,7 +61,7 @@ module ``application of stencils``=
         (
              map_stencil_onto_target
                 example.Stencil.a_fitting_stencil
-                example.Figure.a_high_level_relatively_simple_figure
+                example.Figure.a_figure_with_huge_beginning
                 |> Set.ofSeq
         )
         |>should equal (
@@ -113,7 +113,7 @@ module ``application of stencils``=
 
     [<Fact>]
     let ``a fitting stencil, applied to a figure, outputs subgraphs``()=
-        let target = example.Figure.a_high_level_relatively_simple_figure
+        let target = example.Figure.a_figure_with_huge_beginning
         let stencil = example.Stencil.a_fitting_stencil
         stencil
         |>results_of_stencil_application target
@@ -127,7 +127,7 @@ module ``application of stencils``=
     
     [<Fact>]
     let ``mapping of first stencil subfigures onto target produces initial mapping``()=
-        map_first_nodes 
+        map_first_nodes
             example.Stencil.a_fitting_stencil
             example.Figure.a_high_level_relatively_simple_figure
         |> should equal
@@ -138,7 +138,7 @@ module ``application of stencils``=
     
     [<Fact>]
     let ``initial mapping when the target lacks some figures``()=
-        map_first_nodes 
+        map_first_nodes
             (
                 built.Stencil.simple_without_separator [
                     "b","out1";
@@ -148,19 +148,19 @@ module ``application of stencils``=
                 ]
             )
             example.Figure.a_high_level_relatively_simple_figure
-        |> should equal []
+        |> should be Empty
 
     [<Fact>]
     let ``finding following subfigures referencing a specific figure``()=
         (Figure.subfigures_after_other_subfigures
-            example.Figure.a_high_level_relatively_simple_figure
+            example.Figure.a_figure_with_huge_beginning
             (Figure_id "f")
             [Vertex_id "b0"]
         )|> should equal
             [Vertex_id "f0";Vertex_id "f1"]
 
         (Figure.subfigures_after_other_subfigures
-            example.Figure.a_high_level_relatively_simple_figure
+            example.Figure.a_figure_with_huge_beginning
             (Figure_id "f")
             [Vertex_id "d";Vertex_id "b2"]
         )|> should equal
@@ -168,7 +168,7 @@ module ``application of stencils``=
     
     [<Fact>]
     let ``complete mapping of stencil onto target can be produced``()=
-        let figure = example.Figure.a_high_level_relatively_simple_figure
+        let figure = example.Figure.a_figure_with_huge_beginning
         let stencil = example.Stencil.a_fitting_stencil
         
         (map_stencil_onto_target stencil figure)
@@ -191,7 +191,7 @@ module ``application of stencils``=
 
     [<Fact>] //(Skip="ui")
     let ``paint the target figure and the stencil``()=
-        let figure = example.Figure.a_high_level_relatively_simple_figure
+        let figure = example.Figure.a_figure_with_huge_beginning
         let stencil = example.Stencil.a_fitting_stencil
 
         "F"

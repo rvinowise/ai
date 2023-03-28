@@ -4,7 +4,7 @@ open Xunit
 open FsUnit
 open rvinowise.ai.stencil
 open rvinowise.ai
-open rvinowise.ai.mapping_stencils
+open rvinowise.ai.generating_combinations
 
 module ``generator of orders``=
     

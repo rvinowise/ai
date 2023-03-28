@@ -1,6 +1,6 @@
 using System;
 using NUnit.Framework;
-using rvinowise.ai.mapping_stencils;
+using rvinowise.ai.generating_combinations;
 
 namespace rvinowise.ai.test.Generator_of_mappings {
 

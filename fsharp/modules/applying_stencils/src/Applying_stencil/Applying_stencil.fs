@@ -1,63 +1,18 @@
 namespace rvinowise.ai
 
+
+
 module Applying_stencil = 
     open System.Collections.Generic
-    open rvinowise.ai.mapping_stencils
+    open rvinowise.ai.generating_combinations
     open rvinowise.ai.stencil
     open rvinowise
+    open rvinowise.ai.applying_stencil_impl
  
-   
-    let mapping_from_generator_output
-        (chosen_targets: seq<Element_to_target<Vertex_id,Vertex_id>>)
-        =
-        let mapping = Mapping.empty()
-        
-        chosen_targets
-        |>Seq.iter (fun pair ->
-            mapping.Add(pair.element, pair.target)    
-        )
-        mapping
-
-    type Generator_of_stencil_mappings = 
-        Generator_of_orders<IEnumerable<Element_to_target<Vertex_id,Vertex_id>>>
-
-    let mapping_combinations_from_generators
-        (generators: Generator_of_mappings<Vertex_id, Vertex_id> seq)
-        =
-        generators
-        //all_generators                                   vertices_of_generator(for_one_figure) iterations_of_generator
-        |>Seq.cast<  Element_to_target<Vertex_id,Vertex_id>seq                                   seq>
-        //                    type_of_every_order(digit)
-        |>Generator_of_orders<seq<Element_to_target<Vertex_id, Vertex_id>>>
-        |>Seq.map (Seq.collect id)
-
-    let map_first_nodes
-        (stencil: Stencil)
-        target
-        =
-        let figures_to_map = 
-            stencil
-            |>Stencil.first_referenced_figures
-            
-        let first_subfigures_of_stencil = 
-            Stencil.first_subfigures stencil
-
-        figures_to_map
-        |>Seq.map (fun figure->
-            let subfigures_in_target =
-                Figure.vertices_referencing_lower_figure target figure
-            figure
-            |>Stencil.vertices_referencing_figure 
-                    stencil
-                    first_subfigures_of_stencil
-            |>Seq.map (fun subfigure_in_stencil->
-                Element_to_targets<Vertex_id,Vertex_id> (subfigure_in_stencil,subfigures_in_target);
-            )
-            |>Generator_of_mappings<Vertex_id, Vertex_id>
-        )
-        |>mapping_combinations_from_generators
-        |>Seq.map mapping_from_generator_output
     
+
+    let map_first_nodes = Map_first_nodes.``map_first_nodes(breaking recursion)``
+
     let all_combinations_of_next_mappings 
         (mappings: Map<Figure_id, struct (Vertex_id*seq<Vertex_id>) list>) 
         =
@@ -65,7 +20,7 @@ module Applying_stencil =
         |>Seq.map (fun pair->
             Generator_of_mappings<Vertex_id,Vertex_id> pair.Value
         )
-        |>mapping_combinations_from_generators
+        |>Work_with_generators.mapping_combinations_from_generators
 
 
     let (|Seq|_|) test input =

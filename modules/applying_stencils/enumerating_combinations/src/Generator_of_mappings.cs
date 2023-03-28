@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 
 
-namespace rvinowise.ai.mapping_stencils {
+namespace rvinowise.ai.generating_combinations {
 
 public struct Element_to_targets<Element, Target> {
     public Element element;

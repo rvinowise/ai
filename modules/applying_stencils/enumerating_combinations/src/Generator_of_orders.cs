@@ -4,7 +4,7 @@ using System.Linq;
 using rvinowise.contracts;
 
 
-namespace rvinowise.ai.mapping_stencils {
+namespace rvinowise.ai.generating_combinations {
 
 
 /*

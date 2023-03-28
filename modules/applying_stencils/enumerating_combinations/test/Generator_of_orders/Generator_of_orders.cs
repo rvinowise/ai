@@ -1,5 +1,5 @@
 using NUnit.Framework;
-using rvinowise.ai.mapping_stencils;
+using rvinowise.ai.generating_combinations;
 using rvinowise.contracts;
 
 namespace rvinowise.ai.test.generator_of_order_sequences {

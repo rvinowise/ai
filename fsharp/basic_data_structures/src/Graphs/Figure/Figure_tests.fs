@@ -23,7 +23,7 @@ namespace rvinowise.ai
         let ``vertices reacheble from others``()=
             Edges.vertices_reacheble_from_other_vertices
                 (fun _->true)
-                example.Figure.a_high_level_relatively_simple_figure.edges
+                example.Figure.a_figure_with_huge_beginning.edges
                 (["b0";"b2"]|>Seq.map Vertex_id)
             |> should equal ["f1"]
 
@@ -31,7 +31,7 @@ namespace rvinowise.ai
         let ``vertices reaching others``()=
             Edges.vertices_reaching_other_vertices
                 (fun _->true)
-                example.Figure.a_high_level_relatively_simple_figure.edges
+                example.Figure.a_figure_with_huge_beginning.edges
                 (["b1";"f1"]|>Seq.map Vertex_id)
             |> should equal ["b0"]
 
