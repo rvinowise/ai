@@ -35,18 +35,18 @@ module mapping_first_nodes =
         member this.breaking_recursion()=
             Map_first_nodes.``map_first_nodes(breaking recursion)`` 
                 this.stencil
-                example.Figure.a_figure_with_huge_beginning
+                this.target_figure
             |> Consumer().Consume
   
         [<Benchmark>]
         member this.checking_after_full_calculation()=
             Map_first_nodes.``map_first_nodes(checking after full calculation)``
                 this.stencil
-                example.Figure.a_figure_with_huge_beginning
+                this.target_figure
             |> Consumer().Consume
         
         
-    [<Fact>] //(Skip="slow")
+    [<Fact(Skip="slow")>] //
     let run_benchmark()=
 
         let config = 
