@@ -168,7 +168,7 @@ module ``application of stencils``=
     
     [<Fact>]
     let ``complete mapping of stencil onto target can be produced``()=
-        let figure = example.Figure.a_figure_with_huge_beginning
+        let figure = example.Figure.a_figure_with_big_beginning
         let stencil = example.Stencil.a_fitting_stencil
         
         (map_stencil_onto_target stencil figure)
