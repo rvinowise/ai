@@ -43,6 +43,7 @@ module rvinowise.ai.example.Figure
                 ("i1","f0");
                 ("j1","f0");
             ]
+
     let a_figure_with_big_beginning = 
         built.Figure.simple 
             [
@@ -51,8 +52,11 @@ module rvinowise.ai.example.Figure
                 ("c0","x0");
                 ("d0","x0");
                 ("e0","x0");
-                
-               
+                ("f0","x0");
+                ("g0","x0");
+                ("h0","x0");
+                ("i0","x0");
+
                 ("x0","y0");
                 ("y0","z0");
                 ("z0","f0");
@@ -62,5 +66,8 @@ module rvinowise.ai.example.Figure
                 ("c1","f0");
                 ("d1","f0");
                 ("e1","f0");
-                
+                ("f1","f0");
+                ("g1","f0");
+                ("h1","f0");
+                ("i1","f0");
             ]

@@ -168,7 +168,7 @@ module ``application of stencils``=
     
     [<Fact>]
     let ``complete mapping of stencil onto target can be produced``()=
-        let figure = example.Figure.a_figure_with_big_beginning
+        let figure = example.Figure.a_high_level_relatively_simple_figure
         let stencil = example.Stencil.a_fitting_stencil
         
         (map_stencil_onto_target stencil figure)
@@ -187,7 +187,13 @@ module ``application of stencils``=
             ]
             //|>Seq.map Set.ofSeq
         
-
+    [<Fact>]
+    let ``an impossible mapping onto a big figure finishes in a short time ``()=
+        let figure = example.Figure.a_figure_with_huge_beginning
+        let stencil = example.Stencil.a_fitting_stencil
+        
+        (map_stencil_onto_target stencil figure)
+        |> should be Empty
 
     [<Fact>] //(Skip="ui")
     let ``paint the target figure and the stencil``()=
