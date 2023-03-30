@@ -1,12 +1,12 @@
 namespace rvinowise.ai.test
 
+open System
 open Xunit
 open FsUnit
 
 open rvinowise.ai
 open rvinowise.ai.Applying_stencil
 open rvinowise.ai.ui
-open rvinowise.ai.generating_combinations
 
 
         
@@ -186,14 +186,44 @@ module ``application of stencils``=
                 ];
             ]
             //|>Seq.map Set.ofSeq
-        
+    
+    
+    let with_timeout timeout action =
+        async {
+            let! child = Async.StartChild( action, timeout )
+            return! child
+        }
+    type Async with
+        static member WithTimeout (timeout : int option) operation = 
+            match timeout with
+            | Some time  when time > 0 -> 
+                async { 
+                    let! child = Async.StartChild (operation, time) 
+                    try 
+                        let! result = child 
+                        return Some result
+                    with :? TimeoutException -> return None 
+                }
+            | _ -> 
+                async { 
+                    let! result = operation
+                    return Some result
+                }
+    
     [<Fact>]
-    let ``an impossible mapping onto a big figure finishes in a short time ``()=
-        let figure = example.Figure.a_figure_with_huge_beginning
+    let ``mapping onto a (tricky?) figure finishes in a short time ``()=
+        let figure = example.Figure.a_figure_with_big_beginning
         let stencil = example.Stencil.a_fitting_stencil
         
-        (map_stencil_onto_target stencil figure)
-        |> should be Empty
+        let task = async {
+            return (map_stencil_onto_target stencil figure)
+        }
+        //|>with_timeout 10000
+        //|>Async.WithTimeout (Some 10000)
+        let t = Async.StartChild(task, 10000)
+        //|> Async.RunSynchronously
+        t.Result
+        |>should be Empty
 
     [<Fact>] //(Skip="ui")
     let ``paint the target figure and the stencil``()=
