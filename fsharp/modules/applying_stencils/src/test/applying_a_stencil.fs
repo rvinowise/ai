@@ -219,6 +219,21 @@ module ``application of stencils``=
         map_stencil_onto_target stencil figure
         |>should be Empty
 
+    [<Fact>]
+    let ``prolongate mapping which halts``()=
+        let stencil = example.Stencil.a_fitting_stencil 
+        let target = example.Figure.a_figure_with_big_beginning
+        let next_subfigures_to_map = [Vertex_id "f", Figure_id "f"]
+        [
+            Mapping[Vertex_id "h", Vertex_id "h0"; Vertex_id "b", Vertex_id "b0"];
+            Mapping[Vertex_id "h", Vertex_id "h1"; Vertex_id "b", Vertex_id "b0"];
+            Mapping[Vertex_id "h", Vertex_id "h0"; Vertex_id "b", Vertex_id "b1"];
+            Mapping[Vertex_id "h", Vertex_id "h1"; Vertex_id "b", Vertex_id "b1"];
+        ]
+        |>Seq.map (prolongate_one_mapping_with_next_subfigures stencil target next_subfigures_to_map)
+        |>should be Empty
+            
+            
     [<Fact>] //(Skip="ui")
     let ``paint the target figure and the stencil``()=
         let figure = example.Figure.a_high_level_relatively_simple_figure

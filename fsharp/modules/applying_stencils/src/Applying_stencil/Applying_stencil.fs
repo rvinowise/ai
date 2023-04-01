@@ -155,10 +155,13 @@ module Applying_stencil =
             match next_subfigures_to_map with
             | Seq [] -> mappings
             |_->
+//                mappings
+//                |>Seq.collect (
+//                    prolongate_one_mapping_with_next_subfigures stencil target next_subfigures_to_map
+//                )
                 mappings
-                |>Seq.collect (
-                    prolongate_one_mapping_with_next_subfigures stencil target next_subfigures_to_map
-                )
+                |>Seq.map (prolongate_one_mapping_with_next_subfigures stencil target next_subfigures_to_map)
+                |>Seq.collect id
         
         match next_vertices_to_map with
         | Seq [] -> 
