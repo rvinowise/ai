@@ -1,6 +1,8 @@
 namespace rvinowise.ai.test
 
 open System
+open System.Threading
+open System.Threading.Tasks
 open Xunit
 open FsUnit
 
@@ -188,41 +190,33 @@ module ``application of stencils``=
             //|>Seq.map Set.ofSeq
     
     
-    let with_timeout timeout action =
+    let mapping_task (stencil, figure) : Async<Unit> =
         async {
-            let! child = Async.StartChild( action, timeout )
-            return! child
+            let! ct = Async.CancellationToken
+            printfn $"Cancellation token: {ct.GetHashCode()}"
+
+            use! c = Async.OnCancel(fun () -> printfn "Cancelled")
+
+            printfn $"{map_stencil_onto_target stencil figure}"
         }
-    type Async with
-        static member WithTimeout (timeout : int option) operation = 
-            match timeout with
-            | Some time  when time > 0 -> 
-                async { 
-                    let! child = Async.StartChild (operation, time) 
-                    try 
-                        let! result = child 
-                        return Some result
-                    with :? TimeoutException -> return None 
-                }
-            | _ -> 
-                async { 
-                    let! result = operation
-                    return Some result
-                }
     
     [<Fact>]
-    let ``mapping onto a (tricky?) figure finishes in a short time ``()=
+    let ``mapping onto a tricky figure (profiling with timeout)``()=
         let figure = example.Figure.a_figure_with_big_beginning
         let stencil = example.Stencil.a_fitting_stencil
         
-        let task = async {
-            return (map_stencil_onto_target stencil figure)
-        }
-        //|>with_timeout 10000
-        //|>Async.WithTimeout (Some 10000)
-        let t = Async.StartChild(task, 10000)
-        //|> Async.RunSynchronously
-        t.Result
+        let cts = new CancellationTokenSource(10000)
+        
+        Async.Start(mapping_task(stencil, figure), cts.Token)
+        Async.Sleep(10000)|>Async.RunSynchronously
+        //Async.Ignore
+    
+    [<Fact>]
+    let ``mapping onto a tricky figure``()=
+        let figure = example.Figure.a_figure_with_big_beginning
+        let stencil = example.Stencil.a_fitting_stencil
+        
+        map_stencil_onto_target stencil figure
         |>should be Empty
 
     [<Fact>] //(Skip="ui")
