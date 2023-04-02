@@ -88,6 +88,30 @@ namespace rvinowise.ai
             |>Seq.filter (is_last_vertex edges)
             |>Seq.distinct
         
+
+        let rec first_vertex_reacheble_from_vertices
+            (is_needed:Vertex_id->bool)
+            (step_further: Vertex_id -> Vertex_id seq)
+            (starting_vertices: Vertex_id seq)
+            =
+            let further_vertices =
+                starting_vertices
+                |>Seq.collect step_further
+            
+            if Seq.length further_vertices > 0 then
+                further_vertices
+                |>Seq.tryFind is_needed
+                |>function 
+                |Some needed_vertex -> Some needed_vertex
+                |None -> 
+                    first_vertex_reacheble_from_vertices
+                        is_needed
+                        step_further
+                        further_vertices
+            else
+                None
+
+
         let rec private all_vertices_reacheble_from_vertices
             (is_needed:Vertex_id->bool)
             (step_further: Vertex_id -> Vertex_id seq)

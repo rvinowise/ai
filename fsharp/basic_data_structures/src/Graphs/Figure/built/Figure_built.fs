@@ -9,6 +9,30 @@ module rvinowise.ai.built.Figure
     open rvinowise.extensions
     open rvinowise
 
+
+    let can_reach_itself 
+        (edges: Edge seq) 
+        (vertex:Vertex_id)
+        =
+        Edges.first_vertex_reacheble_from_vertices
+            (fun v->v=vertex)
+            (Edges.next_vertices edges)
+            [vertex]
+        
+
+    exception BadGraphWithCycle of Vertex_id
+    let make_sure_no_loops (figure:Figure) =
+        figure.subfigures
+        |>Map.keys
+        |>Seq.tryPick (can_reach_itself figure.edges)
+        |>(fun looped_vertex ->
+            match looped_vertex with
+            |Some vertex ->
+                raise (BadGraphWithCycle vertex)
+            |None->
+                figure
+        )
+
     let simple (edges:seq<string*string>) =
         {
             edges=built.Graph.simple edges
@@ -31,6 +55,7 @@ module rvinowise.ai.built.Figure
                 |>Seq.concat
                 |>Map.ofSeq 
         }
+        |>make_sure_no_loops
     
     let from_sequence (subfigures: Figure_id seq) =
         let separator = "#"
@@ -151,6 +176,7 @@ module rvinowise.ai.built.Figure
             edges=built.Graph.from_tuples edges
             subfigures=vertex_data_from_tuples edges
         }
+        |>make_sure_no_loops
 
     let stencil_output figure (edges:Edge seq)=
         from_edges_of_figure figure edges

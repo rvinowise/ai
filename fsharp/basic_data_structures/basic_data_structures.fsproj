@@ -23,23 +23,17 @@
     <Compile Include="src\Graphs\components\Edge\Edge_type.fs" />
     <Compile Include="src\Graphs\components\Edge\Edge_functions.fs" />
     
-    <!-- <Compile Include="src\Graphs\Graph\type.fs" /> -->
     <Compile Include="src\Graphs\Graph\Graph_built.fs" />
-    <!-- <Compile Include="src\Graphs\Graph\Graph.fs" /> -->
-
 
     <Compile Include="src\Graphs\Figure\Figure_printed.fs" />
     <Compile Include="src\Graphs\Figure\Figure_types.fs" />
     <Compile Include="src\Graphs\Figure\Figure.fs" />
     <Compile Include="src\Graphs\Figure\built\Figure_built.fs" />
-    <!-- <Compile Include="src\Graphs\Figure\built\fusing_figures_into_a_sequence.fs" /> -->
     <Compile Include="src\Graphs\Figure\Figure_example.fs" />
-    <Compile Include="src\Graphs\Figure\Figure_tests.fs" />
+    
 
     <Compile Include="src\Graphs\Sequence\types.fs" />
     <Compile Include="src\Graphs\Sequence\fusing_sequences.fs" />
-    <!-- <Compile Include="src\Graphs\Sequence\example.fs" />
-    <Compile Include="src\Graphs\Sequence\tests.fs" /> -->
 
     <Compile Include="src\Graphs\Stencil\Stencil_types.fs" />
     <Compile Include="src\Graphs\Stencil\Stencil_built.fs" />
@@ -68,6 +62,10 @@
     <Compile Include="src\History\Event_batches\built.fs" />
     <Compile Include="src\History\Event_batches\convert_to_figure.fs" />
     <Compile Include="src\History\Event_batches\example.fs" />
+
+    <!-- tests -->
+    <Compile Include="src\Graphs\Figure\Figure_tests.fs" />
+
   </ItemGroup>
 
   <ItemGroup>

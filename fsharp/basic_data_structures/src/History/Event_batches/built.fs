@@ -210,7 +210,7 @@ module rvinowise.ai.built.Event_batches
             ];
             4,[
                 Finish ("a"|>Figure_id,2);
-                "b"|>Figure_id|>Start
+                "b"|>Figure_id|>Signal
             ]
         ]
 

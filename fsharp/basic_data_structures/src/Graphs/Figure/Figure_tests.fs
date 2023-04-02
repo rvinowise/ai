@@ -67,3 +67,13 @@ namespace rvinowise.ai
             |>(fun f->f.edges)
             |>Edges.is_sequence
             |>should equal false
+
+        [<Fact>]
+        let ``subfigures_after_other_subfigures with a tricky figure``()=
+            let stencil = example.Stencil.a_fitting_stencil
+            let figure = example.Figure.a_figure_with_big_beginning
+
+            Figure.subfigures_after_other_subfigures
+                figure
+                (Figure_id "f")
+                [Vertex_id "h0"; Vertex_id "b0"]

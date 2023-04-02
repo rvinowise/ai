@@ -62,7 +62,7 @@ namespace rvinowise.ai
                     is_vertex_referencing_figure 
                         owner_figure 
                         figure_referenced_by_needed_subfigures
-                    )
+                )
                 owner_figure.edges
                 subfigures_before_goals
 
