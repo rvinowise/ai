@@ -202,7 +202,7 @@ module ``application of stencils``=
     
     [<Fact>]
     let ``mapping onto a tricky figure (profiling with timeout)``()=
-        let figure = example.Figure.a_figure_with_big_beginning
+        let figure = example.Figure.a_figure_with_huge_beginning
         let stencil = example.Stencil.a_fitting_stencil
         
         let cts = new CancellationTokenSource(10000)
@@ -213,7 +213,7 @@ module ``application of stencils``=
     
     [<Fact>]
     let ``mapping onto a tricky figure``()=
-        let figure = example.Figure.a_figure_with_big_beginning
+        let figure = example.Figure.a_figure_with_huge_beginning
         let stencil = example.Stencil.a_fitting_stencil
         
         map_stencil_onto_target stencil figure
@@ -222,7 +222,7 @@ module ``application of stencils``=
     [<Fact>]
     let ``prolongate mapping which halts``()=
         let stencil = example.Stencil.a_fitting_stencil 
-        let target = example.Figure.a_figure_with_big_beginning
+        let target = example.Figure.a_figure_with_huge_beginning
         let next_subfigures_to_map = [Vertex_id "f", Figure_id "f"]
         [
             Mapping[Vertex_id "h", Vertex_id "h0"; Vertex_id "b", Vertex_id "b0"];

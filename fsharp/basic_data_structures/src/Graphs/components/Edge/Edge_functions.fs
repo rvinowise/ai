@@ -89,6 +89,44 @@ namespace rvinowise.ai
             |>Seq.distinct
         
 
+        let vertex_which_goes_into_cycle
+            (edges: Edge seq)
+            (starting_vertices: Vertex_id seq)
+            =
+
+            let rec vertex_which_goes_into_loop
+                (step_further: Vertex_id -> Vertex_id seq)
+                (starting_vertices: Vertex_id seq)
+                (passed_vertices: Set<Vertex_id>)
+                =
+                let further_vertices =
+                    starting_vertices
+                    |>Seq.collect step_further
+                
+                if Seq.length further_vertices > 0 then
+                    further_vertices
+                    |>Seq.tryFind (fun vertex->
+                        Set.contains vertex passed_vertices 
+                    )|>function
+                    |None->
+                        vertex_which_goes_into_loop
+                            step_further
+                            further_vertices
+                            (
+                                further_vertices
+                                |>Set.ofSeq
+                                |>Set.union passed_vertices
+                            )
+                    |repeated_vertex -> repeated_vertex
+                else
+                    None
+
+            vertex_which_goes_into_loop
+                (next_vertices edges)
+                starting_vertices
+                Set.empty
+
+
         let rec first_vertex_reacheble_from_vertices
             (is_needed:Vertex_id->bool)
             (step_further: Vertex_id -> Vertex_id seq)
