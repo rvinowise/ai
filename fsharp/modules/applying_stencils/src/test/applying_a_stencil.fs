@@ -114,7 +114,7 @@ module ``application of stencils``=
         )
 
     [<Fact>]
-    let ``a fitting stencil, applied to a figure, outputs subgraphs``()=
+    let ``a fitting stencil, applied to a figure, outputs a subgraph (with several vertices)``()=
         let target = example.Figure.a_high_level_relatively_simple_figure
         let stencil = example.Stencil.a_fitting_stencil
         stencil
@@ -126,6 +126,16 @@ module ``application of stencils``=
                 ]
         ]
 
+    [<Fact>]
+    let ``a fitting stencil, applied to a figure, outputs a subgraph (with only one vertex)``()=
+        built.Stencil.simple_with_separator [
+            "N","out";
+            "out",";";
+        ]
+        |>results_of_stencil_application (built.Figure.sequence_from_text "N0;")
+        |>should equal [
+            built.Figure.signal "0"
+        ]
     
     [<Fact>]
     let ``mapping of first stencil subfigures onto target produces initial mapping``()=
@@ -205,7 +215,7 @@ module ``application of stencils``=
             (painted.Graph.add_graph stencil.edges)
         |>painted.image.open_image_of_graph
 
-    [<Fact(Skip="bug")>]
+    [<Fact>]//(Skip="bug")
     let ``apply stencil to a long sequence``()=
         let number_concept = 
             built.Stencil.simple_with_separator [

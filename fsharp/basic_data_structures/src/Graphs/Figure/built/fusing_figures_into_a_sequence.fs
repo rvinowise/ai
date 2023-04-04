@@ -34,7 +34,7 @@ module rvinowise.ai.built.Fusing_figures_into_sequence
         |None->[]
         |Some vertices ->vertices
 
-    let private assign_numbers_to_vertices 
+    let private assign_numbers_to_vertices_of_one_figure 
         base_name
         starting_number
         vertices
@@ -47,7 +47,7 @@ module rvinowise.ai.built.Fusing_figures_into_sequence
                     ->
                 let new_vertex = base_name+string last_number
                 (
-                    renamed_vertices@[new_vertex]
+                    new_vertex::renamed_vertices
                     ,
                     last_number+1
                 )
@@ -55,6 +55,7 @@ module rvinowise.ai.built.Fusing_figures_into_sequence
         
         renamed
         |>fst
+        |>List.rev
         |>Seq.zip (vertices)
         |>Map.ofSeq
         ,
@@ -62,7 +63,7 @@ module rvinowise.ai.built.Fusing_figures_into_sequence
 
     type Renamed_subfigures = 
         Map<Figure_id, //figure, referenced by renamed vertices 
-                list< //owner figure which has the renamed verticex
+                list< //every element = owner figure which has the renamed verticex
                     Map<
                         Vertex_id, //old name of a vertex
                         Vertex_id> //new name of a vertex
@@ -97,12 +98,12 @@ module rvinowise.ai.built.Fusing_figures_into_sequence
             let renamed_a_vertices, last_number =
                 a_vertices
                 |>vertices_referencing_figure referenced_figure
-                |>assign_numbers_to_vertices
+                |>assign_numbers_to_vertices_of_one_figure
                     referenced_figure 1
             let renamed_b_vertices, _ =
                 b_vertices
                 |>vertices_referencing_figure referenced_figure
-                |>assign_numbers_to_vertices
+                |>assign_numbers_to_vertices_of_one_figure
                     referenced_figure last_number
             (
                 referenced_figure, 

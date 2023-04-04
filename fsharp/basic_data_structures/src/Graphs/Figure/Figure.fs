@@ -70,7 +70,9 @@ namespace rvinowise.ai
             figure.edges
             |>Seq.isEmpty|>not
 
-        
+        let is_empty (figure:Figure) =
+            figure.subfigures
+            |>Map.isEmpty
 
         let id_of_a_sequence (figure:Figure) =
             if Seq.isEmpty figure.edges then 

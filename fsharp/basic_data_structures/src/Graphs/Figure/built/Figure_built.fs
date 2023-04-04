@@ -120,11 +120,11 @@ module rvinowise.ai.built.Figure
             subfigures=[id|>Vertex_id, id|>Figure_id]|>Map.ofSeq
         }
 
-    let vertex_data_from_edges_of_figure (vertex_data: Map<Vertex_id, Figure_id>) (edges:Edge seq) =
+    let vertex_data_from_edges_of_figure (full_vertex_data: Map<Vertex_id, Figure_id>) (edges:Edge seq) =
         edges
         |>Edges.all_vertices
         |>Seq.map (fun vertex->
-            let referenced_element = vertex_data.TryFind(vertex)
+            let referenced_element = full_vertex_data.TryFind(vertex)
             Contract.Assume(
                 (referenced_element <> None), 
                 "the taken edges of the provided figure must not have verticex, which are not in that figure"
@@ -137,7 +137,16 @@ module rvinowise.ai.built.Figure
                     "the taken edges of the provided figure must not have verticex, which are not in that figure"
         )
         |>Map.ofSeq
-        
+    
+    let vertex_data_from_vertices_of_figure 
+        (full_vertex_data: Map<Vertex_id, Figure_id>) 
+        (vertices: Vertex_id seq)
+        =
+        vertices
+        |>Seq.map (fun vertex->
+            vertex, full_vertex_data|>Map.find vertex
+        )
+        |>Map.ofSeq
 
 
     let vertex_data_from_tuples 
@@ -153,12 +162,13 @@ module rvinowise.ai.built.Figure
         |>Seq.concat
         |>Map.ofSeq 
 
-    let from_edges_of_figure
+    let from_parts_of_figure
         (figure:Figure)
+        (vertices:Vertex_id seq)
         (edges:Edge seq) =
         {
             edges=edges|>Set.ofSeq
-            subfigures=vertex_data_from_edges_of_figure figure.subfigures edges
+            subfigures=(vertex_data_from_vertices_of_figure figure.subfigures vertices)
 
         }
 
@@ -170,16 +180,19 @@ module rvinowise.ai.built.Figure
         }
         |>make_sure_no_cycles
 
-    let stencil_output figure (edges:Edge seq)=
-        from_edges_of_figure figure edges
 
     let empty = from_tuples []
 
     
     let subgraph_with_vertices 
         original_figure 
-        (vertices:Set<Vertex_id>)
+        vertices
         =
         vertices
         |>Edges.edges_between_vertices original_figure.edges
-        |>stencil_output original_figure
+        |>from_parts_of_figure original_figure vertices 
+
+
+    let rename_vertices_to_standard_names 
+        (owner_figure:Figure)
+        
