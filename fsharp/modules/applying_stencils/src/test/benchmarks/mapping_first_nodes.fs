@@ -9,7 +9,7 @@ open BenchmarkDotNet.Running
 
 open rvinowise.ai
 open rvinowise.ai.applying_stencil_impl
-
+open rvinowise.extensions.benchmark
 
 
 module mapping_first_nodes =
@@ -17,36 +17,40 @@ module mapping_first_nodes =
     type Benchmarking_mapping_first_nodes() =
 
         member val stencils = [
-            example.Stencil.a_fitting_stencil;
-            example.Stencil.a_stencil_with_huge_beginning
+            {Parameter.value= example.Stencil.a_fitting_stencil; 
+            name="a_fitting_stencil"};
+            {value= example.Stencil.a_stencil_with_huge_beginning; 
+            name="a_stencil_with_huge_beginning"}
         ]
         member val target_figures = [
-            example.Figure.a_high_level_relatively_simple_figure;
-            example.Figure.a_figure_with_huge_beginning;
+            {Parameter.value= example.Figure.a_high_level_relatively_simple_figure; 
+            name="a_high_level_relatively_simple_figure"};
+            {value= example.Figure.a_figure_with_huge_beginning;
+            name="a_figure_with_huge_beginning"}
         ]
 
         [<ParamsSource("stencils")>]
-        member val stencil = built.Stencil.simple_without_separator [] with get, set
+        member val stencil = {value=built.Stencil.empty; name="default"} with get, set
 
         [<ParamsSource("target_figures")>]
-        member val target_figure = built.Figure.empty with get, set
+        member val target_figure = {value=built.Figure.empty; name="default"} with get, set
 
         [<Benchmark>]
         member this.breaking_recursion()=
             Map_first_nodes.``map_first_nodes(breaking recursion)`` 
-                this.stencil
-                this.target_figure
+                this.stencil.value
+                this.target_figure.value
             |> Consumer().Consume
   
         [<Benchmark>]
         member this.checking_after_full_calculation()=
             Map_first_nodes.``map_first_nodes(checking after full calculation)``
-                this.stencil
-                this.target_figure
+                this.stencil.value
+                this.target_figure.value
             |> Consumer().Consume
         
         
-    [<Fact(Skip="slow")>] //
+    [<Fact>] //(Skip="slow")
     let run_benchmark()=
 
         let config = 
@@ -55,3 +59,24 @@ module mapping_first_nodes =
 
         BenchmarkRunner.Run<Benchmarking_mapping_first_nodes>(config) |> ignore
 
+
+    [<Fact>]
+    let ``profile map_first_nodes(breaking recursion) big_stencil``()=
+        Map_first_nodes.``map_first_nodes(breaking recursion)`` 
+            example.Stencil.a_stencil_with_huge_beginning
+            example.Figure.a_high_level_relatively_simple_figure
+        |> Consumer().Consume
+
+    [<Fact>]
+    let ``profile map_first_nodes(breaking recursion) small_stencil``()=
+        Map_first_nodes.``map_first_nodes(breaking recursion)`` 
+            example.Stencil.a_fitting_stencil
+            example.Figure.a_high_level_relatively_simple_figure
+        |> Consumer().Consume
+    
+    [<Fact>]
+    let ``profile map_first_nodes(simple) big_stencil``()=
+        Map_first_nodes.``map_first_nodes(checking after full calculation)`` 
+            example.Stencil.a_stencil_with_huge_beginning
+            example.Figure.a_high_level_relatively_simple_figure
+        |> Consumer().Consume

@@ -103,7 +103,7 @@ module HashSet =
 
     [<Fact(Skip="long")>]
     let benchmark_hashSet()=
-       benchmark<Benchmarking_hashSet>()
+       Benchmarking.run_benchmark<Benchmarking_hashSet>()
 
     [<Fact>]
     let ``intersect many hash sets``()=

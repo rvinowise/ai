@@ -82,21 +82,25 @@ namespace rvinowise.ai
 
         
         
-        let private the_only_vertex figure =
+        let private try_the_only_vertex figure =
             figure.subfigures
-            |>Seq.head 
-            |>KeyValuePair.key
-            |>Seq.singleton
+            |>Seq.tryHead 
+            |>function
+            |Some pair->
+                pair
+                |>KeyValuePair.key
+                |>Seq.singleton
+            |None->Seq.empty
 
         let first_vertices figure =
             if Seq.isEmpty figure.edges then
-                the_only_vertex figure
+                try_the_only_vertex figure
             else
                 Edges.first_vertices figure.edges
 
         let last_vertices figure =
             if Seq.isEmpty figure.edges then
-                the_only_vertex figure
+                try_the_only_vertex figure
             else
                 Edges.last_vertices figure.edges
 

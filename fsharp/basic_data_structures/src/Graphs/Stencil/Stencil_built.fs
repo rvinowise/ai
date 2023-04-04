@@ -64,3 +64,5 @@ module rvinowise.ai.built.Stencil
             edges=built.Graph.from_tuples edges
             nodes=vertex_data_from_tuples edges
         }
+
+    let empty = {edges=Seq.empty; nodes=dict []}

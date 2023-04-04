@@ -13,9 +13,10 @@ module rvinowise.ai.built.Figure
     let make_sure_no_cycles (figure:Figure) =
         figure
         |>Figure.first_vertices
-        |>Edges.vertex_which_goes_into_cycle figure.edges
-        |>(fun looped_vertex ->
-            match looped_vertex with
+        |>Seq.map (Edges.vertex_which_goes_into_cycle figure.edges)
+        |>Seq.tryPick id
+        |>(fun cycled_vertex ->
+            match cycled_vertex with
             |Some vertex ->
                 raise (BadGraphWithCycle vertex)
             |None->

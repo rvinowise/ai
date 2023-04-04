@@ -4,14 +4,23 @@ open BenchmarkDotNet.Configs
 open BenchmarkDotNet.Attributes
 open BenchmarkDotNet.Running
 
-[<AutoOpen>]
-module Benchmarking=
+    module Benchmarking=
 
 
-    let benchmark<'Fixture>() =
+        let run_benchmark<'Fixture>() =
 
-        let config = 
-            DefaultConfig.Instance.
-                WithOptions(ConfigOptions.DisableOptimizationsValidator)
+            let config = 
+                DefaultConfig.Instance.
+                    WithOptions(ConfigOptions.DisableOptimizationsValidator)
 
-        BenchmarkRunner.Run<'Fixture>(config) |> ignore
+            BenchmarkRunner.Run<'Fixture>(config) |> ignore
+    
+
+namespace rvinowise.extensions.benchmark
+
+    type Parameter<'T> = {
+        value: 'T;
+        name: string
+    }
+    with
+        override this.ToString()=this.name

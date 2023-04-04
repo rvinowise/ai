@@ -91,40 +91,52 @@ namespace rvinowise.ai
 
         let vertex_which_goes_into_cycle
             (edges: Edge seq)
-            (starting_vertices: Vertex_id seq)
+            (starting_vertex: Vertex_id)
             =
 
-            let rec vertex_which_goes_into_loop
+            let rec DFS_for_repetitions
                 (step_further: Vertex_id -> Vertex_id seq)
-                (starting_vertices: Vertex_id seq)
-                (passed_vertices: Set<Vertex_id>)
+                (all_visited_vertices: HashSet<Vertex_id>)
+                (recursion_stack: Set<Vertex_id>)
+                (current_vertex: Vertex_id)
                 =
+
+                let only_unchecked_vertices vertices =
+                    vertices
+                    |>Seq.filter (fun vertex->
+                        all_visited_vertices.Contains(vertex)
+                        |>not
+                    )
+
                 let further_vertices =
-                    starting_vertices
-                    |>Seq.collect step_further
-                
-                if Seq.length further_vertices > 0 then
+                    current_vertex
+                    |>step_further
+
+                all_visited_vertices.Add(current_vertex)|>ignore
+
+                let repeated_vertex = 
                     further_vertices
                     |>Seq.tryFind (fun vertex->
-                        Set.contains vertex passed_vertices 
-                    )|>function
-                    |None->
-                        vertex_which_goes_into_loop
+                        Set.contains vertex recursion_stack
+                    )
+                match repeated_vertex with
+                |Some vertex ->Some vertex
+                |None->
+                    further_vertices
+                    |>only_unchecked_vertices
+                    |>Seq.tryPick (fun next_vertex->
+                        DFS_for_repetitions
                             step_further
-                            further_vertices
-                            (
-                                further_vertices
-                                |>Set.ofSeq
-                                |>Set.union passed_vertices
-                            )
-                    |repeated_vertex -> repeated_vertex
-                else
-                    None
+                            all_visited_vertices
+                            (recursion_stack|>Set.add current_vertex)
+                            next_vertex
+                    )
 
-            vertex_which_goes_into_loop
+            DFS_for_repetitions
                 (next_vertices edges)
-                starting_vertices
+                (HashSet<Vertex_id>())
                 Set.empty
+                starting_vertex
 
 
         let rec first_vertex_reacheble_from_vertices

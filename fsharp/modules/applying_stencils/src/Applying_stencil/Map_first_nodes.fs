@@ -6,6 +6,9 @@ module Map_first_nodes =
 
     (*a breaking function, which doesn't waste time on further search, if at least one referenced_figure is lacking.
     a simple optimisation, similar to "break" in C#
+    
+    works slightly faster generally; 
+    but it's 10x slower if a big stencil is failed to be applied to a small figure
     *)
     let subfigures_which_reference_figures
         (target:Figure)
@@ -72,7 +75,7 @@ module Map_first_nodes =
             Seq.empty
             
     
-    
+    (* simplest straight-forward implementation. reliably fast *)
     let ``map_first_nodes(checking after full calculation)``
         (stencil: Stencil)
         target
@@ -86,9 +89,9 @@ module Map_first_nodes =
 
         let subfigures_in_target =
             figures_to_map
-            |>Seq.map (fun figure->
-                figure,
-                Figure.vertices_referencing_lower_figure target figure
+            |>Seq.map (fun referenced_figure->
+                referenced_figure,
+                Figure.vertices_referencing_lower_figure target referenced_figure
             )
         let some_figures_are_lacking =  
             subfigures_in_target
