@@ -6,6 +6,7 @@ module rvinowise.ai.built.Fusing_figures_into_sequence
     open rvinowise.ai
     open rvinowise.extensions
     open rvinowise
+    open System.Collections.Generic
 
     let private rename_duplicating_vertices
         (a_figure: Figure)
@@ -17,7 +18,7 @@ module rvinowise.ai.built.Fusing_figures_into_sequence
             if 
                 a_figure.subfigures|>Map.containsKey b_vertex
             then
-                Some (b_vertex, b_vertex+"'")
+                Some (b_vertex, b_vertex+Vertex_id "'")
             else
                 None
 
@@ -34,8 +35,8 @@ module rvinowise.ai.built.Fusing_figures_into_sequence
         |None->[]
         |Some vertices ->vertices
 
-    let private assign_numbers_to_vertices_of_one_figure 
-        base_name
+    let assign_numbers_to_vertices_of_one_figure //todo use simpler vertices_with_sequencial_names
+        (referenced_figure:Figure_id)
         starting_number
         vertices
         =
@@ -45,7 +46,9 @@ module rvinowise.ai.built.Fusing_figures_into_sequence
                 fun 
                     (renamed_vertices, last_number) _
                     ->
-                let new_vertex = base_name+string last_number
+                let new_vertex =
+                    Figure_id.value referenced_figure+string last_number
+                    |>Vertex_id
                 (
                     new_vertex::renamed_vertices
                     ,
@@ -144,32 +147,7 @@ module rvinowise.ai.built.Fusing_figures_into_sequence
         )
         |>Map.ofSeq
 
-    let renamed_edges
-        (old_to_new_names: Map<Vertex_id, Vertex_id>)
-        (edges: Edge seq)
-        =
-        edges
-        |>Seq.map (fun edge->
-            let new_tail =
-                old_to_new_names[edge.tail]
-            let new_head =
-                old_to_new_names
-                |>Map.tryFind edge.head
-                |>function
-                |None -> "test"
-                |Some head -> head
-            Edge(new_tail, new_head)
-        )
-
-    let renamed_subfigures_of_figure 
-        (old_to_new_names: Map<Vertex_id, Vertex_id>)
-        (subfigures: Figure_vertex_data)
-        =
-        subfigures
-        |>Seq.map(fun pair->
-            old_to_new_names[pair.Key],
-            pair.Value
-        )|>Map.ofSeq
+    
 
     let sequential_pair 
         (a_figure: Figure)
@@ -190,19 +168,19 @@ module rvinowise.ai.built.Fusing_figures_into_sequence
 
         let renamed_a_edges =
             a_figure.edges
-            |>renamed_edges old_to_new_vertices_of_a
+            |>Renaming_figures.renamed_edges_for_figure old_to_new_vertices_of_a
         
         let renamed_b_edges =
             b_figure.edges
-            |>renamed_edges old_to_new_vertices_of_b
+            |>Renaming_figures.renamed_edges_for_figure old_to_new_vertices_of_b
         
         let renamed_a_subfigures =
             a_figure.subfigures
-            |>renamed_subfigures_of_figure old_to_new_vertices_of_a
+            |>Renaming_figures.renamed_subfigures_for_figure old_to_new_vertices_of_a
         
         let renamed_b_subfigures =
             b_figure.subfigures
-            |>renamed_subfigures_of_figure old_to_new_vertices_of_b
+            |>Renaming_figures.renamed_subfigures_for_figure old_to_new_vertices_of_b
 
         let edges_inbetween =
             let last_vertices_of_a =
@@ -247,7 +225,7 @@ module rvinowise.ai.built.Fusing_figures_into_sequence
                 "c1","e1"
 
             ]
-            |>Seq.map Edge.ofPair
+            |>Seq.map Edge.ofStringPair
             |>Set.ofSeq
             
             subfigures=[
@@ -260,6 +238,10 @@ module rvinowise.ai.built.Fusing_figures_into_sequence
                 "c1","c";
                 "e1","e";
             ]
+            |>Seq.map (fun pair->
+                pair|>fst|>Vertex_id,
+                pair|>snd|>Figure_id
+            )
             |>Map.ofSeq
         }
         let real_ab_figure = 

@@ -14,9 +14,9 @@ let private branching_edges_to_string (edges:Edge seq) =
     edges
     |>Seq.iter(fun edge ->
         result 
-        ++ edge.tail
+        ++ (edge.tail|>Vertex_id.value)
         ++"->"
-        ++ edge.head
+        ++ (edge.head|>Vertex_id.value)
         +=" "
     )
     result+=")"

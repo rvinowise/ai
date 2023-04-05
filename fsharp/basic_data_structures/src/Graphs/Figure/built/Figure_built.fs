@@ -193,6 +193,4 @@ module rvinowise.ai.built.Figure
         |>from_parts_of_figure original_figure vertices 
 
 
-    let rename_vertices_to_standard_names 
-        (owner_figure:Figure)
-        
+    
