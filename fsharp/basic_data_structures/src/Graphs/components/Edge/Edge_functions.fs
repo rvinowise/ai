@@ -1,4 +1,3 @@
-
 namespace rvinowise.ai
 
 
@@ -9,8 +8,8 @@ namespace rvinowise.ai
         open rvinowise.extensions
 
         let incoming_edges
-            (edges: seq<Edge>) 
-            (vertex:Vertex_id) 
+            (edges: Edge seq) 
+            (vertex: Vertex_id) 
             =
             edges
             |>Seq.filter (fun e->e.head = vertex)

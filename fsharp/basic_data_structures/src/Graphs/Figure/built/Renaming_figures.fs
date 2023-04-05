@@ -45,11 +45,32 @@ module rvinowise.ai.Renaming_figures
             pair.Value
         )|>Map.ofSeq
 
-    let sort_vertices_by_occurance_in_graph
+
+    let DFS_tree 
         (edges: Edge seq)
-        (vertices: Vertex_id seq)
+        (step_further: Vertex_id->Vertex_id seq)
+        (root_vertex: Vertex_id)
         =
-        
+        let rec dfs_step 
+            (composed_tree: Edges list)
+            (root_vertex: Vertex_id)
+            =
+            root_vertex
+            |>step_further
+            |>Seq.map
+
+    let compare_place_in_graph
+        (edges: Edge seq)
+        (vertex_a: Vertex_id)
+        (vertex_b: Vertex_id)
+        =
+        preceeding_tree_a = vertex_a|>DFS_tree edges (Edges.next_vertices edges)
+
+    let sort_vertices_by_their_place_in_graph
+        (edges: Edge seq)
+        (vertices: Vertex_id list)
+        =
+        vertices|>List.sortWith (compare_place_in_graph edges)
 
     let rename_vertices_to_standard_names 
         (owner_figure:Figure)
