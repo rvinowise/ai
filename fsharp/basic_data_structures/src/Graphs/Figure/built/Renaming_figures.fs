@@ -45,6 +45,12 @@ module rvinowise.ai.Renaming_figures
             pair.Value
         )|>Map.ofSeq
 
+    let sort_vertices_by_occurance_in_graph
+        (edges: Edge seq)
+        (vertices: Vertex_id seq)
+        =
+        
+
     let rename_vertices_to_standard_names 
         (owner_figure:Figure)
         =
