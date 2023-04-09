@@ -89,8 +89,9 @@ module rvinowise.ai.Renaming_figures
                         referenced_figure
                         (Seq.length vertices_to_this_figure)
                 
-                renamed_vertices
-                |>Seq.zip vertices_to_this_figure
+                vertices_to_this_figure
+                |>sort_vertices_by_their_place_in_graph owner_figure.edges
+                |>Seq.zip renamed_vertices
             )|>Map.ofSeq
 
         {
