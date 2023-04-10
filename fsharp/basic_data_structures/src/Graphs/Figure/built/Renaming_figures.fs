@@ -59,12 +59,48 @@ module rvinowise.ai.Renaming_figures
             |>step_further
             |>Seq.map
 
+    let private compare_many_vertices_by_their_figures 
+        (figure_to_vertices: Map<Vertex_id, Figure_id>)
+        a_neighbours
+        b_neighbours
+        =
+        let a_figures = 
+            a_neighbours
+            |>List.map (fun vertex->figure_to_vertices[vertex])
+            |>List.sort
+        let b_figures = 
+            b_neighbours
+            |>List.map (fun vertex->figure_to_vertices[vertex])
+            |>List.sort
+        Seq.compareWith Operators.compare a_figures b_figures
+
     let compare_place_in_graph
-        (edges: Edge seq)
+        (owner_figure: Figure)
         (vertex_a: Vertex_id)
         (vertex_b: Vertex_id)
         =
-        preceeding_tree_a = vertex_a|>DFS_tree edges (Edges.next_vertices edges)
+        
+
+        let rec compare_adjacent_vertices 
+            (next_step: vertex_id->vertex_id seq)
+            edges
+            vertex_a
+            vertex_b
+            =
+            let a_neighbours = next_step vertex_a
+            let b_neighbours = next_step vertex_b
+            let compared_neighbours = 
+                compare_many_vertices_by_their_figures 
+                    (Edges.previous_vertices owner_figure.edges)
+                    a_neighbours b_neighbours
+            if compared_neighbours=0 then
+                a_neighbours
+                |>Seq.map next_step
+            else
+                compared_neighbours
+
+        let preceding_vertices = 
+            compare_preceding_vertices edges vertex_a vertex_b
 
     let sort_vertices_by_their_place_in_graph
         (edges: Edge seq)
