@@ -46,89 +46,18 @@ module rvinowise.ai.Renaming_figures
         )|>Map.ofSeq
 
 
-    let DFS_tree 
-        (edges: Edge seq)
-        (step_further: Vertex_id->Vertex_id seq)
-        (root_vertex: Vertex_id)
-        =
-        let rec dfs_step 
-            (composed_tree: Edges list)
-            (root_vertex: Vertex_id)
-            =
-            root_vertex
-            |>step_further
-            |>Seq.map
-
-    let private compare_many_vertices_by_their_figures 
-        (figure_to_vertices: Map<Vertex_id, Figure_id>)
-        a_neighbours
-        b_neighbours
-        =
-        let a_figures = 
-            a_neighbours
-            |>List.map (fun vertex->figure_to_vertices[vertex])
-            |>List.sort
-        let b_figures = 
-            b_neighbours
-            |>List.map (fun vertex->figure_to_vertices[vertex])
-            |>List.sort
-        Seq.compareWith Operators.compare a_figures b_figures
-
-    let compare_place_in_graph
-        (owner_figure: Figure)
-        (vertex_a: Vertex_id)
-        (vertex_b: Vertex_id)
-        =
-        
-
-        let rec compare_adjacent_vertices 
-            (next_step: vertex_id->vertex_id seq)
-            edges
-            vertex_a
-            vertex_b
-            =
-            let a_neighbours = next_step vertex_a
-            let b_neighbours = next_step vertex_b
-            let compared_neighbours = 
-                compare_many_vertices_by_their_figures 
-                    (Edges.previous_vertices owner_figure.edges)
-                    a_neighbours b_neighbours
-            if compared_neighbours=0 then
-                a_neighbours
-                |>Seq.map next_step
-            else
-                compared_neighbours
-
-        let preceding_vertices = 
-            compare_preceding_vertices edges vertex_a vertex_b
-
-    let sort_vertices_by_their_place_in_graph
-        (edges: Edge seq)
-        (vertices: Vertex_id list)
-        =
-        vertices|>List.sortWith (compare_place_in_graph edges)
+    
 
     let rename_vertices_to_standard_names 
-        (owner_figure:Figure)
+        (owner_figure: Figure)
         =
         let figure_to_vertices = 
             owner_figure.subfigures
             |>extensions.Map.reverse_with_list_of_keys
 
-        let vertices_to_new_names = 
-            figure_to_vertices
-            |>Seq.collect (fun pair ->
-                let referenced_figure = pair.Key
-                let vertices_to_this_figure = pair.Value
-                let renamed_vertices =
-                    vertices_with_sequencial_names
-                        referenced_figure
-                        (Seq.length vertices_to_this_figure)
-                
-                vertices_to_this_figure
-                |>sort_vertices_by_their_place_in_graph owner_figure.edges
-                |>Seq.zip renamed_vertices
-            )|>Map.ofSeq
+        let first_vertices =
+            owner_figure.edges
+            |>Edges.first_vertices
 
         {
             edges=
