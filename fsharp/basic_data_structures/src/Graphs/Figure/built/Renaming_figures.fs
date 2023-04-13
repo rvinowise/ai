@@ -52,6 +52,75 @@ module rvinowise.ai.Renaming_figures
             (Vertex_id*Vertex_id) list
         >
 
+    let group_by_figures 
+        (all_referenced_figures: Map<Vertex_id, Figure_id>)
+        (used_vertices: Vertex_id Set)
+        =
+        all_referenced_figures
+        |>Map.filter(fun key value -> used_vertices|>Set.contains key)
+        |>extensions.Map.reverse_with_list_of_keys
+
+    let next_vertex_id_for_figure 
+        (number: int)
+        (figure:Figure_id)
+        =
+        ((figure|>Figure_id.value)+(string number))
+        |>Vertex_id
+
+    let assign_next_numbers 
+        (all_renamings: Map<Vertex_id, Vertex_id>)
+        (all_figures_to_last_number: Map<Figure_id, int>)
+        (figures: Map<Figure_id, Vertex_id>)
+        =
+        let renamings=
+            figures
+            |>Seq.map (fun pair->
+                let figure = pair.Key
+                let vertex = pair.Value
+                let new_last_number = all_figures_to_last_number.TryFind(figure)|>(Option.defaultValue 0)
+                
+                (vertex,
+                figure|>next_vertex_id_for_figure new_last_number,
+                figure,
+                new_last_number)
+            )
+        let updated_renamings =
+            Seq.fold 
+                (fun map (old_name,new_name,_,_) ->
+                    Map.add old_name new_name map
+                )
+                all_renamings
+                renamings
+        let updated_figures_to_last_number = 
+            Seq.fold 
+                (fun map (_,_,figure,last_number) ->
+                    Map.add figure last_number map
+                )
+                all_figures_to_last_number
+                renamings
+        (updated_renamings,updated_figures_to_last_number)
+
+
+    let assign_numbers_to_next_vertex_wave
+        (all_referenced_figures: Map<Vertex_id, Figure_id>)
+        (renamings: Map<Vertex_id, Vertex_id>)
+        (figure_to_last_number: Map<Figure_id, int>)
+        (vertices: Vertex_id Set)
+        =
+        let grouped_vertices = 
+            vertices
+            |>group_by_figures all_referenced_figures
+        
+        let single_figures = 
+            grouped_vertices
+            |>Map.filter(fun figure vertices->verticex|>Seq.length = 1)
+        let (renamings, figure_to_last_number) = assign_next_numbers renamings single_figures
+
+        let competing_vertices =
+            grouped_vertices
+            |>Map.filter(fun figure vertices->verticex|>Seq.length > 1)
+
+
     let rename_vertices_to_standard_names 
         (owner_figure: Figure)
         =
@@ -62,6 +131,13 @@ module rvinowise.ai.Renaming_figures
         let first_vertices =
             owner_figure.edges
             |>Edges.first_vertices
+            |>Set.ofSeq
+        
+        assign_numbers_to_next_vertex_wave
+            owner_figure.subfigures
+            Map.empty
+            Map.empty
+            first_vertices
 
         {
             edges=
