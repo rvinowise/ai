@@ -46,7 +46,11 @@ module rvinowise.ai.Renaming_figures
         )|>Map.ofSeq
 
 
-    
+    type Figures_to_renamings = 
+        Map<
+            Figure_id, 
+            (Vertex_id*Vertex_id) list
+        >
 
     let rename_vertices_to_standard_names 
         (owner_figure: Figure)
