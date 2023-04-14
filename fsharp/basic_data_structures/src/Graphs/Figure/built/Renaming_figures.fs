@@ -137,11 +137,16 @@ module rvinowise.ai.Renaming_figures
                 (last_number+(vertices|>List.length))
         (updated_renamings,updated_figures_to_last_number)
 
+    let sort_compeating_vertices_by_their_neighbours
+        (owner_figure:Figure)
+        (renamings: Map<Vertex_id, Vertex_id>)
+        (vertices: Vertex_id list)
+        =()
 
     let rec assign_numbers_to_next_vertex_wave
         (owner_figure:Figure)
         (renamings: Map<Vertex_id, Vertex_id>)
-        (figure_to_last_number: Map<Figure_id, int>)
+        (figures_to_last_number: Map<Figure_id, int>)
         (vertices: Vertex_id list)
         =
         let grouped_vertices = 
@@ -153,15 +158,41 @@ module rvinowise.ai.Renaming_figures
             grouped_vertices
             |>Map.filter(fun figure vertices->vertices|>Seq.length = 1)
             |>Map.map (fun figure vertex->vertex|>Seq.head)
-        let (renamings, figure_to_last_number) = 
+        let (renamings, figures_to_last_number) = 
             single_figures
             |>assign_next_numbers 
                 renamings 
-                figure_to_last_number
+                figures_to_last_number
 
         let competing_vertices =
             grouped_vertices
             |>Map.filter(fun figure vertices->vertices|>Seq.length > 1)
+            |>Map.map(fun figure vertices->
+                vertices
+                |>sort_compeating_vertices_by_their_neighbours
+                    owner_figure
+                    renamings
+            )
+
+        let (renamings, figures_to_last_number) = 
+            competing_vertices
+            |>extensions.Map.toPairs
+            |>Seq.fold (
+                fun 
+                    (renamings,figures_to_last_number) 
+                    (figure,vertices) ->
+                assign_next_numbers_to_sorted_vertices
+                    renamings
+                    figures_to_last_number
+                    figure
+                    vertices
+            )
+            (renamings,figures_to_last_number)
+
+        |>Seq.map(fun pair->
+            let figure = pair.Key
+            let vertices = pair.Value
+        )
 
         let next_vertices = 
             vertices
@@ -186,11 +217,11 @@ module rvinowise.ai.Renaming_figures
         let first_vertices =
             owner_figure.edges
             |>Edges.first_vertices
-            |>Set.ofSeq
+            |>List.ofSeq
         
         let (renamings, figure_to_last_number) =
             assign_numbers_to_next_vertex_wave
-                owner_figure.subfigures
+                owner_figure
                 Map.empty
                 Map.empty
                 first_vertices
