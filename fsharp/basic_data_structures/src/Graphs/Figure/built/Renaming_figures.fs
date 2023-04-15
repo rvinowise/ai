@@ -147,27 +147,49 @@ module rvinowise.ai.Renaming_figures
     let compare_compeating_vertices
         (owner_figure:Figure)
         (renamings: Map<Vertex_id, Vertex_id>)
-        vertex1 vertex2
+        (vertex1:Vertex_id) 
+        (vertex2:Vertex_id) 
         = 
         let rec compare_neighbors
+            (step_further: Vertex_id -> Vertex_id seq)
             (neighbors1: Vertex_id list)
             (neighbors2: Vertex_id list)
             =
             match neighbors1,neighbors2 with
             |[],[]->0
             |_->
-                let comparison =
+                let neighbors1 =
                     neighbors1
                     |>form_for_comparison owner_figure.subfigures renamings
-                    |>Seq.compareWith Operators.compare (
-                        neighbors2
-                        |>form_for_comparison owner_figure.subfigures renamings
-                    )
+                let neighbors2 =
+                    neighbors2
+                    |>form_for_comparison owner_figure.subfigures renamings
+                    
+                let comparison = 
+                    Seq.compareWith Operators.compare 
+                        (neighbors1
+                        |>form_for_comparison owner_figure.subfigures renamings)
+                        (neighbors2
+                        |>form_for_comparison owner_figure.subfigures renamings)
+                    
                 match comparison with 
                 |0->
+                    compare_neighbors 
+                        step_further
+
 
                 |difference->difference
-
+        
+        let comparison_of_previous = 
+            compare_neighbors 
+                (Edges.previous_vertices owner_figure.edges)
+                [vertex1] [vertex2]
+        if comparison_of_previous<>0 then
+            comparison_of_previous
+        else
+            compare_neighbors 
+                (Edges.next_vertices owner_figure.edges)
+                [vertex1] [vertex2]
 
 
     let sort_compeating_vertices_by_their_neighbours
@@ -283,4 +305,57 @@ module rvinowise.ai.Renaming_figures
                 "B1","B","figure_c1","figure_c";
                 "B1","B","a2","a";
             ]
+        )
+    
+    [<Fact>]
+    let ``standartizing names allows for structural comparison of figures``()=
+        let figure1 = {
+            Figure.edges=[
+                "a1","b1";
+                "a2","b1";
+                "a3","c1";
+                "b1","d1";
+                "c1","d1";
+                "c1","d2";
+            ]|>List.map Edge.ofStringPair
+            |>Set.ofList
+            subfigures=[
+                "a1","a";
+                "a2","a";
+                "a3","a";
+                "b1","b";
+                "c1","c";
+                "d1","d";
+                "d2","d";
+            ]
+            |>List.map (fun pair->pair|>fst|>Vertex_id, pair|>snd|>Figure_id)
+            |>Map.ofList
+        }
+        let figure2 = {
+            Figure.edges=[
+                "a1","b1";
+                "a3","b1";
+                "a2","c1";
+                "b1","d2";
+                "c1","d2";
+                "c1","d1";
+            ]|>List.map Edge.ofStringPair
+            |>Set.ofList
+            subfigures=[
+                "a1","a";
+                "a2","a";
+                "a3","a";
+                "b1","b";
+                "c1","c";
+                "d1","d";
+                "d2","d";
+            ]
+            |>List.map (fun pair->pair|>fst|>Vertex_id, pair|>snd|>Figure_id)
+            |>Map.ofList
+        }
+        figure1
+        |>rename_vertices_to_standard_names
+        |>should equal (
+            figure2
+            |>rename_vertices_to_standard_names
         )
