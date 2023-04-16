@@ -9,21 +9,65 @@ module rvinowise.ai.built.Figure
     open rvinowise.extensions
 
 
-    exception BadGraphWithCycle of Vertex_id
-    let make_sure_no_cycles (figure:Figure) =
+    exception BadGraph of string
+
+    let error_because_of_cycles (figure:Figure) =
         figure
         |>Figure.first_vertices
-        |>Seq.map (Edges.vertex_which_goes_into_cycle figure.edges)
-        |>Seq.tryPick id
-        |>(fun cycled_vertex ->
-            match cycled_vertex with
-            |Some vertex ->
-                raise (BadGraphWithCycle vertex)
-            |None->
-                figure
-        )
+        |>List.ofSeq
+        |>function
+        |[]->
+            if Figure.is_empty figure then
+                None
+            else
+                Some "non-empty figure without first vertices, possibly because of a loop in them"
+        |[signal]->None
+        |many_vertices->
+            many_vertices
+            |>Seq.map (Edges.vertex_which_goes_into_cycle figure.edges)
+            |>Seq.tryPick id
+            |>(fun cycled_vertex ->
+                match cycled_vertex with
+                |Some vertex ->
+                    Some $"figure has a loop with vertex \"{vertex}\""
+                |None->
+                    None
+            )
+
     
-    
+    let error_in_correspondence_between_subfigures_and_edges (figure:Figure)=
+        let subfigures_in_edges = 
+            figure.edges
+            |>Seq.collect (fun edge->
+                [edge.head;edge.tail]
+            )|>Set.ofSeq
+        let subfigures = 
+            figure.subfigures
+            |>Map.keys
+            |>Set.ofSeq
+        let difference =
+            subfigures_in_edges
+            |>Set.difference subfigures
+        if difference.IsEmpty then
+            None
+        else
+            Some $"superfluous subfigures: {difference}"
+
+
+    let check_correctness (figure:Figure)=
+        [
+            error_because_of_cycles;
+            error_in_correspondence_between_subfigures_and_edges;
+        ]|>List.map(fun check ->
+            check figure
+        )|>List.choose id
+        |>function
+        |[]->figure
+        |errors->
+            errors
+            |>String.concat "\n"
+            |>BadGraph
+            |>raise
 
     let simple (edges:seq<string*string>) =
         {
@@ -47,7 +91,7 @@ module rvinowise.ai.built.Figure
                 |>Seq.concat
                 |>Map.ofSeq 
         }
-        |>make_sure_no_cycles
+        |>check_correctness
     
     let from_sequence (subfigures: Figure_id seq) =
         let separator = "#"
@@ -178,7 +222,7 @@ module rvinowise.ai.built.Figure
             edges=built.Graph.from_tuples edges
             subfigures=vertex_data_from_tuples edges
         }
-        |>make_sure_no_cycles
+        |>check_correctness
 
 
     let empty = from_tuples []
@@ -191,6 +235,6 @@ module rvinowise.ai.built.Figure
         vertices
         |>Edges.edges_between_vertices original_figure.edges
         |>from_parts_of_figure original_figure vertices 
-
+        |>Renaming_figures.rename_vertices_to_standard_names
 
     

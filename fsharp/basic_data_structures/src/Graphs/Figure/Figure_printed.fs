@@ -70,10 +70,10 @@ let private edges_to_string
 
 let private signal_to_string (subfigures:Map<Vertex_id, Figure_id>) =
     Contract.Assume(Seq.length subfigures = 1)
-    let signal =
-        subfigures
-        |>Seq.head
-    $"Signal({signal.Key}={signal.Value})"
+    subfigures
+    |>Map.values
+    |>Seq.head
+    |>Figure_id.value
 
 let to_string edges subfigures  =
     if (Seq.isEmpty edges) then

@@ -252,10 +252,7 @@ namespace rvinowise.ai
                     |>Seq.head
                     |>next_vertices edges
                     |>only_one_next_vertex_exist edges 
-                else if Seq.isEmpty vertices then
-                    true
-                else
-                    false
+                else Seq.isEmpty vertices
             edges
             |>first_vertices
             |>only_one_next_vertex_exist edges

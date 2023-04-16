@@ -83,7 +83,78 @@ module Figure_tests=
     
     [<Fact>]
     let ``detect cycles in figures``()=
-        Assert.Throws<BadGraphWithCycle> (fun()->
+        Assert.Throws<BadGraph> (fun()->
             example.Figure.create_a_bad_figure_with_cycle()
             |>ignore
+        )
+    
+    [<Fact>]
+    let ``try rename_vertices_to_standard_names``()=
+        built.Figure.from_tuples [
+            "my_a0","a","my_b1","b";
+            "my_a0","a","uppercase_b","B";
+            "uppercase_b","B","c0_at_the_end","figure_c";
+            "uppercase_b","B","another_a","a";
+        ]|>Renaming_figures.rename_vertices_to_standard_names
+        |>built.Figure.check_correctness
+        |>should equal (
+            built.Figure.from_tuples [
+                "a1","a","b1","b";
+                "a1","a","B1","B";
+                "B1","B","figure_c1","figure_c";
+                "B1","B","a2","a";
+            ]
+        )
+    
+    [<Fact>]
+    let ``standartizing names allows for structural comparison of figures``()=
+        let figure1 = {
+            Figure.edges=[
+                "a1","b1";
+                "a2","b1";
+                "a3","c1";
+                "b1","d1";
+                "c1","d1";
+                "c1","d2";
+            ]|>List.map Edge.ofStringPair
+            |>Set.ofList
+            subfigures=[
+                "a1","a";
+                "a2","a";
+                "a3","a";
+                "b1","b";
+                "c1","c";
+                "d1","d";
+                "d2","d";
+            ]
+            |>List.map (fun pair->pair|>fst|>Vertex_id, pair|>snd|>Figure_id)
+            |>Map.ofList
+        }
+        let figure2 = {
+            Figure.edges=[
+                "a1","b1";
+                "a3","b1";
+                "a2","c1";
+                "b1","d2";
+                "c1","d2";
+                "c1","d1";
+            ]|>List.map Edge.ofStringPair
+            |>Set.ofList
+            subfigures=[
+                "a1","a";
+                "a2","a";
+                "a3","a";
+                "b1","b";
+                "c1","c";
+                "d1","d";
+                "d2","d";
+            ]
+            |>List.map (fun pair->pair|>fst|>Vertex_id, pair|>snd|>Figure_id)
+            |>Map.ofList
+        }
+        figure1
+        |>Renaming_figures.rename_vertices_to_standard_names
+        |>should equal (
+            figure2
+            |>Renaming_figures.rename_vertices_to_standard_names
         )
