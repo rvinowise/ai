@@ -151,20 +151,13 @@ module rvinowise.ai.Renaming_figures
         (vertex2:Vertex_id) 
         = 
         let rec compare_neighbors
-            (step_further: Vertex_id -> Vertex_id seq)
+            (step_further: Vertex_id -> Vertex_id list)
             (neighbors1: Vertex_id list)
             (neighbors2: Vertex_id list)
             =
             match neighbors1,neighbors2 with
             |[],[]->0
             |_->
-                let neighbors1 =
-                    neighbors1
-                    |>form_for_comparison owner_figure.subfigures renamings
-                let neighbors2 =
-                    neighbors2
-                    |>form_for_comparison owner_figure.subfigures renamings
-                    
                 let comparison = 
                     Seq.compareWith Operators.compare 
                         (neighbors1
@@ -174,21 +167,27 @@ module rvinowise.ai.Renaming_figures
                     
                 match comparison with 
                 |0->
+                    let next_neighbors1 = 
+                        neighbors1
+                        |>List.collect step_further
+                    let next_neighbors2 = 
+                        neighbors2
+                        |>List.collect step_further
                     compare_neighbors 
                         step_further
-
-
+                        next_neighbors1
+                        next_neighbors2
                 |difference->difference
         
         let comparison_of_previous = 
             compare_neighbors 
-                (Edges.previous_vertices owner_figure.edges)
+                (Edges.previous_vertices owner_figure.edges>>List.ofSeq)
                 [vertex1] [vertex2]
         if comparison_of_previous<>0 then
             comparison_of_previous
         else
             compare_neighbors 
-                (Edges.next_vertices owner_figure.edges)
+                (Edges.next_vertices owner_figure.edges>>List.ofSeq)
                 [vertex1] [vertex2]
 
 
