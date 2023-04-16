@@ -65,7 +65,7 @@ module rvinowise.ai.Renaming_figures
         (number: int)
         (figure:Figure_id)
         =
-        ((figure|>Figure_id.value)+(string number))
+        ((figure|>Figure_id.value)+"#"+(string number))
         |>Vertex_id
 
     let assign_next_numbers 
