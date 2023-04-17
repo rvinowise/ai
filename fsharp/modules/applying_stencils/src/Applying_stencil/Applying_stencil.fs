@@ -194,6 +194,6 @@ module Applying_stencil =
         target
         |>map_stencil_onto_target stencil
         |>Seq.map (Mapping.retrieve_result stencil target)
-        |>Seq.filter (Figure.is_empty>>not)
+        |>Seq.choose id
 
     

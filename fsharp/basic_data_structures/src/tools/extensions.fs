@@ -251,6 +251,9 @@ module Map =
 
 
 
+
+
+
 module Option=
     exception LackingDataException of string
     
@@ -258,3 +261,11 @@ module Option=
         match option with
         |Some value -> value
         |None -> raise (LackingDataException "the option must have a value, but it's None") 
+
+    type OptionBuilder() =
+        member x.Bind(v,f) = Option.bind f v
+        member x.Return v = Some v
+        member x.ReturnFrom o = o
+        member x.Zero () = None
+
+    let opt = OptionBuilder()

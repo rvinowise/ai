@@ -9,7 +9,7 @@ module rvinowise.ai.built.Stencil
         | subfigure -> 
             subfigure
             |>Figure_id
-            |>Stencil_node.Lower_figure 
+            |>Lower_figure 
 
     let vertex_data_from_tuples 
         (edges: seq<string*string*string*string>) =
@@ -49,11 +49,12 @@ module rvinowise.ai.built.Stencil
                     ]
                 )
                 |>Seq.concat
-                |>dict 
+                |>dict
+            output_without=Set.empty
         }
 
     let simple_without_separator (edges:seq<string*string>) =
-         simple String.remove_number edges
+        simple String.remove_number edges
 
     let simple_with_separator (edges:seq<string*string>) =
         simple String.remove_number_with_hash edges
@@ -63,6 +64,6 @@ module rvinowise.ai.built.Stencil
         {
             edges=built.Graph.from_tuples edges
             nodes=vertex_data_from_tuples edges
+            output_without=Set.empty
         }
 
-    let empty = {edges=Seq.empty; nodes=dict []}

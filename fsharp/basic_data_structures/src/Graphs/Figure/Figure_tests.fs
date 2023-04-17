@@ -129,6 +129,7 @@ module Figure_tests=
             ]
             |>List.map (fun pair->pair|>fst|>Vertex_id, pair|>snd|>Figure_id)
             |>Map.ofList
+            without=Set.empty
         }
         let figure2 = {
             Figure.edges=[
@@ -151,6 +152,7 @@ module Figure_tests=
             ]
             |>List.map (fun pair->pair|>fst|>Vertex_id, pair|>snd|>Figure_id)
             |>Map.ofList
+            without=Set.empty
         }
         figure1
         |>Renaming_figures.rename_vertices_to_standard_names

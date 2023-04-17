@@ -30,7 +30,7 @@ module mapping_first_nodes =
         ]
 
         [<ParamsSource("stencils")>]
-        member val stencil = {value=built.Stencil.empty; name="default"} with get, set
+        member val stencil = {value=example.Stencil.empty; name="default"} with get, set
 
         [<ParamsSource("target_figures")>]
         member val target_figure = {value=built.Figure.empty; name="default"} with get, set
@@ -50,7 +50,7 @@ module mapping_first_nodes =
             |> Consumer().Consume
         
         
-    [<Fact>] //(Skip="slow")
+    [<Fact(Skip="slow")>] //
     let run_benchmark()=
 
         let config = 

@@ -232,12 +232,12 @@ module ``application of stencils``=
 
         number_concept
         |>Applying_stencil.results_of_stencil_application history_as_figure
-        |>Set.ofSeq
-        |>Set.isSubset (
+        |>should be (
             "0123456789"
             |>Seq.map string
             |>Seq.map built.Figure.signal
-            |>Set.ofSeq
-        )|>should equal true
+            |>subsetOf 
+        )
+        
 
     

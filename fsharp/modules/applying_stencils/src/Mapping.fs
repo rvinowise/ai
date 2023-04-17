@@ -1,6 +1,7 @@
 namespace rvinowise.ai.stencil
     open System.Collections.Generic
     open rvinowise.ai
+    open rvinowise
     open System.Linq
     open System
 
@@ -115,7 +116,7 @@ namespace rvinowise.ai.stencil
             //i don't know how to handle stencils with multiple outputs. assume it's one for now
             let output_node = 
                 stencil
-                |>Stencil.outputs
+                |>Stencil.output
                 |>Seq.head
 
             let output_beginning =
@@ -138,7 +139,15 @@ namespace rvinowise.ai.stencil
             
             output_beginning
             |>Set.intersect output_ending
-            |>built.Figure.subgraph_with_vertices target
+            |>function
+            |set when set|>Set.count>0 -> Some set
+            |_->None
+            |>Option.map( built.Figure.subgraph_with_vertices target)
+            //|>built.Figure.is_empty
+            
+            extensions.Option.opt {
+                
+            }
 
         let ofStringPairs (pairs: seq<string*string>) =
             pairs

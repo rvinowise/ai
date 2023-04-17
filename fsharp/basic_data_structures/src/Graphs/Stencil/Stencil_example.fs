@@ -2,6 +2,9 @@
 module rvinowise.ai.example.Stencil
     open rvinowise.ai
 
+    let empty =
+        built.Stencil.simple_without_separator []
+
     let a_fitting_stencil =
         built.Stencil.simple_without_separator
             [

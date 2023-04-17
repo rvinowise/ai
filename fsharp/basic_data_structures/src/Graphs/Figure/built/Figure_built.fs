@@ -11,13 +11,17 @@ module rvinowise.ai.built.Figure
 
     exception BadGraph of string
 
+    let is_empty (figure:Figure) =
+        figure.subfigures
+        |>Map.isEmpty
+
     let error_because_of_cycles (figure:Figure) =
         figure
         |>Figure.first_vertices
         |>List.ofSeq
         |>function
         |[]->
-            if Figure.is_empty figure then
+            if is_empty figure then
                 None
             else
                 Some "non-empty figure without first vertices, possibly because of a loop in them"
@@ -53,6 +57,7 @@ module rvinowise.ai.built.Figure
         else
             Some $"superfluous subfigures: {difference}"
 
+    
 
     let check_correctness (figure:Figure)=
         [
@@ -89,7 +94,8 @@ module rvinowise.ai.built.Figure
                     ]
                 )
                 |>Seq.concat
-                |>Map.ofSeq 
+                |>Map.ofSeq
+            without=Set.empty
         }
         |>check_correctness
     
@@ -133,6 +139,7 @@ module rvinowise.ai.built.Figure
             subfigures=
                 subfigures_sequence
                 |>Map.ofSeq
+            without=Set.empty
         }
 
     let sequence_from_text (text:string) =
@@ -156,6 +163,7 @@ module rvinowise.ai.built.Figure
                     |>Seq.map (fun (tail,head) -> Vertex_id tail, Figure_id head)
                     |>Map.ofSeq
                     |>Map.map (fun _ value ->value)
+                without=Set.empty
             }
 
     let signal (id:string) =
@@ -165,6 +173,7 @@ module rvinowise.ai.built.Figure
                 (id+"#1")|>Vertex_id,
                 id|>Figure_id
             ]|>Map.ofSeq
+            without=Set.empty
         }
 
     let vertex_data_from_edges_of_figure (full_vertex_data: Map<Vertex_id, Figure_id>) (edges:Edge seq) =
@@ -216,7 +225,7 @@ module rvinowise.ai.built.Figure
         {
             edges=edges|>Set.ofSeq
             subfigures=(vertex_data_from_vertices_of_figure figure.subfigures vertices)
-
+            without=Set.empty
         }
 
     let from_tuples 
@@ -224,6 +233,7 @@ module rvinowise.ai.built.Figure
         {
             edges=built.Graph.from_tuples edges
             subfigures=vertex_data_from_tuples edges
+            without=Set.empty
         }
         |>check_correctness
 

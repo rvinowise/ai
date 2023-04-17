@@ -6,10 +6,13 @@ module Stencil=
     open rvinowise.ai
     open rvinowise.extensions
 
-    let outputs (stencil: Stencil) =
+    let output (stencil: Stencil) =
         stencil.nodes
         |>Seq.filter (fun vertex->
-            vertex.Value=Stencil_output
+            match vertex.Value with
+            |Stencil_output _ -> true
+            |_->false
+            //vertex.Value=Stencil_output
         )
         |>Seq.map KeyValuePair.key
         |>Seq.distinct
@@ -19,7 +22,10 @@ module Stencil=
         |>Dictionary.some_value stencil.nodes
         |>function
         |None -> false
-        |Some node -> node=Stencil_output
+        |Some node ->
+            match node with
+            |Stencil_output _ ->true
+            |_->false
 
     let is_subfigure stencil vertex =
         vertex
@@ -118,3 +124,6 @@ module Stencil=
             |_->None
         )
         |>Seq.distinct
+    
+    let impossible_output_parts (stentcil:Stencil) =
+        stentcil.output_without
