@@ -54,7 +54,6 @@ namespace rvinowise.ai.stencil
                     |> fun pair_with_difference ->
                         match pair_with_difference with
                         |Some (this, other) ->
-                            //this.CompareTo(other)
                             if this < other then -1 else 1
                         |None -> 0
 

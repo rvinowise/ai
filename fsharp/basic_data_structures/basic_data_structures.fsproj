@@ -34,8 +34,7 @@
     <Compile Include="src\Graphs\Figure\built\fusing_figures_into_a_sequence.fs" />
     
 
-    <Compile Include="src\Graphs\Sequence\types.fs" />
-    <Compile Include="src\Graphs\Sequence\fusing_sequences.fs" />
+    <!-- <Compile Include="src\Graphs\Sequence\fusing_sequences.fs" /> -->
 
     <Compile Include="src\Graphs\Stencil\Stencil_types.fs" />
     <Compile Include="src\Graphs\Stencil\Stencil_built.fs" />
