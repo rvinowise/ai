@@ -74,4 +74,11 @@ open rvinowise.ai
                     "h1","f0";
                 ]
         
-        
+        let fitting_stencil_as_figure =
+            built.Figure.simple
+                [
+                    "b","f";
+                    "h","f";
+                ]
+
+        let empty = built.Figure.from_tuples []

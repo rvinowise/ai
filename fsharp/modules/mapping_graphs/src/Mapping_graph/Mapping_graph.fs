@@ -2,16 +2,15 @@ namespace rvinowise.ai
 
 
 
-module Applying_stencil = 
+module Mapping_graph = 
     open System.Collections.Generic
     open rvinowise.ai.generating_combinations
     open rvinowise.ai.stencil
     open rvinowise
-    open rvinowise.ai.applying_stencil_impl
- 
-    
+    open rvinowise.ai.mapping_graph_impl
 
-    let map_first_nodes = Map_first_nodes.``map_first_nodes(breaking recursion)``
+
+    let map_first_nodes = Map_first_nodes.map_first_nodes
 
     let all_combinations_of_next_mappings 
         (mappings: Map<Figure_id, struct (Vertex_id*seq<Vertex_id>) list>) 
@@ -40,23 +39,6 @@ module Applying_stencil =
         )
         mapping
 
-    
-    let possible_targets_for_mapping_subfigure
-        stencil
-        target
-        mapping  
-        (prolongating_stencil_subfigure: Vertex_id*Figure_id)
-        =
-        let prolongating_vertex = prolongating_stencil_subfigure|>fst
-        let prolongating_figure = prolongating_stencil_subfigure|>snd
-        prolongating_vertex
-        |>Stencil.previous_subfigures_jumping_over_outputs stencil
-        |>Mapping.targets_of_mapping mapping
-        |>Figure.subfigures_after_other_subfigures
-            target
-            prolongating_figure
-
-        
     let prolongate_mapping_with_next_mapped_subfigures 
         (base_mapping: Mapping)
         //                                                       all_vertices   combinations               
@@ -65,15 +47,31 @@ module Applying_stencil =
         added_mappings
         |>Seq.map (copied_mapping_with_prolongation base_mapping)
 
+    let possible_targets_for_mapping_subfigure
+        mappee
+        target
+        mapping
+        (prolongating_stencil_subfigure: Vertex_id*Figure_id)
+        =
+        let prolongating_vertex = prolongating_stencil_subfigure|>fst
+        let prolongating_figure = prolongating_stencil_subfigure|>snd
+        prolongating_vertex
+        |>Edges.previous_vertices mappee.edges
+        |>Mapping.targets_of_mapping mapping
+        |>Figure.subfigures_after_other_subfigures
+            target
+            prolongating_figure
 
-    let next_mapping_targets_for_stencil_subfigures
-        stencil
+        
+
+    let next_mapping_targets_for_mapped_subfigures
+        mappee
         target
         base_mapping
         next_subfigures_to_map
         =
         let rec mapping_targets_for_next_subfigure
-            (stencil:Stencil)
+            (mappee:Figure)
             (target:Figure)
             (mapping:Mapping)
             (left_subfigures_to_map:  list<Vertex_id*Figure_id>)
@@ -86,7 +84,7 @@ module Applying_stencil =
             | current_subfigure_to_map::left_subfigures_to_map ->
                 let targets = 
                     possible_targets_for_mapping_subfigure
-                        stencil
+                        mappee
                         target
                         base_mapping
                         current_subfigure_to_map
@@ -104,28 +102,28 @@ module Applying_stencil =
                         found_mappings
                         |>Map.add figure updated_targets
                     mapping_targets_for_next_subfigure
-                        stencil
+                        mappee
                         target
                         mapping
                         left_subfigures_to_map
                         updated_mappings
         
         mapping_targets_for_next_subfigure
-            stencil
+            mappee
             target
             base_mapping
             next_subfigures_to_map
             Map.empty
 
     let prolongate_one_mapping_with_next_subfigures 
-        (stencil:Stencil)
+        (mappee:Figure)
         (target:Figure)
         (next_subfigures_to_map: seq<Vertex_id*Figure_id>)
         (mapping:Mapping)
         =
         let possible_next_mappings =
-            next_mapping_targets_for_stencil_subfigures
-                stencil
+            next_mapping_targets_for_mapped_subfigures
+                mappee
                 target
                 mapping
                 (List.ofSeq next_subfigures_to_map)
@@ -136,59 +134,45 @@ module Applying_stencil =
             possible_next_mappings
             |>all_combinations_of_next_mappings
             |>prolongate_mapping_with_next_mapped_subfigures mapping
-
+    
     let rec prolongate_all_mappings 
-        (stencil:Stencil)
+        (mappee:Figure)
         (target:Figure)
         (last_mapped_vertices: Vertex_id seq )
         (mappings: Mapping seq)
         =
         let next_vertices_to_map = 
-            stencil
-            |>Stencil.next_vertices last_mapped_vertices
+            last_mapped_vertices
+            |>Edges.next_vertices_of_many mappee.edges
 
         let mappings =
             let next_subfigures_to_map =
                 next_vertices_to_map
-                |>Stencil.only_subfigures_with_figures stencil
-            match next_subfigures_to_map with
-            | Seq [] -> mappings
-            |_->
+                |>Figure.vertices_with_referenced_figures mappee
+            if Seq.isEmpty next_subfigures_to_map then
                 mappings
-                |>Seq.map (prolongate_one_mapping_with_next_subfigures stencil target next_subfigures_to_map)
+            else
+                mappings
+                |>Seq.map (prolongate_one_mapping_with_next_subfigures mappee target next_subfigures_to_map)
                 |>Seq.collect id
         
-        match next_vertices_to_map with
-        | Seq [] -> 
+        if Seq.isEmpty next_vertices_to_map then
             mappings
-        | _ ->
+        else
             prolongate_all_mappings
-                stencil 
+                mappee 
                 target 
                 next_vertices_to_map
                 mappings
-        
-        
 
-    let map_stencil_onto_target
-        stencil
+
+    let map_figure_onto_target
         target
+        mappee
         =
         target
-        |>map_first_nodes stencil
+        |>map_first_nodes mappee
         |>prolongate_all_mappings
-            stencil 
+            mappee 
             target
-            (Stencil.first_subfigures stencil)
-            
-        
-    let results_of_stencil_application
-        target
-        stencil
-        =
-        target
-        |>map_stencil_onto_target stencil
-        |>Seq.map (Mapping.retrieve_result stencil target)
-        |>Seq.choose id
-
-    
+            (Figure.first_vertices mappee)

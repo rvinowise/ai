@@ -30,19 +30,6 @@ module Figure=
         | None -> nonexistent_vertex
 
 
-    let vertices_referencing_lower_figure (owner_figure:Figure) lower_figure = 
-        lower_figure 
-        |> Dictionary.keys_with_value owner_figure.subfigures  
-
-    let referenced_figures 
-        owner_figure
-        (subfigures:Vertex_id seq)
-        =
-        subfigures
-        |>Seq.choose (Dictionary.some_value owner_figure.subfigures)
-
-    
-
     let is_vertex_referencing_figure 
         owner_figure
         referenced_figure
@@ -51,6 +38,45 @@ module Figure=
         checked_vertex
         |>Dictionary.some_value owner_figure.subfigures
             = Some(referenced_figure)
+
+    let all_vertices_referencing_figure lower_figure (owner_figure:Figure)  = 
+        lower_figure 
+        |> Dictionary.keys_with_value owner_figure.subfigures  
+
+    let vertices_referencing_figure 
+        search_in_these_vertices
+        referenced_figure
+        owner_figure
+        =
+        search_in_these_vertices
+        |>Seq.filter (
+            is_vertex_referencing_figure
+                owner_figure
+                referenced_figure
+        )
+
+    let referenced_figures 
+        owner_figure
+        (subfigures:Vertex_id seq)
+        =
+        subfigures
+        |>Seq.choose (Dictionary.some_value owner_figure.subfigures)
+        |>Seq.distinct
+
+    let vertices_with_referenced_figures 
+        (owner_figure:Figure)
+        vertices
+        =
+        vertices
+        |>Seq.choose (fun vertex->
+            owner_figure.subfigures
+            |>Map.tryFind vertex
+            |>function
+            |None -> None
+            |Some referenced_figure ->Some (vertex,referenced_figure)
+        )
+
+    
 
     let subfigures_after_other_subfigures
         owner_figure
@@ -97,6 +123,11 @@ module Figure=
             try_the_only_vertex figure
         else
             Edges.first_vertices figure.edges
+
+    let first_referenced_figures figure =
+        figure
+        |>first_vertices
+        |>referenced_figures figure
 
     let last_vertices figure =
         if Seq.isEmpty figure.edges then

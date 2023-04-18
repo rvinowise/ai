@@ -21,7 +21,7 @@ module rvinowise.ai.built.Stencil
             ]
         )
         |>Seq.concat
-        |>dict 
+        |>Map.ofSeq
 
     
 
@@ -49,7 +49,7 @@ module rvinowise.ai.built.Stencil
                     ]
                 )
                 |>Seq.concat
-                |>dict
+                |>Map.ofSeq
             output_without=Set.empty
         }
 

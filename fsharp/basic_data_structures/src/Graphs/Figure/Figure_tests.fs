@@ -103,7 +103,7 @@ module Figure_tests=
                 "a1","a","B1","B";
                 "B1","B","figure_c1","figure_c";
                 "B1","B","a2","a";
-            ]
+            ]|>Renaming_figures.rename_vertices_to_standard_names
         )
     
     [<Fact>]

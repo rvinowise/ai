@@ -1,4 +1,4 @@
-namespace rvinowise.ai.applying_stencil_impl
+namespace rvinowise.ai.mapping_graph_impl
 
 
 
@@ -16,6 +16,7 @@ module Work_with_generators =
         chosen_targets
         |>Seq.iter (fun pair ->
             mapping.Add(pair.element, pair.target)    
+            
         )
         mapping
         
@@ -28,3 +29,7 @@ module Work_with_generators =
         //                    type_of_every_order(digit)
         |>Generator_of_orders<seq<Element_to_target<Vertex_id, Vertex_id>>>
         |>Seq.map (Seq.collect id)
+    
+    // [<Fact>]
+    // let ``mapping_combinations_from_generators shouldn't map same vertices twice``()=
+            

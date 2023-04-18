@@ -257,7 +257,11 @@ namespace rvinowise.ai
             |>first_vertices
             |>only_one_next_vertex_exist edges
 
-        
+
+        let next_vertices_of_many (edges: Edge seq) vertices =
+            vertices
+            |>Seq.collect (next_vertices edges)
+            |>Seq.distinct
 
 
 

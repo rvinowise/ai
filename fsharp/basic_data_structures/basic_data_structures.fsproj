@@ -40,6 +40,7 @@
     <Compile Include="src\Graphs\Stencil\Stencil_built.fs" />
     <Compile Include="src\Graphs\Stencil\Stencil_example.fs" />
     <Compile Include="src\Graphs\Stencil\Stencil.fs" />
+    <Compile Include="src\Graphs\Stencil\Figure_from_stencil.fs" />
 
     <!-- History -->
     <Compile Include="src\History\Figure_history\Figure_appearances\printed.fs" />

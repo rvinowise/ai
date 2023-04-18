@@ -238,7 +238,7 @@ module rvinowise.ai.built.Figure
         |>check_correctness
 
 
-    let empty = from_tuples []
+    
 
     
     let subgraph_with_vertices 

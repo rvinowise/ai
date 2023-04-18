@@ -8,14 +8,12 @@ module Stencil=
 
     let output (stencil: Stencil) =
         stencil.nodes
-        |>Seq.filter (fun vertex->
-            match vertex.Value with
-            |Stencil_output _ -> true
-            |_->false
+        |>Seq.pick (fun pair->
+            match pair.Value with
+            |Stencil_output _ -> Some pair.Key
+            |_->None
             //vertex.Value=Stencil_output
         )
-        |>Seq.map KeyValuePair.key
-        |>Seq.distinct
 
     let is_output stencil vertex=
         vertex
@@ -51,14 +49,9 @@ module Stencil=
                 |Stencil_output _ -> None
         )
 
-    let next_vertices vertices (stencil: Stencil)=
+    let next_subfigures_of_many (stencil: Stencil) vertices =
         vertices
-        |>Seq.collect (Edges.next_vertices stencil.edges)
-        |>Seq.distinct
-
-    let next_subfigures vertices (stencil: Stencil)=
-        stencil
-        |>next_vertices vertices
+        |>Edges.next_vertices_of_many stencil.edges
         |>only_subfigures stencil
 
     let previous_subfigures_jumping_over_outputs
@@ -83,17 +76,7 @@ module Stencil=
         |>Dictionary.some_value owner_stencil.nodes
             = Some (Lower_figure referenced_figure)
 
-    let vertices_referencing_figure 
-        owner_stencil
-        search_in_these_vertices
-        referenced_figure
-        =
-        search_in_these_vertices
-        |>Seq.filter (
-            is_vertex_referencing_figure
-                owner_stencil
-                referenced_figure
-        )
+    
     
     let nonexistent_vertex =  "0"|>Figure_id|>Lower_figure
 
@@ -127,3 +110,5 @@ module Stencil=
     
     let impossible_output_parts (stentcil:Stencil) =
         stentcil.output_without
+
+   

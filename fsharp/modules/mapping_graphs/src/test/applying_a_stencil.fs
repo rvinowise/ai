@@ -8,6 +8,7 @@ open FsUnit
 
 open rvinowise.ai
 open rvinowise.ai.Applying_stencil
+open rvinowise.ai.Mapping_graph
 open rvinowise.ai.ui
 
 
@@ -32,7 +33,7 @@ module ``application of stencils``=
     [<Fact>]
     let ``impossible to prolongate, because of no matching following subfigures``()=
         prolongate_one_mapping_with_next_subfigures 
-            example.Stencil.a_fitting_stencil
+            example.Figure.fitting_stencil_as_figure
             example.Figure.a_high_level_relatively_simple_figure
             [(Vertex_id "f", Figure_id "f")]
             initial_mapping_without_prolongation
@@ -42,7 +43,7 @@ module ``application of stencils``=
     [<Fact>]
     let``prolongation with a single following node``()=
         prolongate_one_mapping_with_next_subfigures 
-            example.Stencil.a_fitting_stencil
+            example.Figure.fitting_stencil_as_figure
             example.Figure.a_high_level_relatively_simple_figure
             [(Vertex_id "f", Figure_id "f")]
             initial_useless_mapping
@@ -61,9 +62,9 @@ module ``application of stencils``=
     let ``several mappings can be produced by one stencil application``()=
         
         (
-             map_stencil_onto_target
-                example.Stencil.a_fitting_stencil
+             map_figure_onto_target
                 example.Figure.a_high_level_relatively_simple_figure
+                example.Figure.fitting_stencil_as_figure
                 |> Set.ofSeq
         )
         |>should equal (
@@ -82,13 +83,13 @@ module ``application of stencils``=
 
     [<Fact>]
     let ``a full mapping can be produced if the stencil has only "out" in the middle``()=
-        let stencil = 
+        let mappee = 
             built.Stencil.simple_with_separator [
                 "N","out";
                 ",#1","out";
                 "out",",#2";
                 "out",";";
-            ]
+            ]|>Figure_from_stencil.convert
 
         let target =
             "N0,1,2,3,4,5,6,7,8,9;"
@@ -96,8 +97,8 @@ module ``application of stencils``=
             |>built.Figure.sequence_from_text
    
         let mappings =
-            map_stencil_onto_target
-                stencil
+            map_figure_onto_target
+                mappee
                 target
                 |>Set.ofSeq
         
@@ -140,7 +141,7 @@ module ``application of stencils``=
     [<Fact>]
     let ``mapping of first stencil subfigures onto target produces initial mapping``()=
         map_first_nodes
-            example.Stencil.a_fitting_stencil
+            example.Figure.fitting_stencil_as_figure
             example.Figure.a_high_level_relatively_simple_figure
         |> should equal
             [   Mapping.ofStringPairs ["b","b0";"h","h"];
@@ -152,9 +153,8 @@ module ``application of stencils``=
     let ``initial mapping when the target lacks some figures``()=
         map_first_nodes
             (
-                built.Stencil.simple_without_separator [
-                    "b","out1";
-                    "out1","f";
+                built.Figure.simple [
+                    "b","f";
                     "h","f";
                     "x","f";
                 ]
@@ -181,9 +181,9 @@ module ``application of stencils``=
     [<Fact>]
     let ``complete mapping of stencil onto target can be produced``()=
         let figure = example.Figure.a_high_level_relatively_simple_figure
-        let stencil = example.Stencil.a_fitting_stencil
+        let mappee = example.Figure.fitting_stencil_as_figure
         
-        (map_stencil_onto_target stencil figure)
+        (map_figure_onto_target figure mappee)
         |> should equal
             [
                 Mapping.ofStringPairs [

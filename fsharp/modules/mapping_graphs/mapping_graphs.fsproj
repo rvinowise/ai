@@ -10,8 +10,9 @@
   
   <ItemGroup>
     <Compile Include="src\Mapping.fs" />
-    <Compile Include="src\Applying_stencil\Work_with_generators.fs" />
-    <Compile Include="src\Applying_stencil\Map_first_nodes.fs" />
+    <Compile Include="src\Mapping_graph\Work_with_generators.fs" />
+    <Compile Include="src\Mapping_graph\Map_first_nodes.fs" />
+    <Compile Include="src\Mapping_graph\Mapping_graph.fs" />
     <Compile Include="src\Applying_stencil\Applying_stencil.fs" />
     
     <Compile Include="src\painted\applying_stencil.fs" />
@@ -20,7 +21,6 @@
     <Compile Include="src\test\generator_of_orders.fs" />
     <Compile Include="src\test\benchmarks\enumerating_combinations.fs" />
     <Compile Include="src\test\benchmarks\mapping_first_nodes.fs" />
-    <Compile Include="src\test\benchmarks\querying_stencil.fs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -28,7 +28,7 @@
     <ProjectReference Include="..\..\basic_data_structures\basic_data_structures.fsproj" />
     <ProjectReference Include="..\..\io\io.fsproj" />
     
-    <ProjectReference Include="..\..\..\modules\applying_stencils\enumerating_combinations\enumerating_combinations.csproj" />
+    <ProjectReference Include="..\..\..\modules\mapping_graphs\enumerating_combinations\enumerating_combinations.csproj" />
   </ItemGroup>
 
   <ItemGroup>

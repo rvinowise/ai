@@ -111,42 +111,8 @@ namespace rvinowise.ai.stencil
                 mapping[subfigure]
             )
 
-        let retrieve_result stencil (target:Figure) mapping =
-            //i don't know how to handle stencils with multiple outputs. assume it's one for now
-            let output_node = 
-                stencil
-                |>Stencil.output
-                |>Seq.head
-
-            let output_beginning =
-                output_node
-                |>Edges.previous_vertices stencil.edges
-                |>targets_of_mapping mapping
-                |>Edges.vertices_reacheble_from_other_vertices
-                    (fun _->true)
-                    target.edges
-                |>Set.ofSeq
-
-            let output_ending =
-                output_node
-                |>Edges.next_vertices stencil.edges
-                |>targets_of_mapping mapping //bug
-                |>Edges.vertices_reaching_other_vertices
-                    (fun _->true)
-                    target.edges
-                |>Set.ofSeq
+        
             
-            output_beginning
-            |>Set.intersect output_ending
-            |>function
-            |set when set|>Set.count>0 -> Some set
-            |_->None
-            |>Option.map( built.Figure.subgraph_with_vertices target)
-            //|>built.Figure.is_empty
-            
-            extensions.Option.opt {
-                
-            }
 
         let ofStringPairs (pairs: seq<string*string>) =
             pairs
