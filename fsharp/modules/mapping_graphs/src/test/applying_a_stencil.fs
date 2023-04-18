@@ -215,15 +215,20 @@ module ``application of stencils``=
             (painted.Graph.add_graph stencil.edges)
         |>painted.image.open_image_of_graph
 
-    [<Fact>]//(Skip="bug")
+    [<Fact>]
     let ``apply stencil to a long sequence``()=
-        let number_concept = 
+        let number_concept = {
             built.Stencil.simple_with_separator [
                 "N","out";
                 ",#1","out";
                 "out",",#2";
                 "out",";";
-            ]
+            ] with 
+                output_without=
+                    ","
+                    |>built.Figure.signal
+                    |>Set.singleton
+        }
 
         let history_as_figure =
             "N0,1,2,3,4,5,6,7,8,9;"

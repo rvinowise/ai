@@ -34,8 +34,8 @@ module Applying_stencil =
                     target.edges
                 |>Set.ofSeq
             
-            output_beginning
-            |>Set.intersect output_ending
+            (output_beginning, output_ending)
+            ||>Set.intersect 
             |>function
             |set when set|>Set.count>0 -> Some set
             |_->None
