@@ -228,7 +228,11 @@ namespace rvinowise.ai
             (starting_vertices: seq<Vertex_id>)
             =
             starting_vertices
-            |>Seq.map (all_vertices_reacheble_from_vertex is_needed step_further)
+            |>Seq.map (
+                all_vertices_reacheble_from_vertex 
+                    is_needed 
+                    step_further
+            )
             |>HashSet.intersectMany
 
         let vertices_reacheble_from_other_vertices
