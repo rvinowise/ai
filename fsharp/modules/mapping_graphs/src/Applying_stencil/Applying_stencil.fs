@@ -8,6 +8,14 @@ module Applying_stencil =
     open rvinowise.ai.mapping_graph_impl
  
 
+    let is_figure_without_impossible_parts 
+        (impossibles: Figure seq)
+        (owner_figure: Figure)
+        =
+        impossibles
+        |>Seq.collect (Mapping_graph.map_figure_onto_target owner_figure)
+        |>Seq.isEmpty
+
     let retrieve_result 
         stencil
         (target:Figure)
@@ -34,13 +42,13 @@ module Applying_stencil =
                     target.edges
                 |>Set.ofSeq
             
-            output_beginning
-            |>Set.intersect output_ending
-            |>function
-            |set when set|>Set.count>0 -> Some set
-            |_->None
-            |>Option.map ( built.Figure.subgraph_with_vertices target)
-            //|>built.Figure.is_empty
+            (output_beginning,output_ending)
+            ||>Set.intersect 
+            |>Some
+            |>Option.filter (Set.isEmpty>>not)
+            |>Option.map (built.Figure.subgraph_with_vertices target)
+            |>Option.filter (is_figure_without_impossible_parts stencil.output_without)
+            
 
 
     let results_of_stencil_application

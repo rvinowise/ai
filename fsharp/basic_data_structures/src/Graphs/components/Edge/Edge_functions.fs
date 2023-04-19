@@ -161,27 +161,48 @@ namespace rvinowise.ai
                 None
 
 
+        let greedy_continuation
+            (needed_vertices: Vertex_id Set)
+            (further_vertices: Vertex_id Set)
+            =
+            needed_vertices
+            |>Set.difference further_vertices
+
+        let wide_continuation
+            (needed_vertices: Vertex_id Set)
+            (further_vertices: Vertex_id Set)
+            =
+            further_vertices
+
+
         let rec private all_vertices_reacheble_from_vertices
             (is_needed:Vertex_id->bool)
             (step_further: Vertex_id -> Vertex_id seq)
+            (continuation: Vertex_id Set -> Vertex_id Set -> Vertex_id Set)
             (reached_goals: HashSet<Vertex_id>)
             (starting_vertices: Vertex_id seq)
             =
             let further_vertices =
                 starting_vertices
                 |>Seq.collect step_further
+                |>Set.ofSeq
             
             if Seq.length further_vertices > 0 then
-                further_vertices
-                |>Seq.filter is_needed
+                let needed_vertices =
+                    further_vertices
+                    |>Set.filter is_needed
+                
+                needed_vertices
                 |>Seq.iter (fun vertex -> 
                     reached_goals.Add(vertex) |> ignore
                 )
 
-                further_vertices
+                (needed_vertices, further_vertices) 
+                ||>continuation 
                 |>all_vertices_reacheble_from_vertices
                     is_needed
                     step_further
+                    continuation
                     reached_goals 
             else
                 ()
@@ -189,12 +210,14 @@ namespace rvinowise.ai
         let all_vertices_reacheble_from_vertex//<'Vertex when 'Vertex :> Vertex>
             (is_needed:Vertex_id->bool)
             (step_further: Vertex_id -> Vertex_id seq)
+            (continuation: Vertex_id Set->Vertex_id Set->Vertex_id Set)
             (starting_vertex: Vertex_id)
             =
             let reached_goals = HashSet<Vertex_id>()
             all_vertices_reacheble_from_vertices
                 is_needed
                 step_further
+                continuation
                 reached_goals
                 [starting_vertex]
             reached_goals

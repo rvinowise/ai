@@ -217,13 +217,18 @@ module ``application of stencils``=
 
     [<Fact>]//(Skip="bug")
     let ``apply stencil to a long sequence``()=
-        let number_concept = 
+        let number_concept = {
             built.Stencil.simple_with_separator [
                 "N","out";
-                ",#1","out";
-                "out",",#2";
+                //",#1","out";
+                //"out",",#2";
                 "out",";";
-            ]
+            ] with 
+                output_without=
+                    [","]
+                    |>Seq.map built.Figure.signal
+                    |>Set.ofSeq
+            }
 
         let history_as_figure =
             "N0,1,2,3,4,5,6,7,8,9;"
@@ -232,11 +237,12 @@ module ``application of stencils``=
 
         number_concept
         |>Applying_stencil.results_of_stencil_application history_as_figure
-        |>should be (
+        |>Set.ofSeq
+        |>should equal (
             "0123456789"
             |>Seq.map string
             |>Seq.map built.Figure.signal
-            |>subsetOf 
+            |>Set.ofSeq
         )
         
 
