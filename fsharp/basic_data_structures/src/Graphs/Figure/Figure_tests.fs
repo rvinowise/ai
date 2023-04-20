@@ -27,7 +27,7 @@ module Figure_tests=
         Edges.vertices_reacheble_from_other_vertices
             (fun _->true)
             example.Figure.a_high_level_relatively_simple_figure.edges
-            (["b0";"b2"]|>Seq.map Vertex_id)
+            (["b0";"b2"]|>List.map Vertex_id|>Set.ofList)
         |> should equal [Vertex_id "f1"]
 
     [<Fact>]
@@ -35,7 +35,7 @@ module Figure_tests=
         Edges.vertices_reaching_other_vertices
             (fun _->true)
             example.Figure.a_high_level_relatively_simple_figure.edges
-            (["b1";"f1"]|>Seq.map Vertex_id)
+            (["b1";"f1"]|>List.map Vertex_id|>Set.ofList)
         |> should equal [Vertex_id "b0"]
 
     [<Fact>]
@@ -79,7 +79,7 @@ module Figure_tests=
         Figure.subfigures_after_other_subfigures
             figure
             (Figure_id "f")
-            [Vertex_id "h0"; Vertex_id "b0"]
+            (Set.ofList [Vertex_id "h0"; Vertex_id "b0"])
     
     [<Fact>]
     let ``detect cycles in figures``()=

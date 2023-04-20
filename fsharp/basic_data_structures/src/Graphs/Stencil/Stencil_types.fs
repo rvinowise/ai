@@ -12,7 +12,7 @@ namespace rvinowise.ai
     | Stencil_output
 
     type Stencil = {
-        edges: Edge seq
+        edges: Edge Set
         nodes: Map<Vertex_id, Stencil_node>
         output_without: Figure Set
     }

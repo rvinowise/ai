@@ -167,14 +167,14 @@ module ``application of stencils``=
         (Figure.subfigures_after_other_subfigures
             example.Figure.a_high_level_relatively_simple_figure
             (Figure_id "f")
-            [Vertex_id "b0"]
+            ( "b0"|>Vertex_id|>Set.singleton)
         )|> should equal
             [Vertex_id "f0";Vertex_id "f1"]
 
         (Figure.subfigures_after_other_subfigures
             example.Figure.a_high_level_relatively_simple_figure
             (Figure_id "f")
-            [Vertex_id "d";Vertex_id "b2"]
+            ([Vertex_id "d";Vertex_id "b2"]|>Set.ofList)
         )|> should equal
             [Vertex_id "f1"]
     
@@ -217,18 +217,13 @@ module ``application of stencils``=
 
     [<Fact>]//(Skip="bug")
     let ``apply stencil to a long sequence``()=
-        let number_concept = {
+        let number_concept =
             built.Stencil.simple_with_separator [
                 "N","out";
-                //",#1","out";
-                //"out",",#2";
+                ",#1","out";
+                "out",",#2";
                 "out",";";
-            ] with 
-                output_without=
-                    [","]
-                    |>Seq.map built.Figure.signal
-                    |>Set.ofSeq
-            }
+            ]
 
         let history_as_figure =
             "N0,1,2,3,4,5,6,7,8,9;"

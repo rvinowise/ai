@@ -64,7 +64,7 @@ module Stencil=
             if is_output stencil edge.tail then
                 Edges.previous_vertices stencil.edges edge.tail
             else
-                Seq.ofList [edge.tail]
+                Set.ofList [edge.tail]
         )
     
     let is_vertex_referencing_figure

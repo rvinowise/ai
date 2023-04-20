@@ -104,15 +104,13 @@ namespace rvinowise.ai.stencil
         
         let targets_of_mapping 
             (mapping:Mapping)
-            (subfigures: Vertex_id seq) 
+            subfigures
             =
             subfigures
-            |>Seq.map (fun subfigure->
+            |>Set.map (fun subfigure->
                 mapping[subfigure]
             )
 
-        
-            
 
         let ofStringPairs (pairs: seq<string*string>) =
             pairs

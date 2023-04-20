@@ -8,93 +8,91 @@ namespace rvinowise.ai
         open rvinowise.extensions
 
         let incoming_edges
-            (edges: Edge seq) 
+            (edges: Edge Set) 
             (vertex: Vertex_id) 
             =
             edges
-            |>Seq.filter (fun e->e.head = vertex)
+            |>Set.filter (fun e->e.head = vertex)
 
         let outgoing_edges
-            (edges: Edge seq) 
+            (edges: Edge Set) 
             vertex
             =
             edges
-            |>Seq.filter (fun e->
+            |>Set.filter (fun e->
                 e.tail = vertex
             )
         
         let next_edges
-            (edges: Edge seq)
+            (edges: Edge Set)
             (edge: Edge)
             =
             edges
-            |>Seq.filter (fun e->
+            |>Set.filter (fun e->
                 e.tail = edge.head
             )
 
         let next_vertices
-            (edges: Edge seq) 
+            (edges: Edge Set) 
             vertex
             =
             vertex
             |>outgoing_edges edges
-            |>Seq.map (fun e->e.head)
+            |>Set.map (fun e->e.head)
 
         let previous_vertices
-            (edges: Edge seq) 
+            (edges: Edge Set) 
             vertex
             =
             vertex
             |>incoming_edges edges
-            |>Seq.map (fun e->e.tail)
+            |>Set.map (fun e->e.tail)
 
         let all_vertices 
-            (edges: Edge seq)
+            (edges: Edge Set)
             =
             edges
             |>Seq.collect (fun edge->[edge.tail; edge.head])
-            |>Seq.distinct
+            |>Set.ofSeq
 
         let is_first_vertex
-            (edges: seq<Edge> )
+            (edges: Edge Set )
             vertex
             =
             edges
-            |> Seq.exists (fun edge-> edge.head = vertex)
+            |> Set.exists (fun edge-> edge.head = vertex)
             |> not
 
         let first_vertices
-            (edges: seq<Edge>)
+            (edges: Edge Set)
             =
             edges
             |>all_vertices
-            |>Seq.filter (is_first_vertex edges)
-            |>Seq.distinct
+            |>Set.filter (is_first_vertex edges)
 
         let is_last_vertex
-            (edges: seq<Edge> )
+            (edges: Edge Set )
             vertex
             =
             edges
-            |> Seq.exists (fun edge-> edge.tail = vertex)
+            |> Set.exists (fun edge-> edge.tail = vertex)
             |> not
 
         let last_vertices
-            (edges: seq<Edge>)
+            (edges: Edge Set)
             =
             edges
             |>all_vertices
-            |>Seq.filter (is_last_vertex edges)
-            |>Seq.distinct
+            |>Set.filter (is_last_vertex edges)
         
 
         let vertex_which_goes_into_cycle
-            (edges: Edge seq)
+            (edges: Edge Set)
             (starting_vertex: Vertex_id)
             =
 
             let rec DFS_for_repetitions
-                (step_further: Vertex_id -> Vertex_id seq)
+                (step_further: Vertex_id -> Vertex_id Set)
                 (all_visited_vertices: HashSet<Vertex_id>)
                 (recursion_stack: Set<Vertex_id>)
                 (current_vertex: Vertex_id)
@@ -177,7 +175,7 @@ namespace rvinowise.ai
 
         let rec private all_vertices_reacheble_from_vertices
             (is_needed:Vertex_id->bool)
-            (step_further: Vertex_id -> Vertex_id seq)
+            (step_further: Vertex_id -> Vertex_id Set)
             (continuation: Vertex_id Set -> Vertex_id Set -> Vertex_id Set)
             (reached_goals: HashSet<Vertex_id>)
             (starting_vertices: Vertex_id seq)
@@ -209,7 +207,7 @@ namespace rvinowise.ai
         
         let all_vertices_reacheble_from_vertex//<'Vertex when 'Vertex :> Vertex>
             (is_needed:Vertex_id->bool)
-            (step_further: Vertex_id -> Vertex_id seq)
+            (step_further: Vertex_id -> Vertex_id Set)
             (continuation: Vertex_id Set->Vertex_id Set->Vertex_id Set)
             (starting_vertex: Vertex_id)
             =
@@ -224,21 +222,22 @@ namespace rvinowise.ai
 
         let vertices_reacheble_from_every_vertex
             (is_needed: Vertex_id->bool)
-            (step_further: Vertex_id -> seq<Vertex_id> )
-            (starting_vertices: seq<Vertex_id>)
+            (step_further: Vertex_id -> Vertex_id Set)
+            (starting_vertices: Vertex_id seq)
             =
             starting_vertices
             |>Seq.map (
                 all_vertices_reacheble_from_vertex 
-                    is_needed 
+                    is_needed
                     step_further
+                    greedy_continuation
             )
             |>HashSet.intersectMany
 
         let vertices_reacheble_from_other_vertices
             (is_needed: Vertex_id->bool)
-            (edges: Edge seq)
-            (subfigures_before_goals: Vertex_id seq)
+            (edges: Edge Set)
+            (subfigures_before_goals: Vertex_id Set)
             :HashSet<Vertex_id>
             =
             vertices_reacheble_from_every_vertex
@@ -248,8 +247,8 @@ namespace rvinowise.ai
 
         let vertices_reaching_other_vertices
             (is_needed: Vertex_id->bool)
-            (edges: Edge seq)
-            (subfigures_after_goals: Vertex_id seq)
+            (edges: Edge Set)
+            (subfigures_after_goals: Vertex_id Set)
             =
             vertices_reacheble_from_every_vertex
                 is_needed
@@ -269,26 +268,26 @@ namespace rvinowise.ai
             )
 
     
-        let is_sequence (edges: Edge seq) =
+        let is_sequence (edges: Edge Set) =
             let rec only_one_next_vertex_exist
                 edges 
-                (vertices: Vertex_id seq) 
+                (vertices: Vertex_id Set) 
                 =
-                if Seq.length vertices = 1 then
+                if Set.count vertices = 1 then
                     vertices
                     |>Seq.head
                     |>next_vertices edges
                     |>only_one_next_vertex_exist edges 
-                else Seq.isEmpty vertices
+                else Set.isEmpty vertices
             edges
             |>first_vertices
             |>only_one_next_vertex_exist edges
 
 
-        let next_vertices_of_many (edges: Edge seq) vertices =
+        let next_vertices_of_many (edges: Edge Set) vertices =
             vertices
             |>Seq.collect (next_vertices edges)
-            |>Seq.distinct
+            |>Set.ofSeq
 
 
 

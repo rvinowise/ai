@@ -24,7 +24,7 @@ let private branching_edges_to_string (edges:Edge seq) =
 
 
 let id_of_a_sequence_from_edges
-    (edges: Edge seq) 
+    edges
     (subfigures: Map<Vertex_id, Figure_id>) 
     =
     let first_vertex =
@@ -33,7 +33,7 @@ let id_of_a_sequence_from_edges
         |>Seq.head
     
     let rec build_id 
-        (edges : Edge seq)
+        edges
         (subfigures: Map<Vertex_id, Figure_id>) 
         id
         (vertex:Vertex_id)
@@ -53,14 +53,14 @@ let id_of_a_sequence_from_edges
     build_id edges subfigures (Figure_id "") first_vertex
 
 let private sequential_edges_to_string 
-    (edges:Edge seq)
+    edges
     (subfigures) 
     =
     id_of_a_sequence_from_edges edges subfigures
     |>Figure_id.value
 
 let private edges_to_string 
-    (edges:Edge seq)
+    edges
     (subfigures) 
     =
     if Edges.is_sequence edges then

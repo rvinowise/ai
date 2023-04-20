@@ -176,7 +176,7 @@ module rvinowise.ai.built.Figure
             without=Set.empty
         }
 
-    let vertex_data_from_edges_of_figure (full_vertex_data: Map<Vertex_id, Figure_id>) (edges:Edge seq) =
+    let vertex_data_from_edges_of_figure (full_vertex_data: Map<Vertex_id, Figure_id>) edges =
         edges
         |>Edges.all_vertices
         |>Seq.map (fun vertex->

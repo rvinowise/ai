@@ -29,9 +29,9 @@ module Figure_from_stencil=
         let edges_without_output = 
             stencil.edges
             |>Seq.filter(fun edge->
-                edge.head=output_vertex 
+                (edge.head=output_vertex 
                 || 
-                edge.tail=output_vertex
+                edge.tail=output_vertex)
                 |>not
             )
 

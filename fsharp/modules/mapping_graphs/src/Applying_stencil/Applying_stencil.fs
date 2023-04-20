@@ -36,7 +36,7 @@ module Applying_stencil =
             let output_ending =
                 output_node
                 |>Edges.next_vertices stencil.edges
-                |>Mapping.targets_of_mapping mapping //bug
+                |>Mapping.targets_of_mapping mapping
                 |>Edges.vertices_reaching_other_vertices
                     (fun _->true)
                     target.edges
