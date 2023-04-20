@@ -79,19 +79,20 @@ module Figure=
     
 
     let subfigures_after_other_subfigures
+        continuation
         owner_figure
         figure_referenced_by_needed_subfigures
         subfigures_before_goals
         =
         Edges.vertices_reacheble_from_other_vertices
+            continuation
             (fun vertex->
                 is_vertex_referencing_figure 
                     owner_figure 
                     figure_referenced_by_needed_subfigures
                     vertex
                 &&
-                Set.contains vertex subfigures_before_goals
-                |>not
+                (subfigures_before_goals|>Set.contains vertex|>not )
             )
             owner_figure.edges
             subfigures_before_goals

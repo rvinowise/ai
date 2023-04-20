@@ -136,47 +136,25 @@ namespace rvinowise.ai
                 starting_vertex
 
 
-        let rec first_vertex_reacheble_from_vertices
-            (is_needed:Vertex_id->bool)
-            (step_further: Vertex_id -> Vertex_id seq)
-            (starting_vertices: Vertex_id seq)
-            =
-            let further_vertices =
-                starting_vertices
-                |>Seq.collect step_further
-            
-            if Seq.length further_vertices > 0 then
-                further_vertices
-                |>Seq.tryFind is_needed
-                |>function 
-                |Some needed_vertex -> Some needed_vertex
-                |None -> 
-                    first_vertex_reacheble_from_vertices
-                        is_needed
-                        step_further
-                        further_vertices
-            else
-                None
 
-
-        let greedy_continuation
+        let only_first_suitable_vertices
             (needed_vertices: Vertex_id Set)
             (further_vertices: Vertex_id Set)
             =
             needed_vertices
             |>Set.difference further_vertices
 
-        let wide_continuation
+        let continue_search_till_end
             (needed_vertices: Vertex_id Set)
             (further_vertices: Vertex_id Set)
             =
             further_vertices
 
 
-        let rec private all_vertices_reacheble_from_vertices
-            (is_needed:Vertex_id->bool)
-            (step_further: Vertex_id -> Vertex_id Set)
+        let rec private vertices_reacheble_from_vertices
             (continuation: Vertex_id Set -> Vertex_id Set -> Vertex_id Set)
+            (is_vertex_needed:Vertex_id->bool)
+            (step_further: Vertex_id -> Vertex_id Set)
             (reached_goals: HashSet<Vertex_id>)
             (starting_vertices: Vertex_id seq)
             =
@@ -188,7 +166,7 @@ namespace rvinowise.ai
             if Seq.length further_vertices > 0 then
                 let needed_vertices =
                     further_vertices
-                    |>Set.filter is_needed
+                    |>Set.filter is_vertex_needed
                 
                 needed_vertices
                 |>Seq.iter (fun vertex -> 
@@ -197,61 +175,66 @@ namespace rvinowise.ai
 
                 (needed_vertices, further_vertices) 
                 ||>continuation 
-                |>all_vertices_reacheble_from_vertices
-                    is_needed
-                    step_further
+                |>vertices_reacheble_from_vertices
                     continuation
+                    is_vertex_needed
+                    step_further
                     reached_goals 
             else
                 ()
         
-        let all_vertices_reacheble_from_vertex//<'Vertex when 'Vertex :> Vertex>
-            (is_needed:Vertex_id->bool)
-            (step_further: Vertex_id -> Vertex_id Set)
+        let vertices_reacheble_from_vertex//<'Vertex when 'Vertex :> Vertex>
             (continuation: Vertex_id Set->Vertex_id Set->Vertex_id Set)
+            (is_vertex_needed:Vertex_id->bool)
+            (step_further: Vertex_id -> Vertex_id Set)
             (starting_vertex: Vertex_id)
             =
             let reached_goals = HashSet<Vertex_id>()
-            all_vertices_reacheble_from_vertices
-                is_needed
-                step_further
+            vertices_reacheble_from_vertices
                 continuation
+                is_vertex_needed
+                step_further
                 reached_goals
                 [starting_vertex]
             reached_goals
 
         let vertices_reacheble_from_every_vertex
-            (is_needed: Vertex_id->bool)
+            (continuation)
+            (is_vertex_needed: Vertex_id->bool)
             (step_further: Vertex_id -> Vertex_id Set)
             (starting_vertices: Vertex_id seq)
             =
             starting_vertices
             |>Seq.map (
-                all_vertices_reacheble_from_vertex 
-                    is_needed
+                vertices_reacheble_from_vertex 
+                    continuation
+                    is_vertex_needed
                     step_further
-                    greedy_continuation
             )
             |>HashSet.intersectMany
 
         let vertices_reacheble_from_other_vertices
-            (is_needed: Vertex_id->bool)
+            continuation
+            (is_vertex_needed: Vertex_id->bool)
             (edges: Edge Set)
             (subfigures_before_goals: Vertex_id Set)
             :HashSet<Vertex_id>
             =
             vertices_reacheble_from_every_vertex
-                is_needed
+                continuation
+                is_vertex_needed
                 (next_vertices edges)
                 subfigures_before_goals
 
         let vertices_reaching_other_vertices
-            (is_needed: Vertex_id->bool)
+            continuation
+            (is_vertex_needed: Vertex_id->bool)
             (edges: Edge Set)
             (subfigures_after_goals: Vertex_id Set)
             =
             vertices_reacheble_from_every_vertex
-                is_needed
+                continuation
+                is_vertex_needed
                 (previous_vertices edges)
                 subfigures_after_goals
 

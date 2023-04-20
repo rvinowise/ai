@@ -25,6 +25,7 @@ module Figure_tests=
     [<Fact>]
     let ``vertices reacheble from others``()=
         Edges.vertices_reacheble_from_other_vertices
+            Edges.continue_search_till_end
             (fun _->true)
             example.Figure.a_high_level_relatively_simple_figure.edges
             (["b0";"b2"]|>List.map Vertex_id|>Set.ofList)
@@ -33,6 +34,7 @@ module Figure_tests=
     [<Fact>]
     let ``vertices reaching others``()=
         Edges.vertices_reaching_other_vertices
+            Edges.continue_search_till_end
             (fun _->true)
             example.Figure.a_high_level_relatively_simple_figure.edges
             (["b1";"f1"]|>List.map Vertex_id|>Set.ofList)
@@ -77,6 +79,7 @@ module Figure_tests=
         let figure = example.Figure.a_figure_with_huge_beginning
 
         Figure.subfigures_after_other_subfigures
+            Edges.continue_search_till_end
             figure
             (Figure_id "f")
             (Set.ofList [Vertex_id "h0"; Vertex_id "b0"])

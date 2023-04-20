@@ -59,6 +59,7 @@ module Mapping_graph =
         |>Edges.previous_vertices mappee.edges
         |>Mapping.targets_of_mapping mapping
         |>Figure.subfigures_after_other_subfigures
+            Edges.only_first_suitable_vertices
             target
             prolongating_figure
 
