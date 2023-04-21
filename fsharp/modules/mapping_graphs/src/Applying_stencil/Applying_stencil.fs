@@ -28,7 +28,7 @@ module Applying_stencil =
                 output_node
                 |>Edges.previous_vertices stencil.edges
                 |>Mapping.targets_of_mapping mapping
-                |>Edges.vertices_reacheble_from_other_vertices
+                |>Edges.search_vertices_forward
                     Edges.continue_search_till_end
                     (fun _->true)
                     target.edges
@@ -38,7 +38,7 @@ module Applying_stencil =
                 output_node
                 |>Edges.next_vertices stencil.edges
                 |>Mapping.targets_of_mapping mapping
-                |>Edges.vertices_reaching_other_vertices
+                |>Edges.search_vertices_backward
                     Edges.continue_search_till_end
                     (fun _->true)
                     target.edges

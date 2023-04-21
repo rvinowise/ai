@@ -81,21 +81,27 @@ module Figure=
     let subfigures_after_other_subfigures
         continuation
         owner_figure
-        figure_referenced_by_needed_subfigures
-        subfigures_before_goals
+        figure_referenced_by_needed_vertices
+        starting_vertices
         =
-        Edges.vertices_reacheble_from_other_vertices
+        let references_needed_figure vertex =
+            is_vertex_referencing_figure 
+                owner_figure 
+                figure_referenced_by_needed_vertices
+                vertex
+
+        let isnot_part_of_starting_vertices vertex =
+            starting_vertices|>Set.contains vertex|>not
+
+        Edges.search_vertices_forward
             continuation
             (fun vertex->
-                is_vertex_referencing_figure 
-                    owner_figure 
-                    figure_referenced_by_needed_subfigures
-                    vertex
+                references_needed_figure vertex
                 &&
-                (subfigures_before_goals|>Set.contains vertex|>not )
+                isnot_part_of_starting_vertices vertex
             )
             owner_figure.edges
-            subfigures_before_goals
+            starting_vertices
 
     let has_edges (figure:Figure) =
         figure.edges

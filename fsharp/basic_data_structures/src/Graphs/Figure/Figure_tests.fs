@@ -24,7 +24,7 @@ module Figure_tests=
 
     [<Fact>]
     let ``vertices reacheble from others``()=
-        Edges.vertices_reacheble_from_other_vertices
+        Edges.search_vertices_forward
             Edges.continue_search_till_end
             (fun _->true)
             example.Figure.a_high_level_relatively_simple_figure.edges
@@ -33,7 +33,7 @@ module Figure_tests=
 
     [<Fact>]
     let ``vertices reaching others``()=
-        Edges.vertices_reaching_other_vertices
+        Edges.search_vertices_backward
             Edges.continue_search_till_end
             (fun _->true)
             example.Figure.a_high_level_relatively_simple_figure.edges
