@@ -49,11 +49,18 @@ module Mapping_graph =
 
     
     let first_vertices_reacheble_from_vertices
-        edges
+        figure
         figure_referenced_by_needed_vertex
         starting_vertices
         =
+        let vertex_references_needed_figure vertex =
+            Figure.reference_of_vertex figure vertex =
+                figure_referenced_by_needed_vertex
+        
         Search_in_graph.first_vertices_reacheble_from_vertices
+            vertex_references_needed_figure
+            (Edges.next_vertices figure.edges)
+            starting_vertices
 
 
 
@@ -70,7 +77,7 @@ module Mapping_graph =
         |>Edges.previous_vertices mappee.edges
         |>Mapping.targets_of_mapping mapping
         |>first_vertices_reacheble_from_vertices
-            target.edges
+            target
             prolongating_figure
         
 

@@ -49,7 +49,6 @@ module Applying_stencil =
                 |>Mapping.targets_of_mapping mapping
                 |>all_vertices_reacheble_from_vertices 
                     (Edges.previous_vertices target.edges)
-                    target.edges
                 |>Set.ofSeq
             
             (output_beginning,output_ending)
