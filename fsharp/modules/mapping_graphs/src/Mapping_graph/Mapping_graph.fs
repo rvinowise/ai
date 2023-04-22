@@ -47,6 +47,17 @@ module Mapping_graph =
         added_mappings
         |>Seq.map (copied_mapping_with_prolongation base_mapping)
 
+    
+    let first_vertices_reacheble_from_vertices
+        edges
+        figure_referenced_by_needed_vertex
+        starting_vertices
+        =
+        Search_in_graph.first_vertices_reacheble_from_vertices
+
+
+
+
     let possible_targets_for_mapping_subfigure
         mappee
         target
@@ -58,11 +69,9 @@ module Mapping_graph =
         prolongating_vertex
         |>Edges.previous_vertices mappee.edges
         |>Mapping.targets_of_mapping mapping
-        |>Figure.subfigures_after_other_subfigures
-            Edges.only_first_suitable_vertices
-            target
+        |>first_vertices_reacheble_from_vertices
+            target.edges
             prolongating_figure
-
         
 
     let next_mapping_targets_for_mapped_subfigures

@@ -22,23 +22,7 @@ module Figure_tests=
         f1 |>should equal f2
 
 
-    [<Fact>]
-    let ``vertices reacheble from others``()=
-        Edges.search_vertices_forward
-            Edges.continue_search_till_end
-            (fun _->true)
-            example.Figure.a_high_level_relatively_simple_figure.edges
-            (["b0";"b2"]|>List.map Vertex_id|>Set.ofList)
-        |> should equal [Vertex_id "f1"]
-
-    [<Fact>]
-    let ``vertices reaching others``()=
-        Edges.search_vertices_backward
-            Edges.continue_search_till_end
-            (fun _->true)
-            example.Figure.a_high_level_relatively_simple_figure.edges
-            (["b1";"f1"]|>List.map Vertex_id|>Set.ofList)
-        |> should equal [Vertex_id "b0"]
+    
 
     [<Fact>]
     let ``try id_from_sequence``()=
@@ -73,16 +57,7 @@ module Figure_tests=
         |>Edges.is_sequence
         |>should equal false
 
-    [<Fact>]
-    let ``subfigures_after_other_subfigures with a tricky figure``()=
-        let stencil = example.Stencil.a_fitting_stencil
-        let figure = example.Figure.a_figure_with_huge_beginning
-
-        Figure.subfigures_after_other_subfigures
-            Edges.continue_search_till_end
-            figure
-            (Figure_id "f")
-            (Set.ofList [Vertex_id "h0"; Vertex_id "b0"])
+    
     
     [<Fact>]
     let ``detect cycles in figures``()=

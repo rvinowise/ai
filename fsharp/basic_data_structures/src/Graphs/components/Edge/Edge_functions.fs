@@ -1,7 +1,6 @@
 namespace rvinowise.ai
 
 
-    [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
     module Edges =
         open rvinowise
         open System.Collections.Generic
@@ -135,123 +134,6 @@ namespace rvinowise.ai
                 Set.empty
                 starting_vertex
 
-
-
-        let only_first_suitable_vertices
-            (needed_vertices: Vertex_id Set)
-            (further_vertices: Vertex_id Set)
-            =
-            needed_vertices
-            |>Set.difference further_vertices
-
-        let continue_search_till_end
-            (needed_vertices: Vertex_id Set)
-            (further_vertices: Vertex_id Set)
-            =
-            further_vertices
-
-
-        let rec private vertices_reacheble_from_vertices
-            (is_vertex_needed:Vertex_id->bool)
-            (step_further: Vertex_id -> Vertex_id Set)
-            (reached_goals: HashSet<Vertex_id>)
-            (starting_vertices: Vertex_id seq)
-            =
-            let further_vertices =
-                starting_vertices
-                |>Seq.collect step_further
-                |>Set.ofSeq
-            
-            if Seq.length further_vertices > 0 then
-                let needed_vertices =
-                    further_vertices
-                    |>Set.filter is_vertex_needed
-                
-                needed_vertices
-                |>Seq.iter (fun vertex -> 
-                    reached_goals.Add(vertex) |> ignore
-                )
-
-                (needed_vertices, further_vertices) 
-                ||>continue_search_till_end 
-                |>vertices_reacheble_from_vertices
-                    is_vertex_needed
-                    step_further
-                    reached_goals 
-            else
-                ()
-        
-        let vertices_reacheble_from_vertex//<'Vertex when 'Vertex :> Vertex>
-            (is_vertex_needed:Vertex_id->bool)
-            (step_further: Vertex_id -> Vertex_id Set)
-            (starting_vertex: Vertex_id)
-            =
-            let reached_goals = HashSet<Vertex_id>()
-            vertices_reacheble_from_vertices
-                is_vertex_needed
-                step_further
-                reached_goals
-                [starting_vertex]
-            reached_goals
-
-        let ``first_encountered_vertex(simple)`` 
-            (step_further: Vertex_id -> Vertex_id Set)
-            (vertices: HashSet<Vertex_id>)
-            =
-            //let vertices = set vertices
-            let reached_vertices =
-                vertices
-                |>Seq.fold(fun (set:HashSet<Vertex_id>) vertex->
-                        vertex
-                        |>vertices_reacheble_from_vertex
-                            (fun vertex->vertices.Contains(vertex))
-                            step_further
-                        |>set.UnionWith
-                        |>ignore
-                        set
-                    )
-                    (HashSet<Vertex_id>())
-            let unreached_vertices = 
-                vertices.ExceptWith reached_vertices
-            unreached_vertices
-
-        let vertices_reacheble_from_every_vertex
-            (is_vertex_needed: Vertex_id->bool)
-            (step_further: Vertex_id -> Vertex_id Set)
-            (starting_vertices: Vertex_id seq)
-            =
-            starting_vertices
-            |>Seq.map (
-                vertices_reacheble_from_vertex 
-                    is_vertex_needed
-                    step_further
-            )
-            |>HashSet.intersectMany
-            |>``first_encountered_vertex(simple)``
-
-        let search_vertices_forward
-            continuation
-            (is_vertex_needed: Vertex_id->bool)
-            (edges: Edge Set)
-            (starting_vertices: Vertex_id Set)
-            =
-            vertices_reacheble_from_every_vertex
-                continuation
-                is_vertex_needed
-                (next_vertices edges)
-                starting_vertices
-
-        let search_vertices_backward
-            continuation
-            (is_vertex_needed: Vertex_id->bool)
-            (edges: Edge Set)
-            (starting_vertices: Vertex_id Set)
-            =
-            vertices_reacheble_from_every_vertex
-                continuation
-                is_vertex_needed
-                (previous_vertices edges)
-                starting_vertices
 
 
         let edges_between_vertices 

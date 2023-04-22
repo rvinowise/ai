@@ -165,7 +165,7 @@ module ``application of stencils``=
     [<Fact>]
     let ``finding following subfigures referencing a specific figure``()=
         (Figure.subfigures_after_other_subfigures
-            Edges.continue_search_till_end
+            Search_in_graph.continue_search_till_end
             example.Figure.a_high_level_relatively_simple_figure
             (Figure_id "f")
             ( "b0"|>Vertex_id|>Set.singleton)
@@ -173,7 +173,7 @@ module ``application of stencils``=
             [Vertex_id "f0";Vertex_id "f1"]
 
         (Figure.subfigures_after_other_subfigures
-            Edges.continue_search_till_end
+            Search_in_graph.continue_search_till_end
             example.Figure.a_high_level_relatively_simple_figure
             (Figure_id "f")
             ([Vertex_id "d";Vertex_id "b2"]|>Set.ofList)

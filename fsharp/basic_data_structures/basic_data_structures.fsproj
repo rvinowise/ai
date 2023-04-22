@@ -42,6 +42,8 @@
     <Compile Include="src\Graphs\Stencil\Stencil.fs" />
     <Compile Include="src\Graphs\Stencil\Figure_from_stencil.fs" />
 
+    <Compile Include="src\Graphs\Graph\Search_in_graph.fs" />
+    
     <!-- History -->
     <Compile Include="src\History\Figure_history\Figure_appearances\printed.fs" />
     <Compile Include="src\History\Figure_history\Figure_id_appearances\Figure_id_appearances.fs" />

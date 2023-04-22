@@ -16,6 +16,17 @@ module Applying_stencil =
         |>Seq.collect (Mapping_graph.map_figure_onto_target owner_figure)
         |>Seq.isEmpty
 
+
+    let all_vertices_reacheble_from_vertices
+        (step_further: Vertex_id->Vertex_id Set)
+        starting_vertices
+        =
+        Search_in_graph.vertices_reacheble_from_vertices 
+            (fun _->true)
+            step_further
+            starting_vertices
+
+
     let retrieve_result 
         stencil
         (target:Figure)
@@ -28,19 +39,16 @@ module Applying_stencil =
                 output_node
                 |>Edges.previous_vertices stencil.edges
                 |>Mapping.targets_of_mapping mapping
-                |>Edges.search_vertices_forward
-                    Edges.continue_search_till_end
-                    (fun _->true)
-                    target.edges
+                |>all_vertices_reacheble_from_vertices 
+                    (Edges.next_vertices target.edges)
                 |>Set.ofSeq
 
             let output_ending =
                 output_node
                 |>Edges.next_vertices stencil.edges
                 |>Mapping.targets_of_mapping mapping
-                |>Edges.search_vertices_backward
-                    Edges.continue_search_till_end
-                    (fun _->true)
+                |>all_vertices_reacheble_from_vertices 
+                    (Edges.previous_vertices target.edges)
                     target.edges
                 |>Set.ofSeq
             
