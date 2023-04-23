@@ -17,14 +17,18 @@ module Applying_stencil =
         |>Seq.isEmpty
 
 
-    let all_vertices_reacheble_from_vertices
+    let all_vertices_reacheble_from_all_vertices_together
         (step_further: Vertex_id->Vertex_id Set)
         starting_vertices
         =
-        Search_in_graph.vertices_reacheble_from_vertices 
-            (fun _->true)
-            step_further
-            starting_vertices
+        starting_vertices
+        |>Seq.map Seq.singleton
+        |>Seq.map (
+            Search_in_graph.vertices_reacheble_from_any_vertices 
+                (fun _->true)
+                step_further
+        )|>Set.intersectMany
+            
 
 
     let retrieve_result 
@@ -39,7 +43,7 @@ module Applying_stencil =
                 output_node
                 |>Edges.previous_vertices stencil.edges
                 |>Mapping.targets_of_mapping mapping
-                |>all_vertices_reacheble_from_vertices 
+                |>all_vertices_reacheble_from_all_vertices_together 
                     (Edges.next_vertices target.edges)
                 |>Set.ofSeq
 
@@ -47,7 +51,7 @@ module Applying_stencil =
                 output_node
                 |>Edges.next_vertices stencil.edges
                 |>Mapping.targets_of_mapping mapping
-                |>all_vertices_reacheble_from_vertices 
+                |>all_vertices_reacheble_from_all_vertices_together 
                     (Edges.previous_vertices target.edges)
                 |>Set.ofSeq
             
@@ -70,4 +74,5 @@ module Applying_stencil =
         |>Seq.map (retrieve_result stencil target)
         |>Seq.choose id
 
+    
     

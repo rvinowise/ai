@@ -1,13 +1,14 @@
 namespace rvinowise.ai
 
-
-
 module Mapping_graph = 
     open System.Collections.Generic
     open rvinowise.ai.generating_combinations
     open rvinowise.ai.stencil
     open rvinowise
     open rvinowise.ai.mapping_graph_impl
+
+    open Xunit
+    open FsUnit
 
 
     let map_first_nodes = Map_first_nodes.map_first_nodes
@@ -48,22 +49,86 @@ module Mapping_graph =
         |>Seq.map (copied_mapping_with_prolongation base_mapping)
 
     
-    let first_vertices_reacheble_from_vertices
-        figure
-        figure_referenced_by_needed_vertex
-        starting_vertices
+    let choose_first_vertices 
+        (step_further: Vertex_id -> Vertex_id Set)
+        (vertices: Vertex_id Set)
         =
-        let vertex_references_needed_figure vertex =
-            Figure.reference_of_vertex figure vertex =
-                figure_referenced_by_needed_vertex
-        
-        Search_in_graph.first_vertices_reacheble_from_vertices
-            vertex_references_needed_figure
-            (Edges.next_vertices figure.edges)
-            starting_vertices
+        let reached_vertices =
+            vertices
+            |>Seq.fold(fun set vertex->
+                    [vertex]
+                    |>Search_in_graph.vertices_reacheble_from_any_vertices
+                        (fun vertex->vertices|>Set.contains vertex)
+                        step_further
+                    |>Set.union set
+                )
+                Set.empty
+        reached_vertices
+        |>Set.difference vertices
 
+    let first_vertices_reacheble_from_all_vertices_together
+        (is_vertex_needed: Vertex_id->bool)
+        (step_further: Vertex_id -> Vertex_id Set)
+        (starting_vertices: Vertex_id seq)
+        =
+        starting_vertices
+        |>Seq.map Seq.singleton
+        |>Seq.map (
+            Search_in_graph.vertices_reacheble_from_any_vertices 
+                is_vertex_needed
+                step_further
+        )
+        |>Set.intersectMany
+        |>choose_first_vertices step_further
 
+    let does_vertex_reference_figue
+        owner_figure
+        referenced_figure
+        vertex
+        =
+        vertex
+        |>Figure.reference_of_vertex owner_figure
+            = referenced_figure
 
+    [<Fact>]
+    let ``finding following subfigures referencing a specific figure``()=
+        let owner_figure = example.Figure.a_high_level_relatively_simple_figure
+        let referenced_figure = (Figure_id "f")
+        (first_vertices_reacheble_from_all_vertices_together 
+            (does_vertex_reference_figue
+                owner_figure
+                referenced_figure)
+            (Edges.next_vertices owner_figure.edges)
+            ( "b0"|>Vertex_id|>Set.singleton)
+        )|> should equal
+            [Vertex_id "f0";Vertex_id "f1"]
+
+        (first_vertices_reacheble_from_all_vertices_together
+            (does_vertex_reference_figue
+                owner_figure
+                referenced_figure)
+            (Edges.next_vertices owner_figure.edges)
+            ([Vertex_id "d";Vertex_id "b2"]|>Set.ofList)
+        )|> should equal
+            [Vertex_id "f1"]
+
+    [<Fact>]
+    let ``vertices reacheble from others``()=
+        let owner_figure = example.Figure.a_high_level_relatively_simple_figure
+        let referenced_figure = Figure_id "f"
+        first_vertices_reacheble_from_all_vertices_together
+            (fun _->true)
+            (Edges.next_vertices owner_figure.edges)
+            (["b0";"b2"]|>List.map Vertex_id|>Set.ofList)
+        |> should equal [Vertex_id "f1"]
+
+    [<Fact>]
+    let ``vertices reaching others``()=
+        first_vertices_reacheble_from_all_vertices_together
+            (fun _->true)
+            (Edges.previous_vertices example.Figure.a_high_level_relatively_simple_figure.edges)
+            (["b1";"f1"]|>List.map Vertex_id|>Set.ofList)
+        |> should equal [Vertex_id "b0"]
 
     let possible_targets_for_mapping_subfigure
         mappee
@@ -73,12 +138,16 @@ module Mapping_graph =
         =
         let prolongating_vertex = prolongating_stencil_subfigure|>fst
         let prolongating_figure = prolongating_stencil_subfigure|>snd
+        let vertex_references_needed_figure vertex =
+            Figure.reference_of_vertex target vertex =
+                prolongating_figure 
+        
         prolongating_vertex
         |>Edges.previous_vertices mappee.edges
         |>Mapping.targets_of_mapping mapping
-        |>first_vertices_reacheble_from_vertices
-            target
-            prolongating_figure
+        |>first_vertices_reacheble_from_all_vertices_together
+            vertex_references_needed_figure
+            (Edges.next_vertices target.edges)
         
 
     let next_mapping_targets_for_mapped_subfigures

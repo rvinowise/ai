@@ -11,7 +11,6 @@ open rvinowise.ai.Applying_stencil
 open rvinowise.ai.Mapping_graph
 open rvinowise.ai.ui
 
-
         
 module ``application of stencils``=
     
@@ -162,21 +161,9 @@ module ``application of stencils``=
             example.Figure.a_high_level_relatively_simple_figure
         |> should be Empty
 
-    [<Fact>]
-    let ``finding following subfigures referencing a specific figure``()=
-        (Search_in_graph.vertices_reacheble_from_vertices
-            example.Figure.a_high_level_relatively_simple_figure
-            (Figure_id "f")
-            ( "b0"|>Vertex_id|>Set.singleton)
-        )|> should equal
-            [Vertex_id "f0";Vertex_id "f1"]
+    
 
-        (Search_in_graph.vertices_reacheble_from_vertices
-            example.Figure.a_high_level_relatively_simple_figure
-            (Figure_id "f")
-            ([Vertex_id "d";Vertex_id "b2"]|>Set.ofList)
-        )|> should equal
-            [Vertex_id "f1"]
+    
     
     [<Fact>]
     let ``complete mapping of stencil onto target can be produced``()=
