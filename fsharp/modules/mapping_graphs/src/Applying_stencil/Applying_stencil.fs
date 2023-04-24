@@ -30,6 +30,8 @@ module Applying_stencil =
         )|>Set.intersectMany
             
 
+    
+
 
     let retrieve_result 
         stencil

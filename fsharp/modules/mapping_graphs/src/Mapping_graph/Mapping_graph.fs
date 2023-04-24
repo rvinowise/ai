@@ -124,6 +124,24 @@ module Mapping_graph =
             (["b1";"f1"]|>List.map Vertex_id|>Set.ofList)
         |> should equal [Vertex_id "b0"]
 
+
+    let further_step_of_finding_mapping_targets 
+        (step_further: Edge Set->Vertex_id->Vertex_id Set)
+        figure
+        terminating_figure
+        starting_vertex
+        =
+        if  
+            terminating_figure =
+                Figure.reference_of_vertex 
+                    figure
+                    starting_vertex
+        then
+            Set.empty
+        else
+            starting_vertex
+            |>step_further figure.edges 
+
     let possible_targets_for_mapping_subfigure
         mappee
         target
@@ -132,16 +150,28 @@ module Mapping_graph =
         =
         let prolongating_vertex = prolongating_stencil_subfigure|>fst
         let prolongating_figure = prolongating_stencil_subfigure|>snd
-        let vertex_references_needed_figure vertex =
+        
+        let does_vertex_reference_needed_figure vertex =
             Figure.reference_of_vertex target vertex =
                 prolongating_figure 
         
+        let figure_terminating_search = 
+            Figure.reference_of_vertex
+                target
+                prolongating_vertex
+        
+        let further_step_of_searching_targets =
+            further_step_of_finding_mapping_targets
+                    Edges.next_vertices
+                    target
+                    figure_terminating_search
+
         prolongating_vertex
         |>Edges.previous_vertices mappee.edges
         |>Mapping.targets_of_mapping mapping
         |>first_vertices_reacheble_from_all_vertices_together
-            vertex_references_needed_figure
-            (Edges.next_vertices target.edges)
+            does_vertex_reference_needed_figure
+            further_step_of_searching_targets
         
 
     let next_mapping_targets_for_mapped_subfigures
