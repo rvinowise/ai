@@ -77,7 +77,6 @@ module Stencil=
             = Some (Lower_figure referenced_figure)
 
     
-    
     let nonexistent_vertex =  "0"|>Figure_id|>Lower_figure
 
     let referenced_node stencil vertex_id =
