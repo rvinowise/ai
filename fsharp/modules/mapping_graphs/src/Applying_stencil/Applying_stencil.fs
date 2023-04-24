@@ -34,33 +34,34 @@ module Applying_stencil =
     let retrieve_result 
         stencil
         (target:Figure)
-        mapping =
-            let output_node = 
-                stencil
-                |>Stencil.output
+        mapping 
+        =
+        let output_node = 
+            stencil
+            |>Stencil.output
 
-            let output_beginning =
-                output_node
-                |>Edges.previous_vertices stencil.edges
-                |>Mapping.targets_of_mapping mapping
-                |>all_vertices_reacheble_from_all_vertices_together 
-                    (Edges.next_vertices target.edges)
-                |>Set.ofSeq
+        let output_beginning =
+            output_node
+            |>Edges.previous_vertices stencil.edges
+            |>Mapping.targets_of_mapping mapping
+            |>all_vertices_reacheble_from_all_vertices_together 
+                (Edges.next_vertices target.edges)
+            |>Set.ofSeq
 
-            let output_ending =
-                output_node
-                |>Edges.next_vertices stencil.edges
-                |>Mapping.targets_of_mapping mapping
-                |>all_vertices_reacheble_from_all_vertices_together 
-                    (Edges.previous_vertices target.edges)
-                |>Set.ofSeq
-            
-            (output_beginning,output_ending)
-            ||>Set.intersect 
-            |>Some
-            |>Option.filter (Set.isEmpty>>not)
-            |>Option.map (built.Figure.subgraph_with_vertices target)
-            |>Option.filter (is_figure_without_impossible_parts stencil.output_without)
+        let output_ending =
+            output_node
+            |>Edges.next_vertices stencil.edges
+            |>Mapping.targets_of_mapping mapping
+            |>all_vertices_reacheble_from_all_vertices_together 
+                (Edges.previous_vertices target.edges)
+            |>Set.ofSeq
+        
+        (output_beginning,output_ending)
+        ||>Set.intersect 
+        |>Some
+        |>Option.filter (Set.isEmpty>>not)
+        |>Option.map (built.Figure.subgraph_with_vertices target)
+        |>Option.filter (is_figure_without_impossible_parts stencil.output_without)
             
 
 

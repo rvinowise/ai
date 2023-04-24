@@ -21,12 +21,6 @@ module Mapping_graph =
             Generator_of_mappings<Vertex_id,Vertex_id> pair.Value
         )
         |>Work_with_generators.mapping_combinations_from_generators
-
-
-    let (|Seq|_|) test input =
-        if Seq.compareWith Operators.compare input test = 0
-            then Some ()
-            else None
     
 
     let copied_mapping_with_prolongation
