@@ -204,7 +204,7 @@ module ``application of stencils``=
 
     [<Fact>]
     let ``apply stencil to a long sequence``()=
-        let number_concept =
+        let middle_digit_stencil =
             built.Stencil.simple_with_separator [
                 "N","out";
                 ",#1","out";
@@ -217,15 +217,36 @@ module ``application of stencils``=
     //mom:   0123456789¹123456789²
             |>built.Figure.sequence_from_text
 
-        number_concept
+        middle_digit_stencil
         |>Applying_stencil.results_of_stencil_application history_as_figure
         |>Set.ofSeq
         |>should equal (
-            "0123456789"
+            "12345678"
             |>Seq.map string
             |>Seq.map built.Figure.signal
             |>Set.ofSeq
         )
         
+    [<Fact>]
+    let ``apply stencil, when some first mapped vertices whould be skipped``()=
+        let last_digit_stencil =
+            built.Stencil.simple_with_separator [
+                "N","out";
+                ",#1","out";
+                "out",";";
+            ]
+
+        let history_as_figure =
+            "N0,1,2,3,4,5,6,7,8,9;"
+    //mom:   0123456789¹123456789²
+            |>built.Figure.sequence_from_text
+
+        last_digit_stencil
+        |>Applying_stencil.results_of_stencil_application history_as_figure
+        |>should equal (
+            "9"
+            |>built.Figure.signal
+            |>Seq.singleton
+        )
 
     

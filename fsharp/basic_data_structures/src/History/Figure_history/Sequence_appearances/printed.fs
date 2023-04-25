@@ -12,7 +12,7 @@ let to_string
     let str_sequence= 
         sequence
         |>Seq.map Figure_id.value
-        |>String.concat "" 
+        |>String.Concat
     let str_appearances = printed.Interval.sequence_to_string appearances
     $"""{str_sequence} appearances={str_appearances}"""
 
