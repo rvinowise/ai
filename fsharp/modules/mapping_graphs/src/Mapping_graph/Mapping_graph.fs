@@ -155,16 +155,11 @@ module Mapping_graph =
             Figure.reference_of_vertex target vertex =
                 prolongating_figure 
         
-        let figure_terminating_search = 
-            Figure.reference_of_vertex
-                target
-                prolongating_vertex
-        
         let further_step_of_searching_targets =
             further_step_of_finding_mapping_targets
                     Edges.next_vertices
                     target
-                    figure_terminating_search
+                    prolongating_figure
 
         prolongating_vertex
         |>Edges.previous_vertices mappee.edges
@@ -222,7 +217,7 @@ module Mapping_graph =
             mappee
             target
             base_mapping
-            next_subfigures_to_map
+            (List.ofSeq next_subfigures_to_map)
             Map.empty
 
     let prolongate_one_mapping_with_next_subfigures 
@@ -236,7 +231,7 @@ module Mapping_graph =
                 mappee
                 target
                 mapping
-                (List.ofSeq next_subfigures_to_map)
+                next_subfigures_to_map
 
         if possible_next_mappings.IsEmpty then
             Seq.empty
@@ -258,7 +253,7 @@ module Mapping_graph =
         let mappings =
             let next_subfigures_to_map =
                 next_vertices_to_map
-                |>Figure.vertices_with_referenced_figures mappee
+                |>Figure.vertices_with_their_referenced_figures mappee
             if Seq.isEmpty next_subfigures_to_map then
                 mappings
             else

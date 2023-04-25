@@ -63,7 +63,7 @@ module Figure=
         |>Seq.choose (Dictionary.some_value owner_figure.subfigures)
         |>Seq.distinct
 
-    let vertices_with_referenced_figures 
+    let vertices_with_their_referenced_figures 
         (owner_figure:Figure)
         vertices
         =
