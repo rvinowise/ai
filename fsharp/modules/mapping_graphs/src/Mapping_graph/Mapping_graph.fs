@@ -124,23 +124,7 @@ module Mapping_graph =
             (["b1";"f1"]|>List.map Vertex_id|>Set.ofList)
         |> should equal [Vertex_id "b0"]
 
-
-    let further_step_of_finding_mapping_targets 
-        (step_further: Edge Set->Vertex_id->Vertex_id Set)
-        figure
-        terminating_figure
-        starting_vertex
-        =
-        if  
-            terminating_figure =
-                Figure.reference_of_vertex 
-                    figure
-                    starting_vertex
-        then
-            Set.empty
-        else
-            starting_vertex
-            |>step_further figure.edges 
+    
 
     let possible_targets_for_mapping_subfigure
         mappee
@@ -156,10 +140,7 @@ module Mapping_graph =
                 prolongating_figure 
         
         let further_step_of_searching_targets =
-            further_step_of_finding_mapping_targets
-                    Edges.next_vertices
-                    target
-                    prolongating_figure
+            Edges.next_vertices target.edges
 
         prolongating_vertex
         |>Edges.previous_vertices mappee.edges
@@ -180,7 +161,7 @@ module Mapping_graph =
             (target:Figure)
             (mapping:Mapping)
             (left_subfigures_to_map:  list<Vertex_id*Figure_id>)
-            //                   mapping_generator  stencil_vertex possible_targets
+            //                                      stencil_vertex possible_targets
             (found_mappings: Map<Figure_id,  struct(Vertex_id   *  seq<Vertex_id>)  list>)
             =
 
@@ -199,13 +180,13 @@ module Mapping_graph =
                 else
                     let updated_mappings =
                         let figure = snd current_subfigure_to_map
-                        let updated_targets =
+                        let updated_targets_of_this_figure =
                             struct(current_subfigure_to_map|>fst, targets|>Seq.cast)
                             ::
                             (found_mappings
                             |>extensions.Map.getOrDefault figure [])
                         found_mappings
-                        |>Map.add figure updated_targets
+                        |>Map.add figure updated_targets_of_this_figure
                     mapping_targets_for_next_subfigure
                         mappee
                         target
@@ -243,7 +224,7 @@ module Mapping_graph =
     let rec prolongate_all_mappings 
         (mappee:Figure)
         (target:Figure)
-        (last_mapped_vertices: Vertex_id seq )
+        (last_mapped_vertices: Vertex_id seq)
         (mappings: Mapping seq)
         =
         let next_vertices_to_map = 
@@ -258,7 +239,12 @@ module Mapping_graph =
                 mappings
             else
                 mappings
-                |>Seq.map (prolongate_one_mapping_with_next_subfigures mappee target next_subfigures_to_map)
+                |>Seq.map (
+                    prolongate_one_mapping_with_next_subfigures 
+                        mappee 
+                        target 
+                        next_subfigures_to_map
+                )
                 |>Seq.collect id
         
         if Seq.isEmpty next_vertices_to_map then
