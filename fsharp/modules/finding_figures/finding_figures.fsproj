@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\basic_data_structures\basic_data_structures.fsproj" />
+    <ProjectReference Include="..\..\..\dotnet\basic_data_structures\basic_data_structures.fsproj" />
     <ProjectReference Include="..\..\io\io.fsproj" />
   </ItemGroup>
 

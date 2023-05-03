@@ -18,7 +18,7 @@ module rvinowise.ai.built.Sequence_appearances
         {
             Figure_id_appearances.figure=
                 sequence_appearances.sequence
-                |>Seq.map string
+                |>Seq.map Figure_id.value
                 |>String.concat ""
                 |>Figure_id
             appearances=sequence_appearances.appearances

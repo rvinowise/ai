@@ -50,11 +50,19 @@ namespace rvinowise.ai.ui.painted
             =
             match event with
             |Start figure-> 
-                tr [] [ td [_port $"({figure}"] [str $"({figure}" ]] 
+                tr [] [ td [_port $"({figure}"] [str $"({Figure_id.value figure}" ]] 
             |Finish (figure, _) -> 
-                tr [] [ td [_port $"{figure})"] [str $"{figure})" ]] 
+                tr [] [ td [_port $"{figure})"] [str $"{Figure_id.value figure})" ]] 
             |Signal (figure) -> 
-                tr [] [ td [_port $"{figure}"] [str $"{figure}" ]] 
+                tr [] [ td [_port $"{figure}"] [str $"{Figure_id.value figure}" ]] 
+
+            // match event with
+            // |Start figure-> 
+            //     tr [] [ td [_port $"({figure}"] [str $"({figure}" ]] 
+            // |Finish (figure, _) -> 
+            //     tr [] [ td [_port $"{figure})"] [str $"{figure})" ]] 
+            // |Signal (figure) -> 
+            //     tr [] [ td [_port $"{figure}"] [str $"{figure}" ]] 
             
         let cell_for_moment moment =
             tr [] 

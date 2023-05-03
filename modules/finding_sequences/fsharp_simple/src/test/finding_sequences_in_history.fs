@@ -101,7 +101,7 @@ module finding_sequences_in_history =
             (ui.painted.History.add_combined_history step4_combined_history)
         |>ui.painted.image.open_image_of_graph
 
-    [<Fact>] //(Skip="ui")
+    [<Fact(Skip="ui")>] //
     let ``visualising stages of pattern finding, mixing levels of abstraction``()=
         let signal_history =
             built.Event_batches.from_contingent_signals 0 [

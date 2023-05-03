@@ -7,14 +7,10 @@ open FsUnit
 open Xunit
 
 
-module Finding_repetitions =
+module ``Finding_repetitions(simple)`` =
     (* figure "a" is the beginning of the found pair, 
     and figure "b" is its ending, for intuitive naming *)
 
-    type Cursor= {
-        index:int
-        moment:Moment
-    }
 
     type Interval_in_sequence={
         exists:bool
@@ -221,61 +217,8 @@ module Finding_repetitions =
             b_appearances
             iteration
             found_pairs
-       
-    [<Fact(Timeout=1000)>]
-    let ``finding repetitions, when the last A-figure is taken, but there's still B-figures left ``()=
-        async { 
-            let signal1 = built.Figure_id_appearances.from_moments "signal1" [0;5]
-            let signal2 = built.Figure_id_appearances.from_moments "signal2" [1;6;7]
-            repeated_pair
-                (signal1.appearances|>Array.ofSeq)
-                (signal2.appearances|>Array.ofSeq)
-            |>should equal (
-                [
-                    0,1; 5,6
-                ]
-                |>Seq.map Interval.ofPair
-            )
-        }
         
-    let repeated_pair_with_histories
-        (sequence: Figure_id array)
-        (a_appearances: Interval array,
-        b_appearances:  Interval array)
-        =
-        {
-            Sequence_appearances.sequence = sequence
-            appearances=
-                (repeated_pair 
-                    (a_appearances)
-                    (b_appearances)
-                ).ToArray()
-        }
+    
 
 
-    [<Fact>]
-    let ``try repeated_pair_with_histories``()=
-        let a_history =
-            {
-                Sequence_appearances.sequence= [|"a"|]
-                appearances=[0;5]|>Seq.map Interval.moment|>Array.ofSeq
-            }
-        let b_history =
-            {
-                Sequence_appearances.sequence= [|"b"|]
-                appearances=[1;7]|>Seq.map Interval.moment|>Array.ofSeq
-            }
-                            
-        repeated_pair_with_histories
-            (Array.append a_history.sequence b_history.sequence)
-            (a_history.appearances, b_history.appearances)
-        |>should equal
-            {
-                Sequence_appearances.sequence=[|"a";"b"|]
-                appearances=
-                    [
-                        0,1; 5,7
-                    ]
-                    |>Seq.map Interval.ofPair
-                    |>Array.ofSeq
-            }
+

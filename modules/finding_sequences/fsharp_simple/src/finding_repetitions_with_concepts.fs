@@ -79,6 +79,7 @@ module Finding_repetitions_with_concepts =
         [<Benchmark>]
         member this.transforming_sequence_into_a_figure()=
             this.history_as_array
+            |>Seq.map Figure_id
             |>built.Figure.from_sequence
 
         [<Benchmark>]
