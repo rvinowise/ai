@@ -8,7 +8,7 @@ open BenchmarkDotNet.Attributes
 open BenchmarkDotNet.Running
 
 
-module finding_sequences_in_history =
+module images_of_finding_sequences =
     open rvinowise.ai
     open rvinowise.ai
     open rvinowise.ui
@@ -194,32 +194,7 @@ module finding_sequences_in_history =
             (ui.painted.History.add_combined_history step4_history)
         |>ui.painted.image.open_image_of_graph
 
-    [<Fact>]
-    let ``finding long overlaid sequences, performance heavy``()=
-        let original_signals =
-            "a1bc2d31a2ef4bg3c54de6fh5g6h"
-    //seq1:  a bc d    ef  g        h
-    //seq2:   1  2 3     4    5   6  
-    //seq3:          a    b  c  de f  g h         
-    //seq4:         1 2     3  4     5 6  
-    //mom:   0123456789¹123456789²123456789³
-            |>built.Event_batches.from_text
-        
-        let found_sequences =
-            original_signals 
-            |>built.Event_batches.to_sequence_appearances
-            |>Finding_many_repetitions.all_repetitions
-        let combined_found_sequences =
-            found_sequences
-            |>built.Event_batches.from_sequence_appearances
-        found_sequences
-        |>Set.ofSeq
-        |>Set.isProperSubset (
-            [
-                built.Sequence_appearances.from_string_and_pairs "abcdefgh" [0,23;8,27];
-                built.Sequence_appearances.from_string_and_pairs "123456" [1,21;7,26];
-            ]|>Set.ofSeq
-        ) |>should equal true
+    
 
         
         

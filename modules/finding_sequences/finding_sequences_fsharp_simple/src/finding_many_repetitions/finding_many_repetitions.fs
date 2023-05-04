@@ -1,17 +1,10 @@
 namespace rvinowise.ai
 
-open Xunit
-open FsUnit
-
 open System
-open rvinowise.ai
-open rvinowise
 
-module ``Finding_many_repetitions(simple)`` =
+module ``Finding_many_repetitions(fsharp_simple)`` =
     
-
     type Known_sequences = Set<Figure_id array>
-
 
     let private is_this_sequence_already_found 
         (known_sequences: Known_sequences)
@@ -47,7 +40,7 @@ module ``Finding_many_repetitions(simple)`` =
             else
                 let found_pair = 
                     (a_history.appearances, b_history.appearances)
-                    |>Finding_repetitions.repeated_pair_with_histories ab_sequence
+                    |>``Finding_repetitions(fsharp_simple)``.repeated_pair_with_histories ab_sequence
                 if Appearances.has_repetitions found_pair.appearances then
                     (
                         known_sequences
@@ -59,18 +52,6 @@ module ``Finding_many_repetitions(simple)`` =
             )
             (known_sequences,[])
         |>snd
-
-
-    let repetitions_in_combined_history
-        (event_batches:Event_batches)
-        =
-        event_batches
-        |>built.Event_batches.to_sequence_appearances
-        |>many_repetitions
-        |>built.Event_batches.from_sequence_appearances
-        |>built.Event_batches.add_mood_to_combined_history
-           (Event_batches.get_mood_history event_batches)
-        |>built.Event_batches.remove_batches_without_actions
     
 
     let all_repetitions 

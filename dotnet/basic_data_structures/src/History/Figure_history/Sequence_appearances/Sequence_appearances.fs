@@ -7,7 +7,7 @@ namespace rvinowise.ai
 
     type Sequence_appearances = {
         sequence: Figure_id array
-        appearances: array<Interval>
+        appearances: Interval array
     } with
         override this.ToString()=
             printed.Sequence_appearances.to_string this.sequence this.appearances

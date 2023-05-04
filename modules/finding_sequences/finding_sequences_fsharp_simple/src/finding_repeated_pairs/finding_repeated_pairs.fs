@@ -1,13 +1,9 @@
 namespace rvinowise.ai
 
 open System
-open rvinowise.ai
-
-open FsUnit
-open Xunit
 
 
-module ``Finding_repetitions(simple)`` =
+module ``Finding_repetitions(fsharp_simple)`` =
     (* figure "a" is the beginning of the found pair, 
     and figure "b" is its ending, for intuitive naming *)
 
@@ -218,7 +214,19 @@ module ``Finding_repetitions(simple)`` =
             iteration
             found_pairs
         
-    
+    let repeated_pair_with_histories
+        (repeating_sequence: Figure_id array)
+        (a_appearances: Interval array,
+        b_appearances:  Interval array)
+        =
+        {
+            Sequence_appearances.sequence = repeating_sequence
+            appearances=
+                (repeated_pair 
+                    a_appearances
+                    b_appearances
+                ).ToArray()
+        }
 
 
 

@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="src\finding_repeatitions.fs" />
+    <Compile Include="src\finding_many_repetitions.fs" />
+
+    <!-- unit tests -->
+    <Compile Include="src\test\benchmark.fs" />
+    <Compile Include="src\test\finding_a_sequence.fs" />
+    <Compile Include="src\test\finding_many_repetitions.fs" />
+    <Compile Include="src\test\images_of_finding_sequences.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\finding_sequences_fsharp_simple\finding_sequences_fsharp_simple.fsproj" />
+    <ProjectReference Include="..\finding_sequences_csharp_gpu\finding_sequences_csharp_gpu.csproj" />
+    <ProjectReference Include="..\..\..\fsharp\io\io.fsproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!--unit testing-->  
+    <PackageReference Include="BenchmarkDotNet" Version="0.13.5" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.4.0" />
+    <PackageReference Include="fsunit" Version="5.2.0" />
+    <PackageReference Include="xunit" Version="2.4.2" />
+   
+  </ItemGroup>
+
+</Project>

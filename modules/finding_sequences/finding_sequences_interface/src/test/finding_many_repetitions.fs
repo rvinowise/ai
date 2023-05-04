@@ -7,7 +7,7 @@ open System
 open rvinowise.ai
 open rvinowise
 
-module ``Finding_many_repetitions, tests`` =
+module ``Finding_many_repetitions, test`` =
 
 
     [<Fact>]
@@ -23,7 +23,7 @@ module ``Finding_many_repetitions, tests`` =
             ["b"];//7
         ]
         |>built.Event_batches.to_sequence_appearances
-        |>many_repetitions
+        |>Finding_many_repetitions.many_repetitions
         |>Seq.map built.Sequence_appearances.to_figure_id_appearances
         |>Seq.sort
         |>should equal [
@@ -66,7 +66,7 @@ module ``Finding_many_repetitions, tests`` =
         }
         let ada_appearances =
             [ad_appearances;a_appearances;da_appearances]
-            |>many_repetitions
+            |>Finding_many_repetitions.many_repetitions
             |>Seq.filter (fun sequence_appearances ->
                 sequence_appearances.sequence = ("ada"|>Seq.map (string>>Figure_id)|>Array.ofSeq)
             )
@@ -121,9 +121,35 @@ module ``Finding_many_repetitions, tests`` =
 //mom:   0123456789¹1
         |>built.Event_batches.from_text
         |>built.Event_batches.to_sequence_appearances
-        |>all_repetitions
+        |>Finding_many_repetitions.all_repetitions
         |>Set.ofSeq
         |>Set.intersect expected_sequences
         |>should equal expected_sequences
 
-   
+
+    [<Fact>]
+    let ``finding long overlaid sequences, performance heavy``()=
+        let original_signals =
+            "a1bc2d31a2ef4bg3c54de6fh5g6h"
+    //seq1:  a bc d    ef  g        h
+    //seq2:   1  2 3     4    5   6  
+    //seq3:          a    b  c  de f  g h         
+    //seq4:         1 2     3  4     5 6  
+    //mom:   0123456789¹123456789²123456789³
+            |>built.Event_batches.from_text
+        
+        let found_sequences =
+            original_signals 
+            |>built.Event_batches.to_sequence_appearances
+            |>Finding_many_repetitions.all_repetitions
+        let combined_found_sequences =
+            found_sequences
+            |>built.Event_batches.from_sequence_appearances
+        found_sequences
+        |>Set.ofSeq
+        |>Set.isProperSubset (
+            [
+                built.Sequence_appearances.from_string_and_pairs "abcdefgh" [0,23;8,27];
+                built.Sequence_appearances.from_string_and_pairs "123456" [1,21;7,26];
+            ]|>Set.ofSeq
+        ) |>should equal true
