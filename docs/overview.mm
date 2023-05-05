@@ -424,7 +424,7 @@
 <node TEXT="animated explanations" ID="ID_381909901" CREATED="1658182054809" MODIFIED="1658188337705" LINK="modules/find%20sequences/">
 <icon BUILTIN="book_open"/>
 </node>
-<node TEXT="impl" ID="ID_944389057" CREATED="1673047597472" MODIFIED="1673047600113">
+<node TEXT="impl" ID="ID_944389057" CREATED="1673047597472" MODIFIED="1683250735801" LINK="../modules/finding_sequences/">
 <icon BUILTIN="present"/>
 <node TEXT="c++" LOCALIZED_STYLE_REF="default" ID="ID_983316736" CREATED="1672993437481" MODIFIED="1673047604535" LINK="../modules/finding_sequences/" COLOR="#000000" BACKGROUND_COLOR="#ffffff">
 <node TEXT="f# wrapper" LOCALIZED_STYLE_REF="default" ID="ID_375675934" CREATED="1672993403241" MODIFIED="1673047604541" LINK="../fsharp/modules/finding_sequences/" COLOR="#000000" BACKGROUND_COLOR="#ffffff"/>
@@ -484,7 +484,7 @@
 <icon BUILTIN="box"/>
 </node>
 </node>
-<node TEXT="algorithm of stencil application" LOCALIZED_STYLE_REF="default" ID="ID_1267499080" CREATED="1632698228404" MODIFIED="1683249388509" LINK="../modules/mapping_graphs/src/" COLOR="#000000" BACKGROUND_COLOR="#ffffff">
+<node TEXT="algorithm of stencil application" LOCALIZED_STYLE_REF="default" ID="ID_1267499080" CREATED="1632698228404" MODIFIED="1683249958006" LINK="../fsharp/modules/mapping_graphs/src/apply%20stencil%20to%20a%20long%20sequence.png" COLOR="#000000" BACKGROUND_COLOR="#ffffff">
 <icon BUILTIN="book_open"/>
 </node>
 <node TEXT="impl" ID="ID_1135469188" CREATED="1673045748597" MODIFIED="1673045751809">
@@ -743,7 +743,7 @@
 <node TEXT="unity" LOCALIZED_STYLE_REF="default" ID="ID_324999900" CREATED="1633007090240" MODIFIED="1672996953608" LINK="file:/D:/prj/unity_ai/Assets/scripts/unity_ai/Figure/Figure_appearance.cs" COLOR="#000000" BACKGROUND_COLOR="#ffffff"/>
 <node TEXT="f#" ID="ID_1821133170" CREATED="1672996954479" MODIFIED="1672998163575">
 <icon BUILTIN="connection"/>
-<node TEXT="Interval" ID="ID_1869253889" CREATED="1672998044697" MODIFIED="1673058170300">
+<node TEXT="Interval seq" ID="ID_1869253889" CREATED="1672998044697" MODIFIED="1683250046723">
 <icon BUILTIN="punctuation/equal"/>
 <icon BUILTIN="present"/>
 </node>
@@ -778,7 +778,7 @@
 <node TEXT="raw input/output" LOCALIZED_STYLE_REF="default" ID="ID_973109195" CREATED="1633007976220" MODIFIED="1633008284610" COLOR="#000000" BACKGROUND_COLOR="#ffffff">
 <icon BUILTIN="box_inscribed"/>
 </node>
-<node TEXT="a sequence of actions as a figure" LOCALIZED_STYLE_REF="default" ID="ID_1829914945" CREATED="1632652612940" MODIFIED="1633003600645">
+<node TEXT="a sequence of subfigures as a figure" LOCALIZED_STYLE_REF="default" ID="ID_1829914945" CREATED="1632652612940" MODIFIED="1683250506517">
 <icon BUILTIN="box_inscribed"/>
 </node>
 </node>
@@ -797,8 +797,11 @@
 <icon BUILTIN="box_inscribed"/>
 </node>
 </node>
-<node TEXT="f#" ID="ID_835092495" CREATED="1672996565724" MODIFIED="1673061096867">
-<icon BUILTIN="useless"/>
+<node TEXT="f#" LOCALIZED_STYLE_REF="default" ID="ID_835092495" CREATED="1672996565724" MODIFIED="1683250587047" COLOR="#000000" BACKGROUND_COLOR="#ffffff">
+<icon BUILTIN="present"/>
+<node TEXT="Figure_id array" ID="ID_1498439093" CREATED="1683250544092" MODIFIED="1683250579711">
+<icon BUILTIN="box_inscribed"/>
+</node>
 </node>
 </node>
 </node>
@@ -822,6 +825,13 @@
 </html>
 </richcontent>
 <node TEXT="by ignoring links distinguishing them" ID="ID_889083141" CREATED="1633210726591" MODIFIED="1633211002723"/>
+<node TEXT="but those sequences may not even exist" ID="ID_1256009802" CREATED="1683251969917" MODIFIED="1683251983548">
+<icon BUILTIN="bad"/>
+</node>
+</node>
+<node TEXT="combines several repeated sequences together" ID="ID_1143306776" CREATED="1683251997843" MODIFIED="1683252031609">
+<icon BUILTIN="cog"/>
+<node TEXT="repeated a-&gt;c and b-&gt;c give (a,b)-&gt;c" ID="ID_1705665991" CREATED="1683252035989" MODIFIED="1683252110209"/>
 </node>
 </node>
 <node TEXT="a graph of figures" LOCALIZED_STYLE_REF="default" ID="ID_193105785" CREATED="1632652923871" MODIFIED="1633003600644">
