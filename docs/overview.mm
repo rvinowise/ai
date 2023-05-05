@@ -344,7 +344,7 @@
 </node>
 </node>
 </node>
-<node TEXT="modules" LOCALIZED_STYLE_REF="default" FOLDED="true" POSITION="right" ID="ID_303254332" CREATED="1632652373243" MODIFIED="1675042940493" COLOR="#000000" BACKGROUND_COLOR="#eeeeee">
+<node TEXT="modules" LOCALIZED_STYLE_REF="default" POSITION="right" ID="ID_303254332" CREATED="1632652373243" MODIFIED="1675042940493" COLOR="#000000" BACKGROUND_COLOR="#eeeeee">
 <icon BUILTIN="group"/>
 <node TEXT="input_receiver" ID="ID_1728916427" CREATED="1633179805199" MODIFIED="1633179825519">
 <icon BUILTIN="present"/>
@@ -406,7 +406,11 @@
 </node>
 <node TEXT="sequential figures" LOCALIZED_STYLE_REF="default" ID="ID_1409202754" CREATED="1632696538460" MODIFIED="1652327091268" COLOR="#000000" BACKGROUND_COLOR="#ffffff">
 <icon BUILTIN="output"/>
-<node TEXT="stores found sequences in the History as Actions" LOCALIZED_STYLE_REF="default" ID="ID_1891842202" CREATED="1632858342804" MODIFIED="1673053279897" COLOR="#000000" BACKGROUND_COLOR="#ffffff"/>
+<node TEXT="gui" ID="ID_1034975289" CREATED="1683248598121" MODIFIED="1683248647423">
+<icon BUILTIN="emoji-1F441"/>
+<node TEXT="stores found sequences in the History as Actions" LOCALIZED_STYLE_REF="default" ID="ID_1891842202" CREATED="1632858342804" MODIFIED="1683248605850" COLOR="#000000" BACKGROUND_COLOR="#ffffff"/>
+</node>
+<node TEXT="a collection of appearances (as Intervals) of a new pair of sequences" ID="ID_136548684" CREATED="1683248494390" MODIFIED="1683248569654"/>
 <node TEXT="repeated pairs" ID="ID_1515093377" CREATED="1673053281590" MODIFIED="1673053290920">
 <icon BUILTIN="punctuation/equal"/>
 </node>
@@ -480,7 +484,7 @@
 <icon BUILTIN="box"/>
 </node>
 </node>
-<node TEXT="algorithm of stencil application" LOCALIZED_STYLE_REF="default" ID="ID_1267499080" CREATED="1632698228404" MODIFIED="1658248717024" LINK="../Assets/scripts/unity_ai/Stencil_applier/algorithm%20of%20stencil%20application.png" COLOR="#000000" BACKGROUND_COLOR="#ffffff">
+<node TEXT="algorithm of stencil application" LOCALIZED_STYLE_REF="default" ID="ID_1267499080" CREATED="1632698228404" MODIFIED="1683249388509" LINK="../modules/mapping_graphs/src/" COLOR="#000000" BACKGROUND_COLOR="#ffffff">
 <icon BUILTIN="book_open"/>
 </node>
 <node TEXT="impl" ID="ID_1135469188" CREATED="1673045748597" MODIFIED="1673045751809">
@@ -502,7 +506,7 @@
 <node TEXT="figure provider" ID="ID_1870262604" CREATED="1652699646645" MODIFIED="1673055853814">
 <icon BUILTIN="present"/>
 <icon BUILTIN="useless"/>
-<node TEXT="creates of retrieves from storage figures with demanded sequences" ID="ID_379625545" CREATED="1652700724216" MODIFIED="1652701519128">
+<node TEXT="creates or retrieves from storage figures with demanded sequences" ID="ID_379625545" CREATED="1652700724216" MODIFIED="1683249201797">
 <icon BUILTIN="cog"/>
 </node>
 <node TEXT="base signals initializer" ID="ID_268728456" CREATED="1653087624579" MODIFIED="1653087645550">
@@ -601,7 +605,7 @@
 </node>
 </node>
 </node>
-<node TEXT="objects" LOCALIZED_STYLE_REF="default" FOLDED="true" POSITION="right" ID="ID_1902469308" CREATED="1632652416117" MODIFIED="1675042940490" COLOR="#000000" BACKGROUND_COLOR="#eeeeee">
+<node TEXT="objects" LOCALIZED_STYLE_REF="default" POSITION="right" ID="ID_1902469308" CREATED="1632652416117" MODIFIED="1675042940490" COLOR="#000000" BACKGROUND_COLOR="#eeeeee">
 <icon BUILTIN="group"/>
 <node TEXT="history" LOCALIZED_STYLE_REF="default" ID="ID_74294546" CREATED="1632652535678" MODIFIED="1673056196000">
 <icon BUILTIN="present"/>
@@ -875,7 +879,7 @@
 </node>
 </node>
 </node>
-<node TEXT="legend" FOLDED="true" POSITION="right" ID="ID_49802336" CREATED="1632692624170" MODIFIED="1672994032199" BACKGROUND_COLOR="#eeeeee">
+<node TEXT="legend" POSITION="right" ID="ID_49802336" CREATED="1632692624170" MODIFIED="1672994032199" BACKGROUND_COLOR="#eeeeee">
 <icon BUILTIN="group"/>
 <node TEXT="icons" ID="ID_143750967" CREATED="1632698164973" MODIFIED="1632698166792">
 <node TEXT="what it is" ID="ID_643462232" CREATED="1632844495015" MODIFIED="1633006313614">
