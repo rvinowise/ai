@@ -20,7 +20,7 @@ let mark_expected_nodes
     |> Seq.iter (
         fun (vertex) ->
             node
-            |>infrastructure.Graph.provide_vertex vertex
+            |>infrastructure.Graph.provide_vertex (Vertex_id.value vertex)
             |>rvinowise.ui.infrastructure.Graph.fill_with_color "red"
             |>ignore
     )

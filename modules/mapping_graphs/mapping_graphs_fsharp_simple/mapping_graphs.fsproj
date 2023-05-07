@@ -24,9 +24,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\provided_data\provided_data.fsproj" />
+    <ProjectReference Include="..\..\..\fsharp\provided_data\provided_data.fsproj" />
     <ProjectReference Include="..\..\..\dotnet\basic_data_structures\basic_data_structures.fsproj" />
-    <ProjectReference Include="..\..\io\io.fsproj" />
+    <ProjectReference Include="..\..\..\fsharp\io\io.fsproj" />
     
     <ProjectReference Include="..\..\..\modules\mapping_graphs\enumerating_combinations\enumerating_combinations.csproj" />
   </ItemGroup>

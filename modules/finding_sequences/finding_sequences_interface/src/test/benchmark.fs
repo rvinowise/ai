@@ -30,7 +30,7 @@ module ``finding_sequences, benchmark`` =
             this.long_sequence_of_input()
 
         [<Benchmark>]
-        member this.fsharp_search_in_big_sequences()=
+        member this.repeated_pair_in_big_sequences()=
             Finding_repetitions.repeated_pair this.heads this.heads
 
     
