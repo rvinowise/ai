@@ -138,14 +138,9 @@ module ``Finding_many_repetitions, test`` =
     //mom:   0123456789¹123456789²123456789³
             |>built.Event_batches.from_text
         
-        let found_sequences =
-            original_signals 
-            |>built.Event_batches.to_sequence_appearances
-            |>Finding_many_repetitions.all_repetitions
-        let combined_found_sequences =
-            found_sequences
-            |>built.Event_batches.from_sequence_appearances
-        found_sequences
+        original_signals 
+        |>built.Event_batches.to_sequence_appearances
+        |>Finding_many_repetitions.all_repetitions
         |>Set.ofSeq
         |>Set.isProperSubset (
             [
