@@ -11,8 +11,9 @@
 
     <!-- unit tests -->
     <Compile Include="src\test\benchmark.fs" />
-    <Compile Include="src\test\finding_a_sequence.fs" />
     <Compile Include="src\test\finding_many_repetitions.fs" />
+    <Compile Include="src\test\finding_repetitions.fs" />
+    <!-- <Compile Include="src\test\finding_sequences_with_concepts.fs" /> -->
     <Compile Include="src\test\images_of_finding_sequences.fs" />
   </ItemGroup>
 

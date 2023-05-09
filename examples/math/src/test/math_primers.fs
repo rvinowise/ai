@@ -17,9 +17,20 @@ module Math_primers=
                 "N:0,1,2,3,4,5,6,7,8,9;";
                 "1+1=2;×"; "1+2=3;×";
                 "1+1=";
+    //mom:       0123456789¹123456789²1
+    //mom(20+):  2345678    9³12345
+    //mom(30+):  6789
             ]
-        
-        
+            |>built.Event_batches.from_text
+            |>built.Event_batches.to_sequence_appearances
+            |>Finding_many_repetitions.all_repetitions
+            |>Set.ofSeq
+            |>Set.isProperSubset (
+                [
+                    built.Sequence_appearances.from_string_and_pairs "1+1=" [0,23;8,27];
+                    built.Sequence_appearances.from_string_and_pairs "1+1=" [1,21;7,26];
+                ]|>Set.ofSeq
+            ) |>should equal true
 
     [<Fact>]
     let ``draw training history``()=

@@ -51,7 +51,7 @@ public static class Finding_sequences_csharp_gpu {
     public static List<Sequence_appearances> many_repetitions(
         IEnumerable<Sequence_appearances> sequence_appearances
     ) {
-    
+        return new List<Sequence_appearances>();
     }
 }
 

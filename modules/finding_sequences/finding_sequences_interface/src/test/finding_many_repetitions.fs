@@ -129,16 +129,13 @@ module ``Finding_many_repetitions, test`` =
 
     [<Fact>]
     let ``finding long overlaid sequences, performance heavy``()=
-        let original_signals =
-            "a1bc2d31a2ef4bg3c54de6fh5g6h"
-    //seq1:  a bc d    ef  g        h
-    //seq2:   1  2 3     4    5   6  
-    //seq3:          a    b  c  de f  g h         
-    //seq4:         1 2     3  4     5 6  
-    //mom:   0123456789¹123456789²123456789³
-            |>built.Event_batches.from_text
-        
-        original_signals 
+        "a1bc2d31a2ef4bg3c54de6fh5g6h"
+//seq1:  a bc d    ef  g        h
+//seq2:   1  2 3     4    5   6  
+//seq3:          a    b  c  de f  g h         
+//seq4:         1 2     3  4     5 6  
+//mom:   0123456789¹123456789²123456789³
+        |>built.Event_batches.from_text
         |>built.Event_batches.to_sequence_appearances
         |>Finding_many_repetitions.all_repetitions
         |>Set.ofSeq
