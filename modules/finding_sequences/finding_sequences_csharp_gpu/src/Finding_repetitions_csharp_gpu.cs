@@ -6,7 +6,7 @@ using System;
 
 using Xunit;
 
-public static class Finding_sequences_csharp_gpu {
+public static class Finding_repetitions_csharp_gpu {
     static void Kernel(Index1D i, ArrayView<int> data, ArrayView<int> output) {
         output[i] = data[i % data.Length];
     }
@@ -57,7 +57,7 @@ public static class Finding_sequences_csharp_gpu {
 
 
 
-public class Finding_sequences_csharp_gpu_test {
+public class Finding_repetitions_csharp_gpu_test {
     [Fact]
     public void try_repeated_pair() {
         var a_intervals = new Interval[] {
@@ -68,6 +68,6 @@ public class Finding_sequences_csharp_gpu_test {
             new(5, 6),
             new(15, 16)
         };
-        var result = Finding_sequences_csharp_gpu.repeated_pair(a_intervals, b_intervals);
+        var result = Finding_repetitions_csharp_gpu.repeated_pair(a_intervals, b_intervals);
     }
 }

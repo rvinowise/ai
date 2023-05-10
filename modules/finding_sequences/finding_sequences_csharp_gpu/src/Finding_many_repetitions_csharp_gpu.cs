@@ -65,7 +65,7 @@ public static class Finding_many_repetitions_csharp_gpu {
 
 public class Finding_many_repetitions_csharp_gpu_test {
     [Fact]
-    public void many_repetitions() {
+    public void all_repetitions() {
         
         var initial_appearances =
             built.Event_batches.to_sequence_appearances(
@@ -76,6 +76,6 @@ public class Finding_many_repetitions_csharp_gpu_test {
     //mom:   0123456789¹1    
             ));
 
-        var result = Finding_many_repetitions_csharp_gpu.many_repetitions(initial_appearances);
+        var result = Finding_many_repetitions_csharp_gpu.all_repetitions(initial_appearances);
     }
 }

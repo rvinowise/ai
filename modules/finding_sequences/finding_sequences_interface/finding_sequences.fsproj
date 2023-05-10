@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="src\finding_repeatitions.fs" />
+    <Compile Include="src\finding_repetitions.fs" />
     <Compile Include="src\finding_many_repetitions.fs" />
 
     <!-- unit tests -->
@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\finding_sequences_fsharp_simple\finding_sequences_fsharp_simple.fsproj" />
+    <ProjectReference Include="..\finding_sequences_fsharp_gpu\finding_sequences_fsharp_gpu.fsproj" />
     <ProjectReference Include="..\finding_sequences_csharp_gpu\finding_sequences_csharp_gpu.csproj" />
     <ProjectReference Include="..\..\..\fsharp\io\io.fsproj" />
   </ItemGroup>
