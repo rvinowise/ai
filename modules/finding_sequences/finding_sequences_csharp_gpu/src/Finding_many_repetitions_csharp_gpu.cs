@@ -66,14 +66,16 @@ public static class Finding_many_repetitions_csharp_gpu {
 public class Finding_many_repetitions_csharp_gpu_test {
     [Fact]
     public void many_repetitions() {
-        var a_intervals = new Interval[] {
-            new(0, 1),
-            new(10, 11)
-        };
-        var b_intervals = new Interval[] {
-            new(5, 6),
-            new(15, 16)
-        };
-        var result = Finding_many_repetitions_csharp_gpu.many_repetitions();
+        
+        var initial_appearances =
+            built.Event_batches.to_sequence_appearances(
+            built.Event_batches.from_text(
+            "a1b2c3a45bc"
+    //       a b c
+    //             a  bc
+    //mom:   0123456789¹1    
+            ));
+
+        var result = Finding_many_repetitions_csharp_gpu.many_repetitions(initial_appearances);
     }
 }
