@@ -13,22 +13,8 @@ open rvinowise.extensions.benchmark
 module ``finding_sequences, benchmark`` =
     open rvinowise.ai
 
-    type Benchmarking_finding_repetitions() =
+    type Benchmarking_all_repetitions() =
         
-        [<Params(5, 50(*, 10000*))>]
-        member val items_amount = 0 with get, set
-        
-        member this.long_sequence_of_input() = 
-            [|
-                for i in 0..this.items_amount -> 
-                    Interval.from_int i (i+1)
-            |]
-
-        member this.heads = this.long_sequence_of_input()
-
-        [<Benchmark>]
-        member this.prepare_long_sequences_of_input()=
-            this.long_sequence_of_input()
 
         [<Benchmark>]
         member this.repeated_pair_in_big_sequences()=
@@ -37,9 +23,9 @@ module ``finding_sequences, benchmark`` =
 
         member val all_repetitions = [
             {Parameter.value= ``Finding_many_repetitions(fsharp_simple)``.all_repetitions; 
-            name="many_repetitions(fsharp_simple)"};
-            {value= Finding_many_repetitions_csharp_gpu.all_repetitions; 
-            name="many_repetitions(csharp_gpu)"}
+            name="all_repetitions(fsharp_simple)"};
+            {value= ``Finding_many_repetitions(fsharp_gpu)``.all_repetitions; 
+            name="all_repetitions(fsharp_gpu)"}
         ]
 
         [<ParamsSource("all_repetitions")>]
@@ -61,7 +47,7 @@ module ``finding_sequences, benchmark`` =
         [<Benchmark>]
         member this.all_repetitions_in_overlaid_sequences()=
             this.overlaid_sequences
-            |>``Finding_many_repetitions(fsharp_simple)``.all_repetitions 
+            |>this.all_repetitions
             
         [<Fact(Skip="slow")>] //
         member _.benchmark()=
@@ -70,7 +56,7 @@ module ``finding_sequences, benchmark`` =
                 DefaultConfig.Instance.
                     WithOptions(ConfigOptions.DisableOptimizationsValidator)
 
-            BenchmarkRunner.Run<Benchmarking_finding_repetitions>(config) |> ignore
+            BenchmarkRunner.Run<Benchmarking_all_repetitions>(config) |> ignore
 
 
 
