@@ -90,7 +90,7 @@ module Figure=
             |>Seq.head
             |>extensions.KeyValuePair.value
         else
-            printed.Figure.id_of_a_sequence_from_edges figure.edges figure.subfigures
+            Figure_printing.id_of_a_sequence_from_edges figure.edges figure.subfigures
 
     
     

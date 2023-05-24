@@ -1,6 +1,9 @@
 ﻿namespace rvinowise.ai
 
 open System.Runtime.InteropServices
+open System
+open System.Text
+
 
 [<StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)>]
 type Interval = 
@@ -12,7 +15,10 @@ type Interval =
             {start=start;finish=finish}
 
         override this.ToString() =
-            $"Interval({this.start}, {this.finish})"
+            if this.start = this.finish then
+                $"{this.start}"
+            else
+                $"{this.start}-{this.finish}"
     end
 
 [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
@@ -33,7 +39,6 @@ module Interval =
     let ofPair tuple=
         let start, finish = tuple
         Interval(start, finish)
-    //let moment (moment:int) = Interval(uint64(moment), uint64(moment))
 
     let start (interval:Interval)=
         interval.start
@@ -53,3 +58,12 @@ module Interval =
         regular 
             (moments|>Seq.min)
             (moments|>Seq.max)
+
+    let intervals_to_string (intervals: Interval seq) =
+        if Seq.isEmpty intervals then
+            sprintf $"[]"
+        else
+            String.Join (" ", 
+                intervals
+                |>Seq.map string 
+            )

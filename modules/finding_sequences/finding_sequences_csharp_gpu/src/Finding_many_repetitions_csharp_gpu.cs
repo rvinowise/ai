@@ -48,7 +48,7 @@ public static class Finding_many_repetitions_csharp_gpu {
         return new List<Interval>();
     }
     
-    public static List<Sequence_appearances> many_repetitions(
+    public static List<Sequence_appearances> repetitions_of_one_stage(
         IEnumerable<Sequence_appearances> sequence_appearances
     ) {
         return new List<Sequence_appearances>();

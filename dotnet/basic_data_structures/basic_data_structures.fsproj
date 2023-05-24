@@ -18,14 +18,13 @@
     <Compile Include="src\tools\extensions.fs" />
     <Compile Include="src\id_types.fs" />
     <Compile Include="src\Interval\Interval.fs" />
-    <Compile Include="src\Interval\printed.fs" />
 
     <Compile Include="src\Graphs\components\Edge\Edge_type.fs" />
     <Compile Include="src\Graphs\components\Edge\Edge_functions.fs" />
     
     <Compile Include="src\Graphs\Graph\Graph_built.fs" />
 
-    <Compile Include="src\Graphs\Figure\Figure_printed.fs" />
+    <Compile Include="src\Graphs\Figure\Figure_printing.fs" />
     <Compile Include="src\Graphs\Figure\Figure_types.fs" />
     <Compile Include="src\Graphs\Figure\Figure.fs" />
     <Compile Include="src\Graphs\Figure\built\Renaming_figures.fs" />
@@ -49,13 +48,11 @@
     <Compile Include="src\Graphs\Graph\Search_in_graph.fs" />
     
     <!-- History -->
-    <Compile Include="src\History\Figure_history\Figure_appearances\printed.fs" />
     <Compile Include="src\History\Figure_history\Figure_id_appearances\Figure_id_appearances.fs" />
     <Compile Include="src\History\Figure_history\Figure_id_appearances\built.fs" />
     <Compile Include="src\History\Figure_history\Figure_id_appearances\examples.fs" />
     <Compile Include="src\History\Figure_history\Figure_appearances\Figure_appearances.fs" />
     <Compile Include="src\History\Figure_history\Figure_appearances\built.fs" />
-    <Compile Include="src\History\Figure_history\Sequence_appearances\printed.fs" />
     <Compile Include="src\History\Figure_history\Sequence_appearances\Sequence_appearances.fs" />
     <Compile Include="src\History\Figure_history\Sequence_appearances\built.fs" />
 

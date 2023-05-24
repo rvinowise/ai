@@ -41,7 +41,7 @@ module ``Finding_many_repetitions(fsharp_gpu)`` =
         use deviceOutput = accelerator.Allocate1D<int>(10_000);
 
         let loadedKernel = 
-            accelerator.LoadAutoGroupedStreamKernel<_,_,_>(kernel)
+            accelerator.LoadAutoGroupedStreamKernel<_,_,_>(Program.kernel)
 
         loadedKernel(Index1D(int(deviceOutput.Length)), deviceData.View, deviceOutput.View);
 
@@ -56,7 +56,7 @@ module ``Finding_many_repetitions(fsharp_gpu)`` =
                     all_sequences
                     |>Seq.append sequences_of_previous_step
                 all_sequences
-                |>many_repetitions
+                |>repetitions_of_one_stage
                 |>steps_of_finding_repetitions all_sequences
                 
         steps_of_finding_repetitions

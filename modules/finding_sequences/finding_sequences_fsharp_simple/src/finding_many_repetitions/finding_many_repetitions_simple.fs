@@ -13,7 +13,7 @@ module ``Finding_many_repetitions(fsharp_simple)`` =
         known_sequences
         |>Set.contains ab_sequence 
 
-    let many_repetitions
+    let repetitions_of_one_stage
         (sequence_appearances: seq<Sequence_appearances>)
         =
         let known_sequences = 
@@ -40,7 +40,8 @@ module ``Finding_many_repetitions(fsharp_simple)`` =
             else
                 let found_pair = 
                     (a_history.appearances, b_history.appearances)
-                    |>``Finding_repetitions(fsharp_simple)``.repeated_pair_with_histories ab_sequence
+                    |>``Finding_repetitions(fsharp_simple)``.repeated_pair_with_histories
+                        ab_sequence
                 if Appearances.has_repetitions found_pair.appearances then
                     (
                         known_sequences
@@ -68,7 +69,7 @@ module ``Finding_many_repetitions(fsharp_simple)`` =
                     all_sequences
                     |>Seq.append sequences_of_previous_step
                 all_sequences
-                |>many_repetitions
+                |>repetitions_of_one_stage
                 |>steps_of_finding_repetitions all_sequences
                 
         steps_of_finding_repetitions

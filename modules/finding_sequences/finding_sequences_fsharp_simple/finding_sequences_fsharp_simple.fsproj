@@ -7,7 +7,8 @@
 
   <ItemGroup>
     <Compile Include="src\finding_repetitions\finding_repetitions.fs" />
-    <Compile Include="src\finding_many_repetitions\finding_many_repetitions.fs" />
+    <Compile Include="src\finding_many_repetitions\finding_many_repetitions_simple.fs" />
+    <Compile Include="src\finding_many_repetitions\finding_many_repetitions_no_dictionary.fs" />
     <!-- <Compile Include="src\finding_repetitions_with_concepts.fs" /> -->
   </ItemGroup>
 

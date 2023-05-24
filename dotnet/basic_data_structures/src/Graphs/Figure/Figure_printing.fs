@@ -1,10 +1,10 @@
-module rvinowise.ai.printed.Figure
+module rvinowise.ai.Figure_printing
 
-open rvinowise
+open rvinowise.extensions
 open rvinowise.ai
 open System.Text
-open rvinowise.extensions
 open System.Diagnostics.Contracts
+
 
 
 let private branching_edges_to_string (edges:Edge seq) =
@@ -75,16 +75,9 @@ let private signal_to_string (subfigures:Map<Vertex_id, Figure_id>) =
     |>Seq.head
     |>Figure_id.value
 
-let to_string edges subfigures  =
+let figure_to_string edges subfigures  =
     if (Seq.isEmpty edges) then
         subfigures
         |>signal_to_string     
     else
         edges_to_string edges subfigures
-
-
-
-
-
-
-

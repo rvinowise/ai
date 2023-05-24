@@ -8,7 +8,7 @@
         <attribute_value VALUE="https://www.youtube.com/shorts/66t2mLXtj9E?&amp;ab_channel=THESTRAIGHTPATH"/>
     </attribute_name>
 </attribute_registry>
-<node TEXT="ai" LOCALIZED_STYLE_REF="AutomaticLayout.level.root" FOLDED="false" ID="ID_696401721" CREATED="1610381621824" MODIFIED="1632652331747"><hook NAME="MapStyle" zoom="0.923">
+<node TEXT="ai" LOCALIZED_STYLE_REF="AutomaticLayout.level.root" FOLDED="false" ID="ID_696401721" CREATED="1610381621824" MODIFIED="1632652331747"><hook NAME="MapStyle" zoom="1.56">
     <properties show_icon_for_attributes="true" edgeColorConfiguration="#ff3333ff,#33ff00ff,#ffcc33ff" show_notes_in_map="false" show_note_icons="false" fit_to_viewport="false"/>
 
 <map_styles>
@@ -424,12 +424,30 @@
 <node TEXT="animated explanations" ID="ID_381909901" CREATED="1658182054809" MODIFIED="1658188337705" LINK="modules/find%20sequences/">
 <icon BUILTIN="book_open"/>
 </node>
+<node TEXT="permutation with repetition" ID="ID_278648319" CREATED="1684241173338" MODIFIED="1684242301546">
+<icon BUILTIN="term"/>
+<node TEXT="takes into account the order of elements" ID="ID_1482216833" CREATED="1684241203165" MODIFIED="1684241212939">
+<node TEXT="combination" ID="ID_642257355" CREATED="1684241196622" MODIFIED="1684241202789">
+<icon BUILTIN="punctuation/not_equal"/>
+<icon BUILTIN="term"/>
+</node>
+</node>
+<node TEXT="formulas" ID="ID_1523665157" CREATED="1684241703818" MODIFIED="1684242272210" LINK="https://www.omnicalculator.com/statistics/combination">
+<icon BUILTIN="emoji-26F2"/>
+</node>
+<node TEXT="permutation" ID="ID_694436165" CREATED="1684242272733" MODIFIED="1684242336532">
+<icon BUILTIN="punctuation/not_equal"/>
+<icon BUILTIN="term"/>
+<node TEXT="every element can be taken only once" ID="ID_1247206119" CREATED="1684242306423" MODIFIED="1684242318702"/>
+</node>
+</node>
 <node TEXT="impl" ID="ID_944389057" CREATED="1673047597472" MODIFIED="1683250735801" LINK="../modules/finding_sequences/">
 <icon BUILTIN="present"/>
 <node TEXT="c++" LOCALIZED_STYLE_REF="default" ID="ID_983316736" CREATED="1672993437481" MODIFIED="1673047604535" LINK="../modules/finding_sequences/" COLOR="#000000" BACKGROUND_COLOR="#ffffff">
 <node TEXT="f# wrapper" LOCALIZED_STYLE_REF="default" ID="ID_375675934" CREATED="1672993403241" MODIFIED="1673047604541" LINK="../fsharp/modules/finding_sequences/" COLOR="#000000" BACKGROUND_COLOR="#ffffff"/>
 </node>
 <node TEXT="unity" LOCALIZED_STYLE_REF="default" ID="ID_550676609" CREATED="1632698228404" MODIFIED="1673047604540" LINK="../Assets/scripts/unity_ai/Sequence_finder/" COLOR="#000000" BACKGROUND_COLOR="#ffffff"/>
+<node TEXT="cuda (ILGPU)" ID="ID_50359359" CREATED="1684241116096" MODIFIED="1684241162559" LINK="../modules/finding_sequences/finding_sequences_fsharp_gpu/"/>
 </node>
 </node>
 <node TEXT="figure finder" LOCALIZED_STYLE_REF="default" ID="ID_1255975763" CREATED="1633110650941" MODIFIED="1633180939221" COLOR="#000000" BACKGROUND_COLOR="#ffffff">

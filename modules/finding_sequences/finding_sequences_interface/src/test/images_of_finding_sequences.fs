@@ -70,21 +70,21 @@ module images_of_finding_sequences =
         let step2_sequence_histories =
             signal_history
             |>built.Event_batches.to_sequence_appearances
-            |>Finding_many_repetitions.many_repetitions
+            |>Finding_many_repetitions.repetitions_of_one_stage
         let step2_combined_history =
             signal_history
             |>built.Event_batches.add_sequence_appearances step2_sequence_histories
 
         let step3_sequence_histories =
             step2_sequence_histories
-            |>Finding_many_repetitions.many_repetitions
+            |>Finding_many_repetitions.repetitions_of_one_stage
         let step3_combined_history =
             step2_combined_history
             |>built.Event_batches.add_sequence_appearances step3_sequence_histories
 
         let step4_sequence_histories =
             step3_sequence_histories
-            |>Finding_many_repetitions.many_repetitions
+            |>Finding_many_repetitions.repetitions_of_one_stage
         let step4_combined_history =
             step3_combined_history
             |>built.Event_batches.add_sequence_appearances step4_sequence_histories
@@ -121,7 +121,7 @@ module images_of_finding_sequences =
 
         let step2_sequence_histories =
             step1_sequence_histories
-            |>Finding_many_repetitions.many_repetitions
+            |>Finding_many_repetitions.repetitions_of_one_stage
             |>Seq.append step1_sequence_histories
         let step2_combined_history =
             step2_sequence_histories
@@ -129,7 +129,7 @@ module images_of_finding_sequences =
 
         let step3_sequence_histories =
             step2_sequence_histories
-            |>Finding_many_repetitions.many_repetitions
+            |>Finding_many_repetitions.repetitions_of_one_stage
             |>Seq.append step2_sequence_histories
         let step3_combined_history =
             step3_sequence_histories
@@ -137,7 +137,7 @@ module images_of_finding_sequences =
 
         let step4_sequence_histories =
             step3_sequence_histories
-            |>Finding_many_repetitions.many_repetitions
+            |>Finding_many_repetitions.repetitions_of_one_stage
             |>Seq.append step3_sequence_histories
         let step4_combined_history =
             step4_sequence_histories

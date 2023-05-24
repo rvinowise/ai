@@ -16,7 +16,7 @@ namespace rvinowise.ai
     }
     with 
         override this.ToString()=
-            printed.Figure.to_string this.edges this.subfigures
+            Figure_printing.figure_to_string this.edges this.subfigures
         
         override this.Equals(other) =
             match other with

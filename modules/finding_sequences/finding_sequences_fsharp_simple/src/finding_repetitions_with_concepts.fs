@@ -43,7 +43,7 @@
 //                     all_sequences
 //                     |>Seq.append sequences_of_previous_step
 //                 all_sequences
-//                 |>Finding_many_repetitions.many_repetitions
+//                 |>Finding_many_repetitions.repetitions_of_one_stage
 //                 |>steps_of_finding_repetitions all_sequences
 //         ()        
 //         // steps_of_finding_repetitions

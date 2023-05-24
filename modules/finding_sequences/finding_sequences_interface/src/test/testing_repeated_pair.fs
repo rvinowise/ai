@@ -9,12 +9,12 @@ open BenchmarkDotNet.Attributes
 open BenchmarkDotNet.Running
 
 
-module ``Finding_repetitions, test`` =
+module ``testing repeated_pair`` =
     open rvinowise.ai
 
 
     [<Fact>]
-    let ``finding repeated pair in tiny intricate sequences``()=
+    let ``in tiny intricate sequences``()=
         Finding_repetitions.repeated_pair
             [|
                 Interval.from_int 0 1;
@@ -33,7 +33,7 @@ module ``Finding_repetitions, test`` =
             |]
     
     [<Fact>]
-    let ``finding repeated pairs in big sequences``()=
+    let ``in big sequences``()=
         let items_amount = 100
         
         let heads = [|
@@ -53,7 +53,7 @@ module ``Finding_repetitions, test`` =
             |]
 
     [<Fact>]//(Timeout=1000)
-    let ``finding repetitions, when the last A-figure is taken, but there's still B-figures left ``()=
+    let ``when the last A-figure is taken, but there's still B-figures left ``()=
         async { 
             let signal1 = built.Figure_id_appearances.from_moments "signal1" [0;5]
             let signal2 = built.Figure_id_appearances.from_moments "signal2" [1;6;7]
