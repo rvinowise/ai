@@ -117,6 +117,19 @@ module ``testing all_repetitions (several levels of abstraction)`` =
             0,5; 5,8
         ]|>Seq.map Interval.ofPair)
 
+
+    let write_sequences_to_file 
+        filename
+        (histories:Sequence_history_debug seq) 
+        =
+        use output_stream = File.AppendText(filename)
+        histories
+        |>Seq.sort
+        |>Seq.iter (fun history->
+            history
+            |>output_stream.WriteLine
+        )
+
     [<Fact>]//(Skip="ui")
     let ``largest repetitions in a text file``()=
         use input_stream =
@@ -125,20 +138,19 @@ module ``testing all_repetitions (several levels of abstraction)`` =
             input_stream.ReadToEnd()
             |>built.Event_batches.from_text
             |>built.Event_batches.to_sequence_appearances
-        use output_nodict = new StreamWriter "C:/prj/ai/modules/finding_sequences/found_repetitions_nodict.txt"
-        use output_dict = new StreamWriter "C:/prj/ai/modules/finding_sequences/found_repetitions_dict.txt"
         
         raw_signals
-        |>``Finding_many_repetitions(fsharp_no_dictionary)``.all_repetitions_with_remark
-        |>Seq.sort
-        |>Seq.iter (fun appearances->
-            appearances
-            |>output_nodict.WriteLine
-        )
-        raw_signals
-        |>``Finding_many_repetitions(fsharp_simple)``.all_repetitions
-        |>Seq.sort
-        |>Seq.iter (fun appearances->
-            appearances
-            |>output_dict.WriteLine
-        )
+        |>``Finding_many_repetitions(fsharp_no_dictionary)``.all_repetitions
+//            (fun _->())
+            (
+                write_sequences_to_file 
+                    @"C:\prj\ai\modules\finding_sequences\found_repetitions_nodict.txt"
+            )
+        
+//        raw_signals
+//        |>``Finding_many_repetitions(fsharp_simple)``.all_repetitions
+//        |>Seq.sort
+//        |>Seq.iter (fun appearances->
+//            appearances
+//            |>output_dict.WriteLine
+//        )
