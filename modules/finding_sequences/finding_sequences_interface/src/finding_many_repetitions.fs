@@ -1,15 +1,40 @@
 namespace rvinowise.ai
 
+open System.IO
+open System
 
+
+module Reporting=
+    let dont= fun _->()
+
+module Reporting_repetitions=
+    let write_to_file 
+        filename
+        (histories:Sequence_history_debug seq) 
+        =
+        use output_stream = File.AppendText(filename)
+        histories
+        |>Seq.sort
+        |>Seq.iter (fun history->
+            history
+            |>output_stream.WriteLine
+        )
 
 module Finding_many_repetitions =
     let repetitions_of_one_stage = 
-        ``Finding_many_repetitions(fsharp_simple)``.repetitions_of_one_stage
-        //``Finding_many_repetitions(fsharp_no_dictionary)``.repetitions_of_one_stage
+        //``Finding_many_repetitions(fsharp_dictionary_first)``.repetitions_of_one_stage
+        ``Finding_many_repetitions(no_dictionary)``.repetitions_of_one_stage
 
-    let all_repetitions =
-        ``Finding_many_repetitions(fsharp_simple)``.all_repetitions
-        //``Finding_many_repetitions(fsharp_no_dictionary)``.all_repetitions
+    let all_repetitions (appearances: Sequence_appearances seq) =
+        appearances|>
+        ``Finding_many_repetitions(no_dictionary)``.all_repetitions
+            Reporting.dont
+            // (
+            //     Reporting_repetitions.write_to_file 
+            //         @"C:\prj\ai\modules\finding_sequences\found_repetitions_nodict.txt"
+            // )
+        //``Finding_many_repetitions(fsharp_dictionary_first)``.all_repetitions
+    
 
     let repetitions_in_combined_history
         (event_batches:Event_batches)

@@ -2,7 +2,7 @@ namespace rvinowise.ai
 
 open System
 
-module ``Finding_many_repetitions(fsharp_simple)`` =
+module ``Finding_many_repetitions(fsharp_dictionary_first)`` =
     
     type Known_sequences = Set<Figure_id array>
 

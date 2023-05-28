@@ -1,16 +1,14 @@
 namespace rvinowise.ai
 
-open BenchmarkDotNet.Engines
 open Xunit
 open FsUnit
 
-open System
 open rvinowise.ai
-open rvinowise
+
+
 
 module ``testing all_repetitions (several levels of abstraction)`` =
     open System.IO
-
 
 
     [<Fact>]
@@ -118,34 +116,21 @@ module ``testing all_repetitions (several levels of abstraction)`` =
         ]|>Seq.map Interval.ofPair)
 
 
-    let write_sequences_to_file 
-        filename
-        (histories:Sequence_history_debug seq) 
-        =
-        use output_stream = File.AppendText(filename)
-        histories
-        |>Seq.sort
-        |>Seq.iter (fun history->
-            history
-            |>output_stream.WriteLine
-        )
+    
 
     [<Fact>]//(Skip="ui")
     let ``largest repetitions in a text file``()=
         use input_stream =
-            new StreamReader "C:/prj/ai/modules/finding_sequences/signals.txt"
+            //new StreamReader "C:/prj/ai/modules/finding_sequences/signals.txt"
+            new StreamReader "C:/prj/ai/modules/finding_sequences/mathematical_primers.txt"
         let raw_signals =
             input_stream.ReadToEnd()
             |>built.Event_batches.from_text
             |>built.Event_batches.to_sequence_appearances
         
         raw_signals
-        |>``Finding_many_repetitions(fsharp_no_dictionary)``.all_repetitions
-//            (fun _->())
-            (
-                write_sequences_to_file 
-                    @"C:\prj\ai\modules\finding_sequences\found_repetitions_nodict.txt"
-            )
+        |>Finding_many_repetitions.all_repetitions
+            
         
 //        raw_signals
 //        |>``Finding_many_repetitions(fsharp_simple)``.all_repetitions

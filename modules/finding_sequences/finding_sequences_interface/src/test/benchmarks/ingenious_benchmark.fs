@@ -17,18 +17,17 @@ module Finding_repetitions_ingenious_benchmark =
     type Finding_repetitions_ingenious_benchmark() =
         
         member val all_repetitions_implementations = [
-            // {Parameter.value= ``Finding_many_repetitions(fsharp_simple)``.all_repetitions; 
-            // name="all_repetitions(fsharp_simple)"};
-            {Parameter.value= ``Finding_many_repetitions(fsharp_no_dictionary)``.all_repetitions 
-                (fun _ -> ()); 
-            name="all_repetitions(fsharp_no_dictionary)"};
+            // {Parameter.value= ``Finding_many_repetitions(fsharp_dictionary_first)``.all_repetitions; 
+            // name="all_repetitions(fsharp_dictionary_first)"};
+            {Parameter.value= Finding_many_repetitions.all_repetitions;
+            name="all_repetitions"};
             // {value= Finding_many_repetitions_csharp_gpu.all_repetitions; 
             // name="all_repetitions(csharp_gpu)"}
         ]
 
         [<ParamsSource("all_repetitions_implementations")>]
         member val all_repetitions = {
-                value=``Finding_many_repetitions(fsharp_simple)``.all_repetitions; 
+                value=``Finding_many_repetitions(fsharp_dictionary_first)``.all_repetitions; 
                 name="default"
             } with get, set
 

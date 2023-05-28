@@ -15,9 +15,16 @@ type Sequence_history_debug = {
             this.sequence_history.appearances
             |>Interval.intervals_to_string 
         $"""{str_sequence} remark={this.remark} appearances={str_appearances}"""
-    
 
-module ``Finding_many_repetitions(fsharp_no_dictionary)`` =
+module Sequence_history_debug=
+    let ofSequence_history history =
+        {
+            Sequence_history_debug.sequence_history = history;
+            remark=""
+        }
+
+
+module ``Finding_many_repetitions(no_dictionary)`` =
 
     let repeated_pairs_with_histories
         (appearances: (Sequence_history_debug*Sequence_history_debug) seq)
@@ -69,12 +76,18 @@ module ``Finding_many_repetitions(fsharp_no_dictionary)`` =
         
         smaller_sequences,largest_sequences
 
+    
 
     let repetitions_of_one_stage appearances = 
-        stage_of_finding_repetitions 
+        appearances
+        |>Seq.map Sequence_history_debug.ofSequence_history
+        |>stage_of_finding_repetitions 
             [] 
-            appearances
+            
         |>snd
+        |>Seq.map(fun history ->
+            history.sequence_history
+        )
 
     let all_repetitions_with_remark
         (report_findings: seq<Sequence_history_debug> -> unit )
@@ -85,20 +98,21 @@ module ``Finding_many_repetitions(fsharp_no_dictionary)`` =
             (smaller_sequences_of_previous_step: seq<Sequence_history_debug>)
             (largest_sequences_of_previous_step: seq<Sequence_history_debug>)
             =
-            if Seq.isEmpty largest_sequences_of_previous_step then
-                smaller_sequences_of_previous_step
+            let sofar_found_sequences =
+                largest_sequences_of_previous_step
+                |>Seq.append smaller_sequences_of_previous_step
                 |>Seq.append all_sequences_found_before
+            
+            largest_sequences_of_previous_step
+            |>Seq.append smaller_sequences_of_previous_step
+            |>report_findings
+
+            if Seq.isEmpty largest_sequences_of_previous_step then
+                sofar_found_sequences
             else
-                let sofar_found_sequences =
-                    largest_sequences_of_previous_step
-                    |>Seq.append smaller_sequences_of_previous_step
-                    |>Seq.append all_sequences_found_before
-                
                 let sofar_found_smaller_sequences =
                     smaller_sequences_of_previous_step
                     |>Seq.append all_sequences_found_before
-                
-                report_findings sofar_found_sequences
 
                 stage_of_finding_repetitions
                     sofar_found_smaller_sequences
@@ -118,11 +132,10 @@ module ``Finding_many_repetitions(fsharp_no_dictionary)`` =
                 )
             )
     
-    
 
 
     let all_repetitions
-        report_findings
+        (report_findings: seq<Sequence_history_debug> ->unit)
         (sequence_appearances: seq<Sequence_appearances>)
         =
         sequence_appearances

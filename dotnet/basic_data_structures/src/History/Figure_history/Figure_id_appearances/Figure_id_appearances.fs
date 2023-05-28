@@ -6,7 +6,7 @@ namespace rvinowise.ai
  
     type Figure_id_appearances = {
         figure: Figure_id
-        appearances: array<Interval>
+        appearances: Interval array
     }
 
 
