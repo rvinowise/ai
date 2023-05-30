@@ -63,7 +63,9 @@ module Applying_stencil =
         |>Some
         |>Option.filter (Set.isEmpty>>not)
         |>Option.map (built.Figure.subgraph_with_vertices target)
-        |>Option.filter (is_figure_without_impossible_parts stencil.output_without)
+        |>Option.filter (
+            is_figure_without_impossible_parts stencil.output_without
+        )
             
 
 

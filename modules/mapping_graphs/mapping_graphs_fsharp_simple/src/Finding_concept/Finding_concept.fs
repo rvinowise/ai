@@ -9,24 +9,43 @@ module Finding_concept =
     open FsUnit
 
 
-    let rec occurances 
+    let rec concrete_instances 
         (place: Figure)
         (concept: Concept)
         =
         match concept with
         |Leaf stencil->
             stencil
-            |>Applying_Stencil.results_of_stencil_application place
-            |>Seq.singleton
+            |>Applying_stencil.results_of_stencil_application place
+            |>Set.ofSeq
         |Or children->
             children
-            |>Seq.collect (occurances place)
-        |And children->
+            |>Seq.collect (concrete_instances place)
+            |>Set.ofSeq
+        |And children ->
             children
-            |>Seq.map (occurances place)
-            |>Seq.map Set.ofSeq
+            |>Seq.map (concrete_instances place>>Set.ofSeq)
             |>Set.intersectMany
 
+
+    [<Fact>]
+    let ``concept of number``()=
+        let math_operator = 
+            ["+";"=";"-"]
+            |>List.map built.Figure.signal
+        let control_flow = 
+            [",";";";"ok";"no"]
+            |>List.map built.Figure.signal
+        [
+            "[digit]#1","[digit]#2"
+        ]|>built.Stencil.simple_with_separator
+        |>fun stencil->{
+            stencil with 
+                output_without=
+                    [math_operator;control_flow]
+                    |>Seq.collect id 
+                    |>Set.ofSeq
+        }
 
     [<Fact>]
     let ``concept of digit``()=
@@ -35,15 +54,15 @@ module Finding_concept =
                 "N","out";
                 "out",",";
                 "out",";";
-            ]
+            ] 
         let middle_digit_stencil =
             built.Stencil.simple_with_separator [
                 "N","out";
                 ",#1","out";
                 "out",",#2";
                 "out",";";
-            ]
-        let last_digit_stencil =
+            ] 
+        let last_digit_stencil = //{
             built.Stencil.simple_with_separator [
                 "N","out";
                 ",","out";
@@ -51,10 +70,17 @@ module Finding_concept =
             ]
         let digit_concept = 
             [
-                Concept.leaf first_digit_stencil;
-                Concept.leaf middle_digit_stencil;
-                Concept.leaf last_digit_stencil
-            ]|>Concept.or 
+                first_digit_stencil;
+                middle_digit_stencil;
+                last_digit_stencil
+            ]
+            |>List.map (fun stencil->
+                {stencil with 
+                    output_without=
+                        ","|>built.Figure.signal|>Set.singleton})
+            |>List.map Concept.Leaf
+            |>Set.ofList
+            |>Concept.Or 
         
 
         let history_as_figure =
@@ -63,7 +89,7 @@ module Finding_concept =
             |>built.Figure.sequence_from_text
 
         digit_concept
-        |>occurances history_as_figure
+        |>concrete_instances history_as_figure
         |>Set.ofSeq
         |>should equal (
             "0123456789"
