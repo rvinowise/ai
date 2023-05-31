@@ -43,7 +43,7 @@ module Figure_tests=
     [<Fact>]
     let ``try is_sequence``()=
         "abcde"
-        |>built.Figure.sequence_from_text
+        |>built.Figure.sequential_figure_from_text
         |>(fun f->f.edges)
         |>Edges.is_sequence
         |>should equal true

@@ -99,59 +99,36 @@ module rvinowise.ai.built.Figure
         }
         |>check_correctness
     
-    let from_sequence (subfigures: Figure_id seq) =
-        let separator = "#"
-        let _, (subfigures_sequence: (Vertex_id*Figure_id) list) = 
-            subfigures
-            |>Seq.fold (
-                fun 
-                    (referenced_figures_to_last_number,subfigures_sequence)
-                    referenced_figure
-                    ->
-                let last_number = 
-                    referenced_figures_to_last_number
-                    |>Map.tryFind referenced_figure
-                    |>function
-                    |None -> 0
-                    |Some number -> number
-                let this_number = last_number+1
+    
 
-                (
-                    referenced_figures_to_last_number
-                    |>Map.add referenced_figure this_number
-                    ,
-                    subfigures_sequence @
-                    [
-                        (Figure_id.value referenced_figure+separator+string this_number) |> Vertex_id,
-                        referenced_figure
-                    ]
-                    
-                )
+    let sequential_figure_from_sequence (subfigures: string seq) =
+        let subfigures_sequence = 
+            subfigures
+            |>built.Graph.unique_numbers_for_names_in_sequence
+            |>Seq.map (fun (vertex, name) ->
+                vertex,Figure_id name
             )
-                (Map.empty,[])
         {
             edges=
                 subfigures_sequence
                 |>Seq.map fst
-                |>Seq.pairwise
-                |>Seq.map Edge.ofPair
-                |>Set.ofSeq
+                |>built.Graph.sequential_edges
+                
             subfigures=
                 subfigures_sequence
                 |>Map.ofSeq
             without=Set.empty
         }
 
-    let sequence_from_text (text:string) =
+    let sequential_figure_from_text (text:string) =
         text
-        |>Seq.map (string>>Figure_id)
-        |>Array.ofSeq
-        |>from_sequence
+        |>Seq.map string
+        |>sequential_figure_from_sequence
 
     [<Fact>]
     let ``try sequence_from_text``()=
         "abba"
-        |>sequence_from_text
+        |>sequential_figure_from_text
         |>should equal
             {
                 edges=

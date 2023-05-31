@@ -93,7 +93,7 @@ module ``application of stencils``=
         let target =
             "N0,1,2,3,4,5,6,7,8,9;"
     //mom:   0123456789¹123456789²
-            |>built.Figure.sequence_from_text
+            |>built.Figure.sequential_figure_from_text
    
         let mappings =
             map_figure_onto_target
@@ -132,7 +132,7 @@ module ``application of stencils``=
             "N","out";
             "out",";";
         ]
-        |>results_of_stencil_application (built.Figure.sequence_from_text "N0;")
+        |>results_of_stencil_application (built.Figure.sequential_figure_from_text "N0;")
         |>should equal [
             built.Figure.signal "0"
         ]
@@ -215,7 +215,7 @@ module ``application of stencils``=
         let history_as_figure =
             "N0,1,2,3,4,5,6,7,8,9;"
     //mom:   0123456789¹123456789²
-            |>built.Figure.sequence_from_text
+            |>built.Figure.sequential_figure_from_text
 
         middle_digit_stencil
         |>Applying_stencil.results_of_stencil_application history_as_figure
@@ -239,7 +239,7 @@ module ``application of stencils``=
         let history_as_figure =
             "N0,1,2,3,4,5,6,7,8,9;"
     //mom:   0123456789¹123456789²
-            |>built.Figure.sequence_from_text
+            |>built.Figure.sequential_figure_from_text
 
         last_digit_stencil
         |>Applying_stencil.results_of_stencil_application history_as_figure

@@ -59,6 +59,8 @@ module rvinowise.ai.built.Stencil
     let simple_with_separator (edges:seq<string*string>) =
         simple String.remove_number_with_hash edges
 
+
+
     let from_tuples
         (edges:seq<string*string*string*string>) =
         {
@@ -67,3 +69,21 @@ module rvinowise.ai.built.Stencil
             output_without=Set.empty
         }
 
+    let sequential_stencil_from_sequence (vertices: string seq) =
+        let vertices_sequence = 
+            vertices
+            |>built.Graph.unique_numbers_for_names_in_sequence
+            |>Seq.map (fun (vertex, name) ->
+                vertex,node_reference_from_string name
+            )
+        {
+            edges=
+                vertices_sequence
+                |>Seq.map fst
+                |>built.Graph.sequential_edges
+                
+            nodes=
+                vertices_sequence
+                |>Map.ofSeq
+            output_without=Set.empty
+        }
