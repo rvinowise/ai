@@ -13,6 +13,14 @@ module images_of_finding_sequences =
     open rvinowise.ai
     open rvinowise.ui
 
+    let repetitions_of_adjacent_sequences = 
+        Finding_many_repetitions.repetitions_in_combined_history
+            (Finding_repetitions.halves_are_close_enough 1)
+
+    let repetitions_of_one_stage_of_adjacent_sequences = 
+        Finding_many_repetitions.repetitions_of_one_stage
+            (Finding_repetitions.halves_are_close_enough 1)
+
     [<Fact(Skip="ui")>] //
     let ``visualising stages of pattern finding``()=
         let signal_history =
@@ -29,15 +37,15 @@ module images_of_finding_sequences =
             ]
         let step2_history =
             signal_history
-            |>Finding_many_repetitions.repetitions_in_combined_history
+            |>repetitions_of_adjacent_sequences
         
         let step3_history =
             step2_history
-            |>Finding_many_repetitions.repetitions_in_combined_history
+            |>repetitions_of_adjacent_sequences
 
         let step4_history =
             step3_history
-            |>Finding_many_repetitions.repetitions_in_combined_history
+            |>repetitions_of_adjacent_sequences
 
         "stages of pattern search"
         |>infrastructure.Graph.empty
@@ -70,21 +78,21 @@ module images_of_finding_sequences =
         let step2_sequence_histories =
             signal_history
             |>built.Event_batches.to_sequence_appearances
-            |>Finding_many_repetitions.repetitions_of_one_stage
+            |>repetitions_of_one_stage_of_adjacent_sequences
         let step2_combined_history =
             signal_history
             |>built.Event_batches.add_sequence_appearances step2_sequence_histories
 
         let step3_sequence_histories =
             step2_sequence_histories
-            |>Finding_many_repetitions.repetitions_of_one_stage
+            |>repetitions_of_one_stage_of_adjacent_sequences
         let step3_combined_history =
             step2_combined_history
             |>built.Event_batches.add_sequence_appearances step3_sequence_histories
 
         let step4_sequence_histories =
             step3_sequence_histories
-            |>Finding_many_repetitions.repetitions_of_one_stage
+            |>repetitions_of_one_stage_of_adjacent_sequences
         let step4_combined_history =
             step3_combined_history
             |>built.Event_batches.add_sequence_appearances step4_sequence_histories
@@ -121,7 +129,7 @@ module images_of_finding_sequences =
 
         let step2_sequence_histories =
             step1_sequence_histories
-            |>Finding_many_repetitions.repetitions_of_one_stage
+            |>repetitions_of_one_stage_of_adjacent_sequences
             |>Seq.append step1_sequence_histories
         let step2_combined_history =
             step2_sequence_histories
@@ -129,7 +137,7 @@ module images_of_finding_sequences =
 
         let step3_sequence_histories =
             step2_sequence_histories
-            |>Finding_many_repetitions.repetitions_of_one_stage
+            |>repetitions_of_one_stage_of_adjacent_sequences
             |>Seq.append step2_sequence_histories
         let step3_combined_history =
             step3_sequence_histories
@@ -137,7 +145,7 @@ module images_of_finding_sequences =
 
         let step4_sequence_histories =
             step3_sequence_histories
-            |>Finding_many_repetitions.repetitions_of_one_stage
+            |>repetitions_of_one_stage_of_adjacent_sequences
             |>Seq.append step3_sequence_histories
         let step4_combined_history =
             step4_sequence_histories
@@ -172,15 +180,15 @@ module images_of_finding_sequences =
             ]
         let step2_history =
             signal_history
-            |>Finding_many_repetitions.repetitions_in_combined_history
+            |>repetitions_of_adjacent_sequences
         
         let step3_history =
             step2_history
-            |>Finding_many_repetitions.repetitions_in_combined_history
+            |>repetitions_of_adjacent_sequences
 
         let step4_history =
             step3_history
-            |>Finding_many_repetitions.repetitions_in_combined_history
+            |>repetitions_of_adjacent_sequences
 
         "stages of pattern search, with mood"
         |>infrastructure.Graph.empty
@@ -211,6 +219,8 @@ module images_of_finding_sequences =
             original_signals 
             |>built.Event_batches.to_sequence_appearances
             |>Finding_many_repetitions.all_repetitions
+                (Finding_repetitions.halves_are_close_enough 1)
+                Reporting.dont
         let combined_found_sequences =
             found_sequences
             |>built.Event_batches.from_sequence_appearances

@@ -52,7 +52,7 @@ module Finding_repetitions_ingenious_benchmark =
         [<Benchmark>]
         member this.all_repetitions_in_overlaid_sequences()=
             this.long_overlaid_sequences
-            |>this.all_repetitions.value
+            |>this.all_repetitions.value (Finding_repetitions.halves_are_close_enough 1)
             |>Consumer().Consume
             
 

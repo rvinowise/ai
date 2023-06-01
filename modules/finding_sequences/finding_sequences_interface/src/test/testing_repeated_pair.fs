@@ -15,7 +15,7 @@ module ``testing repeated_pair`` =
 
     [<Fact>]
     let ``in tiny intricate sequences``()=
-        Finding_repetitions.repeated_pair
+        Finding_repetitions.repeated_pair (Finding_repetitions.halves_are_close_enough 1)
             [|
                 Interval.from_int 0 1;
                 Interval.from_int 2 3;
@@ -45,7 +45,9 @@ module ``testing repeated_pair`` =
                 Interval.from_int i (i+1) 
         |]
         
-        Finding_repetitions.repeated_pair heads tails
+        Finding_repetitions.repeated_pair 
+            (Finding_repetitions.halves_are_close_enough 1) 
+            heads tails
         |>should equal 
             [|
                 for i in 0..items_amount-2 ->
@@ -58,6 +60,7 @@ module ``testing repeated_pair`` =
             let signal1 = built.Figure_id_appearances.from_moments "signal1" [0;5]
             let signal2 = built.Figure_id_appearances.from_moments "signal2" [1;6;7]
             Finding_repetitions.repeated_pair
+                (Finding_repetitions.halves_are_close_enough 1)
                 (signal1.appearances|>Array.ofSeq)
                 (signal2.appearances|>Array.ofSeq)
             |>should equal (

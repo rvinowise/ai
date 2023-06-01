@@ -49,6 +49,8 @@ module ``testing all_repetitions (several levels of abstraction)`` =
         |>built.Event_batches.from_text
         |>built.Event_batches.to_sequence_appearances
         |>Finding_many_repetitions.all_repetitions
+            (Finding_repetitions.halves_are_close_enough 1)
+            Reporting.dont
         |>Set.ofSeq
         |>Set.intersect expected_sequences
         |>should equal expected_sequences
@@ -66,7 +68,8 @@ module ``testing all_repetitions (several levels of abstraction)`` =
             |>built.Event_batches.from_text
             |>built.Event_batches.to_sequence_appearances
             |>Finding_many_repetitions.all_repetitions
-        
+                (Finding_repetitions.halves_are_close_enough 1)
+                Reporting.dont
         //should find long sequences
         repetitions
         |>Set.ofSeq
@@ -101,6 +104,8 @@ module ``testing all_repetitions (several levels of abstraction)`` =
         let ada_appearances =
             [a_appearances;d_appearances]
             |>Finding_many_repetitions.all_repetitions
+                (Finding_repetitions.halves_are_close_enough 1)
+                Reporting.dont
             |>Seq.filter (fun sequence_appearances ->
                 sequence_appearances.sequence = ("ada"|>Seq.map (string>>Figure_id)|>Array.ofSeq)
             )
@@ -119,7 +124,7 @@ module ``testing all_repetitions (several levels of abstraction)`` =
     
 
     [<Fact>]//(Skip="ui")
-    let ``largest repetitions in a text file``()=
+    let ``find repetitions in a text file``()=
         use input_stream =
             //new StreamReader "C:/prj/ai/modules/finding_sequences/signals.txt"
             new StreamReader "C:/prj/ai/modules/finding_sequences/mathematical_primers.txt"
@@ -129,7 +134,9 @@ module ``testing all_repetitions (several levels of abstraction)`` =
             |>built.Event_batches.to_sequence_appearances
         
         raw_signals
-        |>Finding_many_repetitions.all_repetitions
+        |>Finding_many_repetitions.all_repetitions 
+            (Finding_repetitions.halves_are_close_enough 1)
+            Reporting.dont
             
         
 //        raw_signals

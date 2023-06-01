@@ -160,18 +160,10 @@ module ``Finding_repetitions(fsharp_simple)`` =
         else
             Interval_in_sequence.non_existent
 
-    let halves_are_close_enough 
-        a b
-        =
-        let maximum_distance_between_a_and_b = 2 
-        let distance_to_b = 
-            b.interval.start - a.interval.finish
-        if (distance_to_b <= maximum_distance_between_a_and_b) then
-            true
-        else
-            false
+    
 
     let iteration_of_finding_a_repeated_pair
+        (halves_can_form_pair: Interval->Interval->bool)
         (previous_iteration: Iteration_state_of_searching_pairs)
         (a_appearances: Interval array)
         (b_appearances: Interval array)
@@ -202,7 +194,7 @@ module ``Finding_repetitions(fsharp_simple)`` =
                     a_cursor=closest_a
                     b_cursor=found_b
                     result=
-                        if halves_are_close_enough closest_a found_b then
+                        if halves_can_form_pair closest_a.interval found_b.interval then
                             Pair_found
                         else
                             Not_found_yet
@@ -214,6 +206,7 @@ module ``Finding_repetitions(fsharp_simple)`` =
         
 
     let rec find_repeated_pairs
+        (halves_can_form_pair: Interval->Interval->bool)
         (a_appearances: Interval array)
         (b_appearances: Interval array)
         (previous_iteration: Iteration_state_of_searching_pairs)
@@ -230,11 +223,13 @@ module ``Finding_repetitions(fsharp_simple)`` =
         |Pair_found|Not_found_yet->
             let iteration = 
                 iteration_of_finding_a_repeated_pair
+                    halves_can_form_pair
                     previous_iteration
                     a_appearances
                     b_appearances
 
             find_repeated_pairs
+                halves_can_form_pair
                 a_appearances
                 b_appearances
                 iteration
@@ -243,16 +238,19 @@ module ``Finding_repetitions(fsharp_simple)`` =
             found_pairs|>List.rev
 
     let repeated_pair 
+        (halves_can_form_pair: Interval->Interval->bool)
         (a_appearances: Interval array)
         (b_appearances: Interval array)
         =
         let iteration = 
             iteration_of_finding_a_repeated_pair
+                halves_can_form_pair
                 Iteration_state_of_searching_pairs.state_before_the_first_iteration
                 a_appearances
                 b_appearances
 
         find_repeated_pairs 
+            halves_can_form_pair
             a_appearances
             b_appearances
             iteration
@@ -260,6 +258,7 @@ module ``Finding_repetitions(fsharp_simple)`` =
         |>Array.ofList
         
     let repeated_pair_with_histories
+        (halves_can_form_pair: Interval->Interval->bool)
         (repeating_sequence: Figure_id array)
         (a_appearances: Interval array,
         b_appearances:  Interval array)
@@ -271,10 +270,11 @@ module ``Finding_repetitions(fsharp_simple)`` =
         {
             Sequence_appearances.sequence = repeating_sequence
             appearances=
-                (repeated_pair 
+                repeated_pair 
+                    halves_can_form_pair
                     a_appearances
                     b_appearances
-                )
+                
         }
 
 

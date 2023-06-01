@@ -2,12 +2,14 @@ namespace rvinowise.ai.math
 
 open Xunit
 open FsUnit
+open System.IO
 
 open rvinowise.ai
 open rvinowise
 open rvinowise.ui
 
 module Math_primers=
+    open System
 
 
     [<Fact>]
@@ -23,6 +25,8 @@ module Math_primers=
         |>built.Event_batches.from_text_blocks
         |>built.Event_batches.to_sequence_appearances
         |>Finding_many_repetitions.all_repetitions
+            (Finding_repetitions.halves_are_close_enough 1)
+            Reporting.dont
         |>Set.ofSeq
         |>should be (supersetOf(
             [
@@ -58,3 +62,50 @@ module Math_primers=
             ("2",";");
             (";","×");
         ]
+
+    [<Fact>]//(Skip="ui")
+    let ``find repetitions which lead to good``()=
+        let good_signal = "ok;"
+        use input_stream =
+            new StreamReader "C:/prj/ai/examples/math/mathematical_primers.txt"
+        let raw_signals =
+            input_stream.ReadToEnd()
+            |>fun string->string.Replace("\r", "").Replace("\n", " ")
+            |>built.Event_batches.from_text
+            |>built.Event_batches.to_sequence_appearances
+        
+        let intermediat_results_file = @"C:\prj\ai\examples\math\mathematical_primers_intermediate_output.txt"
+        let final_results_file ="C:/prj/ai/examples/math/math_output.txt"
+        File.Delete(intermediat_results_file)
+        File.Delete(final_results_file)
+        use output_stream = File.AppendText(final_results_file)
+        
+        let all_repetitions =
+            raw_signals
+            |>Finding_many_repetitions.all_repetitions
+                (Finding_repetitions.halves_are_close_enough 1)
+                (
+                Reporting_repetitions.write_to_file 
+                    intermediat_results_file
+                )
+        
+        output_stream.WriteLine $"sequences ending with {good_signal}"
+        all_repetitions
+        |>Seq.filter (fun appearances ->
+            appearances.sequence
+            |>Array.rev
+            |>Array.truncate (String.length good_signal)
+            |>Array.rev
+            |>Seq.map Figure_id.value
+            |>String.concat ""
+            |>(=)good_signal
+        )|>Seq.iter output_stream.WriteLine
+
+        output_stream.WriteLine $"sequences containing {good_signal}"
+        all_repetitions
+        |>Seq.filter (fun appearances ->
+            appearances.sequence
+            |>Seq.map Figure_id.value
+            |>String.concat ""
+            |>(fun string -> string.Contains(good_signal))
+        )|>Seq.iter output_stream.WriteLine

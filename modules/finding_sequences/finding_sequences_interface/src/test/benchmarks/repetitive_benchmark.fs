@@ -32,7 +32,9 @@ module Finding_repetitions_repetitive_benchmark =
 
         [<Benchmark>]
         member this.repeated_pair_in_big_sequences()=
-            Finding_repetitions.repeated_pair this.heads this.heads
+            Finding_repetitions.repeated_pair 
+                (Finding_repetitions.halves_are_close_enough 1)
+                this.heads this.heads
             
 
     [<Fact(Skip="slow")>] //

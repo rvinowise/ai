@@ -14,6 +14,7 @@ module ``Finding_many_repetitions(fsharp_dictionary_first)`` =
         |>Set.contains ab_sequence 
 
     let repetitions_of_one_stage
+        (halves_can_form_pair: Interval->Interval->bool)
         (sequence_appearances: seq<Sequence_appearances>)
         =
         let known_sequences = 
@@ -41,6 +42,7 @@ module ``Finding_many_repetitions(fsharp_dictionary_first)`` =
                 let found_pair = 
                     (a_history.appearances, b_history.appearances)
                     |>``Finding_repetitions(fsharp_simple)``.repeated_pair_with_histories
+                        halves_can_form_pair
                         ab_sequence
                 if Appearances.has_repetitions found_pair.appearances then
                     (
@@ -55,7 +57,8 @@ module ``Finding_many_repetitions(fsharp_dictionary_first)`` =
         |>snd
     
 
-    let all_repetitions 
+    let all_repetitions
+        (halves_can_form_pair: Interval->Interval->bool)
         (sequence_appearances: seq<Sequence_appearances>)
         =
         let rec steps_of_finding_repetitions
@@ -69,7 +72,7 @@ module ``Finding_many_repetitions(fsharp_dictionary_first)`` =
                     all_sequences
                     |>Seq.append sequences_of_previous_step
                 all_sequences
-                |>repetitions_of_one_stage
+                |>repetitions_of_one_stage halves_can_form_pair
                 |>steps_of_finding_repetitions all_sequences
                 
         steps_of_finding_repetitions

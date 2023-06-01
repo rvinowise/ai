@@ -24,6 +24,7 @@ module ``testing repetitions_of_one_stage`` =
         ]
         |>built.Event_batches.to_sequence_appearances
         |>Finding_many_repetitions.repetitions_of_one_stage
+            (Finding_repetitions.halves_are_close_enough 1)
         |>Seq.map built.Sequence_appearances.to_figure_id_appearances
         |>Seq.sort
         |>should equal [
