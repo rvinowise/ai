@@ -170,7 +170,7 @@ module String =
         Regex("""(.)\1*""").Matches(s)
         |> Seq.cast<Match> 
         |> Seq.map (fun m -> m.Value)
-        //|> Seq.toList
+        |> Seq.toList
     
 module Map =
 

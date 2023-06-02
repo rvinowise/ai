@@ -129,6 +129,25 @@ namespace rvinowise.ai
                 (Interval.regular 2 7), Mood -1; 
                 (Interval.regular 5 7), Mood -2;
             ]
+        
+        [<Fact>]
+        let ``intervals changing mood (with multi-symbol good signals)``()=
+            let good = "ok;"
+            let bad = "bad;"
+            "1ok;23;ok;45bad;bad;67"
+//moment:    0123456789¹123456789²123456789
+            |>built.Event_batches.from_text
+            |>built.Event_batches.to_separate_histories
+            |>Separate_histories.mood_change_history
+            |>intervals_changing_mood
+            |>should equal [
+                (Interval.regular 0 1), Mood +1; 
+                (Interval.regular 0 4), Mood +2;
+                (Interval.regular 0 7), Mood 0;
+                (Interval.regular 2 4), Mood +1; 
+                (Interval.regular 2 7), Mood -1; 
+                (Interval.regular 5 7), Mood -2;
+            ]
             
         [<Fact>]
         let ``intervals changing mood, with repeated signals``()=
