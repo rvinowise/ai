@@ -2,36 +2,8 @@ namespace rvinowise.ai
 
 open System
 
-type Sequence_history_debug = {
-    sequence_history: Sequence_appearances;
-    remark: string
-} with
-    override this.ToString() =
-        let str_sequence=
-            this.sequence_history.sequence
-            |>Sequence_printing.sequence_to_string
-            
-        let str_appearances = 
-            this.sequence_history.appearances
-            |>Interval.intervals_to_string 
-        
-        $"appearances={str_appearances}"
-        |>(+)
-            (if this.remark.Length>0 then 
-                $" remark={this.remark} " 
-            else
-                " ")
-        |>(+) $"{str_sequence}"
 
-module Sequence_history_debug=
-    let ofSequence_history history =
-        {
-            Sequence_history_debug.sequence_history = history;
-            remark=""
-        }
-
-
-module ``Finding_many_repetitions(no_dictionary)`` =
+module ``Finding_many_repetitions_across_intervals(no_dictionary)`` =
 
     let repeated_pairs_with_histories
         (halves_can_form_pair: Interval->Interval->bool)
@@ -86,22 +58,7 @@ module ``Finding_many_repetitions(no_dictionary)`` =
         
         smaller_sequences, largest_sequences
 
-    
 
-    let repetitions_of_one_stage 
-        halves_can_form_pair
-        appearances
-        = 
-        appearances
-        |>Seq.map Sequence_history_debug.ofSequence_history
-        |>stage_of_finding_repetitions 
-            halves_can_form_pair
-            [] 
-            
-        |>snd
-        |>Seq.map(fun history ->
-            history.sequence_history
-        )
 
     let all_repetitions_with_remark
         (halves_can_form_pair)
@@ -163,4 +120,8 @@ module ``Finding_many_repetitions(no_dictionary)`` =
             history.sequence_history
         )
 
-    
+    let repetitions_across_intervals
+        halves_can_form_pair
+        (interval1_appearances: Sequence_appearances seq) 
+        (interval2_appearances: Sequence_appearances seq)
+        =

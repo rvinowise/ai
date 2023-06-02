@@ -24,6 +24,19 @@ module Finding_many_repetitions =
     let repetitions_of_one_stage = 
         //``Finding_many_repetitions(fsharp_dictionary_first)``.repetitions_of_one_stage
         ``Finding_many_repetitions(no_dictionary)``.repetitions_of_one_stage
+    
+    let repetitions_of_one_stage_in_combined_history
+        halves_can_form_pair
+        (event_batches:Event_batches)
+        =
+        event_batches
+        |>built.Event_batches.to_sequence_appearances
+        |>repetitions_of_one_stage halves_can_form_pair
+        |>built.Event_batches.from_sequence_appearances
+        |>built.Event_batches.add_mood_to_combined_history
+           (Event_batches.get_mood_history event_batches)
+        |>built.Event_batches.remove_batches_without_actions
+
 
     let all_repetitions 
         halves_can_form_pair
@@ -37,16 +50,15 @@ module Finding_many_repetitions =
             report_findings
             
         //``Finding_many_repetitions(fsharp_dictionary_first)``.all_repetitions
-    
 
-    let repetitions_in_combined_history
+
+    let repetitions_across_intervals
         halves_can_form_pair
-        (event_batches:Event_batches)
+        (interval1_appearances: Sequence_appearances seq) 
+        (interval2_appearances: Sequence_appearances seq)
         =
-        event_batches
-        |>built.Event_batches.to_sequence_appearances
-        |>repetitions_of_one_stage halves_can_form_pair
-        |>built.Event_batches.from_sequence_appearances
-        |>built.Event_batches.add_mood_to_combined_history
-           (Event_batches.get_mood_history event_batches)
-        |>built.Event_batches.remove_batches_without_actions
+        ``Finding_many_repetitions(no_dictionary)``.repetitions_across_intervals
+            halves_can_form_pair
+            interval1_appearances
+            interval2_appearances
+        

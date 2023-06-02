@@ -14,7 +14,7 @@ module images_of_finding_sequences =
     open rvinowise.ui
 
     let repetitions_of_adjacent_sequences = 
-        Finding_many_repetitions.repetitions_in_combined_history
+        Finding_many_repetitions.repetitions_of_one_stage_in_combined_history
             (Finding_repetitions.halves_are_close_enough 1)
 
     let repetitions_of_one_stage_of_adjacent_sequences = 
