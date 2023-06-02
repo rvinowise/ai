@@ -11,15 +11,15 @@ module rvinowise.ai.built.Event_batches
         
     let from_contingent_signals 
         start
-        batches
+        (batches: string list list)
         =
         batches
-        |>Seq.mapi (fun index (fired_signals: string seq)->
+        |>List.mapi (fun index (fired_signals: string list)->
             (
                 start+index,
                 Event_batch.ofSignalsWithMood fired_signals
             )
-        )|>Map.ofSeq
+        )|>Map.ofList
     
     
     [<Fact>]
@@ -58,13 +58,13 @@ module rvinowise.ai.built.Event_batches
     let from_text (text:string)=
         text
         |>extensions.String.split_into_same_symbols
-        |>Seq.collect (fun group->
+        |>List.collect (fun group->
             match Seq.head group with
-            |'×'-> seq{seq{$"+{Seq.length group}"}}
-            |'¬'-> seq{seq{$"-{Seq.length group}"}}
+            |'×'-> [[$"+{String.length group}"]]
+            |'¬'-> [[$"-{String.length group}"]]
             |signal ->
                 group
-                |> Seq.map (string>>Seq.singleton)
+                |>Seq.map [string]
         )
         |>from_contingent_signals 0
 
