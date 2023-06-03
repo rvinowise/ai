@@ -115,9 +115,9 @@ namespace rvinowise.ai
 
         [<Fact>]
         let ``intervals changing mood``()=
-            "1×23×45¬¬67"
-           //01234567 89 <-moments
-            |>built.Event_batches.from_text
+            "1ok;23ok;45no2;67"
+           //01  234  567   89 <-moments
+            |>built_from_text.Event_batches.from_text
             |>built.Event_batches.to_separate_histories
             |>Separate_histories.mood_change_history
             |>intervals_changing_mood
@@ -136,7 +136,7 @@ namespace rvinowise.ai
             let bad = "bad;"
             "1ok;23;ok;45bad;bad;67"
 //moment:    0123456789¹123456789²123456789
-            |>built.Event_batches.from_text
+            |>built_from_text.Event_batches.from_text
             |>built.Event_batches.to_separate_histories
             |>Separate_histories.mood_change_history
             |>intervals_changing_mood
@@ -153,7 +153,7 @@ namespace rvinowise.ai
         let ``intervals changing mood, with repeated signals``()=
             "00¬¬¬223××4¬¬"
            //012  3456 78 9 <-moments
-            |>built.Event_batches.from_text
+            |>built_from_text.Event_batches.from_text
             |>built.Event_batches.to_separate_histories
             |>Separate_histories.mood_change_history
             |>intervals_changing_mood

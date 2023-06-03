@@ -78,5 +78,10 @@
                 }
         }
 
+        let ofMood mood =
+            {
+                events=[]
+                mood={change=Mood mood;value=Mood 0}
+            }
 
     

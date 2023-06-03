@@ -17,22 +17,17 @@ namespace rvinowise.ai.ui.painted
             {Figure_id_appearances.finish history}"
         
         let combined_history_description 
-            (history: Event_batches)
+            (history: Event_batch seq)
             =
-            let border = 
-                history
-                |>Event_batches.interval
-
-            $"history from {border.start} to {border.finish}"
+            $"history from 0 to {Seq.length history}"
 
 
         let add_event_batches 
             (receptacle: infrastructure.Node)
-            (event_batches: Event_batches)
+            (event_batches: Event_batch seq)
             =
             event_batches
-            |>Map.toPairs
-            |>Seq.map (fun (moment, batch) ->
+            |>Seq.mapi (fun moment batch ->
                 (
                     moment,
                     (   

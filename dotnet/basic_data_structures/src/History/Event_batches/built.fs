@@ -8,92 +8,6 @@ module rvinowise.ai.built.Event_batches
     open rvinowise 
 
     
-        
-    let from_contingent_signals 
-        start
-        (batches: string list list)
-        =
-        batches
-        |>List.mapi (fun index (fired_signals: string list)->
-            (
-                start+index,
-                Event_batch.ofSignalsWithMood fired_signals
-            )
-        )|>Map.ofList
-    
-    
-    [<Fact>]
-    let ``construct combined history with mood``()=
-        let history = 
-            from_contingent_signals 0 [
-                ["a";"x"];
-                ["+1";"b";"y"];
-                ["a";"z";"x"];
-                ["+2";"c"];
-                ["b";"x"];
-                ["b"];
-                ["-3";"a"];
-                ["c"]
-            ]
-        history
-
-    [<Fact>]
-    let ``history interval can start from any moment``()=
-        let history = 
-            from_contingent_signals 0 [
-                ["a";"x"];
-                ["b";"y"];
-                ["a";"z";"x"];
-                ["c"];
-                ["b";"x"];
-                ["b"];
-                ["a"];
-                ["c"]
-            ]
-        history
-        |>Event_batches.interval
-        |>should equal
-            (Interval.regular 0 7)
-
-    let from_text (text:string)=
-        text
-        |>extensions.String.split_into_same_symbols
-        |>List.collect (fun group->
-            match Seq.head group with
-            |'×'-> [[$"+{String.length group}"]]
-            |'¬'-> [[$"-{String.length group}"]]
-            |signal ->
-                group
-                |>Seq.map [string]
-        )
-        |>from_contingent_signals 0
-
-    [<Fact>]
-    let ``from text``()=
-        "1+2=3×"
-        |>from_text
-        |>should equal (
-            from_contingent_signals 0 [
-                ["1"];["+"];["2"];["="];["3"];["+1"];
-            ]
-        )
-
-    let from_text_blocks (text_blocks:string seq)=
-        text_blocks
-        |>Seq.collect id
-        |>String.Concat
-        |>from_text
-
-    [<Fact>]
-    let ``from text blocks``()=
-        ["1+2=3";"1"]
-        |>from_text_blocks
-        |>should equal (
-            from_contingent_signals 0 [
-                ["1"];["+"];["2"];["="];["3"];["1"]
-            ]
-        )
-
     let add_signal_to_history 
         figure
         moment
@@ -247,26 +161,25 @@ module rvinowise.ai.built.Event_batches
         |>add_mood_to_combined_history mood_history
     
     let to_separate_histories
-        (event_batches: Event_batches)
+        (event_batches: (Appearance_event seq * Mood) seq )
         =
         let figure_appearances = 
             Dictionary<Figure_id, ResizeArray<Interval>>()
         let mutable mood_changes: Mood_changes_history = Map.empty
         
         event_batches
-        |>extensions.Map.toPairs
-        |>Seq.iter (fun ((moment:Moment), (batch: Event_batch)) ->
-            batch.events
+        |>Seq.iteri (fun moment (events,mood) ->
+            events
             |>Seq.iter (function
                 |Finish (figure, start_moment) ->
-                    let old_appearances=
+                    let old_appearances =
                         figure_appearances
                         |>extensions.Dictionary.getOrDefault 
                             figure (ResizeArray())
                     old_appearances.Add(Interval.regular start_moment moment)
                     figure_appearances[figure]<- old_appearances
                 |Signal figure ->
-                    let old_appearances=
+                    let old_appearances =
                         figure_appearances
                         |>extensions.Dictionary.getOrDefault 
                             figure (ResizeArray())
@@ -274,8 +187,8 @@ module rvinowise.ai.built.Event_batches
                     figure_appearances[figure]<- old_appearances
                 |_ ->()
             )
-            if batch.mood.change <> Mood 0 then 
-                mood_changes <- mood_changes.Add(moment, batch.mood.change)
+            if mood <> Mood 0 then 
+                mood_changes <- mood_changes.Add(moment, mood)
             else
                 ()
         )
@@ -291,11 +204,12 @@ module rvinowise.ai.built.Event_batches
             mood_change_history=mood_changes
         }
 
+
     [<Fact>]
     let ``to mood changes history``()=
-        "1×23×45¬¬67"
-       //01234567 89 <-moments
-        |>from_text
+        "1ok;23ok;45no;no;67"
+       //01  234  567  8  9¹ <-moments
+        |>built_from_text.Event_batches.signals_with_mood_from_text
         |>to_separate_histories
         |>Separate_histories.mood_change_history
         |>should equal (dict [
@@ -305,9 +219,9 @@ module rvinowise.ai.built.Event_batches
         ])
     [<Fact>]
     let ``to mood changes history2``()=
-        "00¬¬¬223××4¬¬"
-       //012  3456 78 9 <-moments
-        |>from_text
+        "00 no3; 223 ok2;4 no2;"
+       //01 2    345 6   7 89 <-moments
+        |>built_from_text.Event_batches.signals_with_mood_from_text
         |>to_separate_histories
         |>Separate_histories.mood_change_history
         |>should equal (dict [
@@ -317,17 +231,10 @@ module rvinowise.ai.built.Event_batches
         ])
 
 
-    let from_combined_histories 
-        (histories: Event_batches seq)
-        =
-        histories
-        |>Seq.map to_separate_histories
-        |>Seq.collect Separate_histories.figure_id_appearances
-        |>from_figure_id_appearances
     
     let add_figure_id_appearances
         (figure_id_appearances: Figure_id_appearances seq)
-        (event_batches: Event_batches)
+        (event_batches: Event_batch seq)
         =
         event_batches
         |>to_separate_histories
@@ -337,7 +244,7 @@ module rvinowise.ai.built.Event_batches
 
     let add_figure_appearances
         (figure_appearances: Figure_appearances seq)
-        (event_batches: Event_batches)
+        (event_batches: Event_batch seq)
         =
         event_batches
         |>add_figure_id_appearances (
@@ -346,7 +253,7 @@ module rvinowise.ai.built.Event_batches
         )
     let add_sequence_appearances
         (sequence_appearances: Sequence_appearances seq)
-        (event_batches: Event_batches)
+        (event_batches: Event_batch seq)
         =
         event_batches
         |>add_figure_id_appearances (
@@ -356,13 +263,13 @@ module rvinowise.ai.built.Event_batches
 
     [<Fact>]
     let ``turn a combined history into separate figure histories``()=
-        from_contingent_signals 0
             [
                 ["a";"b"]//0
                 ["c";"d"]//1
                 ["a"]//2
                 ["b"]//3
-            ]
+            ]|>List.map (List.map Figure_id)
+            |>List.map (Event_batch.ofSignals Mood_state.empty)
             |>to_separate_histories
             |>Separate_histories.figure_id_appearances
             |>should equal [

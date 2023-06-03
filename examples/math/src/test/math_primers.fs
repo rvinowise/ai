@@ -15,14 +15,14 @@ module Math_primers=
     [<Fact>]
     let ``find sequences in math primers``()=
         [
-            "N:0,1,2,3,4,5,6,7,8,9;";"1+1=2;×";"1+2=3;×";"1+1=";
-//mom:       0123456789¹123456789²1   2345678   9³12345   6789
-//seq1                                +1         +         1
-//seq2                                           +         1+1
+            "N:0,1,2,3,4,5,6,7,8,9;";"1+1=2;ok;";"1+2=3;ok;";"1+1=";
+//mom:       0123456789¹123456789²1   2345678     9³12345     6789
+//seq1                                 +1          +          1
+//seq2                                             +          1+1
 //mom(20+):  2345678    9³12345
 //mom(30+):  6789
         ]
-        |>built.Event_batches.from_text_blocks
+        |>built_from_text.Event_batches.from_text_blocks
         |>built.Event_batches.to_sequence_appearances
         |>Finding_many_repetitions.all_repetitions
             (Finding_repetitions.halves_are_close_enough 1)
@@ -38,9 +38,9 @@ module Math_primers=
     [<Fact>]
     let ``draw training history``()=
         let input_primers =
-            built.Event_batches.from_text_blocks [
+            built_from_text.Event_batches.from_text_blocks [
                 "N:0,1,2,3,4,5,6,7,8,9;";
-                "1+1=2;×"; "1+2=3;×";
+                "1+1=2;ok;"; "1+2=3;ok;";
                 "1+1=";
             ]
         
@@ -52,7 +52,7 @@ module Math_primers=
 
     [<Fact>]
     let ``ai can reply with rote-memorised constant sequences``()=
-        built.Event_batches.from_text_blocks [
+        built_from_text.Event_batches.from_text_blocks [
             "N:0,1,2,3,4,5,6,7,8,9;";
             "1+1=2;×"; "1+2=3;×";
             "1+1=";
@@ -70,8 +70,7 @@ module Math_primers=
             new StreamReader "C:/prj/ai/examples/math/mathematical_primers.txt"
         let raw_signals =
             input_stream.ReadToEnd()
-            |>fun string->string.Replace("\r", "").Replace("\n", " ")
-            |>built.Event_batches.from_text
+            |>built_from_text.Event_batches.from_text
             |>built.Event_batches.to_sequence_appearances
         
         let intermediat_results_file = @"C:\prj\ai\examples\math\mathematical_primers_intermediate_output.txt"
