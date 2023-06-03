@@ -24,7 +24,7 @@ module rvinowise.ai.built_from_text.Event_batches
                 |>> (
                     int
                     >> ( * ) mood_multiplier
-                    >>fun mood -> [],mood
+                    >>fun mood -> [],Mood mood
                 )
             )
         let any_mood_change =
@@ -35,7 +35,7 @@ module rvinowise.ai.built_from_text.Event_batches
             <|>(
                 anyString 1 
                 |>> (fun symbol -> 
-                    [Figure_id symbol],0
+                    [symbol|>Figure_id|>Appearance_event.Signal],Mood 0
                 )
             )
 
