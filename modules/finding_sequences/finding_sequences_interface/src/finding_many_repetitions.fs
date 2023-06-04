@@ -27,14 +27,11 @@ module Finding_many_repetitions =
     
     let repetitions_of_one_stage_in_combined_history
         halves_can_form_pair
-        (event_batches:Event_batches)
+        (event_batches: Appearance_event list seq)
         =
         event_batches
         |>built.Event_batches.to_sequence_appearances
         |>repetitions_of_one_stage halves_can_form_pair
-        |>built.Event_batches.from_sequence_appearances
-        |>built.Event_batches.add_mood_to_combined_history
-           (Event_batches.get_mood_history event_batches)
         |>built.Event_batches.remove_batches_without_actions
 
 

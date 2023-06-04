@@ -64,7 +64,7 @@ module images_of_finding_sequences =
     [<Fact(Skip="ui")>] //
     let ``visualising stages of pattern finding, including all previous stages``()=
         let signal_history =
-            built.Event_batches.from_contingent_signals 0 [
+            [
                 ["a";"b"];
                 ["c"];
                 ["d";"b"];
@@ -74,7 +74,7 @@ module images_of_finding_sequences =
                 ["d";"e"];
                 ["e";"f";"g"];
                 ["a";"c"];
-            ]
+            ]|>List.map (List.map (Figure_id>>Appearance_event.Signal))
         let step2_sequence_histories =
             signal_history
             |>built.Event_batches.to_sequence_appearances

@@ -32,8 +32,8 @@
     <Compile Include="src\Graphs\Figure\Figure_example.fs" />
     <Compile Include="src\Graphs\Figure\built\fusing_figures_into_a_sequence.fs" />
     
-
-    <!-- <Compile Include="src\Graphs\Sequence\fusing_sequences.fs" /> -->
+    <Compile Include="src\Graphs\Sequence\Sequence_type.fs" />
+    <Compile Include="src\Graphs\Sequence\built.fs" />
 
     <Compile Include="src\Graphs\Stencil\Stencil_types.fs" />
     <Compile Include="src\Graphs\Stencil\Stencil_built.fs" />
@@ -48,19 +48,13 @@
     <Compile Include="src\Graphs\Graph\Search_in_graph.fs" />
     
     <!-- History -->
-    <Compile Include="src\History\Figure_history\Figure_id_appearances\Figure_id_appearances.fs" />
-    <Compile Include="src\History\Figure_history\Figure_id_appearances\built.fs" />
-    <Compile Include="src\History\Figure_history\Figure_id_appearances\examples.fs" />
-    <Compile Include="src\History\Figure_history\Figure_appearances\Figure_appearances.fs" />
-    <Compile Include="src\History\Figure_history\Figure_appearances\built.fs" />
-    <Compile Include="src\History\Figure_history\Sequence_appearances\Sequence_appearances.fs" />
-    <Compile Include="src\History\Figure_history\Sequence_appearances\built.fs" />
+    <Compile Include="src\History\Appearances\built.fs" />
+    <Compile Include="src\History\Appearances\Appearances.fs" />
+    <Compile Include="src\History\Appearances\examples.fs" />
 
     <Compile Include="src\History\Mood_history\Mood_history.fs" />
     <Compile Include="src\History\Mood_history\built.fs" />
     <Compile Include="src\History\Mood_history\examples.fs" />
-    
-    <Compile Include="src\History\Separate_histories\Separate_histories.fs" />
     
     <Compile Include="src\History\Event_batches\parts.fs" />
     <Compile Include="src\History\Event_batches\Event_batches.fs" />
@@ -76,6 +70,7 @@
 
   <ItemGroup>
     <PackageReference Include="FParsec" Version="1.1.1" />
+    <PackageReference Include="fsharpplus" Version="1.4.1" />
     <PackageReference Include="xUnit" Version="2.4.2" />
     <PackageReference Include="fsunit" Version="5.2.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.4.0" />

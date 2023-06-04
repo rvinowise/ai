@@ -39,25 +39,4 @@ namespace rvinowise.ai
         let is_bad (mood: Mood)=
             mood < Mood 0
 
-    type Mood_history = {
-        interval: Interval
-        mood_at_moments: seq<Mood>
-    }
 
-    type Mood_changes_history = Map<Moment, Mood>
-
-    [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
-    module Mood_history=
-        open rvinowise.ai
-        open FsUnit
-        open Xunit
-
-        let interval (history:Mood_history) =
-            history.interval
-
-
-        let mood_at_moment history moment=
-            ()
-
-        let ofChanges mood_changes=
-            ()

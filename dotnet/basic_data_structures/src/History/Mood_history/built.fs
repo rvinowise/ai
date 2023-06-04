@@ -5,10 +5,7 @@ module rvinowise.ai.built.Mood_history
     open rvinowise
 
 
-    type Detailed_history={
-        initial_mood:Mood
-        mood_at_moments:Mood seq
-    }
+    
     let complete_from_tuples
         tuples
         =
@@ -16,49 +13,41 @@ module rvinowise.ai.built.Mood_history
             tuples
             |>Map.ofSeq
         
-        {
-            initial_mood = Mood 0
-            mood_at_moments=
-                mood_changes
-                |>Seq.pairwise
-                |>Seq.fold (
-                    fun 
-                        history
-                        (
-                            start,
-                            finish
-                        ) ->
-                        let mood_change = start.Value
-                        let amount_of_moments = finish.Key-start.Key
-                        let new_mood =history.initial_mood + mood_change
-                        {
-                            initial_mood=new_mood
-                            mood_at_moments=
-                                Seq.append 
-                                    history.mood_at_moments
-                                    (List.init amount_of_moments (fun _->new_mood))
-                        }
-                    
-                    )
-                    {
-                        Detailed_history.initial_mood=Mood 0
-                        mood_at_moments=[]
-                    }
-                |>fun detailed_history->detailed_history.mood_at_moments
-                |>fun mood_at_moments ->
-                    Seq.append
+        mood_changes
+        |>Seq.pairwise
+        |>Seq.fold (
+            fun 
+                (initial_mood, mood_at_moments)
+                (
+                    start,
+                    finish
+                ) ->
+                let mood_change = start.Value
+                let amount_of_moments = finish.Key-start.Key
+                let new_mood = initial_mood + mood_change
+                
+                new_mood
+                ,
+                Seq.append 
+                    mood_at_moments
+                    (List.init amount_of_moments (fun _->new_mood))
+            
+            )
+            (Mood 0,[])
+        |>snd
+        |>fun mood_at_moments ->
+            Seq.append
+                mood_at_moments
+                [
+                    mood_changes
+                    |>Seq.last
+                    |>extensions.KeyValuePair.value
+                    |>fun last_mood_change->
                         mood_at_moments
-                        [
-                            mood_changes
-                            |>Seq.last
-                            |>extensions.KeyValuePair.value
-                            |>fun last_mood_change->
-                                mood_at_moments
-                                |>Seq.last
-                                |>(+) last_mood_change
-                        ]
+                        |>Seq.last
+                        |>(+) last_mood_change
+                ]
 
-        }
     
     // [<Fact>]
     // let ``mood history build complete_from_tuples``()=

@@ -2,66 +2,53 @@ namespace rvinowise.ai
 
 open System
 
-type Sequence_history_debug = {
-    sequence_history: Sequence_appearances;
-    remark: string
-} with
-    override this.ToString() =
-        let str_sequence=
-            this.sequence_history.sequence
-            |>Sequence_printing.sequence_to_string
-            
-        let str_appearances = 
-            this.sequence_history.appearances
-            |>Interval.intervals_to_string 
-        
-        $"appearances={str_appearances}"
-        |>(+)
-            (if this.remark.Length>0 then 
-                $" remark={this.remark} " 
-            else
-                " ")
-        |>(+) $"{str_sequence}"
 
-module Sequence_history_debug=
-    let ofSequence_history history =
-        {
-            Sequence_history_debug.sequence_history = history;
-            remark=""
-        }
 
 
 module ``Finding_many_repetitions(no_dictionary)`` =
 
-    let repeated_pairs_with_histories
-        (halves_can_form_pair: Interval->Interval->bool)
-        (appearances: (Sequence_history_debug*Sequence_history_debug) seq)
+
+    let sequence_appearances_to_string 
+        (sequence: Sequence)
+        (appearances: Interval array)
         =
-        appearances
+        let str_sequence=
+            sequence
+            |>Seq.map Figure_id.value
+            |>String.concat ""
+            
+        let str_appearances = 
+            appearances
+            |>Interval.intervals_to_string 
+        
+        $"appearances={str_appearances}"
+        |>(+) $"{str_sequence}"
+
+    let repeated_pairs_of_sequences
+        (halves_can_form_pair: Interval->Interval->bool)
+        (appearances_pairs: ((Sequence*Interval array) * (Sequence * Interval array)) seq)
+        =
+        appearances_pairs
         |>Seq.fold (
             fun 
                 found_pairs
-                (a_history,b_history) 
+                ((a_sequence, 
+                a_appearances), 
+                (b_sequence, 
+                b_appearances)) 
                 ->
             let ab_sequence = 
                 Array.append 
-                    a_history.sequence_history.sequence
-                    b_history.sequence_history.sequence
-            let found_pair =
-                (a_history.sequence_history.appearances, b_history.sequence_history.appearances)
-                |>``Finding_repetitions(fsharp_simple)``.repeated_pair_with_histories
-                    halves_can_form_pair
-                    ab_sequence
+                    a_sequence
+                    b_sequence
             
-            //let str_a = a_history.sequence_history.sequence|>Sequence_printing.sequence_to_string
-            //let str_b = b_history.sequence_history.sequence|>Sequence_printing.sequence_to_string
-            let found_pair = 
-                {
-                    Sequence_history_debug.sequence_history=found_pair;
-                    remark= ""//$"""{str_a}.{str_b}"""
-                }
-            if Appearances.has_repetitions found_pair.sequence_history.appearances then
-                found_pair::found_pairs
+            let ab_appearances =
+                (a_appearances, b_appearances)
+                ||>``Finding_repetitions(fsharp_simple)``.repeated_pair
+                    halves_can_form_pair
+            
+            if Appearances.has_repetitions ab_appearances then
+                (ab_sequence, ab_appearances)::found_pairs
             else
                 found_pairs
             )
@@ -71,18 +58,18 @@ module ``Finding_many_repetitions(no_dictionary)`` =
 
     let stage_of_finding_repetitions
         halves_can_form_pair
-        (previous_smaller_sequences: seq<Sequence_history_debug>)
-        (previous_largest_sequences: seq<Sequence_history_debug>)
+        (previous_smaller_sequences: (Sequence*Interval array) seq)
+        (previous_largest_sequences: (Sequence*Interval array) seq)
         =
         let largest_sequences =
             (previous_largest_sequences, previous_largest_sequences)
             ||>Seq.allPairs
-            |>repeated_pairs_with_histories halves_can_form_pair
+            |>repeated_pairs_of_sequences halves_can_form_pair
         
         let smaller_sequences =
             (previous_smaller_sequences, previous_largest_sequences)
             ||>Seq.allPairs
-            |>repeated_pairs_with_histories halves_can_form_pair
+            |>repeated_pairs_of_sequences halves_can_form_pair
         
         smaller_sequences, largest_sequences
 
@@ -93,25 +80,22 @@ module ``Finding_many_repetitions(no_dictionary)`` =
         appearances
         = 
         appearances
-        |>Seq.map Sequence_history_debug.ofSequence_history
         |>stage_of_finding_repetitions 
             halves_can_form_pair
             [] 
             
         |>snd
-        |>Seq.map(fun history ->
-            history.sequence_history
-        )
+        
 
-    let all_repetitions_with_remark
+    let all_repetitions
         (halves_can_form_pair)
-        (report_findings: Sequence_history_debug seq -> unit )
-        (sequence_appearances: Sequence_appearances seq)
+        (report_findings: (Sequence*Interval array) seq -> unit )
+        (sequence_appearances: (Sequence*Interval array) seq)
         =
         let rec next_step_of_finding_repetitions
-            (all_sequences_found_before: Sequence_history_debug seq)
-            (smaller_sequences_of_previous_step: Sequence_history_debug seq)
-            (largest_sequences_of_previous_step: Sequence_history_debug seq)
+            (all_sequences_found_before: (Sequence*Interval array) seq)
+            (smaller_sequences_of_previous_step: (Sequence*Interval array) seq)
+            (largest_sequences_of_previous_step: (Sequence*Interval array) seq)
             =
             let sofar_found_sequences =
                 largest_sequences_of_previous_step
@@ -137,30 +121,10 @@ module ``Finding_many_repetitions(no_dictionary)`` =
                     sofar_found_sequences
                 
         next_step_of_finding_repetitions
-            [] []
-            (
-                sequence_appearances
-                |>Seq.map (fun history->
-                    {
-                        sequence_history=history;
-                        remark=""
-                    }
-                )
-            )
+            [] [] sequence_appearances
+                
     
 
 
-    let all_repetitions
-        halves_can_form_pair
-        (report_findings: seq<Sequence_history_debug> ->unit)
-        (sequence_appearances: seq<Sequence_appearances>)
-        =
-        sequence_appearances
-        |>all_repetitions_with_remark
-            halves_can_form_pair
-            report_findings
-        |>Seq.map(fun history ->
-            history.sequence_history
-        )
 
     

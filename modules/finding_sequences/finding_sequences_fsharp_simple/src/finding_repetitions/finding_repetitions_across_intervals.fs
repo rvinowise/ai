@@ -41,15 +41,11 @@ module ``Finding_repetitions_across_intervals(fsharp_simple)`` =
         (repeating_sequence: Figure_id array)
         (interval1, interval2)
         =
-        {
-            Sequence_appearances.sequence = repeating_sequence
-            appearances=
-                repeated_pair_across_intervals 
-                    halves_can_form_pair
-                    interval1
-                    interval2
+        repeated_pair_across_intervals 
+            halves_can_form_pair
+            interval1
+            interval2
                 
-        }
 
 
 

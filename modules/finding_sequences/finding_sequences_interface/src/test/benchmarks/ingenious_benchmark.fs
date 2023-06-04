@@ -27,7 +27,7 @@ module Finding_repetitions_ingenious_benchmark =
 
         [<ParamsSource("all_repetitions_implementations")>]
         member val all_repetitions = {
-                value=``Finding_many_repetitions(fsharp_dictionary_first)``.all_repetitions; 
+                value=``Finding_many_repetitions(no_dictionary)``.all_repetitions; 
                 name="default"
             } with get, set
 
@@ -38,7 +38,7 @@ module Finding_repetitions_ingenious_benchmark =
     //seq3:          a    b  c  de f  g h         
     //seq4:         1 2     3  4     5 6  
     //mom:   0123456789¹123456789²123456789³
-            |>built.Event_batches.from_text
+            |>built_from_text.Event_batches.signals_with_mood_from_text
             |>built.Event_batches.to_sequence_appearances
 
         member this.overlaid_sequences =
