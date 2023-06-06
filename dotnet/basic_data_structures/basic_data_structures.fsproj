@@ -55,9 +55,9 @@
     <Compile Include="src\History\Mood_history\built.fs" />
     <Compile Include="src\History\Mood_history\examples.fs" />
     
-    <Compile Include="src\History\Event_batches\parts.fs" />
-    <Compile Include="src\History\Event_batches\built_from_text.fs" />
-    <Compile Include="src\History\Event_batches\built.fs" />
+    <Compile Include="src\History\Event_batches\Event_batches_types.fs" />
+    <Compile Include="src\History\Event_batches\parsing_text.fs" />
+    <Compile Include="src\History\Event_batches\Event_batches.fs" />
     <Compile Include="src\History\Event_batches\convert_to_figure.fs" />
     <Compile Include="src\History\Event_batches\example.fs" />
 

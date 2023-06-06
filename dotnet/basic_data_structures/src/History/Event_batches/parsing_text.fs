@@ -8,7 +8,7 @@ module rvinowise.ai.built_from_text.Event_batches
     open rvinowise 
     
 
-    let signals_with_mood_from_text 
+    let event_batches_from_text 
         (text:string)
         =
         let good = "ok"
@@ -52,7 +52,7 @@ module rvinowise.ai.built_from_text.Event_batches
     [<Fact>]
     let ``try from_text``()=
         "a1ok;2 no2;3"
-        |>signals_with_mood_from_text
+        |>event_batches_from_text
         |>should equal ([
             ["a"],0;    
             ["1"],0; 
@@ -62,16 +62,12 @@ module rvinowise.ai.built_from_text.Event_batches
             ["3"],0; 
         ])
 
-    let signals_from_text 
-        (text:string)
-        =
-        text
-        |>signals_with_mood_from_text
-        |>List.map fst
-
+  
     let from_text_blocks (text_blocks:string seq)=
         text_blocks
         |>Seq.collect id
         |>String.Concat
-        |>signals_with_mood_from_text
+        |>event_batches_from_text
 
+
+    

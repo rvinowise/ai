@@ -167,7 +167,7 @@ module images_of_finding_sequences =
     //seq1:  abcd ef g
     //seq3:      a  b cdefg
     //mom:   0123456789¹123456789²123456789³
-            |>built_from_text.Event_batches.signals_with_mood_from_text
+            |>built_from_text.Event_batches.event_batches_from_text
             |>List.map fst
 
         let found_sequences =

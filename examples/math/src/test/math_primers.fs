@@ -23,6 +23,7 @@ module Math_primers=
 //mom(30+):  6789
         ]
         |>built_from_text.Event_batches.from_text_blocks
+        |>Event_batches.only_signals
         |>Event_batches.to_sequence_appearances
         |>Finding_many_repetitions.all_repetitions
             (Finding_repetitions.halves_are_close_enough 1)
@@ -30,12 +31,12 @@ module Math_primers=
         |>Set.ofSeq
         |>should be (supersetOf(
             [
-                built.Sequence_appearances.from_string_and_pairs "1+1=" [22,25;36,39];
-                built.Sequence_appearances.from_string_and_pairs "1+=;" [22,27;29,34];
+                "1+1="|>Sequence.ofString, [22,25;36,39]|>List.map Interval.ofPair;
+                "1+=;"|>Sequence.ofString, [22,27;29,34]|>List.map Interval.ofPair;
             ]|>Set.ofSeq
         ))
 
-    [<Fact>]
+    [<Fact(Skip="ui")>]
     let ``draw training history``()=
         let input_primers =
             built_from_text.Event_batches.from_text_blocks [
@@ -43,6 +44,7 @@ module Math_primers=
                 "1+1=2;ok;"; "1+2=3;ok;";
                 "1+1=";
             ]
+            |>Event_batches.only_signals
         
         "math inputs"
         |>infrastructure.Graph.empty
@@ -70,7 +72,8 @@ module Math_primers=
             new StreamReader "C:/prj/ai/examples/math/mathematical_primers.txt"
         let raw_signals =
             input_stream.ReadToEnd()
-            |>built_from_text.Event_batches.from_text
+            |>built_from_text.Event_batches.event_batches_from_text
+            |>Event_batches.only_signals
             |>Event_batches.to_sequence_appearances
         
         let intermediat_results_file = @"C:\prj\ai\examples\math\mathematical_primers_intermediate_output.txt"
@@ -91,20 +94,22 @@ module Math_primers=
         output_stream.WriteLine $"sequences ending with {good_signal}"
         all_repetitions
         |>Seq.filter (fun appearances ->
-            appearances.sequence
+            appearances|>fst
             |>Array.rev
             |>Array.truncate (String.length good_signal)
             |>Array.rev
             |>Seq.map Figure_id.value
             |>String.concat ""
             |>(=)good_signal
-        )|>Seq.iter output_stream.WriteLine
+        )|>Seq.map Appearances.sequence_appearances_to_string 
+        |>Seq.iter output_stream.WriteLine
 
         output_stream.WriteLine $"sequences containing {good_signal}"
         all_repetitions
         |>Seq.filter (fun appearances ->
-            appearances.sequence
+            appearances|>fst
             |>Seq.map Figure_id.value
             |>String.concat ""
             |>(fun string -> string.Contains(good_signal))
-        )|>Seq.iter output_stream.WriteLine
+        )|>Seq.map Appearances.sequence_appearances_to_string 
+        |>Seq.iter output_stream.WriteLine

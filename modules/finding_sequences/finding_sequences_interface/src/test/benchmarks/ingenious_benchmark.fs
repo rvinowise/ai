@@ -47,7 +47,8 @@ module Finding_repetitions_ingenious_benchmark =
     //seq3:          a    b  c  de f  g h         
     //seq4:         1 2     3  4     5 6  
     //mom:   0123456789¹123456789²123456789³
-            |>built_from_text.Event_batches.signals_from_text
+            |>built_from_text.Event_batches.event_batches_from_text
+            |>Event_batches.only_signals
             |>Event_batches.event_batches_to_figure_appearances
             |>extensions.Map.toPairs
             |>Seq.map (fun (figure, appearances)->
@@ -59,7 +60,8 @@ module Finding_repetitions_ingenious_benchmark =
     //seq1:  a bc  d
     //seq3:      a   bc  d       
     //mom:   0123456789¹123456789²123456789³
-            |>built_from_text.Event_batches.signals_from_text
+            |>built_from_text.Event_batches.event_batches_from_text
+            |>Event_batches.only_signals
             |>Event_batches.to_sequence_appearances
 
         [<Benchmark>]

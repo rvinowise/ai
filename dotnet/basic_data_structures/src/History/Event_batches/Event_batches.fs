@@ -9,6 +9,22 @@ module rvinowise.ai.Event_batches
     open rvinowise 
 
 
+    let only_signals 
+        (event_batches: (Appearance_event list*Mood) seq) 
+        =
+        event_batches
+        |>Seq.map fst
+
+    let only_mood_changes
+        (event_batches: (Appearance_event list*Mood) seq) 
+        =
+        event_batches
+        |>Seq.map snd
+        |>Seq.indexed
+        |>Seq.filter (fun (_,mood)->
+            mood <> Mood 0
+        )
+
     let event_history_from_lists =
         List.map (List.map (Figure_id>>Appearance_event.Signal))
         >>Array.ofList

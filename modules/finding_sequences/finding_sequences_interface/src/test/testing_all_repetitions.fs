@@ -47,7 +47,8 @@ module ``testing all_repetitions (several levels of abstraction)`` =
 //       a b c
 //             a  bc
 //mom:   0123456789¹1
-        |>built_from_text.Event_batches.signals_from_text
+        |>built_from_text.Event_batches.event_batches_from_text
+        |>Event_batches.only_signals
         |>Event_batches.to_sequence_appearances
         |>Finding_many_repetitions.all_repetitions
             Finding_repetitions.all_halves
@@ -66,7 +67,8 @@ module ``testing all_repetitions (several levels of abstraction)`` =
     //seq3:          a    b  c  de f  g h         
     //seq4:         1 2     3  4     5 6  
     //mom:   0123456789¹123456789²123456789³
-            |>built_from_text.Event_batches.signals_from_text
+            |>built_from_text.Event_batches.event_batches_from_text
+            |>Event_batches.only_signals
             |>Event_batches.to_sequence_appearances
             |>Finding_many_repetitions.all_repetitions
                 Finding_repetitions.all_halves
@@ -131,7 +133,8 @@ module ``testing all_repetitions (several levels of abstraction)`` =
             new StreamReader "C:/prj/ai/modules/finding_sequences/mathematical_primers.txt"
         let raw_signals =
             input_stream.ReadToEnd()
-            |>built_from_text.Event_batches.signals_from_text
+            |>built_from_text.Event_batches.event_batches_from_text
+            |>Event_batches.only_signals
             |>Event_batches.to_sequence_appearances
         
         raw_signals

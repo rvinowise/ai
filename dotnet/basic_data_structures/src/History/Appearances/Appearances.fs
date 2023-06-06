@@ -9,16 +9,15 @@ module rvinowise.ai.Appearances
 
 
     let sequence_appearances_to_string 
-        (sequence: Sequence)
-        (appearances: Interval array)
+        (sequence_appearances: Sequence*Interval array)
         =
         let str_sequence=
-            sequence
+            sequence_appearances|>fst
             |>Seq.map Figure_id.value
             |>String.concat ""
             
         let str_appearances = 
-            appearances
+            sequence_appearances|>snd
             |>Interval.intervals_to_string 
         
         $"appearances={str_appearances}"

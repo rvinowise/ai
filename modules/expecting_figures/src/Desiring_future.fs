@@ -95,10 +95,11 @@ namespace rvinowise.ai
                 (start_index+1)
 
 
-        let intervals_changing_mood (mood_changes_history:Mood_changes_history)=
+        let intervals_changing_mood 
+            (mood_changes_history: (Moment*Mood) seq)
+            =
             let changes =
                 mood_changes_history
-                |>extensions.Map.toPairs
                 |>Seq.append [(-1,Mood 0)]//initial mood before the first change
                 |>Array.ofSeq
                 
@@ -117,9 +118,8 @@ namespace rvinowise.ai
         let ``intervals changing mood``()=
             "1ok;23ok;45no2;67"
            //01  234  567   89 <-moments
-            |>built_from_text.Event_batches.from_text
-            |>Event_batches.to_separate_histories
-            |>Separate_histories.mood_change_history
+            |>built_from_text.Event_batches.event_batches_from_text
+            |>Event_batches.only_mood_changes
             |>intervals_changing_mood
             |>should equal [
                 (Interval.regular 0 1), Mood +1; 
@@ -136,9 +136,8 @@ namespace rvinowise.ai
             let bad = "bad;"
             "1ok;23;ok;45bad;bad;67"
 //moment:    0123456789¹123456789²123456789
-            |>built_from_text.Event_batches.from_text
-            |>Event_batches.to_separate_histories
-            |>Separate_histories.mood_change_history
+            |>built_from_text.Event_batches.event_batches_from_text
+            |>Event_batches.only_mood_changes
             |>intervals_changing_mood
             |>should equal [
                 (Interval.regular 0 1), Mood +1; 
@@ -153,9 +152,8 @@ namespace rvinowise.ai
         let ``intervals changing mood, with repeated signals``()=
             "00¬¬¬223××4¬¬"
            //012  3456 78 9 <-moments
-            |>built_from_text.Event_batches.from_text
-            |>Event_batches.to_separate_histories
-            |>Separate_histories.mood_change_history
+            |>built_from_text.Event_batches.event_batches_from_text
+            |>Event_batches.only_mood_changes
             |>intervals_changing_mood
             |>should equal [
                 (Interval.regular 0 2), Mood -3; 
@@ -173,25 +171,21 @@ namespace rvinowise.ai
         let commonalities_between_two_intervals
             (interval1: Interval)
             (interval2: Interval)
-            (figure_appearances: Figure_id_appearances seq)
+            (figure_appearances)
             =
-            figure_appearances
-            |>Seq.map(fun figure_appearance->
-                figure_appearance.appearances
-
-            )
+            ()
 
         let commonalities_in_history_intervals
             (is_interval_needed: Mood -> bool)
             (mood_intervals: (Interval*Mood) seq)
-            (history: Figure_id_appearances seq)
+            (history)
             =
             ()
 
 
         let good_commonalities 
             (mood_intervals: (Interval*Mood) seq)
-            (history: Figure_id_appearances seq)
+            (history)
             =
             commonalities_in_history_intervals
                 (Mood.is_good)
@@ -200,12 +194,9 @@ namespace rvinowise.ai
 
 
         let desired history=
-            let separate_histories=
-                history
-                |>Event_batches.to_separate_histories
             let mood_intervals = 
-                separate_histories
-                |>Separate_histories.mood_change_history
+                history
+                |>Event_batches.only_mood_changes
                 |>intervals_changing_mood
             // let good_commonalities =
             //     separate_histories

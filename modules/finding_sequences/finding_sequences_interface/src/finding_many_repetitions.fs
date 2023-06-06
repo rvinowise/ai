@@ -17,7 +17,7 @@ module Reporting_repetitions=
         |>Seq.sort
         |>Seq.iter (fun history->
             history
-            ||>Appearances.sequence_appearances_to_string
+            |>Appearances.sequence_appearances_to_string
             |>output_stream.WriteLine
         )
 
