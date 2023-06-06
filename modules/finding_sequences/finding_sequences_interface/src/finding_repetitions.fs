@@ -23,8 +23,6 @@ module Finding_repetitions =
         ``Finding_repetitions(fsharp_simple)``.repeated_pair
     let repeated_pair_of_sequences = 
         ``Finding_repetitions(fsharp_simple)``.repeated_pair_of_sequences
-    //let repeated_pair a b = Finding_sequences_csharp_gpu.repeated_pair (a,b)
-    //let repeated_pair_with_histories a b = Finding_sequences_csharp_gpu.repeated_pair (a,b)
 
 
     [<Fact>]
