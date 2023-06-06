@@ -118,7 +118,7 @@ namespace rvinowise.ai
             "1ok;23ok;45no2;67"
            //01  234  567   89 <-moments
             |>built_from_text.Event_batches.from_text
-            |>built.Event_batches.to_separate_histories
+            |>Event_batches.to_separate_histories
             |>Separate_histories.mood_change_history
             |>intervals_changing_mood
             |>should equal [
@@ -137,7 +137,7 @@ namespace rvinowise.ai
             "1ok;23;ok;45bad;bad;67"
 //moment:    0123456789¹123456789²123456789
             |>built_from_text.Event_batches.from_text
-            |>built.Event_batches.to_separate_histories
+            |>Event_batches.to_separate_histories
             |>Separate_histories.mood_change_history
             |>intervals_changing_mood
             |>should equal [
@@ -154,7 +154,7 @@ namespace rvinowise.ai
             "00¬¬¬223××4¬¬"
            //012  3456 78 9 <-moments
             |>built_from_text.Event_batches.from_text
-            |>built.Event_batches.to_separate_histories
+            |>Event_batches.to_separate_histories
             |>Separate_histories.mood_change_history
             |>intervals_changing_mood
             |>should equal [
@@ -202,7 +202,7 @@ namespace rvinowise.ai
         let desired history=
             let separate_histories=
                 history
-                |>built.Event_batches.to_separate_histories
+                |>Event_batches.to_separate_histories
             let mood_intervals = 
                 separate_histories
                 |>Separate_histories.mood_change_history

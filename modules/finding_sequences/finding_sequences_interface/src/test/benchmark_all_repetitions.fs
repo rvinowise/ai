@@ -41,8 +41,8 @@ module ``finding_sequences, benchmark`` =
     //seq3:          a    b  c  de f  g h         
     //seq4:         1 2     3  4     5 6  
     //mom:   0123456789¹123456789²123456789³
-            |>built.Event_batches.from_text
-            |>built.Event_batches.to_sequence_appearances
+            |>Event_batches.from_text
+            |>Event_batches.to_sequence_appearances
 
         [<Benchmark>]
         member this.all_repetitions_in_overlaid_sequences()=

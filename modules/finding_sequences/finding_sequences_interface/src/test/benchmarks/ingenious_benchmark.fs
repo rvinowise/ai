@@ -13,21 +13,30 @@ open rvinowise.extensions.benchmark
 
 module Finding_repetitions_ingenious_benchmark =
     open rvinowise.ai
+    open rvinowise
 
     type Finding_repetitions_ingenious_benchmark() =
         
         member val all_repetitions_implementations = [
             // {Parameter.value= ``Finding_many_repetitions(fsharp_dictionary_first)``.all_repetitions; 
             // name="all_repetitions(fsharp_dictionary_first)"};
-            {Parameter.value= Finding_many_repetitions.all_repetitions;
-            name="all_repetitions"};
+            {
+                Parameter.value= 
+                    Finding_many_repetitions.all_repetitions
+                        (Finding_repetitions.halves_are_close_enough 1)
+                        (Reporting.dont);
+                name="all_repetitions"
+            };
             // {value= Finding_many_repetitions_csharp_gpu.all_repetitions; 
             // name="all_repetitions(csharp_gpu)"}
         ]
 
         [<ParamsSource("all_repetitions_implementations")>]
         member val all_repetitions = {
-                value=``Finding_many_repetitions(no_dictionary)``.all_repetitions; 
+                value=
+                    Finding_many_repetitions.all_repetitions
+                        (Finding_repetitions.halves_are_close_enough 1)
+                        (Reporting.dont); 
                 name="default"
             } with get, set
 
@@ -38,25 +47,30 @@ module Finding_repetitions_ingenious_benchmark =
     //seq3:          a    b  c  de f  g h         
     //seq4:         1 2     3  4     5 6  
     //mom:   0123456789¹123456789²123456789³
-            |>built_from_text.Event_batches.signals_with_mood_from_text
-            |>built.Event_batches.to_sequence_appearances
+            |>built_from_text.Event_batches.signals_from_text
+            |>Event_batches.event_batches_to_figure_appearances
+            |>extensions.Map.toPairs
+            |>Seq.map (fun (figure, appearances)->
+                [|figure|],appearances
+            )
 
         member this.overlaid_sequences =
             "a1bca2d3bc45d"
     //seq1:  a bc  d
     //seq3:      a   bc  d       
     //mom:   0123456789¹123456789²123456789³
-            |>built.Event_batches.from_text
-            |>built.Event_batches.to_sequence_appearances
+            |>built_from_text.Event_batches.signals_from_text
+            |>Event_batches.to_sequence_appearances
 
         [<Benchmark>]
         member this.all_repetitions_in_overlaid_sequences()=
             this.long_overlaid_sequences
-            |>this.all_repetitions.value (Finding_repetitions.halves_are_close_enough 1)
+            
+            |>this.all_repetitions.value 
             |>Consumer().Consume
             
 
-    [<Fact>] //(Skip="slow")
+    [<Fact(Skip="slow")>] //
     let benchmark()=
         let config = 
             DefaultConfig.Instance.

@@ -32,8 +32,7 @@
     <Compile Include="src\Graphs\Figure\Figure_example.fs" />
     <Compile Include="src\Graphs\Figure\built\fusing_figures_into_a_sequence.fs" />
     
-    <Compile Include="src\Graphs\Sequence\Sequence_type.fs" />
-    <Compile Include="src\Graphs\Sequence\built.fs" />
+    <Compile Include="src\Graphs\Sequence.fs" />
 
     <Compile Include="src\Graphs\Stencil\Stencil_types.fs" />
     <Compile Include="src\Graphs\Stencil\Stencil_built.fs" />
@@ -57,7 +56,6 @@
     <Compile Include="src\History\Mood_history\examples.fs" />
     
     <Compile Include="src\History\Event_batches\parts.fs" />
-    <Compile Include="src\History\Event_batches\Event_batches.fs" />
     <Compile Include="src\History\Event_batches\built_from_text.fs" />
     <Compile Include="src\History\Event_batches\built.fs" />
     <Compile Include="src\History\Event_batches\convert_to_figure.fs" />

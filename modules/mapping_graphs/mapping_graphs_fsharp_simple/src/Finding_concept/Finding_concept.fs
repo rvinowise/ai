@@ -113,8 +113,9 @@ module Finding_concept =
             [
                 "1";"+";"[digit]";"=";"[digit]";";"
             ]|>built.Figure.sequential_figure_from_sequence
-        let next_digit = 
-            [
-                "reference";",";"out"
-            ]|>built.Stencil.simple_with_separator
-            
+        // let next_digit = 
+        //     [
+        //         "reference";",";"out"
+        //     ]|>built.Stencil.simple_with_separator
+        
+        ()

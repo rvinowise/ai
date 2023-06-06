@@ -22,7 +22,7 @@ module rvinowise.ai.ui.painted.History
 
     let add_event_batches 
         (receptacle: infrastructure.Node)
-        (event_batches: Event_batch seq)
+        (event_batches: Appearance_event list seq)
         =
         event_batches
         |>Seq.mapi (fun moment batch ->
@@ -33,7 +33,7 @@ module rvinowise.ai.ui.painted.History
                     receptacle
                     |>infrastructure.Graph.provide_html_vertex (
                         batch
-                        |>Batch_html.layout_for_event_batch moment
+                        |>Batch_html.layout_for_event_batch moment (Mood 0) (Mood 0)
                         |>RenderView.AsString.htmlNode
                         |>sprintf "<\n%s\n>"
                     )
@@ -44,12 +44,12 @@ module rvinowise.ai.ui.painted.History
 
 
     let connect_events_start_to_finish
-        (batches:Map<Moment, (Event_batch*infrastructure.Node) > )
+        (batches:Map<Moment, (Appearance_event list*infrastructure.Node) > )
         =
         batches
         |>Seq.map extensions.KeyValuePair.value
-        |>Seq.iter(fun (batch,node) ->
-            batch.events
+        |>Seq.iter(fun (events,node) ->
+            events
             |>Seq.iter(fun event ->
                 match event with 
                 |Finish (figure, start_moment)->
@@ -72,10 +72,10 @@ module rvinowise.ai.ui.painted.History
         |>ignore
 
     let arrange_event_batches_sequentially
-        (batches:Map<Moment, (Event_batch*infrastructure.Node) > )
+        (batches:Map<Moment, infrastructure.Node > )
         =
         batches
-        |>Seq.map (extensions.KeyValuePair.value>>snd)
+        |>Seq.map (extensions.KeyValuePair.value)
         |>Seq.pairwise
         |>Seq.iter arrange_two_batches
         
@@ -92,20 +92,11 @@ module rvinowise.ai.ui.painted.History
         history
         |>add_event_batches node
         |>connect_events_start_to_finish
+        |>Map.map (fun _ (_, node)->node)
         |>arrange_event_batches_sequentially
         |>ignore
         
-    
-    let as_graph 
-        event_batches 
-        =
-        let graph=
-            event_batches
-            |>combined_history_description
-            |>infrastructure.Graph.empty
-            
-        graph|>add_combined_history event_batches
-        graph
+
 
     
     

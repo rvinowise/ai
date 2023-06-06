@@ -8,7 +8,7 @@ type Interval_with_repetitions = {
     b_appearances: Interval array;
 }
 
-module ``Finding_repetitions_across_intervals(fsharp_simple)`` =
+module ``Finding_repetitions_across_intervals(simple)`` =
    
 
     let repeated_pair_across_intervals 
@@ -36,9 +36,9 @@ module ``Finding_repetitions_across_intervals(fsharp_simple)`` =
             appearances_in_interval2
             |>Array.append appearances_in_interval1
 
-    let repeated_pair_across_intervals_with_histories
+    let repeated_pair_across_intervals_with_sequences
         (halves_can_form_pair: Interval->Interval->bool)
-        (repeating_sequence: Figure_id array)
+        (repeating_sequence: Sequence)
         (interval1, interval2)
         =
         repeated_pair_across_intervals 

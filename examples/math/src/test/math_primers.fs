@@ -23,7 +23,7 @@ module Math_primers=
 //mom(30+):  6789
         ]
         |>built_from_text.Event_batches.from_text_blocks
-        |>built.Event_batches.to_sequence_appearances
+        |>Event_batches.to_sequence_appearances
         |>Finding_many_repetitions.all_repetitions
             (Finding_repetitions.halves_are_close_enough 1)
             Reporting.dont
@@ -71,7 +71,7 @@ module Math_primers=
         let raw_signals =
             input_stream.ReadToEnd()
             |>built_from_text.Event_batches.from_text
-            |>built.Event_batches.to_sequence_appearances
+            |>Event_batches.to_sequence_appearances
         
         let intermediat_results_file = @"C:\prj\ai\examples\math\mathematical_primers_intermediate_output.txt"
         let final_results_file ="C:/prj/ai/examples/math/math_output.txt"

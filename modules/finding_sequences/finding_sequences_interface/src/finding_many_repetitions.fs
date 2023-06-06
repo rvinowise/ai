@@ -10,51 +10,43 @@ module Reporting=
 module Reporting_repetitions=
     let write_to_file 
         filename
-        (histories:Sequence_history_debug seq) 
+        (histories: (Sequence*Interval array) seq) 
         =
         use output_stream = File.AppendText(filename)
         histories
         |>Seq.sort
         |>Seq.iter (fun history->
             history
+            ||>Appearances.sequence_appearances_to_string
             |>output_stream.WriteLine
         )
 
 module Finding_many_repetitions =
     let repetitions_of_one_stage = 
         //``Finding_many_repetitions(fsharp_dictionary_first)``.repetitions_of_one_stage
-        ``Finding_many_repetitions(no_dictionary)``.repetitions_of_one_stage
+        ``Finding_many_repetitions(simple)``.repetitions_of_one_stage
     
-    let repetitions_of_one_stage_in_combined_history
-        halves_can_form_pair
-        (event_batches: Appearance_event list seq)
-        =
-        event_batches
-        |>built.Event_batches.to_sequence_appearances
-        |>repetitions_of_one_stage halves_can_form_pair
-        |>built.Event_batches.remove_batches_without_actions
+    
 
 
     let all_repetitions 
         halves_can_form_pair
         report_findings
-        (appearances: Sequence_appearances seq) 
+        appearances
         =
         appearances|>
-        ``Finding_many_repetitions(no_dictionary)``.all_repetitions
+        ``Finding_many_repetitions(simple)``.all_repetitions
             halves_can_form_pair
-            //Reporting.dont
             report_findings
             
-        //``Finding_many_repetitions(fsharp_dictionary_first)``.all_repetitions
 
 
     let repetitions_across_intervals
         halves_can_form_pair
-        (interval1_appearances: Sequence_appearances seq) 
-        (interval2_appearances: Sequence_appearances seq)
+        interval1_appearances
+        interval2_appearances
         =
-        ``Finding_many_repetitions(no_dictionary)``.repetitions_across_intervals
+        ``Finding_many_repetitions_across_intervals(simple)``.repetitions_across_intervals
             halves_can_form_pair
             interval1_appearances
             interval2_appearances

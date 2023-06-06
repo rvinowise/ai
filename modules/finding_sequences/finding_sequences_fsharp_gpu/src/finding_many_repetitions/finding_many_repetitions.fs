@@ -69,7 +69,7 @@ module ``Finding_many_repetitions(fsharp_gpu)`` =
 //       a b c
 //             a  bc
 //mom:   0123456789¹1
-        |>built.Event_batches.from_text
-        |>built.Event_batches.to_sequence_appearances
+        |>Event_batches.from_text
+        |>Event_batches.to_sequence_appearances
         |>all_repetitions
         |>Set.ofSeq

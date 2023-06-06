@@ -15,12 +15,10 @@ module rvinowise.ai.built_from_text.Event_batches
         let bad = "no"
 
         let separator =
-            spaces
-            <|>
             (skipString ";")
         let particular_mood_change mood_word mood_multiplier =
             (
-                pstring mood_word >>. (puint32 <|>% uint32 1) .>> many1 separator
+                pstring mood_word >>. (puint32 <|>% uint32 1) .>> (many separator) .>> spaces
                 |>> (
                     int
                     >> ( * ) mood_multiplier
@@ -63,6 +61,13 @@ module rvinowise.ai.built_from_text.Event_batches
             [],-2; 
             ["3"],0; 
         ])
+
+    let signals_from_text 
+        (text:string)
+        =
+        text
+        |>signals_with_mood_from_text
+        |>List.map fst
 
     let from_text_blocks (text_blocks:string seq)=
         text_blocks

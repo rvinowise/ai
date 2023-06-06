@@ -1,4 +1,4 @@
-module rvinowise.ai.built.Event_batches
+module rvinowise.ai.Event_batches
     open System
     open FsUnit
     open Xunit
@@ -8,57 +8,38 @@ module rvinowise.ai.built.Event_batches
     open rvinowise.ai
     open rvinowise 
 
+
+    let event_history_from_lists =
+        List.map (List.map (Figure_id>>Appearance_event.Signal))
+        >>Array.ofList
     
     let add_signal_to_history 
         figure
         moment
-        (batches:Event_batches)
+        (batches: Appearance_event list array)
         =
+        batches[moment] <- (
+            (Signal figure)::batches[moment]
+        )
         batches
-            |>Map.add moment (
-                let start_batch = 
-                    batches
-                    |>extensions.Map.getOrDefault moment Event_batch.empty
-                {start_batch with 
-                    events=
-                        start_batch.events
-                        |>Seq.append [Signal figure]
-                }
-            )
 
     let add_start_and_finish_to_history
         figure
         (interval:Interval)
-        (batches:Map<Moment, Event_batch>)
+        (batches: Appearance_event list array)
         =
-        let combined_batches =
-            batches
-            |>Map.add interval.start (
-                let start_batch = 
-                    batches
-                    |>extensions.Map.getOrDefault interval.start Event_batch.empty
-                {start_batch with 
-                    events=
-                        start_batch.events
-                        |>Seq.append [Start figure]
-                }
-            )
-        combined_batches
-        |>Map.add interval.finish (
-            let end_batch = 
-                combined_batches
-                |>extensions.Map.getOrDefault interval.finish Event_batch.empty
-            {end_batch with 
-                events=
-                    end_batch.events
-                    |>Seq.append [Finish (figure, interval.start)] 
-            }
+        batches[interval.start] <- (
+            (Start figure)::batches[interval.start]
         )
+        batches[interval.finish] <- (
+            (Finish (figure,interval.start))::batches[interval.finish]
+        )
+        batches
 
     let add_events_to_combined_history 
         figure
         (appearances : Interval array)
-        (event_batches: Event_batches)
+        (event_batches: Appearance_event list array)
         = 
         appearances
         |>Seq.fold (fun batches interval->
@@ -76,16 +57,29 @@ module rvinowise.ai.built.Event_batches
         ) event_batches
 
     let from_appearances 
-        (figure_histories : Map<Figure_id, Interval array>)
+        (figure_histories : (Figure_id * Interval array) seq)
         =
+        let history = 
+            if Seq.isEmpty figure_histories then
+                [||]
+            else 
+                figure_histories
+                |>Seq.map (fun history->
+                    history
+                    |>snd
+                    |>Seq.maxBy (fun interval -> interval.finish)
+                    |>Interval.finish
+                )
+                |>Seq.max
+                |>fun history_length -> (history_length+1),[]
+                ||>Array.create
         figure_histories
-        |>Map.fold (
+        |>Seq.fold (
             fun event_batches 
-                figure 
-                appearances ->
+                (figure, appearances) ->
             add_events_to_combined_history figure appearances event_batches
-        ) 
-            Map.empty
+        ) history
+            
 
 
     [<Fact>]
@@ -99,11 +93,10 @@ module rvinowise.ai.built.Event_batches
         [
             (Figure_id "a", history_of_a); 
             (Figure_id "b", history_of_b)
-        ]|>Map
+        ]
         |>from_appearances 
-        |>extensions.Map.toPairs
-        |>Seq.map (fun (moment,batch) ->
-            moment, (batch.events|>Seq.sort)
+        |>Seq.mapi (fun moment batch ->
+            moment, (batch|>Seq.sort)
         )
         |>should equal [
             0,[
@@ -238,24 +231,25 @@ module rvinowise.ai.built.Event_batches
 
     
     let add_appearances
-        (appearances: Map<Figure_id,Interval array> )
+        (appearances: (Figure_id*Interval array) seq )
         (event_batches: Appearance_event list seq)
         =
         event_batches
         |>event_batches_to_figure_appearances
-        |>FSharpPlus.Map.union appearances
+        |>FSharpPlus.Map.union (appearances|>Map)
+        |>extensions.Map.toPairs
         |>from_appearances
 
     
     let add_sequence_appearances
         (sequence_appearances: (Sequence*Interval array) seq)
-        (event_batches: Appearance_event list seq)
+        (event_batches: Appearance_event list array)
         =
         event_batches
         |>add_appearances (
             sequence_appearances
             |>Seq.map (fun (sequence, apperances)->
-                (sequence|>built.Sequence.to_figure_id)
+                (sequence|>Sequence.to_figure_id)
                 ,
                 apperances
             )
@@ -283,16 +277,6 @@ module rvinowise.ai.built.Event_batches
                 )
             )
 
-
-    let remove_batches_without_actions (event_batches:Event_batches)=
-        event_batches
-        |>extensions.Map.toPairs
-        |>Seq.filter (fun (moment, batch)->
-            (batch.events|>Seq.isEmpty|>not)
-            ||
-            (batch.mood.change <> (Mood 0))
-        )
-        |>Map.ofSeq
 
     
     let to_sequence_appearances event_batches =

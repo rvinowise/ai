@@ -12,7 +12,7 @@ module ``testing repetitions_of_one_stage`` =
 
     [<Fact>]
     let ``in simple combined history``()=
-        built.Event_batches.from_contingent_signals 0 [
+        [
             ["a"];//0
             ["b"];//1
             ["c"];//2
@@ -21,25 +21,28 @@ module ``testing repetitions_of_one_stage`` =
             ["c"];//5
             ["a"];//6
             ["b"];//7
-        ]
-        |>built.Event_batches.to_sequence_appearances
+        ]|>Event_batches.event_history_from_lists
+        |>Event_batches.to_sequence_appearances
         |>Finding_many_repetitions.repetitions_of_one_stage
-            (Finding_repetitions.halves_are_close_enough 1)
-        |>Seq.map built.Sequence_appearances.to_figure_id_appearances
+            Finding_repetitions.all_halves
+        |>Appearances.sequence_appearances_to_id_appearances
         |>Seq.sort
         |>should equal [
-            built.Figure_id_appearances.from_tuples "aa" [
+            "aa"|>Figure_id, 
+            [|
                 0,4; 4,6
-            ]
-            built.Figure_id_appearances.from_tuples "ab" [
+            |]|>Array.map Interval.ofPair;
+            "ab"|>Figure_id, 
+            [|
                 0,1; 6,7
-            ]
-            built.Figure_id_appearances.from_tuples "ac" [
+            |]|>Array.map Interval.ofPair;
+            "ac"|>Figure_id,  [|
                 0,2; 4,5
-            ]
-            built.Figure_id_appearances.from_tuples "ca" [
+            |]|>Array.map Interval.ofPair;
+            "ca"|>Figure_id,  
+            [|
                 2,4; 5,6
-            ]
+            |]|>Array.map Interval.ofPair;
         ]
     
     

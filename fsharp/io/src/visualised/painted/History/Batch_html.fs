@@ -36,10 +36,13 @@ module rvinowise.ai.ui.painted.Batch_html
                 ] 
             |>Some
 
-    let cells_of_mood (mood:Mood_state) =
+    let cells_of_mood 
+        (mood_change:Mood) 
+        (mood_value:Mood) 
+        =
         [
-        (cell_of_mood_change (Mood.value mood.change));
-        (cell_of_mood_value (Mood.value mood.value))
+        (cell_of_mood_change (Mood.value mood_change));
+        (cell_of_mood_value (Mood.value mood_value))
         ]|>Seq.choose id
 
     let cell_of_event 
@@ -71,7 +74,9 @@ module rvinowise.ai.ui.painted.Batch_html
 
     let layout_for_event_batch
         (moment:Moment)
-        (batch:Event_batch)
+        (mood_change: Mood)
+        (mood_value: Mood)
+        (events: Appearance_event seq)
         =
         table [
                 (attr "BORDER" "0") 
@@ -81,13 +86,13 @@ module rvinowise.ai.ui.painted.Batch_html
             ] 
             (
                 let cells_of_events = 
-                    batch.events
+                    events
                     |>Seq.sort
                     |>Seq.map cell_of_event
                 
                 [cell_for_moment moment]
                 |>Seq.append(
-                    cells_of_mood batch.mood
+                    cells_of_mood mood_change mood_value
                 )
                 |>Seq.append cells_of_events
                 |>List.ofSeq

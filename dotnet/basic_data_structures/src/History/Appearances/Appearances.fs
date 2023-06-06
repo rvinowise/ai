@@ -8,6 +8,32 @@ module rvinowise.ai.Appearances
     open Xunit
 
 
+    let sequence_appearances_to_string 
+        (sequence: Sequence)
+        (appearances: Interval array)
+        =
+        let str_sequence=
+            sequence
+            |>Seq.map Figure_id.value
+            |>String.concat ""
+            
+        let str_appearances = 
+            appearances
+            |>Interval.intervals_to_string 
+        
+        $"appearances={str_appearances}"
+        |>(+) $"{str_sequence}"
+
+    let sequence_appearances_to_id_appearances 
+        (history: (Sequence*Interval array) seq)
+        =
+        history
+        |>Seq.map (fun (figure, appearances)->
+            (Sequence.to_figure_id figure)
+            ,
+            appearances
+        )
+
     let has_repetitions appearances =
         Seq.length appearances > 1
 

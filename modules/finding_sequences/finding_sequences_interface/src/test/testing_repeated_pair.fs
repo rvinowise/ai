@@ -57,12 +57,17 @@ module ``testing repeated_pair`` =
     [<Fact>]//(Timeout=1000)
     let ``when the last A-figure is taken, but there's still B-figures left ``()=
         async { 
-            let signal1 = built.Figure_id_appearances.from_moments "signal1" [0;5]
-            let signal2 = built.Figure_id_appearances.from_moments "signal2" [1;6;7]
+            let signal1 = 
+                [|"signal1"|>Figure_id|],
+                [|0;5|]|>Array.map Interval.moment
+            let signal2 = 
+                [|"signal2"|>Figure_id|],
+                [|1;6;7|]|>Array.map Interval.moment
             Finding_repetitions.repeated_pair
-                (Finding_repetitions.halves_are_close_enough 1)
-                (signal1.appearances|>Array.ofSeq)
-                (signal2.appearances|>Array.ofSeq)
+                //(Finding_repetitions.halves_are_close_enough 1)
+                Finding_repetitions.all_halves
+                (snd signal1)
+                (snd signal2)
             |>should equal (
                 [
                     0,1; 5,6

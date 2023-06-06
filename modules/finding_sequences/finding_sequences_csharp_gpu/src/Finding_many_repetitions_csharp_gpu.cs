@@ -68,8 +68,8 @@ public class Finding_many_repetitions_csharp_gpu_test {
     public void all_repetitions() {
         
         var initial_appearances =
-            built.Event_batches.to_sequence_appearances(
-            built.Event_batches.from_text(
+            Event_batches.to_sequence_appearances(
+            Event_batches.from_text(
             "a1b2c3a45bc"
     //       a b c
     //             a  bc

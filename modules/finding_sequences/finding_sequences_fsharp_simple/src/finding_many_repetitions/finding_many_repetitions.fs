@@ -5,24 +5,10 @@ open System
 
 
 
-module ``Finding_many_repetitions(no_dictionary)`` =
+module ``Finding_many_repetitions(simple)`` =
 
 
-    let sequence_appearances_to_string 
-        (sequence: Sequence)
-        (appearances: Interval array)
-        =
-        let str_sequence=
-            sequence
-            |>Seq.map Figure_id.value
-            |>String.concat ""
-            
-        let str_appearances = 
-            appearances
-            |>Interval.intervals_to_string 
-        
-        $"appearances={str_appearances}"
-        |>(+) $"{str_sequence}"
+    
 
     let repeated_pairs_of_sequences
         (halves_can_form_pair: Interval->Interval->bool)
