@@ -46,7 +46,7 @@ module Finding_many_repetitions =
         interval1_appearances
         interval2_appearances
         =
-        ``Finding_many_repetitions_across_intervals(simple)``.repetitions_across_intervals
+        ``Finding_many_repetitions_across_intervals(simple)``.repetitions_in_2_intervals
             halves_can_form_pair
             interval1_appearances
             interval2_appearances

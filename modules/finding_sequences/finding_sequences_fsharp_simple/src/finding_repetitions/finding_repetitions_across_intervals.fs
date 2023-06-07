@@ -3,18 +3,19 @@ namespace rvinowise.ai
 open System
 
 
-type Interval_with_repetitions = {
-    a_appearances: Interval array;
-    b_appearances: Interval array;
-}
+
 
 module ``Finding_repetitions_across_intervals(simple)`` =
-   
+    
+    type Interval_with_ab = {
+        a_appearances: Interval array;
+        b_appearances: Interval array;
+    }
 
-    let repeated_pair_across_intervals 
+    let repeated_pair_in_2_intervals 
         (halves_can_form_pair: Interval->Interval->bool)
-        (interval1: Interval_with_repetitions)
-        (interval2: Interval_with_repetitions)
+        (interval1: Interval_with_ab)
+        (interval2: Interval_with_ab)
         =
         let appearances_in_interval1 =
             ``Finding_repetitions(fsharp_simple)``.repeated_pair
