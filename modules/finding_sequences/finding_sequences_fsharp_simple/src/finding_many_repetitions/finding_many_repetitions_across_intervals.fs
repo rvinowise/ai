@@ -36,4 +36,7 @@ module ``Finding_many_repetitions_across_intervals(simple)`` =
                 take_commonalities_between_2_intervals
                     interval1_appearances
                     interval2_appearances
-        ()
+        
+        history2
+        |>Seq.allPairs history1
+        |>
