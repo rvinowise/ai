@@ -76,13 +76,13 @@ module ``Finding_many_repetitions_across_intervals(simple)`` =
             halves_can_form_pair
             {
                 interval1_findings with 
-                    smaller_sequences=sequences1|>fst
-                    largest_sequences=sequences1|>snd
+                    smaller_sequences=smaller_sequences|>fst
+                    largest_sequences=largest_sequences|>fst
             }
             {
                 interval2_findings with 
-                    smaller_sequences=sequences2|>fst
-                    largest_sequences=sequences2|>snd
+                    smaller_sequences=smaller_sequences|>snd
+                    largest_sequences=largest_sequences|>snd
             }
 
     let repetitions_in_2_intervals
