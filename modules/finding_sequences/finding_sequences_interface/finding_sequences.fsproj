@@ -12,6 +12,7 @@
     <!-- unit tests -->
     <Compile Include="src\test\benchmarks\ingenious_benchmark.fs" />
     <Compile Include="src\test\benchmarks\repetitive_benchmark.fs" />
+    <!-- <Compile Include="src\test\benchmarks\benchmark_all_repetitions.fs" /> -->
     <Compile Include="src\test\testing_repeated_pair.fs" />
     <Compile Include="src\test\testing_many_repetitions.fs" />
     <Compile Include="src\test\testing_all_repetitions.fs" />

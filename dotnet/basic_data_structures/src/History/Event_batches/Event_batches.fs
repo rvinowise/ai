@@ -135,11 +135,12 @@ module rvinowise.ai.Event_batches
 
  
     let event_batches_to_figure_appearances
+        starting_moment
         (event_batches: Appearance_event list seq)
         =
         event_batches
         |>Seq.mapi (fun index batch ->
-            (index, batch)
+            (index+starting_moment, batch)
         )
         |>Seq.fold (
             fun 
@@ -251,7 +252,7 @@ module rvinowise.ai.Event_batches
         (event_batches: Appearance_event list seq)
         =
         event_batches
-        |>event_batches_to_figure_appearances
+        |>event_batches_to_figure_appearances 0
         |>FSharpPlus.Map.union (appearances|>Map)
         |>extensions.Map.toPairs
         |>from_appearances
@@ -279,7 +280,7 @@ module rvinowise.ai.Event_batches
                 ["a"]//2
                 ["b"]//3
             ]|>List.map (List.map (Figure_id>>Appearance_event.Signal))
-            |>event_batches_to_figure_appearances
+            |>event_batches_to_figure_appearances 0
             |>should equal (
                 [
                     "a", [0;2]
@@ -297,7 +298,7 @@ module rvinowise.ai.Event_batches
     
     let to_sequence_appearances event_batches =
         event_batches
-        |>event_batches_to_figure_appearances
+        |>event_batches_to_figure_appearances 0
         |>Seq.map (fun pair ->
             [|pair.Key|], pair.Value
         )

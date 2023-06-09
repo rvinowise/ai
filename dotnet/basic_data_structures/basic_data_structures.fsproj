@@ -63,6 +63,7 @@
 
     <!-- tests -->
     <Compile Include="src\Graphs\Figure\Figure_tests.fs" />
+    <Compile Include="src\tests\benchmarks\modifications_of_history.fs" />
 
   </ItemGroup>
 
