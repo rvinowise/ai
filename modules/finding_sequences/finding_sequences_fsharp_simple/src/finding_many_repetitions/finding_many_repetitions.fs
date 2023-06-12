@@ -10,37 +10,19 @@ module ``Finding_many_repetitions(simple)`` =
 
     
 
-    let repeated_pairs_of_sequences
-        (halves_can_form_pair: Interval->Interval->bool)
-        (appearances_pairs: ((Sequence*Interval array) * (Sequence * Interval array)) seq)
-        =
-        appearances_pairs
-        |>Seq.fold (
-            fun 
-                found_pairs
-                ((a_sequence, 
-                a_appearances), 
-                (b_sequence, 
-                b_appearances)) 
-                ->
-            let ab_sequence = 
-                Array.append 
-                    a_sequence
-                    b_sequence
-            
-            let ab_appearances =
-                (a_appearances, b_appearances)
-                ||>``Finding_repetitions(fsharp_simple)``.repeated_pair
-                    halves_can_form_pair
-            
-            if Appearances.has_repetitions ab_appearances then
-                (ab_sequence, ab_appearances)::found_pairs
-            else
-                found_pairs
-            )
-            []
+    
         
-
+    let combinations_of_repeated_pairs
+        halves_can_form_pair
+        (a_histories: (Sequence*Interval array) seq)
+        (b_histories: (Sequence*Interval array) seq)
+        =
+        (a_histories,b_histories)
+        ||>Seq.allPairs
+        |>Seq.map (
+            ``Finding_repetitions(fsharp_simple)``.repeated_pair_of_sequences 
+                halves_can_form_pair
+        )|>Seq.filter (snd>>Appearances.has_repetitions)
 
     let stage_of_finding_repetitions
         halves_can_form_pair
@@ -49,13 +31,11 @@ module ``Finding_many_repetitions(simple)`` =
         =
         let largest_sequences =
             (previous_largest_sequences, previous_largest_sequences)
-            ||>Seq.allPairs
-            |>repeated_pairs_of_sequences halves_can_form_pair
+            ||>combinations_of_repeated_pairs halves_can_form_pair
         
         let smaller_sequences =
             (previous_smaller_sequences, previous_largest_sequences)
-            ||>Seq.allPairs
-            |>repeated_pairs_of_sequences halves_can_form_pair
+            ||>combinations_of_repeated_pairs halves_can_form_pair
         
         smaller_sequences, largest_sequences
 
@@ -69,7 +49,6 @@ module ``Finding_many_repetitions(simple)`` =
         |>stage_of_finding_repetitions 
             halves_can_form_pair
             [] 
-            
         |>snd
         
 
