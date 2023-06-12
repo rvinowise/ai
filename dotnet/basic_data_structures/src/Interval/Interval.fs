@@ -40,6 +40,9 @@ module Interval =
         let start, finish = tuple
         Interval(start, finish)
 
+    let toPair (interval:Interval) =
+        interval.start, interval.finish
+
     let start (interval:Interval)=
         interval.start
     let finish (interval:Interval)=

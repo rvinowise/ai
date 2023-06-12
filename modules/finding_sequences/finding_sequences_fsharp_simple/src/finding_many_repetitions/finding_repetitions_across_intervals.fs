@@ -4,7 +4,7 @@ open System
 open Xunit
 open FsUnit
 
-module ``Finding_many_repetitions_across_intervals(simple)`` =
+module ``Finding_repetitions_across_intervals(simple)`` =
 
     let take_which_exist_in_other_interval 
         (other_interval: (Sequence*Interval array) seq)
@@ -127,41 +127,11 @@ module ``Finding_many_repetitions_across_intervals(simple)`` =
                 rest_sequences_found_before=[]
             }
             {
-                previous_largest_sequences=interval1_appearances
+                previous_largest_sequences=interval2_appearances
                 previous_smaller_sequences=[]
                 rest_sequences_found_before=[]
             }
 
 
-    let all_halves (_:Interval) (_:Interval) = true
+    
 
-    [<Fact>]
-    let ``try repetitions_in_2_intervals``()=
-        let interval1 =
-            "1abcdabcd2"
-    //       1        2  //noticed, because appeared in 2nd
-    //        abcd       //ignored, because didn't appear in 2nd
-    //            abcd
-    //        ab  ab     //repeated in 2nd
-    //mom:   0123456789¹
-            |>built_from_text.Event_batches.event_batches_from_text
-            |>Event_batches.only_signals
-            |>Event_batches.to_sequence_appearances
-        let interval2 =
-            "d3c1a2b1a2b434"
-    //          1 2 1 2      //noticed (appeared in 1st)
-    //           a b a b     //noticed (also repeated in 1st)
-    //        3         4    //ignored (didn't appear in 1st)
-    //                   34
-    //mom:   0123456789¹12345        
-            |>built_from_text.Event_batches.event_batches_from_text
-            |>Event_batches.only_signals
-            |>Event_batches.to_sequence_appearances
-        repetitions_in_2_intervals
-            all_halves
-            interval1
-            interval2
-        |>should equal ([
-            //"12"|>Seq.map (string>>Figure_id)|>Array.ofSeq,
-            
-        ])

@@ -7,9 +7,8 @@
 
   <ItemGroup>
     <Compile Include="src\finding_repetitions\finding_repetitions.fs" />
-    <Compile Include="src\finding_repetitions\finding_repetitions_across_intervals.fs" />
     <Compile Include="src\finding_many_repetitions\finding_many_repetitions.fs" />
-    <Compile Include="src\finding_many_repetitions\finding_many_repetitions_across_intervals.fs" />
+    <Compile Include="src\finding_many_repetitions\finding_repetitions_across_intervals.fs" />
   </ItemGroup>
 
   <ItemGroup>

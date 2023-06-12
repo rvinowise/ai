@@ -73,7 +73,7 @@ type Finding_repetitions_ingenious_benchmark() =
         |>Consumer().Consume
         
 
-    [<Fact>] //(Skip="slow")
+    [<Fact(Skip="slow")>] //
     member this.benchmark()=
         let config = 
             DefaultConfig.Instance.

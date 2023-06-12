@@ -29,25 +29,10 @@ module Finding_many_repetitions =
     
 
 
-    let all_repetitions 
-        halves_can_form_pair
-        report_findings
-        appearances
-        =
-        appearances|>
+    let all_repetitions =
         ``Finding_many_repetitions(simple)``.all_repetitions
-            halves_can_form_pair
-            report_findings
-            
+           
 
-
-    let repetitions_across_intervals
-        halves_can_form_pair
-        interval1_appearances
-        interval2_appearances
-        =
-        ``Finding_many_repetitions_across_intervals(simple)``.repetitions_in_2_intervals
-            halves_can_form_pair
-            interval1_appearances
-            interval2_appearances
+    let repetitions_in_2_intervals =
+        ``Finding_repetitions_across_intervals(simple)``.repetitions_in_2_intervals
         
