@@ -48,8 +48,8 @@ module rvinowise.ai.Appearances
 
 
     let shift_sequence_appearances_in_time
-        (sequence_appearances: Sequence*Interval array)
         added_moments
+        (sequence_appearances: Sequence*Interval array)
         =
         sequence_appearances
         |>snd
@@ -60,7 +60,17 @@ module rvinowise.ai.Appearances
             )
         )
         
-        
+    let shift_appearances_in_time
+        added_moments
+        (appearances: Interval array)
+        =
+        appearances
+        |>Array.map (fun interval->
+            Interval.ofPair (
+                (interval.start+added_moments),
+                (interval.finish+added_moments)
+            )
+        )
       
 
 
