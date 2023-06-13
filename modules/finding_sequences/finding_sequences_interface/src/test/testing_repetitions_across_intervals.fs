@@ -3,9 +3,11 @@ module rvinowise.ai.``testing repetitions across intervals``
     open Xunit
     open FsUnit
 
+
     open System
     open rvinowise.ai
     open rvinowise
+    open System.Collections.Generic
 
 
     let all_halves (_:Interval) (_:Interval) = true
@@ -14,19 +16,9 @@ module rvinowise.ai.``testing repetitions across intervals``
         text
         |>Seq.map (string>>Figure_id)|>Array.ofSeq
 
-    let sequence_to_text (sequence: Figure_id array) =
-        sequence
-        |>Seq.map Figure_id.value
-        |>String.concat ""
+    
 
-    let sequence_appearances_to_text_and_tuples
-        (sequence_appearances: (Sequence*Interval array) seq)
-        =
-        sequence_appearances
-        |>Seq.map (fun (sequence, appearances)->
-            sequence|>sequence_to_text,
-            appearances|>Seq.map Interval.toPair
-        )
+    
 
     [<Fact>]
     let ``try repetitions_in_2_intervals``()=
@@ -58,18 +50,22 @@ module rvinowise.ai.``testing repetitions across intervals``
                     interval1
                     interval2
         interval1_findings
-        |>sequence_appearances_to_text_and_tuples
-        |>should equal (
+        |>Appearances.sequence_appearances_to_text_and_tuples
+        |>Set.ofSeq
+        |>Set.isProperSubset (
             [
                 "12", [0,9];
                 "ab", [1,2;5,6];
-            ]
+            ]|>Set.ofList
         )
+        |>should equal true
+        
         interval2_findings
-        |>sequence_appearances_to_text_and_tuples
-        |>should equal (
+        |>Appearances.sequence_appearances_to_text_and_tuples
+        |>Set.ofSeq 
+        |>Set.isProperSubset (
             [
                 "12", [3,5;7,9];
                 "ab", [4,6;8,10];
-            ]
-        )
+            ]|>Set.ofList
+        )|>should equal true

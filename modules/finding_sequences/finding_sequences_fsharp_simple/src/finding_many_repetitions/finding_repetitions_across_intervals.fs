@@ -28,10 +28,8 @@ module ``Finding_repetitions_across_intervals(simple)`` =
         interval1_history,interval2_history
 
     type Sequence_findings = {
-        previous_smaller_sequences: (Sequence*Interval array) seq
         previous_largest_sequences: (Sequence*Interval array) seq
-        rest_sequences_found_before: (Sequence*Interval array) seq
-        //sofar_found_sequences: (Sequence*Interval array) seq
+        rest_smaller_sequences_found_before: (Sequence*Interval array) seq
     }
 
 
@@ -39,20 +37,27 @@ module ``Finding_repetitions_across_intervals(simple)`` =
         halves_can_form_pair
         findings
         =
-        ``Finding_many_repetitions(simple)``.stage_of_finding_repetitions
-            halves_can_form_pair
-            (
-                findings.rest_sequences_found_before
-                |>Seq.append (findings.previous_smaller_sequences)
-            )
-            findings.previous_largest_sequences
+        let (
+            smaller_sequences,
+            largest_sequences
+            ) =
+            ``Finding_many_repetitions(simple)``.stage_of_finding_repetitions
+                halves_can_form_pair
+                findings.rest_smaller_sequences_found_before
+                findings.previous_largest_sequences
+        
+        smaller_sequences
+        |>Seq.filter (snd>>Seq.isEmpty>>not)
+        |>Seq.append findings.previous_largest_sequences
+        ,
+        largest_sequences
+        |>Seq.filter (snd>>Seq.isEmpty>>not)
 
     let all_sofar_found_sequences_in_interval 
         findings
         =
         findings.previous_largest_sequences
-            |>Seq.append findings.previous_smaller_sequences
-            |>Seq.append findings.rest_sequences_found_before
+            |>Seq.append findings.rest_smaller_sequences_found_before
 
     let repetitions_are_depleted
         interval1_findings interval2_findings
@@ -81,36 +86,54 @@ module ``Finding_repetitions_across_intervals(simple)`` =
             sofar_found_sequences1,sofar_found_sequences2
         else
 
-            let sequences1 = 
+            let (
+                    smaller_sequences_interval1,
+                    largest_sequences_interval1
+                ) 
+                = 
                 interval1_findings
                 |>stage_of_finding_repetitions_in_interval
                     halves_can_form_pair
 
-            let sequences2 = 
+            let (
+                    smaller_sequences_interval2,
+                    largest_sequences_interval2
+                ) 
+                =
                 interval2_findings
                 |>stage_of_finding_repetitions_in_interval
                     halves_can_form_pair
 
-            let smaller_sequences = 
+            let (
+                    shared_smaller_sequences_interval1, 
+                    shared_smaller_sequences_interval2
+                ) 
+                = 
                 take_commonalities_between_2_intervals 
-                    (sequences1|>fst)
-                    (sequences2|>fst)
-            let largest_sequences = 
+                    (smaller_sequences_interval1)
+                    (smaller_sequences_interval2)
+            let (
+                    shared_larger_sequences_interval1, 
+                    shared_larger_sequences_interval2
+                )
+                = 
                 take_commonalities_between_2_intervals 
-                    (sequences1|>snd)
-                    (sequences2|>snd)
+                    (largest_sequences_interval1)
+                    (largest_sequences_interval2)
 
             next_step_of_finding_repetitions
                 halves_can_form_pair
-                {
-                    interval1_findings with 
-                        previous_smaller_sequences=smaller_sequences|>fst
-                        previous_largest_sequences=largest_sequences|>fst
+                {     
+                    previous_largest_sequences=shared_larger_sequences_interval1
+                    rest_smaller_sequences_found_before = 
+                        interval1_findings.rest_smaller_sequences_found_before
+                        |>Seq.append shared_smaller_sequences_interval1
                 }
                 {
-                    interval2_findings with 
-                        previous_smaller_sequences=smaller_sequences|>snd
-                        previous_largest_sequences=largest_sequences|>snd
+                    previous_largest_sequences=shared_larger_sequences_interval2
+                    rest_smaller_sequences_found_before = 
+                        interval2_findings.rest_smaller_sequences_found_before
+                        |>Seq.append shared_smaller_sequences_interval2
                 }
 
 
@@ -123,13 +146,11 @@ module ``Finding_repetitions_across_intervals(simple)`` =
             halves_can_form_pair
             {
                 previous_largest_sequences=interval1_appearances
-                previous_smaller_sequences=[]
-                rest_sequences_found_before=[]
+                rest_smaller_sequences_found_before=[]
             }
             {
                 previous_largest_sequences=interval2_appearances
-                previous_smaller_sequences=[]
-                rest_sequences_found_before=[]
+                rest_smaller_sequences_found_before=[]
             }
 
 

@@ -259,8 +259,6 @@ module ``Finding_repetitions(fsharp_simple)`` =
         
     let repeated_pair_of_sequences
         (halves_can_form_pair: Interval->Interval->bool)
-        // (a_history: (Sequence*Interval array))
-        // (b_history: (Sequence*Interval array))
         (histories: (Sequence*Interval array)*(Sequence*Interval array))
         =
         let (
@@ -282,10 +280,6 @@ module ``Finding_repetitions(fsharp_simple)`` =
                 a_appearances
                 b_appearances
         
-        ab_sequence, 
-        (
-            if Appearances.has_repetitions ab_appearances then
-                ab_appearances
-            else [||]
-        )
+        ab_sequence, ab_appearances
+      
 

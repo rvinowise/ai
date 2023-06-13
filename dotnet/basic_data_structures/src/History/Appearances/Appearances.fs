@@ -59,7 +59,9 @@ module rvinowise.ai.Appearances
                 (interval.finish+added_moments)
             )
         )
-        
+    
+
+
     let shift_appearances_in_time
         added_moments
         (appearances: Interval array)
@@ -71,8 +73,22 @@ module rvinowise.ai.Appearances
                 (interval.finish+added_moments)
             )
         )
+        
+    let sequence_to_text (sequence: Figure_id array) =
+        sequence
+        |>Seq.map Figure_id.value
+        |>String.concat ""
       
-
+    let sequence_appearances_to_text_and_tuples
+        (sequence_appearances: (Sequence*Interval array) seq)
+        =
+        sequence_appearances
+        |>Seq.map (fun (sequence, appearances)->
+            sequence|>sequence_to_text,
+            appearances
+            |>Seq.map Interval.toPair
+            |>List.ofSeq
+        )
 
 
      

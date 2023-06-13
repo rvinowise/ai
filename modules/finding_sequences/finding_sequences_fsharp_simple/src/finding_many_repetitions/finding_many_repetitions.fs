@@ -22,7 +22,7 @@ module ``Finding_many_repetitions(simple)`` =
         |>Seq.map (
             ``Finding_repetitions(fsharp_simple)``.repeated_pair_of_sequences 
                 halves_can_form_pair
-        )|>Seq.filter (snd>>Appearances.has_repetitions)
+        )
 
     let stage_of_finding_repetitions
         halves_can_form_pair
@@ -32,7 +32,7 @@ module ``Finding_many_repetitions(simple)`` =
         let largest_sequences =
             (previous_largest_sequences, previous_largest_sequences)
             ||>combinations_of_repeated_pairs halves_can_form_pair
-        
+            
         let smaller_sequences =
             (previous_smaller_sequences, previous_largest_sequences)
             ||>combinations_of_repeated_pairs halves_can_form_pair
@@ -50,6 +50,7 @@ module ``Finding_many_repetitions(simple)`` =
             halves_can_form_pair
             [] 
         |>snd
+        |>Seq.filter (snd>>Appearances.has_repetitions)
         
 
     let all_repetitions
@@ -62,6 +63,13 @@ module ``Finding_many_repetitions(simple)`` =
             (smaller_sequences_of_previous_step: (Sequence*Interval array) seq)
             (largest_sequences_of_previous_step: (Sequence*Interval array) seq)
             =
+            let smaller_sequences_of_previous_step = 
+                smaller_sequences_of_previous_step
+                |>Seq.filter (snd>>Appearances.has_repetitions)
+            let largest_sequences_of_previous_step = 
+                largest_sequences_of_previous_step
+                |>Seq.filter (snd>>Appearances.has_repetitions)
+
             let sofar_found_sequences =
                 largest_sequences_of_previous_step
                 |>Seq.append smaller_sequences_of_previous_step
