@@ -35,10 +35,10 @@ module Finding_repetitions =
                 [|Figure_id "b"|],
                 ([1;7]|>Seq.map Interval.moment|>Array.ofSeq)
             
-                            
-        repeated_pair_of_sequences
+        (a_history, b_history)                    
+        |>repeated_pair_of_sequences
             all_halves
-            a_history b_history
+            
         |>should equal
             (
                 [|"a";"b"|]|>Array.map Figure_id
