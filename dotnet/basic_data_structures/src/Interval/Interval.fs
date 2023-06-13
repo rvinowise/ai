@@ -70,3 +70,14 @@ module Interval =
                 intervals
                 |>Seq.map string 
             )
+    
+    let intervals_interleave 
+        (interval1:Interval) 
+        (interval2:Interval) 
+        =
+        let interval1_start_side =
+            interval1.start - interval2.start
+            |>Math.Sign
+        let interval1_finish_side =
+            interval1.finish - interval2.finish                                                                                                                                                                                                                                                                                                                                                  
+            |>Math.Sign

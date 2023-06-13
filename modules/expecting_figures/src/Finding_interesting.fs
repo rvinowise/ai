@@ -5,6 +5,24 @@ module rvinowise.ai.Finding_interesting
     open rvinowise
 
 
+    let sequences_which_appeared_in_interval
+        (appearances_of_sequences: (Sequence*Interval array) seq)
+        (interval: Interval)
+        =
+        appearances_of_sequences
+        |>Seq.map (fun (sequence, appearances) ->
+            sequence
+            ,
+            appearances
+            |>Seq.filter(fun appearance ->
+                interval.start <= appearance.start
+                ||
+                interval.finish >= appearance.finish
+            )
+        )
+        |>Seq.filter (snd>>Seq.isEmpty>>not)
+
+
     let find_good_sequences
         (sequence_history: (Sequence*Interval array) seq)
         (mood_changes: (Moment*Mood) seq)
@@ -12,6 +30,10 @@ module rvinowise.ai.Finding_interesting
         mood_changes
         |>Seq.filter (snd>>Mood.is_good)
         |>Mood_history.intervals_changing_mood
+        |>Seq.map fst
+        |>Seq.map (sequences_which_appeared_in_interval sequence_history)
+        |>Seq.allPairs
+        |>Seq.filter 
 
 
     [<Fact>]
