@@ -27,13 +27,39 @@ module rvinowise.ai.Finding_interesting
         (sequence_history: (Sequence*Interval array) seq)
         (mood_changes: (Moment*Mood) seq)
         =
-        mood_changes
-        |>Seq.filter (snd>>Mood.is_good)
-        |>Mood_history.intervals_changing_mood
-        |>Seq.map fst
-        |>Seq.map (sequences_which_appeared_in_interval sequence_history)
-        |>Seq.allPairs
-        |>Seq.filter 
+        let all_intervals = 
+            mood_changes
+            |>Seq.filter (snd>>Mood.is_good)
+            |>Mood_history.intervals_changing_mood
+            |>Seq.map fst
+        let interval_to_histories =
+            all_intervals
+            |>Seq.map (fun interval->
+                interval
+                ,
+                sequences_which_appeared_in_interval sequence_history interval
+            )
+            |>Map.ofSeq
+
+        let interval_pairs =
+            (all_intervals,all_intervals)
+            ||>Seq.allPairs
+            |>Seq.filter (fun (interval1,interval2) ->
+                Interval.intervals_intersect
+                    interval1 interval2
+                |>not
+            )
+
+        interval_pairs
+        |>Seq.map (fun (interval1,interval2)->
+            let sequence_appearances1 = interval_to_histories[interval1]
+            let sequence_appearances2 = interval_to_histories[interval2]
+            Finding_many_repetitions.repetitions_in_2_intervals
+                Finding_repetitions.all_halves
+                sequence_appearances1
+                sequence_appearances2
+                
+        )
 
 
     [<Fact>]

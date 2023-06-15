@@ -17,9 +17,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\fsharp\provided_data\provided_data.fsproj" />
     <ProjectReference Include="..\..\dotnet\basic_data_structures\basic_data_structures.fsproj" />
     <ProjectReference Include="..\..\fsharp\io\io.fsproj" />
+    <ProjectReference Include="..\finding_sequences\finding_sequences_interface\finding_sequences.fsproj" />
   </ItemGroup>
 
   <ItemGroup>

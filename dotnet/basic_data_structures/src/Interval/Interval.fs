@@ -71,13 +71,29 @@ module Interval =
                 |>Seq.map string 
             )
     
-    let intervals_interleave 
+    let oversection_of_intervals
         (interval1:Interval) 
         (interval2:Interval) 
         =
-        let interval1_start_side =
-            interval1.start - interval2.start
-            |>Math.Sign
-        let interval1_finish_side =
-            interval1.finish - interval2.finish                                                                                                                                                                                                                                                                                                                                                  
-            |>Math.Sign
+        if 
+            interval1.start > interval2.finish 
+            ||
+            interval2.start > interval1.finish 
+        then
+            None
+        else
+            Interval (
+                max interval1.start interval2.start,
+                min interval1.finish interval2.finish
+            )    
+            |>Some
+
+    let intervals_intersect
+        (interval1:Interval) 
+        (interval2:Interval)
+        =
+        oversection_of_intervals
+            interval1
+            interval2
+            <> None
+        
