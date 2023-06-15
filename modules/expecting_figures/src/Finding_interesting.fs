@@ -16,7 +16,7 @@ module rvinowise.ai.Finding_interesting
             appearances
             |>Array.filter(fun appearance ->
                 interval.start <= appearance.start
-                ||
+                &&
                 interval.finish >= appearance.finish
             )
         )
@@ -44,7 +44,7 @@ module rvinowise.ai.Finding_interesting
         =
         interval1.start < interval2.start
         &&
-        interval1.finish <= interval2.finish
+        interval1.finish <= interval2.start
     
     let find_good_sequences
         (sequence_history: (Sequence*Interval array) seq)
@@ -52,8 +52,8 @@ module rvinowise.ai.Finding_interesting
         =
         let all_intervals = 
             mood_changes
-            |>Seq.filter (snd>>Mood.is_good)
             |>Mood_history.intervals_changing_mood
+            |>Seq.filter (snd>>Mood.is_good)
             |>Seq.map fst
         let interval_to_histories =
             all_intervals

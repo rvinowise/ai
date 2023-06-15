@@ -2,12 +2,7 @@ module rvinowise.ai.``testing repetitions across intervals``
 
     open Xunit
     open FsUnit
-
-
-    open System
     open rvinowise.ai
-    open rvinowise
-    open System.Collections.Generic
 
 
     let all_halves (_:Interval) (_:Interval) = true

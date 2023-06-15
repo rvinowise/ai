@@ -72,18 +72,14 @@ module ``Finding_repetitions_across_intervals(simple)`` =
         (interval1_findings: Sequence_findings)
         (interval2_findings: Sequence_findings)
         =
-        let sofar_found_sequences1 =
-            interval1_findings
-            |>all_sofar_found_sequences_in_interval
-
-        let sofar_found_sequences2 =
-            interval2_findings
-            |>all_sofar_found_sequences_in_interval
-
         if 
             repetitions_are_depleted interval1_findings interval2_findings
         then
-            sofar_found_sequences1,sofar_found_sequences2
+            interval1_findings
+            |>all_sofar_found_sequences_in_interval
+            , 
+            interval2_findings
+            |>all_sofar_found_sequences_in_interval
         else
 
             let (
