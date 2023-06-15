@@ -14,7 +14,7 @@ module rvinowise.ai.Finding_interesting
             sequence
             ,
             appearances
-            |>Seq.filter(fun appearance ->
+            |>Array.filter(fun appearance ->
                 interval.start <= appearance.start
                 ||
                 interval.finish >= appearance.finish
@@ -23,6 +23,29 @@ module rvinowise.ai.Finding_interesting
         |>Seq.filter (snd>>Seq.isEmpty>>not)
 
 
+
+    let unite_appearances_of_same_sequences
+        (histories: (Sequence*Interval array) seq)
+        =
+        Map.empty
+        |>Seq.foldBack (fun (sequence, history) sequence_histories ->
+            sequence_histories
+            |>Map.add sequence (
+                sequence_histories
+                |>Map.tryFind sequence
+                |>Option.defaultValue [||]
+                |>Array.append history
+            )
+
+        ) histories
+
+    let first_interval_is_before_second
+        (interval1:Interval, interval2:Interval)
+        =
+        interval1.start < interval2.start
+        &&
+        interval1.finish <= interval2.finish
+    
     let find_good_sequences
         (sequence_history: (Sequence*Interval array) seq)
         (mood_changes: (Moment*Mood) seq)
@@ -44,22 +67,22 @@ module rvinowise.ai.Finding_interesting
         let interval_pairs =
             (all_intervals,all_intervals)
             ||>Seq.allPairs
-            |>Seq.filter (fun (interval1,interval2) ->
-                Interval.intervals_intersect
-                    interval1 interval2
-                |>not
-            )
+            |>Seq.filter first_interval_is_before_second
+            
 
         interval_pairs
-        |>Seq.map (fun (interval1,interval2)->
+        |>Seq.collect (fun (interval1,interval2)->
             let sequence_appearances1 = interval_to_histories[interval1]
             let sequence_appearances2 = interval_to_histories[interval2]
-            Finding_many_repetitions.repetitions_in_2_intervals
-                Finding_repetitions.all_halves
-                sequence_appearances1
-                sequence_appearances2
-                
-        )
+            let in_interval1, in_interval2 = 
+                Finding_many_repetitions.repetitions_in_2_intervals
+                    Finding_repetitions.all_halves
+                    sequence_appearances1
+                    sequence_appearances2
+            [in_interval1;in_interval2]
+        )|>Seq.concat
+        |>unite_appearances_of_same_sequences
+
 
 
     [<Fact>]
@@ -79,6 +102,7 @@ module rvinowise.ai.Finding_interesting
         find_good_sequences 
             signal_history
             mood_history
+        |>extensions.Map.toPairs
         |>Appearances.sequence_appearances_to_text_and_tuples
         |>Set.ofSeq
         |>Set.isProperSubset (
