@@ -111,3 +111,29 @@ module rvinowise.ai.Finding_interesting
                 [1,5;15,19]
             ]|>Set.ofList
         )|>should equal true
+
+    [<Fact>]
+     let ``try find_good_sequences in a file``()=
+        let history =
+            @"C:\prj\ai\modules\finding_sequences\mathematical_primers.txt"
+            |>built_from_text.Event_batches.event_batches_from_textfile
+        let signal_history =
+            history
+            |>Event_batches.only_signals
+            |>Event_batches.to_sequence_appearances
+        let mood_history = 
+            history
+            |>Event_batches.only_mood_changes
+            
+        find_good_sequences 
+            signal_history
+            mood_history
+        |>extensions.Map.toPairs
+        |>Appearances.sequence_appearances_to_text_and_tuples
+        |>Set.ofSeq
+        |>Set.isProperSubset (
+            [
+                "+=;",
+                [1,5;15,19]
+            ]|>Set.ofList
+        )|>should equal true

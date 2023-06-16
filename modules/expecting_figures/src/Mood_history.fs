@@ -31,7 +31,7 @@ module rvinowise.ai.Mood_history
             (finish_index:int)
             (Mood 0)
 
-    let mood_changes_starting_from_index
+    let all_mood_changes_starting_from_index
         (changes: (Moment*Mood) array)
         (start_index:int)
         =
@@ -74,6 +74,16 @@ module rvinowise.ai.Mood_history
             start_index
             (start_index+1)
 
+    let one_mood_change_in_shortest_interval
+        (changes: (Moment*Mood) array)
+        (start_index:int)
+        =
+        (
+            mood_change_from_start_to_finish
+                changes
+                start_index
+                (start_index+1)
+        )
 
     let intervals_changing_mood 
         (mood_changes_history: (Moment*Mood) seq)
@@ -85,7 +95,7 @@ module rvinowise.ai.Mood_history
             
         changes
         |>Seq.mapi (fun index _ ->
-            mood_changes_starting_from_index
+            all_mood_changes_starting_from_index
                 changes
                 index
         )

@@ -128,12 +128,9 @@ module ``testing all_repetitions (several levels of abstraction)`` =
 
     [<Fact>]//(Skip="ui")
     let ``find repetitions in a text file``()=
-        use input_stream =
-            //new StreamReader "C:/prj/ai/modules/finding_sequences/signals.txt"
-            new StreamReader "C:/prj/ai/modules/finding_sequences/mathematical_primers.txt"
         let raw_signals =
-            input_stream.ReadToEnd()
-            |>built_from_text.Event_batches.event_batches_from_text
+            "C:/prj/ai/modules/finding_sequences/mathematical_primers.txt"
+            |>built_from_text.Event_batches.event_batches_from_textfile
             |>Event_batches.only_signals
             |>Event_batches.to_sequence_appearances
         

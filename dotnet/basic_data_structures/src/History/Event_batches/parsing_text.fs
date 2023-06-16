@@ -5,15 +5,12 @@ module rvinowise.ai.built_from_text.Event_batches
     open FParsec
 
     open rvinowise.ai
-    open rvinowise 
+    open System.IO
     
 
     let event_batches_from_text 
         (text:string)
         =
-        let good = "ok"
-        let bad = "no"
-
         let separator =
             (skipString ";")
         let particular_mood_change mood_word mood_multiplier =
@@ -47,6 +44,15 @@ module rvinowise.ai.built_from_text.Event_batches
         |Success (batches,_,_) ->
             batches
         |Failure (error,_,_) -> failwith error
+
+
+    let event_batches_from_textfile
+        (file:string)
+        =
+        use input_stream =
+            new StreamReader(file)
+        input_stream.ReadToEnd()
+        |>event_batches_from_text
 
 
     [<Fact>]
