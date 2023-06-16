@@ -9,9 +9,9 @@ module rvinowise.ai.Mood_history
         =
         let rec collect_moods_in_interval
             (changes: (Moment*Mood) array)
-            (current_index:int)
-            (finish_index:int)
-            (accumulated_mood: Mood)
+            current_index
+            finish_index
+            accumulated_mood
             =
             if current_index<=finish_index then
                 collect_moods_in_interval
@@ -26,9 +26,9 @@ module rvinowise.ai.Mood_history
             else
                 accumulated_mood
         collect_moods_in_interval
-            (changes: (Moment*Mood) array)
-            (start_index:int)
-            (finish_index:int)
+            changes
+            start_index
+            finish_index
             (Mood 0)
 
     let all_mood_changes_starting_from_index
