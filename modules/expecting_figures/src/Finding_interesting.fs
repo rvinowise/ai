@@ -53,6 +53,7 @@ module rvinowise.ai.Finding_interesting
         let all_intervals = 
             mood_changes
             |>Mood_history.intervals_changing_mood
+                Mood_history.one_mood_change_in_shortest_interval
             |>Seq.filter (snd>>Mood.is_good)
             |>Seq.map fst
         let interval_to_histories =

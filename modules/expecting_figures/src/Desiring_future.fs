@@ -51,6 +51,7 @@ namespace rvinowise.ai
                 history
                 |>Event_batches.only_mood_changes
                 |>Mood_history.intervals_changing_mood
+                    Mood_history.all_mood_changes_starting_from_index
             // let good_commonalities =
             //     separate_histories
             //     |>good_commonalities mood_intervals
