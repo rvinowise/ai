@@ -25,6 +25,7 @@ module rvinowise.ai.``testing repetitions across intervals``
     //        ab  ab     //repeated in 2nd
     //mom:   0123456789¹
             |>built_from_text.Event_batches.event_batches_from_text
+                built_from_text.Event_batches.no_mood
             |>Event_batches.only_signals
             |>Event_batches.to_sequence_appearances
         let interval2 =
@@ -35,6 +36,7 @@ module rvinowise.ai.``testing repetitions across intervals``
     //                   34
     //mom:   0123456789¹12345        
             |>built_from_text.Event_batches.event_batches_from_text
+                built_from_text.Event_batches.no_mood
             |>Event_batches.only_signals
             |>Event_batches.to_sequence_appearances
         

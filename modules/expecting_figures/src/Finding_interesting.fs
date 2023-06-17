@@ -69,7 +69,6 @@ module rvinowise.ai.Finding_interesting
             (all_intervals,all_intervals)
             ||>Seq.allPairs
             |>Seq.filter first_interval_is_before_second
-            
 
         interval_pairs
         |>Seq.collect (fun (interval1,interval2)->
@@ -92,6 +91,7 @@ module rvinowise.ai.Finding_interesting
             "1+1=2;ok;1+1=3;no;2+2=4;ok;"
     //mom:   0123456  789¹123  456789²  123456789
             |>built_from_text.Event_batches.event_batches_from_text
+                (built_from_text.Event_batches.mood_changes_as_words_and_numbers "no" "ok")
         let signal_history =
             history
             |>Event_batches.only_signals
@@ -118,6 +118,7 @@ module rvinowise.ai.Finding_interesting
         let history =
             @"C:\prj\ai\modules\finding_sequences\mathematical_primers.txt"
             |>built_from_text.Event_batches.event_batches_from_textfile
+                (built_from_text.Event_batches.mood_changes_as_words_and_numbers "no" "ok")
         let signal_history =
             history
             |>Event_batches.only_signals

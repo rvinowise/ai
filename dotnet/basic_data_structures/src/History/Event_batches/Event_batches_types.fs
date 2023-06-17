@@ -1,6 +1,4 @@
 ﻿namespace rvinowise.ai
-    open FsUnit
-    open Xunit
     
     open rvinowise.ai
 

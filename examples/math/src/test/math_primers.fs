@@ -73,6 +73,7 @@ module Math_primers=
         let raw_signals =
             input_stream.ReadToEnd()
             |>built_from_text.Event_batches.event_batches_from_text
+                built_from_text.Event_batches.no_mood
             |>Event_batches.only_signals
             |>Event_batches.to_sequence_appearances
         

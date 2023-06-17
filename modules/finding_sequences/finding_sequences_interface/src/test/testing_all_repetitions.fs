@@ -48,6 +48,7 @@ module ``testing all_repetitions (several levels of abstraction)`` =
 //             a  bc
 //mom:   0123456789¹1
         |>built_from_text.Event_batches.event_batches_from_text
+            built_from_text.Event_batches.no_mood
         |>Event_batches.only_signals
         |>Event_batches.to_sequence_appearances
         |>Finding_many_repetitions.all_repetitions
@@ -68,6 +69,7 @@ module ``testing all_repetitions (several levels of abstraction)`` =
     //seq4:         1 2     3  4     5 6  
     //mom:   0123456789¹123456789²123456789³
             |>built_from_text.Event_batches.event_batches_from_text
+                built_from_text.Event_batches.no_mood
             |>Event_batches.only_signals
             |>Event_batches.to_sequence_appearances
             |>Finding_many_repetitions.all_repetitions
@@ -131,6 +133,7 @@ module ``testing all_repetitions (several levels of abstraction)`` =
         let raw_signals =
             "C:/prj/ai/modules/finding_sequences/mathematical_primers.txt"
             |>built_from_text.Event_batches.event_batches_from_textfile
+                (built_from_text.Event_batches.mood_changes_as_words_and_numbers "no" "ok")
             |>Event_batches.only_signals
             |>Event_batches.to_sequence_appearances
         

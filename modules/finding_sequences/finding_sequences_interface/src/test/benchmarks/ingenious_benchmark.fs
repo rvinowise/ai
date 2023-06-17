@@ -41,7 +41,7 @@ type Finding_repetitions_ingenious_benchmark() =
         }
         with get,set
 
-    member this.long_overlaid_sequences =
+    member _.long_overlaid_sequences =
         "a1bc2d31a2ef4bg3c54de6fh5g6h"
 //seq1:  a bc d    ef  g        h
 //seq2:   1  2 3     4    5   6  
@@ -49,6 +49,7 @@ type Finding_repetitions_ingenious_benchmark() =
 //seq4:         1 2     3  4     5 6  
 //mom:   0123456789¹123456789²123456789³
         |>built_from_text.Event_batches.event_batches_from_text
+            built_from_text.Event_batches.no_mood
         |>Event_batches.only_signals
         |>Event_batches.event_batches_to_figure_appearances 0
         |>extensions.Map.toPairs
@@ -56,12 +57,13 @@ type Finding_repetitions_ingenious_benchmark() =
             [|figure|],appearances
         )
 
-    member this.overlaid_sequences =
+    member _.overlaid_sequences =
         "a1bca2d3bc45d"
 //seq1:  a bc  d
 //seq3:      a   bc  d       
 //mom:   0123456789¹123456789²123456789³
         |>built_from_text.Event_batches.event_batches_from_text
+            built_from_text.Event_batches.no_mood
         |>Event_batches.only_signals
         |>Event_batches.to_sequence_appearances
 

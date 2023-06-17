@@ -16,6 +16,7 @@ type Benchmarking_modifications_of_history() =
     let event_batches = 
         "1234567890"
         |>built_from_text.Event_batches.event_batches_from_text
+            (built_from_text.Event_batches.mood_changes_as_words_and_numbers "no" "ok")
         |>Event_batches.only_signals
 
     [<Benchmark>]
