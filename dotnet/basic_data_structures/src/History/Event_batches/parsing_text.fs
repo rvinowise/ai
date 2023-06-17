@@ -20,7 +20,7 @@ module rvinowise.ai.built_from_text.Event_batches
         =
         let particular_mood_change mood_symbol mood_multiplier =
             (
-                many (pchar mood_symbol) .>> spaces
+                many1 (pchar mood_symbol) .>> spaces
                 |>> (fun symbols -> 
                     symbols.Length * mood_multiplier
                     |>fun mood -> [],Mood mood

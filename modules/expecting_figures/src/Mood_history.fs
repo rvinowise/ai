@@ -39,12 +39,12 @@ module rvinowise.ai.Mood_history
         (start_index:int)
         (finish_index:int)
         =
-        let moment_after_last_change =
-            (fst changes[start_index]) + 1
+        let start_moment =
+            (fst changes[start_index])+1
         let moment_of_next_change =
             (fst changes[finish_index])
         Interval.regular
-            moment_after_last_change
+            start_moment
             moment_of_next_change
             
     let all_mood_changes_starting_from_index
@@ -64,7 +64,7 @@ module rvinowise.ai.Mood_history
                     ,
                     mood_change_from_start_to_finish
                         changes
-                        (start_index+1)
+                        start_index
                         finish_index
                 )::found_intervals
                 |>mood_changes_for_all_final_moments
@@ -76,22 +76,21 @@ module rvinowise.ai.Mood_history
         mood_changes_for_all_final_moments
             changes
             start_index
-            (start_index+1)
+            start_index
             []
 
     let one_mood_change_in_shortest_interval
         (changes: (Moment*Mood) array)
         (start_index:int)
         =
-        let finish_index = start_index+1
         (
             interval_from_indices changes
-                start_index finish_index
+                start_index (start_index+1)
             ,
             mood_change_from_start_to_finish
                 changes
                 start_index
-                finish_index
+                (start_index+1)
         )|>List.singleton
 
     let intervals_changing_mood 
@@ -119,20 +118,20 @@ module rvinowise.ai.Mood_history
 
     [<Fact>]
     let ``try intervals_changing_mood``()=
-        "01ok;23ok;45no2;67"
-    //   01   23   45    6789 <-moments
+        "0ok;23ok;45no2;67"
+    //   0   12   34    5678 <-moments
         |>built_from_text.Event_batches.event_batches_from_text
             (built_from_text.Event_batches.mood_changes_as_words_and_numbers "no" "ok")
         |>Event_batches.only_mood_changes
         |>intervals_changing_mood 
             all_mood_changes_starting_from_index
         |>should equal [
-            (Interval.regular 0 1), Mood +1; 
-            (Interval.regular 0 4), Mood +2;
-            (Interval.regular 0 7), Mood 0;
-            (Interval.regular 2 4), Mood +1; 
-            (Interval.regular 2 7), Mood -1; 
-            (Interval.regular 5 7), Mood -2;
+            (Interval.moment 0), Mood +1; 
+            (Interval.regular 0 2), Mood +2;
+            (Interval.regular 0 4), Mood 0;
+            (Interval.regular 1 2), Mood +1; 
+            (Interval.regular 1 4), Mood -1; 
+            (Interval.regular 3 4), Mood -2;
         ]
     
     
@@ -140,25 +139,25 @@ module rvinowise.ai.Mood_history
     [<Fact>]
     let ``try intervals_changing_mood, with repeated signals``()=
         "00¬¬¬223××4¬¬"
-    //   012  3456 78 9 <-moments
+    //   01   234  5  6789 <-moments
         |>built_from_text.Event_batches.event_batches_from_text
-            (built_from_text.Event_batches.mood_changes_as_words_and_numbers "no" "ok")
+            (built_from_text.Event_batches.mood_changes_as_repeated_symbols '¬' '×')
         |>Event_batches.only_mood_changes
         |>intervals_changing_mood 
             all_mood_changes_starting_from_index
         |>should equal [
-            (Interval.regular 0 2), Mood -3; 
-            (Interval.regular 0 6), Mood -1;
-            (Interval.regular 0 8), Mood -3;
-            (Interval.regular 3 6), Mood +2; 
-            (Interval.regular 3 8), Mood 0; 
-            (Interval.regular 7 8), Mood -2;
+            (Interval.regular 0 1), Mood -3; 
+            (Interval.regular 0 4), Mood -1;
+            (Interval.regular 0 5), Mood -3;
+            (Interval.regular 2 4), Mood +2; 
+            (Interval.regular 2 5), Mood 0; 
+            (Interval.moment 5), Mood -2;
         ]  
     
     [<Fact>]
     let ``try intervals_changing_mood with one_mood_change_in_shortest_interval``()=
         "1ok;23ok;45no2;67"
-    //   01  234  567   89 <-moments
+    //   0   12   34    56789 <-moments
         |>built_from_text.Event_batches.event_batches_from_text
             (built_from_text.Event_batches.mood_changes_as_words_and_numbers "no" "ok")
         |>Event_batches.only_mood_changes
