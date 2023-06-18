@@ -89,7 +89,7 @@ module rvinowise.ai.Finding_interesting
     let ``try find_good_sequences``()=
         let history =
             "1+1=2;ok;1+1=3;no;2+2=4;ok;"
-    //mom:   0123456  789¹123  456789²  123456789
+    //mom:   012345   6789¹1   234567   89²  123456789
             |>built_from_text.Event_batches.event_batches_from_text
                 (built_from_text.Event_batches.mood_changes_as_words_and_numbers "no" "ok")
         let signal_history =
@@ -109,12 +109,12 @@ module rvinowise.ai.Finding_interesting
         |>Set.isProperSubset (
             [
                 "+=;",
-                [1,5;15,19]
+                [1,5;13,17]
             ]|>Set.ofList
         )|>should equal true
 
     [<Fact>]
-     let ``try find_good_sequences in a file``()=
+    let ``try find_good_sequences in a file``()=
         let history =
             @"C:\prj\ai\modules\finding_sequences\mathematical_primers.txt"
             |>built_from_text.Event_batches.event_batches_from_textfile
@@ -136,6 +136,6 @@ module rvinowise.ai.Finding_interesting
         |>Set.isProperSubset (
             [
                 "+=;",
-                [1,5;15,19]
+                [1,5;7,11;13,17;19,23]
             ]|>Set.ofList
         )|>should equal true
