@@ -34,18 +34,22 @@ module rvinowise.ai.Mood_history
             finish_index
             (Mood 0)
 
-    let private interval_from_indices
+    let private interval_from_indices_of_changes
         (changes: (Moment*Mood) array)
         (start_index:int)
-        (finish_index:int)
+        (final_index:int)
         =
         let start_moment =
-            (fst changes[start_index])+1
-        let moment_of_next_change =
-            (fst changes[finish_index])
+            changes
+            |>Array.tryItem (start_index-1)
+            |>Option.defaultValue (-1, Mood 0)
+            |>fst
+            |>(+)1
+        let moment_of_final_change =
+            (fst changes[final_index])
         Interval.regular
             start_moment
-            moment_of_next_change
+            moment_of_final_change
             
     let all_mood_changes_starting_from_index
         (changes: (Moment*Mood) array)
@@ -54,23 +58,23 @@ module rvinowise.ai.Mood_history
         let rec mood_changes_for_all_final_moments
             (changes: (Moment*Mood) array)
             (start_index:int)
-            (finish_index:int)
+            (final_index:int)
             (found_intervals: (Interval*Mood) list )
             =
-            if finish_index < changes.Length then
+            if final_index < changes.Length then
                 (
-                    interval_from_indices changes
-                        start_index finish_index
+                    interval_from_indices_of_changes changes
+                        start_index final_index
                     ,
                     mood_change_from_start_to_finish
                         changes
                         start_index
-                        finish_index
+                        final_index
                 )::found_intervals
                 |>mood_changes_for_all_final_moments
                     changes
                     start_index
-                    (finish_index+1)
+                    (final_index+1)
             else
                 found_intervals|>List.rev
         mood_changes_for_all_final_moments
@@ -84,13 +88,13 @@ module rvinowise.ai.Mood_history
         (start_index:int)
         =
         (
-            interval_from_indices changes
-                start_index (start_index+1)
+            interval_from_indices_of_changes changes
+                start_index start_index
             ,
             mood_change_from_start_to_finish
                 changes
                 start_index
-                (start_index+1)
+                start_index
         )|>List.singleton
 
     let intervals_changing_mood 
@@ -102,7 +106,6 @@ module rvinowise.ai.Mood_history
         =
         let changes =
             mood_changes_history
-            |>Seq.append [(-1,Mood 0)]//initial mood before the first change
             |>Array.ofSeq
             
         changes
@@ -164,7 +167,7 @@ module rvinowise.ai.Mood_history
         |>intervals_changing_mood 
             one_mood_change_in_shortest_interval
         |>should equal [
-            (Interval.regular 0 1), Mood +1; 
-            (Interval.regular 2 4), Mood +1; 
-            (Interval.regular 5 7), Mood -2;
+            (Interval.regular 0 0), Mood +1; 
+            (Interval.regular 1 2), Mood +1; 
+            (Interval.regular 3 4), Mood -2;
         ]
