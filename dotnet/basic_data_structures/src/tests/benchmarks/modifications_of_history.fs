@@ -5,9 +5,7 @@ open Xunit
 open BenchmarkDotNet.Configs
 open BenchmarkDotNet.Attributes
 open BenchmarkDotNet.Running
-open rvinowise.extensions.benchmark
 open rvinowise.ai
-open rvinowise
 open BenchmarkDotNet.Engines
 
 type Benchmarking_modifications_of_history() =
@@ -20,7 +18,7 @@ type Benchmarking_modifications_of_history() =
         |>Event_batches.only_signals
 
     [<Benchmark>]
-    member this.shifting_appearances_in_time() =
+    member _.shifting_appearances_in_time() =
         let initial_appearances = 
             event_batches
             |>Event_batches.event_batches_to_figure_appearances 0
@@ -32,13 +30,13 @@ type Benchmarking_modifications_of_history() =
         
     
     [<Benchmark>]
-    member this.creating_shifted_appearances_from_batches() =
+    member _.creating_shifted_appearances_from_batches() =
         event_batches
         |>Event_batches.event_batches_to_figure_appearances 100
         |>Consumer().Consume
 
     [<Fact>]
-    member this.``shifting appearances and creating them shifted give same result``()=
+    member _.``shifting appearances and creating them shifted give same result``()=
         let appearances_created_shifted = 
             event_batches
             |>Event_batches.event_batches_to_figure_appearances 100

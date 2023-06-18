@@ -164,7 +164,7 @@ module rvinowise.ai.Mood_history
         |>intervals_changing_mood 
             one_mood_change_in_shortest_interval
         |>should equal [
-            (Interval.regular 0 1), Mood +1; 
-            (Interval.regular 2 4), Mood +1; 
-            (Interval.regular 5 7), Mood -2;
+            (Interval.moment 0), Mood +1; 
+            (Interval.regular 1 2), Mood +1; 
+            (Interval.regular 3 4), Mood -2;
         ]
