@@ -27,17 +27,25 @@ module rvinowise.ai.Finding_interesting
     let unite_appearances_of_same_sequences
         (histories: (Sequence*Interval array) seq)
         =
-        Map.empty
-        |>Seq.foldBack (fun (sequence, history) sequence_histories ->
+        histories
+        |>Seq.fold (fun sequence_histories (sequence, history)  ->
+            if
+                sequence
+                =
+                ("+=;"
+                |>Seq.map (string>>Figure_id)
+                |>Array.ofSeq)
+            then
+                printf "test"
+                
             sequence_histories
             |>Map.add sequence (
                 sequence_histories
                 |>Map.tryFind sequence
-                |>Option.defaultValue [||]
-                |>Array.append history
+                |>Option.defaultValue Set.empty
+                |>Set.union (history|>Set.ofArray)
             )
-
-        ) histories
+        ) Map.empty
 
     let first_interval_is_before_second
         (interval1:Interval, interval2:Interval)
@@ -69,16 +77,17 @@ module rvinowise.ai.Finding_interesting
             (all_intervals,all_intervals)
             ||>Seq.allPairs
             |>Seq.filter first_interval_is_before_second
-
+        
         interval_pairs
         |>Seq.collect (fun (interval1,interval2)->
-            let sequence_appearances1 = interval_to_histories[interval1]
-            let sequence_appearances2 = interval_to_histories[interval2]
+            let sequences_appearances1 = interval_to_histories[interval1]
+            let sequences_appearances2 = interval_to_histories[interval2]
+            
             let in_interval1, in_interval2 = 
                 Finding_many_repetitions.repetitions_in_2_intervals
                     Finding_repetitions.all_halves
-                    sequence_appearances1
-                    sequence_appearances2
+                    sequences_appearances1
+                    sequences_appearances2
             [in_interval1;in_interval2]
         )|>Seq.concat
         |>unite_appearances_of_same_sequences
@@ -104,7 +113,7 @@ module rvinowise.ai.Finding_interesting
             signal_history
             mood_history
         |>extensions.Map.toPairs
-        |>Appearances.sequence_appearances_to_text_and_tuples
+        |>Seq.map Appearances.sequence_appearances_to_text_and_tuples
         |>Set.ofSeq
         |>Set.isProperSubset (
             [
@@ -131,7 +140,7 @@ module rvinowise.ai.Finding_interesting
             signal_history
             mood_history
         |>extensions.Map.toPairs
-        |>Appearances.sequence_appearances_to_text_and_tuples
+        |>Seq.map Appearances.sequence_appearances_to_text_and_tuples
         |>Set.ofSeq
         |>Set.isProperSubset (
             [

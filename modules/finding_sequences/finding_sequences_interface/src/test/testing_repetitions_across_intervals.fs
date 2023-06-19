@@ -47,7 +47,7 @@ module rvinowise.ai.``testing repetitions across intervals``
                     interval1
                     interval2
         interval1_findings
-        |>Appearances.sequence_appearances_to_text_and_tuples
+        |>Appearances.sequences_appearances_to_text_and_tuples
         |>Set.ofSeq
         |>Set.isProperSubset (
             [
@@ -58,7 +58,7 @@ module rvinowise.ai.``testing repetitions across intervals``
         |>should equal true
         
         interval2_findings
-        |>Appearances.sequence_appearances_to_text_and_tuples
+        |>Appearances.sequences_appearances_to_text_and_tuples
         |>Set.ofSeq 
         |>Set.isProperSubset (
             [

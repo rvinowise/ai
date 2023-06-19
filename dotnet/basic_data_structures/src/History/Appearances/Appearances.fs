@@ -79,10 +79,10 @@ module rvinowise.ai.Appearances
         |>Seq.map Figure_id.value
         |>String.concat ""
       
-    let sequence_appearances_to_text_and_tuples
-        (sequence_appearances: (Sequence*Interval array) seq)
+    let sequences_appearances_to_text_and_tuples
+        (sequences_appearances: (Sequence*Interval array) seq)
         =
-        sequence_appearances
+        sequences_appearances
         |>Seq.map (fun (sequence, appearances)->
             sequence|>sequence_to_text,
             appearances
@@ -90,7 +90,16 @@ module rvinowise.ai.Appearances
             |>List.ofSeq
         )
 
-
+    let sequence_appearances_to_text_and_tuples
+        (sequence_appearances: (Sequence*Interval seq))
+        =
+        let sequence, appearances = sequence_appearances
+        
+        sequence|>sequence_to_text
+        ,
+        appearances
+        |>Seq.map Interval.toPair
+        |>List.ofSeq
      
   
 
