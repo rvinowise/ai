@@ -11,7 +11,8 @@
     <Compile Include="src\Expecting_figures.fs" />
     <Compile Include="src\Mood_history.fs" />
     <Compile Include="src\Desiring_future.fs" />
-    <Compile Include="src\Finding_interesting.fs" />
+    <Compile Include="src\Finding_repeatedly_good_sequences.fs" />
+    <Compile Include="src\Finding_context_of_patterns.fs" />
     <Compile Include="src\painted\Expected_figure_prolongation.fs" />
     <Compile Include="src\test\expectation_of_prolongation_of_figures.fs" />
   </ItemGroup>

@@ -27,7 +27,9 @@ module ``expectation of prolongation of figures``=
     let ``an expected prolongation, constructed from a figure, expects its first subfigures at first``()=
         let figure_f = a_high_level_relatively_simple_figure
         let first_subfigures = 
-            ["b";"h"]|>List.map Vertex_id
+            ["b";"h"]
+            |>List.map Vertex_id
+            |>Set.ofList
         let prolongation = 
             Expected_figure_prolongation.from_figure figure_f
         

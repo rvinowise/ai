@@ -3,7 +3,6 @@ namespace rvinowise.ai
 
 module Expecting_figures = 
     open rvinowise.ai
-    open Expected_figure_prolongation
 
 
     let prolongate_expectation_with_an_input_figure 

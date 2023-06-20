@@ -1,4 +1,4 @@
-module rvinowise.ai.Finding_interesting
+module rvinowise.ai.Finding_repeatedly_good_sequences
     
     open FsUnit
     open Xunit
@@ -92,6 +92,18 @@ module rvinowise.ai.Finding_interesting
         )|>Seq.concat
         |>unite_appearances_of_same_sequences
 
+    let find_good_sequences_in_batches batches =
+        let signal_history =
+            batches
+            |>Event_batches.only_signals
+            |>Event_batches.to_sequence_appearances
+        let mood_history = 
+            batches
+            |>Event_batches.only_mood_changes
+            
+        find_good_sequences 
+            signal_history
+            mood_history
 
 
     [<Fact>]
