@@ -1,10 +1,7 @@
 namespace rvinowise.ai
 
-module Mapping_graph = 
-    open rvinowise.ai.generating_combinations
-    open rvinowise.ai.stencil
+module Mapping_sequence = 
     open rvinowise
-    open rvinowise.ai.mapping_graph_impl
 
     open Xunit
     open FsUnit
@@ -254,14 +251,18 @@ module Mapping_graph =
                 next_vertices_to_map
                 mappings
 
-
-    let map_figure_onto_target
-        target
-        mappee
+    let rec map_next_signal
+        (rest_target: Figure_id list)
+        (rest_mappee: Figure_id list)
+        (mapping: (Figure_id*Moment) list)
         =
-        target
-        |>map_first_nodes mappee
-        |>prolongate_all_mappings
-            mappee 
+
+
+    let map_sequence_onto_target
+        (target: Sequence)
+        (mappee:Sequence)
+        =
+        map_next_signal
             target
-            (Figure.first_vertices mappee)
+            mappee
+            []

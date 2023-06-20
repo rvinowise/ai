@@ -167,10 +167,10 @@ module ``application of stencils``=
     
     [<Fact>]
     let ``complete mapping of stencil onto target can be produced``()=
-        let figure = example.Figure.a_high_level_relatively_simple_figure
+        let target = example.Figure.a_high_level_relatively_simple_figure
         let mappee = example.Figure.fitting_stencil_as_figure
         
-        (map_figure_onto_target figure mappee)
+        (map_figure_onto_target target mappee)
         |> should equal
             [
                 Mapping.ofStringPairs [

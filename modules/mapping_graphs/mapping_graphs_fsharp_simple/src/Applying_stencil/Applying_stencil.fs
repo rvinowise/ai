@@ -1,11 +1,7 @@
 namespace rvinowise.ai
 
 module Applying_stencil = 
-    open System.Collections.Generic
-    open rvinowise.ai.generating_combinations
     open rvinowise.ai.stencil
-    open rvinowise
-    open rvinowise.ai.mapping_graph_impl
  
 
     let is_figure_without_impossible_parts 
