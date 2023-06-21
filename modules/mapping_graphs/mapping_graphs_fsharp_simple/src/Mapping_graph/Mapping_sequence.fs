@@ -9,11 +9,11 @@ module Mapping_sequence =
 
     let rec find_next_signal_in_target
         (signal: Figure_id)
-        (target: (Moment*Figure_id) list)
+        (target: (Figure_id*Moment) list)
         =
         match target with
         |head::tail->
-            if signal = (snd head) then
+            if signal = (fst head) then
                 Some (head,tail)
             else
                 find_next_signal_in_target

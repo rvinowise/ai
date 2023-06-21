@@ -4,8 +4,8 @@ module rvinowise.ai.Finding_context_of_patterns
     open FsUnit
 
     let context_of_sequence_appearance
-        history
-        (mapped_sequence )
+        (history: (Figure_id*Moment) array)
+        (mapped_sequence: (Figure_id*Moment) list)
         =()
 
 
@@ -13,9 +13,10 @@ module rvinowise.ai.Finding_context_of_patterns
         (history: Figure_id array)
         (interval: Interval)
         =
-        history[interval.start..interval.finish]
+        [|for i in interval.start..interval.finish -> i|]
         |>Array.zip
-            [|for i in interval.start..interval.finish -> i|]
+            history[interval.start..interval.finish]
+            
 
 
     let sequence_mappings_onto_history
@@ -67,6 +68,14 @@ module rvinowise.ai.Finding_context_of_patterns
         |>Seq.map (
             context_of_sequence_appearance
                 history
-        )|>should equal [
-            
-        ]
+        )|>should equal (
+            [
+                ["1",0; "1",1; "2",2; "1+1=3;2+2=4;",3];
+                ["1+1=2;1+1=3;2",0; "2",1; "4",2]
+            ]|>List.map (List.map (fun (sequence,moment)->
+                sequence
+                |>Seq.map (string>>Figure_id)|>Array.ofSeq
+                ,
+                moment
+            ))
+        )
