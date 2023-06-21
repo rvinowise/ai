@@ -21,6 +21,7 @@
     <ProjectReference Include="..\..\dotnet\basic_data_structures\basic_data_structures.fsproj" />
     <ProjectReference Include="..\..\fsharp\io\io.fsproj" />
     <ProjectReference Include="..\finding_sequences\finding_sequences_interface\finding_sequences.fsproj" />
+    <ProjectReference Include="..\mapping_graphs\mapping_graphs_fsharp_simple\mapping_graphs.fsproj" />
   </ItemGroup>
 
   <ItemGroup>

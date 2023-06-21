@@ -9,11 +9,11 @@ module Mapping_sequence =
 
     let rec find_next_signal_in_target
         (signal: Figure_id)
-        (target: (Figure_id*Moment) list)
+        (target: (Moment*Figure_id) list)
         =
         match target with
         |head::tail->
-            if signal = (fst head) then
+            if signal = (snd head) then
                 Some (head,tail)
             else
                 find_next_signal_in_target
@@ -23,9 +23,9 @@ module Mapping_sequence =
             None
 
     let rec map_next_signal
-        rest_target
         rest_mappee
-        (mapping: (Figure_id*Moment) list)
+        rest_target
+        mapping
         =
         match rest_mappee with
         |[]->Some mapping
@@ -37,18 +37,18 @@ module Mapping_sequence =
             with
             |Some (mapped_signal,rest_target) ->
                 map_next_signal
-                    rest_target
                     tail
+                    rest_target
                     (mapped_signal::mapping)
             |None->None
             
 
 
     let map_sequence_onto_target
-        (target: Sequence)
-        (mappee: Sequence)
+        mappee
+        target
         =
         map_next_signal
-            target
             mappee
+            target
             []

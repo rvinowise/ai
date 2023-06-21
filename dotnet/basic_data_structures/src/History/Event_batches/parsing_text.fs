@@ -9,7 +9,7 @@ module rvinowise.ai.built_from_text.Event_batches
     
 
     let separator =
-            (skipString ";")
+        (skipString ";")
 
     
     let no_mood: Parser<Appearance_event list * Mood, unit> =
@@ -23,7 +23,7 @@ module rvinowise.ai.built_from_text.Event_batches
                 many1 (pchar mood_symbol) .>> spaces
                 |>> (fun symbols -> 
                     symbols.Length * mood_multiplier
-                    |>fun mood -> [],Mood mood
+                    |>Mood
                 )
             )
         (particular_mood_change bad_symbol -1)
@@ -40,56 +40,48 @@ module rvinowise.ai.built_from_text.Event_batches
                 |>> (
                     int
                     >> ( * ) mood_multiplier
-                    >>fun mood -> [],Mood mood
+                    >>Mood
                 )
             )
         (particular_mood_change bad_word -1)
         <|>(particular_mood_change good_word 1)
 
-    let attach_mood_to_preceding_signal
-        (batch_elements: (Appearance_event list * Mood) list)
-        =
-        batch_elements
-        |>List.fold (fun batches element ->
-            match element|>snd with
-            | Mood 0 ->
-                element::batches
-            | mood_change ->
-                match batches with
-                |(last_signals,last_mood)::rest_batches ->
-                    let updated_mood =
-                        last_mood
-                        |>(+) mood_change
-                    (last_signals,updated_mood)::rest_batches
-                |[]->[]
-        ) []
-        |>List.rev
 
-    let event_batches_from_text
-        (mood_change: Parser<Appearance_event list * Mood, unit>)
+    let signals_from_text
+        (mood_change: Parser<Mood, unit>)
         (text:string)
         =
-        let batch_element = 
-            mood_change
-            <|>(
+        let signal = 
+            (
                 anyString 1 
-                |>> (fun symbol -> 
-                    [symbol|>Figure_id|>Signal],Mood 0
-                )
-            )
+                |>> Figure_id
+            ) .>>. (mood_change <|>% Mood 0)
 
-
-        let batch_element_ws =
-            batch_element .>> spaces
-        let all_batch_elements = many (spaces >>. batch_element_ws)
+        let signal_ws =
+            signal .>> spaces
+        let all_signals = many (spaces >>. signal_ws)
         
         text
-        |>run all_batch_elements
+        |>run all_signals
         |>function
         |Success (batches,_,_) ->
             batches
-            |>attach_mood_to_preceding_signal
         |Failure (error,_,_) -> failwith error
+
+    let event_batches_from_text
+        (mood_change: Parser<Mood, unit>)
+        (text:string)
+        =
+        signals_from_text
+            mood_change
+            text
+        |>Seq.map (fun (signal,mood) -> 
+            signal
+            |>Signal
+            |>List.singleton 
+            ,
+            mood
+        )
 
 
     let event_batches_from_textfile
