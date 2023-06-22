@@ -3,11 +3,44 @@ module rvinowise.ai.Finding_context_of_patterns
     open Xunit
     open FsUnit
 
-    let context_of_sequence_appearance
-        (history: (Figure_id*Moment) array)
-        (mapped_sequence: (Figure_id*Moment) list)
-        =()
+    type Relative_interval = 
+        struct
+            val start: int
+            val finish: int
+        end
 
+    type Context =
+    |Before of Figure_id array
+    |Inside of Relative_interval*Figure_id array
+    |After of Figure_id array
+
+    let context_of_sequence_appearance
+        (history: Figure_id array)
+        (mapped_sequence: (Figure_id*Moment) array)
+        =
+        let mapped_moments =
+            mapped_sequence
+            |>Array.map snd
+        
+        mapped_moments
+        |>Array.fold (
+            fun 
+                (contexts, (last_moment:Moment))
+                moment
+                ->
+            ((last_moment,moment),history[last_moment..moment])
+            ::contexts
+            ,
+            moment
+
+        ) ([],0)
+        |>fst
+
+        let last_sequence_moment = 
+            mapped_moments
+            |>Array.last
+        mapped_moments
+        |>Ara
 
     let history_slice
         (history: Figure_id array)
@@ -40,7 +73,6 @@ module rvinowise.ai.Finding_context_of_patterns
             |>Seq.map (
                 history_slice (
                     history
-                    |>Array.map fst
                 )
             )
         history_slices
@@ -56,6 +88,7 @@ module rvinowise.ai.Finding_context_of_patterns
     //mom:   012345   6789¹1   234567   89²  123456789
             |>built_from_text.Event_batches.signals_from_text
                 (built_from_text.Event_batches.mood_changes_as_words_and_numbers "no" "ok")
+            |>List.map fst
             |>Array.ofList
 
         let mapped_sequences =
