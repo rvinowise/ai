@@ -25,15 +25,23 @@ module rvinowise.ai.Finding_context_of_patterns
         mapped_moments
         |>Array.fold (
             fun 
-                (contexts, (last_moment:Moment))
+                (contexts, (last_index:int))
                 moment
                 ->
-            ((last_moment,moment),history[last_moment..moment])
+            let current_index = last_index+1
+            let current_relative_interval =
+                (last_index,current_index)
+            let current_absolute_interval = 
+                mapped_moments[last_index],mapped_moments[current_index]
+            let current_context = 
+                history[mapped_moments[last_index]..mapped_moments[current_index]]
+            
+            (current_relative_interval,current_context)
             ::contexts
             ,
             moment
 
-        ) ([],0)
+        ) ([],-1)
         |>fst
 
         let last_sequence_moment = 
