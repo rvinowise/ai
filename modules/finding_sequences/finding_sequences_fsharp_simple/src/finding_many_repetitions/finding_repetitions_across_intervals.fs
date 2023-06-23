@@ -6,7 +6,7 @@ open FsUnit
 
 module ``Finding_repetitions_across_intervals(simple)`` =
 
-    let take_which_exist_in_other_interval 
+    let take_which_exist_in_other_interval //todo change into a Map?
         (other_interval: (Sequence*Interval array) seq)
         (this_interval: (Sequence*Interval array) seq)
         =
@@ -100,22 +100,18 @@ module ``Finding_repetitions_across_intervals(simple)`` =
                 |>stage_of_finding_repetitions_in_interval
                     halves_can_form_pair
 
-            let (
-                    shared_smaller_sequences_interval1, 
-                    shared_smaller_sequences_interval2
-                ) 
-                = 
-                take_commonalities_between_2_intervals 
-                    (smaller_sequences_interval1)
-                    (smaller_sequences_interval2)
-            let (
-                    shared_larger_sequences_interval1, 
-                    shared_larger_sequences_interval2
-                )
-                = 
-                take_commonalities_between_2_intervals 
-                    (largest_sequences_interval1)
-                    (largest_sequences_interval2)
+            let shared_smaller_sequences_interval1, 
+                shared_smaller_sequences_interval2
+                    = 
+                    take_commonalities_between_2_intervals 
+                        (smaller_sequences_interval1)
+                        (smaller_sequences_interval2)
+            let shared_larger_sequences_interval1, 
+                shared_larger_sequences_interval2
+                    = 
+                    take_commonalities_between_2_intervals 
+                        (largest_sequences_interval1)
+                        (largest_sequences_interval2)
 
             next_step_of_finding_repetitions
                 halves_can_form_pair

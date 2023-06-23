@@ -9,8 +9,6 @@ open rvinowise
 open rvinowise.ui
 
 module Math_primers=
-    open System
-
 
     [<Fact>]
     let ``find sequences in math primers``()=
@@ -59,7 +57,7 @@ module Math_primers=
             "1+1=2;×"; "1+2=3;×";
             "1+1=";
         ]
-        |>ai.Desiring_future.desired
+        |>Desiring_future.desired
         |>should equal [
             ("2",";");
             (";","×");
