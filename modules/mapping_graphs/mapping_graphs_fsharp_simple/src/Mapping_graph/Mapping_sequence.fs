@@ -52,3 +52,4 @@ module Mapping_sequence =
             mappee
             target
             []
+        |>Option.map List.rev

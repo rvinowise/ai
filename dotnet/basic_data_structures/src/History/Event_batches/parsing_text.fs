@@ -12,8 +12,8 @@ module rvinowise.ai.built_from_text.Event_batches
         (skipString ";")
 
     
-    let no_mood: Parser<Appearance_event list * Mood, unit> =
-        spaces |>> fun _ ->([], Mood 0)
+    let no_mood: Parser<Mood, unit> =
+        spaces |>> fun _ ->(Mood 0)
 
     let mood_changes_as_repeated_symbols
         bad_symbol good_symbol

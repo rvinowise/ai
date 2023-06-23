@@ -9,11 +9,6 @@ module rvinowise.ai.Finding_context_of_patterns
             val finish: int
         end
 
-    type Context =
-    |Before of Figure_id array
-    |Inside of Relative_interval*Figure_id array
-    |After of Figure_id array
-
     let context_of_sequence_appearance
         (history: Figure_id array)
         (mapped_sequence: (Figure_id*Moment) array)
@@ -22,33 +17,35 @@ module rvinowise.ai.Finding_context_of_patterns
             mapped_sequence
             |>Array.map snd
         
-        mapped_moments
-        |>Array.fold (
-            fun 
-                (contexts, (last_index:int))
-                moment
-                ->
-            let current_index = last_index+1
-            let current_relative_interval =
-                (last_index,current_index)
-            let current_absolute_interval = 
-                mapped_moments[last_index],mapped_moments[current_index]
-            let current_context = 
-                history[mapped_moments[last_index]..mapped_moments[current_index]]
-            
-            (current_relative_interval,current_context)
-            ::contexts
-            ,
-            moment
+        let mapped_moments_without_last = mapped_moments[0..mapped_moments.Length-2]
+        let context_inside = 
+            mapped_moments_without_last
+            |>Array.fold (
+                fun 
+                    (found_contexts, index)
+                    moment
+                    ->
+                let next_index = index+1
+                let current_relative_interval =
+                    (index,next_index)
+                let current_context = 
+                    history[moment+1..mapped_moments[next_index]-1]
+                
+                (current_relative_interval,current_context)
+                ::found_contexts
+                ,
+                next_index
 
-        ) ([],-1)
-        |>fst
+            ) ([],0)
+            |>fst
+            |>List.rev
 
-        let last_sequence_moment = 
-            mapped_moments
-            |>Array.last
-        mapped_moments
-        |>Ara
+        let context_before =
+            history[.. (Array.head mapped_moments)-1]
+        let context_after =
+            history[(Array.last mapped_moments)+1 ..]
+        
+        context_before,context_inside,context_after
 
     let history_slice
         (history: Figure_id array)
@@ -104,6 +101,7 @@ module rvinowise.ai.Finding_context_of_patterns
                 "+=;"
                 [1,5; 13,17]
                 history
+            |>Seq.map Array.ofList
 
         mapped_sequences
         |>Seq.map (
@@ -111,12 +109,21 @@ module rvinowise.ai.Finding_context_of_patterns
                 history
         )|>should equal (
             [
-                ["1",0; "1",1; "2",2; "1+1=3;2+2=4;",3];
-                ["1+1=2;1+1=3;2",0; "2",1; "4",2]
-            ]|>List.map (List.map (fun (sequence,moment)->
-                sequence
+                "1",[0,1,"1"; 1,2,"2"],"1+1=3;2+2=4;";
+                "1+1=2;1+1=3;2", [0,1,"2"; 1,2,"4"],""
+            ]|>List.map (fun (before,inside,after)->
+                before
                 |>Seq.map (string>>Figure_id)|>Array.ofSeq
                 ,
-                moment
-            ))
+                inside
+                |>List.map (fun (start,finish,sequence)->
+                    (start,finish)
+                    ,
+                    sequence
+                    |>Seq.map (string>>Figure_id)|>Array.ofSeq
+                )
+                ,
+                after
+                |>Seq.map (string>>Figure_id)|>Array.ofSeq
+            )
         )
