@@ -7,17 +7,17 @@ open FsUnit
 module ``Finding_repetitions_across_intervals(simple)`` =
 
     let take_which_exist_in_other_interval //todo change into a Map?
-        (other_interval: (Sequence*Interval array) seq)
-        (this_interval: (Sequence*Interval array) seq)
+        (other_interval: Map<Sequence, Interval array>)
+        (this_interval: Map<Sequence, Interval array>)
         =
         this_interval
-        |>Seq.filter (fun (sequence,_)->
-            other_interval|>Seq.exists (fst>>(=)sequence)
+        |>Map.filter (fun sequence _->
+            other_interval|>Map.containsKey (sequence)
         )
     
     let take_commonalities_between_2_intervals
-        (interval1_appearances: (Sequence*Interval array) seq) 
-        (interval2_appearances: (Sequence*Interval array) seq)
+        (interval1_appearances: Map<Sequence, Interval array>) 
+        (interval2_appearances: Map<Sequence, Interval array>)
         =
         let interval1_history = 
             interval1_appearances
@@ -82,23 +82,19 @@ module ``Finding_repetitions_across_intervals(simple)`` =
             |>all_sofar_found_sequences_in_interval
         else
 
-            let (
-                    smaller_sequences_interval1,
-                    largest_sequences_interval1
-                ) 
-                = 
-                interval1_findings
-                |>stage_of_finding_repetitions_in_interval
-                    halves_can_form_pair
+            let smaller_sequences_interval1,
+                largest_sequences_interval1
+                    = 
+                    interval1_findings
+                    |>stage_of_finding_repetitions_in_interval
+                        halves_can_form_pair
 
-            let (
-                    smaller_sequences_interval2,
-                    largest_sequences_interval2
-                ) 
-                =
-                interval2_findings
-                |>stage_of_finding_repetitions_in_interval
-                    halves_can_form_pair
+            let smaller_sequences_interval2,
+                largest_sequences_interval2
+                    =
+                    interval2_findings
+                    |>stage_of_finding_repetitions_in_interval
+                        halves_can_form_pair
 
             let shared_smaller_sequences_interval1, 
                 shared_smaller_sequences_interval2
