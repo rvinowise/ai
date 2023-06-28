@@ -152,6 +152,7 @@ module rvinowise.ai.Finding_repeatedly_good_sequences
         find_good_sequences 
             signal_history
             mood_history
+        |>Consumer().Consume
 //        |>extensions.Map.toPairs
 //        |>Seq.map Appearances.sequence_appearances_to_text_and_tuples
 //        |>Set.ofSeq
