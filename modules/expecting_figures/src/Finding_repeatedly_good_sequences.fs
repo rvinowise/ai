@@ -127,18 +127,17 @@ module rvinowise.ai.Finding_repeatedly_good_sequences
         )|>should equal true
 
     [<Fact>]
-    let ``try find_good_sequences in a file``()=
+    let ``try find_good_sequences in a big history``()=
         let history =
-            //@"C:\prj\ai\modules\finding_sequences\mathematical_primers.txt"
-            @"
-1 is a digit; 2 is a digit; 3 is a digit;
+            @"1 is a digit; 2 is a digit; 3 is a digit;
 
-1+1=2;ok; 1+2=3;ok; 1+3=4;ok; 
-2+1=3;ok; 3+1=4;ok; 
+            1+1=2;ok; 1+2=3;ok; 1+3=4;ok; 
+            2+1=3;ok; 3+1=4;ok; 
 
-2+2=4;ok; 2+3=5;ok; 2+4=6;ok;
-3+2=5;ok; 4+2=6;ok;
-            "
+            2+2=4;ok; 2+3=5;ok; 2+4=6;ok;
+            3+2=5;ok; 4+2=6;ok;
+
+            1+4="
             |>built_from_text.Event_batches.event_batches_from_text
                 (built_from_text.Event_batches.mood_changes_as_words_and_numbers "no" "ok")
         let signal_history =
@@ -152,13 +151,8 @@ module rvinowise.ai.Finding_repeatedly_good_sequences
         find_good_sequences 
             signal_history
             mood_history
-        |>Consumer().Consume
-//        |>extensions.Map.toPairs
-//        |>Seq.map Appearances.sequence_appearances_to_text_and_tuples
-//        |>Set.ofSeq
-//        |>Set.isProperSubset (
-//            [
-//                "+=;",
-//                [1,5;7,11;13,17;19,23]
-//            ]|>Set.ofList
-//        )|>should equal true
+        |>Map.toSeq
+        |>Seq.map Appearances.sequence_appearances_to_text_and_tuples
+        |>Map.ofSeq
+        |>Map.find "+=;"
+        |>should haveLength 10
