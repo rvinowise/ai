@@ -125,4 +125,9 @@ module Figure=
         owner_figure.without
     
 
-    
+    let is_signal name figure =
+        figure.subfigures.Count = 1
+        &&
+        figure.subfigures
+        |>Map.toSeq|>Seq.head|>snd
+        |>Figure_id.value = name

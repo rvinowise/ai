@@ -76,20 +76,24 @@ module rvinowise.ai.built.Figure
 
     let simple (edges:seq<string*string>) =
         {
-            edges=built.Graph.simple edges
+            edges=Graph.simple edges
             subfigures=
                 edges
                 |>Seq.map (fun(tail_id,head_id)->
                     [
-                        (Vertex_id tail_id,  
-                        tail_id
-                        |>String.remove_number
-                        |>Figure_id
+                        (
+                            Vertex_id tail_id
+                            ,  
+                            tail_id
+                            |>String.remove_number
+                            |>Figure_id
                         );
-                        (Vertex_id head_id,
-                        head_id 
-                        |>String.remove_number
-                        |>Figure_id
+                        (
+                            Vertex_id head_id
+                            ,
+                            head_id 
+                            |>String.remove_number
+                            |>Figure_id
                         )
                     ]
                 )
@@ -98,7 +102,7 @@ module rvinowise.ai.built.Figure
             without=Set.empty
         }
         |>check_correctness
-    
+        |>Renaming_figures.rename_vertices_to_standard_names
     
 
     let sequential_figure_from_sequence (subfigures: string seq) =
@@ -118,7 +122,7 @@ module rvinowise.ai.built.Figure
                 subfigures_sequence
                 |>Map.ofSeq
             without=Set.empty
-        }
+        }|>Renaming_figures.rename_vertices_to_standard_names
 
     let sequential_figure_from_text (text:string) =
         text
@@ -151,7 +155,7 @@ module rvinowise.ai.built.Figure
                 id|>Figure_id
             ]|>Map.ofSeq
             without=Set.empty
-        }
+        }|>Renaming_figures.rename_vertices_to_standard_names
 
     let vertex_data_from_edges_of_figure (full_vertex_data: Map<Vertex_id, Figure_id>) edges =
         edges
@@ -208,14 +212,12 @@ module rvinowise.ai.built.Figure
     let from_tuples 
         (edges:seq<string*string*string*string>) =
         {
-            edges=built.Graph.from_tuples edges
+            edges=Graph.from_tuples edges
             subfigures=vertex_data_from_tuples edges
             without=Set.empty
         }
         |>check_correctness
-
-
-    
+        |>Renaming_figures.rename_vertices_to_standard_names
 
     
     let subgraph_with_vertices 
@@ -225,6 +227,6 @@ module rvinowise.ai.built.Figure
         vertices
         |>Edges.edges_between_vertices original_figure.edges
         |>from_parts_of_figure original_figure vertices 
-        |>Renaming_figures.rename_vertices_to_standard_names
+        
 
     

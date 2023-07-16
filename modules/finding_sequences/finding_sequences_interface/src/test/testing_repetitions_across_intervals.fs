@@ -24,8 +24,8 @@ module rvinowise.ai.``testing repetitions across intervals``
     //            abcd
     //        ab  ab     //repeated in 2nd
     //mom:   0123456789¹
-            |>built_from_text.Event_batches.event_batches_from_text
-                built_from_text.Event_batches.no_mood
+            |>History_from_text.event_batches_from_text
+                History_from_text.no_mood
             |>Event_batches.only_signals
             |>Event_batches.to_sequence_appearances
         let interval2 =
@@ -35,8 +35,8 @@ module rvinowise.ai.``testing repetitions across intervals``
     //        3         4    //ignored (didn't appear in 1st)
     //                   34
     //mom:   0123456789¹12345        
-            |>built_from_text.Event_batches.event_batches_from_text
-                built_from_text.Event_batches.no_mood
+            |>History_from_text.event_batches_from_text
+                History_from_text.no_mood
             |>Event_batches.only_signals
             |>Event_batches.to_sequence_appearances
         

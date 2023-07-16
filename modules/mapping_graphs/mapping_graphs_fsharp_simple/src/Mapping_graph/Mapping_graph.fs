@@ -92,18 +92,22 @@ module Mapping_graph =
                 owner_figure
                 referenced_figure)
             (Edges.next_vertices owner_figure.edges)
-            ( "b0"|>Vertex_id|>Set.singleton)
-        )|> should equal
-            [Vertex_id "f0";Vertex_id "f1"]
+            ( "b#1"|>Vertex_id|>Set.singleton)
+        )|> should equal (
+            [Vertex_id "f#1";Vertex_id "f#2"]
+            |>Set.ofList
+        )
 
         (first_vertices_reacheble_from_all_vertices_together
             (does_vertex_reference_figue
                 owner_figure
                 referenced_figure)
             (Edges.next_vertices owner_figure.edges)
-            ([Vertex_id "d";Vertex_id "b2"]|>Set.ofList)
-        )|> should equal
-            [Vertex_id "f1"]
+            ([Vertex_id "d#1";Vertex_id "b#2"]|>Set.ofList)
+        )|> should equal (
+            [Vertex_id "f#2"]
+            |>Set.ofList
+        )
 
     [<Fact>]
     let ``vertices reacheble from others``()=
@@ -111,16 +115,22 @@ module Mapping_graph =
         first_vertices_reacheble_from_all_vertices_together
             (fun _->true)
             (Edges.next_vertices owner_figure.edges)
-            (["b0";"b2"]|>List.map Vertex_id|>Set.ofList)
-        |> should equal [Vertex_id "f1"]
+            (["b#1";"b#2"]|>List.map Vertex_id|>Set.ofList)
+        |> should equal (
+            [Vertex_id "f#2"]
+            |>Set.ofList
+        )
 
     [<Fact>]
     let ``vertices reaching others``()=
         first_vertices_reacheble_from_all_vertices_together
             (fun _->true)
             (Edges.previous_vertices example.Figure.a_high_level_relatively_simple_figure.edges)
-            (["b1";"f1"]|>List.map Vertex_id|>Set.ofList)
-        |> should equal [Vertex_id "b0"]
+            (["b#3";"f#2"]|>List.map Vertex_id|>Set.ofList)
+        |> should equal (
+            [Vertex_id "b#1"]
+            |>Set.ofList
+        )
 
     
 

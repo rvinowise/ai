@@ -54,14 +54,30 @@ module Applying_stencil =
                 (Edges.previous_vertices target.edges)
             |>Set.ofSeq
         
-        (output_beginning,output_ending)
-        ||>Set.intersect 
-        |>Some
-        |>Option.filter (Set.isEmpty>>not)
-        |>Option.map (built.Figure.subgraph_with_vertices target)
-        |>Option.filter (
-            is_figure_without_impossible_parts stencil.output_without
-        )
+        let output_vertices = 
+            (output_beginning,output_ending)
+            ||>Set.intersect 
+        
+        if Set.isEmpty output_vertices then
+            None
+        else
+            let resulting_part_of_target = 
+                output_vertices
+                |>built.Figure.subgraph_with_vertices target
+            
+            if 
+                is_figure_without_impossible_parts
+                    stencil.output_without 
+                    resulting_part_of_target
+            then
+                Some (
+                    Renaming_figures.rename_vertices_to_standard_names resulting_part_of_target
+                    ,
+                    resulting_part_of_target    
+                )
+            else
+                None
+            
             
 
 

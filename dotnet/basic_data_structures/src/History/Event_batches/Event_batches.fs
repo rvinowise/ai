@@ -1,12 +1,10 @@
 module rvinowise.ai.Event_batches
-    open System
     open FsUnit
     open Xunit
-    open System.Collections.Generic
     //open FSharpPlus
+    open System.Linq
 
     open rvinowise.ai
-    open rvinowise 
 
 
     let only_signals 
@@ -72,10 +70,10 @@ module rvinowise.ai.Event_batches
             
         ) event_batches
 
-    let from_appearances 
+    let contingent_batches_from_appearances 
         (figure_histories : (Figure_id * Interval array) seq)
         =
-        let history = 
+        let empty_history_to_be_filled_with_events = 
             if Seq.isEmpty figure_histories then
                 [||]
             else 
@@ -94,7 +92,7 @@ module rvinowise.ai.Event_batches
             fun event_batches 
                 (figure, appearances) ->
             add_events_to_combined_history figure appearances event_batches
-        ) history
+        ) empty_history_to_be_filled_with_events
             
 
 
@@ -110,7 +108,7 @@ module rvinowise.ai.Event_batches
             (Figure_id "a", history_of_a); 
             (Figure_id "b", history_of_b)
         ]
-        |>from_appearances 
+        |>contingent_batches_from_appearances 
         |>Seq.mapi (fun moment batch ->
             moment, (batch|>Seq.sort)
         )
@@ -126,6 +124,7 @@ module rvinowise.ai.Event_batches
                 "a"|>Figure_id|>Start;
                 Finish ("b"|>Figure_id,0)
             ];
+            3,[];
             4,[
                 Finish ("a"|>Figure_id,2);
                 "b"|>Figure_id|>Signal
@@ -173,7 +172,7 @@ module rvinowise.ai.Event_batches
                 |_->figure_appearances
             ) figure_appearences
         ) Map.empty
-        |> Map.map (fun figure appearances->
+        |> Map.map (fun _ appearances->
             appearances|>List.rev|>Array.ofList
         )
 
@@ -226,7 +225,7 @@ module rvinowise.ai.Event_batches
     // let ``to mood changes history``()=
     //     "1ok;23ok;45no;no;67"
     //    //01  234  567  8  9¹ <-moments
-    //     |>built_from_text.Event_batches.signals_with_mood_from_text
+    //     |>History_from_text.signals_with_mood_from_text
     //     |>event_batches_to_mood_changes
     //     |>should equal (dict [
     //         1,Mood +1;
@@ -237,7 +236,7 @@ module rvinowise.ai.Event_batches
     // let ``to mood changes history2``()=
     //     "00 no3; 223 ok2;4 no2;"
     //    //01 2    345 6   7 89 <-moments
-    //     |>built_from_text.Event_batches.signals_with_mood_from_text
+    //     |>History_from_text.signals_with_mood_from_text
     //     |>event_batches_to_mood_changes
     //     |>should equal (dict [
     //         2,Mood -3;
@@ -253,9 +252,9 @@ module rvinowise.ai.Event_batches
         =
         event_batches
         |>event_batches_to_figure_appearances 0
-        |>FSharpPlus.Map.union (appearances|>Map)
-        |>extensions.Map.toPairs
-        |>from_appearances
+        |>fun map -> map.Union(appearances|>Map)
+        |>Seq.map (fun pair->pair.Key,pair.Value)
+        |>contingent_batches_from_appearances
 
     
     let add_sequence_appearances
@@ -281,6 +280,7 @@ module rvinowise.ai.Event_batches
                 ["b"]//3
             ]|>List.map (List.map (Figure_id>>Appearance_event.Signal))
             |>event_batches_to_figure_appearances 0
+            |>Map.toSeq
             |>should equal (
                 [
                     "a", [0;2]
@@ -302,3 +302,31 @@ module rvinowise.ai.Event_batches
         |>Seq.map (fun pair ->
             [|pair.Key|], pair.Value
         )
+
+    let sequential_event_batches_to_figure 
+        (event_batches: Appearance_event list seq)
+        =
+        let subfigures_sequence = 
+            event_batches
+            |>Seq.map List.tryHead
+            |>Seq.choose id
+            |>Seq.map (function
+                |Signal name->Figure_id.value name
+                |_->failwith "only sequential batches of signals (without overlapping intervals) are allowed  " 
+            (* maybe full-fledged figures are not needed (too slow), 
+            and some sort of sequences can represend complex causation*)
+            )|>built.Graph.unique_numbers_for_names_in_sequence
+            |>Seq.map (fun (vertex, name) ->
+                vertex,Figure_id name
+            )
+        {
+            edges=
+                subfigures_sequence
+                |>Seq.map fst
+                |>built.Graph.sequential_edges
+                
+            subfigures=
+                subfigures_sequence
+                |>Map.ofSeq
+            without=Set.empty
+        }|>Renaming_figures.rename_vertices_to_standard_names

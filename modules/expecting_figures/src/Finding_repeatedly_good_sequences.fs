@@ -103,8 +103,8 @@ module rvinowise.ai.Finding_repeatedly_good_sequences
         let history =
             "1+1=2;ok;1+1=3;no;2+2=4;ok;"
     //mom:   012345   6789¹1   234567   89²  123456789
-            |>built_from_text.Event_batches.event_batches_from_text
-                (built_from_text.Event_batches.mood_changes_as_words_and_numbers "no" "ok")
+            |>History_from_text.event_batches_from_text
+                (History_from_text.mood_changes_as_words_and_numbers "no" "ok")
         let signal_history =
             history
             |>Event_batches.only_signals
@@ -138,8 +138,8 @@ module rvinowise.ai.Finding_repeatedly_good_sequences
             3+2=5;ok; 4+2=6;ok;
 
             1+4="
-            |>built_from_text.Event_batches.event_batches_from_text
-                (built_from_text.Event_batches.mood_changes_as_words_and_numbers "no" "ok")
+            |>History_from_text.event_batches_from_text
+                (History_from_text.mood_changes_as_words_and_numbers "no" "ok")
         let signal_history =
             history
             |>Event_batches.only_signals

@@ -48,8 +48,8 @@ type Finding_repetitions_ingenious_benchmark() =
 //seq3:          a    b  c  de f  g h         
 //seq4:         1 2     3  4     5 6  
 //mom:   0123456789¹123456789²123456789³
-        |>built_from_text.Event_batches.event_batches_from_text
-            built_from_text.Event_batches.no_mood
+        |>History_from_text.event_batches_from_text
+            History_from_text.no_mood
         |>Event_batches.only_signals
         |>Event_batches.event_batches_to_figure_appearances 0
         |>extensions.Map.toPairs
@@ -62,8 +62,8 @@ type Finding_repetitions_ingenious_benchmark() =
 //seq1:  a bc  d
 //seq3:      a   bc  d       
 //mom:   0123456789¹123456789²123456789³
-        |>built_from_text.Event_batches.event_batches_from_text
-            built_from_text.Event_batches.no_mood
+        |>History_from_text.event_batches_from_text
+            History_from_text.no_mood
         |>Event_batches.only_signals
         |>Event_batches.to_sequence_appearances
 

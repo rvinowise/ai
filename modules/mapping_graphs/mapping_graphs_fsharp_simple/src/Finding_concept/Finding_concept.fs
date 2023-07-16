@@ -3,13 +3,12 @@ namespace rvinowise.ai
 module Finding_concept = 
  
     open rvinowise.ai
-    open rvinowise.extensions
 
     open Xunit
     open FsUnit
 
 
-    let rec concrete_instances 
+    let rec incarnations_of_concept 
         (place: Figure)
         (concept: Concept)
         =
@@ -20,15 +19,15 @@ module Finding_concept =
             |>Set.ofSeq
         |Or children->
             children
-            |>Seq.collect (concrete_instances place)
+            |>Seq.collect (incarnations_of_concept place)
             |>Set.ofSeq
         |And children ->
             children
-            |>Seq.map (concrete_instances place>>Set.ofSeq)
+            |>Seq.map (incarnations_of_concept place>>Set.ofSeq)
             |>Set.intersectMany
 
 
-    let digit_concept =
+    let complex_digit_concept =
         let first_digit_stencil =
             built.Stencil.simple_with_separator [
                 "N","out";
@@ -58,26 +57,129 @@ module Finding_concept =
             {stencil with 
                 output_without=
                     ","|>built.Figure.signal|>Set.singleton})
-        |>List.map Concept.Leaf
+        |>List.map Leaf
         |>Set.ofList
-        |>Concept.Or 
+        |>Or 
+
+    let digit_concept =
+        {
+            (
+                built.Stencil.simple_with_separator [
+                    "N","out";
+                    "out",";";
+                ]
+            ) with 
+                output_without=
+                    ","|>built.Figure.signal|>Set.singleton
+        }|>Leaf
+
+    let digit_concept_between_commas =
+        {
+            (
+                built.Stencil.simple_with_separator [
+                    ",","out";
+                    "out",",";
+                ]
+            ) with 
+                output_without=
+                    ","|>built.Figure.signal|>Set.singleton
+        }|>Leaf
 
     [<Fact>]
-    let ``try digit concept``()=
+    let ``try incarnations of digit concept``()=
         let history_as_figure =
             "N0,1,2,3,4,5,6,7,8,9;"
     //mom:   0123456789¹123456789²
             |>built.Figure.sequential_figure_from_text
 
         digit_concept
-        |>concrete_instances history_as_figure
-        |>Set.ofSeq
+        |>incarnations_of_concept history_as_figure
+        |>Set.map fst
         |>should equal (
             "0123456789"
             |>Seq.map string
             |>Seq.map built.Figure.signal
             |>Set.ofSeq
         )
+
+    [<Fact>]
+    let ``try incarnations of concept in several places of incarnation``()=
+        (*TODO "N0" and "y" are mistakenly considered number incarnations *)
+        let history_as_figure =
+            "N0,1;x,y;z,N0,2;"
+    //mom:   0123456789¹123456789²
+            |>built.Figure.sequential_figure_from_text
+
+        let incarnations = 
+            complex_digit_concept
+            |>incarnations_of_concept history_as_figure
+        
+        incarnations
+        |>Set.filter(fun (standardized_figure, _)->
+            standardized_figure
+            |>Figure.is_signal "0"
+        )|>should haveCount 2
+    
+        incarnations
+        |>Set.map fst
+        |>should equal (
+            "012"
+            |>Seq.map string
+            |>Seq.map built.Figure.signal
+            |>Set.ofSeq
+        )
+
+    let appearances_of_concept_incarnations
+        (history: Figure)
+        concept
+        =
+        let incarnations =         
+            concept
+            |>incarnations_of_concept history
+        
+        let vertices_of_incarnations = 
+            incarnations
+            |>Seq.map snd
+            |>Seq.map (fun figure->
+                figure.subfigures
+                |>Map.keys
+                |>Set.ofSeq
+            )
+            |>Set.ofSeq
+
+        incarnations
+        |>Seq.map fst
+        |>Seq.map (
+            Mapping_graph.map_figure_onto_target
+                history
+        )|>Seq.concat
+        |>Seq.filter (fun (appearance: stencil.Mapping)->
+            let appearance_vertices = 
+                appearance.Keys
+                |>Set.ofSeq
+            
+            vertices_of_incarnations
+            |>Set.exists (fun incarnation_vertices->
+                incarnation_vertices = appearance_vertices
+            ) 
+            |>not
+        )
+
+    [<Fact>]
+    let ``try appearances of incarnations of digit concept``()=
+        let history_as_figure =
+            @"N0,1,2,3,4,5,6,7,8,9;
+            N0,x;
+            1+1=2;ok;"
+    //mom:    0123456789¹123456789²
+            |>History_from_text.sequential_figure_from_text
+                (History_from_text.mood_changes_as_words_and_numbers "no" "ok")
+
+        appearances_of_concept_incarnations
+            history_as_figure
+            digit_concept
+        
+        ()
 
     [<Fact>]
     let ``mathematical concepts``()=
@@ -98,7 +200,7 @@ module Finding_concept =
                 stencil with 
                     output_without=
                         [math_operators;control_flow]
-                        |>Seq.collect id 
+                        |>Seq.concat
                         |>Set.ofSeq
             }
         let second_digit_of_primer =

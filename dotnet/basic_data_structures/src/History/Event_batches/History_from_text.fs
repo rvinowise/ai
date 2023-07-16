@@ -1,4 +1,4 @@
-module rvinowise.ai.built_from_text.Event_batches
+module rvinowise.ai.History_from_text
     open System
     open FsUnit
     open Xunit
@@ -51,18 +51,20 @@ module rvinowise.ai.built_from_text.Event_batches
         (mood_change: Parser<Mood, unit>)
         (text:string)
         =
-        let signal = 
+        let signal =
             (
                 anyString 1 
                 |>> Figure_id
-            ) .>>. (mood_change <|>% Mood 0)
+            ) .>> spaces
+        let batch = 
+            signal .>>. (mood_change <|>% Mood 0)
 
-        let signal_ws =
-            signal .>> spaces
-        let all_signals = many (spaces >>. signal_ws)
+        let batch_ws =
+            batch .>> spaces
+        let all_batches = many (spaces >>. batch_ws)
         
         text
-        |>run all_signals
+        |>run all_batches
         |>function
         |Success (batches,_,_) ->
             batches
@@ -99,23 +101,34 @@ module rvinowise.ai.built_from_text.Event_batches
     [<Fact>]
     let ``try from_text``()=
         "a1ok;2 no2;3"
-        |>event_batches_from_text
+        |>signals_from_text
             (mood_changes_as_words_and_numbers "no" "ok")
-        |>should equal ([
-            ["a"],0;    
-            ["1"],0; 
-            [],1; 
-            ["2"],0; 
-            [],-2; 
-            ["3"],0; 
-        ])
+        |>should equal (
+            [
+                "a",0;    
+                "1",1; 
+                "2",-2; 
+                "3",0; 
+            ]|>Seq.map (fun (symbol, mood) ->
+                symbol|>Figure_id
+                ,
+                Mood mood
+            )
+        )
 
   
-    let from_text_blocks (text_blocks:string seq)=
+    let event_batches_from_text_blocks (text_blocks:string seq)=
         text_blocks
         |>Seq.collect id
         |>String.Concat
         |>event_batches_from_text
             (mood_changes_as_words_and_numbers "no" "ok")
 
-    
+    let sequential_figure_from_text 
+        (mood_change: Parser<Mood, unit>)
+        text 
+        =
+        text
+        |>event_batches_from_text mood_change
+        |>Event_batches.only_signals
+        |>Event_batches.sequential_event_batches_to_figure

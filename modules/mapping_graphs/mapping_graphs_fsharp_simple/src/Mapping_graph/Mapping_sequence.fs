@@ -1,7 +1,6 @@
 namespace rvinowise.ai
 
 module Mapping_sequence = 
-    open rvinowise
 
     open Xunit
     open FsUnit

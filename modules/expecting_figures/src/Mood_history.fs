@@ -123,8 +123,8 @@ module rvinowise.ai.Mood_history
     let ``try intervals_changing_mood``()=
         "0ok;23ok;45no2;67"
     //   0   12   34    5678 <-moments
-        |>built_from_text.Event_batches.event_batches_from_text
-            (built_from_text.Event_batches.mood_changes_as_words_and_numbers "no" "ok")
+        |>History_from_text.event_batches_from_text
+            (History_from_text.mood_changes_as_words_and_numbers "no" "ok")
         |>Event_batches.only_mood_changes
         |>intervals_changing_mood 
             all_mood_changes_starting_from_index
@@ -143,8 +143,8 @@ module rvinowise.ai.Mood_history
     let ``try intervals_changing_mood, with repeated signals``()=
         "00¬¬¬223××4¬¬"
     //   01   234  5  6789 <-moments
-        |>built_from_text.Event_batches.event_batches_from_text
-            (built_from_text.Event_batches.mood_changes_as_repeated_symbols '¬' '×')
+        |>History_from_text.event_batches_from_text
+            (History_from_text.mood_changes_as_repeated_symbols '¬' '×')
         |>Event_batches.only_mood_changes
         |>intervals_changing_mood 
             all_mood_changes_starting_from_index
@@ -161,8 +161,8 @@ module rvinowise.ai.Mood_history
     let ``try intervals_changing_mood with one_mood_change_in_shortest_interval``()=
         "1ok;23ok;45no2;67"
     //   0   12   34    56789 <-moments
-        |>built_from_text.Event_batches.event_batches_from_text
-            (built_from_text.Event_batches.mood_changes_as_words_and_numbers "no" "ok")
+        |>History_from_text.event_batches_from_text
+            (History_from_text.mood_changes_as_words_and_numbers "no" "ok")
         |>Event_batches.only_mood_changes
         |>intervals_changing_mood 
             one_mood_change_in_shortest_interval

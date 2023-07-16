@@ -18,9 +18,9 @@ module ``application of stencils``=
     open rvinowise.ui
     
         
-    let initial_mapping_without_prolongation = Mapping.ofStringPairs ["b","b1";"h","h"]
-    let initial_fruitful_mapping = Mapping.ofStringPairs ["b","b0";"h","h"]
-    let initial_useless_mapping = Mapping.ofStringPairs ["b","b2";"h","h"]
+    let initial_mapping_without_prolongation = Mapping.ofStringPairs ["b#1","b#3";"h#1","h#1"]
+    let initial_fruitful_mapping = Mapping.ofStringPairs ["b#1","b#1";"h#1","h#1"]
+    let initial_useless_mapping = Mapping.ofStringPairs ["b#1","b#2";"h#1","h#1"]
         
     let result_of_fruitful_stencil_application =
         built.Figure.simple
@@ -34,7 +34,7 @@ module ``application of stencils``=
         prolongate_one_mapping_with_next_subfigures 
             example.Figure.fitting_stencil_as_figure
             example.Figure.a_high_level_relatively_simple_figure
-            [(Vertex_id "f", Figure_id "f")]
+            [(Vertex_id "f#1", Figure_id "f")]
             initial_mapping_without_prolongation
         |> should equal
             []
@@ -44,14 +44,14 @@ module ``application of stencils``=
         prolongate_one_mapping_with_next_subfigures 
             example.Figure.fitting_stencil_as_figure
             example.Figure.a_high_level_relatively_simple_figure
-            [(Vertex_id "f", Figure_id "f")]
+            [(Vertex_id "f#1", Figure_id "f")]
             initial_useless_mapping
         |> should equal
             [
                 Mapping.ofStringPairs [
-                    "b","b2";
-                    "h","h";
-                    "f","f1"
+                    "b#1","b#2";
+                    "h#1","h#1";
+                    "f#1","f#2"
                 ]
             ]
     
@@ -69,14 +69,14 @@ module ``application of stencils``=
         |>should equal (
             Set.ofSeq [
                 Mapping.ofStringPairs [
-                    "b","b0";
-                    "h","h";
-                    "f","f1"
+                    "b#1","b#1";
+                    "h#1","h#1";
+                    "f#1","f#2"
                 ];
                 Mapping.ofStringPairs [
-                    "b","b2";
-                    "h","h";
-                    "f","f1"
+                    "b#1","b#2";
+                    "h#1","h#1";
+                    "f#1","f#2"
                 ]
             ])
 
@@ -119,12 +119,13 @@ module ``application of stencils``=
         let stencil = example.Stencil.a_fitting_stencil
         stencil
         |>results_of_stencil_application target
-        |>should equal [
-            built.Figure.simple
-                [
-                    "d","e"
-                ]
-        ]
+        |>Set.ofSeq
+        |>should equal (
+            [
+                ["d","e"]|>built.Figure.simple;
+                "h"|>built.Figure.signal 
+            ]|>Set.ofList
+        )
 
     [<Fact>]
     let ``a fitting stencil, applied to a figure, outputs a subgraph (with only one vertex)``()=
@@ -142,11 +143,12 @@ module ``application of stencils``=
         map_first_nodes
             example.Figure.fitting_stencil_as_figure
             example.Figure.a_high_level_relatively_simple_figure
-        |> should equal
-            [   Mapping.ofStringPairs ["b","b0";"h","h"];
-                Mapping.ofStringPairs ["b","b1";"h","h"];
-                Mapping.ofStringPairs ["b","b2";"h","h"]
-            ]
+        |>Set.ofSeq
+        |> should equal ([   
+            Mapping.ofStringPairs ["b#1","b#1";"h#1","h#1"];
+            Mapping.ofStringPairs ["b#1","b#3";"h#1","h#1"];
+            Mapping.ofStringPairs ["b#1","b#2";"h#1","h#1"]
+        ]|>Set.ofSeq)
     
     [<Fact>]
     let ``initial mapping when the target lacks some figures``()=
@@ -174,19 +176,17 @@ module ``application of stencils``=
         |> should equal
             [
                 Mapping.ofStringPairs [
-                    "b","b0";
-                    "h","h";
-                    "f","f1";
+                    "b#1","b#1";
+                    "h#1","h#1";
+                    "f#1","f#2";
                 ];
                 Mapping.ofStringPairs [
-                    "b","b2";
-                    "h","h";
-                    "f","f1";
+                    "b#1","b#2";
+                    "h#1","h#1";
+                    "f#1","f#2";
                 ];
             ]
-            //|>Seq.map Set.ofSeq
-    
-            
+
             
     [<Fact(Skip="ui")>] //
     let ``paint the target figure and the stencil``()=
@@ -218,7 +218,7 @@ module ``application of stencils``=
             |>built.Figure.sequential_figure_from_text
 
         middle_digit_stencil
-        |>Applying_stencil.results_of_stencil_application history_as_figure
+        |>results_of_stencil_application history_as_figure
         |>Set.ofSeq
         |>should equal (
             "12345678"
@@ -230,19 +230,23 @@ module ``application of stencils``=
     [<Fact>]
     let ``apply stencil, when some first mapped vertices whould be skipped``()=
         let last_digit_stencil =
-            built.Stencil.simple_with_separator [
-                "N","out";
-                ",#1","out";
-                "out",";";
-            ]
-
+            {
+                built.Stencil.simple_with_separator [
+                    "N","out";
+                    ",#1","out";
+                    "out",";";
+                ] with
+                    output_without=
+                        ","|>built.Figure.signal|>Set.singleton
+            }
+        
         let history_as_figure =
             "N0,1,2,3,4,5,6,7,8,9;"
     //mom:   0123456789¹123456789²
             |>built.Figure.sequential_figure_from_text
 
         last_digit_stencil
-        |>Applying_stencil.results_of_stencil_application history_as_figure
+        |>results_of_stencil_application history_as_figure
         |>should equal (
             "9"
             |>built.Figure.signal

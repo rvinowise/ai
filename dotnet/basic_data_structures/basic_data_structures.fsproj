@@ -56,8 +56,8 @@
     <Compile Include="src\History\Mood_history\examples.fs" />
     
     <Compile Include="src\History\Event_batches\Event_batches_types.fs" />
-    <Compile Include="src\History\Event_batches\parsing_text.fs" />
     <Compile Include="src\History\Event_batches\Event_batches.fs" />
+    <Compile Include="src\History\Event_batches\History_from_text.fs" />
     <Compile Include="src\History\Event_batches\convert_to_figure.fs" />
     <Compile Include="src\History\Event_batches\example.fs" />
 
@@ -69,7 +69,6 @@
 
   <ItemGroup>
     <PackageReference Include="FParsec" Version="1.1.1" />
-    <PackageReference Include="fsharpplus" Version="1.4.1" />
     <PackageReference Include="xUnit" Version="2.4.2" />
     <PackageReference Include="fsunit" Version="5.2.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.4.0" />

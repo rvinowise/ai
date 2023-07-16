@@ -3,11 +3,6 @@ module rvinowise.ai.Finding_context_of_patterns
     open Xunit
     open FsUnit
 
-    type Relative_interval = 
-        struct
-            val start: int
-            val finish: int
-        end
 
     let context_of_sequence_appearance
         (history: Figure_id array)
@@ -91,8 +86,8 @@ module rvinowise.ai.Finding_context_of_patterns
         let history =
             "1+1=2;ok;1+1=3;no;2+2=4;ok;"
     //mom:   012345   6789¹1   234567   89²  123456789
-            |>built_from_text.Event_batches.signals_from_text
-                (built_from_text.Event_batches.mood_changes_as_words_and_numbers "no" "ok")
+            |>History_from_text.signals_from_text
+                (History_from_text.mood_changes_as_words_and_numbers "no" "ok")
             |>List.map fst
             |>Array.ofList
 

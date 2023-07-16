@@ -1,7 +1,6 @@
 namespace rvinowise.ai.stencil
     open System.Collections.Generic
     open rvinowise.ai
-    open rvinowise
     open System.Linq
     open System
 
@@ -9,7 +8,7 @@ namespace rvinowise.ai.stencil
     type Mapping_dict = Dictionary<Vertex_id, Vertex_id>
     type IMapping_dict = IDictionary<Vertex_id, Vertex_id>
 
-    (* mapping ot a stencil onto a figure, so that its subgraph can be retrieved,
+    (* mapping of a stencil onto a figure, so that its subgraph can be retrieved,
     which is the output *)
     type Mapping = 
         inherit Dictionary<Vertex_id,Vertex_id>

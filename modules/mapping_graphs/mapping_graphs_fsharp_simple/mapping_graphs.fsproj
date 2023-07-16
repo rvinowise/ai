@@ -13,6 +13,7 @@
     <Compile Include="src\Mapping_graph\Work_with_generators.fs" />
     <Compile Include="src\Mapping_graph\Map_first_nodes.fs" />
     <Compile Include="src\Mapping_graph\Mapping_graph.fs" />
+    <Compile Include="src\Mapping_graph\Mapping_graph_tightly.fs" />
     <Compile Include="src\Mapping_graph\Mapping_sequence.fs" />
     <Compile Include="src\Applying_stencil\Applying_stencil.fs" />
     <Compile Include="src\Finding_concept\Finding_concept.fs" />

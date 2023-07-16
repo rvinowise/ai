@@ -20,7 +20,7 @@ module Math_primers=
 //mom(20+):  2345678    9³12345
 //mom(30+):  6789
         ]
-        |>built_from_text.Event_batches.from_text_blocks
+        |>History_from_text.event_batches_from_text_blocks
         |>Event_batches.only_signals
         |>Event_batches.to_sequence_appearances
         |>Finding_many_repetitions.all_repetitions
@@ -37,7 +37,7 @@ module Math_primers=
     [<Fact(Skip="ui")>]
     let ``draw training history``()=
         let input_primers =
-            built_from_text.Event_batches.from_text_blocks [
+            History_from_text.event_batches_from_text_blocks [
                 "N:0,1,2,3,4,5,6,7,8,9;";
                 "1+1=2;ok;"; "1+2=3;ok;";
                 "1+1=";
@@ -52,7 +52,7 @@ module Math_primers=
 
     [<Fact>]
     let ``ai can reply with rote-memorised constant sequences``()=
-        built_from_text.Event_batches.from_text_blocks [
+        History_from_text.event_batches_from_text_blocks [
             "N:0,1,2,3,4,5,6,7,8,9;";
             "1+1=2;×"; "1+2=3;×";
             "1+1=";
@@ -70,14 +70,14 @@ module Math_primers=
             new StreamReader "C:/prj/ai/examples/math/mathematical_primers.txt"
         let raw_signals =
             input_stream.ReadToEnd()
-            |>built_from_text.Event_batches.event_batches_from_text
-                built_from_text.Event_batches.no_mood
+            |>History_from_text.event_batches_from_text
+                History_from_text.no_mood
             |>Event_batches.only_signals
             |>Event_batches.to_sequence_appearances
         
-        let intermediat_results_file = @"C:\prj\ai\examples\math\mathematical_primers_intermediate_output.txt"
+        let intermediate_results_file = @"C:\prj\ai\examples\math\mathematical_primers_intermediate_output.txt"
         let final_results_file ="C:/prj/ai/examples/math/math_output.txt"
-        File.Delete(intermediat_results_file)
+        File.Delete(intermediate_results_file)
         File.Delete(final_results_file)
         use output_stream = File.AppendText(final_results_file)
         
@@ -87,7 +87,7 @@ module Math_primers=
                 (Finding_repetitions.halves_are_close_enough 1)
                 (
                 Reporting_repetitions.write_to_file 
-                    intermediat_results_file
+                    intermediate_results_file
                 )
         
         output_stream.WriteLine $"sequences ending with {good_signal}"
