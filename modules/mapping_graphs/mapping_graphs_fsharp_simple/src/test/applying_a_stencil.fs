@@ -1,8 +1,5 @@
 namespace rvinowise.ai.test
 
-open System
-open System.Threading
-open System.Threading.Tasks
 open Xunit
 open FsUnit
 
