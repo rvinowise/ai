@@ -1,4 +1,7 @@
-module rvinowise.ai.Finding_figures
+namespace rvinowise.ai
+
+
+module Finding_figures =
 
     (* 
         it's similar to stencil application, but we map a source-figure onto the target-figure

@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\dotnet\basic_data_structures\basic_data_structures.fsproj" />
     <ProjectReference Include="..\..\modules\finding_sequences\finding_sequences_interface\finding_sequences.fsproj" />
 	<ProjectReference Include="..\..\modules\expecting_figures\expecting_figures.fsproj" />
 

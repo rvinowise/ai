@@ -22,6 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\dotnet\basic_data_structures\basic_data_structures.fsproj" />
     <ProjectReference Include="..\finding_sequences_fsharp_simple\finding_sequences_fsharp_simple.fsproj" />
     <!-- <ProjectReference Include="..\finding_sequences_fsharp_gpu\finding_sequences_fsharp_gpu.fsproj" />
     <ProjectReference Include="..\finding_sequences_csharp_gpu\finding_sequences_csharp_gpu.csproj" /> -->
@@ -34,6 +35,7 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.4.0" />
     <PackageReference Include="fsunit" Version="5.2.0" />
     <PackageReference Include="xunit" Version="2.4.2" />
+    <PackageReference Include="xunit.extensibility.core" Version="2.4.2" />
    
   </ItemGroup>
 
