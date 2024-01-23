@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <GenerateProgramFile>true</GenerateProgramFile>
     <OutputType>Library</OutputType>
     <!-- because of graphviz graph visualisation -->
@@ -31,7 +31,7 @@
     <ProjectReference Include="..\..\dotnet\basic_data_structures\basic_data_structures.fsproj" />
     <ProjectReference Include="..\provided_data\provided_data.fsproj" />
     
-    <ProjectReference Include="..\..\..\DotNetGraph\Sources\DotNetGraph\DotNetGraph.csproj" />
+    <ProjectReference Include="..\..\..\DotNetGraph_withPorts\Sources\DotNetGraph\DotNetGraph.csproj" />
   </ItemGroup>
 
   <ItemGroup>

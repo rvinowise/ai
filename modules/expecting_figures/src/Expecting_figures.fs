@@ -1,9 +1,8 @@
 namespace rvinowise.ai
+open rvinowise.ai
 
 
 module Expecting_figures = 
-    open rvinowise.ai
-
 
     let prolongate_expectation_with_an_input_figure 
         (fired_figure: Figure_id)

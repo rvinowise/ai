@@ -2,13 +2,10 @@
 
 open Xunit
 open FsUnit
-open BenchmarkDotNet.Configs
 open BenchmarkDotNet.Attributes
-open BenchmarkDotNet.Running
 
 [<AutoOpen>]
 module StringBuilder=
-    open System.Text
 
     let (++) (left : System.Text.StringBuilder) (right : 't) : System.Text.StringBuilder =
         left.Append right
@@ -38,6 +35,7 @@ module Dictionary=
         | true, value -> value
         | _ -> default'
 
+
 module KeyValuePair=
     open System.Collections.Generic
 
@@ -46,11 +44,11 @@ module KeyValuePair=
     let value (pair:KeyValuePair<'a,'b>) =
         pair.Value
 
+
+
 module HashSet =
     open System.Collections.Generic
     open System.Linq
-    
-    
     
     let intersectMany
         (sets: IEnumerable<HashSet<'a> >)
@@ -171,6 +169,7 @@ module String =
         |> Seq.cast<Match> 
         |> Seq.map (fun m -> m.Value)
         |> Seq.toList
+    
     
 module Map =
 

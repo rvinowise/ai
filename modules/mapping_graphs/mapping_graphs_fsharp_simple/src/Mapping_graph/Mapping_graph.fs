@@ -1,14 +1,15 @@
 namespace rvinowise.ai
 
+open rvinowise.ai.generating_combinations
+open rvinowise.ai.stencil
+open rvinowise
+open rvinowise.ai.mapping_graph_impl
+
+open Xunit
+open FsUnit
+
+
 module Mapping_graph = 
-    open rvinowise.ai.generating_combinations
-    open rvinowise.ai.stencil
-    open rvinowise
-    open rvinowise.ai.mapping_graph_impl
-
-    open Xunit
-    open FsUnit
-
 
     let map_first_nodes = Map_first_nodes.map_first_nodes
 

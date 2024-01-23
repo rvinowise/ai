@@ -1,11 +1,8 @@
-module rvinowise.ai.Appearances
-    open System.Collections.Generic
-    open rvinowise
-    open FsUnit
-    open Xunit
-    open rvinowise.ai
-    open FsUnit
-    open Xunit
+namespace rvinowise.ai
+
+open rvinowise.ai
+
+module Appearances=
 
 
     let sequence_appearances_to_string 

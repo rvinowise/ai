@@ -1,6 +1,10 @@
-module rvinowise.ai.Mood_history
-    open FsUnit
-    open Xunit
+namespace rvinowise.ai
+
+
+open FsUnit
+open Xunit
+
+module Mood_history =
 
     let mood_change_from_start_to_finish
         (changes: (Moment*Mood) array)

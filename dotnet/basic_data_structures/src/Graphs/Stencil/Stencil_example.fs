@@ -1,6 +1,8 @@
 
-module rvinowise.ai.example.Stencil
-    open rvinowise.ai
+namespace rvinowise.ai.example
+open rvinowise.ai
+
+module Stencil =
 
     let empty =
         built.Stencil.simple_without_separator []

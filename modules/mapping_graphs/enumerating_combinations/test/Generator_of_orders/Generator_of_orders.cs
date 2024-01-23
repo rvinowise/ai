@@ -2,10 +2,10 @@ using NUnit.Framework;
 using rvinowise.ai.generating_combinations;
 using rvinowise.contracts;
 
-namespace rvinowise.ai.test.generator_of_order_sequences {
+namespace rvinowise.ai.test.generator_of_order_sequences;
 
 [TestFixture]
-public partial class filling_generator_or_orders_with_orders {
+public class filling_generator_or_orders_with_orders {
     
     
     
@@ -30,7 +30,7 @@ public partial class filling_generator_or_orders_with_orders {
             }
         );
         
-    //  states      figures     elements
+        //  states      figures     elements
         IEnumerable<IEnumerable<IEnumerable<Element_to_target<string, string>>>> result_combinations = 
             new List<List<List<Element_to_target<string, string>>>> {
                 //1st iteration of the 2nd order
@@ -108,8 +108,4 @@ public partial class filling_generator_or_orders_with_orders {
         
         
     }
-}
-
-
-
 }

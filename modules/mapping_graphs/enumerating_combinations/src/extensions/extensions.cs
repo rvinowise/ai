@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
+namespace rvinowise;
 
 public static class Extensions
 {

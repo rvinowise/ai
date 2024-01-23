@@ -1,15 +1,11 @@
-module rvinowise.ai.Renaming_figures
+namespace rvinowise.ai
     
-    open Xunit
-    open FsUnit
     
-    open rvinowise.ai
-    open rvinowise.extensions
-    open rvinowise
-    open System.Collections.Generic
+open rvinowise.extensions
+open System.Collections.Generic
 
 
-    
+module Renaming_figures =
     
 
     let renamed_edges_for_figure

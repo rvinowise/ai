@@ -1,12 +1,9 @@
-namespace rvinowise.ai
+namespace rvinowise.ai.test
 
 open Xunit
 open FsUnit
 
-open System
 open rvinowise.ai
-open rvinowise
-open rvinowise.ai.example
 
 module ``testing repetitions_of_one_stage`` =
 

@@ -1,16 +1,17 @@
 namespace rvinowise.ai
 
+open rvinowise.ai
+open rvinowise.extensions
+
+
 [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
 module Stencil=
-
-    open rvinowise.ai
-    open rvinowise.extensions
 
     let output (stencil: Stencil) =
         stencil.nodes
         |>Seq.pick (fun pair->
             match pair.Value with
-            |Stencil_output _ -> Some pair.Key
+            |Stencil_output -> Some pair.Key
             |_->None
             //vertex.Value=Stencil_output
         )
@@ -22,7 +23,7 @@ module Stencil=
         |None -> false
         |Some node ->
             match node with
-            |Stencil_output _ ->true
+            |Stencil_output ->true
             |_->false
 
     let is_subfigure stencil vertex =
@@ -46,7 +47,7 @@ module Stencil=
             |Some node ->
                 match node with
                 |Lower_figure figure->Some (vertex,figure)
-                |Stencil_output _ -> None
+                |Stencil_output -> None
         )
 
     let next_subfigures_of_many (stencil: Stencil) vertices =

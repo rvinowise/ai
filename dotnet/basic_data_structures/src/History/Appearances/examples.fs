@@ -1,7 +1,8 @@
-module rvinowise.ai.example.Apperances
-    open Xunit
-    open FsUnit
-    open rvinowise.ai
+namespace rvinowise.ai.example
+
+open rvinowise.ai
+
+module Apperances=
 
     let short_history_with_some_repetitions=
         built.Appearances.from_tuples [

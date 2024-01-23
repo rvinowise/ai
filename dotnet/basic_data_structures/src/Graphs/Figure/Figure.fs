@@ -1,8 +1,5 @@
 namespace rvinowise.ai
 
-open Xunit
-open FsUnit
-
 [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
 module Figure=
     open rvinowise.ai

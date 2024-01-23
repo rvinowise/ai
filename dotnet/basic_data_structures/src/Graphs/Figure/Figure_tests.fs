@@ -1,14 +1,12 @@
 namespace rvinowise.ai
 
-open System
+open Xunit
+open FsUnit
+open rvinowise
+open rvinowise.ai.built
 open rvinowise.ai.built.Figure
     
 module Figure_tests=
-
-    open Xunit
-    open FsUnit
-
-    open rvinowise
 
 
     [<Fact>]

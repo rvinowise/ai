@@ -1,12 +1,13 @@
-module rvinowise.ai.Event_batches
-    open FsUnit
-    open Xunit
-    //open FSharpPlus
-    open System.Linq
+namespace rvinowise.ai
 
-    open rvinowise.ai
+open FsUnit
+open Xunit
+open System.Linq
+
+open rvinowise.ai
 
 
+module Event_batches =
     let only_signals 
         (event_batches: (Appearance_event list*Mood) seq) 
         =

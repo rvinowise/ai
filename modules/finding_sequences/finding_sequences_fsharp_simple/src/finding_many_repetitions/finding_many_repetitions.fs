@@ -8,10 +8,7 @@ open System
 module ``Finding_many_repetitions(simple)`` =
 
 
-    
 
-    
-        
     let combinations_of_repeated_pairs
         halves_can_form_pair
         (a_histories: (Sequence*Interval array) seq)

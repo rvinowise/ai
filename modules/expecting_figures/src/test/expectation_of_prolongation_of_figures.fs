@@ -56,8 +56,7 @@ module ``expectation of prolongation of figures``=
         next_expectation.expected
         |> should equal expected_subfigures_after_d
 
-    [<Fact(Skip="ui")>] //
-    let paint_expectation()=
+    let ``paint expectation``()=
         let high_figure = a_high_level_relatively_simple_figure
         let initial_expectation = from_figure high_figure
         let expectation_after_b = 

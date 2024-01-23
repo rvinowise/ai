@@ -34,7 +34,6 @@ module Math_primers=
             ]|>Set.ofSeq
         ))
 
-    [<Fact(Skip="ui")>]
     let ``draw training history``()=
         let input_primers =
             History_from_text.event_batches_from_text_blocks [

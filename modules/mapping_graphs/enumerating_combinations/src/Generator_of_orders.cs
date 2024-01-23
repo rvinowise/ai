@@ -4,12 +4,11 @@ using System.Linq;
 using rvinowise.contracts;
 
 
-namespace rvinowise.ai.generating_combinations {
-
+namespace rvinowise.ai.generating_combinations;
 
 /*
     iterates in the numerical order, with each Order being another iterator
-    (with Reset and MoveNext methods) 
+    (with Reset and MoveNext methods)
     */
 
 
@@ -25,9 +24,9 @@ public class Generator_of_orders<T>:
     }
 
     private static IEnumerable<T> get_combination(
-        IEnumerable<IEnumerator<T>> mapping_enumerators
+        IList<IEnumerator<T>> mapping_enumerators
     ) {
-        T[] result_orders = new T[mapping_enumerators.Count()];
+        T[] result_orders = new T[mapping_enumerators.Count];
         
         int i_figure=0;
         foreach(IEnumerator<T> figure_enumerator in mapping_enumerators) {
@@ -60,7 +59,7 @@ public class Generator_of_orders<T>:
 
     #endregion IEnumerable
 
-    private bool set_next_iteration(IEnumerable<IEnumerator> enumerators) {
+    private static bool set_next_iteration(IEnumerable<IEnumerator> enumerators) {
         foreach (IEnumerator enumerator in enumerators) {
             if (enumerator.MoveNext()) {
                 return true;
@@ -71,10 +70,4 @@ public class Generator_of_orders<T>:
     }
 
     
-}
-
-
-
-
-
 }

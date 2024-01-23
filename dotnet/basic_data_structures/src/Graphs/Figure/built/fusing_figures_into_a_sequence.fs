@@ -1,13 +1,13 @@
-module rvinowise.ai.built.Fusing_figures_into_sequence
-    
-    open Xunit
-    open FsUnit
-    
-    open rvinowise.ai
-    open rvinowise.extensions
-    open rvinowise
-    open System.Collections.Generic
+namespace rvinowise.ai.built
 
+open Xunit
+open FsUnit
+
+open rvinowise.ai
+open rvinowise
+
+module Fusing_figures_into_sequence=
+    
     let private rename_duplicating_vertices
         (a_figure: Figure)
         (b_figure: Figure)

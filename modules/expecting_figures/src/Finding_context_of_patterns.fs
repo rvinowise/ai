@@ -1,7 +1,9 @@
-module rvinowise.ai.Finding_context_of_patterns
+namespace rvinowise.ai
 
-    open Xunit
-    open FsUnit
+open Xunit
+open FsUnit
+
+module Finding_context_of_patterns =
 
 
     let context_of_sequence_appearance

@@ -1,10 +1,12 @@
-module rvinowise.ai.Finding_repeatedly_good_sequences
+namespace rvinowise.ai
     
-    open BenchmarkDotNet.Engines
-    open FsUnit
-    open Xunit
-    open rvinowise
+open BenchmarkDotNet.Engines
+open FsUnit
+open Xunit
+open rvinowise
 
+    
+module Finding_repeatedly_good_sequences=
 
     let sequences_which_appeared_in_interval
         (appearances_of_sequences: (Sequence*Interval array) seq)

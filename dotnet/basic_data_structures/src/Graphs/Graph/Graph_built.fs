@@ -1,5 +1,7 @@
-module rvinowise.ai.built.Graph
-    open rvinowise.ai
+namespace rvinowise.ai.built
+open rvinowise.ai
+
+module Graph =
 
     let simple (raw_edges:seq<string*string>) =
         raw_edges

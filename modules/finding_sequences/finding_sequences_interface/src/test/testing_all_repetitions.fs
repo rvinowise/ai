@@ -1,4 +1,4 @@
-namespace rvinowise.ai
+namespace rvinowise.ai.test
 
 open Xunit
 open FsUnit
@@ -8,7 +8,6 @@ open rvinowise.ai
 
 
 module ``testing all_repetitions (several levels of abstraction)`` =
-    open System.IO
 
 
     [<Fact>]

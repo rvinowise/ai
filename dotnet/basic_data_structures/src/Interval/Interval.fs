@@ -2,7 +2,6 @@
 
 open System.Runtime.InteropServices
 open System
-open System.Text
 
 
 [<StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)>]
@@ -21,7 +20,6 @@ type Interval =
                 $"{this.start}-{this.finish}"
     end
 
-[<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
 module Interval =
 
     let moment (moment:Moment): Interval = 

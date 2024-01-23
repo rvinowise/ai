@@ -1,17 +1,14 @@
-module rvinowise.ai.ui.painted.History
-    open FsUnit
-    open Xunit
+namespace rvinowise.ai.ui.painted
 
-    open Giraffe.ViewEngine
+open Giraffe.ViewEngine
 
-    open rvinowise
-    open rvinowise.extensions
-    open rvinowise.ui
-    open rvinowise.ui.infrastructure
-    open rvinowise.ai
+open rvinowise
+open rvinowise.ui
+open rvinowise.ui.infrastructure
+open rvinowise.ai
 
     
-    
+module History =
 
 
     let combined_history_description 

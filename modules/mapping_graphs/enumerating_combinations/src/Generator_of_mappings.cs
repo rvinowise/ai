@@ -8,16 +8,16 @@ using System.Text;
 namespace rvinowise.ai.generating_combinations {
 
 public struct Element_to_targets<Element, Target> {
-    public Element element;
-    public List<Target> targets;
+    public readonly Element element;
+    public readonly List<Target> targets;
     public Element_to_targets(Element element, IEnumerable<Target> targets) {
         this.element = element;
         this.targets = new List<Target>(targets);
     }
 }
-public struct Element_to_target<Element, Target> {
-    public Element element;
-    public Target target;
+public readonly struct Element_to_target<Element, Target> {
+    public readonly Element element;
+    public readonly Target target;
 
     public Element_to_target(Element element, Target target) {
         this.element = element;
@@ -66,8 +66,8 @@ public class Generator_of_mappings<Element, Target>
 }
 
 class Target_counter<Target> {
-    public int current;
-    public List<Target> targets;
+    private int current;
+    private readonly List<Target> targets;
 
     public Target_counter(List<Target> targets) {
         contracts.Contract.Requires(targets.Any(), 
@@ -209,6 +209,7 @@ public class Generator_of_mappings_enumerator<Element, Target>
     }
     
     public void Dispose() {
+        GC.SuppressFinalize(this);
     }
     
     #endregion IEnumerator

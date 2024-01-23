@@ -8,7 +8,6 @@ type Expected_figure_prolongation = {
 }
 
 
-[<CompilationRepresentationAttribute(CompilationRepresentationFlags.ModuleSuffix)>]
 module Expected_figure_prolongation =
 
     let from_figure (figure: Figure) =

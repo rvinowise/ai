@@ -1,5 +1,7 @@
-module rvinowise.ai.example.Event_batches
-    open rvinowise.ai
+namespace rvinowise.ai.example
+open rvinowise.ai
+
+module Event_batches =
     
     let short_history_with_some_repetitions=
         [

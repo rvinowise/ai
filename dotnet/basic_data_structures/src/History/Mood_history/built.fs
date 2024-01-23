@@ -1,9 +1,9 @@
-module rvinowise.ai.built.Mood_history
-    open Xunit
-    open FsUnit
-    open rvinowise.ai
-    open rvinowise
+namespace rvinowise.ai.built
 
+open rvinowise.ai
+open rvinowise
+
+module Mood_history=
 
     
     let complete_from_tuples

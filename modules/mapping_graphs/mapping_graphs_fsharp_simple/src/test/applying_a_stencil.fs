@@ -7,12 +7,12 @@ open rvinowise.ai
 open rvinowise.ai.Applying_stencil
 open rvinowise.ai.Mapping_graph
 open rvinowise.ai.ui
-
+open rvinowise.ai.stencil
+open rvinowise.ui
+        
         
 module ``application of stencils``=
     
-    open rvinowise.ai.stencil
-    open rvinowise.ui
     
         
     let initial_mapping_without_prolongation = Mapping.ofStringPairs ["b#1","b#3";"h#1","h#1"]
@@ -185,7 +185,6 @@ module ``application of stencils``=
             ]
 
             
-    [<Fact(Skip="ui")>] //
     let ``paint the target figure and the stencil``()=
         let figure = example.Figure.a_high_level_relatively_simple_figure
         let stencil = example.Stencil.a_fitting_stencil

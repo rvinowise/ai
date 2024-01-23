@@ -15,4 +15,4 @@ Digits:0,1,2,3,4,5,6,7,8,9;
 // 4. turn the figure +=;ok; into an algorithm with context 
 // [digit 1]+[digit 2]=[digit 3];ok;
 // 5. solve the algorithm [digit 1] & [digit 2] -> [digit 3] 
-// (this is one of many possible related lgorithms)
+// (this is one of many possible related algorithms)

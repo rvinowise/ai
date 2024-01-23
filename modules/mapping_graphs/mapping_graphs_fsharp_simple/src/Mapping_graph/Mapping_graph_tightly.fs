@@ -15,8 +15,8 @@ module Mapping_graph_tightly =
         mappee
         =
         target
-        |>map_first_nodes mappee
-        |>prolongate_all_mappings
+        |>Map_first_nodes.map_first_nodes mappee
+        |>Mapping_graph.prolongate_all_mappings
             mappee 
             target
             (Figure.first_vertices mappee)

@@ -1,7 +1,5 @@
 namespace rvinowise.ai
 
-open System
-
 
 module ``Finding_repetitions(fsharp_simple)`` =
     (* figure "a" is the beginning of the found pair, 

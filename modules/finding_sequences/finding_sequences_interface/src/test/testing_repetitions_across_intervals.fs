@@ -1,4 +1,7 @@
-module rvinowise.ai.``testing repetitions across intervals``
+namespace rvinowise.ai.test
+
+
+module ``testing repetitions across intervals`` =
 
     open Xunit
     open FsUnit

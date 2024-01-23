@@ -1,11 +1,10 @@
 namespace rvinowise.ai
 
-[<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
+open rvinowise.ai
+
 module Figure_from_stencil=
 
-    open rvinowise.ai
-    open rvinowise.extensions
-
+    
 
     let edges_without_stencil_output stencil =
         

@@ -1,7 +1,6 @@
 namespace rvinowise.ui.painted
 
 
-open rvinowise
 open rvinowise.ai
 
 type Vertex =

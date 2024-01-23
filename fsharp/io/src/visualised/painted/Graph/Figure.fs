@@ -5,7 +5,6 @@ open rvinowise.ai
 open rvinowise.ui
 
 
-[<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
 module Figure=
 
 

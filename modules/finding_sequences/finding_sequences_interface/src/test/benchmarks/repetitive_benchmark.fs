@@ -1,13 +1,9 @@
 namespace rvinowise.ai.test
 
-open System.Runtime.InteropServices
 open Xunit
-open Xunit.Abstractions
-open FsUnit
 open BenchmarkDotNet.Configs
 open BenchmarkDotNet.Attributes
 open BenchmarkDotNet.Running
-open rvinowise.extensions.benchmark
 
 
 module Finding_repetitions_repetitive_benchmark =

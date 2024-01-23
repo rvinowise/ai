@@ -2,8 +2,8 @@
 namespace rvinowise.ui.infrastructure
 
 open System.IO
-open DotNetGraph.Node
-open DotNetGraph.SubGraph
+open DotNetGraph.Attributes
+open DotNetGraph.Core
 open FsUnit
 open Xunit
 
@@ -11,10 +11,10 @@ open DotNetGraph
 open DotNetGraph.Extensions
 
 type Node_id = string
-type private External_vertex = DotNetGraph.Node.DotNode
-type private External_edge = DotNetGraph.Edge.DotEdge
-type private External_graph = DotNetGraph.IDotGraph
-type private External_root = DotNetGraph.DotGraph
+type private External_vertex = DotNetGraph.Core.DotNode
+type private External_edge = DotNetGraph.Core.DotEdge
+type private External_graph = DotNetGraph.Core.DotBaseGraph
+type private External_root = DotNetGraph.Core.DotGraph
 
 
 
@@ -52,25 +52,27 @@ type Edge={
     impl: External_edge
 }
 
+[<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
 module Node=
     let id (node:Node)=
         node.data.id
 
+[<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
 module Edge=
     let with_attribute key value (edge:Edge) =
-        edge.impl.SetCustomAttribute(key,value)|>ignore
+        edge.impl.SetAttribute(key,DotAttribute(value))|>ignore
         edge
 
+[<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
 module Graph=
     open System
     open System.Diagnostics.Contracts
 
-    //type private Node = rvinowise.ui.infrastructure.Node
 
-    let with_attribute key value (node:Node) =
+    let with_attribute (key:string) (value:string) (node:Node) =
         match node.data.impl with
-        |Cluster g -> g.AddLine($"{key}={value}")|>ignore
-        |Vertex v->v.SetCustomAttribute(key,value)|>ignore
+        |Cluster g -> g.WithAttribute(key,value)|>ignore
+        |Vertex v->v.WithAttribute(key,value)|>ignore
         node
 
     let fill_with_color color node =
@@ -79,12 +81,17 @@ module Graph=
         |>with_attribute "style" "filled"
 
     let empty name=
-        let external_root:External_root = DotGraph(name, true)
-        external_root.AddLine("rankdir=LR")|>ignore
-        external_root.AddLine("compound=true")|>ignore //for edges between clusters
-        external_root.AddLine("newrank=true")|>ignore //for different rankdir directions
-        let root_node: Node_data={
-            id = name
+        let external_root:External_root =
+            DotGraph()
+                .WithIdentifier(name)
+                .WithAttribute("rankdir","LR")
+                .WithAttribute("compound","true") //for edges between clusters
+                .WithAttribute("newrank","true") //for different rankdir directions
+        
+        external_root.Directed <- true
+        
+        let root_node = {
+            Node_data.id = name
             id_impl = name
             children=[]
             parent=None
@@ -114,15 +121,16 @@ module Graph=
                     match parent.impl with
                     |Cluster parent_cluster ->
                         graph_node.graph.root_impl.Elements.Remove(vertex)|>ignore
-                        let new_cluster_impl = DotSubGraph(graph_node.data.id_impl)
+                        let new_cluster_impl =
+                            DotSubgraph().WithIdentifier(graph_node.data.id_impl)
                         new_cluster_impl.Label <- graph_node.data.id
-                        new_cluster_impl.SetCustomAttribute("cluster", "true")|>ignore
+                        new_cluster_impl.WithAttribute("cluster", "true")|>ignore
                         parent_cluster.Elements.Add(new_cluster_impl);
                         new_cluster_impl
                     |Vertex _ -> raise (ArgumentException("parent must be a graph"))
                 
                 graph_node.data.impl <- Cluster new_cluster_impl
-                new_cluster_impl :> IDotGraph
+                new_cluster_impl :> DotBaseGraph
             |None -> raise (ArgumentException("root node shouldn't be turned into a graph"))
         |Cluster cluster_impl -> cluster_impl
         
@@ -157,7 +165,7 @@ module Graph=
         =
         attr
         |>Seq.iter (fun pair->
-            node_impl.SetCustomAttribute(pair.Key, pair.Value)|>ignore
+            node_impl.WithAttribute(pair.Key, pair.Value)|>ignore
         )
 
     let provide_html_vertex
@@ -172,10 +180,12 @@ module Graph=
         
         let id = Guid.NewGuid().ToString()
         
-        let vertex_impl = DotNode(owner.data.id_impl+id);
+        let vertex_impl = DotNode().WithIdentifier(owner.data.id_impl+id)
         owner_cluster.Elements.Add(vertex_impl);
-        vertex_impl.SetCustomAttribute("label",label)|>ignore
-        vertex_impl.SetCustomAttribute("shape","plaintext")|>ignore
+        vertex_impl
+            .WithAttribute("label",label)
+            .WithAttribute("shape","plaintext")|>ignore
+        
         //vertex_impl|>write_attributes_to_node owner.data.child_node_attr
 
         
@@ -200,10 +210,10 @@ module Graph=
             |Vertex _->(transform_vertex_into_graph owner)
         
         
-        let vertex_impl = DotNode(owner.data.id_impl+id);
+        let vertex_impl = DotNode().WithIdentifier(owner.data.id_impl+id)
         owner_cluster.Elements.Add(vertex_impl);
             
-        vertex_impl.SetCustomAttribute("label",id)|>ignore
+        vertex_impl.WithAttribute("label",id)|>ignore
         vertex_impl|>write_attributes_to_node owner.data.child_node_attr
 
         
@@ -279,8 +289,8 @@ module Graph=
             |Vertex v -> v
             |Cluster _ -> raise (ArgumentException("ports can't be in clusters, but in leaf verticex"))
              
-        let edge_impl = DotNetGraph.Edge.DotEdge(tail_impl, tail_port, head_impl, head_port)
-        edge_impl.SetCustomAttribute("id",$"\"{tail.data.id_impl}->{head.data.id_impl}\"")|>ignore
+        let edge_impl = DotNetGraph.Core.DotEdge(tail_impl, tail_port, head_impl, head_port)
+        edge_impl.WithIdentifier($"\"{tail.data.id_impl}->{head.data.id_impl}\"")|>ignore
      
         head.graph.root_impl.Elements.Add(edge_impl)
         {

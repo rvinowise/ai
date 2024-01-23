@@ -1,9 +1,8 @@
-module rvinowise.ai.built.Appearances
-    open Xunit
-    open FsUnit
-    open rvinowise.ai
+namespace rvinowise.ai.built
 
+open rvinowise.ai
 
+module Appearances=
     
     let from_tuples 
         tuples

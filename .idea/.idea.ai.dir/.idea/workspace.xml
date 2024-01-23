@@ -5,55 +5,179 @@
     <projectFile>fsharp/cli/cli.fsproj</projectFile>
     <projectFile>fsharp/io/io.fsproj</projectFile>
     <projectFile>modules/expecting_figures/expecting_figures.fsproj</projectFile>
-    <projectFile>modules/mapping_graphs/mapping_graphs_fsharp_simple/mapping_graphs.fsproj</projectFile>
+    <projectFile>modules/finding_figures/finding_figures.fsproj</projectFile>
+    <projectFile>modules/finding_sequences/finding_sequences_fsharp_gpu/finding_sequences_fsharp_gpu.fsproj</projectFile>
     <projectFile>modules/finding_sequences/finding_sequences_interface/finding_sequences.fsproj</projectFile>
+    <projectFile>modules/mapping_graphs/mapping_graphs_fsharp_simple/mapping_graphs.fsproj</projectFile>
+  </component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="36ae4f92-6e61-4a67-8962-15ab8229a0cf" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.ai.dir/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.ai.dir/.idea/indexLayout.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.ai.dir/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.ai.dir/.idea/projectSettingsUpdater.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.ai.dir/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.ai.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ai.dir/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dotnet/basic_data_structures/basic_data_structures.fsproj" beforeDir="false" afterPath="$PROJECT_DIR$/dotnet/basic_data_structures/basic_data_structures.fsproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dotnet/basic_data_structures/src/Graphs/Concept/Concept_functions.fs" beforeDir="false" afterPath="$PROJECT_DIR$/dotnet/basic_data_structures/src/Graphs/Concept/Concept_functions.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dotnet/basic_data_structures/src/Graphs/Concept/Concept_types.fs" beforeDir="false" afterPath="$PROJECT_DIR$/dotnet/basic_data_structures/src/Graphs/Concept/Concept_types.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dotnet/basic_data_structures/src/Graphs/Figure/Figure.fs" beforeDir="false" afterPath="$PROJECT_DIR$/dotnet/basic_data_structures/src/Graphs/Figure/Figure.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dotnet/basic_data_structures/src/Graphs/Figure/Figure_example.fs" beforeDir="false" afterPath="$PROJECT_DIR$/dotnet/basic_data_structures/src/Graphs/Figure/Figure_example.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dotnet/basic_data_structures/src/Graphs/Figure/Figure_printing.fs" beforeDir="false" afterPath="$PROJECT_DIR$/dotnet/basic_data_structures/src/Graphs/Figure/Figure_printing.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dotnet/basic_data_structures/src/Graphs/Figure/Figure_tests.fs" beforeDir="false" afterPath="$PROJECT_DIR$/dotnet/basic_data_structures/src/Graphs/Figure/Figure_tests.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dotnet/basic_data_structures/src/Graphs/Figure/Figure_types.fs" beforeDir="false" afterPath="$PROJECT_DIR$/dotnet/basic_data_structures/src/Graphs/Figure/Figure_types.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dotnet/basic_data_structures/src/Graphs/Figure/built/Figure_built.fs" beforeDir="false" afterPath="$PROJECT_DIR$/dotnet/basic_data_structures/src/Graphs/Figure/built/Figure_built.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dotnet/basic_data_structures/src/Graphs/Figure/built/Renaming_figures.fs" beforeDir="false" afterPath="$PROJECT_DIR$/dotnet/basic_data_structures/src/Graphs/Figure/built/Renaming_figures.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dotnet/basic_data_structures/src/Graphs/Figure/built/fusing_figures_into_a_sequence.fs" beforeDir="false" afterPath="$PROJECT_DIR$/dotnet/basic_data_structures/src/Graphs/Figure/built/fusing_figures_into_a_sequence.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dotnet/basic_data_structures/src/Graphs/Graph/Graph_built.fs" beforeDir="false" afterPath="$PROJECT_DIR$/dotnet/basic_data_structures/src/Graphs/Graph/Graph_built.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dotnet/basic_data_structures/src/Graphs/Graph/Search_in_graph.fs" beforeDir="false" afterPath="$PROJECT_DIR$/dotnet/basic_data_structures/src/Graphs/Graph/Search_in_graph.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dotnet/basic_data_structures/src/Graphs/Sequence.fs" beforeDir="false" afterPath="$PROJECT_DIR$/dotnet/basic_data_structures/src/Graphs/Sequence.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dotnet/basic_data_structures/src/Graphs/Stencil/Figure_from_stencil.fs" beforeDir="false" afterPath="$PROJECT_DIR$/dotnet/basic_data_structures/src/Graphs/Stencil/Figure_from_stencil.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dotnet/basic_data_structures/src/Graphs/Stencil/Stencil.fs" beforeDir="false" afterPath="$PROJECT_DIR$/dotnet/basic_data_structures/src/Graphs/Stencil/Stencil.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dotnet/basic_data_structures/src/Graphs/Stencil/Stencil_built.fs" beforeDir="false" afterPath="$PROJECT_DIR$/dotnet/basic_data_structures/src/Graphs/Stencil/Stencil_built.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dotnet/basic_data_structures/src/Graphs/Stencil/Stencil_example.fs" beforeDir="false" afterPath="$PROJECT_DIR$/dotnet/basic_data_structures/src/Graphs/Stencil/Stencil_example.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dotnet/basic_data_structures/src/Graphs/Stencil/Stencil_types.fs" beforeDir="false" afterPath="$PROJECT_DIR$/dotnet/basic_data_structures/src/Graphs/Stencil/Stencil_types.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dotnet/basic_data_structures/src/Graphs/components/Edge/Edge_built.fs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dotnet/basic_data_structures/src/Graphs/components/Edge/Edge_functions.fs" beforeDir="false" afterPath="$PROJECT_DIR$/dotnet/basic_data_structures/src/Graphs/components/Edge/Edge_functions.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dotnet/basic_data_structures/src/Graphs/components/Edge/Edge_type.fs" beforeDir="false" afterPath="$PROJECT_DIR$/dotnet/basic_data_structures/src/Graphs/components/Edge/Edge_type.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dotnet/basic_data_structures/src/History/Appearances/Appearances.fs" beforeDir="false" afterPath="$PROJECT_DIR$/dotnet/basic_data_structures/src/History/Appearances/Appearances.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dotnet/basic_data_structures/src/History/Appearances/built.fs" beforeDir="false" afterPath="$PROJECT_DIR$/dotnet/basic_data_structures/src/History/Appearances/built.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dotnet/basic_data_structures/src/History/Appearances/examples.fs" beforeDir="false" afterPath="$PROJECT_DIR$/dotnet/basic_data_structures/src/History/Appearances/examples.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dotnet/basic_data_structures/src/History/Event_batches/Event_batches.fs" beforeDir="false" afterPath="$PROJECT_DIR$/dotnet/basic_data_structures/src/History/Event_batches/Event_batches.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dotnet/basic_data_structures/src/History/Event_batches/Event_batches_types.fs" beforeDir="false" afterPath="$PROJECT_DIR$/dotnet/basic_data_structures/src/History/Event_batches/Event_batches_types.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dotnet/basic_data_structures/src/History/Event_batches/History_from_text.fs" beforeDir="false" afterPath="$PROJECT_DIR$/dotnet/basic_data_structures/src/History/Event_batches/History_from_text.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dotnet/basic_data_structures/src/History/Event_batches/convert_to_figure.fs" beforeDir="false" afterPath="$PROJECT_DIR$/dotnet/basic_data_structures/src/History/Event_batches/convert_to_figure.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dotnet/basic_data_structures/src/History/Event_batches/example.fs" beforeDir="false" afterPath="$PROJECT_DIR$/dotnet/basic_data_structures/src/History/Event_batches/example.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dotnet/basic_data_structures/src/History/Mood_history/Mood_history.fs" beforeDir="false" afterPath="$PROJECT_DIR$/dotnet/basic_data_structures/src/History/Mood_history/Mood_history.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dotnet/basic_data_structures/src/History/Mood_history/built.fs" beforeDir="false" afterPath="$PROJECT_DIR$/dotnet/basic_data_structures/src/History/Mood_history/built.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dotnet/basic_data_structures/src/Interval/Interval.fs" beforeDir="false" afterPath="$PROJECT_DIR$/dotnet/basic_data_structures/src/Interval/Interval.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dotnet/basic_data_structures/src/printed.fs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dotnet/basic_data_structures/src/tests/benchmarks/modifications_of_history.fs" beforeDir="false" afterPath="$PROJECT_DIR$/dotnet/basic_data_structures/src/tests/benchmarks/modifications_of_history.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dotnet/basic_data_structures/src/tools/benchmarking.fs" beforeDir="false" afterPath="$PROJECT_DIR$/dotnet/basic_data_structures/src/tools/benchmarking.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dotnet/basic_data_structures/src/tools/extensions.fs" beforeDir="false" afterPath="$PROJECT_DIR$/dotnet/basic_data_structures/src/tools/extensions.fs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/examples/math/math.fsproj" beforeDir="false" afterPath="$PROJECT_DIR$/examples/math/math.fsproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/examples/math/math_output.txt" beforeDir="false" afterPath="$PROJECT_DIR$/examples/math/math_output.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/examples/math/mathematical_primers_intermediate_output.txt" beforeDir="false" afterPath="$PROJECT_DIR$/examples/math/mathematical_primers_intermediate_output.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/examples/math/src/test/math_primers.fs" beforeDir="false" afterPath="$PROJECT_DIR$/examples/math/src/test/math_primers.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fsharp/ai_core.fsproj" beforeDir="false" afterPath="$PROJECT_DIR$/fsharp/ai_core.fsproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fsharp/cli/cli.fsproj" beforeDir="false" afterPath="$PROJECT_DIR$/fsharp/cli/cli.fsproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fsharp/fsharp.fsproj" beforeDir="false" afterPath="$PROJECT_DIR$/fsharp/fsharp.fsproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fsharp/io/io.fsproj" beforeDir="false" afterPath="$PROJECT_DIR$/fsharp/io/io.fsproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fsharp/io/src/visualised/painted/Graph/Figure.fs" beforeDir="false" afterPath="$PROJECT_DIR$/fsharp/io/src/visualised/painted/Graph/Figure.fs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fsharp/io/src/visualised/painted/Graph/Graph.fs" beforeDir="false" afterPath="$PROJECT_DIR$/fsharp/io/src/visualised/painted/Graph/Graph.fs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fsharp/io/src/visualised/painted/History/Event_batch.fs" beforeDir="false" afterPath="$PROJECT_DIR$/fsharp/io/src/visualised/painted/History/Event_batch.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fsharp/io/src/visualised/painted/History/Batch_html.fs" beforeDir="false" afterPath="$PROJECT_DIR$/fsharp/io/src/visualised/painted/History/Batch_html.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fsharp/io/src/visualised/painted/History/History.fs" beforeDir="false" afterPath="$PROJECT_DIR$/fsharp/io/src/visualised/painted/History/History.fs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fsharp/io/src/visualised/painted/external/DotNetGraph/graph.fs" beforeDir="false" afterPath="$PROJECT_DIR$/fsharp/io/src/visualised/painted/external/DotNetGraph/graph.fs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fsharp/io/src/visualised/painted/external/graph_elements.fs" beforeDir="false" afterPath="$PROJECT_DIR$/fsharp/io/src/visualised/painted/external/graph_elements.fs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fsharp/io/src/visualised/painted/painted_image.fs" beforeDir="false" afterPath="$PROJECT_DIR$/fsharp/io/src/visualised/painted/painted_image.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fsharp/provided_data/provided_data.fsproj" beforeDir="false" afterPath="$PROJECT_DIR$/fsharp/provided_data/provided_data.fsproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fsharp/provided_data/src/created/Figure/Appearance.fs" beforeDir="false" afterPath="$PROJECT_DIR$/fsharp/provided_data/src/created/Figure/Appearance.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fsharp/provided_data/src/loaded/Appearances.fs" beforeDir="false" afterPath="$PROJECT_DIR$/fsharp/provided_data/src/loaded/Appearances.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fsharp/provided_data/src/loaded/Edges.fs" beforeDir="false" afterPath="$PROJECT_DIR$/fsharp/provided_data/src/loaded/Edges.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fsharp/provided_data/src/loaded/Figure.fs" beforeDir="false" afterPath="$PROJECT_DIR$/fsharp/provided_data/src/loaded/Figure.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fsharp/provided_data/src/loaded/provided_database.fs" beforeDir="false" afterPath="$PROJECT_DIR$/fsharp/provided_data/src/loaded/provided_database.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fsharp/provided_data/src/loaded/write.fs" beforeDir="false" afterPath="$PROJECT_DIR$/fsharp/provided_data/src/loaded/write.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/expecting_figures/expecting_figures.fsproj" beforeDir="false" afterPath="$PROJECT_DIR$/modules/expecting_figures/expecting_figures.fsproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/expecting_figures/src/Desiring_future.fs" beforeDir="false" afterPath="$PROJECT_DIR$/modules/expecting_figures/src/Desiring_future.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/expecting_figures/src/Expected_figure_prolongation.fs" beforeDir="false" afterPath="$PROJECT_DIR$/modules/expecting_figures/src/Expected_figure_prolongation.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/expecting_figures/src/Expecting_figures.fs" beforeDir="false" afterPath="$PROJECT_DIR$/modules/expecting_figures/src/Expecting_figures.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/expecting_figures/src/Finding_context_of_patterns.fs" beforeDir="false" afterPath="$PROJECT_DIR$/modules/expecting_figures/src/Finding_context_of_patterns.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/expecting_figures/src/Finding_repeatedly_good_sequences.fs" beforeDir="false" afterPath="$PROJECT_DIR$/modules/expecting_figures/src/Finding_repeatedly_good_sequences.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/expecting_figures/src/Mood_history.fs" beforeDir="false" afterPath="$PROJECT_DIR$/modules/expecting_figures/src/Mood_history.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/expecting_figures/src/painted/Expected_figure_prolongation.fs" beforeDir="false" afterPath="$PROJECT_DIR$/modules/expecting_figures/src/painted/Expected_figure_prolongation.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/expecting_figures/src/test/expectation_of_prolongation_of_figures.fs" beforeDir="false" afterPath="$PROJECT_DIR$/modules/expecting_figures/src/test/expectation_of_prolongation_of_figures.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/finding_figures/finding_figures.fsproj" beforeDir="false" afterPath="$PROJECT_DIR$/modules/finding_figures/finding_figures.fsproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/modules/finding_figures/src/commonalities_in_sequence_groups.fs" beforeDir="false" afterPath="$PROJECT_DIR$/modules/finding_figures/src/commonalities_in_sequence_groups.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/finding_sequences/finding_sequences_fsharp_simple/finding_sequences_fsharp_simple.fsproj" beforeDir="false" afterPath="$PROJECT_DIR$/modules/finding_sequences/finding_sequences_fsharp_simple/finding_sequences_fsharp_simple.fsproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/finding_sequences/finding_sequences_fsharp_simple/src/finding_many_repetitions/finding_many_repetitions.fs" beforeDir="false" afterPath="$PROJECT_DIR$/modules/finding_sequences/finding_sequences_fsharp_simple/src/finding_many_repetitions/finding_many_repetitions.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/finding_sequences/finding_sequences_fsharp_simple/src/finding_repetitions/finding_repetitions.fs" beforeDir="false" afterPath="$PROJECT_DIR$/modules/finding_sequences/finding_sequences_fsharp_simple/src/finding_repetitions/finding_repetitions.fs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/modules/finding_sequences/finding_sequences_interface/finding_sequences.fsproj" beforeDir="false" afterPath="$PROJECT_DIR$/modules/finding_sequences/finding_sequences_interface/finding_sequences.fsproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/finding_sequences/finding_sequences_interface/src/test/benchmarks/repetitive_benchmark.fs" beforeDir="false" afterPath="$PROJECT_DIR$/modules/finding_sequences/finding_sequences_interface/src/test/benchmarks/repetitive_benchmark.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/finding_sequences/finding_sequences_interface/src/test/images_of_finding_sequences.fs" beforeDir="false" afterPath="$PROJECT_DIR$/modules/finding_sequences/finding_sequences_interface/src/test/images_of_finding_sequences.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/finding_sequences/finding_sequences_interface/src/test/testing_all_repetitions.fs" beforeDir="false" afterPath="$PROJECT_DIR$/modules/finding_sequences/finding_sequences_interface/src/test/testing_all_repetitions.fs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/modules/finding_sequences/finding_sequences_interface/src/test/testing_many_repetitions.fs" beforeDir="false" afterPath="$PROJECT_DIR$/modules/finding_sequences/finding_sequences_interface/src/test/testing_many_repetitions.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/finding_sequences/finding_sequences_interface/src/test/testing_repetitions_across_intervals.fs" beforeDir="false" afterPath="$PROJECT_DIR$/modules/finding_sequences/finding_sequences_interface/src/test/testing_repetitions_across_intervals.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/finding_sequences/mathematical_primers_long.c" beforeDir="false" afterPath="$PROJECT_DIR$/modules/finding_sequences/mathematical_primers_long.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/mapping_graphs/enumerating_combinations/enumerating_combinations.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/modules/mapping_graphs/enumerating_combinations/enumerating_combinations.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/mapping_graphs/enumerating_combinations/src/Generator_of_mappings.cs" beforeDir="false" afterPath="$PROJECT_DIR$/modules/mapping_graphs/enumerating_combinations/src/Generator_of_mappings.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/mapping_graphs/enumerating_combinations/src/Generator_of_orders.cs" beforeDir="false" afterPath="$PROJECT_DIR$/modules/mapping_graphs/enumerating_combinations/src/Generator_of_orders.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/mapping_graphs/enumerating_combinations/src/extensions/extensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/modules/mapping_graphs/enumerating_combinations/src/extensions/extensions.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/mapping_graphs/enumerating_combinations/test/Generator_of_mappings/Generator_of_mappings.cs" beforeDir="false" afterPath="$PROJECT_DIR$/modules/mapping_graphs/enumerating_combinations/test/Generator_of_mappings/Generator_of_mappings.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/mapping_graphs/enumerating_combinations/test/Generator_of_orders/Generator_of_orders.cs" beforeDir="false" afterPath="$PROJECT_DIR$/modules/mapping_graphs/enumerating_combinations/test/Generator_of_orders/Generator_of_orders.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/mapping_graphs/mapping_graphs_fsharp_simple/mapping_graphs.fsproj" beforeDir="false" afterPath="$PROJECT_DIR$/modules/mapping_graphs/mapping_graphs_fsharp_simple/mapping_graphs.fsproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/mapping_graphs/mapping_graphs_fsharp_simple/src/Applying_stencil/Applying_stencil.fs" beforeDir="false" afterPath="$PROJECT_DIR$/modules/mapping_graphs/mapping_graphs_fsharp_simple/src/Applying_stencil/Applying_stencil.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/mapping_graphs/mapping_graphs_fsharp_simple/src/Finding_concept/Finding_concept.fs" beforeDir="false" afterPath="$PROJECT_DIR$/modules/mapping_graphs/mapping_graphs_fsharp_simple/src/Finding_concept/Finding_concept.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/mapping_graphs/mapping_graphs_fsharp_simple/src/Mapping.fs" beforeDir="false" afterPath="$PROJECT_DIR$/modules/mapping_graphs/mapping_graphs_fsharp_simple/src/Mapping.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/mapping_graphs/mapping_graphs_fsharp_simple/src/Mapping_graph/Map_first_nodes.fs" beforeDir="false" afterPath="$PROJECT_DIR$/modules/mapping_graphs/mapping_graphs_fsharp_simple/src/Mapping_graph/Map_first_nodes.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/mapping_graphs/mapping_graphs_fsharp_simple/src/Mapping_graph/Mapping_graph.fs" beforeDir="false" afterPath="$PROJECT_DIR$/modules/mapping_graphs/mapping_graphs_fsharp_simple/src/Mapping_graph/Mapping_graph.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/mapping_graphs/mapping_graphs_fsharp_simple/src/Mapping_graph/Mapping_graph_tightly.fs" beforeDir="false" afterPath="$PROJECT_DIR$/modules/mapping_graphs/mapping_graphs_fsharp_simple/src/Mapping_graph/Mapping_graph_tightly.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/mapping_graphs/mapping_graphs_fsharp_simple/src/Mapping_graph/Mapping_sequence.fs" beforeDir="false" afterPath="$PROJECT_DIR$/modules/mapping_graphs/mapping_graphs_fsharp_simple/src/Mapping_graph/Mapping_sequence.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/mapping_graphs/mapping_graphs_fsharp_simple/src/Mapping_graph/Work_with_generators.fs" beforeDir="false" afterPath="$PROJECT_DIR$/modules/mapping_graphs/mapping_graphs_fsharp_simple/src/Mapping_graph/Work_with_generators.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/mapping_graphs/mapping_graphs_fsharp_simple/src/test/applying_a_stencil.fs" beforeDir="false" afterPath="$PROJECT_DIR$/modules/mapping_graphs/mapping_graphs_fsharp_simple/src/test/applying_a_stencil.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/mapping_graphs/mapping_graphs_fsharp_simple/src/test/the_mapping_type.fs" beforeDir="false" afterPath="$PROJECT_DIR$/modules/mapping_graphs/mapping_graphs_fsharp_simple/src/test/the_mapping_type.fs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/../DotNetGraph/Sources/DotNetGraph.Tests/Core/DotGraphTests.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../DotNetGraph/Sources/DotNetGraph.Tests/Core/DotSubgraphTests.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../DotNetGraph/Sources/DotNetGraph.Tests/Extensions/DotBaseGraphExtensionsTests.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../DotNetGraph/Sources/DotNetGraph.Tests/Extensions/DotSubgraphExtensionsTests.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../DotNetGraph/Sources/DotNetGraph/Attributes/DotAttribute.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../DotNetGraph/Sources/DotNetGraph/Attributes/DotSubgraphStyleAttribute.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../DotNetGraph/Sources/DotNetGraph/Attributes/IDotAttribute.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../DotNetGraph/Sources/DotNetGraph/Core/DotBaseGraph.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../DotNetGraph/Sources/DotNetGraph/Core/DotEdge.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../DotNetGraph/Sources/DotNetGraph/Core/DotElement.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../DotNetGraph/Sources/DotNetGraph/Core/DotGraph.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../DotNetGraph/Sources/DotNetGraph/Core/DotIdentifier.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../DotNetGraph/Sources/DotNetGraph/Core/DotNode.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../DotNetGraph/Sources/DotNetGraph/Core/DotSubgraph.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../DotNetGraph/Sources/DotNetGraph/Core/IDotElement.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../DotNetGraph/Sources/DotNetGraph/Extensions/DotBaseGraphExtensions.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../DotNetGraph/Sources/DotNetGraph/Extensions/DotElementExtensions.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../DotNetGraph/Sources/DotNetGraph/Extensions/DotGraphExtensions.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../DotNetGraph/Sources/DotNetGraph/Extensions/DotSubgraphExtensions.cs" root0="SKIP_HIGHLIGHTING" />
+  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 0
+}</component>
   <component name="ProjectId" id="2bKN8R0E2rz7C9oVQp2BKhVeOqm" />
   <component name="ProjectViewState">
     <option name="autoscrollFromSource" value="true" />
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="android.sdk.path" value="$PROJECT_DIR$/../../Android/sdk" />
-    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
-    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-    <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="reference.settings.ide.settings.web.browsers" />
-    <property name="vue.rearranger.settings.migration" value="true" />
-  </component>
-  <component name="RunManager" selected=".NET Project.io">
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    ".NET Project.expecting_figures.executor": "Run",
+    ".NET Project.io.executor": "Debug",
+    ".NET Static Method.rvinowise.ai.test.images_of_finding_sequences.visualising stages of pattern finding.executor": "Debug",
+    ".NET Static Method.rvinowise.ai.ui.painted.image.construct a graph.executor": "Debug",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "C:/prj/DotNetGraph",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.sourceCode.C#",
+    "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "rider.external.source.directories": [
+      "C:\\Users\\rvi\\AppData\\Roaming\\JetBrains\\Rider2023.3\\resharper-host\\DecompilerCache",
+      "C:\\Users\\rvi\\AppData\\Roaming\\JetBrains\\Rider2023.3\\resharper-host\\SourcesCache",
+      "C:\\Users\\rvi\\AppData\\Local\\Symbols\\src"
+    ]
+  }
+}]]></component>
+  <component name="RunManager" selected=".NET Static Method.rvinowise.ai.test.images_of_finding_sequences.visualising stages of pattern finding">
     <configuration name="&lt;template&gt;" type="Applet" default="true" selected="false">
       <option name="MAIN_CLASS_NAME" />
       <option name="HTML_FILE_NAME" />
@@ -120,6 +244,24 @@
         <option name="Build" />
       </method>
     </configuration>
+    <configuration name="finding_figures" type="DotNetProject" factoryName=".NET Project">
+      <option name="EXE_PATH" value="" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="PASS_PARENT_ENVS" value="1" />
+      <option name="USE_EXTERNAL_CONSOLE" value="0" />
+      <option name="USE_MONO" value="0" />
+      <option name="RUNTIME_ARGUMENTS" value="" />
+      <option name="PROJECT_PATH" value="$PROJECT_DIR$/modules/finding_figures/finding_figures.fsproj" />
+      <option name="PROJECT_EXE_PATH_TRACKING" value="1" />
+      <option name="PROJECT_ARGUMENTS_TRACKING" value="1" />
+      <option name="PROJECT_WORKING_DIRECTORY_TRACKING" value="1" />
+      <option name="PROJECT_KIND" value="DotNetCore" />
+      <option name="PROJECT_TFM" value="" />
+      <method v="2">
+        <option name="Build" />
+      </method>
+    </configuration>
     <configuration name="finding_sequences" type="DotNetProject" factoryName=".NET Project">
       <option name="EXE_PATH" value="" />
       <option name="PROGRAM_PARAMETERS" value="" />
@@ -129,6 +271,24 @@
       <option name="USE_MONO" value="0" />
       <option name="RUNTIME_ARGUMENTS" value="" />
       <option name="PROJECT_PATH" value="$PROJECT_DIR$/modules/finding_sequences/finding_sequences_interface/finding_sequences.fsproj" />
+      <option name="PROJECT_EXE_PATH_TRACKING" value="1" />
+      <option name="PROJECT_ARGUMENTS_TRACKING" value="1" />
+      <option name="PROJECT_WORKING_DIRECTORY_TRACKING" value="1" />
+      <option name="PROJECT_KIND" value="DotNetCore" />
+      <option name="PROJECT_TFM" value="" />
+      <method v="2">
+        <option name="Build" />
+      </method>
+    </configuration>
+    <configuration name="finding_sequences_fsharp_gpu" type="DotNetProject" factoryName=".NET Project">
+      <option name="EXE_PATH" value="" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="PASS_PARENT_ENVS" value="1" />
+      <option name="USE_EXTERNAL_CONSOLE" value="0" />
+      <option name="USE_MONO" value="0" />
+      <option name="RUNTIME_ARGUMENTS" value="" />
+      <option name="PROJECT_PATH" value="$PROJECT_DIR$/modules/finding_sequences/finding_sequences_fsharp_gpu/finding_sequences_fsharp_gpu.fsproj" />
       <option name="PROJECT_EXE_PATH_TRACKING" value="1" />
       <option name="PROJECT_ARGUMENTS_TRACKING" value="1" />
       <option name="PROJECT_WORKING_DIRECTORY_TRACKING" value="1" />
@@ -174,6 +334,44 @@
         <option name="Build" />
       </method>
     </configuration>
+    <configuration name="rvinowise.ai.test.images_of_finding_sequences.visualising stages of pattern finding" type="DotNetStaticMethod" factoryName=".NET Static Method" temporary="true">
+      <option name="EXE_PATH" value="C:\Program Files\JetBrains\JetBrains Rider 2021.3.4\lib\ReSharperHost\JetLauncherILc.exe" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="PASS_PARENT_ENVS" value="1" />
+      <option name="USE_EXTERNAL_CONSOLE" value="0" />
+      <option name="USE_MONO" value="0" />
+      <option name="RUNTIME_ARGUMENTS" value="" />
+      <option name="PROJECT_PATH" value="$PROJECT_DIR$/modules/finding_sequences/finding_sequences_interface/finding_sequences.fsproj" />
+      <option name="PROJECT_TFM" value="net7.0" />
+      <option name="CLASS_NAME" value="rvinowise.ai.test.images_of_finding_sequences" />
+      <option name="METHOD_NAME" value="visualising stages of pattern finding" />
+      <method v="2">
+        <option name="Build" />
+      </method>
+    </configuration>
+    <configuration name="rvinowise.ai.ui.painted.image.construct a graph" type="DotNetStaticMethod" factoryName=".NET Static Method" temporary="true">
+      <option name="EXE_PATH" value="C:\Program Files\JetBrains\JetBrains Rider 2021.3.4\lib\ReSharperHost\JetLauncherILc.exe" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="PASS_PARENT_ENVS" value="1" />
+      <option name="USE_EXTERNAL_CONSOLE" value="0" />
+      <option name="USE_MONO" value="0" />
+      <option name="RUNTIME_ARGUMENTS" value="" />
+      <option name="PROJECT_PATH" value="$PROJECT_DIR$/fsharp/io/io.fsproj" />
+      <option name="PROJECT_TFM" value="net7.0" />
+      <option name="CLASS_NAME" value="rvinowise.ai.ui.painted.image" />
+      <option name="METHOD_NAME" value="construct a graph" />
+      <method v="2">
+        <option name="Build" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue=".NET Static Method.rvinowise.ai.test.images_of_finding_sequences.visualising stages of pattern finding" />
+        <item itemvalue=".NET Static Method.rvinowise.ai.ui.painted.image.construct a graph" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -184,6 +382,8 @@
       <option name="presentableId" value="Default" />
       <updated>1705959651234</updated>
       <workItem from="1705959663458" duration="3626000" />
+      <workItem from="1705966029372" duration="1679000" />
+      <workItem from="1705969023767" duration="24057000" />
     </task>
     <servers />
   </component>
@@ -191,7 +391,7 @@
     <option name="version" value="3" />
   </component>
   <component name="UnityCheckinConfiguration" checkUnsavedScenes="true" />
-  <component name="UnityProjectConfiguration" hasMinimizedUI="null" />
+  <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
   <component name="UnityUnitTestConfiguration" currentTestLauncher="NUnit" />
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">

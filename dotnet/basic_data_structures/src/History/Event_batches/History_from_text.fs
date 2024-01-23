@@ -1,11 +1,15 @@
-module rvinowise.ai.History_from_text
-    open System
-    open FsUnit
-    open Xunit
-    open FParsec
+namespace rvinowise.ai
 
-    open rvinowise.ai
-    open System.IO
+open System
+open FsUnit
+open Xunit
+open FParsec
+
+open rvinowise.ai
+open System.IO
+
+
+module History_from_text=
     
 
     let separator =

@@ -1,7 +1,11 @@
-module rvinowise.ai.ui.painted.Batch_html
-    open System.Drawing
-    open Giraffe.ViewEngine
-    open rvinowise.ai
+namespace rvinowise.ai.ui.painted
+
+open System.Drawing
+open Giraffe.ViewEngine
+open rvinowise.ai
+
+module Batch_html =
+    
 
     let _port = attr "port"
     

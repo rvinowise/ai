@@ -50,7 +50,6 @@ type Benchmarking_modifications_of_history() =
             |>Map.map (fun _ appearances ->
                     appearances|>Appearances.shift_appearances_in_time 100
             )
-            //|>Appearances.shift_sequence_appearances_in_time 100
 
         appearances_created_shifted
         |>should equal appearances_shifted_later

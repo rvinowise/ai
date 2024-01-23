@@ -1,10 +1,9 @@
-module rvinowise.ai.Search_in_graph
-    open rvinowise
-    open System.Collections.Generic
-    open rvinowise.extensions
+namespace rvinowise.ai
 
-    open Xunit
-    open FsUnit
+
+
+module Search_in_graph=
+
 
     let vertices_reacheble_from_any_vertices
         (is_vertex_needed:Vertex_id->bool)

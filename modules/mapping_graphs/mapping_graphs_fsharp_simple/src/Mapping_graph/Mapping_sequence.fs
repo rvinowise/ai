@@ -1,9 +1,9 @@
 namespace rvinowise.ai
 
-module Mapping_sequence = 
+open Xunit
+open FsUnit
 
-    open Xunit
-    open FsUnit
+module Mapping_sequence = 
 
 
     let rec find_next_signal_in_target

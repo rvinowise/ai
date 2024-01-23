@@ -1,7 +1,10 @@
-module rvinowise.ai.built.Stencil
+namespace rvinowise.ai.built
 
-    open rvinowise.ai
-    open rvinowise.extensions
+open rvinowise.ai
+open rvinowise.extensions
+
+module Stencil =
+
 
     let node_reference_from_string name=
         match name with

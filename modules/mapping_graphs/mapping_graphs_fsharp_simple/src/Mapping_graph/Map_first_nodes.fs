@@ -1,9 +1,10 @@
 namespace rvinowise.ai.mapping_graph_impl
 
-module Map_first_nodes =
-    open rvinowise.ai.generating_combinations
-    open rvinowise.ai
+open rvinowise.ai.generating_combinations
+open rvinowise.ai
 
+
+module Map_first_nodes =
     
     let map_first_nodes
         (mappee: Figure)

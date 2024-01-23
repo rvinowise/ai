@@ -1,5 +1,7 @@
 namespace rvinowise.ai
 
+open rvinowise.ai.ui.painted
+
 
 module Finding_figures =
 

@@ -1,14 +1,12 @@
 namespace rvinowise.ai.test
 
 open Xunit
-
+open FsUnit
+open rvinowise.ai.stencil
+open rvinowise.ai
         
 module ``the mapping type``=
-    open FsUnit
-    open rvinowise.ai.stencil
-    open rvinowise.ai
     
-
         
     [<Fact>]
     let ``comparing equal mappings``()=    

@@ -1,12 +1,12 @@
 namespace rvinowise.ai
 
+open rvinowise.ai
+
+open Xunit
+open FsUnit
+
+
 module Finding_concept = 
- 
-    open rvinowise.ai
-
-    open Xunit
-    open FsUnit
-
 
     let rec incarnations_of_concept 
         (place: Figure)

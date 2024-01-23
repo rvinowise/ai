@@ -1,17 +1,11 @@
 namespace rvinowise.ai.test
 
 open Xunit
-open Xunit.Abstractions
-open FsUnit
-open BenchmarkDotNet.Configs
-open BenchmarkDotNet.Attributes
-open BenchmarkDotNet.Running
-
+open rvinowise.ai
+open rvinowise.ui
 
 module images_of_finding_sequences =
-    open rvinowise.ai
-    open rvinowise.ai
-    open rvinowise.ui
+    
 
     let repetitions_of_one_stage_in_combined_history
         (event_batches: Appearance_event list seq)
@@ -25,10 +19,8 @@ module images_of_finding_sequences =
         Finding_many_repetitions.repetitions_of_one_stage
             Finding_repetitions.all_halves
 
-    
 
 
-    [<Fact(Skip="ui")>] //
     let ``visualising stages of pattern finding``()=
         let signal_history =
             [
@@ -68,7 +60,6 @@ module images_of_finding_sequences =
 
 
 
-    [<Fact(Skip="ui")>] //
     let ``visualising stages of pattern finding, including all previous stages``()=
         let signal_history =
             [
@@ -118,7 +109,6 @@ module images_of_finding_sequences =
 
     
 
-    [<Fact(Skip="ui")>] //
     let ``visualising stages of pattern finding, with mood``()=
         let signal_history =
             [
@@ -158,9 +148,6 @@ module images_of_finding_sequences =
 
     
 
-        
-        
-    [<Fact(Skip="ui")>]
     let ``finding long overlaid sequences, not performance heavy``()=
         let original_signals =
             "abcdaefbgcdefg"

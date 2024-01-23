@@ -1,11 +1,9 @@
-module rvinowise.ai.built.Figure_from_event_batches
-    open System
-    open FsUnit
-    open Xunit
-    open System.Collections.Generic
+namespace rvinowise.ai.built
 
-    open rvinowise.ai
-    open rvinowise 
+
+open rvinowise.ai
+
+module Figure_from_event_batches =
 
     type Built_figure = {
         figure: Figure

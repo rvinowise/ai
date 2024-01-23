@@ -1,16 +1,18 @@
-module rvinowise.ai.built.Figure
+namespace rvinowise.ai.built
     
-    open Xunit
-    open FsUnit
-    
-    open System.Diagnostics.Contracts
-    
-    open rvinowise.ai
-    open rvinowise.extensions
+open Xunit
+open FsUnit
+
+open System.Diagnostics.Contracts
+
+open rvinowise.ai
+open rvinowise.extensions
 
 
-    exception BadGraph of string
+exception BadGraph of string
 
+module Figure=
+    
     let is_empty (figure:Figure) =
         figure.subfigures
         |>Map.isEmpty

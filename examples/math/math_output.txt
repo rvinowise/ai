@@ -1,2 +1,38 @@
 sequences ending with ok;
+ok;appearances=63-65 72-74 81-83 90-92 99-101 108-110 117-119 126-128 135-137 144-146
+;ok;appearances=62-65 71-74 80-83 89-92 98-101 107-110 116-119 125-128 134-137 143-146
+3;ok;appearances=70-74 88-92
+4;ok;appearances=79-83 97-101 106-110
+5;ok;appearances=115-119 133-137
+6;ok;appearances=124-128 142-146
+=3;ok;appearances=69-74 87-92
+=4;ok;appearances=78-83 96-101 105-110
+=5;ok;appearances=114-119 132-137
+=6;ok;appearances=123-128 141-146
 sequences containing ok;
+ok;appearances=63-65 72-74 81-83 90-92 99-101 108-110 117-119 126-128 135-137 144-146
+;ok;appearances=62-65 71-74 80-83 89-92 98-101 107-110 116-119 125-128 134-137 143-146
+ok;1appearances=63-66 72-75 144-147
+ok;2appearances=81-84 99-102 108-111 117-120
+ok;3appearances=90-93 126-129
+3;ok;appearances=70-74 88-92
+4;ok;appearances=79-83 97-101 106-110
+5;ok;appearances=115-119 133-137
+6;ok;appearances=124-128 142-146
+;ok;1appearances=62-66 71-75 143-147
+;ok;2appearances=80-84 98-102 107-111 116-120
+;ok;3appearances=89-93 125-129
+ok;1+appearances=63-67 72-76 144-148
+ok;2+appearances=81-85 99-103 108-112 117-121
+ok;3+appearances=90-94 126-130
+4;ok;2appearances=79-84 97-102 106-111
+;ok;1+appearances=62-67 71-76 143-148
+;ok;2+appearances=80-85 98-103 107-112 116-121
+;ok;3+appearances=89-94 125-130
+=3;ok;appearances=69-74 87-92
+=4;ok;appearances=78-83 96-101 105-110
+=5;ok;appearances=114-119 132-137
+=6;ok;appearances=123-128 141-146
+4;ok;2+appearances=79-85 97-103 106-112
+=4;ok;2appearances=78-84 96-102 105-111
+=4;ok;2+appearances=78-85 96-103 105-112

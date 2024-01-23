@@ -1,7 +1,8 @@
 namespace rvinowise.ai
 
+open rvinowise.ai.stencil
+
 module Applying_stencil = 
-    open rvinowise.ai.stencil
  
 
     let is_figure_without_impossible_parts 
