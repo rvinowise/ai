@@ -23,17 +23,16 @@ module History =
         =
         event_batches
         |>Seq.mapi (fun moment batch ->
-            (
-                moment,
-                (   
-                    batch,
-                    receptacle
-                    |>infrastructure.Graph.provide_html_vertex (
-                        batch
-                        |>Batch_html.layout_for_event_batch moment (Mood 0) (Mood 0)
-                        |>RenderView.AsString.htmlNode
-                        |>sprintf "<\n%s\n>"
-                    )
+            
+            moment,
+            (   
+                batch,
+                receptacle
+                |>Graph.create_html_vertex (
+                    batch
+                    |>Batch_html.layout_for_event_batch moment (Mood 0) (Mood 0)
+                    |>RenderView.AsString.htmlNode
+                    |>sprintf "<\n%s\n>"
                 )
             )
         )
@@ -41,18 +40,18 @@ module History =
 
 
     let connect_events_start_to_finish
-        (batches:Map<Moment, (Appearance_event list*infrastructure.Node) > )
+        (batches: Map<Moment, Appearance_event list * Node > )
         =
         batches
-        |>Seq.map extensions.KeyValuePair.value
-        |>Seq.iter(fun (events,node) ->
+        |>Map.values
+        |>Seq.iter(fun (events,node_of_batch) ->
             events
             |>Seq.iter(fun event ->
                 match event with 
                 |Finish (figure, start_moment)->
-                    let _, start_node = batches[start_moment]
-                    (start_node, $"({figure}")
-                    ||>Graph.provide_edge_between_ports  node $"{figure})"
+                    let _, node_of_starting_batch = batches[start_moment]
+                    (node_of_starting_batch, $"({figure}")
+                    ||>Graph.provide_edge_between_ports  node_of_batch $"{figure})"
                     |>ignore
                     
                 |_ ->()

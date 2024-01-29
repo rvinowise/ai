@@ -17,8 +17,7 @@
     <list default="true" id="36ae4f92-6e61-4a67-8962-15ab8229a0cf" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ai.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ai.dir/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fsharp/io/io.fsproj" beforeDir="false" afterPath="$PROJECT_DIR$/fsharp/io/io.fsproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fsharp/io/src/visualised/painted/external/DotNetGraph/graph.fs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fsharp/io/src/visualised/painted/external/DotNetGraph/graph_trying_to_update_lib.fs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fsharp/io/src/visualised/painted/History/History.fs" beforeDir="false" afterPath="$PROJECT_DIR$/fsharp/io/src/visualised/painted/History/History.fs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,43 +25,49 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/runtime/bf5e279d9239bfef5bb1b8d6212f1b971c434606/src/libraries/System.Private.CoreLib/src/System/Object.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/7149bb3bf3d394de9c50244273e8fcb882dcfa6ea963e8b26d884aa396d4e1/fslib-extra-pervasives.fs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/aa8b4bd5cc1435f2aacbcd414a6776227291290d0d192ebdb2de3af3b89272d/seq.fs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/f82c3336a041109c7bfe1a4cb6ffb275a96b1978f1af78bec6851eb8a1b6b96c/printf.fs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../DotNetGraph_withPorts/Sources/DotNetGraph/Edge/DotEdge.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../DotNetGraph_withPorts/Sources/FSharpWrapper/graph.fs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 5
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5
+}</component>
   <component name="ProjectId" id="2bKN8R0E2rz7C9oVQp2BKhVeOqm" />
   <component name="ProjectViewState">
     <option name="autoscrollFromSource" value="true" />
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    ".NET Static Method.rvinowise.ai.ui.painted.image.construct a graph.executor": "Debug",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "terminal",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;.NET Static Method.rvinowise.ai.test.images_of_finding_sequences.visualising stages of pattern finding.executor&quot;: &quot;Debug&quot;,
+    &quot;.NET Static Method.rvinowise.ai.ui.painted.image.construct a graph.executor&quot;: &quot;Debug&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;terminal&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "rider.external.source.directories": [
-      "C:\\Users\\rvino\\AppData\\Roaming\\JetBrains\\Rider2023.3\\resharper-host\\DecompilerCache",
-      "C:\\Users\\rvino\\AppData\\Roaming\\JetBrains\\Rider2023.3\\resharper-host\\SourcesCache",
-      "C:\\Users\\rvino\\AppData\\Local\\Symbols\\src"
+  &quot;keyToStringList&quot;: {
+    &quot;rider.external.source.directories&quot;: [
+      &quot;C:\\Users\\rvi\\AppData\\Roaming\\JetBrains\\Rider2023.3\\resharper-host\\DecompilerCache&quot;,
+      &quot;C:\\Users\\rvi\\AppData\\Roaming\\JetBrains\\Rider2023.3\\resharper-host\\SourcesCache&quot;,
+      &quot;C:\\Users\\rvi\\AppData\\Local\\Symbols\\src&quot;
     ]
   }
-}]]></component>
-  <component name="RunManager" selected=".NET Static Method.rvinowise.ai.ui.painted.image.construct a graph">
+}</component>
+  <component name="RunManager" selected=".NET Static Method.rvinowise.ai.test.images_of_finding_sequences.visualising stages of pattern finding">
     <configuration name="&lt;template&gt;" type="Applet" default="true" selected="false">
       <option name="MAIN_CLASS_NAME" />
       <option name="HTML_FILE_NAME" />
@@ -253,8 +258,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue=".NET Static Method.rvinowise.ai.ui.painted.image.construct a graph" />
         <item itemvalue=".NET Static Method.rvinowise.ai.test.images_of_finding_sequences.visualising stages of pattern finding" />
+        <item itemvalue=".NET Static Method.rvinowise.ai.ui.painted.image.construct a graph" />
       </list>
     </recent_temporary>
   </component>
@@ -271,6 +276,9 @@
       <workItem from="1705969023767" duration="24057000" />
       <workItem from="1706121492968" duration="1810000" />
       <workItem from="1706125575507" duration="5622000" />
+      <workItem from="1706140904052" duration="8004000" />
+      <workItem from="1706390126601" duration="734000" />
+      <workItem from="1706391779742" duration="1909000" />
     </task>
     <servers />
   </component>
