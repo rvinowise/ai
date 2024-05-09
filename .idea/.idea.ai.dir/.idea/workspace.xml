@@ -17,7 +17,7 @@
     <list default="true" id="36ae4f92-6e61-4a67-8962-15ab8229a0cf" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ai.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ai.dir/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fsharp/io/io.fsproj" beforeDir="false" afterPath="$PROJECT_DIR$/fsharp/io/io.fsproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fsharp/io/src/visualised/painted/History/History.fs" beforeDir="false" afterPath="$PROJECT_DIR$/fsharp/io/src/visualised/painted/History/History.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/finding_sequences/finding_sequences_interface/finding_sequences.fsproj" beforeDir="false" afterPath="$PROJECT_DIR$/modules/finding_sequences/finding_sequences_interface/finding_sequences.fsproj" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -279,6 +279,7 @@
       <workItem from="1706140904052" duration="8004000" />
       <workItem from="1706390126601" duration="734000" />
       <workItem from="1706391779742" duration="1909000" />
+      <workItem from="1706973400126" duration="1320000" />
     </task>
     <servers />
   </component>
