@@ -1,4 +1,3 @@
-
 namespace rvinowise.ai.example
 open rvinowise.ai
 

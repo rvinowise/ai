@@ -17,21 +17,17 @@ module Stencil=
         )
 
     let is_output stencil vertex=
-        vertex
-        |>Dictionary.some_value stencil.nodes
+        stencil.nodes
+        |>Map.find vertex 
         |>function
-        |None -> false
-        |Some node ->
-            match node with
-            |Stencil_output ->true
-            |_->false
+        |Stencil_output ->true
+        |_->false
 
     let is_subfigure stencil vertex =
         vertex
         |>is_output stencil
         |>not
 
-    
 
     let only_subfigures stencil vertices =
         vertices

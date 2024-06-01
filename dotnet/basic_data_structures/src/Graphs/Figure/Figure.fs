@@ -1,11 +1,11 @@
 namespace rvinowise.ai
 
+open rvinowise.ai
+open rvinowise
+open rvinowise.extensions
+
 [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
 module Figure=
-    open rvinowise.ai
-    open rvinowise
-    open rvinowise.extensions
-    
     
     let need_vertex_referencing_element 
         (owner_figure:Figure)

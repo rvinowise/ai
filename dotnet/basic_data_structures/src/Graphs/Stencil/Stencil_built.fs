@@ -14,7 +14,7 @@ module Stencil =
             |>Figure_id
             |>Lower_figure 
 
-    let vertex_data_from_tuples 
+    let vertex_references_from_tuples 
         (edges: seq<string*string*string*string>) =
         edges
         |>Seq.map (fun(tail_id,tail,head_id,head)->
@@ -68,7 +68,7 @@ module Stencil =
         (edges:seq<string*string*string*string>) =
         {
             edges=built.Graph.from_tuples edges
-            nodes=vertex_data_from_tuples edges
+            nodes=vertex_references_from_tuples edges
             output_without=Set.empty
         }
 
@@ -76,8 +76,8 @@ module Stencil =
         let vertices_sequence = 
             vertices
             |>built.Graph.unique_numbers_for_names_in_sequence
-            |>Seq.map (fun (vertex, name) ->
-                vertex,node_reference_from_string name
+            |>Seq.map (fun (vertex, reference_name) ->
+                vertex,node_reference_from_string reference_name
             )
         {
             edges=
