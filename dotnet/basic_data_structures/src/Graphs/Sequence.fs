@@ -5,7 +5,7 @@ type Sequence = Figure_id array
 module Sequence =
 
     let to_figure_id 
-        (sequence) 
+        sequence
         =
         sequence
         |>Seq.map Figure_id.value

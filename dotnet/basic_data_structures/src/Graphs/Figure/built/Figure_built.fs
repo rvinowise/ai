@@ -111,8 +111,8 @@ module Figure=
         let subfigures_sequence = 
             subfigures
             |>built.Graph.unique_numbers_for_names_in_sequence
-            |>Seq.map (fun (vertex, name) ->
-                vertex,Figure_id name
+            |>Seq.map (fun (vertex, figure) ->
+                vertex,Figure_id figure
             )
         {
             edges=
@@ -153,8 +153,9 @@ module Figure=
         {
             edges=Set.empty
             subfigures=[
-                (id+"#1")|>Vertex_id,
-                id|>Figure_id
+                //(id+"#1")|>Vertex_id,
+                Vertex_id id,
+                Figure_id id
             ]|>Map.ofSeq
             without=Set.empty
         }|>Renaming_figures.rename_vertices_to_standard_names
@@ -163,16 +164,11 @@ module Figure=
         edges
         |>Edges.all_vertices
         |>Seq.map (fun vertex->
-            let referenced_element = full_vertex_data.TryFind(vertex)
-            Contract.Assume(
-                (referenced_element <> None), 
-                "the taken edges of the provided figure must not have verticex, which are not in that figure"
-            )
-            match referenced_element with
+            match full_vertex_data.TryFind(vertex) with
             |Some referenced_figure -> (vertex,referenced_figure)
             |None->
                 invalidArg 
-                    (nameof edges + " or " + nameof referenced_element)
+                    (nameof edges + " or " + nameof full_vertex_data)
                     "the taken edges of the provided figure must not have verticex, which are not in that figure"
         )
         |>Map.ofSeq

@@ -19,7 +19,7 @@ with
     override this.ToString() =
         let result = StringBuilder()
         result 
-        += $"Stencil( "
+        += "Stencil( "
         this.edges
         |>Seq.iter(fun edge ->
             result 

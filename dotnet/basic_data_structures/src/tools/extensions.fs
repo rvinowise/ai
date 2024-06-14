@@ -36,16 +36,6 @@ module Dictionary=
         | _ -> default'
 
 
-module KeyValuePair=
-    open System.Collections.Generic
-
-    let key (pair:KeyValuePair<'a,'b>) =
-        pair.Key
-    let value (pair:KeyValuePair<'a,'b>) =
-        pair.Value
-
-
-
 module HashSet =
     open System.Collections.Generic
     open System.Linq

@@ -1,9 +1,7 @@
 namespace rvinowise.ai
 
 
-
 module Search_in_graph=
-
 
     let vertices_reacheble_from_any_vertices
         (is_vertex_needed:Vertex_id->bool)

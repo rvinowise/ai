@@ -5,8 +5,7 @@ open rvinowise.extensions
 
 module Stencil =
 
-
-    let node_reference_from_string name=
+    let vertex_reference_from_string name=
         match name with
         | "out" -> Stencil_output
         | subfigure -> 
@@ -19,8 +18,8 @@ module Stencil =
         edges
         |>Seq.map (fun(tail_id,tail,head_id,head)->
             [
-                (Vertex_id tail_id, node_reference_from_string tail);
-                (Vertex_id head_id, node_reference_from_string head)
+                (Vertex_id tail_id, vertex_reference_from_string tail);
+                (Vertex_id head_id, vertex_reference_from_string head)
             ]
         )
         |>Seq.concat
@@ -41,13 +40,13 @@ module Stencil =
                             tail_id|>Vertex_id, 
                             tail_id
                             |>turn_vertex_id_into_figure_id
-                            |>node_reference_from_string
+                            |>vertex_reference_from_string
                         );
                         (
                             head_id|>Vertex_id,
                             head_id
                             |>turn_vertex_id_into_figure_id
-                            |>node_reference_from_string
+                            |>vertex_reference_from_string
                         );
                     ]
                 )
@@ -63,7 +62,6 @@ module Stencil =
         simple String.remove_number_with_hash edges
 
 
-
     let from_tuples
         (edges:seq<string*string*string*string>) =
         {
@@ -77,7 +75,7 @@ module Stencil =
             vertices
             |>built.Graph.unique_numbers_for_names_in_sequence
             |>Seq.map (fun (vertex, name) ->
-                vertex,node_reference_from_string name
+                vertex,vertex_reference_from_string name
             )
         {
             edges=

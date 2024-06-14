@@ -1,6 +1,5 @@
 namespace rvinowise.ai
 
-open rvinowise.ai
 
 type Concept = 
     |Leaf of Stencil

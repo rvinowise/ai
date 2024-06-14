@@ -1,9 +1,7 @@
 namespace rvinowise.ai
 
-open rvinowise.ai
 
 module Appearances=
-
 
     let sequence_appearances_to_string 
         (sequence_appearances: Sequence*Interval array)
@@ -43,22 +41,6 @@ module Appearances=
         |>Array.last 
         |>Interval.finish
 
-
-    let shift_sequence_appearances_in_time
-        added_moments
-        (sequence_appearances: Sequence*Interval array)
-        =
-        sequence_appearances
-        |>snd
-        |>Array.map (fun interval->
-            Interval.ofPair (
-                (interval.start+added_moments),
-                (interval.finish+added_moments)
-            )
-        )
-    
-
-
     let shift_appearances_in_time
         added_moments
         (appearances: Interval array)
@@ -70,6 +52,15 @@ module Appearances=
                 (interval.finish+added_moments)
             )
         )
+        
+    let shift_sequence_appearances_in_time
+        added_moments
+        (sequence_appearances: Sequence*Interval array)
+        =
+        sequence_appearances
+        |>snd
+        |>shift_appearances_in_time added_moments
+    
         
     let sequence_to_text (sequence: Figure_id array) =
         sequence
@@ -88,7 +79,7 @@ module Appearances=
         )
 
     let sequence_appearances_to_text_and_tuples
-        (sequence_appearances: (Sequence*Interval seq))
+        (sequence_appearances: Sequence*Interval seq)
         =
         let sequence, appearances = sequence_appearances
         

@@ -16,21 +16,43 @@
   <component name="ChangeListManager">
     <list default="true" id="36ae4f92-6e61-4a67-8962-15ab8229a0cf" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ai.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ai.dir/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fsharp/io/io.fsproj" beforeDir="false" afterPath="$PROJECT_DIR$/fsharp/io/io.fsproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/finding_sequences/finding_sequences_interface/finding_sequences.fsproj" beforeDir="false" afterPath="$PROJECT_DIR$/modules/finding_sequences/finding_sequences_interface/finding_sequences.fsproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/ai_index.mm" beforeDir="false" afterPath="$PROJECT_DIR$/docs/ai_index.mm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/modules/find sequences/how to find a repeated pair (pattern)/how to find a repeated pair (pattern).fla" beforeDir="false" afterPath="$PROJECT_DIR$/docs/modules/find sequences/how to find a repeated pair (pattern)/how to find a repeated pair (pattern).fla" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/overview.mm" beforeDir="false" afterPath="$PROJECT_DIR$/docs/overview.mm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/tools/animation tools.js" beforeDir="false" afterPath="$PROJECT_DIR$/docs/tools/animation tools.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dotnet/basic_data_structures/src/Graphs/Concept/Concept_types.fs" beforeDir="false" afterPath="$PROJECT_DIR$/dotnet/basic_data_structures/src/Graphs/Concept/Concept_types.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dotnet/basic_data_structures/src/Graphs/Figure/Figure.fs" beforeDir="false" afterPath="$PROJECT_DIR$/dotnet/basic_data_structures/src/Graphs/Figure/Figure.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dotnet/basic_data_structures/src/Graphs/Figure/Figure_printing.fs" beforeDir="false" afterPath="$PROJECT_DIR$/dotnet/basic_data_structures/src/Graphs/Figure/Figure_printing.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dotnet/basic_data_structures/src/Graphs/Figure/built/Figure_built.fs" beforeDir="false" afterPath="$PROJECT_DIR$/dotnet/basic_data_structures/src/Graphs/Figure/built/Figure_built.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dotnet/basic_data_structures/src/Graphs/Figure/built/Renaming_figures.fs" beforeDir="false" afterPath="$PROJECT_DIR$/dotnet/basic_data_structures/src/Graphs/Figure/built/Renaming_figures.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dotnet/basic_data_structures/src/Graphs/Graph/Graph_built.fs" beforeDir="false" afterPath="$PROJECT_DIR$/dotnet/basic_data_structures/src/Graphs/Graph/Graph_built.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dotnet/basic_data_structures/src/Graphs/Graph/Search_in_graph.fs" beforeDir="false" afterPath="$PROJECT_DIR$/dotnet/basic_data_structures/src/Graphs/Graph/Search_in_graph.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dotnet/basic_data_structures/src/Graphs/Sequence.fs" beforeDir="false" afterPath="$PROJECT_DIR$/dotnet/basic_data_structures/src/Graphs/Sequence.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dotnet/basic_data_structures/src/Graphs/Stencil/Figure_from_stencil.fs" beforeDir="false" afterPath="$PROJECT_DIR$/dotnet/basic_data_structures/src/Graphs/Stencil/Figure_from_stencil.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dotnet/basic_data_structures/src/Graphs/Stencil/Stencil.fs" beforeDir="false" afterPath="$PROJECT_DIR$/dotnet/basic_data_structures/src/Graphs/Stencil/Stencil.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dotnet/basic_data_structures/src/Graphs/Stencil/Stencil_built.fs" beforeDir="false" afterPath="$PROJECT_DIR$/dotnet/basic_data_structures/src/Graphs/Stencil/Stencil_built.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dotnet/basic_data_structures/src/Graphs/Stencil/Stencil_example.fs" beforeDir="false" afterPath="$PROJECT_DIR$/dotnet/basic_data_structures/src/Graphs/Stencil/Stencil_example.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dotnet/basic_data_structures/src/Graphs/Stencil/Stencil_types.fs" beforeDir="false" afterPath="$PROJECT_DIR$/dotnet/basic_data_structures/src/Graphs/Stencil/Stencil_types.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dotnet/basic_data_structures/src/Graphs/components/Edge/Edge_functions.fs" beforeDir="false" afterPath="$PROJECT_DIR$/dotnet/basic_data_structures/src/Graphs/components/Edge/Edge_functions.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dotnet/basic_data_structures/src/History/Appearances/Appearances.fs" beforeDir="false" afterPath="$PROJECT_DIR$/dotnet/basic_data_structures/src/History/Appearances/Appearances.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dotnet/basic_data_structures/src/History/Mood_history/built.fs" beforeDir="false" afterPath="$PROJECT_DIR$/dotnet/basic_data_structures/src/History/Mood_history/built.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dotnet/basic_data_structures/src/Interval/Interval.fs" beforeDir="false" afterPath="$PROJECT_DIR$/dotnet/basic_data_structures/src/Interval/Interval.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dotnet/basic_data_structures/src/tools/extensions.fs" beforeDir="false" afterPath="$PROJECT_DIR$/dotnet/basic_data_structures/src/tools/extensions.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/finding_sequences/finding_sequences_interface/src/finding_many_repetitions.fs" beforeDir="false" afterPath="$PROJECT_DIR$/modules/finding_sequences/finding_sequences_interface/src/finding_many_repetitions.fs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/runtime/bf5e279d9239bfef5bb1b8d6212f1b971c434606/src/libraries/System.Private.CoreLib/src/System/Object.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/7149bb3bf3d394de9c50244273e8fcb882dcfa6ea963e8b26d884aa396d4e1/fslib-extra-pervasives.fs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/aa8b4bd5cc1435f2aacbcd414a6776227291290d0d192ebdb2de3af3b89272d/seq.fs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/f82c3336a041109c7bfe1a4cb6ffb275a96b1978f1af78bec6851eb8a1b6b96c/printf.fs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/d66a9ddb11523e713a644971eac9989b91c52d52884cf7377682d293fa456f2/map.fs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../DotNetGraph_withPorts/Sources/DotNetGraph/Edge/DotEdge.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../DotNetGraph_withPorts/Sources/FSharpWrapper/graph.fs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/dotnet/basic_data_structures/src/Graphs/Figure/built/Renaming_figures.fs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -56,14 +78,14 @@
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;terminal&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
   &quot;keyToStringList&quot;: {
     &quot;rider.external.source.directories&quot;: [
-      &quot;C:\\Users\\rvi\\AppData\\Roaming\\JetBrains\\Rider2023.3\\resharper-host\\DecompilerCache&quot;,
-      &quot;C:\\Users\\rvi\\AppData\\Roaming\\JetBrains\\Rider2023.3\\resharper-host\\SourcesCache&quot;,
-      &quot;C:\\Users\\rvi\\AppData\\Local\\Symbols\\src&quot;
+      &quot;C:\\Users\\rvino\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\DecompilerCache&quot;,
+      &quot;C:\\Users\\rvino\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\SourcesCache&quot;,
+      &quot;C:\\Users\\rvino\\AppData\\Local\\Symbols\\src&quot;
     ]
   }
 }</component>
@@ -280,6 +302,12 @@
       <workItem from="1706390126601" duration="734000" />
       <workItem from="1706391779742" duration="1909000" />
       <workItem from="1706973400126" duration="1320000" />
+      <workItem from="1716157853549" duration="20497000" />
+      <workItem from="1716250881035" duration="12755000" />
+      <workItem from="1716381964978" duration="10730000" />
+      <workItem from="1716514948373" duration="2439000" />
+      <workItem from="1716589772883" duration="4472000" />
+      <workItem from="1716601167361" duration="4726000" />
     </task>
     <servers />
   </component>

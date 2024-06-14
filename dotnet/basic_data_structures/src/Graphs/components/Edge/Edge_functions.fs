@@ -35,7 +35,7 @@ module Edges =
         =
         vertex
         |>outgoing_edges edges
-        |>Set.map (fun e->e.head)
+        |>Set.map (_.head)
 
     let previous_vertices
         (edges: Edge Set) 
@@ -43,7 +43,7 @@ module Edges =
         =
         vertex
         |>incoming_edges edges
-        |>Set.map (fun e->e.tail)
+        |>Set.map (_.tail)
 
     let all_vertices 
         (edges: Edge Set)
@@ -53,7 +53,7 @@ module Edges =
         |>Set.ofSeq
 
     let is_first_vertex
-        (edges: Edge Set )
+        (edges: Edge Set)
         vertex
         =
         edges
@@ -68,7 +68,7 @@ module Edges =
         |>Set.filter (is_first_vertex edges)
 
     let is_last_vertex
-        (edges: Edge Set )
+        (edges: Edge Set)
         vertex
         =
         edges
@@ -136,7 +136,7 @@ module Edges =
 
     let edges_between_vertices 
         (edges: Edge seq)
-        (vertices:Set< Vertex_id>)
+        (vertices: Vertex_id Set)
         =
         edges
         |>Seq.filter (fun edge->

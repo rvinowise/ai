@@ -41,7 +41,7 @@ module Mood_history=
                 [
                     mood_changes
                     |>Seq.last
-                    |>extensions.KeyValuePair.value
+                    |>_.Value
                     |>fun last_mood_change->
                         mood_at_moments
                         |>Seq.last

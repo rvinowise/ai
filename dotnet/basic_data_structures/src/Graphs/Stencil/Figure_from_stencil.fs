@@ -1,10 +1,7 @@
 namespace rvinowise.ai
 
-open rvinowise.ai
 
 module Figure_from_stencil=
-
-    
 
     let edges_without_stencil_output stencil =
         
