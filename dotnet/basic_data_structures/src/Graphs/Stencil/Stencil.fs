@@ -1,6 +1,5 @@
 namespace rvinowise.ai
 
-open rvinowise.ai
 open rvinowise.extensions
 
 
@@ -13,25 +12,19 @@ module Stencil=
             match pair.Value with
             |Stencil_output -> Some pair.Key
             |_->None
-            //vertex.Value=Stencil_output
         )
 
-    let is_output stencil vertex=
-        vertex
-        |>Dictionary.some_value stencil.nodes
+    let is_output stencil vertex =
+        stencil.nodes
+        |>Map.find vertex 
         |>function
-        |None -> false
-        |Some node ->
-            match node with
-            |Stencil_output ->true
-            |_->false
+        |Stencil_output ->true
+        |_->false
 
     let is_subfigure stencil vertex =
         vertex
         |>is_output stencil
         |>not
-
-    
 
     let only_subfigures stencil vertices =
         vertices
@@ -40,17 +33,14 @@ module Stencil=
     let only_subfigures_with_figures stencil vertices =
         vertices
         |>Seq.choose (fun vertex->
-            vertex
-            |>Dictionary.some_value stencil.nodes
+            stencil.nodes
+            |>Map.find vertex 
             |>function
-            |None -> None
-            |Some node ->
-                match node with
-                |Lower_figure figure->Some (vertex,figure)
-                |Stencil_output -> None
+            |Lower_figure figure->Some (vertex,figure)
+            |Stencil_output -> None
         )
 
-    let next_subfigures_of_many (stencil: Stencil) vertices =
+    let next_subfigures_of_many stencil vertices =
         vertices
         |>Edges.next_vertices_of_many stencil.edges
         |>only_subfigures stencil
@@ -78,14 +68,9 @@ module Stencil=
             = Some (Lower_figure referenced_figure)
 
     
-    let nonexistent_vertex =  "0"|>Figure_id|>Lower_figure
-
     let referenced_node stencil vertex_id =
-        vertex_id
-        |>Dictionary.some_value stencil.nodes
-        |>function
-        |Some node_reference -> node_reference
-        |None -> nonexistent_vertex
+        stencil.nodes
+        |>Map.find vertex_id
     
     let referenced_nodes
         owner_stencil

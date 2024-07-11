@@ -54,14 +54,14 @@ module Figure_printing =
 
     let private sequential_edges_to_string 
         edges
-        (subfigures) 
+        subfigures 
         =
         id_of_a_sequence_from_edges edges subfigures
         |>Figure_id.value
 
     let private edges_to_string 
         edges
-        (subfigures) 
+        subfigures 
         =
         if Edges.is_sequence edges then
             sequential_edges_to_string edges subfigures

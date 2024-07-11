@@ -1,17 +1,17 @@
 namespace rvinowise.ai
 
+open rvinowise.ai
+open rvinowise.extensions
+
+
 [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
 module Figure=
-    open rvinowise.ai
-    open rvinowise
-    open rvinowise.extensions
-    
-    
+
     let need_vertex_referencing_element 
         (owner_figure:Figure)
-        (referenced_element)
-        (checked_vertex) =
-        let (exist,reference) = owner_figure.subfigures.TryGetValue(checked_vertex)
+        referenced_element
+        checked_vertex =
+        let exist,reference = owner_figure.subfigures.TryGetValue(checked_vertex)
         exist && reference=referenced_element
 
     let nonexistent_vertex = Figure_id "" 
@@ -85,20 +85,17 @@ module Figure=
         if Seq.isEmpty figure.edges then 
             figure.subfigures
             |>Seq.head
-            |>extensions.KeyValuePair.value
+            |>_.Value
         else
             Figure_printing.id_of_a_sequence_from_edges figure.edges figure.subfigures
 
-    
     
     let private try_the_only_vertex figure =
         figure.subfigures
         |>Seq.tryHead 
         |>function
         |Some pair->
-            pair
-            |>KeyValuePair.key
-            |>Seq.singleton
+            Seq.singleton pair.Key
         |None->Seq.empty
 
     let first_vertices figure =
@@ -117,10 +114,6 @@ module Figure=
             try_the_only_vertex figure
         else
             Edges.last_vertices figure.edges
-
-    let impossible_parts (owner_figure:Figure) =
-        owner_figure.without
-    
 
     let is_signal name figure =
         figure.subfigures.Count = 1

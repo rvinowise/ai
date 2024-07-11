@@ -32,7 +32,7 @@ module Interval =
         (start: int)
         (finish: int)
         =
-        regular (start) (finish)
+        regular start finish
     
     let ofPair tuple=
         let start, finish = tuple
@@ -62,14 +62,14 @@ module Interval =
 
     let intervals_to_string (intervals: Interval seq) =
         if Seq.isEmpty intervals then
-            sprintf $"[]"
+            "[]"
         else
             String.Join (" ", 
                 intervals
                 |>Seq.map string 
             )
     
-    let oversection_of_intervals
+    let intersection_of_intervals
         (interval1:Interval) 
         (interval2:Interval) 
         =
@@ -90,7 +90,7 @@ module Interval =
         (interval1:Interval) 
         (interval2:Interval)
         =
-        oversection_of_intervals
+        intersection_of_intervals
             interval1
             interval2
             <> None

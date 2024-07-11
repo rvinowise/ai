@@ -1,4 +1,4 @@
-<map version="freeplane 1.9.13">
+<map version="freeplane 1.11.5">
 <!--To view this file, download free mind mapping software Freeplane from https://www.freeplane.org -->
 <attribute_registry SHOW_ATTRIBUTES="selected">
     <attribute_name MANUAL="true" NAME="src">
@@ -8,19 +8,19 @@
         <attribute_value VALUE="https://www.youtube.com/shorts/66t2mLXtj9E?&amp;ab_channel=THESTRAIGHTPATH"/>
     </attribute_name>
 </attribute_registry>
-<node TEXT="ai" LOCALIZED_STYLE_REF="AutomaticLayout.level.root" FOLDED="false" ID="ID_696401721" CREATED="1610381621824" MODIFIED="1632652331747"><hook NAME="MapStyle" zoom="1.56">
+<node TEXT="ai" LOCALIZED_STYLE_REF="AutomaticLayout.level.root" FOLDED="false" ID="ID_696401721" CREATED="1610381621824" MODIFIED="1632652331747"><hook NAME="MapStyle" zoom="1.2">
     <properties show_icon_for_attributes="true" edgeColorConfiguration="#ff3333ff,#33ff00ff,#ffcc33ff" show_notes_in_map="false" show_note_icons="false" fit_to_viewport="false"/>
 
 <map_styles>
 <stylenode LOCALIZED_TEXT="styles.root_node" STYLE="oval" UNIFORM_SHAPE="true" VGAP_QUANTITY="24 pt">
 <font SIZE="24"/>
 <edge COLOR="#000000"/>
-<stylenode LOCALIZED_TEXT="styles.predefined" POSITION="right" STYLE="bubble">
+<stylenode LOCALIZED_TEXT="styles.predefined" POSITION="bottom_or_right" STYLE="bubble">
 <edge COLOR="#000000"/>
 <stylenode LOCALIZED_TEXT="default" ID="ID_271890427" ICON_SIZE="12 pt" COLOR="#000000" STYLE="fork" BORDER_COLOR_LIKE_EDGE="false" BORDER_COLOR="#000000">
 <arrowlink SHAPE="CUBIC_CURVE" COLOR="#000000" WIDTH="2" TRANSPARENCY="200" DASH="" FONT_SIZE="9" FONT_FAMILY="SansSerif" DESTINATION="ID_271890427" STARTARROW="DEFAULT" ENDARROW="NONE"/>
 <font NAME="Verdana" SIZE="10" BOLD="false" ITALIC="false"/>
-<richcontent CONTENT-TYPE="plain/auto" TYPE="DETAILS"/>
+<richcontent TYPE="DETAILS" CONTENT-TYPE="plain/auto"/>
 <richcontent TYPE="NOTE" CONTENT-TYPE="plain/auto"/>
 <edge COLOR="#000000"/>
 </stylenode>
@@ -42,7 +42,7 @@
 <edge COLOR="#000000"/>
 </stylenode>
 </stylenode>
-<stylenode LOCALIZED_TEXT="styles.user-defined" POSITION="right" STYLE="bubble">
+<stylenode LOCALIZED_TEXT="styles.user-defined" POSITION="bottom_or_right" STYLE="bubble">
 <edge COLOR="#000000"/>
 <stylenode LOCALIZED_TEXT="styles.important" ID="ID_67550811">
 <icon BUILTIN="yes"/>
@@ -117,7 +117,7 @@
 <icon BUILTIN="launch"/>
 </stylenode>
 </stylenode>
-<stylenode LOCALIZED_TEXT="styles.AutomaticLayout" POSITION="right" STYLE="bubble">
+<stylenode LOCALIZED_TEXT="styles.AutomaticLayout" POSITION="bottom_or_right" STYLE="bubble">
 <edge COLOR="#000000"/>
 <stylenode LOCALIZED_TEXT="AutomaticLayout.level.root" COLOR="#ffffff" BACKGROUND_COLOR="#000000" STYLE="fork" SHAPE_HORIZONTAL_MARGIN="10 pt" SHAPE_VERTICAL_MARGIN="10 pt" BORDER_COLOR_LIKE_EDGE="false" BORDER_COLOR="#000000">
 <font SIZE="10" BOLD="true"/>
@@ -138,9 +138,9 @@
 </stylenode>
 </map_styles>
 </hook>
-<node TEXT="type: project" POSITION="left" ID="ID_683065071" CREATED="1631768151045" MODIFIED="1632652341983"/>
-<node TEXT="bookmarks: done" STYLE_REF="done" POSITION="left" ID="ID_1334217373" CREATED="1632064659870" MODIFIED="1632136937093"/>
-<node TEXT="process" LOCALIZED_STYLE_REF="default" POSITION="right" ID="ID_393996128" CREATED="1633181155567" MODIFIED="1675042940494" COLOR="#000000" BACKGROUND_COLOR="#eeeeee">
+<node TEXT="type: project" POSITION="top_or_left" ID="ID_683065071" CREATED="1631768151045" MODIFIED="1632652341983"/>
+<node TEXT="bookmarks: done" STYLE_REF="done" POSITION="top_or_left" ID="ID_1334217373" CREATED="1632064659870" MODIFIED="1632136937093"/>
+<node TEXT="process" LOCALIZED_STYLE_REF="default" POSITION="bottom_or_right" ID="ID_393996128" CREATED="1633181155567" MODIFIED="1675042940494" COLOR="#000000" BACKGROUND_COLOR="#eeeeee">
 <icon BUILTIN="group"/>
 <node STYLE_REF="list item" ID="ID_913201831" CREATED="1633181351387" MODIFIED="1633221846453" COLOR="#000000" BACKGROUND_COLOR="#ffffff"><richcontent TYPE="NODE">
 
@@ -344,7 +344,7 @@
 </node>
 </node>
 </node>
-<node TEXT="modules" LOCALIZED_STYLE_REF="default" POSITION="right" ID="ID_303254332" CREATED="1632652373243" MODIFIED="1675042940493" COLOR="#000000" BACKGROUND_COLOR="#eeeeee">
+<node TEXT="modules" LOCALIZED_STYLE_REF="default" POSITION="bottom_or_right" ID="ID_303254332" CREATED="1632652373243" MODIFIED="1675042940493" COLOR="#000000" BACKGROUND_COLOR="#eeeeee">
 <icon BUILTIN="group"/>
 <node TEXT="input_receiver" ID="ID_1728916427" CREATED="1633179805199" MODIFIED="1633179825519">
 <icon BUILTIN="present"/>
@@ -365,7 +365,7 @@
 </node>
 </node>
 </node>
-<node TEXT="unity" ID="ID_83614421" CREATED="1633181013626" MODIFIED="1652326983347" LINK="../Assets/scripts/unity_ai/History/">
+<node TEXT="unity" ID="ID_83614421" CREATED="1633181013626" MODIFIED="1716060790710" LINK="../unity_ai/Assets/scripts/History">
 <icon BUILTIN="present"/>
 </node>
 </node>
@@ -376,7 +376,7 @@
 <node TEXT="finds figure appearances from time moments" LOCALIZED_STYLE_REF="default" ID="ID_998272487" CREATED="1633023743881" MODIFIED="1673052745362" COLOR="#000000" BACKGROUND_COLOR="#ffffff">
 <icon BUILTIN="cog"/>
 </node>
-<node TEXT="two overlapping historiy intervals of different figures" LOCALIZED_STYLE_REF="default" ID="ID_1790584575" CREATED="1673047632103" MODIFIED="1673054292682" COLOR="#000000" BACKGROUND_COLOR="#ffffff">
+<node TEXT="two (not?) overlapping history intervals of different figures" LOCALIZED_STYLE_REF="default" ID="ID_1790584575" CREATED="1673047632103" MODIFIED="1716061041890" COLOR="#000000" BACKGROUND_COLOR="#ffffff">
 <icon BUILTIN="control/type_of_parent"/>
 <node TEXT="to find repeated pairs" ID="ID_1159060041" CREATED="1673047815237" MODIFIED="1673047852616"/>
 <node TEXT="f# c++" ID="ID_1844990719" CREATED="1673054119577" MODIFIED="1673054160266">
@@ -498,8 +498,8 @@
 </node>
 <node TEXT="figures" LOCALIZED_STYLE_REF="default" ID="ID_1517811998" CREATED="1632856854905" MODIFIED="1633179278132" COLOR="#000000" BACKGROUND_COLOR="#ffffff">
 <icon BUILTIN="output"/>
-<node TEXT="parts of the target figure" ID="ID_1716619650" CREATED="1633179279007" MODIFIED="1658192439124">
-<icon BUILTIN="box"/>
+<node TEXT="parts of the target figure" LOCALIZED_STYLE_REF="default" ID="ID_1716619650" CREATED="1633179279007" MODIFIED="1716061539940" COLOR="#000000" BACKGROUND_COLOR="#ffffff">
+<icon BUILTIN="box_inscribed"/>
 </node>
 </node>
 <node TEXT="algorithm of stencil application" LOCALIZED_STYLE_REF="default" ID="ID_1267499080" CREATED="1632698228404" MODIFIED="1683249958006" LINK="../fsharp/modules/mapping_graphs/src/apply%20stencil%20to%20a%20long%20sequence.png" COLOR="#000000" BACKGROUND_COLOR="#ffffff">
@@ -573,7 +573,7 @@
 </node>
 </node>
 </node>
-<node TEXT="unity" LOCALIZED_STYLE_REF="default" FOLDED="true" ID="ID_1915337885" CREATED="1652702148999" MODIFIED="1672995517711" COLOR="#000000" BACKGROUND_COLOR="#ffffff">
+<node TEXT="unity" LOCALIZED_STYLE_REF="default" ID="ID_1915337885" CREATED="1652702148999" MODIFIED="1672995517711" COLOR="#000000" BACKGROUND_COLOR="#ffffff">
 <node TEXT="mode selector" ID="ID_605733536" CREATED="1652702063809" MODIFIED="1653091149221">
 <icon BUILTIN="present"/>
 <node TEXT="activates certain gui modules" LOCALIZED_STYLE_REF="default" ID="ID_1426347125" CREATED="1652704317628" MODIFIED="1652704366833" COLOR="#000000" BACKGROUND_COLOR="#ffffff">
@@ -623,7 +623,7 @@
 </node>
 </node>
 </node>
-<node TEXT="objects" LOCALIZED_STYLE_REF="default" POSITION="right" ID="ID_1902469308" CREATED="1632652416117" MODIFIED="1675042940490" COLOR="#000000" BACKGROUND_COLOR="#eeeeee">
+<node TEXT="objects" LOCALIZED_STYLE_REF="default" POSITION="bottom_or_right" ID="ID_1902469308" CREATED="1632652416117" MODIFIED="1675042940490" COLOR="#000000" BACKGROUND_COLOR="#eeeeee">
 <icon BUILTIN="group"/>
 <node TEXT="history" LOCALIZED_STYLE_REF="default" ID="ID_74294546" CREATED="1632652535678" MODIFIED="1673056196000">
 <icon BUILTIN="present"/>
@@ -907,7 +907,7 @@
 </node>
 </node>
 </node>
-<node TEXT="legend" POSITION="right" ID="ID_49802336" CREATED="1632692624170" MODIFIED="1672994032199" BACKGROUND_COLOR="#eeeeee">
+<node TEXT="legend" POSITION="bottom_or_right" ID="ID_49802336" CREATED="1632692624170" MODIFIED="1672994032199" BACKGROUND_COLOR="#eeeeee">
 <icon BUILTIN="group"/>
 <node TEXT="icons" ID="ID_143750967" CREATED="1632698164973" MODIFIED="1632698166792">
 <node TEXT="what it is" ID="ID_643462232" CREATED="1632844495015" MODIFIED="1633006313614">
@@ -953,6 +953,15 @@
 <icon BUILTIN="cog"/>
 <icon BUILTIN="puzzle_piece"/>
 <node TEXT="action of parent, using the object" ID="ID_329143368" CREATED="1633025415670" MODIFIED="1633025570749"/>
+</node>
+</node>
+<node TEXT="a module" ID="ID_1332116231" CREATED="1716045677383" MODIFIED="1716045701590">
+<icon BUILTIN="present"/>
+<node TEXT="the input into that module" ID="ID_1969410741" CREATED="1716045680675" MODIFIED="1716045688058">
+<icon BUILTIN="input"/>
+</node>
+<node TEXT="the output from that module" ID="ID_1927722087" CREATED="1716045688378" MODIFIED="1716045696851">
+<icon BUILTIN="output"/>
 </node>
 </node>
 </node>

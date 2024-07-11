@@ -21,13 +21,12 @@ module Reporting_repetitions=
             |>output_stream.WriteLine
         )
 
+
 module Finding_many_repetitions =
     let repetitions_of_one_stage = 
         //``Finding_many_repetitions(fsharp_dictionary_first)``.repetitions_of_one_stage
         ``Finding_many_repetitions(simple)``.repetitions_of_one_stage
     
-    
-
 
     let all_repetitions =
         ``Finding_many_repetitions(simple)``.all_repetitions

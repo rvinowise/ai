@@ -1,4 +1,4 @@
-<map version="freeplane 1.9.13">
+<map version="freeplane 1.11.5">
 <!--To view this file, download free mind mapping software Freeplane from https://www.freeplane.org -->
 <attribute_registry SHOW_ATTRIBUTES="selected">
     <attribute_name MANUAL="true" NAME="src">
@@ -15,12 +15,12 @@
 <stylenode LOCALIZED_TEXT="styles.root_node" STYLE="oval" UNIFORM_SHAPE="true" VGAP_QUANTITY="24 pt">
 <font SIZE="24"/>
 <edge COLOR="#000000"/>
-<stylenode LOCALIZED_TEXT="styles.predefined" POSITION="right" STYLE="bubble">
+<stylenode LOCALIZED_TEXT="styles.predefined" POSITION="bottom_or_right" STYLE="bubble">
 <edge COLOR="#000000"/>
 <stylenode LOCALIZED_TEXT="default" ID="ID_271890427" ICON_SIZE="12 pt" COLOR="#000000" STYLE="fork" BORDER_COLOR_LIKE_EDGE="false" BORDER_COLOR="#000000">
 <arrowlink SHAPE="CUBIC_CURVE" COLOR="#000000" WIDTH="2" TRANSPARENCY="200" DASH="" FONT_SIZE="9" FONT_FAMILY="SansSerif" DESTINATION="ID_271890427" STARTARROW="DEFAULT" ENDARROW="NONE"/>
 <font NAME="Verdana" SIZE="10" BOLD="false" ITALIC="false"/>
-<richcontent CONTENT-TYPE="plain/auto" TYPE="DETAILS"/>
+<richcontent TYPE="DETAILS" CONTENT-TYPE="plain/auto"/>
 <richcontent TYPE="NOTE" CONTENT-TYPE="plain/auto"/>
 <edge COLOR="#000000"/>
 </stylenode>
@@ -42,7 +42,7 @@
 <edge COLOR="#000000"/>
 </stylenode>
 </stylenode>
-<stylenode LOCALIZED_TEXT="styles.user-defined" POSITION="right" STYLE="bubble">
+<stylenode LOCALIZED_TEXT="styles.user-defined" POSITION="bottom_or_right" STYLE="bubble">
 <edge COLOR="#000000"/>
 <stylenode LOCALIZED_TEXT="styles.important" ID="ID_67550811">
 <icon BUILTIN="yes"/>
@@ -117,7 +117,7 @@
 <icon BUILTIN="launch"/>
 </stylenode>
 </stylenode>
-<stylenode LOCALIZED_TEXT="styles.AutomaticLayout" POSITION="right" STYLE="bubble">
+<stylenode LOCALIZED_TEXT="styles.AutomaticLayout" POSITION="bottom_or_right" STYLE="bubble">
 <edge COLOR="#000000"/>
 <stylenode LOCALIZED_TEXT="AutomaticLayout.level.root" COLOR="#ffffff" BACKGROUND_COLOR="#000000" STYLE="fork" SHAPE_HORIZONTAL_MARGIN="10 pt" SHAPE_VERTICAL_MARGIN="10 pt" BORDER_COLOR_LIKE_EDGE="false" BORDER_COLOR="#000000">
 <font SIZE="10" BOLD="true"/>
@@ -138,9 +138,9 @@
 </stylenode>
 </map_styles>
 </hook>
-<node TEXT="type: project" POSITION="left" ID="ID_683065071" CREATED="1631768151045" MODIFIED="1641509948610"/>
-<node TEXT="bookmarks: done" STYLE_REF="done" POSITION="left" ID="ID_1334217373" CREATED="1632064659870" MODIFIED="1632136937093"/>
-<node TEXT="legend" POSITION="left" ID="ID_49802336" CREATED="1632692624170" MODIFIED="1632692627877">
+<node TEXT="type: project" POSITION="top_or_left" ID="ID_683065071" CREATED="1631768151045" MODIFIED="1641509948610"/>
+<node TEXT="bookmarks: done" STYLE_REF="done" POSITION="top_or_left" ID="ID_1334217373" CREATED="1632064659870" MODIFIED="1632136937093"/>
+<node TEXT="legend" POSITION="top_or_left" ID="ID_49802336" CREATED="1632692624170" MODIFIED="1632692627877">
 <node TEXT="icons" ID="ID_143750967" CREATED="1632698164973" MODIFIED="1632698166792">
 <node TEXT="what it is" ID="ID_643462232" CREATED="1632844495015" MODIFIED="1633006313614">
 <icon BUILTIN="box_inscribed"/>
@@ -193,24 +193,22 @@
 <node TEXT="impl: implementation" ID="ID_425363286" CREATED="1632698181664" MODIFIED="1632698185978"/>
 </node>
 </node>
-<node TEXT="overview.mm" POSITION="right" ID="ID_963805880" CREATED="1641509947257" MODIFIED="1641509947259" LINK="overview.mm"/>
-<node TEXT="interface" POSITION="right" ID="ID_815172773" CREATED="1643857705088" MODIFIED="1643857711564" LINK="interface/">
+<node TEXT="overview.mm" POSITION="bottom_or_right" ID="ID_963805880" CREATED="1641509947257" MODIFIED="1641509947259" LINK="overview.mm"/>
+<node TEXT="interface" POSITION="bottom_or_right" ID="ID_815172773" CREATED="1643857705088" MODIFIED="1643857711564" LINK="interface/">
 <node TEXT="user interface design" ID="ID_464923108" CREATED="1643857714125" MODIFIED="1667646848717" LINK="interface/interface%20design.mm"/>
 </node>
-<node TEXT="persistence" POSITION="right" ID="ID_201293481" CREATED="1641509967643" MODIFIED="1641510505723" LINK="persistence/">
+<node TEXT="persistence" POSITION="bottom_or_right" ID="ID_201293481" CREATED="1641509967643" MODIFIED="1641510505723" LINK="persistence/">
 <node TEXT="json format" ID="ID_423055997" CREATED="1641510507559" MODIFIED="1652303036730" LINK="persistence/json%20format.mm"/>
-<node TEXT="postgres_database.mm" ID="ID_1871556" CREATED="1660428622513" MODIFIED="1660428622517" LINK="../../../knowledge/study/programming/data%20persistence/postgres_database.mm"/>
 </node>
-<node TEXT="presenting documentation" POSITION="right" ID="ID_1134278367" CREATED="1659347819677" MODIFIED="1659355988423">
+<node TEXT="presenting documentation" POSITION="bottom_or_right" ID="ID_1134278367" CREATED="1659347819677" MODIFIED="1659355988423">
 <node TEXT="videos" ID="ID_1109093235" CREATED="1659347825149" MODIFIED="1659347920830" LINK="videos/">
 <node TEXT="making videos" ID="ID_1217371651" CREATED="1659347959934" MODIFIED="1659355722926" LINK="videos/making%20videos.mm"/>
 </node>
 </node>
-<node TEXT="programming tools" POSITION="right" ID="ID_811290730" CREATED="1659355936361" MODIFIED="1659355995816" LINK="programming%20tools/">
+<node TEXT="programming tools" POSITION="bottom_or_right" ID="ID_811290730" CREATED="1659355936361" MODIFIED="1659355995816" LINK="programming%20tools/">
 <node TEXT="c-sharp" ID="ID_1340315914" CREATED="1659355996364" MODIFIED="1659356007781"/>
 </node>
-<node TEXT="project structure" POSITION="right" ID="ID_509784941" CREATED="1661115139465" MODIFIED="1661115148950" LINK="project%20structure/">
-<node TEXT="folder structure" ID="ID_1524235830" CREATED="1661115156395" MODIFIED="1661115162142" LINK="file:/C:/prj/ai/docs/project%20structure/folder%20structure.mm"/>
+<node TEXT="project structure" POSITION="bottom_or_right" ID="ID_509784941" CREATED="1661115139465" MODIFIED="1661115148950" LINK="project%20structure/">
 <node TEXT="folder structure.ora" ID="ID_892733686" CREATED="1667651924931" MODIFIED="1667651924931" LINK="project%20structure/folder%20structure.ora"/>
 </node>
 </node>

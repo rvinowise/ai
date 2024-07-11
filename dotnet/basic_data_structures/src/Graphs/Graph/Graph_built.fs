@@ -5,11 +5,8 @@ module Graph =
 
     let simple (raw_edges:seq<string*string>) =
         raw_edges
-        |>Seq.map (fun (tail_id, head_id)->
-            Edge(
-                tail_id, head_id
-            );
-        )|>Set.ofSeq
+        |>Seq.map Edge
+        |>Set.ofSeq
 
     let from_tuples 
         (raw_edges:seq<string*string*string*string>)

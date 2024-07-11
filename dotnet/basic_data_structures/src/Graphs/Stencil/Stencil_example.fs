@@ -1,4 +1,3 @@
-
 namespace rvinowise.ai.example
 open rvinowise.ai
 
@@ -10,32 +9,32 @@ module Stencil =
     let a_fitting_stencil =
         built.Stencil.simple_without_separator
             [
-                "b","out1";
-                "out1","f";
+                "b","out";
+                "out","f";
                 "h","f";
             ]
 
     let a_stencil_with_huge_beginning =
         built.Stencil.simple_without_separator
             [
-                "a","out1";
-                "b","out1";
-                "c","out1";
-                "d","out1";
-                "e","out1";
-                "g","out1";
-                "h","out1";
-                "i","out1";
-                "j","out1";
-                "k","out1";
-                "l","out1";
-                "m","out1";
-                "n","out1";
-                "o","out1";
-                "p","out1";
-                "q","out1";
+                "a","out";
+                "b","out";
+                "c","out";
+                "d","out";
+                "e","out";
+                "g","out";
+                "h","out";
+                "i","out";
+                "j","out";
+                "k","out";
+                "l","out";
+                "m","out";
+                "n","out";
+                "o","out";
+                "p","out";
+                "q","out";
 
-                "out1","f";
+                "out","f";
 
                 "a","f";
                 "b","f";

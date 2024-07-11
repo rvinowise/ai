@@ -37,12 +37,12 @@ module Renaming_figures =
             (Vertex_id*Vertex_id) list
         >
 
-    let group_by_figures 
+    let group_by_figures //answers which vertices refer to this figure?
         (all_referenced_figures: Map<Vertex_id, Figure_id>)
         (used_vertices: Vertex_id Set)
         =
         all_referenced_figures
-        |>Map.filter(fun key _ -> used_vertices|>Set.contains key)
+        |>Map.filter(fun vertex _ -> used_vertices|>Set.contains vertex)
         |>Map.reverse_with_list_of_keys
 
     let next_vertex_id_for_figure 
