@@ -179,7 +179,6 @@ module Finding_concept =
             history_as_figure
             digit_concept
         
-        ()
 
     [<Fact>]
     let ``mathematical concepts``()=

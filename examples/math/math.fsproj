@@ -23,11 +23,12 @@
 
   <ItemGroup>
     <PackageReference Include="Fparsec" Version="1.1.1" />
-    <PackageReference Include="Xunit" Version="2.4.2" />
+    <PackageReference Include="Xunit" Version="2.9.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+    <PackageReference Include="xunit.extensibility.core" Version="2.9.0" />
     <PackageReference Include="FsUnit" Version="5.2.0" />
     <PackageReference Include="Microsoft.TestPlatform" Version="17.4.1" />
     

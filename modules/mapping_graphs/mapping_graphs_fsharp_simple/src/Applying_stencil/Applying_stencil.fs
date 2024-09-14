@@ -4,7 +4,6 @@ open rvinowise.ai.stencil
 
 module Applying_stencil = 
  
-
     let is_figure_without_impossible_parts 
         (impossibles: Figure seq)
         (owner_figure: Figure)
@@ -26,9 +25,6 @@ module Applying_stencil =
                 step_further
         )|>Set.intersectMany
             
-
-    
-
 
     let retrieve_result 
         stencil
@@ -80,7 +76,6 @@ module Applying_stencil =
                 None
             
             
-
 
     let results_of_stencil_application
         target

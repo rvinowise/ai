@@ -15,7 +15,7 @@ module Figure_tests=
             "a0","a","b0","b"
         ]
         let f2 = ai.built.Figure.from_tuples [
-            "a0","a","b0","b"
+            "a1","a","b20","b"
         ]
         f1 |>should equal f2
 

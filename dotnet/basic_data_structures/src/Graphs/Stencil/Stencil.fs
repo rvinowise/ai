@@ -14,7 +14,7 @@ module Stencil=
             |_->None
         )
 
-    let is_output stencil vertex =
+    (* let is_output stencil vertex =
         stencil.nodes
         |>Map.find vertex 
         |>function
@@ -93,7 +93,7 @@ module Stencil=
         )
         |>Seq.distinct
     
-    let impossible_output_parts (stentcil:Stencil) =
-        stentcil.output_without
+    let impossible_output_parts (stencil:Stencil) =
+        stencil.output_without
 
-   
+    *)

@@ -7,9 +7,9 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/modules/mapping_graphs/enumerating_combinations/enumerating_combinations.csproj",
+                "${workspaceFolder}/ai.sln",
                 "/property:GenerateFullPaths=true",
-                "/consoleloggerparameters:NoSummary"
+                "/consoleloggerparameters:NoSummary;ForceNoAlign"
             ],
             "problemMatcher": "$msCompile"
         },
@@ -19,9 +19,9 @@
             "type": "process",
             "args": [
                 "publish",
-                "${workspaceFolder}/modules/mapping_graphs/enumerating_combinations/enumerating_combinations.csproj",
+                "${workspaceFolder}/ai.sln",
                 "/property:GenerateFullPaths=true",
-                "/consoleloggerparameters:NoSummary"
+                "/consoleloggerparameters:NoSummary;ForceNoAlign"
             ],
             "problemMatcher": "$msCompile"
         },
@@ -33,7 +33,7 @@
                 "watch",
                 "run",
                 "--project",
-                "${workspaceFolder}/modules/mapping_graphs/enumerating_combinations/enumerating_combinations.csproj"
+                "${workspaceFolder}/ai.sln"
             ],
             "problemMatcher": "$msCompile"
         }

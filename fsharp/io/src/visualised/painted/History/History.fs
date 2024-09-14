@@ -71,7 +71,7 @@ module History =
         (batches:Map<Moment, infrastructure.Node > )
         =
         batches
-        |>Seq.map (extensions.KeyValuePair.value)
+        |>Map.values
         |>Seq.pairwise
         |>Seq.iter arrange_two_batches
         
