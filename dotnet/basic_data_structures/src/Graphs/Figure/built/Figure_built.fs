@@ -101,29 +101,31 @@ module Figure=
                 )
                 |>Seq.concat
                 |>Map.ofSeq
-            without=Set.empty
         }
         |>check_correctness
         |>Renaming_figures.rename_vertices_to_standard_names
     
 
-    let sequential_figure_from_sequence (subfigures: string seq) =
-        let subfigures_sequence = 
-            subfigures
-            |>built.Graph.unique_numbers_for_names_in_sequence
-            |>Seq.map (fun (vertex, figure) ->
-                vertex,Figure_id figure
-            )
+    let sequence_to_vertices_and_figures (figures: string seq) =
+        figures
+        |>built.Graph.unique_numbers_for_names_in_sequence
+        |>Seq.map (fun (vertex, figure) ->
+            vertex,Figure_id figure
+        )
+    
+    let sequential_figure_from_sequence (figures: string seq) =
+        let vertices_to_figures =
+            sequence_to_vertices_and_figures figures
+            
         {
             edges=
-                subfigures_sequence
+                vertices_to_figures
                 |>Seq.map fst
                 |>built.Graph.sequential_edges
                 
             subfigures=
-                subfigures_sequence
+                vertices_to_figures
                 |>Map.ofSeq
-            without=Set.empty
         }|>Renaming_figures.rename_vertices_to_standard_names
 
     let sequential_figure_from_text (text:string) =
@@ -146,7 +148,6 @@ module Figure=
                     |>Seq.map (fun (tail,head) -> Vertex_id tail, Figure_id head)
                     |>Map.ofSeq
                     |>Map.map (fun _ value ->value)
-                without=Set.empty
             }
 
     let signal (id:string) =
@@ -157,7 +158,6 @@ module Figure=
                 Vertex_id id,
                 Figure_id id
             ]|>Map.ofSeq
-            without=Set.empty
         }|>Renaming_figures.rename_vertices_to_standard_names
 
     let vertex_data_from_edges_of_figure (full_vertex_data: Map<Vertex_id, Figure_id>) edges =
@@ -204,7 +204,6 @@ module Figure=
         {
             edges=edges|>Set.ofSeq
             subfigures=(vertex_data_from_vertices_of_figure figure.subfigures vertices)
-            without=Set.empty
         }
 
     let from_tuples 
@@ -212,7 +211,6 @@ module Figure=
         {
             edges=Graph.from_tuples edges
             subfigures=vertex_data_from_tuples edges
-            without=Set.empty
         }
         |>check_correctness
         |>Renaming_figures.rename_vertices_to_standard_names

@@ -1,58 +1,97 @@
 namespace rvinowise.ai.built
 
 open rvinowise.ai
+open rvinowise
 open rvinowise.extensions
 
 module Stencil =
 
-    let vertex_reference_from_string name=
-        match name with
-        | "out" -> Stencil_output
-        | subfigure -> 
-            subfigure
-            |>Figure_id
-            |>Lower_figure 
-
-    let vertex_data_from_tuples 
-        (edges: seq<string*string*string*string>) =
-        edges
-        |>Seq.map (fun(tail_id,tail,head_id,head)->
-            [
-                (Vertex_id tail_id, vertex_reference_from_string tail);
-                (Vertex_id head_id, vertex_reference_from_string head)
-            ]
-        )
-        |>Seq.concat
-        |>Map.ofSeq
-
     
+    
+
+    let remove_vertex_from_graph
+        removed_vertex
+        edges
+        =
+        let vertices_before_output =
+            removed_vertex
+            |>Edges.previous_vertices edges
+        
+        let vertices_after_output =
+            removed_vertex
+            |>Edges.next_vertices edges
+        
+        let edges_instead_of_output =
+            (vertices_before_output,vertices_after_output)
+            ||>Seq.allPairs
+            |>Seq.map Edge.ofPair
+
+        let edges_without_output = 
+            edges
+            |>Seq.filter(fun edge->
+                (edge.head=removed_vertex 
+                || 
+                edge.tail=removed_vertex)
+                |>not
+            )
+
+        edges_instead_of_output
+        |>Seq.append edges_without_output
+        |>Set.ofSeq
 
     let simple 
         (turn_vertex_id_into_figure_id: string->string)
-        (edges:seq<string*string>) 
+        (raw_edges:seq<string*string>) 
         =
-        {
-            edges=built.Graph.simple edges
-            nodes=edges
-                |>Seq.map (fun(tail_id,head_id)->
+        let edges =
+            raw_edges
+            |>built.Graph.simple
+            
+        let vertices_before_out =
+            rvinowise.ai.Stencil.output_vertex
+            |>Edges.previous_vertices edges
+        
+        let vertices_after_out =
+            Stencil.output_vertex
+            |>Edges.next_vertices edges
+            
+        let edges_without_out =
+            edges
+            |>remove_vertex_from_graph Stencil.output_vertex
+            
+        let figure = {
+            edges = edges_without_out
+                
+            subfigures=  
+                edges_without_out
+                |>Seq.map (fun edge->
                     [
                         (
-                            tail_id|>Vertex_id, 
-                            tail_id
+                            edge.tail, 
+                            edge.tail
+                            |>Vertex_id.value
                             |>turn_vertex_id_into_figure_id
-                            |>vertex_reference_from_string
+                            |>Figure_id
                         );
                         (
-                            head_id|>Vertex_id,
-                            head_id
+                            edge.head,
+                            edge.head
+                            |>Vertex_id.value
                             |>turn_vertex_id_into_figure_id
-                            |>vertex_reference_from_string
+                            |>Figure_id
                         );
                     ]
                 )
                 |>Seq.concat
                 |>Map.ofSeq
+        }
+            
+        {
+            figure=figure
+            vertices_before_out = vertices_before_out
+            vertices_after_out = vertices_after_out
             output_without=Set.empty
+            blocking_vertices = Map.empty 
         }
 
     let simple_without_separator (edges:seq<string*string>) =
@@ -62,29 +101,39 @@ module Stencil =
         simple String.remove_number_with_hash edges
 
 
-    let from_tuples
-        (edges:seq<string*string*string*string>) =
-        {
-            edges=built.Graph.from_tuples edges
-            nodes=vertex_data_from_tuples edges
-            output_without=Set.empty
-        }
-
-    let sequential_stencil_from_sequence (vertices: string seq) =
-        let vertices_sequence = 
-            vertices
-            |>built.Graph.unique_numbers_for_names_in_sequence
-            |>Seq.map (fun (vertex, name) ->
-                vertex,vertex_reference_from_string name
-            )
-        {
-            edges=
-                vertices_sequence
-                |>Seq.map fst
-                |>built.Graph.sequential_edges
-                
-            nodes=
-                vertices_sequence
+    let sequential_stencil_from_sequence (references_of_vertices: string seq) =
+        let edges =
+            references_of_vertices
+            |>Seq.map Vertex_id
+            |>built.Graph.sequential_edges
+            
+        let vertices_before_out =
+            ai.Stencil.output_vertex
+            |>Edges.previous_vertices edges
+        
+        let vertices_after_out =
+            ai.Stencil.output_vertex
+            |>Edges.next_vertices edges
+            
+        let edges_without_out =
+            edges
+            |>remove_vertex_from_graph ai.Stencil.output_vertex
+        
+        let figure = {
+            edges = edges_without_out
+            subfigures =
+                references_of_vertices
+                |>Seq.filter (fun reference -> reference <> Vertex_id.value ai.Stencil.output_vertex)
+                |>built.Figure.sequence_to_vertices_and_figures
                 |>Map.ofSeq
+        }
+       
+        {
+            figure=figure
+                
+            vertices_before_out = vertices_before_out
+            vertices_after_out = vertices_before_out
+            
             output_without=Set.empty
+            blocking_vertices = Map.empty 
         }

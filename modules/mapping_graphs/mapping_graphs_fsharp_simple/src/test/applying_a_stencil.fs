@@ -85,7 +85,7 @@ module ``application of stencils``=
                 ",#1","out";
                 "out",",#2";
                 "out",";";
-            ]|>Figure_from_stencil.convert
+            ]|>_.figure
 
         let target =
             "N0,1,2,3,4,5,6,7,8,9;"
@@ -195,7 +195,7 @@ module ``application of stencils``=
         |>infrastructure.Graph.with_filled_vertex "target figure" 
             (painted.Graph.add_graph figure.edges)
         |>infrastructure.Graph.with_filled_vertex "stencil"
-            (painted.Graph.add_graph stencil.edges)
+            (painted.Graph.add_graph stencil.figure.edges)
         |>painted.image.open_image_of_graph
 
     [<Fact>]

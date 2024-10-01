@@ -5,22 +5,21 @@ open rvinowise.ai
 open rvinowise.extensions
 
 
-[<Struct>]
-type Stencil_node =
-| Lower_figure of Lower_figure: Figure_id
-| Stencil_output
 
 type Stencil = {
-    edges: Edge Set
-    nodes: Map<Vertex_id, Stencil_node>
+    figure: Figure
+    vertices_before_out: Vertex_id Set
+    vertices_after_out: Vertex_id Set
     output_without: Figure Set
+    blocking_vertices:
+        Map<Edge,Set<Figure_id>>
 }
 with 
     override this.ToString() =
         let result = StringBuilder()
         result 
         += "Stencil( "
-        this.edges
+        this.figure.edges
         |>Seq.iter(fun edge ->
             result 
             ++ edge.tail

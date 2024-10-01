@@ -10,7 +10,6 @@ open System.Linq
 type Figure = {
     edges: Edge Set
     subfigures: Map<Vertex_id, Figure_id>
-    without: Figure Set
 }
 with 
     override this.ToString()=
