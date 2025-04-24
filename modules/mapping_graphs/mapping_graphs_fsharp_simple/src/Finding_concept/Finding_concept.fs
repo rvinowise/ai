@@ -1,4 +1,3 @@
-
 namespace rvinowise.ai
 
 open rvinowise.ai
@@ -17,7 +16,6 @@ module Finding_concept =
         |Leaf stencil->
             stencil
             |>Applying_stencil.results_of_stencil_application place
-            |>Seq.map Renaming_figures.rename_vertices_to_standard_names
             |>Set.ofSeq
         |Or children->
             children
@@ -29,15 +27,6 @@ module Finding_concept =
             |>Set.intersectMany
 
 
-    let digit_concept_with_prohibited_links =
-        built.Stencil.simple_with_separator [
-            "N","out";
-            ",#1","out";
-            "out",",#2";
-            "out",";";
-        ]
-        |>Concept.Leaf
-    
     let complex_digit_concept =
         let first_digit_stencil =
             built.Stencil.simple_with_separator [
@@ -66,11 +55,8 @@ module Finding_concept =
         ]
         |>List.map (fun stencil->
             {stencil with 
-                output_without=[
-                    ","|>built.Figure.signal;
-                    "N"|>built.Figure.signal
-                ]|>Set.ofList
-            })
+                output_without=
+                    ","|>built.Figure.signal|>Set.singleton})
         |>List.map Leaf
         |>Set.ofList
         |>Or 
@@ -108,7 +94,7 @@ module Finding_concept =
 
         digit_concept
         |>incarnations_of_concept history_as_figure
-        |>Set.map Renaming_figures.rename_vertices_to_standard_names
+        |>Set.map fst
         |>should equal (
             "0123456789"
             |>Seq.map string
@@ -127,14 +113,15 @@ module Finding_concept =
         let incarnations = 
             complex_digit_concept
             |>incarnations_of_concept history_as_figure
-            |>Set.map Renaming_figures.rename_vertices_to_standard_names
-            
+        
         incarnations
-        |>Set.filter(
-            Figure.is_signal "0"
+        |>Set.filter(fun (standardized_figure, _)->
+            standardized_figure
+            |>Figure.is_signal "0"
         )|>should haveCount 2
     
         incarnations
+        |>Set.map fst
         |>should equal (
             "012"
             |>Seq.map string
@@ -142,11 +129,30 @@ module Finding_concept =
             |>Set.ofSeq
         )
 
-    let exclude_incarnations
-        vertices_of_incarnations
-        all_appearances_of_concepts
+    let appearances_of_concept_incarnations
+        (history: Figure)
+        concept
         =
-        all_appearances_of_concepts
+        let incarnations =         
+            concept
+            |>incarnations_of_concept history
+        
+        let vertices_of_incarnations = 
+            incarnations
+            |>Seq.map snd
+            |>Seq.map (fun figure->
+                figure.subfigures
+                |>Map.keys
+                |>Set.ofSeq
+            )
+            |>Set.ofSeq
+
+        incarnations
+        |>Seq.map fst
+        |>Seq.map (
+            Mapping_graph.map_figure_onto_target
+                history
+        )|>Seq.concat
         |>Seq.filter (fun (appearance: stencil.Mapping)->
             let appearance_vertices = 
                 appearance.Keys
@@ -158,32 +164,6 @@ module Finding_concept =
             ) 
             |>not
         )
-    
-    let appearances_of_concept_incarnations
-        (history: Figure)
-        concept
-        =
-        let incarnations =         
-            concept
-            |>incarnations_of_concept history
-        
-        let vertices_of_incarnations = 
-            incarnations
-            |>Seq.map (fun figure->
-                figure.subfigures
-                |>Map.keys
-                |>Set.ofSeq
-            )
-            |>Set.ofSeq
-
-        incarnations
-        |>Seq.map Renaming_figures.rename_vertices_to_standard_names
-        |>Seq.map (
-            Mapping_graph.map_figure_onto_target
-                history
-        )|>Seq.concat
-        |>exclude_incarnations vertices_of_incarnations
-        
 
     [<Fact>]
     let ``try appearances of incarnations of digit concept``()=

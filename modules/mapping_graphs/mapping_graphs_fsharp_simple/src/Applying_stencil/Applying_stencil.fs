@@ -22,7 +22,6 @@ module Applying_stencil =
         |>Seq.map (
             Search_in_graph.vertices_reacheble_from_any_vertices 
                 (fun _->true)
-                (fun _->false)
                 step_further
         )|>Set.intersectMany
             
@@ -32,15 +31,21 @@ module Applying_stencil =
         (target:Figure)
         mapping 
         =
+        let output_node = 
+            stencil
+            |>Stencil.output
+
         let output_beginning =
-            stencil.vertices_before_out
+            output_node
+            |>Edges.previous_vertices stencil.edges
             |>Mapping.targets_of_mapping mapping
             |>all_vertices_reacheble_from_all_vertices_together 
                 (Edges.next_vertices target.edges)
             |>Set.ofSeq
 
         let output_ending =
-            stencil.vertices_after_out
+            output_node
+            |>Edges.next_vertices stencil.edges
             |>Mapping.targets_of_mapping mapping
             |>all_vertices_reacheble_from_all_vertices_together 
                 (Edges.previous_vertices target.edges)
@@ -62,7 +67,11 @@ module Applying_stencil =
                     stencil.output_without 
                     resulting_part_of_target
             then
-                Some resulting_part_of_target    
+                Some (
+                    Renaming_figures.rename_vertices_to_standard_names resulting_part_of_target
+                    ,
+                    resulting_part_of_target    
+                )
             else
                 None
             
@@ -72,7 +81,8 @@ module Applying_stencil =
         target
         stencil
         =
-        stencil.figure
+        stencil
+        |>Figure_from_stencil.convert
         |>Mapping_graph.map_figure_onto_target target
         |>Seq.map (retrieve_result stencil target)
         |>Seq.choose id

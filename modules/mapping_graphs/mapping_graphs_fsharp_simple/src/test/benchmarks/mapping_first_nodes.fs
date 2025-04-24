@@ -19,7 +19,7 @@ module mapping_first_nodes =
         member val mappees = [
             {Parameter.value= example.Figure.fitting_stencil_as_figure; 
             name="a_fitting_stencil"};
-            {value= example.Stencil.a_stencil_with_huge_beginning|> _.figure; 
+            {value= example.Stencil.a_stencil_with_huge_beginning|>Figure_from_stencil.convert; 
             name="a_stencil_with_huge_beginning"}
         ]
         member val target_figures = [

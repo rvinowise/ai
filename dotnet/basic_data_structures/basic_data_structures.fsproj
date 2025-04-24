@@ -35,9 +35,9 @@
     <Compile Include="src\Graphs\Sequence.fs" />
 
     <Compile Include="src\Graphs\Stencil\Stencil_types.fs" />
-    <Compile Include="src\Graphs\Stencil\Stencil.fs" />
     <Compile Include="src\Graphs\Stencil\Stencil_built.fs" />
     <Compile Include="src\Graphs\Stencil\Stencil_example.fs" />
+    <Compile Include="src\Graphs\Stencil\Stencil.fs" />
     <Compile Include="src\Graphs\Stencil\Figure_from_stencil.fs" />
 
     <Compile Include="src\Graphs\Concept\Concept_types.fs" />

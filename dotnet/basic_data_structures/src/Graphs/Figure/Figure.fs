@@ -65,8 +65,12 @@ module Figure=
         vertices
         =
         vertices
-        |>Seq.map (fun vertex->
-            vertex, owner_figure.subfigures[vertex]
+        |>Seq.choose (fun vertex->
+            owner_figure.subfigures
+            |>Map.tryFind vertex
+            |>function
+            |None -> None
+            |Some referenced_figure ->Some (vertex,referenced_figure)
         )
 
     

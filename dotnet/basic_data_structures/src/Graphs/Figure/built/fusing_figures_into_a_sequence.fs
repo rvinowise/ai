@@ -187,12 +187,14 @@ module Fusing_figures_into_sequence=
                 {
                     edges=renamed_a_edges|>Set.ofSeq
                     subfigures=renamed_a_subfigures
+                    without=Set.empty
                 }
                 |>Figure.last_vertices
             let first_vertices_of_b =
                 {
                     edges=renamed_b_edges|>Set.ofSeq
                     subfigures=renamed_b_subfigures
+                    without=Set.empty
                 }
                 |>Figure.first_vertices
             Seq.allPairs last_vertices_of_a first_vertices_of_b 
@@ -209,6 +211,7 @@ module Fusing_figures_into_sequence=
                 all_renamed_subfigures
                     renamed_subfigures
 
+            without=Set.empty
         }
 
     [<Fact>]
@@ -245,6 +248,7 @@ module Fusing_figures_into_sequence=
             )
             |>Map.ofSeq
 
+            without=Set.empty
         }
         let real_ab_figure = 
             sequential_pair
