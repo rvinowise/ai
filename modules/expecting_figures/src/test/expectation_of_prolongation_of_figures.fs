@@ -27,7 +27,7 @@ module ``expectation of prolongation of figures``=
     let ``an expected prolongation, constructed from a figure, expects its first subfigures at first``()=
         let figure_f = a_high_level_relatively_simple_figure
         let first_subfigures = 
-            ["b";"h"]
+            ["b#1";"h#1"]
             |>List.map Vertex_id
             |>Set.ofList
         let prolongation = 
@@ -40,9 +40,9 @@ module ``expectation of prolongation of figures``=
     let ``prolongating a figure with a new input changes expectations``()=
         let high_figure = a_high_level_relatively_simple_figure
         let expected_subfigures_after_b = 
-            ["c";"d";"h";]|>Seq.map Vertex_id
+            ["c#1";"d#1";"h#1";]|>Seq.map Vertex_id
         let expected_subfigures_after_d = 
-            ["c";"e";"h";]|>Seq.map Vertex_id
+            ["c#1";"e#1";"h#1";]|>Seq.map Vertex_id
         let initial_expectation = from_figure high_figure
         let next_expectation = 
             prolongate_expectation_with_an_input_figure (Figure_id "b") initial_expectation 

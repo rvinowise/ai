@@ -7,22 +7,13 @@ using System.Text;
 
 namespace rvinowise.ai.generating_combinations {
 
-public struct Element_to_targets<Element, Target> {
-    public readonly Element element;
-    public readonly List<Target> targets;
-    public Element_to_targets(Element element, IEnumerable<Target> targets) {
-        this.element = element;
-        this.targets = new List<Target>(targets);
-    }
+public struct Element_to_targets<Element, Target>(Element element, IEnumerable<Target> targets) {
+    public readonly Element element = element;
+    public readonly List<Target> targets = [..targets];
 }
-public readonly struct Element_to_target<Element, Target> {
-    public readonly Element element;
-    public readonly Target target;
-
-    public Element_to_target(Element element, Target target) {
-        this.element = element;
-        this.target = target;
-    }
+public readonly struct Element_to_target<Element, Target>(Element element, Target target) {
+    public readonly Element element = element;
+    public readonly Target target = target;
 
     public override string ToString() {
         return $"{element}-{target}";
@@ -39,7 +30,7 @@ public class Generator_of_mappings<Element, Target>
     public Generator_of_mappings(
         IEnumerable<Element_to_targets<Element, Target>> elements_to_targets
     ) {
-        this.elements_to_targets = new List<Element_to_targets<Element,Target>>(elements_to_targets);
+        this.elements_to_targets = [..elements_to_targets];
     }
     public Generator_of_mappings(
         IEnumerable<(Element, IEnumerable<Target>)> elements_to_targets

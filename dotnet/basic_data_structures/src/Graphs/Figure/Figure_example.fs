@@ -82,3 +82,36 @@ module Figure =
             ]
 
     let empty = built.Figure.from_tuples []
+    
+    
+    let a_long_figure = 
+        built.Figure.simple 
+            [
+                "b1","c1";
+                "b1","d1";
+                "c1","b3";
+                "d1","e1";
+                "d1","f1";
+                "e1","f2";
+                "b2","h1";
+                "h1","f2";
+                
+                "f1","x1";
+                "x1","y1";
+                "y1","z1";
+                "z1","p1";
+                "p1","r1";
+                "r1","s1";
+                "s1","f3";
+                "f3","t1"
+                
+                "f2","m1"
+                "f2","k1"
+                "m1","n1"
+                "k1","l1"
+                "n1","o1"
+                "l1","o1"
+                "o1","p1"
+                "o1","q1"
+                "q1","r1"
+            ]

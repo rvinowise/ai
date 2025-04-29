@@ -289,7 +289,6 @@ module Renaming_figures =
             subfigures=
                 owner_figure.subfigures
                 |>renamed_subfigures_for_figure renamings
-            without=Set.empty
         }
 
     

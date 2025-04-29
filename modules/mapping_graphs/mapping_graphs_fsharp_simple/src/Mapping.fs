@@ -118,3 +118,22 @@ module Mapping=
             target_vertex|>Vertex_id
         )
         |>Mapping
+
+module Immutable_mapping=
+    
+    let targets_of_mapping 
+        (mapping:Map<Vertex_id,Vertex_id>)
+        vertices
+        =
+        vertices
+        |>Set.map (fun vertices->
+            mapping[vertices]
+        )
+    
+    let ofStringPairs (pairs: seq<string*string>) =
+        pairs
+        |>Seq.map (fun (stencil_vertex, target_vertex) ->
+            stencil_vertex|>Vertex_id,
+            target_vertex|>Vertex_id
+        )
+        |>Map.ofSeq

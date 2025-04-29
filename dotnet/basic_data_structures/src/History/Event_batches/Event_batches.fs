@@ -329,5 +329,4 @@ module Event_batches =
             subfigures=
                 subfigures_sequence
                 |>Map.ofSeq
-            without=Set.empty
         }|>Renaming_figures.rename_vertices_to_standard_names

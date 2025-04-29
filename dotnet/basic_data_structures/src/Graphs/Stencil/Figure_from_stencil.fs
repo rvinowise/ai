@@ -57,5 +57,4 @@ module Figure_from_stencil=
         {
             Figure.edges=edges_without_stencil_output stencil
             subfigures=stencil_nodes_to_figure_subfigures stencil.nodes
-            without=Set.empty
         }

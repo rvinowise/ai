@@ -17,7 +17,7 @@ module enumerating_combinations =
 
         [<Benchmark>]
         member this.generator_of_mappings_with_indices()=
-            Mapping_graph.map_first_nodes 
+            Map_first_nodes.map_first_nodes_with_mutable_mapping 
                 example.Figure.fitting_stencil_as_figure
                 example.Figure.a_high_level_relatively_simple_figure
             |> Consumer().Consume

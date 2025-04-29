@@ -30,3 +30,13 @@ with
         )
         result+=")"
         result.ToString()
+        
+        
+type Stencil_output_border = {
+    before: Vertex_id Set
+    after: Vertex_id Set
+}
+type Conditional_stencil = {
+    figure: Conditional_figure
+    output_border: Stencil_output_border
+}

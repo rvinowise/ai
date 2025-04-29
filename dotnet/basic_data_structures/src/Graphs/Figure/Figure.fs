@@ -7,13 +7,6 @@ open rvinowise.extensions
 [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
 module Figure=
 
-    let need_vertex_referencing_element 
-        (owner_figure:Figure)
-        referenced_element
-        checked_vertex =
-        let exist,reference = owner_figure.subfigures.TryGetValue(checked_vertex)
-        exist && reference=referenced_element
-
     let nonexistent_vertex = Figure_id "" 
 
     let reference_of_vertex 

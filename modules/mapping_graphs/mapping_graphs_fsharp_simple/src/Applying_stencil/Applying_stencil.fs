@@ -9,7 +9,7 @@ module Applying_stencil =
         (owner_figure: Figure)
         =
         impossibles
-        |>Seq.collect (Mapping_graph.map_figure_onto_target owner_figure)
+        |>Seq.collect (Mapping_graph_with_immutable_mapping.map_figure_onto_target owner_figure)
         |>Seq.isEmpty
 
 
@@ -38,7 +38,7 @@ module Applying_stencil =
         let output_beginning =
             output_node
             |>Edges.previous_vertices stencil.edges
-            |>Mapping.targets_of_mapping mapping
+            |>Immutable_mapping.targets_of_mapping mapping
             |>all_vertices_reacheble_from_all_vertices_together 
                 (Edges.next_vertices target.edges)
             |>Set.ofSeq
@@ -46,7 +46,7 @@ module Applying_stencil =
         let output_ending =
             output_node
             |>Edges.next_vertices stencil.edges
-            |>Mapping.targets_of_mapping mapping
+            |>Immutable_mapping.targets_of_mapping mapping
             |>all_vertices_reacheble_from_all_vertices_together 
                 (Edges.previous_vertices target.edges)
             |>Set.ofSeq
@@ -67,11 +67,7 @@ module Applying_stencil =
                     stencil.output_without 
                     resulting_part_of_target
             then
-                Some (
-                    Renaming_figures.rename_vertices_to_standard_names resulting_part_of_target
-                    ,
-                    resulting_part_of_target    
-                )
+                Some resulting_part_of_target
             else
                 None
             
@@ -83,7 +79,7 @@ module Applying_stencil =
         =
         stencil
         |>Figure_from_stencil.convert
-        |>Mapping_graph.map_figure_onto_target target
+        |>Mapping_graph_with_immutable_mapping.map_figure_onto_target target
         |>Seq.map (retrieve_result stencil target)
         |>Seq.choose id
 

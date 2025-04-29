@@ -53,3 +53,19 @@ module Stencil =
                 "p","f";
                 "q","f";
             ]
+            
+    let a_long_stencil =
+        built.Stencil.simple_without_separator
+            [
+                "b1","y1"
+                "b1","f1"
+                "h1","f1"
+                "y1","out"
+                "f1","out"
+                "out","o1"
+                "o1","r1"
+                "r1","s1"
+                "r1","f2"
+                "s1","t1"
+                "f2","t1"
+            ]

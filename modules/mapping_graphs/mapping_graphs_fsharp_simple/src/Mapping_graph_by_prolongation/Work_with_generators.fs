@@ -17,7 +17,14 @@ module Work_with_generators =
             mapping.Add(pair.element, pair.target)    
         )
         mapping
-        
+    
+    let immutable_mapping_from_generator_output
+        (chosen_targets: seq<Element_to_target<Vertex_id,Vertex_id>>)
+        =
+        chosen_targets
+        |>Seq.map (fun pair-> pair.element, pair.target)
+        |>Map.ofSeq
+            
     let mapping_combinations_from_generators
         (generators: Generator_of_mappings<Vertex_id, Vertex_id> seq)
         =
@@ -28,4 +35,5 @@ module Work_with_generators =
         |>Generator_of_orders<seq<Element_to_target<Vertex_id, Vertex_id>>>
         |>Seq.map (Seq.collect id)
     
-            
+    
+    

@@ -60,9 +60,9 @@ let show_something_about_figure figure shown_part =
     try
         if loaded.Figure.exists figure then
             match shown_part with
-            | "appearances" ->
-                ui.printed.Figure.appearances figure
-                    (ai.loaded.figure.Appearances.all_appearances figure)
+            | "appearances" -> ()
+                // ui.printed.Figure.appearances figure
+                //     (ai.loaded.figure.Appearances.all_appearances figure)
             // | "edges" ->
             //     ui.painted.Figure.visualise_figure figure
             //         (loaded.figure.Edges.edges figure)
@@ -106,8 +106,8 @@ let input_sensory_data (data: string) =
             print_error $"figure ${figure_id} doesn't exist"
     )
 
-let find_sequences head tail =
-    Finding_repetitions_cpp.find_repeated_pairs(head, tail)
+let find_sequences head tail = ()
+    //Finding_repetitions.find_repeated_pairs(head, tail)
 
 let process_input (command:string) =
     let words = 

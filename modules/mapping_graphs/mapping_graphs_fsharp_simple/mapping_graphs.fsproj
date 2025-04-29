@@ -10,11 +10,15 @@
   
   <ItemGroup>
     <Compile Include="src\Mapping.fs" />
-    <Compile Include="src\Mapping_graph\Work_with_generators.fs" />
-    <Compile Include="src\Mapping_graph\Map_first_nodes.fs" />
-    <Compile Include="src\Mapping_graph\Mapping_graph.fs" />
-    <Compile Include="src\Mapping_graph\Mapping_graph_tightly.fs" />
-    <Compile Include="src\Mapping_graph\Mapping_sequence.fs" />
+    
+    <Compile Include="src\Mapping_graph_by_prolongation\Work_with_generators.fs" />
+    <Compile Include="src\Mapping_graph_by_prolongation\Map_first_nodes.fs" />
+    <Compile Include="src\Mapping_graph_by_prolongation\Mapping_graph_with_mutable_mapping.fs" />
+    <Compile Include="src\Mapping_graph_by_prolongation\Mapping_graph_with_immutable_mapping.fs" />
+    <Compile Include="src\Mapping_graph_by_prolongation\Mapping_sequence.fs" />
+    
+    <Compile Include="src\Mapping_graph_with_conditions\Mapping_graph_with_conditions.fs" />
+    
     <Compile Include="src\Applying_stencil\Applying_stencil.fs" />
     <Compile Include="src\Finding_concept\Finding_concept.fs" />
     
@@ -23,6 +27,7 @@
     <Compile Include="src\test\the_mapping_type.fs" />
     <Compile Include="src\test\generator_of_orders.fs" />
     <Compile Include="src\test\benchmarks\enumerating_combinations.fs" />
+    <Compile Include="src\test\benchmarks\prolongation_of_mapping.fs" />
     <Compile Include="src\test\benchmarks\mapping_first_nodes.fs" />
   </ItemGroup>
 

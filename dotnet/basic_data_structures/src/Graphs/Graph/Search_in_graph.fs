@@ -42,7 +42,17 @@ module Search_in_graph=
             starting_vertices
     
 
-
+    let vertices_reacheble_from_vertex
+        (is_vertex_needed:Vertex_id->bool)
+        (step_further: Vertex_id -> Vertex_id Set)
+        (starting_vertex: Vertex_id)
+        =
+        starting_vertex
+        |>Seq.singleton
+        |>vertices_reacheble_from_any_vertices
+            is_vertex_needed
+            step_further
+            
     
     
 
