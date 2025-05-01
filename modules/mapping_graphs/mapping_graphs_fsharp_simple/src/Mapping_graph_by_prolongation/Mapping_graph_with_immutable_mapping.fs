@@ -134,7 +134,40 @@ module Mapping_graph_with_immutable_mapping =
             |>Set.ofList
         )
 
-    
+    let targets_of_previously_mapped_vertices
+        edges
+        mapping
+        vertex
+        =
+        let rec iterate_back_finding_mapped_vertices
+            (still_unmapped_vertices: Vertex_id list)
+            (found_mappings: Map<Vertex_id,Vertex_id>)
+            =
+            match still_unmapped_vertices with
+            |[] -> Map.values found_mappings
+            |still_unmapped_vertices ->
+                still_unmapped_vertices
+                |>List.map (Edges.previous_vertices edges)
+                |>Seq.collect id
+                |>Seq.fold(fun (still_unmapped_vertices, found_mappings) vertex ->
+                        Map.tryFind vertex mapping
+                        |>function
+                        |Some target_vertex ->
+                            still_unmapped_vertices
+                            ,
+                            Map.add vertex target_vertex found_mappings
+                        |None ->
+                            vertex::still_unmapped_vertices
+                            ,
+                            found_mappings
+                    )
+                    ([], found_mappings)
+                
+                ||>iterate_back_finding_mapped_vertices
+            
+        iterate_back_finding_mapped_vertices
+            [vertex]
+            Map.empty
 
     let possible_targets_for_mapping_subfigure
         mappee
@@ -153,8 +186,7 @@ module Mapping_graph_with_immutable_mapping =
             Edges.next_vertices target.edges
 
         prolongating_vertex
-        |>Edges.previous_vertices mappee.edges
-        |>Immutable_mapping.targets_of_mapping mapping
+        |>targets_of_previously_mapped_vertices mappee.edges mapping
         |>first_vertices_reacheble_from_all_vertices_together
             does_vertex_reference_needed_figure
             further_step_of_searching_targets
@@ -215,23 +247,49 @@ module Mapping_graph_with_immutable_mapping =
                 prolongated_mapping
                 subfigure_to_map
     
+    let unmapped_vertices
+        mapping
+        vertices
+        =
+        vertices
+        |>Seq.filter (fun mappee_vertex -> Map.containsKey mappee_vertex mapping|>not)
+    
     let prolongate_one_mapping_with_next_subfigures 
-        possible_targets_for_mapping_vertex
-        (next_subfigures_to_map: seq<Vertex_id*Figure_id>)
+        mappee
+        target
+        within_mapping
+        (next_vertices_to_map: seq<Vertex_id>)
         (mapping:Map<Vertex_id,Vertex_id>)
         =
-        let possible_next_mappings =
-            next_mapping_targets_for_mapped_subfigures
-                possible_targets_for_mapping_vertex
-                next_subfigures_to_map
-
-        if possible_next_mappings.IsEmpty then
-            Seq.empty
+        let possible_targets_for_mapping_vertex =
+            targets_for_mapping_prolongation
+                mappee
+                target
+                mapping
+                within_mapping
+        
+        let next_subfigures_to_map =
+            next_vertices_to_map
+            |>unmapped_vertices mapping
+            |>Figure.vertices_with_their_referenced_figures mappee
+        
+        if Seq.isEmpty next_subfigures_to_map then
+            Seq.singleton mapping
         else
-            possible_next_mappings
-            |>all_combinations_of_next_mappings
-            |>prolongate_mapping_with_next_mapped_subfigures mapping
+            let possible_next_mappings =
+                next_mapping_targets_for_mapped_subfigures
+                    possible_targets_for_mapping_vertex
+                    next_subfigures_to_map
+
+            if possible_next_mappings.IsEmpty then
+                Seq.empty
+            else
+                possible_next_mappings
+                |>all_combinations_of_next_mappings
+                |>prolongate_mapping_with_next_mapped_subfigures mapping
     
+    
+        
     let rec prolongate_all_mappings 
         (mappee:Figure)
         (target:Figure)
@@ -246,25 +304,13 @@ module Mapping_graph_with_immutable_mapping =
         if Seq.isEmpty next_vertices_to_map then
             mappings
         else
-            let next_subfigures_to_map =
-                next_vertices_to_map
-                |>Figure.vertices_with_their_referenced_figures mappee
-            
             mappings
-            |>Seq.map (fun mapping ->
-                
-                let possible_targets_for_mapping_vertex =
-                    targets_for_mapping_prolongation
-                        mappee
-                        target
-                        mapping
-                        within_mapping
-                
-                prolongate_one_mapping_with_next_subfigures 
-                    possible_targets_for_mapping_vertex
-                    next_subfigures_to_map
-                    mapping
-                    
+            |>Seq.map (
+                prolongate_one_mapping_with_next_subfigures
+                    mappee
+                    target
+                    within_mapping
+                    next_vertices_to_map
             )
             |>Seq.collect id
             |>prolongate_all_mappings

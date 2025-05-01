@@ -60,7 +60,7 @@ module Stencil =
                 "b1","y1"
                 "b1","f1"
                 "h1","f1"
-                "y1","out"
+                "y1","s1"
                 "f1","out"
                 "out","o1"
                 "o1","r1"

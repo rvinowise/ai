@@ -84,7 +84,7 @@ module Map_first_nodes =
         mappee
         |>Figure.first_vertices
         |>possible_combinations_of_mapping_vertices mappee target
-        |>Seq.map Work_with_generators.mapping_from_generator_output
+        |>Seq.map Work_with_generators.mutable_mapping_from_generator_output
     
     
     

@@ -28,32 +28,23 @@ module ``application of stencils``=
 
     [<Fact>]
     let ``impossible to prolongate, because of no matching following subfigures``()=
-        let possible_targets_for_mapping_vertex =
-            targets_for_mapping_prolongation
-                example.Figure.fitting_stencil_as_figure
-                example.Figure.a_high_level_relatively_simple_figure
-                initial_mapping_without_prolongation
-                Map.empty
-        
-        prolongate_one_mapping_with_next_subfigures 
-            possible_targets_for_mapping_vertex
-            [(Vertex_id "f#1", Figure_id "f")]
+        prolongate_one_mapping_with_next_subfigures
+            example.Figure.fitting_stencil_as_figure
+            example.Figure.a_high_level_relatively_simple_figure
+            Map.empty
+            [Vertex_id "f#1"]
             initial_mapping_without_prolongation
         |> should equal
             []
     
     [<Fact>]
     let``prolongation with a single following node``()=
-        let possible_targets_for_mapping_vertex =
-            targets_for_mapping_prolongation
-                example.Figure.fitting_stencil_as_figure
-                example.Figure.a_high_level_relatively_simple_figure
-                initial_useless_mapping
-                Map.empty
         
         prolongate_one_mapping_with_next_subfigures
-            possible_targets_for_mapping_vertex
-            [(Vertex_id "f#1", Figure_id "f")]
+            example.Figure.fitting_stencil_as_figure
+            example.Figure.a_high_level_relatively_simple_figure
+            Map.empty
+            [Vertex_id "f#1"]
             initial_useless_mapping
         |> should equal
             [
@@ -147,15 +138,14 @@ module ``application of stencils``=
         ]
     
     [<Fact>]
-    let ``a long fitting stencil, applied to a long figure, outputs subgraphs``()=
+    let ``a long fitting stencil, applied to a long figure, outputs its result (two disjoined subgraphs)``()=
         results_of_stencil_application
             example.Figure.a_long_figure
             example.Stencil.a_long_stencil
         |>Set.ofSeq
         |>should equal (
             [
-                ["k","l"]|>built.Figure.simple;
-                ["m","n"]|>built.Figure.simple;
+                ["k","l";"m","n"]|>built.Figure.simple
             ]|>Set.ofList
         )
     

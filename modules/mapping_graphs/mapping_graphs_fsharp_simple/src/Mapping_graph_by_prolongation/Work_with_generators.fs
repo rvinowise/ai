@@ -7,7 +7,7 @@ open rvinowise.ai.stencil
 module Work_with_generators =
     
     
-    let mapping_from_generator_output
+    let mutable_mapping_from_generator_output
         (chosen_targets: seq<Element_to_target<Vertex_id,Vertex_id>>)
         =
         let mapping = Mapping.empty()
