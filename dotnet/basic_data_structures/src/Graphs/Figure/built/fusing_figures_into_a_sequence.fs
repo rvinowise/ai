@@ -213,8 +213,8 @@ module Fusing_figures_into_sequence=
 
     [<Fact>]
     let ``try sequential_pair``()=
-        let a_figure = built.Figure.simple ["a1","b1";"b1","a2";"b1","c1"]
-        let b_figure = built.Figure.simple ["a1","b1";"e1","b1";"b1","a2"]
+        let a_figure = built.Figure.simple_without_separator ["a1","b1";"b1","a2";"b1","c1"]
+        let b_figure = built.Figure.simple_without_separator ["a1","b1";"e1","b1";"b1","a2"]
         let expected_ab_figure = {
             edges=[
                 "a1","b1"; "b1","a2"; "b1","c1";

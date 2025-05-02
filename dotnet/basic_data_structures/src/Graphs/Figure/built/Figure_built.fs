@@ -76,7 +76,9 @@ module Figure=
             |>BadGraph
             |>raise
 
-    let simple (edges:seq<string*string>) =
+    let simple
+        (turn_vertex_id_into_figure_id: string->string)
+        (edges:seq<string*string>) =
         {
             edges=Graph.simple edges
             subfigures=
@@ -87,14 +89,14 @@ module Figure=
                             Vertex_id tail_id
                             ,  
                             tail_id
-                            |>String.remove_number
+                            |>turn_vertex_id_into_figure_id
                             |>Figure_id
                         );
                         (
                             Vertex_id head_id
                             ,
                             head_id 
-                            |>String.remove_number
+                            |>turn_vertex_id_into_figure_id
                             |>Figure_id
                         )
                     ]
@@ -105,22 +107,28 @@ module Figure=
         |>check_correctness
         |>Renaming_figures.rename_vertices_to_standard_names
     
+    
+    let simple_without_separator (edges:seq<string*string>) =
+        simple String.remove_number edges
 
-    let sequential_figure_from_sequence (subfigures: string seq) =
-        let subfigures_sequence = 
-            subfigures
+    let simple_with_separator (edges:seq<string*string>) =
+        simple String.remove_number_with_hash edges
+
+    let sequential_figure_from_sequence (vertices: string seq) =
+        let vertices_sequence = 
+            vertices
             |>built.Graph.unique_numbers_for_names_in_sequence
             |>Seq.map (fun (vertex, figure) ->
                 vertex,Figure_id figure
             )
         {
             edges=
-                subfigures_sequence
+                vertices_sequence
                 |>Seq.map fst
                 |>built.Graph.sequential_edges
                 
             subfigures=
-                subfigures_sequence
+                vertices_sequence
                 |>Map.ofSeq
         }|>Renaming_figures.rename_vertices_to_standard_names
 
@@ -141,9 +149,8 @@ module Figure=
                     |>Set.ofSeq
                 subfigures=
                     ["a#1","a";"a#2","a";"b#1","b";"b#2","b"]
-                    |>Seq.map (fun (tail,head) -> Vertex_id tail, Figure_id head)
+                    |>Seq.map (fun (vertex,figure) -> Vertex_id vertex, Figure_id figure)
                     |>Map.ofSeq
-                    |>Map.map (fun _ value ->value)
             }
 
     let signal (id:string) =

@@ -20,7 +20,7 @@ module ``application of stencils``=
     let initial_useless_mapping = Immutable_mapping.ofStringPairs ["b#1","b#2";"h#1","h#1"]
         
     let result_of_fruitful_stencil_application =
-        built.Figure.simple
+        built.Figure.simple_without_separator
             [
                 "d","e"
             ]
@@ -121,7 +121,7 @@ module ``application of stencils``=
         |>Set.ofSeq
         |>should equal (
             [
-                ["d","e"]|>built.Figure.simple;
+                ["d","e"]|>built.Figure.simple_without_separator;
                 "h"|>built.Figure.signal 
             ]|>Set.ofList
         )
@@ -145,7 +145,7 @@ module ``application of stencils``=
         |>Set.ofSeq
         |>should equal (
             [
-                ["k","l";"m","n"]|>built.Figure.simple
+                ["k","l";"m","n"]|>built.Figure.simple_without_separator
             ]|>Set.ofList
         )
     
@@ -166,7 +166,7 @@ module ``application of stencils``=
     let ``initial mapping when the target lacks some figures``()=
         Map_first_nodes.map_first_nodes_with_immutable_mapping
             (
-                built.Figure.simple [
+                built.Figure.simple_without_separator [
                     "b","f";
                     "h","f";
                     "x","f";
@@ -261,4 +261,43 @@ module ``application of stencils``=
             |>Seq.singleton
         )
 
-    
+    [<Fact>]
+    let ``apply stencil with a blocking figure, for a "tight" application of stencil``()=
+        let existing_figure =
+            built.Figure.simple_with_separator [
+                "D#1",";#1";
+            ]
+        let output_borders = {
+            before = "D#1"|>Vertex_id|>Set.singleton
+            after = ";#1"|>Vertex_id|>Set.singleton
+        }
+        let impossible_figure_before =
+            built.Figure.simple_with_separator [
+                "D#1","D#2";
+                "D#2",";#1";
+            ]
+        let impossible_figure_after =
+            built.Figure.simple_with_separator [
+                "D#1",";#2";
+                ";#2",";#1";
+            ]
+        
+        let conditional_figure = {
+            Conditional_figure.existing = existing_figure
+            impossibles=[
+                impossible_figure_before|>Conditional_figure.from_figure
+                impossible_figure_after|>Conditional_figure.from_figure
+            ]|>Set.ofList
+        }
+        
+        let history =
+            "xDyDab;z;x"
+            |>History_from_text.sequential_figure_from_text History_from_text.no_mood
+            
+        results_of_conditional_stencil_application
+            history
+            conditional_figure
+            output_borders
+        |>should equal (
+            "ab"|>History_from_text.sequential_figure_from_text History_from_text.no_mood
+        )

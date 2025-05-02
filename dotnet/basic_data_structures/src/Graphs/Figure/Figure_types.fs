@@ -55,5 +55,12 @@ with
 
 type Conditional_figure = {
     existing: Figure
-    impossible: Conditional_figure Set
+    impossibles: Conditional_figure Set
 }
+
+module Conditional_figure =
+    let from_figure figure =
+        {
+            existing = figure
+            impossibles = Set.empty 
+        }

@@ -24,33 +24,66 @@ module Applying_stencil =
                 (fun _->true)
                 step_further
         )|>Set.intersectMany
+    
+    
+    let get_output_beginning_and_ending
+        edges
+        mapping
+        (output_border)
+        =
+            output_border.before
+            |>Immutable_mapping.targets_of_mapping mapping
+            |>all_vertices_reacheble_from_all_vertices_together 
+                (Edges.next_vertices edges)
+            |>Set.ofSeq
+            ,
+            output_border.after
+            |>Immutable_mapping.targets_of_mapping mapping
+            |>all_vertices_reacheble_from_all_vertices_together 
+                (Edges.previous_vertices edges)
+            |>Set.ofSeq
+    
+    let retrieve_result_from_output_border
+        (output_border: Stencil_output_border)
+        (target:Figure)
+        mapping 
+        =
+        
+        let (output_beginning,output_ending) =
+            get_output_beginning_and_ending
+                target.edges
+                mapping
+                output_border
+        
+        let output_vertices = 
+            (output_beginning,output_ending)
+            ||>Set.intersect 
+        
+        if Set.isEmpty output_vertices then
+            None
+        else
+            output_vertices
+            |>built.Figure.subgraph_with_vertices target
+            |>Some
             
+                   
 
     let retrieve_result 
         stencil
         (target:Figure)
         mapping 
         =
-        let output_node = 
+        let (output_beginning,output_ending) =
             stencil
             |>Stencil.output
-
-        let output_beginning =
-            output_node
-            |>Edges.previous_vertices stencil.edges
-            |>Immutable_mapping.targets_of_mapping mapping
-            |>all_vertices_reacheble_from_all_vertices_together 
-                (Edges.next_vertices target.edges)
-            |>Set.ofSeq
-
-        let output_ending =
-            output_node
-            |>Edges.next_vertices stencil.edges
-            |>Immutable_mapping.targets_of_mapping mapping
-            |>all_vertices_reacheble_from_all_vertices_together 
-                (Edges.previous_vertices target.edges)
-            |>Set.ofSeq
-        
+            |>fun output_node-> {
+                Stencil_output_border.before =  Edges.previous_vertices stencil.edges output_node;
+                after =  Edges.next_vertices stencil.edges output_node
+            }
+            |>get_output_beginning_and_ending
+                target.edges
+                mapping
+                
         let output_vertices = 
             (output_beginning,output_ending)
             ||>Set.intersect 
@@ -85,3 +118,12 @@ module Applying_stencil =
 
     
     
+    let results_of_conditional_stencil_application
+        target
+        (mappee: Conditional_figure)
+        (output_border: Stencil_output_border)
+        =
+        mappee
+        |>Mapping_graph_with_immutable_mapping.map_conditional_figure_onto_target Map.empty target
+        |>Seq.map (retrieve_result_from_output_border output_border target)
+        |>Seq.choose id

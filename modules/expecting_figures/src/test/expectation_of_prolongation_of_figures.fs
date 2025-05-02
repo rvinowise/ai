@@ -13,7 +13,7 @@ open rvinowise.ui
 module ``expectation of prolongation of figures``=
     
     let a_high_level_relatively_simple_figure =
-        rvinowise.ai.built.Figure.simple
+        rvinowise.ai.built.Figure.simple_without_separator
             [
                 "b","c";
                 "b","d";

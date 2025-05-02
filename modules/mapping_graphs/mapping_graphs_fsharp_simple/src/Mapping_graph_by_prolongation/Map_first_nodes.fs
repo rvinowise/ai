@@ -39,9 +39,9 @@ module Map_first_nodes =
             
     
     let map_within_other_mapping
+        (within_mapping: Map<Vertex_id,Vertex_id>)
         (mappee: Figure)
         (target: Figure)
-        (within_mapping: Map<Vertex_id,Vertex_id>)
         =
         let first_vertices_of_mappee = 
             Figure.first_vertices mappee |>Set.ofSeq

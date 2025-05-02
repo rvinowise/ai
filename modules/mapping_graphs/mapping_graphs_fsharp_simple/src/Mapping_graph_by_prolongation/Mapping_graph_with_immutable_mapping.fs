@@ -321,12 +321,12 @@ module Mapping_graph_with_immutable_mapping =
 
 
     let map_figure_onto_target_within_mapping
+        within_mapping
         target
         mappee
-        within_mapping
         =
         target
-        |>Map_first_nodes.map_first_nodes_with_immutable_mapping mappee
+        |>Map_first_nodes.map_within_other_mapping within_mapping mappee 
         |>prolongate_all_mappings
             mappee 
             target
@@ -338,6 +338,38 @@ module Mapping_graph_with_immutable_mapping =
         mappee
         =
         map_figure_onto_target_within_mapping
+            Map.empty
             target
             mappee
-            Map.empty
+
+
+    let rec map_conditional_figure_onto_target
+        within_mapping
+        target
+        (mappee: Conditional_figure)
+        =
+        let mappings =
+            map_figure_onto_target_within_mapping
+                within_mapping
+                target
+                mappee.existing
+        if mappee.impossibles.IsEmpty then
+            mappings
+        else
+            mappings
+            |>Seq.map(fun mapping->
+                mappee.impossibles
+                (*early stop may help performance: discard the Mapping after one impossible_figure is mapped fully *)
+                |>Seq.map(fun impossible_figure ->
+                    map_conditional_figure_onto_target
+                        mapping
+                        target
+                        impossible_figure
+                )|>Seq.collect id
+                |>Seq.isEmpty
+                |>function
+                |true->
+                    Some mapping
+                |false->
+                    None
+            )|>Seq.choose id  

@@ -62,14 +62,6 @@ module Stencil =
         simple String.remove_number_with_hash edges
 
 
-    let from_tuples
-        (edges:seq<string*string*string*string>) =
-        {
-            edges=built.Graph.from_tuples edges
-            nodes=vertex_data_from_tuples edges
-            output_without=Set.empty
-        }
-
     let sequential_stencil_from_sequence (vertices: string seq) =
         let vertices_sequence = 
             vertices
