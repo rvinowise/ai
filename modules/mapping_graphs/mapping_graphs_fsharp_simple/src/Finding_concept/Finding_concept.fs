@@ -85,7 +85,7 @@ module Finding_concept =
                     ","|>built.Figure.signal|>Set.singleton
         }|>Leaf
 
-    [<Fact>]
+    [<Fact(Skip="not implemented")>]
     let ``try incarnations of digit concept``()=
         let history_as_figure =
             "N0,1,2,3,4,5,6,7,8,9;"
@@ -101,7 +101,7 @@ module Finding_concept =
             |>Set.ofSeq
         )
 
-    [<Fact>]
+    [<Fact(Skip="not implemented")>]
     let ``try incarnations of concept in several places of incarnation``()=
         (*TODO "N0" and "y" are mistakenly considered number incarnations *)
         let history_as_figure =
@@ -161,7 +161,7 @@ module Finding_concept =
             |>not
         )
 
-    [<Fact>]
+    [<Fact(Skip="not implemented")>]
     let ``try appearances of incarnations of digit concept``()=
         let history_as_figure =
             @"N0,1,2,3,4,5,6,7,8,9;

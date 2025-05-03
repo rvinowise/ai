@@ -173,10 +173,10 @@ module Mapping_graph_with_immutable_mapping =
         mappee
         target
         mapping
-        (prolongating_stencil_subfigure: Vertex_id*Figure_id)
+        (prolongating_subfigure: Vertex_id*Figure_id)
         =
-        let prolongating_vertex = prolongating_stencil_subfigure|>fst
-        let prolongating_figure = prolongating_stencil_subfigure|>snd
+        let prolongating_vertex = prolongating_subfigure|>fst
+        let prolongating_figure = prolongating_subfigure|>snd
         
         let does_vertex_reference_needed_figure vertex =
             Figure.reference_of_vertex target vertex =
@@ -192,7 +192,7 @@ module Mapping_graph_with_immutable_mapping =
             further_step_of_searching_targets
         
 
-    let next_mapping_targets_for_mapped_subfigures
+    let next_mapping_targets_for_subfigures_to_map
         (possible_targets_for_mapping_vertex: Vertex_id*Figure_id -> Vertex_id Set)
         next_subfigures_to_map
         =
@@ -277,7 +277,7 @@ module Mapping_graph_with_immutable_mapping =
             Seq.singleton mapping
         else
             let possible_next_mappings =
-                next_mapping_targets_for_mapped_subfigures
+                next_mapping_targets_for_subfigures_to_map
                     possible_targets_for_mapping_vertex
                     next_subfigures_to_map
 
