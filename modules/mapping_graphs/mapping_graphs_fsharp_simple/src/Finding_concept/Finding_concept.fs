@@ -205,11 +205,11 @@ module Finding_concept =
         let math_equation_digit_addition_ =
             [
                 "[digit]";"+";"[digit]";"=";"[digit]"
-            ]|>built.Figure.sequential_figure_from_sequence
+            ]|>built.Figure.sequential_figure_from_sequence_of_figures
         let math_equation_addition_of_1 =
             [
                 "1";"+";"[digit]";"=";"[digit]";";"
-            ]|>built.Figure.sequential_figure_from_sequence
+            ]|>built.Figure.sequential_figure_from_sequence_of_figures
         // let next_digit = 
         //     [
         //         "reference";",";"out"

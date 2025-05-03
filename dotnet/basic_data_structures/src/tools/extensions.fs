@@ -154,6 +154,9 @@ module String =
     let remove_number_with_hash label =
         Regex.Replace(label, @"#[0-9]", "")
 
+    let remove_text_with_hash label =
+        Regex.Replace(label, @"#.*", "")
+    
     let split_into_same_symbols s =
         Regex("""(.)\1*""").Matches(s)
         |> Seq.cast<Match> 

@@ -114,12 +114,35 @@ module Figure=
     let simple_with_separator (edges:seq<string*string>) =
         simple String.remove_number_with_hash edges
 
-    let sequential_figure_from_sequence (vertices: string seq) =
-        let vertices_sequence = 
-            vertices
+    let sequential_figure_from_sequence_of_figures (figures: string seq) =
+        let subfigures_sequence = 
+            figures
             |>built.Graph.unique_numbers_for_names_in_sequence
             |>Seq.map (fun (vertex, figure) ->
                 vertex,Figure_id figure
+            )
+        {
+            edges=
+                subfigures_sequence
+                |>Seq.map fst
+                |>built.Graph.sequential_edges
+                
+            subfigures=
+                subfigures_sequence
+                |>Map.ofSeq
+        }|>Renaming_figures.rename_vertices_to_standard_names
+
+    let sequential_figure_from_sequence_of_vertices
+        (turn_vertex_id_into_figure_id: string->string)
+        (vertices: string seq)
+        =
+        let vertices_sequence = 
+            vertices
+            |>Seq.map (fun vertex->
+                Vertex_id vertex
+                ,
+                turn_vertex_id_into_figure_id vertex
+                |>Figure_id
             )
         {
             edges=
@@ -130,12 +153,12 @@ module Figure=
             subfigures=
                 vertices_sequence
                 |>Map.ofSeq
-        }|>Renaming_figures.rename_vertices_to_standard_names
-
+        }//|>Renaming_figures.rename_vertices_to_standard_names
+    
     let sequential_figure_from_text (text:string) =
         text
         |>Seq.map string
-        |>sequential_figure_from_sequence
+        |>sequential_figure_from_sequence_of_figures
 
     [<Fact>]
     let ``try sequence_from_text``()=

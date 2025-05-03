@@ -343,6 +343,41 @@ module Mapping_graph_with_immutable_mapping =
             mappee
 
 
+    let is_maping_without_impossible_figures
+        (map_figure_onto_target)
+        (within_mapping: Map<Vertex_id,Vertex_id>)
+        (target: Figure)
+        (impossibles: Conditional_figure seq)
+        (checked_mapping: Map<Vertex_id,Vertex_id>)
+        =
+        impossibles
+        (*early stop may help performance: discard the Mapping after one impossible_figure is mapped fully *)
+        |>Seq.map(
+            map_figure_onto_target
+                checked_mapping
+                target
+        )|>Seq.collect id
+        |>Seq.isEmpty
+        
+    
+    let remove_mappings_with_impossible_figures
+        (map_figure_onto_target)
+        (within_mapping: Map<Vertex_id,Vertex_id>)
+        (target: Figure)
+        (impossibles: Conditional_figure seq)
+        (all_mappings: Map<Vertex_id,Vertex_id> seq)
+        =
+        all_mappings
+        |>Seq.filter (
+            is_maping_without_impossible_figures
+                map_figure_onto_target
+                within_mapping
+                target
+                impossibles
+        )
+            
+        
+    
     let rec map_conditional_figure_onto_target
         within_mapping
         target
@@ -353,23 +388,12 @@ module Mapping_graph_with_immutable_mapping =
                 within_mapping
                 target
                 mappee.existing
-        if mappee.impossibles.IsEmpty then
-            mappings
-        else
-            mappings
-            |>Seq.map(fun mapping->
-                mappee.impossibles
-                (*early stop may help performance: discard the Mapping after one impossible_figure is mapped fully *)
-                |>Seq.map(fun impossible_figure ->
-                    map_conditional_figure_onto_target
-                        mapping
-                        target
-                        impossible_figure
-                )|>Seq.collect id
-                |>Seq.isEmpty
-                |>function
-                |true->
-                    Some mapping
-                |false->
-                    None
-            )|>Seq.choose id  
+        
+        mappings
+        |>remove_mappings_with_impossible_figures
+            map_conditional_figure_onto_target
+            within_mapping
+            target
+            mappee.impossibles
+            
+              

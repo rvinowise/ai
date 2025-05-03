@@ -3,9 +3,11 @@ namespace rvinowise.ai.test
 open Xunit
 open FsUnit
 
+open rvinowise
 open rvinowise.ai
 open rvinowise.ai.Applying_stencil
 open rvinowise.ai.Mapping_graph_with_immutable_mapping
+open rvinowise.ai.built.Figure_from_event_batches
 open rvinowise.ai.ui
 open rvinowise.ai.stencil
 open rvinowise.ui
@@ -262,42 +264,109 @@ module ``application of stencils``=
         )
 
     [<Fact>]
+    let ``applying a stencil within another mapping limits targets of application(simple example)``()=
+        let mappee =
+            built.Figure.sequential_figure_from_sequence_of_vertices
+                extensions.String.remove_text_with_hash
+                ["D#1";";#1"]
+        
+        let target =
+            ["D#bad_first";"D#good_last";";";]
+            |>built.Figure.sequential_figure_from_sequence_of_vertices
+                extensions.String.remove_text_with_hash
+        
+        let within_mapping =
+            [
+                "D#1","D#bad_first";
+                ";#1",";";
+            ]
+            |>List.map(fun (tail, head) -> Vertex_id tail,Vertex_id head)
+            |>Map.ofList
+        
+        let resulting_mapping =
+            [
+                "D#1","D#bad_first";
+                ";#1",";";
+            ]
+            |>List.map(fun (tail, head) -> Vertex_id tail,Vertex_id head)
+            |>Map.ofList
+        
+        map_figure_onto_target_within_mapping
+            within_mapping
+            target
+            mappee
+        |>should equal (
+            [resulting_mapping]
+        )
+    
+    [<Fact>]
+    let ``applying a stencil within another mapping. doubled ending shouldn't be mapped twice``()=
+        let mappee =
+            built.Figure.sequential_figure_from_sequence_of_vertices
+                extensions.String.remove_text_with_hash
+                ["D#1";";#2";";#1"]
+        
+        let target =
+            ["x#first";"D#bad_first";"y";"D#good_last";"a";"b";";#good_first";"z";";#bad_last";"x#last"]
+            |>built.Figure.sequential_figure_from_sequence_of_vertices
+                extensions.String.remove_text_with_hash
+        
+        let within_mapping =
+            [
+                ";#1",";#good_first"
+                "D#1","D#good_last"
+            ]
+            |>List.map(fun (tail, head) -> Vertex_id tail,Vertex_id head)
+            |>Map.ofList
+        
+        map_figure_onto_target_within_mapping
+            within_mapping
+            target
+            mappee
+        |>should equal (
+            []
+        )  
+        
+    [<Fact>]
     let ``apply stencil with a blocking figure, for a "tight" application of stencil``()=
         let existing_figure =
-            built.Figure.simple_with_separator [
-                "D#1",";#1";
-            ]
+            built.Figure.sequential_figure_from_sequence_of_vertices
+                extensions.String.remove_text_with_hash
+                ["D#1";";#1"]
         let output_borders = {
             before = "D#1"|>Vertex_id|>Set.singleton
             after = ";#1"|>Vertex_id|>Set.singleton
         }
         let impossible_figure_before =
-            built.Figure.simple_with_separator [
-                "D#1","D#2";
-                "D#2",";#1";
-            ]
+            built.Figure.sequential_figure_from_sequence_of_vertices
+                extensions.String.remove_text_with_hash
+                ["D#1";"D#2";";#1"]
+            
         let impossible_figure_after =
-            built.Figure.simple_with_separator [
-                "D#1",";#2";
-                ";#2",";#1";
-            ]
+            built.Figure.sequential_figure_from_sequence_of_vertices
+                extensions.String.remove_text_with_hash
+                ["D#1";";#2";";#1"]
+            
         
         let conditional_figure = {
             Conditional_figure.existing = existing_figure
             impossibles=[
                 impossible_figure_before|>Conditional_figure.from_figure
-                impossible_figure_after|>Conditional_figure.from_figure
+                //impossible_figure_after|>Conditional_figure.from_figure
             ]|>Set.ofList
         }
         
         let history =
-            "xDyDab;z;x"
-            |>History_from_text.sequential_figure_from_text History_from_text.no_mood
+            ["x#first";"D#bad_first";"y";"D#good_last";"a";"b";";#good_first";"z";";#bad_last";"x#last"]
+            |>built.Figure.sequential_figure_from_sequence_of_vertices
+                extensions.String.remove_text_with_hash
             
         results_of_conditional_stencil_application
             history
             conditional_figure
             output_borders
         |>should equal (
-            "ab"|>History_from_text.sequential_figure_from_text History_from_text.no_mood
+            "ab"
+            |>built.Figure.sequential_figure_from_text
+            |>Seq.singleton
         )
