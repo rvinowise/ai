@@ -20,7 +20,6 @@
     <Compile Include="src\Mapping_graph_with_conditions\Mapping_graph_with_conditions.fs" />
     
     <Compile Include="src\Applying_stencil\Applying_stencil.fs" />
-    <Compile Include="src\Finding_concept\Finding_concept.fs" />
     
     <Compile Include="src\painted\applying_stencil.fs" />
     <Compile Include="src\test\applying_a_stencil.fs" />

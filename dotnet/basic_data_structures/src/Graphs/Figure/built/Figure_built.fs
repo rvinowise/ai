@@ -251,4 +251,9 @@ module Figure=
         |>from_parts_of_figure original_figure vertices 
         
 
-    
+module Conditional_figure =
+    let from_figure_without_impossibles (figure:Figure) =
+        {
+            Conditional_figure.existing = figure
+            impossibles = Set.empty 
+        }

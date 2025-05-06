@@ -10,7 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="src\test\math_primers.fs" />
+    <Compile Include="src\test\math_primers_proposals.fs" />
     
   </ItemGroup>
 
@@ -37,6 +37,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include="src\test\math_primers.fs" />
     <Content Include="xunit.runner.json" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 

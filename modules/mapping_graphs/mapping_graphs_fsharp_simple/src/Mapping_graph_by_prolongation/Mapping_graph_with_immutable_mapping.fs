@@ -1,5 +1,7 @@
 namespace rvinowise.ai
 
+open System.Diagnostics
+open Microsoft.Extensions.Logging
 open rvinowise.ai.generating_combinations
 open rvinowise.ai.stencil
 open rvinowise
@@ -170,25 +172,19 @@ module Mapping_graph_with_immutable_mapping =
             Map.empty
 
     let possible_targets_for_mapping_subfigure
+        is_vertex_needed
         mappee
         target
         mapping
-        (prolongating_subfigure: Vertex_id*Figure_id)
+        (prolongating_vertex: Vertex_id)
         =
-        let prolongating_vertex = prolongating_subfigure|>fst
-        let prolongating_figure = prolongating_subfigure|>snd
-        
-        let does_vertex_reference_needed_figure vertex =
-            Figure.reference_of_vertex target vertex =
-                prolongating_figure 
-        
         let further_step_of_searching_targets =
             Edges.next_vertices target.edges
 
         prolongating_vertex
         |>targets_of_previously_mapped_vertices mappee.edges mapping
         |>first_vertices_reacheble_from_all_vertices_together
-            does_vertex_reference_needed_figure
+            is_vertex_needed
             further_step_of_searching_targets
         
 
@@ -233,19 +229,52 @@ module Mapping_graph_with_immutable_mapping =
         (target:Figure)
         (prolongated_mapping:Map<Vertex_id,Vertex_id>)
         (within_mapping:Map<Vertex_id,Vertex_id>)
-        (subfigure_to_map: Vertex_id*Figure_id)
+        (prolongating_subfigure: Vertex_id*Figure_id)
         =
-        within_mapping
-        |>Map.tryFind (fst subfigure_to_map)
-        |>function
-        |Some mapped_target_vertex ->
-            Set.singleton mapped_target_vertex
-        |None ->
-            possible_targets_for_mapping_subfigure
-                mappee
-                target
-                prolongated_mapping
-                subfigure_to_map
+        
+        let prolongating_vertex = fst prolongating_subfigure
+        let prolongating_figure = snd prolongating_subfigure
+        
+        let needed_target_vertex =
+            within_mapping
+            |>Map.tryFind prolongating_vertex
+        
+        let does_vertex_reference_needed_figure vertex =
+            Figure.reference_of_vertex target vertex =
+                prolongating_figure
+
+        let targets_to_mappees_in_rail_mapping =
+            within_mapping
+            |>Map.toSeq
+            |>Seq.map(fun (mappee, target) -> target,mappee)
+            |>Map.ofSeq
+            
+        let vertex_is_used_in_mapping_by_somebody target_vertex =
+            targets_to_mappees_in_rail_mapping
+            |>Map.tryFind target_vertex
+            |>function
+            |None-> false
+            |Some mapped_vertex_in_rail ->
+                mappee.subfigures
+                |>Map.containsKey mapped_vertex_in_rail
+                
+        let is_vertex_suitable_for_mapping target_vertex =
+            if (Vertex_id.value target_vertex = ";#good_first") then
+                Debug.Write "test"
+            match needed_target_vertex with
+            |Some needed_target_vertex ->
+                needed_target_vertex = target_vertex
+            |None ->
+                does_vertex_reference_needed_figure target_vertex
+                &&
+                not <| vertex_is_used_in_mapping_by_somebody target_vertex
+        
+        possible_targets_for_mapping_subfigure
+            is_vertex_suitable_for_mapping
+            mappee
+            target
+            prolongated_mapping
+            prolongating_vertex
     
     let unmapped_vertices
         mapping

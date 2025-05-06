@@ -118,8 +118,8 @@ module ``application of stencils``=
     [<Fact>]
     let ``a fitting stencil, applied to a figure, outputs a subgraph (with several vertices)``()=
         results_of_stencil_application
-            example.Figure.a_high_level_relatively_simple_figure
             example.Stencil.a_fitting_stencil
+            example.Figure.a_high_level_relatively_simple_figure
         |>Set.ofSeq
         |>should equal (
             [
@@ -130,11 +130,14 @@ module ``application of stencils``=
 
     [<Fact>]
     let ``a fitting stencil, applied to a figure, outputs a subgraph (with only one vertex)``()=
-        built.Stencil.simple_with_separator [
-            "N","out";
-            "out",";";
-        ]
-        |>results_of_stencil_application (built.Figure.sequential_figure_from_text "N0;")
+        
+        built.Figure.sequential_figure_from_text "N0;"
+        |>results_of_stencil_application (
+            built.Stencil.simple_with_separator [
+                "N","out";
+                "out",";";
+            ]
+        )
         |>should equal [
             built.Figure.signal "0"
         ]
@@ -142,8 +145,8 @@ module ``application of stencils``=
     [<Fact>]
     let ``a long fitting stencil, applied to a long figure, outputs its result (two disjoined subgraphs)``()=
         results_of_stencil_application
-            example.Figure.a_long_figure
             example.Stencil.a_long_stencil
+            example.Figure.a_long_figure
         |>Set.ofSeq
         |>should equal (
             [
@@ -226,9 +229,9 @@ module ``application of stencils``=
             "N0,1,2,3,4,5,6,7,8,9;"
     //mom:   0123456789¹123456789²
             |>built.Figure.sequential_figure_from_text
-
-        middle_digit_stencil
-        |>results_of_stencil_application history_as_figure
+        
+        history_as_figure
+        |>results_of_stencil_application middle_digit_stencil 
         |>Set.ofSeq
         |>should equal (
             "12345678"
@@ -255,8 +258,9 @@ module ``application of stencils``=
     //mom:   0123456789¹123456789²
             |>built.Figure.sequential_figure_from_text
 
-        last_digit_stencil
-        |>results_of_stencil_application history_as_figure
+        history_as_figure
+        |>results_of_stencil_application last_digit_stencil
+ 
         |>should equal (
             "9"
             |>built.Figure.signal
@@ -277,7 +281,7 @@ module ``application of stencils``=
         
         let within_mapping =
             [
-                "D#1","D#bad_first";
+                "D#1","D#good_last";
                 ";#1",";";
             ]
             |>List.map(fun (tail, head) -> Vertex_id tail,Vertex_id head)
@@ -285,7 +289,7 @@ module ``application of stencils``=
         
         let resulting_mapping =
             [
-                "D#1","D#bad_first";
+                "D#1","D#good_last";
                 ";#1",";";
             ]
             |>List.map(fun (tail, head) -> Vertex_id tail,Vertex_id head)
@@ -333,10 +337,7 @@ module ``application of stencils``=
             built.Figure.sequential_figure_from_sequence_of_vertices
                 extensions.String.remove_text_with_hash
                 ["D#1";";#1"]
-        let output_borders = {
-            before = "D#1"|>Vertex_id|>Set.singleton
-            after = ";#1"|>Vertex_id|>Set.singleton
-        }
+                
         let impossible_figure_before =
             built.Figure.sequential_figure_from_sequence_of_vertices
                 extensions.String.remove_text_with_hash
@@ -347,13 +348,20 @@ module ``application of stencils``=
                 extensions.String.remove_text_with_hash
                 ["D#1";";#2";";#1"]
             
-        
         let conditional_figure = {
             Conditional_figure.existing = existing_figure
             impossibles=[
                 impossible_figure_before|>Conditional_figure.from_figure
-                //impossible_figure_after|>Conditional_figure.from_figure
+                impossible_figure_after|>Conditional_figure.from_figure
             ]|>Set.ofList
+        }
+        
+        let conditional_stencil = {
+            Conditional_stencil.figure=conditional_figure
+            output_border =  {
+                before = "D#1"|>Vertex_id|>Set.singleton
+                after = ";#1"|>Vertex_id|>Set.singleton
+            }
         }
         
         let history =
@@ -362,11 +370,34 @@ module ``application of stencils``=
                 extensions.String.remove_text_with_hash
             
         results_of_conditional_stencil_application
+            conditional_stencil
             history
-            conditional_figure
-            output_borders
+        |>Seq.map Renaming_figures.rename_vertices_to_standard_names
         |>should equal (
             "ab"
             |>built.Figure.sequential_figure_from_text
             |>Seq.singleton
+        )
+        
+    [<Fact>]
+    let ``applying a conditional stencil with output at the very border``() =
+        let target =
+            "0,1,2"|>built.Figure.sequential_figure_from_text
+        
+        let stencil = {
+            Conditional_stencil.figure=
+                [",#1"]
+                |>built.Figure.sequential_figure_from_sequence_of_vertices extensions.String.remove_number_with_hash
+                |>built.Conditional_figure.from_figure_without_impossibles
+            output_border =  {
+                before = Set.empty
+                after = ",#1"|>Vertex_id|>Set.singleton
+            }
+        }
+        
+        results_of_conditional_stencil_application
+            stencil
+            target
+        |>should equal (
+            "0"|>built.Figure.sequential_figure_from_text
         )

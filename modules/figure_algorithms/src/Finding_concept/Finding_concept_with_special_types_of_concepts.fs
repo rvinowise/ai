@@ -6,7 +6,7 @@ open Xunit
 open FsUnit
 
 
-module Finding_concept = 
+module Finding_concept_with_special_types_of_concepts = 
 
     let rec incarnations_of_concept 
         (place: Figure)
@@ -14,8 +14,8 @@ module Finding_concept =
         =
         match concept with
         |Leaf stencil->
-            stencil
-            |>Applying_stencil.results_of_stencil_application place
+            place
+            |>Applying_stencil.results_of_stencil_application stencil
             |>Set.ofSeq
         |Or children->
             children
@@ -103,7 +103,7 @@ module Finding_concept =
 
     [<Fact(Skip="not implemented")>]
     let ``try incarnations of concept in several places of incarnation``()=
-        (*TODO "N0" and "y" are mistakenly considered number incarnations *)
+        (* "N0" and "y" are mistakenly considered number incarnations *)
         let history_as_figure =
             "N0,1;x,y;z,N0,2;"
     //mom:   0123456789¹123456789²
@@ -135,31 +135,7 @@ module Finding_concept =
             concept
             |>incarnations_of_concept history
         
-        let vertices_of_incarnations = 
-            incarnations
-            |>Seq.map (fun figure->
-                figure.subfigures
-                |>Map.keys
-                |>Set.ofSeq
-            )
-            |>Set.ofSeq
-
-        incarnations
-        |>Seq.map (
-            Mapping_graph_with_immutable_mapping.map_figure_onto_target
-                history
-        )|>Seq.concat
-        |>Seq.filter (fun (appearance)->
-            let appearance_vertices = 
-                appearance.Keys
-                |>Set.ofSeq
-            
-            vertices_of_incarnations
-            |>Set.exists (fun incarnation_vertices->
-                incarnation_vertices = appearance_vertices
-            ) 
-            |>not
-        )
+        Concept.appearances_of_concept_incarnations incarnations history 
 
     [<Fact(Skip="not implemented")>]
     let ``try appearances of incarnations of digit concept``()=
