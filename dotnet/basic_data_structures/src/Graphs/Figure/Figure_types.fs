@@ -5,15 +5,19 @@ open rvinowise
 open System
 open System.Linq
 
-        
+
+ 
+
+         
 [<CustomEquality; CustomComparison>]
 type Figure = {
     edges: Edge Set
-    subfigures: Map<Vertex_id, Figure_id>
+    subfigures: Map<Vertex_id, Figure -> bool >
 }
 with 
     override this.ToString()=
-        Figure_printing.figure_to_string this.edges this.subfigures
+        this.subfigures
+        |>Figure_printing.figure_to_string this.edges
     
     override this.Equals(other) =
         match other with

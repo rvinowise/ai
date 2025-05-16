@@ -47,7 +47,7 @@ module Figure_from_stencil=
                     map
                     |>Map.add 
                         vertex
-                        referenced_figure
+                        (built.Subfigure.referencing_constant_figure referenced_figure)
 
             )
             Map.empty

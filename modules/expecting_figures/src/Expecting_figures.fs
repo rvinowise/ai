@@ -11,13 +11,14 @@ module Expecting_figures =
         let expected_figures = 
             expectation.expected
             |>Figure.referenced_figures expectation.prolongated
-                
+            |>Seq.map _.name
         if (Seq.contains fired_figure expected_figures) then
             let fired_subfigures = 
                 expectation.expected
                 |>Set.filter (fun expected -> 
                     expected
-                    |>Figure.reference_of_vertex expectation.prolongated 
+                    |>Figure.reference_of_vertex expectation.prolongated
+                    |>_.name
                         = fired_figure
                 )
                     

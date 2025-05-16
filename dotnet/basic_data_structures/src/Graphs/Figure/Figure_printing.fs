@@ -25,7 +25,7 @@ module Figure_printing =
 
     let id_of_a_sequence_from_edges
         edges
-        (subfigures: Map<Vertex_id, Figure_id>) 
+        (subfigures: Map<Vertex_id, Subfigure>) 
         =
         let first_vertex =
             edges
@@ -34,11 +34,11 @@ module Figure_printing =
         
         let rec build_id 
             edges
-            (subfigures: Map<Vertex_id, Figure_id>) 
+            (subfigures: Map<Vertex_id, Subfigure>) 
             id
             (vertex:Vertex_id)
             =
-            let updated_id = id+ subfigures[vertex]
+            let updated_id = id+ subfigures[vertex].name
             vertex
             |>Edges.next_vertices edges
             |>Seq.tryHead
@@ -68,12 +68,12 @@ module Figure_printing =
         else 
             branching_edges_to_string edges
 
-    let private signal_to_string (subfigures:Map<Vertex_id, Figure_id>) =
+    let private signal_to_string (subfigures:Map<Vertex_id, Subfigure>) =
         Contract.Assume(Seq.length subfigures = 1)
         subfigures
         |>Map.values
         |>Seq.head
-        |>Figure_id.value
+        |>_.name|>Figure_id.value
 
     let figure_to_string edges subfigures  =
         if (Seq.isEmpty edges) then

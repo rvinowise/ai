@@ -91,6 +91,7 @@ module Figure=
                             tail_id
                             |>turn_vertex_id_into_figure_id
                             |>Figure_id
+                            |>built.Subfigure.referencing_constant_figure
                         );
                         (
                             Vertex_id head_id
@@ -98,6 +99,8 @@ module Figure=
                             head_id 
                             |>turn_vertex_id_into_figure_id
                             |>Figure_id
+                            |>built.Subfigure.referencing_constant_figure
+
                         )
                     ]
                 )
@@ -119,7 +122,10 @@ module Figure=
             figures
             |>built.Graph.unique_numbers_for_names_in_sequence
             |>Seq.map (fun (vertex, figure) ->
-                vertex,Figure_id figure
+                vertex,
+                figure
+                |>Figure_id
+                |>built.Subfigure.referencing_constant_figure
             )
         {
             edges=
@@ -143,6 +149,31 @@ module Figure=
                 ,
                 turn_vertex_id_into_figure_id vertex
                 |>Figure_id
+                |>built.Subfigure.referencing_constant_figure
+            )
+        {
+            edges=
+                vertices_sequence
+                |>Seq.map fst
+                |>built.Graph.sequential_edges
+                
+            subfigures=
+                vertices_sequence
+                |>Map.ofSeq
+        }//|>Renaming_figures.rename_vertices_to_standard_names
+    
+    let sequential_figure_from_sequence_of_subfigures
+        (turn_vertex_id_into_figure_id: string->string)
+        (subfigures: Subfigure seq)
+        =
+        let vertices_sequence = 
+            subfigures
+            |>Seq.map (fun subfigure->
+                Vertex_id vertex
+                ,
+                turn_vertex_id_into_figure_id vertex
+                |>Figure_id
+                |>built.Subfigure.referencing_constant_figure
             )
         {
             edges=
@@ -172,7 +203,12 @@ module Figure=
                     |>Set.ofSeq
                 subfigures=
                     ["a#1","a";"a#2","a";"b#1","b";"b#2","b"]
-                    |>Seq.map (fun (vertex,figure) -> Vertex_id vertex, Figure_id figure)
+                    |>Seq.map (fun (vertex,figure) ->
+                        Vertex_id vertex
+                        ,
+                        Figure_id figure
+                        |>built.Subfigure.referencing_constant_figure
+                    )
                     |>Map.ofSeq
             }
 
@@ -181,8 +217,10 @@ module Figure=
             edges=Set.empty
             subfigures=[
                 //(id+"#1")|>Vertex_id,
-                Vertex_id id,
+                Vertex_id id
+                ,
                 Figure_id id
+                |>built.Subfigure.referencing_constant_figure
             ]|>Map.ofSeq
         }|>Renaming_figures.rename_vertices_to_standard_names
 
@@ -200,7 +238,7 @@ module Figure=
         |>Map.ofSeq
     
     let vertex_data_from_vertices_of_figure 
-        (full_vertex_data: Map<Vertex_id, Figure_id>) 
+        (full_vertex_data: Map<Vertex_id, Subfigure>) 
         (vertices: Vertex_id seq)
         =
         vertices
@@ -216,8 +254,8 @@ module Figure=
         edges
         |>Seq.map (fun(tail_id,tail_ref,head_id,head_ref)->
             [
-                (Vertex_id tail_id, Figure_id tail_ref);
-                (Vertex_id head_id, Figure_id head_ref)
+                (Vertex_id tail_id, Figure_id tail_ref|>built.Subfigure.referencing_constant_figure);
+                (Vertex_id head_id, Figure_id head_ref|>built.Subfigure.referencing_constant_figure)
             ]
         )
         |>Seq.concat

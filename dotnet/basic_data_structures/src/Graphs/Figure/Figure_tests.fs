@@ -103,7 +103,10 @@ module Figure_tests=
                 "d1","d";
                 "d2","d";
             ]
-            |>List.map (fun pair->pair|>fst|>Vertex_id, pair|>snd|>Figure_id)
+            |>List.map (fun pair->
+                pair|>fst|>Vertex_id,
+                pair|>snd|>Figure_id|>built.Subfigure.referencing_constant_figure
+            )
             |>Map.ofList
         }
         let figure2 = {
@@ -125,7 +128,10 @@ module Figure_tests=
                 "d1","d";
                 "d2","d";
             ]
-            |>List.map (fun pair->pair|>fst|>Vertex_id, pair|>snd|>Figure_id)
+            |>List.map (fun pair->
+                pair|>fst|>Vertex_id,
+                pair|>snd|>Figure_id|>built.Subfigure.referencing_constant_figure
+            )
             |>Map.ofList
         }
         figure1

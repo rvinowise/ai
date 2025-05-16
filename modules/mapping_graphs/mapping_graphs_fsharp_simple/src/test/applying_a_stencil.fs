@@ -382,7 +382,7 @@ module ``application of stencils``=
     [<Fact>]
     let ``applying a conditional stencil with output at the very border``() =
         let target =
-            "0,1,2"|>built.Figure.sequential_figure_from_text
+            "0,1"|>built.Figure.sequential_figure_from_text
         
         let stencil = {
             Conditional_stencil.figure=
@@ -399,5 +399,7 @@ module ``application of stencils``=
             stencil
             target
         |>should equal (
-            "0"|>built.Figure.sequential_figure_from_text
+            "0"
+            |>built.Figure.sequential_figure_from_text
+            |>Seq.singleton
         )

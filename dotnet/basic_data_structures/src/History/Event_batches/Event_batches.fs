@@ -318,7 +318,10 @@ module Event_batches =
             and some sort of sequences can represend complex causation*)
             )|>built.Graph.unique_numbers_for_names_in_sequence
             |>Seq.map (fun (vertex, name) ->
-                vertex,Figure_id name
+                vertex
+                ,
+                Figure_id name
+                |>built.Subfigure.referencing_constant_figure
             )
         {
             edges=

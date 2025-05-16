@@ -112,6 +112,7 @@ module Digit_concept =
         "D0,1,2,3,4,5,6,7,8,9;"
         |>built.Figure.sequential_figure_from_text
         |>find_incarnations_of_digit
+        |>Set.ofSeq
         |>should equal (
             "0123456789"
             |>Seq.map string
@@ -152,18 +153,30 @@ module Digit_concept =
         
 module Number_concept =
     
+    let not_digit_subfigure = {
+        Subfigure.name = Figure_id "[not_digit]"
+        is_mappable =
+            //Digit_concept.find_incarnations_of_digit
+            built.Subfigure.does_subfigure_reference_needed_figure
+    }
     let number_concept = {
         Conditional_stencil.figure = {
             existing =
-                ["[number]";"[digit]"]
-                |>built.Figure.sequential_figure_from_sequence_of_figures
+                [
+                    not_digit_subfigure,1
+                    not_digit_subfigure,2
+                ]
+                |>built.Figure.sequential_figure_from_sequence_of_subfigures
             impossibles =
-                ["[number]#1";"[not_digit]";"[digit]#1"]
+                ["[not_digit]#1";"[not_digit]#3";"[not_digit]#2"]
                 |>built.Figure.sequential_figure_from_sequence_of_vertices String.remove_number_with_hash
                 |>built.Conditional_figure.from_figure_without_impossibles
                 |>Set.singleton
         }
-        output_border = {before = Set.empty; after = Set.empty } 
+        output_border = {
+            before = "[not_digit]#1"|>Vertex_id|>Set.singleton
+            after = "[not_digit]#2"|>Vertex_id|>Set.singleton
+        } 
     }
     
     let find_instances_of_number target =()

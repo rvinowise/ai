@@ -17,7 +17,7 @@ module Mapping_graph_with_immutable_mapping =
     (* for a figure we have a list of structures, each such structure has a vertex in the stencil,
     which can be mapped onto a sequence of vertices in the target. all those vertices reference the figure from the key *)
     let all_combinations_of_next_mappings 
-        (mappings: Map<Figure_id, struct (Vertex_id*seq<Vertex_id>) list>) 
+        (mappings: Map<Subfigure, struct (Vertex_id*seq<Vertex_id>) list>) 
         =
         mappings
         |>Seq.map (fun pair->
@@ -87,54 +87,7 @@ module Mapping_graph_with_immutable_mapping =
         |>Figure.reference_of_vertex owner_figure
             = referenced_figure
 
-    [<Fact>]
-    let ``finding following subfigures referencing a specific figure``()=
-        let owner_figure = example.Figure.a_high_level_relatively_simple_figure
-        let referenced_figure = (Figure_id "f")
-        (first_vertices_reacheble_from_all_vertices_together 
-            (does_vertex_reference_figue
-                owner_figure
-                referenced_figure)
-            (Edges.next_vertices owner_figure.edges)
-            ( "b#1"|>Vertex_id|>Set.singleton)
-        )|> should equal (
-            [Vertex_id "f#1";Vertex_id "f#2"]
-            |>Set.ofList
-        )
-
-        (first_vertices_reacheble_from_all_vertices_together
-            (does_vertex_reference_figue
-                owner_figure
-                referenced_figure)
-            (Edges.next_vertices owner_figure.edges)
-            ([Vertex_id "d#1";Vertex_id "b#2"]|>Set.ofList)
-        )|> should equal (
-            [Vertex_id "f#2"]
-            |>Set.ofList
-        )
-
-    [<Fact>]
-    let ``vertices reacheble from others``()=
-        let owner_figure = example.Figure.a_high_level_relatively_simple_figure
-        first_vertices_reacheble_from_all_vertices_together
-            (fun _->true)
-            (Edges.next_vertices owner_figure.edges)
-            (["b#1";"b#2"]|>List.map Vertex_id|>Set.ofList)
-        |> should equal (
-            [Vertex_id "f#2"]
-            |>Set.ofList
-        )
-
-    [<Fact>]
-    let ``vertices reaching others``()=
-        first_vertices_reacheble_from_all_vertices_together
-            (fun _->true)
-            (Edges.previous_vertices example.Figure.a_high_level_relatively_simple_figure.edges)
-            (["b#3";"f#2"]|>List.map Vertex_id|>Set.ofList)
-        |> should equal (
-            [Vertex_id "b#1"]
-            |>Set.ofList
-        )
+    
 
     let targets_of_previously_mapped_vertices
         edges
@@ -189,12 +142,12 @@ module Mapping_graph_with_immutable_mapping =
         
 
     let next_mapping_targets_for_subfigures_to_map
-        (possible_targets_for_mapping_vertex: Vertex_id*Figure_id -> Vertex_id Set)
+        (possible_targets_for_mapping_vertex: Vertex_id*Subfigure -> Vertex_id Set)
         next_subfigures_to_map
         =
         let rec mapping_targets_for_next_subfigure
-            (left_subfigures_to_map:  list<Vertex_id*Figure_id>)
-            (found_mappings: Map<Figure_id,  struct(Vertex_id(*stencil_vertex*) * seq<Vertex_id>(*possible_targets*)) list>)
+            (left_subfigures_to_map:  list<Vertex_id*Subfigure>)
+            (found_mappings: Map<Subfigure,  struct(Vertex_id(*stencil_vertex*) * seq<Vertex_id>(*possible_targets*)) list>)
             =
 
             match left_subfigures_to_map with
@@ -227,21 +180,19 @@ module Mapping_graph_with_immutable_mapping =
     let targets_for_mapping_prolongation
         (mappee:Figure)
         (target:Figure)
-        (prolongated_mapping:Map<Vertex_id,Vertex_id>)
+        (mapping_to_prolongate:Map<Vertex_id,Vertex_id>)
         (within_mapping:Map<Vertex_id,Vertex_id>)
-        (prolongating_subfigure: Vertex_id*Figure_id)
+        (prolongating_node)
         =
         
-        let prolongating_vertex = fst prolongating_subfigure
-        let prolongating_figure = snd prolongating_subfigure
+        let prolongating_vertex = fst prolongating_node
+        let prolongating_subfigure = snd prolongating_node
         
         let needed_target_vertex =
             within_mapping
             |>Map.tryFind prolongating_vertex
         
-        let does_vertex_reference_needed_figure vertex =
-            Figure.reference_of_vertex target vertex =
-                prolongating_figure
+        
 
         let targets_to_mappees_in_rail_mapping =
             within_mapping
@@ -259,21 +210,21 @@ module Mapping_graph_with_immutable_mapping =
                 |>Map.containsKey mapped_vertex_in_rail
                 
         let is_vertex_suitable_for_mapping target_vertex =
-            if (Vertex_id.value target_vertex = ";#good_first") then
-                Debug.Write "test"
             match needed_target_vertex with
             |Some needed_target_vertex ->
                 needed_target_vertex = target_vertex
             |None ->
-                does_vertex_reference_needed_figure target_vertex
-                &&
                 not <| vertex_is_used_in_mapping_by_somebody target_vertex
+                &&
+                target_vertex
+                |>Figure.reference_of_vertex target
+                |>prolongating_subfigure.is_mappable
         
         possible_targets_for_mapping_subfigure
             is_vertex_suitable_for_mapping
             mappee
             target
-            prolongated_mapping
+            mapping_to_prolongate
             prolongating_vertex
     
     let unmapped_vertices
@@ -374,7 +325,6 @@ module Mapping_graph_with_immutable_mapping =
 
     let is_maping_without_impossible_figures
         (map_figure_onto_target)
-        (within_mapping: Map<Vertex_id,Vertex_id>)
         (target: Figure)
         (impossibles: Conditional_figure seq)
         (checked_mapping: Map<Vertex_id,Vertex_id>)
@@ -391,7 +341,6 @@ module Mapping_graph_with_immutable_mapping =
     
     let remove_mappings_with_impossible_figures
         (map_figure_onto_target)
-        (within_mapping: Map<Vertex_id,Vertex_id>)
         (target: Figure)
         (impossibles: Conditional_figure seq)
         (all_mappings: Map<Vertex_id,Vertex_id> seq)
@@ -400,7 +349,6 @@ module Mapping_graph_with_immutable_mapping =
         |>Seq.filter (
             is_maping_without_impossible_figures
                 map_figure_onto_target
-                within_mapping
                 target
                 impossibles
         )
@@ -421,7 +369,6 @@ module Mapping_graph_with_immutable_mapping =
         mappings
         |>remove_mappings_with_impossible_figures
             map_conditional_figure_onto_target
-            within_mapping
             target
             mappee.impossibles
             

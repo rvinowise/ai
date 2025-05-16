@@ -14,7 +14,7 @@ module Mapping_graph_with_mutable_mapping =
     
 
     let all_combinations_of_next_mappings 
-        (mappings: Map<Figure_id, struct (Vertex_id*seq<Vertex_id>) list>) 
+        (mappings: Map<Subfigure, struct (Vertex_id*seq<Vertex_id>) list>) 
         =
         mappings
         |>Seq.map (fun pair->
@@ -89,7 +89,7 @@ module Mapping_graph_with_mutable_mapping =
     [<Fact>]
     let ``finding following subfigures referencing a specific figure``()=
         let owner_figure = example.Figure.a_high_level_relatively_simple_figure
-        let referenced_figure = (Figure_id "f")
+        let referenced_figure = Figure_id "f"|>built.Subfigure.referencing_constant_figure
         (first_vertices_reacheble_from_all_vertices_together 
             (does_vertex_reference_figue
                 owner_figure
@@ -141,7 +141,7 @@ module Mapping_graph_with_mutable_mapping =
         mappee
         target
         mapping
-        (prolongating_stencil_subfigure: Vertex_id*Figure_id)
+        (prolongating_stencil_subfigure: Vertex_id*Subfigure)
         =
         let prolongating_vertex = prolongating_stencil_subfigure|>fst
         let prolongating_figure = prolongating_stencil_subfigure|>snd
@@ -171,9 +171,9 @@ module Mapping_graph_with_mutable_mapping =
             (mappee:Figure)
             (target:Figure)
             (mapping:Mapping)
-            (left_subfigures_to_map:  list<Vertex_id*Figure_id>)
+            (left_subfigures_to_map)
             //                                      stencil_vertex possible_targets
-            (found_mappings: Map<Figure_id,  struct(Vertex_id   *  seq<Vertex_id>)  list>)
+            (found_mappings: Map<Subfigure,  struct(Vertex_id   *  seq<Vertex_id>)  list>)
             =
 
             match left_subfigures_to_map with
@@ -215,7 +215,7 @@ module Mapping_graph_with_mutable_mapping =
     let prolongate_one_mapping_with_next_subfigures 
         (mappee:Figure)
         (target:Figure)
-        (next_subfigures_to_map: seq<Vertex_id*Figure_id>)
+        (next_subfigures_to_map)
         (mapping:Mapping)
         =
         let possible_next_mappings =
@@ -242,30 +242,25 @@ module Mapping_graph_with_mutable_mapping =
             last_mapped_vertices
             |>Edges.next_vertices_of_many mappee.edges
 
-        let mappings =
-            let next_subfigures_to_map =
-                next_vertices_to_map
-                |>Figure.vertices_with_their_referenced_figures mappee
-            if Seq.isEmpty next_subfigures_to_map then
-                mappings
-            else
-                mappings
-                |>Seq.map (
-                    prolongate_one_mapping_with_next_subfigures 
-                        mappee 
-                        target 
-                        next_subfigures_to_map
-                )
-                |>Seq.collect id
-        
         if Seq.isEmpty next_vertices_to_map then
             mappings
         else
-            prolongate_all_mappings
+            let next_subfigures_to_map =
+                next_vertices_to_map
+                |>Figure.vertices_with_their_referenced_figures mappee
+            
+            mappings
+            |>Seq.map (
+                prolongate_one_mapping_with_next_subfigures 
+                    mappee 
+                    target 
+                    next_subfigures_to_map
+            )
+            |>Seq.collect id
+            |>prolongate_all_mappings
                 mappee 
                 target 
                 next_vertices_to_map
-                mappings
 
 
     let map_figure_onto_target

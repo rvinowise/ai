@@ -153,8 +153,6 @@ module Applying_stencil =
     
     
     let results_of_conditional_stencil_application
-        //(mappee: Conditional_figure)
-        //(output_border: Stencil_output_border)
         stencil
         target
         =

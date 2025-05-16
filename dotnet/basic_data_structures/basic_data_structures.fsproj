@@ -23,11 +23,14 @@
     <Compile Include="src\Graphs\components\Edge\Edge_functions.fs" />
     
     <Compile Include="src\Graphs\Graph\Graph_built.fs" />
+    
+    <Compile Include="src\Graphs\Figure\Subfigure.fs" />
 
     <Compile Include="src\Graphs\Figure\Figure_printing.fs" />
     <Compile Include="src\Graphs\Figure\Figure_types.fs" />
     <Compile Include="src\Graphs\Figure\Figure.fs" />
     <Compile Include="src\Graphs\Figure\built\Renaming_figures.fs" />
+    <Compile Include="src\Graphs\Figure\built\Subfigure_built.fs" />
     <Compile Include="src\Graphs\Figure\built\Figure_built.fs" />
     <Compile Include="src\Graphs\Figure\Figure_example.fs" />
     <Compile Include="src\Graphs\Figure\built\fusing_figures_into_a_sequence.fs" />
