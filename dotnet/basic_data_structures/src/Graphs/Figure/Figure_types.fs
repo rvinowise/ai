@@ -6,13 +6,23 @@ open System
 open System.Linq
 
 
- 
+type Mapping_function_id = Mapping_function_id of int
 
+ 
+type Mapped_figure = {
+    edges: Edge Set
+    targets: Map<Vertex_id, Figure_id >
+}
+
+type Unmapped_figure = {
+    edges: Edge Set
+    targets: Map<Vertex_id, Figure_id >
+}
          
 [<CustomEquality; CustomComparison>]
 type Figure = {
     edges: Edge Set
-    subfigures: Map<Vertex_id, Figure -> bool >
+    subfigures: Map<Vertex_id, Figure_id >
 }
 with 
     override this.ToString()=

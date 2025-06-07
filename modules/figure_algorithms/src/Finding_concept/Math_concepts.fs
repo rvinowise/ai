@@ -157,7 +157,8 @@ module Number_concept =
         Subfigure.name = Figure_id "[not_digit]"
         is_mappable =
             //Digit_concept.find_incarnations_of_digit
-            built.Subfigure.does_subfigure_reference_needed_figure
+            Figure_id "[not_digit]"
+            |>built.Subfigure.does_subfigure_reference_needed_figure 
     }
     let number_concept = {
         Conditional_stencil.figure = {

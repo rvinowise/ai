@@ -59,7 +59,7 @@ module Map_first_nodes =
         
         let not_mapped_vertices =
             already_mapped_vertices
-            |>Map.keys
+            |>Map.keys 
             |>Set.ofSeq
             |>Set.difference first_vertices_of_mappee
         
