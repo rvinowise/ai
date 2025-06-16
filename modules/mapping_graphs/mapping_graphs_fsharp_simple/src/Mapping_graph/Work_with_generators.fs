@@ -22,8 +22,8 @@ module Work_with_generators =
         (generators: Generator_of_mappings<Vertex_id, Vertex_id> seq)
         =
         generators
-        //all_generators                                   vertices_of_generator(for_one_figure) iterations_of_generator
-        |>Seq.cast<  Element_to_target<Vertex_id,Vertex_id>seq                                   seq>
+        //all_generators vertices_of_generator(for_one_figure)     iterations_of_generator
+        |>Seq.cast<     Element_to_target<Vertex_id,Vertex_id>seq seq>
         //                    type_of_every_order(digit)
         |>Generator_of_orders<seq<Element_to_target<Vertex_id, Vertex_id>>>
         |>Seq.map (Seq.collect id)

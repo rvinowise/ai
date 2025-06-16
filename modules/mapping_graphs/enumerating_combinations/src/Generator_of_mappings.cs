@@ -15,14 +15,9 @@ public struct Element_to_targets<Element, Target> {
         this.targets = new List<Target>(targets);
     }
 }
-public readonly struct Element_to_target<Element, Target> {
-    public readonly Element element;
-    public readonly Target target;
-
-    public Element_to_target(Element element, Target target) {
-        this.element = element;
-        this.target = target;
-    }
+public readonly struct Element_to_target<Element, Target>(Element element, Target target) {
+    public readonly Element element = element;
+    public readonly Target target = target;
 
     public override string ToString() {
         return $"{element}-{target}";

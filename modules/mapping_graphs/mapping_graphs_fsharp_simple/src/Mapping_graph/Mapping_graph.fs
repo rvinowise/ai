@@ -14,7 +14,16 @@ module Mapping_graph =
     let map_first_nodes = Map_first_nodes.map_first_nodes
 
     let all_combinations_of_next_mappings 
-        (mappings: Map<Figure_id, struct (Vertex_id*seq<Vertex_id>) list>) 
+        (mappings:
+            Map<
+            Figure_id //the figure of next mapped vertices (they are grouped by their figures)
+            ,
+            struct (
+                Vertex_id* // mapped vertex of the mappee (e.g. stencil)
+                seq<Vertex_id> //possible target-vertices in the target-graph (e.g. figure) for mapping that vertex of the mappee
+            ) list //all the next mappee's vertices (of this subfigure), which constitute the "wave" of the next mapping
+            >
+        ) 
         =
         mappings
         |>Seq.map (fun pair->
@@ -36,7 +45,12 @@ module Mapping_graph =
 
     let prolongate_mapping_with_next_mapped_subfigures 
         (base_mapping: Mapping)
-        (added_mappings: Element_to_target<Vertex_id, Vertex_id> seq seq)
+        (
+        added_mappings:
+            Element_to_target<Vertex_id, Vertex_id> //this mappee (stencil) vertex is mapped onto this target (figure) vertex
+            seq //all vertices in one mapping
+            seq //all possible mappings
+        )
         =
         added_mappings
         |>Seq.map (copied_mapping_with_prolongation base_mapping)
@@ -51,7 +65,7 @@ module Mapping_graph =
             |>Seq.fold(fun set vertex->
                     [vertex]
                     |>Search_in_graph.vertices_reacheble_from_any_vertices
-                        (fun vertex->vertices|>Set.contains vertex)
+                        (fun vertex -> Set.contains vertex vertices)
                         (fun _->false)
                         step_further
                     |>Set.union set
@@ -61,7 +75,7 @@ module Mapping_graph =
         |>Set.difference vertices
 
     
-    let does_vertex_reference_blocking_figure
+    let does_figure_vertex_reference_blocking_figure
         (figure: Figure)
         (stencil: Stencil)
         (tail: Vertex_id)
@@ -78,7 +92,7 @@ module Mapping_graph =
             
     
     let first_vertices_reacheble_from_all_vertices_together
-        (target_figure: Figure)
+        (target: Figure)
         (stencil: Stencil)
         (mapped_head_vertex: Vertex_id)
         (step_further: Vertex_id -> Vertex_id Set)
@@ -91,20 +105,21 @@ module Mapping_graph =
                     stencil.figure
                     mapped_head_vertex
             vertex
-            |>Figure.reference_of_vertex target_figure
+            |>Figure.reference_of_vertex target
                 = searched_figure
         
         starting_vertices
         |>Seq.map (fun tail ->
-            let does_vertex_reference_blocking_figure =
-                does_vertex_reference_blocking_figure
-                    stencil.figure
+            let does_figure_vertex_reference_blocking_figure =
+                does_figure_vertex_reference_blocking_figure
+                    target
+                    stencil
                     tail
                     mapped_head_vertex
             
             Search_in_graph.vertices_reacheble_from_any_vertices 
                 is_vertex_needed
-                does_vertex_reference_blocking_figure
+                does_figure_vertex_reference_blocking_figure
                 step_further
                 [tail]
         )
@@ -176,8 +191,8 @@ module Mapping_graph =
     
 
     let possible_targets_for_mapping_subfigure
-        mappee
         target
+        mappee
         mapping
         (prolongating_stencil_subfigure: Vertex_id*Figure_id)
         =
@@ -198,14 +213,14 @@ module Mapping_graph =
         
 
     let next_mapping_targets_for_mapped_subfigures
-        mappee
         target
+        mappee
         base_mapping
         next_subfigures_to_map
         =
         let rec mapping_targets_for_next_subfigure
-            (mappee:Figure)
             (target:Figure)
+            (mappee:Figure)
             (mapping:Mapping)
             (left_subfigures_to_map:  list<Vertex_id*Figure_id>)
             //                                      stencil_vertex possible_targets
@@ -217,8 +232,8 @@ module Mapping_graph =
             | current_subfigure_to_map::left_subfigures_to_map ->
                 let targets = 
                     possible_targets_for_mapping_subfigure
-                        mappee
                         target
+                        mappee
                         base_mapping
                         current_subfigure_to_map
                     
@@ -236,8 +251,8 @@ module Mapping_graph =
                         found_mappings
                         |>Map.add figure updated_targets_of_this_figure
                     mapping_targets_for_next_subfigure
-                        mappee
                         target
+                        mappee
                         mapping
                         left_subfigures_to_map
                         updated_mappings
@@ -250,8 +265,8 @@ module Mapping_graph =
             Map.empty
 
     let prolongate_one_mapping_with_next_subfigures 
-        (mappee:Figure)
         (target:Figure)
+        (mappee:Figure)
         (next_subfigures_to_map: seq<Vertex_id*Figure_id>)
         (mapping:Mapping)
         =
@@ -259,8 +274,8 @@ module Mapping_graph =
             next_subfigures_to_map
             |>List.ofSeq
             |>next_mapping_targets_for_mapped_subfigures
-                mappee
                 target
+                mappee
                 mapping
 
         if possible_next_mappings.IsEmpty then
@@ -271,8 +286,8 @@ module Mapping_graph =
             |>prolongate_mapping_with_next_mapped_subfigures mapping
     
     let rec prolongate_all_mappings 
-        (mappee:Figure)
         (target:Figure)
+        (mappee:Figure)
         (last_mapped_vertices: Vertex_id seq)
         (mappings: Mapping seq)
         =
@@ -289,14 +304,14 @@ module Mapping_graph =
             mappings
             |>Seq.map (
                 prolongate_one_mapping_with_next_subfigures 
-                    mappee 
                     target 
+                    mappee 
                     next_subfigures_to_map
             )
             |>Seq.collect id
             |>prolongate_all_mappings
-                mappee 
                 target 
+                mappee 
                 next_vertices_to_map
 
 
@@ -307,6 +322,6 @@ module Mapping_graph =
         target
         |>map_first_nodes mappee
         |>prolongate_all_mappings
-            mappee 
             target
+            mappee 
             (Figure.first_vertices mappee)

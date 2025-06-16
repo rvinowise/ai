@@ -29,8 +29,8 @@ module ``application of stencils``=
     [<Fact>]
     let ``impossible to prolongate, because of no matching following subfigures``()=
         prolongate_one_mapping_with_next_subfigures 
-            example.Figure.fitting_stencil_as_figure
             example.Figure.a_high_level_relatively_simple_figure
+            example.Figure.fitting_stencil_as_figure
             [(Vertex_id "f#1", Figure_id "f")]
             initial_mapping_without_prolongation
         |> should equal
@@ -39,8 +39,8 @@ module ``application of stencils``=
     [<Fact>]
     let``prolongation with a single following node``()=
         prolongate_one_mapping_with_next_subfigures 
-            example.Figure.fitting_stencil_as_figure
             example.Figure.a_high_level_relatively_simple_figure
+            example.Figure.fitting_stencil_as_figure
             [(Vertex_id "f#1", Figure_id "f")]
             initial_useless_mapping
         |> should equal
