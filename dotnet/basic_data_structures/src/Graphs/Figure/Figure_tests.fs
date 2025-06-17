@@ -25,7 +25,7 @@ module Figure_tests=
     [<Fact>]
     let ``try id_from_sequence``()=
         ["a1","b";"b","a2";"a2","c"]
-        |>built.Figure.simple
+        |>built.Figure.simple_without_separator
         |>ai.Figure.id_of_a_sequence
         |>should equal (Figure_id "abac")
     
@@ -50,7 +50,7 @@ module Figure_tests=
             "a","b";"b","x1";
                     "b","y1";"x1","c";
                              "y1","c"]
-        |>built.Figure.simple
+        |>built.Figure.simple_without_separator
         |>(fun f->f.edges)
         |>Edges.is_sequence
         |>should equal false
@@ -103,7 +103,10 @@ module Figure_tests=
                 "d1","d";
                 "d2","d";
             ]
-            |>List.map (fun pair->pair|>fst|>Vertex_id, pair|>snd|>Figure_id)
+            |>List.map (fun pair->
+                pair|>fst|>Vertex_id,
+                pair|>snd|>Figure_id|>built.Subfigure.referencing_constant_figure
+            )
             |>Map.ofList
         }
         let figure2 = {
@@ -125,7 +128,10 @@ module Figure_tests=
                 "d1","d";
                 "d2","d";
             ]
-            |>List.map (fun pair->pair|>fst|>Vertex_id, pair|>snd|>Figure_id)
+            |>List.map (fun pair->
+                pair|>fst|>Vertex_id,
+                pair|>snd|>Figure_id|>built.Subfigure.referencing_constant_figure
+            )
             |>Map.ofList
         }
         figure1

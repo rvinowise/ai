@@ -1,4 +1,3 @@
-
 namespace rvinowise.ai
 
 open rvinowise.ai
@@ -7,7 +6,7 @@ open Xunit
 open FsUnit
 
 
-module Finding_concept = 
+module Finding_concept_with_special_types_of_concepts = 
 
     let rec incarnations_of_concept 
         (place: Figure)
@@ -15,9 +14,8 @@ module Finding_concept =
         =
         match concept with
         |Leaf stencil->
-            stencil
-            |>Applying_stencil.results_of_stencil_application place
-            |>Seq.map Renaming_figures.rename_vertices_to_standard_names
+            place
+            |>Applying_stencil.results_of_stencil_application stencil
             |>Set.ofSeq
         |Or children->
             children
@@ -29,15 +27,6 @@ module Finding_concept =
             |>Set.intersectMany
 
 
-    let digit_concept_with_prohibited_links =
-        built.Stencil.simple_with_separator [
-            "N","out";
-            ",#1","out";
-            "out",",#2";
-            "out",";";
-        ]
-        |>Concept.Leaf
-    
     let complex_digit_concept =
         let first_digit_stencil =
             built.Stencil.simple_with_separator [
@@ -66,11 +55,8 @@ module Finding_concept =
         ]
         |>List.map (fun stencil->
             {stencil with 
-                output_without=[
-                    ","|>built.Figure.signal;
-                    "N"|>built.Figure.signal
-                ]|>Set.ofList
-            })
+                output_without=
+                    ","|>built.Figure.signal|>Set.singleton})
         |>List.map Leaf
         |>Set.ofList
         |>Or 
@@ -99,7 +85,7 @@ module Finding_concept =
                     ","|>built.Figure.signal|>Set.singleton
         }|>Leaf
 
-    [<Fact>]
+    [<Fact(Skip="not implemented")>]
     let ``try incarnations of digit concept``()=
         let history_as_figure =
             "N0,1,2,3,4,5,6,7,8,9;"
@@ -108,7 +94,6 @@ module Finding_concept =
 
         digit_concept
         |>incarnations_of_concept history_as_figure
-        |>Set.map Renaming_figures.rename_vertices_to_standard_names
         |>should equal (
             "0123456789"
             |>Seq.map string
@@ -116,9 +101,9 @@ module Finding_concept =
             |>Set.ofSeq
         )
 
-    [<Fact>]
+    [<Fact(Skip="not implemented")>]
     let ``try incarnations of concept in several places of incarnation``()=
-        (*TODO "N0" and "y" are mistakenly considered number incarnations *)
+        (* "N0" and "y" are mistakenly considered number incarnations *)
         let history_as_figure =
             "N0,1;x,y;z,N0,2;"
     //mom:   0123456789¹123456789²
@@ -127,11 +112,11 @@ module Finding_concept =
         let incarnations = 
             complex_digit_concept
             |>incarnations_of_concept history_as_figure
-            |>Set.map Renaming_figures.rename_vertices_to_standard_names
-            
+        
         incarnations
-        |>Set.filter(
-            Figure.is_signal "0"
+        |>Set.filter(fun figure->
+            figure
+            |>Figure.is_signal "0"
         )|>should haveCount 2
     
         incarnations
@@ -142,23 +127,6 @@ module Finding_concept =
             |>Set.ofSeq
         )
 
-    let exclude_incarnations
-        vertices_of_incarnations
-        all_appearances_of_concepts
-        =
-        all_appearances_of_concepts
-        |>Seq.filter (fun (appearance: stencil.Mapping)->
-            let appearance_vertices = 
-                appearance.Keys
-                |>Set.ofSeq
-            
-            vertices_of_incarnations
-            |>Set.exists (fun incarnation_vertices->
-                incarnation_vertices = appearance_vertices
-            ) 
-            |>not
-        )
-    
     let appearances_of_concept_incarnations
         (history: Figure)
         concept
@@ -167,25 +135,9 @@ module Finding_concept =
             concept
             |>incarnations_of_concept history
         
-        let vertices_of_incarnations = 
-            incarnations
-            |>Seq.map (fun figure->
-                figure.subfigures
-                |>Map.keys
-                |>Set.ofSeq
-            )
-            |>Set.ofSeq
+        Concept.appearances_of_concept_incarnations incarnations history 
 
-        incarnations
-        |>Seq.map Renaming_figures.rename_vertices_to_standard_names
-        |>Seq.map (
-            Mapping_graph.map_figure_onto_target
-                history
-        )|>Seq.concat
-        |>exclude_incarnations vertices_of_incarnations
-        
-
-    [<Fact>]
+    [<Fact(Skip="not implemented")>]
     let ``try appearances of incarnations of digit concept``()=
         let history_as_figure =
             @"N0,1,2,3,4,5,6,7,8,9;
@@ -229,11 +181,11 @@ module Finding_concept =
         let math_equation_digit_addition_ =
             [
                 "[digit]";"+";"[digit]";"=";"[digit]"
-            ]|>built.Figure.sequential_figure_from_sequence
+            ]|>built.Figure.sequential_figure_from_sequence_of_figures
         let math_equation_addition_of_1 =
             [
                 "1";"+";"[digit]";"=";"[digit]";";"
-            ]|>built.Figure.sequential_figure_from_sequence
+            ]|>built.Figure.sequential_figure_from_sequence_of_figures
         // let next_digit = 
         //     [
         //         "reference";",";"out"

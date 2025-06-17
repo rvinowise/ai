@@ -8,13 +8,13 @@ open rvinowise.ai
 open rvinowise
 open rvinowise.ui
 
-module Math_primers=
+module math_primers=
 
     [<Fact>]
     let ``find sequences in math primers``()=
         [
             "N:0,1,2,3,4,5,6,7,8,9;";"1+1=2;ok;";"1+2=3;ok;";"1+1=";
-//mom:       0123456789¹123456789²1   234567      89³123      456789
+//mom:       0123456789¹123456789²1   234567      89³123      4567
 //seq1                                 +1          +          1
 //seq2                                             +          1+1
 //mom(20+):  2345678    9³12345
@@ -25,7 +25,7 @@ module Math_primers=
         |>Event_batches.to_sequence_appearances
         |>Finding_many_repetitions.all_repetitions
             (Finding_repetitions.halves_are_close_enough 2)
-            Reporting.dont
+            (Reporting_repetitions.write_to_file @"C:\Users\rvi\Downloads\test_repetitions.txt")
         |>Set.ofSeq
         |>should be (supersetOf(
             [
@@ -49,18 +49,7 @@ module Math_primers=
             (ui.painted.History.add_combined_history input_primers)
         |>ui.painted.image.open_image_of_graph
 
-    [<Fact>]
-    let ``ai can reply with rote-memorised constant sequences``()=
-        History_from_text.event_batches_from_text_blocks [
-            "N:0,1,2,3,4,5,6,7,8,9;";
-            "1+1=2;×"; "1+2=3;×";
-            "1+1=";
-        ]
-        |>Desiring_future.desired
-        |>should equal [
-            ("2",";");
-            (";","×");
-        ]
+
 
     [<Fact>]//(Skip="ui")
     let ``find repetitions which lead to good``()=

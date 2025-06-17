@@ -9,9 +9,9 @@ open Xunit
 open FsUnit
 
 
-module Mapping_graph = 
+module Mapping_graph_with_mutable_mapping = 
 
-    let map_first_nodes = Map_first_nodes.map_first_nodes
+    
 
     let all_combinations_of_next_mappings 
         (mappings:
@@ -60,13 +60,13 @@ module Mapping_graph =
         (step_further: Vertex_id -> Vertex_id Set)
         (vertices: Vertex_id Set)
         =
+        (*the first vertices in this group are those, which can't be reached by iterating over the graph, starting from
+        any other vertex from the selected group*) 
         let reached_vertices =
             vertices
             |>Seq.fold(fun set vertex->
                     [vertex]
                     |>Search_in_graph.vertices_reacheble_from_any_vertices
-                        (fun vertex -> Set.contains vertex vertices)
-                        (fun _->false)
                         step_further
                     |>Set.union set
                 )
@@ -74,54 +74,17 @@ module Mapping_graph =
         reached_vertices
         |>Set.difference vertices
 
-    
-    let does_figure_vertex_reference_blocking_figure
-        (figure: Figure)
-        (stencil: Stencil)
-        (tail: Vertex_id)
-        (head: Vertex_id)
-        maybe_blocking_vertex
-        =
-        let checked_figure =
-            Figure.reference_of_vertex figure maybe_blocking_vertex
-            
-        stencil.blocking_vertices
-        |>Map.tryFind (Edge (head, tail))
-        |>Option.defaultValue Set.empty
-        |>Set.contains checked_figure
-            
-    
     let first_vertices_reacheble_from_all_vertices_together
-        (target: Figure)
-        (stencil: Stencil)
-        (mapped_head_vertex: Vertex_id)
+        (is_vertex_needed: Vertex_id->bool)
         (step_further: Vertex_id -> Vertex_id Set)
-        (starting_vertices: Vertex_id seq )
+        (starting_vertices: Vertex_id seq)
         =
-        
-        let is_vertex_needed vertex =
-            let searched_figure =
-                Figure.reference_of_vertex
-                    stencil.figure
-                    mapped_head_vertex
-            vertex
-            |>Figure.reference_of_vertex target
-                = searched_figure
-        
         starting_vertices
-        |>Seq.map (fun tail ->
-            let does_figure_vertex_reference_blocking_figure =
-                does_figure_vertex_reference_blocking_figure
-                    target
-                    stencil
-                    tail
-                    mapped_head_vertex
-            
+        |>Seq.map Seq.singleton
+        |>Seq.map (
             Search_in_graph.vertices_reacheble_from_any_vertices 
                 is_vertex_needed
-                does_figure_vertex_reference_blocking_figure
                 step_further
-                [tail]
         )
         |>Set.intersectMany
         |>choose_first_vertices step_further
@@ -138,27 +101,25 @@ module Mapping_graph =
     [<Fact>]
     let ``finding following subfigures referencing a specific figure``()=
         let owner_figure = example.Figure.a_high_level_relatively_simple_figure
-        let referenced_figure = (Figure_id "f")
-        first_vertices_reacheble_from_all_vertices_together 
+        let referenced_figure = Figure_id "f"|>built.Subfigure.referencing_constant_figure
+        (first_vertices_reacheble_from_all_vertices_together 
             (does_vertex_reference_figue
                 owner_figure
                 referenced_figure)
-            (fun _ -> false)
             (Edges.next_vertices owner_figure.edges)
             ( "b#1"|>Vertex_id|>Set.singleton)
-        |> should equal (
+        )|> should equal (
             [Vertex_id "f#1";Vertex_id "f#2"]
             |>Set.ofList
         )
 
-        first_vertices_reacheble_from_all_vertices_together
+        (first_vertices_reacheble_from_all_vertices_together
             (does_vertex_reference_figue
                 owner_figure
                 referenced_figure)
-            (fun _ -> false)
             (Edges.next_vertices owner_figure.edges)
             ([Vertex_id "d#1";Vertex_id "b#2"]|>Set.ofList)
-        |> should equal (
+        )|> should equal (
             [Vertex_id "f#2"]
             |>Set.ofList
         )
@@ -168,7 +129,6 @@ module Mapping_graph =
         let owner_figure = example.Figure.a_high_level_relatively_simple_figure
         first_vertices_reacheble_from_all_vertices_together
             (fun _->true)
-            (fun _->false)
             (Edges.next_vertices owner_figure.edges)
             (["b#1";"b#2"]|>List.map Vertex_id|>Set.ofList)
         |> should equal (
@@ -180,7 +140,6 @@ module Mapping_graph =
     let ``vertices reaching others``()=
         first_vertices_reacheble_from_all_vertices_together
             (fun _->true)
-            (fun _->false)
             (Edges.previous_vertices example.Figure.a_high_level_relatively_simple_figure.edges)
             (["b#3";"f#2"]|>List.map Vertex_id|>Set.ofList)
         |> should equal (
@@ -191,40 +150,42 @@ module Mapping_graph =
     
 
     let possible_targets_for_mapping_subfigure
-        target
         mappee
+        target
         mapping
-        (prolongating_stencil_subfigure: Vertex_id*Figure_id)
+        (prolongating_stencil_subfigure: Vertex_id*Subfigure)
         =
         let prolongating_vertex = prolongating_stencil_subfigure|>fst
         let prolongating_figure = prolongating_stencil_subfigure|>snd
+        
+        let does_vertex_reference_needed_figure vertex =
+            Figure.reference_of_vertex target vertex =
+                prolongating_figure 
         
         let further_step_of_searching_targets =
             Edges.next_vertices target.edges
 
         prolongating_vertex
-        |>Edges.previous_vertices mappee.figure.edges
+        |>Edges.previous_vertices mappee.edges
         |>Mapping.targets_of_mapping mapping
         |>first_vertices_reacheble_from_all_vertices_together
-            target
-            mappee
-            prolongating_vertex
+            does_vertex_reference_needed_figure
             further_step_of_searching_targets
         
 
     let next_mapping_targets_for_mapped_subfigures
-        target
         mappee
+        target
         base_mapping
         next_subfigures_to_map
         =
         let rec mapping_targets_for_next_subfigure
-            (target:Figure)
             (mappee:Figure)
+            (target:Figure)
             (mapping:Mapping)
-            (left_subfigures_to_map:  list<Vertex_id*Figure_id>)
+            (left_subfigures_to_map)
             //                                      stencil_vertex possible_targets
-            (found_mappings: Map<Figure_id,  struct(Vertex_id   *  seq<Vertex_id>)  list>)
+            (found_mappings: Map<Subfigure,  struct(Vertex_id   *  seq<Vertex_id>)  list>)
             =
 
             match left_subfigures_to_map with
@@ -232,8 +193,8 @@ module Mapping_graph =
             | current_subfigure_to_map::left_subfigures_to_map ->
                 let targets = 
                     possible_targets_for_mapping_subfigure
-                        target
                         mappee
+                        target
                         base_mapping
                         current_subfigure_to_map
                     
@@ -246,13 +207,12 @@ module Mapping_graph =
                             struct(current_subfigure_to_map|>fst, targets|>Seq.cast)
                             ::
                             (found_mappings
-                            |>Map.tryFind figure
-                            |>Option.defaultValue [])
+                            |>extensions.Map.getOrDefault figure [])
                         found_mappings
                         |>Map.add figure updated_targets_of_this_figure
                     mapping_targets_for_next_subfigure
-                        target
                         mappee
+                        target
                         mapping
                         left_subfigures_to_map
                         updated_mappings
@@ -261,22 +221,21 @@ module Mapping_graph =
             mappee
             target
             base_mapping
-            next_subfigures_to_map
+            (List.ofSeq next_subfigures_to_map)
             Map.empty
 
     let prolongate_one_mapping_with_next_subfigures 
-        (target:Figure)
         (mappee:Figure)
-        (next_subfigures_to_map: seq<Vertex_id*Figure_id>)
+        (target:Figure)
+        (next_subfigures_to_map)
         (mapping:Mapping)
         =
         let possible_next_mappings =
-            next_subfigures_to_map
-            |>List.ofSeq
-            |>next_mapping_targets_for_mapped_subfigures
-                target
+            next_mapping_targets_for_mapped_subfigures
                 mappee
+                target
                 mapping
+                next_subfigures_to_map
 
         if possible_next_mappings.IsEmpty then
             Seq.empty
@@ -286,8 +245,8 @@ module Mapping_graph =
             |>prolongate_mapping_with_next_mapped_subfigures mapping
     
     let rec prolongate_all_mappings 
-        (target:Figure)
         (mappee:Figure)
+        (target:Figure)
         (last_mapped_vertices: Vertex_id seq)
         (mappings: Mapping seq)
         =
@@ -301,17 +260,18 @@ module Mapping_graph =
             let next_subfigures_to_map =
                 next_vertices_to_map
                 |>Figure.vertices_with_their_referenced_figures mappee
+            
             mappings
             |>Seq.map (
                 prolongate_one_mapping_with_next_subfigures 
-                    target 
                     mappee 
+                    target 
                     next_subfigures_to_map
             )
             |>Seq.collect id
             |>prolongate_all_mappings
-                target 
                 mappee 
+                target 
                 next_vertices_to_map
 
 
@@ -320,8 +280,8 @@ module Mapping_graph =
         mappee
         =
         target
-        |>map_first_nodes mappee
+        |>Map_first_nodes.map_first_nodes_with_mutable_mapping mappee
         |>prolongate_all_mappings
-            target
             mappee 
+            target
             (Figure.first_vertices mappee)

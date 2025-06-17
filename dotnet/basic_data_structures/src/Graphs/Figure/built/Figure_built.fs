@@ -76,7 +76,9 @@ module Figure=
             |>BadGraph
             |>raise
 
-    let simple (edges:seq<string*string>) =
+    let simple
+        (turn_vertex_id_into_figure_id: string->string)
+        (edges:seq<string*string>) =
         {
             edges=Graph.simple edges
             subfigures=
@@ -87,15 +89,18 @@ module Figure=
                             Vertex_id tail_id
                             ,  
                             tail_id
-                            |>String.remove_number
+                            |>turn_vertex_id_into_figure_id
                             |>Figure_id
+                            |>built.Subfigure.referencing_constant_figure
                         );
                         (
                             Vertex_id head_id
                             ,
                             head_id 
-                            |>String.remove_number
+                            |>turn_vertex_id_into_figure_id
                             |>Figure_id
+                            |>built.Subfigure.referencing_constant_figure
+
                         )
                     ]
                 )
@@ -105,33 +110,86 @@ module Figure=
         |>check_correctness
         |>Renaming_figures.rename_vertices_to_standard_names
     
-
-    let sequence_to_vertices_and_figures (figures: string seq) =
-        figures
-        |>built.Graph.unique_numbers_for_names_in_sequence
-        |>Seq.map (fun (vertex, figure) ->
-            vertex,Figure_id figure
-        )
     
-    let sequential_figure_from_sequence (figures: string seq) =
-        let vertices_to_figures =
-            sequence_to_vertices_and_figures figures
-            
+    let simple_without_separator (edges:seq<string*string>) =
+        simple String.remove_number edges
+
+    let simple_with_separator (edges:seq<string*string>) =
+        simple String.remove_number_with_hash edges
+
+    let sequential_figure_from_sequence_of_figures (figures: string seq) =
+        let subfigures_sequence = 
+            figures
+            |>built.Graph.unique_numbers_for_names_in_sequence
+            |>Seq.map (fun (vertex, figure) ->
+                vertex,
+                figure
+                |>Figure_id
+                |>built.Subfigure.referencing_constant_figure
+            )
         {
             edges=
-                vertices_to_figures
+                subfigures_sequence
                 |>Seq.map fst
                 |>built.Graph.sequential_edges
                 
             subfigures=
-                vertices_to_figures
+                subfigures_sequence
                 |>Map.ofSeq
         }|>Renaming_figures.rename_vertices_to_standard_names
 
+    let sequential_figure_from_sequence_of_vertices
+        (turn_vertex_id_into_figure_id: string->string)
+        (vertices: string seq)
+        =
+        let vertices_sequence = 
+            vertices
+            |>Seq.map (fun vertex->
+                Vertex_id vertex
+                ,
+                turn_vertex_id_into_figure_id vertex
+                |>Figure_id
+                |>built.Subfigure.referencing_constant_figure
+            )
+        {
+            edges=
+                vertices_sequence
+                |>Seq.map fst
+                |>built.Graph.sequential_edges
+                
+            subfigures=
+                vertices_sequence
+                |>Map.ofSeq
+        }//|>Renaming_figures.rename_vertices_to_standard_names
+    
+    let sequential_figure_from_sequence_of_subfigures
+        (turn_vertex_id_into_figure_id: string->string)
+        (subfigures: Subfigure seq)
+        =
+        let vertices_sequence = 
+            subfigures
+            |>Seq.map (fun subfigure->
+                Vertex_id vertex
+                ,
+                turn_vertex_id_into_figure_id vertex
+                |>Figure_id
+                |>built.Subfigure.referencing_constant_figure
+            )
+        {
+            edges=
+                vertices_sequence
+                |>Seq.map fst
+                |>built.Graph.sequential_edges
+                
+            subfigures=
+                vertices_sequence
+                |>Map.ofSeq
+        }//|>Renaming_figures.rename_vertices_to_standard_names
+    
     let sequential_figure_from_text (text:string) =
         text
         |>Seq.map string
-        |>sequential_figure_from_sequence
+        |>sequential_figure_from_sequence_of_figures
 
     [<Fact>]
     let ``try sequence_from_text``()=
@@ -145,9 +203,13 @@ module Figure=
                     |>Set.ofSeq
                 subfigures=
                     ["a#1","a";"a#2","a";"b#1","b";"b#2","b"]
-                    |>Seq.map (fun (tail,head) -> Vertex_id tail, Figure_id head)
+                    |>Seq.map (fun (vertex,figure) ->
+                        Vertex_id vertex
+                        ,
+                        Figure_id figure
+                        |>built.Subfigure.referencing_constant_figure
+                    )
                     |>Map.ofSeq
-                    |>Map.map (fun _ value ->value)
             }
 
     let signal (id:string) =
@@ -155,8 +217,10 @@ module Figure=
             edges=Set.empty
             subfigures=[
                 //(id+"#1")|>Vertex_id,
-                Vertex_id id,
+                Vertex_id id
+                ,
                 Figure_id id
+                |>built.Subfigure.referencing_constant_figure
             ]|>Map.ofSeq
         }|>Renaming_figures.rename_vertices_to_standard_names
 
@@ -174,7 +238,7 @@ module Figure=
         |>Map.ofSeq
     
     let vertex_data_from_vertices_of_figure 
-        (full_vertex_data: Map<Vertex_id, Figure_id>) 
+        (full_vertex_data: Map<Vertex_id, Subfigure>) 
         (vertices: Vertex_id seq)
         =
         vertices
@@ -190,8 +254,8 @@ module Figure=
         edges
         |>Seq.map (fun(tail_id,tail_ref,head_id,head_ref)->
             [
-                (Vertex_id tail_id, Figure_id tail_ref);
-                (Vertex_id head_id, Figure_id head_ref)
+                (Vertex_id tail_id, Figure_id tail_ref|>built.Subfigure.referencing_constant_figure);
+                (Vertex_id head_id, Figure_id head_ref|>built.Subfigure.referencing_constant_figure)
             ]
         )
         |>Seq.concat
@@ -225,4 +289,9 @@ module Figure=
         |>from_parts_of_figure original_figure vertices 
         
 
-    
+module Conditional_figure =
+    let from_figure_without_impossibles (figure:Figure) =
+        {
+            Conditional_figure.existing = figure
+            impossibles = Set.empty 
+        }

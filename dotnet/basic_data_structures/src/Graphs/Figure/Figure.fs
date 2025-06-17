@@ -7,14 +7,7 @@ open rvinowise.extensions
 [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
 module Figure=
 
-    let need_vertex_referencing_element 
-        (owner_figure:Figure)
-        referenced_element
-        checked_vertex =
-        let exist,reference = owner_figure.subfigures.TryGetValue(checked_vertex)
-        exist && reference=referenced_element
-
-    let nonexistent_vertex = Figure_id "" 
+    let nonexistent_vertex = {Subfigure.name=Figure_id ""; is_mappable = fun _ -> false} 
 
     let reference_of_vertex 
         owner_figure 
@@ -65,8 +58,12 @@ module Figure=
         vertices
         =
         vertices
-        |>Seq.map (fun vertex->
-            vertex, owner_figure.subfigures[vertex]
+        |>Seq.choose (fun vertex->
+            owner_figure.subfigures
+            |>Map.tryFind vertex
+            |>function
+            |None -> None
+            |Some referenced_figure ->Some (vertex,referenced_figure)
         )
 
     
@@ -81,7 +78,7 @@ module Figure=
         if Seq.isEmpty figure.edges then 
             figure.subfigures
             |>Seq.head
-            |>_.Value
+            |>_.Value.name
         else
             Figure_printing.id_of_a_sequence_from_edges figure.edges figure.subfigures
 
@@ -115,5 +112,5 @@ module Figure=
         figure.subfigures.Count = 1
         &&
         figure.subfigures
-        |>Map.toSeq|>Seq.head|>snd
+        |>Map.toSeq|>Seq.head|>snd|>_.name
         |>Figure_id.value = name

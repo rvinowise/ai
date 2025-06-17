@@ -1,5 +1,7 @@
 ﻿namespace rvinowise.ai
 
+open System
+
 type Figure_id = |Figure_id of string
 with 
     static member value (Figure_id value) = value
@@ -29,3 +31,6 @@ module Vertex_id =
         figure_id
         |>Figure_id.value
         |>Vertex_id
+        
+        
+ 

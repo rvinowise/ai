@@ -4,7 +4,7 @@ open rvinowise.ai
 module Figure =
 
     let a_high_level_relatively_simple_figure = 
-        built.Figure.simple 
+        built.Figure.simple_without_separator
             [
                 "b0","c";
                 "b0","d";
@@ -17,7 +17,7 @@ module Figure =
             ]
 
     let a_figure_with_huge_beginning = 
-        built.Figure.simple 
+        built.Figure.simple_without_separator 
             [
                 "a0","x0";
                 "b0","x0";
@@ -59,7 +59,7 @@ module Figure =
             ]
 
     let create_a_bad_figure_with_cycle() = 
-        built.Figure.simple 
+        built.Figure.simple_without_separator 
             [
                 "b0","x0";
                 "f0","x0";
@@ -75,10 +75,43 @@ module Figure =
             ]
     
     let fitting_stencil_as_figure =
-        built.Figure.simple
+        built.Figure.simple_without_separator
             [
                 "b","f";
                 "h","f";
             ]
 
     let empty = built.Figure.from_tuples []
+    
+    
+    let a_long_figure = 
+        built.Figure.simple_without_separator 
+            [
+                "b1","c1";
+                "b1","d1";
+                "c1","b3";
+                "d1","e1";
+                "d1","f1";
+                "e1","f2";
+                "b2","h1";
+                "h1","f2";
+                
+                "f1","x1";
+                "x1","y1";
+                "y1","z1";
+                "z1","p1";
+                "p1","r1";
+                "r1","s1";
+                "s1","f3";
+                "f3","t1"
+                
+                "f2","m1"
+                "f2","k1"
+                "m1","n1"
+                "k1","l1"
+                "n1","o1"
+                "l1","o1"
+                "o1","p1"
+                "o1","q1"
+                "q1","r1"
+            ]

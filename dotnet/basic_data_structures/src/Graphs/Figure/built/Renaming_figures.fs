@@ -22,7 +22,7 @@ module Renaming_figures =
 
     let renamed_subfigures_for_figure 
         (old_to_new_names: Map<Vertex_id, Vertex_id>)
-        (subfigures: IDictionary<Vertex_id, Figure_id>)
+        (subfigures: IDictionary<Vertex_id, Subfigure>)
         =
         subfigures
         |>Seq.map(fun pair->
@@ -38,18 +38,18 @@ module Renaming_figures =
         >
 
     let group_by_figures //answers which vertices refer to this figure?
-        (all_referenced_figures: Map<Vertex_id, Figure_id>)
+        (all_referenced_figures)
         (used_vertices: Vertex_id Set)
         =
         all_referenced_figures
         |>Map.filter(fun vertex _ -> used_vertices|>Set.contains vertex)
         |>Map.reverse_with_list_of_keys
 
-    let next_vertex_id_for_figure 
+    let next_vertex_id_for_subfigure 
         (number: int)
-        (figure:Figure_id)
+        (subfigure:Subfigure)
         =
-        ((figure|>Figure_id.value)+"#"+(string number))
+        ((subfigure.name|>Figure_id.value)+"#"+(string number))
         |>Vertex_id
 
     let vertices_with_sequencial_names
@@ -58,15 +58,15 @@ module Renaming_figures =
         amount
         =
         List.init amount (fun number->
-            next_vertex_id_for_figure
+            next_vertex_id_for_subfigure
                 (number+starting_number)
                 referenced_figure
         )
 
     let assign_next_numbers 
         (all_renamings: Map<Vertex_id, Vertex_id>)
-        (all_figures_to_last_number: Map<Figure_id, int>)
-        (figures: Map<Figure_id, Vertex_id>)
+        (all_figures_to_last_number: Map<Subfigure, int>)
+        (figures: Map<Subfigure, Vertex_id>)
         =
         let renamings=
             figures
@@ -78,7 +78,7 @@ module Renaming_figures =
                     |>(+)1
                 
                 vertex,
-                figure|>next_vertex_id_for_figure new_last_number,
+                figure|>next_vertex_id_for_subfigure new_last_number,
                 figure,
                 new_last_number
             )
@@ -100,8 +100,8 @@ module Renaming_figures =
 
     let assign_next_numbers_to_sorted_vertices
         (all_renamings: Map<Vertex_id, Vertex_id>)
-        (all_figures_to_last_number: Map<Figure_id, int>)
-        (referenced_figure: Figure_id)
+        (all_figures_to_last_number: Map<Subfigure, int>)
+        (referenced_figure: Subfigure)
         (vertices: Vertex_id list)
         =
         let last_number = 
@@ -128,7 +128,7 @@ module Renaming_figures =
 
 
     let form_for_comparison 
-        (subfigures:Map<Vertex_id, Figure_id>)
+        (subfigures:Map<Vertex_id, Subfigure>)
         (renamings: Map<Vertex_id, Vertex_id>)
         (vertices: Vertex_id list)
         =
@@ -138,7 +138,7 @@ module Renaming_figures =
             |>Map.tryFind vertex
             |>function
             |Some renamed_vertex->renamed_vertex|>Vertex_id.value
-            |None->subfigures[vertex]|>Figure_id.value
+            |None->subfigures[vertex]|>_.name|>Figure_id.value
         )|>List.sort
 
     let compare_compeating_vertices
@@ -207,7 +207,7 @@ module Renaming_figures =
     let rec assign_numbers_to_next_vertex_wave
         (owner_figure:Figure)
         (renamings: Map<Vertex_id, Vertex_id>)
-        (figures_to_last_number: Map<Figure_id, int>)
+        (figures_to_last_number: Map<Subfigure, int>)
         (vertices: Vertex_id list)
         =
         let grouped_vertices = 

@@ -5,15 +5,29 @@ open rvinowise
 open System
 open System.Linq
 
-        
+
+type Mapping_function_id = Mapping_function_id of int
+
+ 
+type Mapped_figure = {
+    edges: Edge Set
+    targets: Map<Vertex_id, Figure_id >
+}
+
+type Unmapped_figure = {
+    edges: Edge Set
+    targets: Map<Vertex_id, Figure_id >
+}
+         
 [<CustomEquality; CustomComparison>]
 type Figure = {
     edges: Edge Set
-    subfigures: Map<Vertex_id, Figure_id>
+    subfigures: Map<Vertex_id, Figure_id >
 }
 with 
     override this.ToString()=
-        Figure_printing.figure_to_string this.edges this.subfigures
+        this.subfigures
+        |>Figure_printing.figure_to_string this.edges
     
     override this.Equals(other) =
         match other with
@@ -53,4 +67,14 @@ with
 
 
 
-    
+type Conditional_figure = {
+    existing: Figure
+    impossibles: Conditional_figure Set
+}
+
+module Conditional_figure =
+    let from_figure figure =
+        {
+            existing = figure
+            impossibles = Set.empty 
+        }

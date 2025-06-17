@@ -54,7 +54,7 @@ type Benchmarking_modifications_of_history() =
         appearances_created_shifted
         |>should equal appearances_shifted_later
 
-    [<Fact>]
+    [<Fact(Skip="slow")>]
     member _.run()=
         BenchmarkRunner.Run<Benchmarking_modifications_of_history>(
             DefaultConfig.Instance.

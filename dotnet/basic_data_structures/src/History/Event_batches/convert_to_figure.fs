@@ -3,12 +3,12 @@ namespace rvinowise.ai.built
 
 open rvinowise.ai
 
-module Figure_from_event_batches =
+//module Figure_from_event_batches =
 
-    type Built_figure = {
-        figure: Figure
-        last_vertices: Vertex_id Set
-    }
+    // type Built_figure = {
+    //     figure: Figure
+    //     last_vertices: Vertex_id Set
+    // }
 
     // let add_event_batch_to_figure 
     //     (built_figure: Built_figure)

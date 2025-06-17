@@ -3,6 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.002.0
 MinimumVisualStudioVersion = 10.0.40219.1
+#Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "finding_sequences_fsharp_gpu", "modules\finding_sequences\finding_sequences_fsharp_gpu\finding_sequences_fsharp_gpu.fsproj", "{E0CBFE26-205B-4B01-9CC9-EBD1D78D05DB}"
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dotnet", "dotnet", "{039910F8-0867-4296-B9D1-B74C0F31DC0C}"
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "basic_data_structures", "dotnet\basic_data_structures\basic_data_structures.fsproj", "{09D01238-C301-4B59-BD88-743E6B6CC72A}"
@@ -12,8 +13,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "finding_sequences", "finding_sequences", "{3C3BF792-565B-42DF-8EAA-858907661969}"
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "finding_sequences", "modules\finding_sequences\finding_sequences_interface\finding_sequences.fsproj", "{12FA454B-541D-454B-8318-443731FF4A9F}"
-EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "finding_sequences_fsharp_gpu", "modules\finding_sequences\finding_sequences_fsharp_gpu\finding_sequences_fsharp_gpu.fsproj", "{E0CBFE26-205B-4B01-9CC9-EBD1D78D05DB}"
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "finding_sequences_fsharp_simple", "modules\finding_sequences\finding_sequences_fsharp_simple\finding_sequences_fsharp_simple.fsproj", "{5622B2EA-4600-494F-877C-F94C7666729C}"
 EndProject
@@ -40,6 +39,8 @@ EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "provided_data", "fsharp\provided_data\provided_data.fsproj", "{FDFD462E-2D26-42A3-A6A0-F6170ACDCCEE}"
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "cli", "fsharp\cli\cli.fsproj", "{21A035A0-1CC0-41E4-A681-B2D256404FC8}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "figure_algorithms", "modules\figure_algorithms\figure_algorithms.fsproj", "{1F87B3D3-00E8-4174-8974-885103CF7949}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -79,9 +80,10 @@ Global
 		{674A06C0-E333-4E1D-BD4A-E1680FBCBF0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{674A06C0-E333-4E1D-BD4A-E1680FBCBF0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{674A06C0-E333-4E1D-BD4A-E1680FBCBF0C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E0CBFE26-205B-4B01-9CC9-EBD1D78D05DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E0CBFE26-205B-4B01-9CC9-EBD1D78D05DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E0CBFE26-205B-4B01-9CC9-EBD1D78D05DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		#{E0CBFE26-205B-4B01-9CC9-EBD1D78D05DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		#{E0CBFE26-205B-4B01-9CC9-EBD1D78D05DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		#{E0CBFE26-205B-4B01-9CC9-EBD1D78D05DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		#{E0CBFE26-205B-4B01-9CC9-EBD1D78D05DB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5622B2EA-4600-494F-877C-F94C7666729C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5622B2EA-4600-494F-877C-F94C7666729C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5622B2EA-4600-494F-877C-F94C7666729C}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -98,6 +100,10 @@ Global
 		{21A035A0-1CC0-41E4-A681-B2D256404FC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{21A035A0-1CC0-41E4-A681-B2D256404FC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{21A035A0-1CC0-41E4-A681-B2D256404FC8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F87B3D3-00E8-4174-8974-885103CF7949}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F87B3D3-00E8-4174-8974-885103CF7949}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F87B3D3-00E8-4174-8974-885103CF7949}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F87B3D3-00E8-4174-8974-885103CF7949}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -112,11 +118,12 @@ Global
 		{AF8E4086-CB13-4153-AF16-A4841AE9936F} = {A6C4A22F-F114-4772-AA79-FF68954BC000}
 		{674A06C0-E333-4E1D-BD4A-E1680FBCBF0C} = {A6C4A22F-F114-4772-AA79-FF68954BC000}
 		{3C3BF792-565B-42DF-8EAA-858907661969} = {A6C4A22F-F114-4772-AA79-FF68954BC000}
-		{E0CBFE26-205B-4B01-9CC9-EBD1D78D05DB} = {3C3BF792-565B-42DF-8EAA-858907661969}
+		#{E0CBFE26-205B-4B01-9CC9-EBD1D78D05DB} = {3C3BF792-565B-42DF-8EAA-858907661969}
 		{5622B2EA-4600-494F-877C-F94C7666729C} = {3C3BF792-565B-42DF-8EAA-858907661969}
 		{12FA454B-541D-454B-8318-443731FF4A9F} = {3C3BF792-565B-42DF-8EAA-858907661969}
 		{9036B832-EA1D-4340-8B62-BB979633F010} = {C7331D79-0C46-4AF7-9D3D-3BFB7F0FF6BB}
 		{21A035A0-1CC0-41E4-A681-B2D256404FC8} = {5FDD8605-92DC-47D5-ADA1-9EDA472E8DBD}
+		{1F87B3D3-00E8-4174-8974-885103CF7949} = {A6C4A22F-F114-4772-AA79-FF68954BC000}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {60DEC67F-D30E-42F2-B1A9-5C8148C5A13D}

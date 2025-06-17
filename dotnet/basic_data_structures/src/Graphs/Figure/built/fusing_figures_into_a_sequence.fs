@@ -36,7 +36,7 @@ module Fusing_figures_into_sequence=
         |Some vertices ->vertices
 
     let assign_numbers_to_vertices_of_one_figure //todo use simpler vertices_with_sequencial_names
-        (referenced_figure:Figure_id)
+        (referenced_figure:Subfigure)
         starting_number
         vertices
         =
@@ -47,7 +47,11 @@ module Fusing_figures_into_sequence=
                     (renamed_vertices, last_number) _
                     ->
                 let new_vertex =
-                    Figure_id.value referenced_figure+string last_number
+                    (referenced_figure
+                    |>_.name
+                    |>Figure_id.value)
+                    +
+                    (string last_number)
                     |>Vertex_id
                 (
                     new_vertex::renamed_vertices
@@ -65,7 +69,7 @@ module Fusing_figures_into_sequence=
         (snd renamed)
 
     type Renamed_subfigures = 
-        Map<Figure_id, //figure, referenced by renamed vertices 
+        Map<Subfigure, //figure, referenced by renamed vertices 
                 list< //every element = owner figure which has the renamed verticex
                     Map<
                         Vertex_id, //old name of a vertex
@@ -88,10 +92,10 @@ module Fusing_figures_into_sequence=
         
         let all_referenced_figures =
             a_figure.subfigures
-            |>Seq.map (fun key_value -> key_value.Value)
+            |>Map.values
             |>Seq.append (
                 b_figure.subfigures
-                |>Seq.map (fun key_value -> key_value.Value)
+                |>Map.values
             )
             |>Set.ofSeq
         
@@ -206,15 +210,15 @@ module Fusing_figures_into_sequence=
                 |>Set.ofSeq
             
             subfigures=
-                all_renamed_subfigures
-                    renamed_subfigures
+                renamed_subfigures
+                |>all_renamed_subfigures
 
         }
 
     [<Fact>]
     let ``try sequential_pair``()=
-        let a_figure = built.Figure.simple ["a1","b1";"b1","a2";"b1","c1"]
-        let b_figure = built.Figure.simple ["a1","b1";"e1","b1";"b1","a2"]
+        let a_figure = built.Figure.simple_without_separator ["a1","b1";"b1","a2";"b1","c1"]
+        let b_figure = built.Figure.simple_without_separator ["a1","b1";"e1","b1";"b1","a2"]
         let expected_ab_figure = {
             edges=[
                 "a1","b1"; "b1","a2"; "b1","c1";
@@ -241,10 +245,9 @@ module Fusing_figures_into_sequence=
             ]
             |>Seq.map (fun pair->
                 pair|>fst|>Vertex_id,
-                pair|>snd|>Figure_id
+                pair|>snd|>Figure_id|>built.Subfigure.referencing_constant_figure
             )
             |>Map.ofSeq
-
         }
         let real_ab_figure = 
             sequential_pair
