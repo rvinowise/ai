@@ -7,17 +7,19 @@ open System.Linq
 
 
 type Mapping_function_id = Mapping_function_id of int
+type Constant_figure_id = Constant_figure_id of int
 
- 
-type Mapped_figure = {
-    edges: Edge Set
-    targets: Map<Vertex_id, Figure_id >
-}
-
+//can be used by a function which is referenced by a Mapping_function_id
 type Unmapped_figure = {
     edges: Edge Set
-    targets: Map<Vertex_id, Figure_id >
+    targets: Map<Vertex_id, Mapping_function_id>
 }
+ 
+type Constant_figure = { //can be referenced by a Constant_figure_id
+    edges: Edge Set
+    targets: Map<Vertex_id, Constant_figure_id>
+}
+
          
 [<CustomEquality; CustomComparison>]
 type Figure = {
