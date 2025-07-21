@@ -55,7 +55,7 @@ module math_primers=
     let ``find repetitions which lead to good``()=
         let good_signal = "ok;"
         use input_stream =
-            new StreamReader "C:/prj/ai/examples/math/mathematical_primers.txt"
+            new StreamReader "C:/prj/ai/examples/math/data/mathematical_primers.txt"
         let raw_signals =
             input_stream.ReadToEnd()
             |>History_from_text.event_batches_from_text
@@ -63,8 +63,8 @@ module math_primers=
             |>Event_batches.only_signals
             |>Event_batches.to_sequence_appearances
         
-        let intermediate_results_file = @"C:\prj\ai\examples\math\mathematical_primers_intermediate_output.txt"
-        let final_results_file ="C:/prj/ai/examples/math/math_output.txt"
+        let intermediate_results_file = @"C:\prj\ai\examples\math\data\mathematical_primers_intermediate_output.txt"
+        let final_results_file ="C:/prj/ai/examples/math/data/math_output.txt"
         File.Delete(intermediate_results_file)
         File.Delete(final_results_file)
         use output_stream = File.AppendText(final_results_file)

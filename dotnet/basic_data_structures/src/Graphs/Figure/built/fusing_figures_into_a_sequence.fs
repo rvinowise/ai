@@ -48,7 +48,7 @@ module Fusing_figures_into_sequence=
                     ->
                 let new_vertex =
                     (referenced_figure
-                    |>_.name
+                    |> _.name
                     |>Figure_id.value)
                     +
                     (string last_number)

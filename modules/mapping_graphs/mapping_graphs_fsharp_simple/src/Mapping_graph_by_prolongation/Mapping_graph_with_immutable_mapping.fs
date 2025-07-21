@@ -330,7 +330,6 @@ module Mapping_graph_with_immutable_mapping =
         (checked_mapping: Map<Vertex_id,Vertex_id>)
         =
         impossibles
-        (*early stop may help performance: discard the Mapping after one impossible_figure is mapped fully *)
         |>Seq.map(
             map_figure_onto_target
                 checked_mapping

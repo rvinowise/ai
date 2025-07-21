@@ -130,7 +130,7 @@ module ``testing all_repetitions (several levels of abstraction)`` =
     [<Fact>]//(Skip="ui")
     let ``find repetitions in a text file``()=
         let raw_signals =
-            "C:/prj/ai/modules/finding_sequences/mathematical_primers.txt"
+            "C:/prj/ai/modules/finding_sequences/data/mathematical_primers.txt"
             |>History_from_text.event_batches_from_textfile
                 (History_from_text.mood_changes_as_words_and_numbers "no" "ok")
             |>Event_batches.only_signals
