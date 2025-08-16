@@ -5,8 +5,8 @@ open rvinowise.ai.stencil
 module Applying_stencil = 
  
     let is_figure_without_impossible_parts 
-        (impossibles: Figure seq)
-        (owner_figure: Figure)
+        (impossibles: Constant_figure seq)
+        (owner_figure: Constant_figure)
         =
         impossibles
         |>Seq.collect (Mapping_graph_with_immutable_mapping.map_figure_onto_target owner_figure)
@@ -45,7 +45,7 @@ module Applying_stencil =
     
     let output_vertices_from_the_middle
         (output_border: Stencil_output_border)
-        (target:Figure)
+        (target:Constant_figure)
         mapping
         =
         let (output_beginning,output_ending) =
@@ -70,7 +70,7 @@ module Applying_stencil =
     
     let retrieve_result_from_output_border
         (output_border: Stencil_output_border)
-        (target:Figure)
+        (target:Constant_figure)
         mapping 
         =
         let output_vertices =
@@ -104,7 +104,7 @@ module Applying_stencil =
 
     let retrieve_result 
         stencil
-        (target:Figure)
+        (target:Constant_figure)
         mapping 
         =
         let (output_beginning,output_ending) =

@@ -1,5 +1,6 @@
 namespace rvinowise.ai
 
+open System.Collections.Generic
 open System.Diagnostics
 open Microsoft.Extensions.Logging
 open rvinowise.ai.generating_combinations
@@ -9,6 +10,7 @@ open rvinowise.ai.mapping_graph_impl
 
 open Xunit
 open FsUnit
+open rvinowise.extensions
 
 
 module Mapping_graph_with_immutable_mapping = 
@@ -126,28 +128,28 @@ module Mapping_graph_with_immutable_mapping =
 
     let possible_targets_for_mapping_subfigure
         is_vertex_needed
-        mappee
-        target
+        mappee_edges
+        target_edges
         mapping
         (prolongating_vertex: Vertex_id)
         =
         let further_step_of_searching_targets =
-            Edges.next_vertices target.edges
+            Edges.next_vertices target_edges
 
         prolongating_vertex
-        |>targets_of_previously_mapped_vertices mappee.edges mapping
+        |>targets_of_previously_mapped_vertices mappee_edges mapping
         |>first_vertices_reacheble_from_all_vertices_together
             is_vertex_needed
             further_step_of_searching_targets
         
 
     let next_mapping_targets_for_subfigures_to_map
-        (possible_targets_for_mapping_vertex: Vertex_id*Subfigure -> Vertex_id Set)
+        (possible_targets_for_mapping_vertex: Vertex_id*Mapping_function_id -> Vertex_id Set)
         next_subfigures_to_map
         =
         let rec mapping_targets_for_next_subfigure
-            (left_subfigures_to_map:  list<Vertex_id*Subfigure>)
-            (found_mappings: Map<Subfigure,  struct(Vertex_id(*stencil_vertex*) * seq<Vertex_id>(*possible_targets*)) list>)
+            (left_subfigures_to_map:  list<Vertex_id*Mapping_function_id>)
+            (found_mappings: Map<Mapping_function_id,  struct(Vertex_id(*stencil_vertex*) * seq<Vertex_id>(*possible_targets*)) list>)
             =
 
             match left_subfigures_to_map with
@@ -177,23 +179,24 @@ module Mapping_graph_with_immutable_mapping =
             (List.ofSeq next_subfigures_to_map)
             Map.empty
 
+    let mapping_functions = Dictionary<Mapping_function_id, Constant_figure_id -> bool> ()
+    
     let targets_for_mapping_prolongation
-        (mappee:Figure)
-        (target:Figure)
+        (mappee:Unmapped_figure)
+        (target:Constant_figure)
         (mapping_to_prolongate:Map<Vertex_id,Vertex_id>)
         (within_mapping:Map<Vertex_id,Vertex_id>)
         (prolongating_node)
         =
         
         let prolongating_vertex = fst prolongating_node
-        let prolongating_subfigure = snd prolongating_node
+        let prolongating_mapping_function_id = snd prolongating_node
+        
         
         let needed_target_vertex =
             within_mapping
             |>Map.tryFind prolongating_vertex
         
-        
-
         let targets_to_mappees_in_rail_mapping =
             within_mapping
             |>Map.toSeq
@@ -206,8 +209,14 @@ module Mapping_graph_with_immutable_mapping =
             |>function
             |None-> false
             |Some mapped_vertex_in_rail ->
-                mappee.subfigures
+                mappee.targets
                 |>Map.containsKey mapped_vertex_in_rail
+        
+        let can_be_mapped_onto =
+            mapping_functions
+            |>Dictionary.getOrDefault
+                  prolongating_mapping_function_id
+                  (fun mappee -> false)
                 
         let is_vertex_suitable_for_mapping target_vertex =
             match needed_target_vertex with
@@ -217,13 +226,14 @@ module Mapping_graph_with_immutable_mapping =
                 not <| vertex_is_used_in_mapping_by_somebody target_vertex
                 &&
                 target_vertex
-                |>Figure.reference_of_vertex target
-                |>prolongating_subfigure.is_mappable
+                |>Dictionary.some_value target.targets
+                |>Option.defaultValue Figure.nonexistent_constant_figure  
+                |>can_be_mapped_onto
         
         possible_targets_for_mapping_subfigure
             is_vertex_suitable_for_mapping
-            mappee
-            target
+            mappee.edges
+            target.edges
             mapping_to_prolongate
             prolongating_vertex
     
@@ -248,18 +258,18 @@ module Mapping_graph_with_immutable_mapping =
                 mapping
                 within_mapping
         
-        let next_subfigures_to_map =
+        let next_mapping_functions_to_map =
             next_vertices_to_map
             |>unmapped_vertices mapping
-            |>Figure.vertices_with_their_referenced_figures mappee
+            |>Figure.vertices_with_their_referenced_mapping_function_ids mappee
         
-        if Seq.isEmpty next_subfigures_to_map then
+        if Seq.isEmpty next_mapping_functions_to_map then
             Seq.singleton mapping
         else
             let possible_next_mappings =
                 next_mapping_targets_for_subfigures_to_map
                     possible_targets_for_mapping_vertex
-                    next_subfigures_to_map
+                    next_mapping_functions_to_map
 
             if possible_next_mappings.IsEmpty then
                 Seq.empty
@@ -271,8 +281,8 @@ module Mapping_graph_with_immutable_mapping =
     
         
     let rec prolongate_all_mappings 
-        (mappee:Figure)
-        (target:Figure)
+        (mappee:Unmapped_figure)
+        (target:Constant_figure)
         (last_mapped_vertices: Vertex_id seq)
         (within_mapping: Map<Vertex_id,Vertex_id>)
         (mappings: Map<Vertex_id,Vertex_id> seq)
@@ -325,7 +335,7 @@ module Mapping_graph_with_immutable_mapping =
 
     let is_maping_without_impossible_figures
         (map_figure_onto_target)
-        (target: Figure)
+        (target: Constant_figure)
         (impossibles: Conditional_figure seq)
         (checked_mapping: Map<Vertex_id,Vertex_id>)
         =
@@ -340,7 +350,7 @@ module Mapping_graph_with_immutable_mapping =
     
     let remove_mappings_with_impossible_figures
         (map_figure_onto_target)
-        (target: Figure)
+        (target: Constant_figure)
         (impossibles: Conditional_figure seq)
         (all_mappings: Map<Vertex_id,Vertex_id> seq)
         =

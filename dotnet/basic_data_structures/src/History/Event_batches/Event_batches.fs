@@ -329,7 +329,7 @@ module Event_batches =
                 |>Seq.map fst
                 |>built.Graph.sequential_edges
                 
-            subfigures=
+            targets=
                 subfigures_sequence
                 |>Map.ofSeq
         }|>Renaming_figures.rename_vertices_to_standard_names

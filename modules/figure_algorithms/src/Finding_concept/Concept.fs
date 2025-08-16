@@ -10,12 +10,12 @@ open rvinowise.extensions
 module Concept =
     let appearances_of_concept_incarnations
         concept_incarnations
-        (history: Figure)
+        (history: Constant_figure)
         =
         let vertices_of_incarnations = 
             concept_incarnations
             |>Seq.map (fun figure->
-                figure.subfigures
+                figure.targets
                 |>Map.keys
                 |>Set.ofSeq
             )

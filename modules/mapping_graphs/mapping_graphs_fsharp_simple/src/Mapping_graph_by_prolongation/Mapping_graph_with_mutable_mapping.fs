@@ -180,8 +180,8 @@ module Mapping_graph_with_mutable_mapping =
         next_subfigures_to_map
         =
         let rec mapping_targets_for_next_subfigure
-            (mappee:Figure)
-            (target:Figure)
+            (mappee:Constant_figure)
+            (target:Constant_figure)
             (mapping:Mapping)
             (left_subfigures_to_map)
             //                                      stencil_vertex possible_targets
@@ -225,8 +225,8 @@ module Mapping_graph_with_mutable_mapping =
             Map.empty
 
     let prolongate_one_mapping_with_next_subfigures 
-        (mappee:Figure)
-        (target:Figure)
+        (mappee:Constant_figure)
+        (target:Constant_figure)
         (next_subfigures_to_map)
         (mapping:Mapping)
         =
@@ -245,8 +245,8 @@ module Mapping_graph_with_mutable_mapping =
             |>prolongate_mapping_with_next_mapped_subfigures mapping
     
     let rec prolongate_all_mappings 
-        (mappee:Figure)
-        (target:Figure)
+        (mappee:Constant_figure)
+        (target:Constant_figure)
         (last_mapped_vertices: Vertex_id seq)
         (mappings: Mapping seq)
         =

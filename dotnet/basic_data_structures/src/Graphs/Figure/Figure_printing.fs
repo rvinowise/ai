@@ -7,7 +7,9 @@ open System.Diagnostics.Contracts
 
 module Figure_printing =
 
-    let private branching_edges_to_string (edges:Edge seq) =
+    let private branching_edges_to_string
+        (edges:Edge seq)
+        =
         let result = StringBuilder()
         result 
         += "Figure( "
@@ -23,9 +25,9 @@ module Figure_printing =
         result.ToString()
 
 
-    let id_of_a_sequence_from_edges
+    let name_of_a_sequence_from_edges
         edges
-        (subfigures: Map<Vertex_id, Subfigure>) 
+        (subfigure_names: Map<Vertex_id, string>) 
         =
         let first_vertex =
             edges
@@ -34,11 +36,11 @@ module Figure_printing =
         
         let rec build_id 
             edges
-            (subfigures: Map<Vertex_id, Subfigure>) 
-            id
+            (subfigure_names: Map<Vertex_id, string>) 
+            name_so_far
             (vertex:Vertex_id)
             =
-            let updated_id = id+ subfigures[vertex].name
+            let updated_id = name_so_far+ subfigure_names[vertex]
             vertex
             |>Edges.next_vertices edges
             |>Seq.tryHead
@@ -47,37 +49,30 @@ module Figure_printing =
             |Some next_vertex ->
                 build_id
                     edges
-                    subfigures
+                    subfigure_names
                     updated_id
                     next_vertex
-        build_id edges subfigures (Figure_id "") first_vertex
+        build_id edges subfigure_names "" first_vertex
 
-    let private sequential_edges_to_string 
-        edges
-        subfigures 
-        =
-        id_of_a_sequence_from_edges edges subfigures
-        |>Figure_id.value
 
     let private edges_to_string 
         edges
-        subfigures 
+        subfigures
         =
         if Edges.is_sequence edges then
-            sequential_edges_to_string edges subfigures
+            name_of_a_sequence_from_edges edges subfigures
         else 
             branching_edges_to_string edges
 
-    let private signal_to_string (subfigures:Map<Vertex_id, Subfigure>) =
-        Contract.Assume(Seq.length subfigures = 1)
-        subfigures
+    let private signal_to_string (subfigure_names:Map<Vertex_id, string>) =
+        Contract.Assume(Seq.length subfigure_names = 1)
+        subfigure_names
         |>Map.values
         |>Seq.head
-        |>_.name|>Figure_id.value
 
-    let figure_to_string edges subfigures  =
+    let figure_to_string edges subfigure_names   =
         if (Seq.isEmpty edges) then
-            subfigures
+            subfigure_names
             |>signal_to_string     
         else
-            edges_to_string edges subfigures
+            edges_to_string edges subfigure_names

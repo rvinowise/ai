@@ -15,7 +15,7 @@ open rvinowise.extensions.benchmark
 module prolongation_of_mapping =
 
     type Mappee_case = {
-        simple: Figure
+        simple: Constant_figure
         conditional: Conditional_figure
     }
     

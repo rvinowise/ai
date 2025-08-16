@@ -55,6 +55,6 @@ module Figure_from_stencil=
 
     let convert stencil =
         {
-            Figure.edges=edges_without_stencil_output stencil
-            subfigures=stencil_nodes_to_figure_subfigures stencil.nodes
+            Constant_figure.edges=edges_without_stencil_output stencil
+            targets=stencil_nodes_to_figure_subfigures stencil.nodes
         }

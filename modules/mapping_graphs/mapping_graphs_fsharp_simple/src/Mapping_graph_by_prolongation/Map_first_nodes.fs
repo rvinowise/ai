@@ -8,8 +8,8 @@ module Map_first_nodes =
     
     
     let possible_combinations_of_mapping_vertices
-        (mappee: Figure)
-        (target: Figure)
+        (mappee: Constant_figure)
+        (target: Constant_figure)
         vertices_to_map
         =
         let suitable_vertices_in_target =
@@ -40,8 +40,8 @@ module Map_first_nodes =
     
     let map_within_other_mapping
         (within_mapping: Map<Vertex_id,Vertex_id>)
-        (mappee: Figure)
-        (target: Figure)
+        (mappee: Unmapped_figure)
+        (target: Constant_figure)
         =
         let first_vertices_of_mappee = 
             Figure.first_vertices mappee |>Set.ofSeq
@@ -77,8 +77,8 @@ module Map_first_nodes =
         
             
     let map_first_nodes_with_mutable_mapping
-        (mappee: Figure)
-        (target: Figure)
+        (mappee: Constant_figure)
+        (target: Constant_figure)
         =
         //good for long stencils and figures, with many prolongations of the mapping
         mappee
@@ -90,8 +90,8 @@ module Map_first_nodes =
     
             
     let map_first_nodes_with_immutable_mapping
-        (mappee: Figure)
-        (target: Figure)
+        (mappee: Constant_figure)
+        (target: Constant_figure)
         =
         //good for short stencils, with few prolongations
         mappee

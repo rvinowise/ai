@@ -26,7 +26,7 @@ module Figure_tests=
     let ``try id_from_sequence``()=
         ["a1","b";"b","a2";"a2","c"]
         |>built.Figure.simple_without_separator
-        |>ai.Figure.id_of_a_sequence
+        |>ai.Figure.name_of_a_sequence
         |>should equal (Figure_id "abac")
     
     
@@ -34,7 +34,7 @@ module Figure_tests=
     let ``try id_from_sequence for a signal``()=
         "a"
         |>built.Figure.signal
-        |>ai.Figure.id_of_a_sequence
+        |>ai.Figure.name_of_a_sequence
         |>should equal (Figure_id "a")
     
 
@@ -85,7 +85,7 @@ module Figure_tests=
     [<Fact>]
     let ``standartizing names allows for structural comparison of figures``()=
         let figure1 = {
-            Figure.edges=[
+            Constant_figure.edges=[
                 "a1","b1";
                 "a2","b1";
                 "a3","c1";
@@ -94,7 +94,7 @@ module Figure_tests=
                 "c1","d2";
             ]|>List.map Edge.ofStringPair
             |>Set.ofList
-            subfigures=[
+            targets=[
                 "a1","a";
                 "a2","a";
                 "a3","a";
@@ -110,7 +110,7 @@ module Figure_tests=
             |>Map.ofList
         }
         let figure2 = {
-            Figure.edges=[
+            Constant_figure.edges=[
                 "a1","b1";
                 "a3","b1";
                 "a2","c1";
@@ -119,7 +119,7 @@ module Figure_tests=
                 "c1","d1";
             ]|>List.map Edge.ofStringPair
             |>Set.ofList
-            subfigures=[
+            targets=[
                 "a1","a";
                 "a2","a";
                 "a3","a";

@@ -17,8 +17,8 @@ module Finding_figures =
 
 
     let commonalities_between_figures
-        (figure1: Figure)
-        (figure2: Figure)
+        (figure1: Constant_figure)
+        (figure2: Constant_figure)
         =()
 
     

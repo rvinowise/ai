@@ -13,7 +13,7 @@ type Stencil_node =
 type Stencil = {
     edges: Edge Set
     nodes: Map<Vertex_id, Stencil_node>
-    output_without: Figure Set
+    output_without: Constant_figure Set
 }
 with 
     override this.ToString() =

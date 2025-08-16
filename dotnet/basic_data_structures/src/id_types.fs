@@ -8,6 +8,13 @@ with
     static member (+) (this, other) =
         Figure_id (Figure_id.value this + Figure_id.value other)
 
+type Mapping_function_id = Mapping_function_id of int
+type Constant_figure_id = Constant_figure_id of int
+with
+    static member value (Constant_figure_id value) = value
+    static member (+) (this, other) =
+        Constant_figure_id (Constant_figure_id.value this + Constant_figure_id.value other)
+
 type Vertex_id = |Vertex_id of string
 with 
     static member value (Vertex_id value) = value

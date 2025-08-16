@@ -9,7 +9,7 @@ open rvinowise.ai
 module Write=
 
     let new_signal (id:string) =
-        database.Provided.open_connection.Query<ai.Figure>(
+        database.Provided.open_connection.Query<ai.Constant_figure>(
             @"insert into Figure (id)
             values (@id)",
             {|id=id|}
@@ -19,7 +19,7 @@ module Write=
         figure
         (appearance: Interval) 
         =
-        database.Provided.open_connection.Query<ai.Figure>(
+        database.Provided.open_connection.Query<ai.Constant_figure>(
             @"insert into figure_appearance (figure, head, tail)
             values (@figure, @head, @tail)",
             {|

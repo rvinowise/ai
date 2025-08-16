@@ -9,14 +9,14 @@ open rvinowise
 module Fusing_figures_into_sequence=
     
     let private rename_duplicating_vertices
-        (a_figure: Figure)
-        (b_figure: Figure)
+        (a_figure: Constant_figure)
+        (b_figure: Constant_figure)
         =
-        b_figure.subfigures
+        b_figure.targets
         |>Seq.choose (fun pair->
             let b_vertex = pair.Key
             if 
-                a_figure.subfigures|>Map.containsKey b_vertex
+                a_figure.targets|>Map.containsKey b_vertex
             then
                 Some (b_vertex, b_vertex+Vertex_id "'")
             else
@@ -78,23 +78,23 @@ module Fusing_figures_into_sequence=
             >
 
     let private renamed_vertices_for_fusing_figures
-        (a_figure: Figure)
-        (b_figure: Figure)
+        (a_figure: Constant_figure)
+        (b_figure: Constant_figure)
         :Renamed_subfigures
         =
 
         let a_vertices = 
-            a_figure.subfigures
+            a_figure.targets
             |>extensions.Map.reverse_with_list_of_keys
         let b_vertices = 
-            b_figure.subfigures
+            b_figure.targets
             |>extensions.Map.reverse_with_list_of_keys
         
         let all_referenced_figures =
-            a_figure.subfigures
+            a_figure.targets
             |>Map.values
             |>Seq.append (
-                b_figure.subfigures
+                b_figure.targets
                 |>Map.values
             )
             |>Set.ofSeq
@@ -154,8 +154,8 @@ module Fusing_figures_into_sequence=
     
 
     let sequential_pair 
-        (a_figure: Figure)
-        (b_figure: Figure)
+        (a_figure: Constant_figure)
+        (b_figure: Constant_figure)
         =
         let renamed_subfigures =
             renamed_vertices_for_fusing_figures
@@ -179,24 +179,24 @@ module Fusing_figures_into_sequence=
             |>Renaming_figures.renamed_edges_for_figure old_to_new_vertices_of_b
         
         let renamed_a_subfigures =
-            a_figure.subfigures
+            a_figure.targets
             |>Renaming_figures.renamed_subfigures_for_figure old_to_new_vertices_of_a
         
         let renamed_b_subfigures =
-            b_figure.subfigures
+            b_figure.targets
             |>Renaming_figures.renamed_subfigures_for_figure old_to_new_vertices_of_b
 
         let edges_inbetween =
             let last_vertices_of_a =
                 {
                     edges=renamed_a_edges|>Set.ofSeq
-                    subfigures=renamed_a_subfigures
+                    targets=renamed_a_subfigures
                 }
                 |>Figure.last_vertices
             let first_vertices_of_b =
                 {
                     edges=renamed_b_edges|>Set.ofSeq
-                    subfigures=renamed_b_subfigures
+                    targets=renamed_b_subfigures
                 }
                 |>Figure.first_vertices
             Seq.allPairs last_vertices_of_a first_vertices_of_b 
@@ -209,7 +209,7 @@ module Fusing_figures_into_sequence=
                 |>Seq.append edges_inbetween
                 |>Set.ofSeq
             
-            subfigures=
+            targets=
                 renamed_subfigures
                 |>all_renamed_subfigures
 
@@ -233,7 +233,7 @@ module Fusing_figures_into_sequence=
             |>Seq.map Edge.ofStringPair
             |>Set.ofSeq
             
-            subfigures=[
+            targets=[
                 "a1","a";
                 "a3","a";
                 "a2","a";
@@ -257,14 +257,14 @@ module Fusing_figures_into_sequence=
         |>Seq.sort
         |>should equal expected_ab_figure.edges
 
-        real_ab_figure.subfigures
-        |>should equal expected_ab_figure.subfigures
+        real_ab_figure.targets
+        |>should equal expected_ab_figure.targets
 
     [<Fact>]
     let ``sequential_pair with the same figure generates different subfigure ids``()=
         let figure = built.Figure.signal "a"
         let pair = sequential_pair figure figure
-        pair.subfigures
+        pair.targets
         |>Map.keys
         |>Seq.distinct
         |>List.ofSeq

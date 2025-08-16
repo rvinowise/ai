@@ -9,7 +9,7 @@ open FsUnit
 module Finding_concept_with_special_types_of_concepts = 
 
     let rec incarnations_of_concept 
-        (place: Figure)
+        (place: Constant_figure)
         (concept: Concept)
         =
         match concept with
@@ -128,7 +128,7 @@ module Finding_concept_with_special_types_of_concepts =
         )
 
     let appearances_of_concept_incarnations
-        (history: Figure)
+        (history: Constant_figure)
         concept
         =
         let incarnations =         

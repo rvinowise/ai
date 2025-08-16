@@ -7,17 +7,18 @@ open rvinowise.extensions
 [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
 module Figure=
 
-    let nonexistent_vertex = {Subfigure.name=Figure_id ""; is_mappable = fun _ -> false} 
+    let nonexistent_vertex = Figure_id "nonexistent"
+    let nonexistent_constant_figure = Constant_figure_id 0
 
     let reference_of_vertex 
         owner_figure 
         vertex
         =
         match
-            Dictionary.some_value owner_figure.subfigures vertex 
+            Dictionary.some_value owner_figure.targets vertex 
         with
         | Some referenced_figure -> referenced_figure
-        | None -> nonexistent_vertex
+        | None -> nonexistent_constant_figure
 
 
     let is_vertex_referencing_figure 
@@ -26,12 +27,12 @@ module Figure=
         checked_vertex
         =
         checked_vertex
-        |>Dictionary.some_value owner_figure.subfigures
+        |>Dictionary.some_value owner_figure.targets
             = Some(referenced_figure)
 
-    let all_vertices_referencing_figure lower_figure (owner_figure:Figure)  = 
+    let all_vertices_referencing_figure lower_figure (owner_figure:Constant_figure)  = 
         lower_figure 
-        |> Dictionary.keys_with_value owner_figure.subfigures  
+        |> Dictionary.keys_with_value owner_figure.targets  
 
     let vertices_referencing_figure 
         search_in_these_vertices
@@ -50,41 +51,55 @@ module Figure=
         (subfigures:Vertex_id seq)
         =
         subfigures
-        |>Seq.choose (Dictionary.some_value owner_figure.subfigures)
+        |>Seq.choose (Dictionary.some_value owner_figure.targets)
         |>Seq.distinct
 
     let vertices_with_their_referenced_figures 
-        (owner_figure:Figure)
+        (owner_figure:Constant_figure)
         vertices
         =
         vertices
         |>Seq.choose (fun vertex->
-            owner_figure.subfigures
+            owner_figure.targets
             |>Map.tryFind vertex
             |>function
             |None -> None
             |Some referenced_figure ->Some (vertex,referenced_figure)
         )
 
-    
+    let vertices_with_their_referenced_mapping_function_ids
+        (owner_figure:Unmapped_figure)
+        vertices
+        =
+        vertices
+        |>Seq.choose (fun vertex->
+            owner_figure.targets
+            |>Map.tryFind vertex
+            |>function
+            |None -> None
+            |Some referenced_function_id ->Some (vertex,referenced_function_id)
+        )
 
-    let has_edges (figure:Figure) =
+    let has_edges (figure:Constant_figure) =
         figure.edges
         |>Seq.isEmpty|>not
 
     
 
-    let id_of_a_sequence (figure:Figure) =
+    let name_of_a_sequence (figure:Constant_figure) =
         if Seq.isEmpty figure.edges then 
-            figure.subfigures
+            figure.targets
             |>Seq.head
-            |>_.Value.name
+            |>_.Key
+            |>Vertex_id.value
         else
-            Figure_printing.id_of_a_sequence_from_edges figure.edges figure.subfigures
+            figure.targets
+            |>Map.map (fun vertex _ -> Vertex_id.value vertex)
+            |>Figure_printing.name_of_a_sequence_from_edges figure.edges
 
     
     let private try_the_only_vertex figure =
-        figure.subfigures
+        figure.targets
         |>Seq.tryHead 
         |>function
         |Some pair->
@@ -109,8 +124,8 @@ module Figure=
             Edges.last_vertices figure.edges
 
     let is_signal name figure =
-        figure.subfigures.Count = 1
-        &&
-        figure.subfigures
-        |>Map.toSeq|>Seq.head|>snd|>_.name
-        |>Figure_id.value = name
+        figure.targets.Count = 1
+        // &&
+        // figure.targets
+        // |>Map.toSeq|>Seq.head|>snd|>_.name
+        // |>Figure_id.value = name
