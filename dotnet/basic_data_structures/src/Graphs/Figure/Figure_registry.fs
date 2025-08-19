@@ -25,3 +25,5 @@ module Figure_registry =
 
     let id_into_name figure_id =
         signal_names[Constant_figure_id.value figure_id]
+        
+    

@@ -128,7 +128,9 @@ module History_from_text=
         |>event_batches_from_text
             (mood_changes_as_words_and_numbers "no" "ok")
 
-    let sequential_figure_from_text 
+    let sequential_figure_from_text
+        figure_name_to_id
+        figure_id_to_name
         (mood_change: Parser<Mood, unit>)
         text 
         =
@@ -136,3 +138,5 @@ module History_from_text=
         |>event_batches_from_text mood_change
         |>Event_batches.only_signals
         |>Event_batches.sequential_event_batches_to_figure
+            figure_name_to_id
+            figure_id_to_name

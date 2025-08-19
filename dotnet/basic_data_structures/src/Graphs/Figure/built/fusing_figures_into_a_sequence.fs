@@ -36,7 +36,7 @@ module Fusing_figures_into_sequence=
         |Some vertices ->vertices
 
     let assign_numbers_to_vertices_of_one_figure //todo use simpler vertices_with_sequencial_names
-        (referenced_figure:Subfigure)
+        (referenced_figure)
         starting_number
         vertices
         =
@@ -47,9 +47,7 @@ module Fusing_figures_into_sequence=
                     (renamed_vertices, last_number) _
                     ->
                 let new_vertex =
-                    (referenced_figure
-                    |> _.name
-                    |>Figure_id.value)
+                    referenced_figure
                     +
                     (string last_number)
                     |>Vertex_id
@@ -69,7 +67,7 @@ module Fusing_figures_into_sequence=
         (snd renamed)
 
     type Renamed_subfigures = 
-        Map<Subfigure, //figure, referenced by renamed vertices 
+        Map<Constant_figure_id, //figure, referenced by renamed vertices 
                 list< //every element = owner figure which has the renamed verticex
                     Map<
                         Vertex_id, //old name of a vertex
@@ -78,6 +76,7 @@ module Fusing_figures_into_sequence=
             >
 
     let private renamed_vertices_for_fusing_figures
+        figure_id_to_name
         (a_figure: Constant_figure)
         (b_figure: Constant_figure)
         :Renamed_subfigures
@@ -100,18 +99,19 @@ module Fusing_figures_into_sequence=
             |>Set.ofSeq
         
         all_referenced_figures
-        |>Seq.map (fun referenced_figure ->
+        |>Seq.map (fun target_id -> target_id, figure_id_to_name target_id)
+        |>Seq.map (fun (referenced_figure, name) ->
             
             let renamed_a_vertices, last_number =
                 a_vertices
                 |>vertices_referencing_figure referenced_figure
                 |>assign_numbers_to_vertices_of_one_figure
-                    referenced_figure 1
+                    name 1
             let renamed_b_vertices, _ =
                 b_vertices
                 |>vertices_referencing_figure referenced_figure
                 |>assign_numbers_to_vertices_of_one_figure
-                    referenced_figure last_number
+                    name last_number
             (
                 referenced_figure, 
                 [
@@ -159,6 +159,7 @@ module Fusing_figures_into_sequence=
         =
         let renamed_subfigures =
             renamed_vertices_for_fusing_figures
+                Figure_registry.id_into_name
                 a_figure b_figure
 
         let old_to_new_vertices_of_a = 
@@ -245,7 +246,7 @@ module Fusing_figures_into_sequence=
             ]
             |>Seq.map (fun pair->
                 pair|>fst|>Vertex_id,
-                pair|>snd|>Figure_id|>built.Subfigure.referencing_constant_figure
+                pair|>snd|>Figure_registry.provide_signal
             )
             |>Map.ofSeq
         }
@@ -262,7 +263,12 @@ module Fusing_figures_into_sequence=
 
     [<Fact>]
     let ``sequential_pair with the same figure generates different subfigure ids``()=
-        let figure = built.Figure.signal "a"
+        let figure =
+            built.Figure.signal
+                Figure_registry.provide_signal
+                Figure_registry.id_into_name
+                "a"
+                
         let pair = sequential_pair figure figure
         pair.targets
         |>Map.keys

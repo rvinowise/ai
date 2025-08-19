@@ -304,7 +304,9 @@ module Event_batches =
             [|pair.Key|], pair.Value
         )
 
-    let sequential_event_batches_to_figure 
+    let sequential_event_batches_to_figure
+        figure_name_to_id
+        figure_id_to_name
         (event_batches: Appearance_event list seq)
         =
         let subfigures_sequence = 
@@ -320,8 +322,7 @@ module Event_batches =
             |>Seq.map (fun (vertex, name) ->
                 vertex
                 ,
-                Figure_id name
-                |>built.Subfigure.referencing_constant_figure
+                figure_name_to_id name
             )
         {
             edges=
@@ -332,4 +333,4 @@ module Event_batches =
             targets=
                 subfigures_sequence
                 |>Map.ofSeq
-        }|>Renaming_figures.rename_vertices_to_standard_names
+        }|>Renaming_figures.rename_vertices_to_standard_names figure_id_to_name

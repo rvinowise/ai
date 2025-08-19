@@ -122,6 +122,7 @@ module Figure=
 
     let sequential_figure_from_sequence_of_figures
         (figure_name_to_id: string -> Constant_figure_id)        
+        (figure_id_to_name: Constant_figure_id -> string )        
         (figures: string seq)
         =
         let subfigures_sequence = 
@@ -141,7 +142,7 @@ module Figure=
             targets=
                 subfigures_sequence
                 |>Map.ofSeq
-        }|>Renaming_figures.rename_vertices_to_standard_names
+        }|>Renaming_figures.rename_vertices_to_standard_names figure_id_to_name
 
     let sequential_figure_from_sequence_of_vertices
         (turn_vertex_id_into_figure_id)
@@ -166,17 +167,15 @@ module Figure=
         }//|>Renaming_figures.rename_vertices_to_standard_names
     
     let sequential_figure_from_sequence_of_subfigures
-        (turn_vertex_id_into_figure_id: string->string)
+        (turn_vertex_id_into_figure_id)
         (subfigures)
         =
         let vertices_sequence = 
             subfigures
             |>Seq.map (fun subfigure->
-                Vertex_id vertex
+                Vertex_id subfigure
                 ,
-                turn_vertex_id_into_figure_id vertex
-                |>Figure_id
-                |>built.Subfigure.referencing_constant_figure
+                turn_vertex_id_into_figure_id subfigure
             )
         {
             edges=
@@ -193,6 +192,8 @@ module Figure=
         text
         |>Seq.map string
         |>sequential_figure_from_sequence_of_figures
+            Figure_registry.provide_signal
+            Figure_registry.id_into_name
 
     [<Fact>]
     let ``try sequence_from_text``()=
@@ -209,23 +210,25 @@ module Figure=
                     |>Seq.map (fun (vertex,figure) ->
                         Vertex_id vertex
                         ,
-                        Figure_id figure
-                        |>built.Subfigure.referencing_constant_figure
+                        Figure_registry.provide_signal figure
                     )
                     |>Map.ofSeq
             }
 
-    let signal (id:string) =
+    let signal
+        figure_name_to_id
+        figure_id_to_name
+        (name:string)
+        =
         {
             edges=Set.empty
             targets=[
                 //(id+"#1")|>Vertex_id,
-                Vertex_id id
+                Vertex_id name
                 ,
-                Figure_id id
-                |>built.Subfigure.referencing_constant_figure
+                figure_name_to_id name
             ]|>Map.ofSeq
-        }|>Renaming_figures.rename_vertices_to_standard_names
+        }|>Renaming_figures.rename_vertices_to_standard_names figure_id_to_name
 
     let vertex_data_from_edges_of_figure (full_vertex_data: Map<Vertex_id, Figure_id>) edges =
         edges
@@ -241,7 +244,7 @@ module Figure=
         |>Map.ofSeq
     
     let vertex_data_from_vertices_of_figure 
-        (full_vertex_data: Map<Vertex_id, Subfigure>) 
+        (full_vertex_data: Map<Vertex_id, Constant_figure_id>) 
         (vertices: Vertex_id seq)
         =
         vertices
@@ -251,14 +254,15 @@ module Figure=
         |>Map.ofSeq
 
 
-    let vertex_data_from_tuples 
+    let vertex_data_from_tuples
+        figure_name_to_id
         (edges:seq<string*string*string*string>) 
         =
         edges
-        |>Seq.map (fun(tail_id,tail_ref,head_id,head_ref)->
+        |>Seq.map (fun(tail_vertex,tail_target,head_vertex,head_target)->
             [
-                (Vertex_id tail_id, Figure_id tail_ref|>built.Subfigure.referencing_constant_figure);
-                (Vertex_id head_id, Figure_id head_ref|>built.Subfigure.referencing_constant_figure)
+                (Vertex_id tail_vertex, figure_name_to_id tail_target);
+                (Vertex_id head_vertex, figure_name_to_id head_target)
             ]
         )
         |>Seq.concat
@@ -273,14 +277,16 @@ module Figure=
             targets=(vertex_data_from_vertices_of_figure figure.targets vertices)
         }
 
-    let from_tuples 
+    let from_tuples
+        figure_name_to_id
+        figure_id_to_name
         (edges:seq<string*string*string*string>) =
         {
             edges=Graph.from_tuples edges
-            targets=vertex_data_from_tuples edges
+            targets=vertex_data_from_tuples figure_name_to_id edges 
         }
         |>check_correctness
-        |>Renaming_figures.rename_vertices_to_standard_names
+        |>Renaming_figures.rename_vertices_to_standard_names figure_id_to_name
 
     
     let subgraph_with_vertices 

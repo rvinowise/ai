@@ -21,29 +21,29 @@ module Figure=
         | None -> nonexistent_constant_figure
 
 
-    let is_vertex_referencing_figure 
-        owner_figure
-        referenced_figure
+    let is_vertex_referencing_target 
+        targets
+        referenced_target
         checked_vertex
         =
         checked_vertex
-        |>Dictionary.some_value owner_figure.targets
-            = Some(referenced_figure)
+        |>Dictionary.some_value targets
+            = Some(referenced_target)
 
     let all_vertices_referencing_figure lower_figure (owner_figure:Constant_figure)  = 
         lower_figure 
         |> Dictionary.keys_with_value owner_figure.targets  
 
-    let vertices_referencing_figure 
+    let vertices_referencing_target 
         search_in_these_vertices
-        referenced_figure
-        owner_figure
+        (referenced_target: 'Target)
+        targets
         =
         search_in_these_vertices
         |>Seq.filter (
-            is_vertex_referencing_figure
-                owner_figure
-                referenced_figure
+            is_vertex_referencing_target
+                targets
+                referenced_target
         )
 
     let referenced_figures 
@@ -54,6 +54,14 @@ module Figure=
         |>Seq.choose (Dictionary.some_value owner_figure.targets)
         |>Seq.distinct
 
+    let referenced_targets
+        (targets: 'Targets)
+        (subfigures:Vertex_id seq)
+        =
+        subfigures
+        |>Seq.choose (Dictionary.some_value targets)
+        |>Seq.distinct
+    
     let vertices_with_their_referenced_figures 
         (owner_figure:Constant_figure)
         vertices

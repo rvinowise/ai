@@ -10,6 +10,7 @@
   
   <ItemGroup>
     <Compile Include="src\Mapping.fs" />
+    <Compile Include="src\Mapping_functions_register.fs" />
     
     <Compile Include="src\Mapping_graph_by_prolongation\Work_with_generators.fs" />
     <Compile Include="src\Mapping_graph_by_prolongation\Map_first_nodes.fs" />

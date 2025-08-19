@@ -1,4 +1,5 @@
 namespace rvinowise.ai.example
+open rvinowise
 open rvinowise.ai
 
 module Figure =
@@ -81,7 +82,11 @@ module Figure =
                 "h","f";
             ]
 
-    let empty = built.Figure.from_tuples []
+    let empty =
+        built.Figure.from_tuples
+            Figure_registry.provide_signal
+            Figure_registry.id_into_name
+            []
     
     
     let a_long_figure = 

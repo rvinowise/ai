@@ -3,20 +3,40 @@ namespace rvinowise.ai
 open rvinowise.ai.generating_combinations
 open rvinowise.ai
 open rvinowise.ai.mapping_graph_impl
+open rvinowise.ai.stencil
 
 module Map_first_nodes =
     
     
+    
+    
+    let all_valid_target_vertices_for_mapping
+        mapping_id_to_function
+        mapping_function_id
+        target_figure
+        =
+        let mapping_function = mapping_id_to_function mapping_function_id
+        target_figure.targets
+        |>Map.filter(fun vertex figure ->
+            mapping_function vertex
+        )
+         
+        
+    
     let possible_combinations_of_mapping_vertices
-        (mappee: Constant_figure)
+        mapping_id_to_function
+        (mappee: Unmapped_figure)
         (target: Constant_figure)
         vertices_to_map
         =
         let suitable_vertices_in_target =
-            Figure.referenced_figures mappee vertices_to_map
-            |>Seq.map (fun mapped_subfigure->
-                mapped_subfigure,
-                Figure.all_vertices_referencing_figure mapped_subfigure target
+            Figure.referenced_targets mappee.targets vertices_to_map
+            |>Seq.map (fun mapping_function->
+                mapping_function,
+                all_valid_target_vertices_for_mapping
+                    mapping_id_to_function
+                    mapping_function
+                    target
             )
         let some_figures_are_lacking =  
             suitable_vertices_in_target
@@ -25,11 +45,11 @@ module Map_first_nodes =
             Seq.empty
         else 
             suitable_vertices_in_target
-            |>Seq.map (fun (referenced_figure, vertices_in_target) ->
-                mappee
-                |>Figure.vertices_referencing_figure 
+            |>Seq.map (fun (mapping_function, vertices_in_target) ->
+                mappee.targets
+                |>Figure.vertices_referencing_target 
                     vertices_to_map
-                    referenced_figure         
+                    mapping_function         
                 |>Seq.map (fun vertex_in_mappee->
                     Element_to_targets<Vertex_id,Vertex_id> (vertex_in_mappee,vertices_in_target);
                 )

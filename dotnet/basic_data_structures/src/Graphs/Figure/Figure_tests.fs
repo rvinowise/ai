@@ -11,12 +11,21 @@ module Figure_tests=
 
     [<Fact>]
     let ``equality comparison``()=
-        let f1 = ai.built.Figure.from_tuples [
-            "a0","a","b0","b"
-        ]
-        let f2 = ai.built.Figure.from_tuples [
-            "a1","a","b20","b"
-        ]
+        let f1 =
+            [
+                "a0","a","b0","b"
+            ]
+            |>ai.built.Figure.from_tuples
+                Figure_registry.provide_signal
+                Figure_registry.id_into_name
+        let f2 =
+            [
+                "a1","a","b20","b"
+            ]
+            |>ai.built.Figure.from_tuples
+                Figure_registry.provide_signal
+                Figure_registry.id_into_name
+                
         f1 |>should equal f2
 
 
@@ -34,6 +43,8 @@ module Figure_tests=
     let ``try id_from_sequence for a signal``()=
         "a"
         |>built.Figure.signal
+            Figure_registry.provide_signal
+            Figure_registry.id_into_name
         |>ai.Figure.name_of_a_sequence
         |>should equal (Figure_id "a")
     
@@ -66,24 +77,33 @@ module Figure_tests=
     
     [<Fact>]
     let ``try rename_vertices_to_standard_names``()=
-        built.Figure.from_tuples [
-            "my_a0","a","my_b1","b";
-            "my_a0","a","uppercase_b","B";
-            "uppercase_b","B","c0_at_the_end","figure_c";
-            "uppercase_b","B","another_a","a";
-        ]|>Renaming_figures.rename_vertices_to_standard_names
-        |>built.Figure.check_correctness
+        built.Figure.from_tuples
+            Figure_registry.provide_signal
+            Figure_registry.id_into_name
+            [
+                "my_a0","a","my_b1","b";
+                "my_a0","a","uppercase_b","B";
+                "uppercase_b","B","c0_at_the_end","figure_c";
+                "uppercase_b","B","another_a","a";
+            ]
         |>should equal (
-            built.Figure.from_tuples [
-                "a1","a","b1","b";
-                "a1","a","B1","B";
-                "B1","B","figure_c1","figure_c";
-                "B1","B","a2","a";
-            ]|>Renaming_figures.rename_vertices_to_standard_names
+            let edges =
+                [
+                    "a1","a","b1","b";
+                    "a1","a","B1","B";
+                    "B1","B","figure_c1","figure_c";
+                    "B1","B","a2","a";
+                ]
+            {
+                edges=Graph.from_tuples edges
+                targets=vertex_data_from_tuples Figure_registry.provide_signal edges 
+            }
         )
     
     [<Fact>]
     let ``standartizing names allows for structural comparison of figures``()=
+        let figure_name_to_id = Figure_registry.provide_signal
+        let figure_id_to_name = Figure_registry.id_into_name
         let figure1 = {
             Constant_figure.edges=[
                 "a1","b1";
@@ -105,7 +125,7 @@ module Figure_tests=
             ]
             |>List.map (fun pair->
                 pair|>fst|>Vertex_id,
-                pair|>snd|>Figure_id|>built.Subfigure.referencing_constant_figure
+                pair|>snd|>figure_name_to_id
             )
             |>Map.ofList
         }
@@ -130,13 +150,15 @@ module Figure_tests=
             ]
             |>List.map (fun pair->
                 pair|>fst|>Vertex_id,
-                pair|>snd|>Figure_id|>built.Subfigure.referencing_constant_figure
+                pair|>snd|>figure_name_to_id
             )
             |>Map.ofList
         }
         figure1
         |>Renaming_figures.rename_vertices_to_standard_names
+            figure_id_to_name
         |>should equal (
             figure2
             |>Renaming_figures.rename_vertices_to_standard_names
+                figure_id_to_name
         )
