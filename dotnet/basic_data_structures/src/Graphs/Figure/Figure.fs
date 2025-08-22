@@ -106,7 +106,7 @@ module Figure=
             |>Figure_printing.name_of_a_sequence_from_edges figure.edges
 
     
-    let private try_the_only_vertex figure =
+    let private try_the_only_vertex (figure:IFigure) =
         figure.targets
         |>Seq.tryHead 
         |>function
@@ -114,7 +114,7 @@ module Figure=
             Seq.singleton pair.Key
         |None->Seq.empty
 
-    let first_vertices figure =
+    let first_vertices (figure: IFigure) =
         if Seq.isEmpty figure.edges then
             try_the_only_vertex figure
         else

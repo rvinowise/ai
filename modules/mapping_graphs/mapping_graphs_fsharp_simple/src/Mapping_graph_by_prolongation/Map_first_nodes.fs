@@ -19,7 +19,7 @@ module Map_first_nodes =
         target_figure.targets
         |>Map.filter(fun vertex figure ->
             mapping_function vertex
-        )
+        )|>Map.keys
          
         
     
@@ -64,7 +64,7 @@ module Map_first_nodes =
         (target: Constant_figure)
         =
         let first_vertices_of_mappee = 
-            Figure.first_vertices mappee |>Set.ofSeq
+            Figure.first_vertices (mappee :> IFigure) |> Set.ofSeq
         
         let already_mapped_vertices =
             first_vertices_of_mappee

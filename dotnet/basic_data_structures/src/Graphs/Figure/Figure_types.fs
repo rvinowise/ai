@@ -80,3 +80,7 @@ module Conditional_figure =
             existing = figure
             impossibles = Set.empty 
         }
+
+type IFigure =
+    abstract member edges: Edge Set
+    abstract member targets: Map<Vertex_id, Mapping_function_id>
