@@ -160,8 +160,8 @@ module Mapping_graph_with_mutable_mapping =
         (prolongating_stencil_function: Vertex_id * Mapping_function_id)
         =
         let prolongating_vertex = prolongating_stencil_function|>fst
-        let prolongating_function = mapping_id_to_function prolongating_vertex
         let prolongating_mapping_function = prolongating_stencil_function|>snd
+        let prolongating_function = mapping_id_to_function prolongating_mapping_function
         
         let does_vertex_reference_needed_figure vertex =
             prolongating_function target vertex
