@@ -102,26 +102,27 @@ module Mapping_graph_with_mutable_mapping =
 
     [<Fact>]
     let ``finding following subfigures referencing a specific figure``()=
+        let figure_name_to_id = Figure_registry.provide_signal
         let owner_figure = example.Figure.a_high_level_relatively_simple_figure
-        let referenced_figure = Figure_id "f"|>built.Subfigure.referencing_constant_figure
-        (first_vertices_reacheble_from_all_vertices_together 
+        let referenced_figure = figure_name_to_id "f"
+        first_vertices_reacheble_from_all_vertices_together 
             (does_vertex_reference_figue
                 owner_figure
                 referenced_figure)
             (Edges.next_vertices owner_figure.edges)
             ( "b#1"|>Vertex_id|>Set.singleton)
-        )|> should equal (
+        |> should equal (
             [Vertex_id "f#1";Vertex_id "f#2"]
             |>Set.ofList
         )
 
-        (first_vertices_reacheble_from_all_vertices_together
+        first_vertices_reacheble_from_all_vertices_together
             (does_vertex_reference_figue
                 owner_figure
                 referenced_figure)
             (Edges.next_vertices owner_figure.edges)
             ([Vertex_id "d#1";Vertex_id "b#2"]|>Set.ofList)
-        )|> should equal (
+        |> should equal (
             [Vertex_id "f#2"]
             |>Set.ofList
         )
@@ -152,17 +153,18 @@ module Mapping_graph_with_mutable_mapping =
     
 
     let possible_targets_for_mapping_subfigure
+        mapping_id_to_function
         mappee
         target
         mapping
-        (prolongating_stencil_subfigure: Vertex_id*Subfigure)
+        (prolongating_stencil_function: Vertex_id * Mapping_function_id)
         =
-        let prolongating_vertex = prolongating_stencil_subfigure|>fst
-        let prolongating_figure = prolongating_stencil_subfigure|>snd
+        let prolongating_vertex = prolongating_stencil_function|>fst
+        let prolongating_function = mapping_id_to_function prolongating_vertex
+        let prolongating_mapping_function = prolongating_stencil_function|>snd
         
         let does_vertex_reference_needed_figure vertex =
-            Figure.reference_of_vertex target vertex =
-                prolongating_figure 
+            prolongating_function target vertex
         
         let further_step_of_searching_targets =
             Edges.next_vertices target.edges
@@ -182,12 +184,12 @@ module Mapping_graph_with_mutable_mapping =
         next_subfigures_to_map
         =
         let rec mapping_targets_for_next_subfigure
-            (mappee:Constant_figure)
+            mappee
             (target:Constant_figure)
             (mapping:Mapping)
             (left_subfigures_to_map)
-            //                                      stencil_vertex possible_targets
-            (found_mappings: Map<Subfigure,  struct(Vertex_id   *  seq<Vertex_id>)  list>)
+            //                                                stencil_vertex possible_targets
+            (found_mappings: Map<Mapping_function_id,  struct(Vertex_id   *  seq<Vertex_id>)  list>)
             =
 
             match left_subfigures_to_map with
@@ -227,7 +229,7 @@ module Mapping_graph_with_mutable_mapping =
             Map.empty
 
     let prolongate_one_mapping_with_next_subfigures 
-        (mappee:Constant_figure)
+        mappee
         (target:Constant_figure)
         (next_subfigures_to_map)
         (mapping:Mapping)
@@ -247,7 +249,7 @@ module Mapping_graph_with_mutable_mapping =
             |>prolongate_mapping_with_next_mapped_subfigures mapping
     
     let rec prolongate_all_mappings 
-        (mappee:Constant_figure)
+        mappee
         (target:Constant_figure)
         (last_mapped_vertices: Vertex_id seq)
         (mappings: Mapping seq)
