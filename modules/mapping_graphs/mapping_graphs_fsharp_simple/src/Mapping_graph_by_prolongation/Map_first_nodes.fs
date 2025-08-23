@@ -100,24 +100,29 @@ module Map_first_nodes =
         
             
     let map_first_nodes_with_mutable_mapping
-        (mappee: Constant_figure)
+        mapping_id_to_function
+        mappee
         (target: Constant_figure)
         =
         //good for long stencils and figures, with many prolongations of the mapping
         mappee
         |>Figure.first_vertices
-        |>possible_combinations_of_mapping_vertices mappee target
+        |>possible_combinations_of_mapping_vertices
+              mapping_id_to_function
+              mappee 
+              target
         |>Seq.map Work_with_generators.mutable_mapping_from_generator_output
     
     
     
             
     let map_first_nodes_with_immutable_mapping
-        (mappee: Constant_figure)
+        mapping_id_to_function
+        mappee
         (target: Constant_figure)
         =
         //good for short stencils, with few prolongations
         mappee
         |>Figure.first_vertices
-        |>possible_combinations_of_mapping_vertices mappee target
+        |>possible_combinations_of_mapping_vertices mapping_id_to_function mappee target
         |>Seq.map Work_with_generators.immutable_mapping_from_generator_output

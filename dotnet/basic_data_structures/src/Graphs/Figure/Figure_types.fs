@@ -7,12 +7,22 @@ open System.Linq
 
 
 
+type IFigure =
+    abstract member edges: Edge Set
+    abstract member targets: Map<Vertex_id, int>
+
 
 //can be used by a function which is referenced by a Mapping_function_id
 type Unmapped_figure = {
     edges: Edge Set
     targets: Map<Vertex_id, Mapping_function_id>
 }
+with
+    interface IFigure with
+        member this.edges = this.edges
+        member this.targets =
+            this.targets
+            |>Map.map (fun _ target -> Mapping_function_id.value target)
  
 // type Constant_figure = { //can be referenced by a Constant_figure_id
 //     edges: Edge Set
@@ -25,7 +35,12 @@ type Constant_figure = { //can be referenced by a Constant_figure_id
     edges: Edge Set
     targets: Map<Vertex_id, Constant_figure_id >
 }
-with 
+with
+    interface IFigure with
+        member this.edges = this.edges
+        member this.targets =
+            this.targets
+            |>Map.map (fun _ target -> Constant_figure_id.value target)
     override this.ToString()=
         this.targets
         |>Map.map (fun vertex _ -> Vertex_id.value vertex )
@@ -81,6 +96,3 @@ module Conditional_figure =
             impossibles = Set.empty 
         }
 
-type IFigure =
-    abstract member edges: Edge Set
-    abstract member targets: Map<Vertex_id, Mapping_function_id>

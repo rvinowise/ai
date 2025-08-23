@@ -56,7 +56,8 @@ module Mapping_graph_with_mutable_mapping =
         |>Seq.map (copied_mapping_with_prolongation base_mapping)
 
     
-    let choose_first_vertices 
+    let choose_first_vertices
+        is_vertex_needed
         (step_further: Vertex_id -> Vertex_id Set)
         (vertices: Vertex_id Set)
         =
@@ -67,6 +68,7 @@ module Mapping_graph_with_mutable_mapping =
             |>Seq.fold(fun set vertex->
                     [vertex]
                     |>Search_in_graph.vertices_reacheble_from_any_vertices
+                        is_vertex_needed
                         step_further
                     |>Set.union set
                 )
@@ -87,7 +89,7 @@ module Mapping_graph_with_mutable_mapping =
                 step_further
         )
         |>Set.intersectMany
-        |>choose_first_vertices step_further
+        |>choose_first_vertices is_vertex_needed step_further
 
     let does_vertex_reference_figue
         owner_figure
