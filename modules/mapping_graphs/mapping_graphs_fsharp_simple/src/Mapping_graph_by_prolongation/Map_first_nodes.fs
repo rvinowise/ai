@@ -11,15 +11,13 @@ module Map_first_nodes =
     
     
     let all_valid_target_vertices_for_mapping
-        mapping_id_to_function
-        mapping_function_id
+        mapping_function
         target_figure
         =
-        let mapping_function = mapping_id_to_function mapping_function_id
         target_figure.targets
         |>Map.filter(fun vertex figure ->
             mapping_function vertex
-        )
+        )|>Map.keys
          
         
     
@@ -31,10 +29,11 @@ module Map_first_nodes =
         =
         let suitable_vertices_in_target =
             Figure.referenced_targets mappee.targets vertices_to_map
-            |>Seq.map (fun mapping_function->
-                mapping_function,
+            |>Seq.map (fun mapping_function_id->
+                let mapping_function = mapping_id_to_function mapping_function_id
+
+                mapping_function_id,
                 all_valid_target_vertices_for_mapping
-                    mapping_id_to_function
                     mapping_function
                     target
             )
@@ -59,6 +58,7 @@ module Map_first_nodes =
             
     
     let map_within_other_mapping
+        mapping_id_to_function
         (within_mapping: Map<Vertex_id,Vertex_id>)
         (mappee: Unmapped_figure)
         (target: Constant_figure)
@@ -85,7 +85,10 @@ module Map_first_nodes =
         
         
         possible_combinations_of_mapping_vertices
-            mappee target not_mapped_vertices
+            mapping_id_to_function
+            mappee
+            target
+            not_mapped_vertices
         |>Seq.map(fun mapping ->
             already_mapped_vertices
             |>Map.toSeq
