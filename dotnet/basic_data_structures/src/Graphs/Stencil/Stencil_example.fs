@@ -1,8 +1,11 @@
 namespace rvinowise.ai.example
+open rvinowise
 open rvinowise.ai
+open rvinowise.extensions
 
 module Stencil =
 
+    
 
     let a_fitting_stencil =
         {
@@ -10,8 +13,8 @@ module Stencil =
                 [
                     "b1","f1"
                     "h1","f1"
-                ]|>built.Figure.simple_without_separator
-                |>built.Conditional_figure.from_figure_without_impossibles
+                ]
+                |>built.Conditional_figure.conditional_figure_mapped_onto_constants
             output_border = {
                 before = "b1"|>Vertex_id|>Set.singleton
                 after = "f1"|>Vertex_id|>Set.singleton
@@ -38,8 +41,8 @@ module Stencil =
                     "o","f"
                     "p","f"
                     "q","f"
-                ]|>built.Figure.simple_without_separator
-                |>built.Conditional_figure.from_figure_without_impossibles
+                ]
+                |>built.Conditional_figure.conditional_figure_mapped_onto_constants
             output_border = {
                 before = [
                         "a"
@@ -75,8 +78,7 @@ module Stencil =
                     "r1","s1"
                     "s1","t1"
                     "f2","t1"
-                ]|>built.Figure.simple_without_separator
-                |>built.Conditional_figure.from_figure_without_impossibles
+                ]|>built.Conditional_figure.conditional_figure_mapped_onto_constants
             output_border = {
                 before = "f1"|>Vertex_id|>Set.singleton
                 after = "o1"|>Vertex_id|>Set.singleton

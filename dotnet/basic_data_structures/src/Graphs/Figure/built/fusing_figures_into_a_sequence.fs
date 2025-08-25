@@ -9,8 +9,8 @@ open rvinowise
 module Fusing_figures_into_sequence=
     
     let private rename_duplicating_vertices
-        (a_figure: Constant_figure)
-        (b_figure: Constant_figure)
+        (a_figure)
+        (b_figure)
         =
         b_figure.targets
         |>Seq.choose (fun pair->
@@ -77,8 +77,8 @@ module Fusing_figures_into_sequence=
 
     let private renamed_vertices_for_fusing_figures
         figure_id_to_name
-        (a_figure: Constant_figure)
-        (b_figure: Constant_figure)
+        (a_figure: Figure<_>)
+        (b_figure: Figure<_>)
         :Renamed_subfigures
         =
 
@@ -154,8 +154,8 @@ module Fusing_figures_into_sequence=
     
 
     let sequential_pair 
-        (a_figure: Constant_figure)
-        (b_figure: Constant_figure)
+        (a_figure: Figure<_>)
+        (b_figure: Figure<_>)
         =
         let renamed_subfigures =
             renamed_vertices_for_fusing_figures

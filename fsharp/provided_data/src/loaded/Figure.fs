@@ -9,7 +9,7 @@ module Figure =
 
     let body (figure_id:string) =
         let connection = database.Provided.open_connection
-        database.Provided.open_connection.Query<ai.Constant_figure>(
+        database.Provided.open_connection.Query<Figure<_>>(
             @"select * from Figure where Id = @Figure_id",
                 {|figure_id=figure_id|}
         ) |> Seq.tryHead
@@ -18,7 +18,7 @@ module Figure =
         printfn $"figure %s{id} exists requested"
         body id <> None
 
-    let all =
-        database.Provided.open_connection.Query<ai.Constant_figure>(
+    let all () =
+        database.Provided.open_connection.Query<Figure<_>>(
             @"select * from Figure"
         )

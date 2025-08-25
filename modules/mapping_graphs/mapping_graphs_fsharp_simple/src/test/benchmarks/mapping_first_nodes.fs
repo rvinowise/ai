@@ -7,6 +7,7 @@ open BenchmarkDotNet.Configs
 open BenchmarkDotNet.Attributes
 open BenchmarkDotNet.Running
 
+open rvinowise
 open rvinowise.ai
 open rvinowise.ai.mapping_graph_impl
 open rvinowise.extensions.benchmark
@@ -17,9 +18,9 @@ module mapping_first_nodes =
     type Benchmarking_mapping_first_nodes() =
 
         member val mappees = [
-            {Parameter.value= example.Figure.fitting_stencil_as_figure; 
+            {Parameter.value= example.Stencil.a_fitting_stencil.figure.existing; 
             name="a_fitting_stencil"};
-            {value= example.Stencil.a_stencil_with_huge_beginning|>Figure_from_stencil.convert; 
+            {value= example.Stencil.a_stencil_with_huge_beginning.figure.existing; 
             name="a_stencil_with_huge_beginning"}
         ]
         member val target_figures = [
@@ -30,7 +31,7 @@ module mapping_first_nodes =
         ]
 
         [<ParamsSource("mappees")>]
-        member val mappee = {value=example.Figure.empty; name="default"} with get, set
+        member val mappee = {value=prolongation_of_mapping.empty_figure_for_mapping; name="default"} with get, set
 
         [<ParamsSource("target_figures")>]
         member val target_figure = {value=example.Figure.empty; name="default"} with get, set
@@ -40,6 +41,7 @@ module mapping_first_nodes =
         [<Benchmark>]
         member this.mutable_mapping()=
             Map_first_nodes.map_first_nodes_with_mutable_mapping
+                Mapping_functions_registry.id_into_function
                 this.mappee.value
                 this.target_figure.value
             |> Consumer().Consume
@@ -47,6 +49,7 @@ module mapping_first_nodes =
         [<Benchmark>]
         member this.immutable_mapping()=
             Map_first_nodes.map_first_nodes_with_immutable_mapping
+                Mapping_functions_registry.id_into_function
                 this.mappee.value
                 this.target_figure.value
             |> Consumer().Consume

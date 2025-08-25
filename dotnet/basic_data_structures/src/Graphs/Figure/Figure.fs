@@ -30,7 +30,7 @@ module Figure=
         |>Dictionary.some_value targets
             = Some(referenced_target)
 
-    let all_vertices_referencing_figure lower_figure (owner_figure:Constant_figure)  = 
+    let all_vertices_referencing_figure lower_figure owner_figure  = 
         lower_figure 
         |> Dictionary.keys_with_value owner_figure.targets  
 
@@ -47,7 +47,7 @@ module Figure=
         )
 
     let referenced_figures 
-        owner_figure
+        (owner_figure: Figure<_>)
         (subfigures:Vertex_id seq)
         =
         subfigures
@@ -62,39 +62,27 @@ module Figure=
         |>Seq.choose (Dictionary.some_value targets)
         |>Seq.distinct
     
-    let vertices_with_their_referenced_figures 
-        (owner_figure:Constant_figure)
+    let vertices_with_their_referenced_targets 
+        targets
         vertices
         =
         vertices
         |>Seq.choose (fun vertex->
-            owner_figure.targets
+            targets
             |>Map.tryFind vertex
             |>function
             |None -> None
             |Some referenced_figure ->Some (vertex,referenced_figure)
         )
 
-    let vertices_with_their_referenced_mapping_function_ids
-        (owner_figure:Unmapped_figure)
-        vertices
-        =
-        vertices
-        |>Seq.choose (fun vertex->
-            owner_figure.targets
-            |>Map.tryFind vertex
-            |>function
-            |None -> None
-            |Some referenced_function_id ->Some (vertex,referenced_function_id)
-        )
 
-    let has_edges (figure:Constant_figure) =
+    let has_edges (figure:Figure<_>) =
         figure.edges
         |>Seq.isEmpty|>not
 
     
 
-    let name_of_a_sequence (figure:Constant_figure) =
+    let name_of_a_sequence (figure:Figure<_>) =
         if Seq.isEmpty figure.edges then 
             figure.targets
             |>Seq.head
@@ -106,7 +94,7 @@ module Figure=
             |>Figure_printing.name_of_a_sequence_from_edges figure.edges
 
     
-    let private try_the_only_vertex (figure:IFigure) =
+    let private try_the_only_vertex (figure:Figure<_>) =
         figure.targets
         |>Seq.tryHead 
         |>function
@@ -114,7 +102,7 @@ module Figure=
             Seq.singleton pair.Key
         |None->Seq.empty
 
-    let first_vertices (figure: IFigure) =
+    let first_vertices (figure: Figure<_>) =
         if Seq.isEmpty figure.edges then
             try_the_only_vertex figure
         else
@@ -125,13 +113,13 @@ module Figure=
         |>first_vertices
         |>referenced_figures figure
 
-    let last_vertices figure =
+    let last_vertices (figure:Figure<_>) =
         if Seq.isEmpty figure.edges then
             try_the_only_vertex figure
         else
             Edges.last_vertices figure.edges
 
-    let is_signal name figure =
+    let is_signal name (figure:Figure<_>) =
         figure.targets.Count = 1
         // &&
         // figure.targets

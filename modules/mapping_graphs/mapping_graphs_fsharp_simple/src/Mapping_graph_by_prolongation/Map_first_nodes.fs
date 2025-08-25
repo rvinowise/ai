@@ -16,15 +16,15 @@ module Map_first_nodes =
         =
         target_figure.targets
         |>Map.filter(fun vertex figure ->
-            mapping_function vertex
+            mapping_function target_figure vertex
         )|>Map.keys
          
         
     
     let possible_combinations_of_mapping_vertices
         mapping_id_to_function
-        (mappee: Unmapped_figure)
-        (target: Constant_figure)
+        (mappee: Figure<_>)
+        (target: Figure<_>)
         vertices_to_map
         =
         let suitable_vertices_in_target =
@@ -60,11 +60,11 @@ module Map_first_nodes =
     let map_within_other_mapping
         mapping_id_to_function
         (within_mapping: Map<Vertex_id,Vertex_id>)
-        (mappee: Unmapped_figure)
-        (target: Constant_figure)
+        (mappee)
+        (target)
         =
         let first_vertices_of_mappee = 
-            Figure.first_vertices (mappee :> IFigure) |> Set.ofSeq
+            Figure.first_vertices mappee |> Set.ofSeq
         
         let already_mapped_vertices =
             first_vertices_of_mappee
@@ -102,7 +102,7 @@ module Map_first_nodes =
     let map_first_nodes_with_mutable_mapping
         mapping_id_to_function
         mappee
-        (target: Constant_figure)
+        target
         =
         //good for long stencils and figures, with many prolongations of the mapping
         mappee
@@ -119,7 +119,7 @@ module Map_first_nodes =
     let map_first_nodes_with_immutable_mapping
         mapping_id_to_function
         mappee
-        (target: Constant_figure)
+        target
         =
         //good for short stencils, with few prolongations
         mappee

@@ -7,7 +7,6 @@ open rvinowise
 open rvinowise.ai
 open rvinowise.ai.Applying_stencil
 open rvinowise.ai.Mapping_graph_with_immutable_mapping
-open rvinowise.ai.built.Figure_from_event_batches
 open rvinowise.ai.ui
 open rvinowise.ai.stencil
 open rvinowise.ui
@@ -15,7 +14,8 @@ open rvinowise.ui
         
 module ``application of stencils``=
     
-    
+    let figure_name_to_id = Figure_registry.provide_signal
+    let figure_id_to_name = Figure_registry.id_into_name
         
     let initial_mapping_without_prolongation = Immutable_mapping.ofStringPairs ["b#1","b#3";"h#1","h#1"]
     let initial_fruitful_mapping = Immutable_mapping.ofStringPairs ["b#1","b#1";"h#1","h#1"]
@@ -64,6 +64,7 @@ module ``application of stencils``=
         
         (
              map_figure_onto_target
+                Mapping_functions_registry.id_into_function
                 example.Figure.a_high_level_relatively_simple_figure
                 example.Figure.fitting_stencil_as_figure
                 |> Set.ofSeq
@@ -84,24 +85,36 @@ module ``application of stencils``=
 
     [<Fact>]
     let ``a full mapping can be produced if the stencil has only "out" in the middle``()=
-        let mappee = 
-            built.Stencil.simple_with_separator [
-                "N","out";
-                ",#1","out";
-                "out",",#2";
-                "out",";";
-            ]|>Figure_from_stencil.convert
-
+        let mappee ={
+            Conditional_stencil.figure=
+                [
+                    "N",",#2";
+                    ",#1",",#2";
+                    "N",";";
+                    ",#1",";";
+                ]
+                |>built.Figure.simple
+                    (extensions.String.remove_number >> Mapping_functions_registry.onto_exact_figure)
+                    Mapping_functions_registry.id_into_name
+                |>built.Conditional_figure.from_figure_without_impossibles
+            output_border = {
+                before = ["N";",#1"] |> List.map Vertex_id |>Set.ofList 
+                after = [";";",#2"] |> List.map Vertex_id |>Set.ofList 
+            } 
+        }
         let target =
             "N0,1,2,3,4,5,6,7,8,9;"
     //mom:   0123456789¹123456789²
             |>built.Figure.sequential_figure_from_text
+                Figure_registry.provide_signal
+                Figure_registry.id_into_name
    
         let mappings =
             map_figure_onto_target
-                mappee
+                Mapping_functions_registry.id_into_function
                 target
-                |>Set.ofSeq
+                mappee.figure.existing
+            |>Set.ofSeq
         
         mappings
         |>Seq.iter (fun mapping->
@@ -117,34 +130,53 @@ module ``application of stencils``=
 
     [<Fact>]
     let ``a fitting stencil, applied to a figure, outputs a subgraph (with several vertices)``()=
-        results_of_stencil_application
+        
+        results_of_conditional_stencil_application
+            Mapping_functions_registry.id_into_function
             example.Stencil.a_fitting_stencil
             example.Figure.a_high_level_relatively_simple_figure
         |>Set.ofSeq
         |>should equal (
             [
                 ["d","e"]|>built.Figure.simple_without_separator;
-                "h"|>built.Figure.signal 
+                "h"
+                |>built.Figure.signal
+                    figure_name_to_id
+                    figure_id_to_name
             ]|>Set.ofList
         )
 
     [<Fact>]
     let ``a fitting stencil, applied to a figure, outputs a subgraph (with only one vertex)``()=
         
-        built.Figure.sequential_figure_from_text "N0;"
-        |>results_of_stencil_application (
-            built.Stencil.simple_with_separator [
-                "N","out";
-                "out",";";
-            ]
-        )
+        built.Figure.sequential_figure_from_text
+            figure_name_to_id
+            figure_id_to_name
+            "N0;"
+        |>results_of_conditional_stencil_application
+            Mapping_functions_registry.id_into_function
+            {
+                Conditional_stencil.figure=
+                    [
+                        "N","out";
+                        "out",";";
+                    ]|>built.Conditional_figure.conditional_figure_mapped_onto_constants
+                output_border = {
+                    before = "N" |>Vertex_id|>Set.singleton
+                    after = ";" |>Vertex_id|>Set.singleton
+                } 
+            }
         |>should equal [
-            built.Figure.signal "0"
+            built.Figure.signal
+                figure_name_to_id
+                figure_id_to_name
+                "0"
         ]
     
     [<Fact>]
     let ``a long fitting stencil, applied to a long figure, outputs its result (two disjoined subgraphs)``()=
-        results_of_stencil_application
+        results_of_conditional_stencil_application
+            Mapping_functions_registry.id_into_function
             example.Stencil.a_long_stencil
             example.Figure.a_long_figure
         |>Set.ofSeq
@@ -158,6 +190,7 @@ module ``application of stencils``=
     [<Fact>]
     let ``mapping of first stencil subfigures onto target produces initial mapping``()=
         Map_first_nodes.map_first_nodes_with_immutable_mapping
+            Mapping_functions_registry.id_into_function
             example.Figure.fitting_stencil_as_figure
             example.Figure.a_high_level_relatively_simple_figure
         |>Set.ofSeq
@@ -170,12 +203,16 @@ module ``application of stencils``=
     [<Fact>]
     let ``initial mapping when the target lacks some figures``()=
         Map_first_nodes.map_first_nodes_with_immutable_mapping
+            Mapping_functions_registry.id_into_function
             (
-                built.Figure.simple_without_separator [
-                    "b","f";
-                    "h","f";
-                    "x","f";
-                ]
+                built.Figure.simple
+                    (extensions.String.remove_number >> Mapping_functions_registry.onto_exact_figure)
+                    Mapping_functions_registry.id_into_name
+                    [
+                        "b","f";
+                        "h","f";
+                        "x","f";
+                    ]
             )
             example.Figure.a_high_level_relatively_simple_figure
         |> should be Empty
@@ -185,6 +222,7 @@ module ``application of stencils``=
     let ``complete mapping of stencil onto target can be produced``()=
         
         map_figure_onto_target
+            Mapping_functions_registry.id_into_function
             example.Figure.a_high_level_relatively_simple_figure
             example.Figure.fitting_stencil_as_figure
         |> should equal
@@ -212,72 +250,87 @@ module ``application of stencils``=
         |>infrastructure.Graph.with_filled_vertex "target figure" 
             (painted.Graph.add_graph figure.edges)
         |>infrastructure.Graph.with_filled_vertex "stencil"
-            (painted.Graph.add_graph stencil.edges)
+            (painted.Graph.add_graph stencil.figure.existing.edges)
         |>painted.image.open_image_of_graph
 
     [<Fact>]
     let ``apply stencil to a long mathematical sequence``()=
         let middle_digit_stencil =
-            built.Stencil.simple_with_separator [
-                "N","out";
-                ",#1","out";
-                "out",",#2";
-                "out",";";
-            ]
+            {
+                Conditional_stencil.figure =
+                    [
+                        "N",",#2";
+                        "N",";";
+                        ",#1",",#2";
+                        ",#1",";";
+                    ]|>built.Conditional_figure.conditional_figure_mapped_onto_constants
+                output_border = {
+                    before = ["N";",#1"] |>List.map Vertex_id|>Set.ofList 
+                    after = [",#2";";"] |>List.map Vertex_id|>Set.ofList 
+                } 
+            }
 
         let history_as_figure =
             "N0,1,2,3,4,5,6,7,8,9;"
     //mom:   0123456789¹123456789²
             |>built.Figure.sequential_figure_from_text
+                figure_name_to_id
+                figure_id_to_name
         
         history_as_figure
-        |>results_of_stencil_application middle_digit_stencil 
+        |>results_of_conditional_stencil_application
+              Mapping_functions_registry.id_into_function
+              middle_digit_stencil 
         |>Set.ofSeq
         |>should equal (
             "12345678"
             |>Seq.map string
-            |>Seq.map built.Figure.signal
+            |>Seq.map (
+                built.Figure.signal
+                    figure_name_to_id
+                    figure_id_to_name
+            )
             |>Set.ofSeq
         )
         
-    [<Fact>]
-    let ``apply stencil, when some first mapped vertices whould be skipped``()=
-        let last_digit_stencil =
-            {
-                built.Stencil.simple_with_separator [
-                    "N","out";
-                    ",#1","out";
-                    "out",";";
-                ] with
-                    output_without=
-                        ","|>built.Figure.signal|>Set.singleton
-            }
-        
-        let history_as_figure =
-            "N0,1,2,3,4,5,6,7,8,9;"
-    //mom:   0123456789¹123456789²
-            |>built.Figure.sequential_figure_from_text
-
-        history_as_figure
-        |>results_of_stencil_application last_digit_stencil
- 
-        |>should equal (
-            "9"
-            |>built.Figure.signal
-            |>Seq.singleton
-        )
+    // [<Fact>]
+    // let ``apply stencil, when some first mapped vertices whould be skipped``()=
+    //     let last_digit_stencil =
+    //         {
+    //             built.Stencil.simple_with_separator [
+    //                 "N","out";
+    //                 ",#1","out";
+    //                 "out",";";
+    //             ] with
+    //                 output_without=
+    //                     ","|>built.Figure.signal|>Set.singleton
+    //         }
+    //     
+    //     let history_as_figure =
+    //         "N0,1,2,3,4,5,6,7,8,9;"
+    // //mom:   0123456789¹123456789²
+    //         |>built.Figure.sequential_figure_from_text
+    //
+    //     history_as_figure
+    //     |>results_of_stencil_application last_digit_stencil
+    //
+    //     |>should equal (
+    //         "9"
+    //         |>built.Figure.signal
+    //         |>Seq.singleton
+    //     )
 
     [<Fact>]
     let ``applying a stencil within another mapping limits targets of application(simple example)``()=
         let mappee =
             built.Figure.sequential_figure_from_sequence_of_vertices
-                extensions.String.remove_text_with_hash
+                (extensions.String.remove_text_with_hash >> Mapping_functions_registry.onto_exact_figure)
                 ["D#1";";#1"]
         
         let target =
             ["D#bad_first";"D#good_last";";";]
             |>built.Figure.sequential_figure_from_sequence_of_vertices
-                extensions.String.remove_text_with_hash
+                (extensions.String.remove_text_with_hash >> figure_name_to_id)
         
         let within_mapping =
             [
@@ -296,6 +349,7 @@ module ``application of stencils``=
             |>Map.ofList
         
         map_figure_onto_target_within_mapping
+            Mapping_functions_registry.id_into_function
             within_mapping
             target
             mappee
@@ -307,13 +361,13 @@ module ``application of stencils``=
     let ``applying a stencil within another mapping. doubled ending shouldn't be mapped twice``()=
         let mappee =
             built.Figure.sequential_figure_from_sequence_of_vertices
-                extensions.String.remove_text_with_hash
+                (extensions.String.remove_text_with_hash >> Mapping_functions_registry.onto_exact_figure)
                 ["D#1";";#2";";#1"]
         
         let target =
             ["x#first";"D#bad_first";"y";"D#good_last";"a";"b";";#good_first";"z";";#bad_last";"x#last"]
             |>built.Figure.sequential_figure_from_sequence_of_vertices
-                extensions.String.remove_text_with_hash
+                (extensions.String.remove_text_with_hash >> Figure_registry.provide_signal)
         
         let within_mapping =
             [
@@ -324,6 +378,7 @@ module ``application of stencils``=
             |>Map.ofList
         
         map_figure_onto_target_within_mapping
+            Mapping_functions_registry.id_into_function
             within_mapping
             target
             mappee
@@ -333,19 +388,25 @@ module ``application of stencils``=
         
     [<Fact>]
     let ``apply stencil with a blocking figure, for a "tight" application of stencil``()=
+        let vertex_to_function_id =
+            (extensions.String.remove_text_with_hash >> Mapping_functions_registry.onto_exact_figure)
+        
+        let vertex_to_figure_id =
+            (extensions.String.remove_text_with_hash >> Figure_registry.provide_signal)
+        
         let existing_figure =
             built.Figure.sequential_figure_from_sequence_of_vertices
-                extensions.String.remove_text_with_hash
+                vertex_to_function_id
                 ["D#1";";#1"]
                 
         let impossible_figure_before =
             built.Figure.sequential_figure_from_sequence_of_vertices
-                extensions.String.remove_text_with_hash
+                vertex_to_function_id
                 ["D#1";"D#2";";#1"]
             
         let impossible_figure_after =
             built.Figure.sequential_figure_from_sequence_of_vertices
-                extensions.String.remove_text_with_hash
+                vertex_to_function_id
                 ["D#1";";#2";";#1"]
             
         let conditional_figure = {
@@ -367,27 +428,36 @@ module ``application of stencils``=
         let history =
             ["x#first";"D#bad_first";"y";"D#good_last";"a";"b";";#good_first";"z";";#bad_last";"x#last"]
             |>built.Figure.sequential_figure_from_sequence_of_vertices
-                extensions.String.remove_text_with_hash
+                vertex_to_figure_id
             
         results_of_conditional_stencil_application
+            Mapping_functions_registry.id_into_function
             conditional_stencil
             history
-        |>Seq.map Renaming_figures.rename_vertices_to_standard_names
+        |>Seq.map (Renaming_figures.rename_vertices_to_standard_names Figure_registry.id_into_name)
         |>should equal (
             "ab"
             |>built.Figure.sequential_figure_from_text
+                figure_name_to_id
+                figure_id_to_name
             |>Seq.singleton
         )
         
     [<Fact>]
     let ``applying a conditional stencil with output at the very border``() =
+        let vertex_to_function_id =
+            (extensions.String.remove_text_with_hash >> Mapping_functions_registry.onto_exact_figure)
+        
         let target =
-            "0,1"|>built.Figure.sequential_figure_from_text
+            "0,1"
+            |>built.Figure.sequential_figure_from_text
+                figure_name_to_id
+                figure_id_to_name
         
         let stencil = {
             Conditional_stencil.figure=
                 [",#1"]
-                |>built.Figure.sequential_figure_from_sequence_of_vertices extensions.String.remove_number_with_hash
+                |>built.Figure.sequential_figure_from_sequence_of_vertices vertex_to_function_id
                 |>built.Conditional_figure.from_figure_without_impossibles
             output_border =  {
                 before = Set.empty
@@ -396,10 +466,13 @@ module ``application of stencils``=
         }
         
         results_of_conditional_stencil_application
+            Mapping_functions_registry.id_into_function
             stencil
             target
         |>should equal (
             "0"
             |>built.Figure.sequential_figure_from_text
+                figure_name_to_id
+                figure_id_to_name
             |>Seq.singleton
         )

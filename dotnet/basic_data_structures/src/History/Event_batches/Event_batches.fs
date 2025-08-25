@@ -325,7 +325,7 @@ module Event_batches =
                 figure_name_to_id name
             )
         {
-            edges=
+            Figure.edges=
                 subfigures_sequence
                 |>Seq.map fst
                 |>built.Graph.sequential_edges

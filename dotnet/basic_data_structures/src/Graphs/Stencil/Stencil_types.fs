@@ -10,6 +10,6 @@ type Stencil_output_border = {
     after: Vertex_id Set
 }
 type Conditional_stencil = {
-    figure: Conditional_figure
+    figure: Conditional_figure<Mapping_function_id>
     output_border: Stencil_output_border
 }

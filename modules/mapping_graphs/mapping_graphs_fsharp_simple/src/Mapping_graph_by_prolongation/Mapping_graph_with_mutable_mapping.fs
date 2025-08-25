@@ -16,7 +16,7 @@ module Mapping_graph_with_mutable_mapping =
     let all_combinations_of_next_mappings 
         (mappings:
             Map<
-            Figure_id //the figure of next mapped vertices (they are grouped by their figures)
+            Mapping_function_id //the concept of next mapped vertices (they are grouped by their concepts)
             ,
             struct (
                 Vertex_id* // mapped vertex of the mappee (e.g. stencil)
@@ -178,16 +178,18 @@ module Mapping_graph_with_mutable_mapping =
         
 
     let next_mapping_targets_for_mapped_subfigures
+        mapping_id_to_function
         mappee
         target
         base_mapping
         next_subfigures_to_map
         =
         let rec mapping_targets_for_next_subfigure
+            mapping_id_to_function
             mappee
-            (target:Constant_figure)
+            target
             (mapping:Mapping)
-            (left_subfigures_to_map)
+            left_subfigures_to_map
             //                                                stencil_vertex possible_targets
             (found_mappings: Map<Mapping_function_id,  struct(Vertex_id   *  seq<Vertex_id>)  list>)
             =
@@ -197,6 +199,7 @@ module Mapping_graph_with_mutable_mapping =
             | current_subfigure_to_map::left_subfigures_to_map ->
                 let targets = 
                     possible_targets_for_mapping_subfigure
+                        mapping_id_to_function
                         mappee
                         target
                         base_mapping
@@ -215,6 +218,7 @@ module Mapping_graph_with_mutable_mapping =
                         found_mappings
                         |>Map.add figure updated_targets_of_this_figure
                     mapping_targets_for_next_subfigure
+                        mapping_id_to_function
                         mappee
                         target
                         mapping
@@ -222,20 +226,23 @@ module Mapping_graph_with_mutable_mapping =
                         updated_mappings
         
         mapping_targets_for_next_subfigure
+            mapping_id_to_function
             mappee
             target
             base_mapping
             (List.ofSeq next_subfigures_to_map)
             Map.empty
 
-    let prolongate_one_mapping_with_next_subfigures 
+    let prolongate_one_mapping_with_next_subfigures
+        mapping_id_to_function
         mappee
-        (target:Constant_figure)
-        (next_subfigures_to_map)
+        target
+        next_subfigures_to_map
         (mapping:Mapping)
         =
         let possible_next_mappings =
             next_mapping_targets_for_mapped_subfigures
+                mapping_id_to_function
                 mappee
                 target
                 mapping
@@ -248,9 +255,10 @@ module Mapping_graph_with_mutable_mapping =
             |>all_combinations_of_next_mappings
             |>prolongate_mapping_with_next_mapped_subfigures mapping
     
-    let rec prolongate_all_mappings 
+    let rec prolongate_all_mappings
+        mapping_id_to_function
         mappee
-        (target:Constant_figure)
+        target
         (last_mapped_vertices: Vertex_id seq)
         (mappings: Mapping seq)
         =
@@ -263,29 +271,33 @@ module Mapping_graph_with_mutable_mapping =
         else
             let next_subfigures_to_map =
                 next_vertices_to_map
-                |>Figure.vertices_with_their_referenced_figures mappee
+                |>Figure.vertices_with_their_referenced_targets mappee.targets
             
             mappings
             |>Seq.map (
-                prolongate_one_mapping_with_next_subfigures 
+                prolongate_one_mapping_with_next_subfigures
+                    mapping_id_to_function
                     mappee 
                     target 
                     next_subfigures_to_map
             )
             |>Seq.collect id
             |>prolongate_all_mappings
+                mapping_id_to_function
                 mappee 
                 target 
                 next_vertices_to_map
 
 
     let map_figure_onto_target
+        mapping_id_to_function
         target
         mappee
         =
         target
-        |>Map_first_nodes.map_first_nodes_with_mutable_mapping mappee
+        |>Map_first_nodes.map_first_nodes_with_mutable_mapping mapping_id_to_function mappee
         |>prolongate_all_mappings
+            mapping_id_to_function
             mappee 
             target
             (Figure.first_vertices mappee)

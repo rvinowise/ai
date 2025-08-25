@@ -7,6 +7,7 @@ open BenchmarkDotNet.Configs
 open BenchmarkDotNet.Attributes
 open BenchmarkDotNet.Running
 
+open rvinowise
 open rvinowise.ai
 
 
@@ -17,7 +18,8 @@ module enumerating_combinations =
 
         [<Benchmark>]
         member this.generator_of_mappings_with_indices()=
-            Map_first_nodes.map_first_nodes_with_mutable_mapping 
+            Map_first_nodes.map_first_nodes_with_mutable_mapping
+                Mapping_functions_registry.id_into_function
                 example.Figure.fitting_stencil_as_figure
                 example.Figure.a_high_level_relatively_simple_figure
             |> Consumer().Consume

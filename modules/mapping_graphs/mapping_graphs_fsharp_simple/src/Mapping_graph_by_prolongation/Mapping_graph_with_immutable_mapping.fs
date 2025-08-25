@@ -19,7 +19,7 @@ module Mapping_graph_with_immutable_mapping =
     (* for a figure we have a list of structures, each such structure has a vertex in the stencil,
     which can be mapped onto a sequence of vertices in the target. all those vertices reference the figure from the key *)
     let all_combinations_of_next_mappings 
-        (mappings: Map<Subfigure, struct (Vertex_id*seq<Vertex_id>) list>) 
+        (mappings: Map<Mapping_function_id, struct (Vertex_id*seq<Vertex_id>) list>) 
         =
         mappings
         |>Seq.map (fun pair->
@@ -179,11 +179,11 @@ module Mapping_graph_with_immutable_mapping =
             (List.ofSeq next_subfigures_to_map)
             Map.empty
 
-    let mapping_functions = Dictionary<Mapping_function_id, Constant_figure_id -> bool> ()
+    let mapping_functions = Dictionary<Mapping_function_id, Numerical_id -> bool> ()
     
     let targets_for_mapping_prolongation
-        (mappee:Unmapped_figure)
-        (target:Constant_figure)
+        (mappee)
+        (target)
         (mapping_to_prolongate:Map<Vertex_id,Vertex_id>)
         (within_mapping:Map<Vertex_id,Vertex_id>)
         (prolongating_node)
@@ -216,7 +216,7 @@ module Mapping_graph_with_immutable_mapping =
             mapping_functions
             |>Dictionary.getOrDefault
                   prolongating_mapping_function_id
-                  (fun mappee -> false)
+                  (fun _ -> false)
                 
         let is_vertex_suitable_for_mapping target_vertex =
             match needed_target_vertex with
@@ -225,9 +225,10 @@ module Mapping_graph_with_immutable_mapping =
             |None ->
                 not <| vertex_is_used_in_mapping_by_somebody target_vertex
                 &&
-                target_vertex
-                |>Dictionary.some_value target.targets
-                |>Option.defaultValue Figure.nonexistent_constant_figure  
+                //target_vertex
+                //|>Dictionary.some_value target.targets
+                //|>Option.defaultValue Figure.nonexistent_constant_figure  
+                target.targets[target_vertex]
                 |>can_be_mapped_onto
         
         possible_targets_for_mapping_subfigure
@@ -261,7 +262,7 @@ module Mapping_graph_with_immutable_mapping =
         let next_mapping_functions_to_map =
             next_vertices_to_map
             |>unmapped_vertices mapping
-            |>Figure.vertices_with_their_referenced_mapping_function_ids mappee
+            |>Figure.vertices_with_their_referenced_targets mappee.targets
         
         if Seq.isEmpty next_mapping_functions_to_map then
             Seq.singleton mapping
@@ -281,8 +282,8 @@ module Mapping_graph_with_immutable_mapping =
     
         
     let rec prolongate_all_mappings 
-        (mappee:Unmapped_figure)
-        (target:Constant_figure)
+        (mappee:Figure<Mapping_function_id>)
+        target
         (last_mapped_vertices: Vertex_id seq)
         (within_mapping: Map<Vertex_id,Vertex_id>)
         (mappings: Map<Vertex_id,Vertex_id> seq)
@@ -311,12 +312,16 @@ module Mapping_graph_with_immutable_mapping =
 
 
     let map_figure_onto_target_within_mapping
+        mapping_id_to_function
         within_mapping
         target
         mappee
         =
         target
-        |>Map_first_nodes.map_within_other_mapping within_mapping mappee 
+        |>Map_first_nodes.map_within_other_mapping
+              mapping_id_to_function
+              within_mapping 
+              mappee 
         |>prolongate_all_mappings
             mappee 
             target
@@ -324,24 +329,28 @@ module Mapping_graph_with_immutable_mapping =
             within_mapping
             
     let map_figure_onto_target
+        mapping_id_to_function
         target
         mappee
         =
         map_figure_onto_target_within_mapping
+            mapping_id_to_function
             Map.empty
             target
             mappee
 
 
     let is_maping_without_impossible_figures
+        mapping_id_to_function
         (map_figure_onto_target)
-        (target: Constant_figure)
-        (impossibles: Conditional_figure seq)
+        (target: Figure<_>)
+        (impossibles: Conditional_figure<_> seq)
         (checked_mapping: Map<Vertex_id,Vertex_id>)
         =
         impossibles
         |>Seq.map(
             map_figure_onto_target
+                mapping_id_to_function
                 checked_mapping
                 target
         )|>Seq.collect id
@@ -349,14 +358,16 @@ module Mapping_graph_with_immutable_mapping =
         
     
     let remove_mappings_with_impossible_figures
+        mapping_id_to_function
         (map_figure_onto_target)
-        (target: Constant_figure)
-        (impossibles: Conditional_figure seq)
+        (target: Figure<_>)
+        (impossibles: Conditional_figure<_> seq)
         (all_mappings: Map<Vertex_id,Vertex_id> seq)
         =
         all_mappings
         |>Seq.filter (
             is_maping_without_impossible_figures
+                mapping_id_to_function
                 map_figure_onto_target
                 target
                 impossibles
@@ -365,18 +376,21 @@ module Mapping_graph_with_immutable_mapping =
         
     
     let rec map_conditional_figure_onto_target
+        mapping_id_to_function
         within_mapping
-        target
-        (mappee: Conditional_figure)
+        (target: Figure<_>)
+        mappee
         =
         let mappings =
             map_figure_onto_target_within_mapping
+                mapping_id_to_function
                 within_mapping
                 target
                 mappee.existing
         
         mappings
         |>remove_mappings_with_impossible_figures
+            mapping_id_to_function
             map_conditional_figure_onto_target
             target
             mappee.impossibles

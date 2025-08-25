@@ -1,5 +1,6 @@
 namespace rvinowise.ai
 
+open rvinowise
 open rvinowise.ai
 
 open Xunit
@@ -9,7 +10,7 @@ open FsUnit
 module Finding_concept_with_special_types_of_concepts = 
 
     let rec incarnations_of_concept 
-        (place: Constant_figure)
+        (place: Figure<_>)
         (concept: Concept)
         =
         match concept with
@@ -128,7 +129,7 @@ module Finding_concept_with_special_types_of_concepts =
         )
 
     let appearances_of_concept_incarnations
-        (history: Constant_figure)
+        (history: Figure<_>)
         concept
         =
         let incarnations =         
@@ -145,6 +146,8 @@ module Finding_concept_with_special_types_of_concepts =
             1+1=2;ok;"
     //mom:    0123456789¹123456789²
             |>History_from_text.sequential_figure_from_text
+                Figure_registry.provide_signal
+                Figure_registry.id_into_name
                 (History_from_text.mood_changes_as_words_and_numbers "no" "ok")
 
         appearances_of_concept_incarnations

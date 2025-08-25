@@ -4,7 +4,7 @@ namespace rvinowise.ai
 module Algorithm =
     
     let apply_consecutive_functions
-        (actions: (Constant_figure -> Constant_figure seq) seq )
+        (actions: (Figure<_> -> Figure<_> seq) seq )
         target
         =
         actions
@@ -16,7 +16,7 @@ module Algorithm =
         
     
     let apply_parallel_functions
-        (actions: (Constant_figure -> Constant_figure seq) seq )
+        (actions: (Figure<_> -> Figure<_> seq) seq )
         target
         =
         actions

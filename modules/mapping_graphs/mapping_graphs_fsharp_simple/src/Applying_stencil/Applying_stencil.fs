@@ -4,12 +4,17 @@ open rvinowise.ai.stencil
 
 module Applying_stencil = 
  
-    let is_figure_without_impossible_parts 
-        (impossibles: Constant_figure seq)
-        (owner_figure: Constant_figure)
+    let is_figure_without_impossible_parts
+        maping_id_to_function
+        (impossibles: Figure<_> seq)
+        (owner_figure: Figure<_>)
         =
         impossibles
-        |>Seq.collect (Mapping_graph_with_immutable_mapping.map_figure_onto_target owner_figure)
+        |>Seq.collect (
+            Mapping_graph_with_immutable_mapping.map_figure_onto_target
+                maping_id_to_function
+                owner_figure
+        )
         |>Seq.isEmpty
 
 
@@ -45,7 +50,7 @@ module Applying_stencil =
     
     let output_vertices_from_the_middle
         (output_border: Stencil_output_border)
-        (target:Constant_figure)
+        (target:Figure<_>)
         mapping
         =
         let (output_beginning,output_ending) =
@@ -70,7 +75,7 @@ module Applying_stencil =
     
     let retrieve_result_from_output_border
         (output_border: Stencil_output_border)
-        (target:Constant_figure)
+        (target:Figure<_>)
         mapping 
         =
         let output_vertices =
@@ -102,61 +107,28 @@ module Applying_stencil =
             
                    
 
-    let retrieve_result 
-        stencil
-        (target:Constant_figure)
-        mapping 
-        =
-        let (output_beginning,output_ending) =
-            stencil
-            |>Stencil.output
-            |>fun output_node-> {
-                Stencil_output_border.before =  Edges.previous_vertices stencil.edges output_node;
-                after =  Edges.next_vertices stencil.edges output_node
-            }
-            |>get_output_beginning_and_ending
-                target.edges
-                mapping
-                
-        let output_vertices = 
-            (output_beginning,output_ending)
-            ||>Set.intersect 
-        
-        if Set.isEmpty output_vertices then
-            None
-        else
-            let resulting_part_of_target = 
-                output_vertices
-                |>built.Figure.subgraph_with_vertices target
-            
-            if 
-                is_figure_without_impossible_parts
-                    stencil.output_without 
-                    resulting_part_of_target
-            then
-                Some resulting_part_of_target
-            else
-                None
-            
-            
 
-    let results_of_stencil_application
-        stencil
-        target
-        =
-        stencil
-        |>Figure_from_stencil.convert
-        |>Mapping_graph_with_immutable_mapping.map_figure_onto_target target
-        |>Seq.map (retrieve_result stencil target)
-        |>Seq.choose id
+    // let results_of_stencil_application
+    //     stencil
+    //     target
+    //     =
+    //     stencil
+    //     |>Figure_from_stencil.convert
+    //     |>Mapping_graph_with_immutable_mapping.map_figure_onto_target target
+    //     |>Seq.map (retrieve_result stencil target)
+    //     |>Seq.choose id
 
     
     
     let results_of_conditional_stencil_application
+        mapping_id_to_function
         stencil
-        target
+        (target: Figure<_>)
         =
         stencil.figure
-        |>Mapping_graph_with_immutable_mapping.map_conditional_figure_onto_target Map.empty target
+        |>Mapping_graph_with_immutable_mapping.map_conditional_figure_onto_target
+              mapping_id_to_function
+              Map.empty
+              target
         |>Seq.map (retrieve_result_from_output_border stencil.output_border target)
         |>Seq.choose id

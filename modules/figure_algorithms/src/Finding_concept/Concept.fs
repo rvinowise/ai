@@ -4,13 +4,14 @@ open System.Diagnostics
 open BenchmarkDotNet.Engines
 open Xunit
 open FsUnit
+open rvinowise
 open rvinowise.extensions
 
 
 module Concept =
     let appearances_of_concept_incarnations
         concept_incarnations
-        (history: Constant_figure)
+        (history: Figure<_>)
         =
         let vertices_of_incarnations = 
             concept_incarnations
@@ -24,6 +25,7 @@ module Concept =
         concept_incarnations
         |>Seq.map (
             Mapping_graph_with_immutable_mapping.map_figure_onto_target
+                Mapping_functions_registry.id_into_function
                 history
         )|>Seq.concat
         |>Seq.filter (fun (appearance)->

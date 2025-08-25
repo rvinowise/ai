@@ -10,119 +10,66 @@ open rvinowise.ai
 open rvinowise.extensions
 
 
-exception BadGraph of string
-
 module Figure=
     
-    let is_empty (figure:Constant_figure) =
-        figure.targets
-        |>Map.isEmpty
-
-    let error_because_of_cycles (figure:Constant_figure) =
-        figure
-        |>Figure.first_vertices
-        |>List.ofSeq
-        |>function
-        |[]->
-            if is_empty figure then
-                None
-            else
-                Some "non-empty figure without first vertices, possibly because of a loop in them"
-        |[signal]->None
-        |many_vertices->
-            many_vertices
-            |>Seq.map (Edges.vertex_which_goes_into_cycle figure.edges)
-            |>Seq.tryPick id
-            |>(fun cycled_vertex ->
-                match cycled_vertex with
-                |Some vertex ->
-                    Some $"figure has a loop with vertex \"{vertex}\""
-                |None->
-                    None
-            )
-
     
-    let error_in_correspondence_between_subfigures_and_edges (figure:Constant_figure)=
-        let subfigures_in_edges = 
-            figure.edges
-            |>Seq.collect (fun edge->
-                [edge.head;edge.tail]
-            )|>Set.ofSeq
-        let subfigures = 
-            figure.targets
-            |>Map.keys
-            |>Set.ofSeq
-        let difference =
-            subfigures_in_edges
-            |>Set.difference subfigures
-        if difference.IsEmpty then
-            None
-        else
-            Some $"superfluous subfigures: {difference}"
-
-    
-
-    let check_correctness (figure:Constant_figure)=
-        [
-            error_because_of_cycles;
-            error_in_correspondence_between_subfigures_and_edges;
-        ]|>List.map(fun check ->
-            check figure
-        )|>List.choose id
-        |>function
-        |[]->figure
-        |errors->
-            errors
-            |>String.concat "\n"
-            |>BadGraph
-            |>raise
+    let create_targets_from_edges
+        turn_vertex_id_into_target_id
+        (edges:seq<string*string>) =
+        edges
+        |>Seq.map (fun(tail_id,head_id)->
+            [
+                (
+                    Vertex_id tail_id
+                    ,  
+                    tail_id
+                    |>turn_vertex_id_into_target_id
+                );
+                (
+                    Vertex_id head_id
+                    ,
+                    head_id 
+                    |>turn_vertex_id_into_target_id
+                )
+            ]
+        )
+        |>Seq.concat
+        |>Map.ofSeq
 
     let simple
-        figure_id_to_name
-        (turn_vertex_id_into_figure_id)
-        (edges:seq<string*string>) =
+        turn_vertex_id_into_target_id
+        target_id_to_name
+        (edges:seq<string*string>)
+        :Figure<_>
+        =
         {
-            edges=Graph.simple edges
-            targets=
-                edges
-                |>Seq.map (fun(tail_id,head_id)->
-                    [
-                        (
-                            Vertex_id tail_id
-                            ,  
-                            tail_id
-                            |>turn_vertex_id_into_figure_id
-                        );
-                        (
-                            Vertex_id head_id
-                            ,
-                            head_id 
-                            |>turn_vertex_id_into_figure_id
-                        )
-                    ]
-                )
-                |>Seq.concat
-                |>Map.ofSeq
+            Figure.edges=Graph.simple edges
+            targets=create_targets_from_edges turn_vertex_id_into_target_id edges
+                
         }
-        |>check_correctness
-        |>Renaming_figures.rename_vertices_to_standard_names figure_id_to_name
+        |>Check_figure_correctness.check_correctness
+        |>Renaming_figures.rename_vertices_to_standard_names target_id_to_name
     
     
-    let simple_without_separator (edges:seq<string*string>) =
+    let simple_without_separator
+        (edges:seq<string*string>)
+        =
+        let turn_vertex_id_into_target_id = (String.remove_number >> Figure_registry.provide_signal)
         simple
+            turn_vertex_id_into_target_id
             Figure_registry.id_into_name
-            (String.remove_number >> Figure_registry.provide_signal)
             edges
 
     let simple_with_separator (edges:seq<string*string>) =
+        let turn_vertex_id_into_target_id = (String.remove_number_with_hash >> Figure_registry.provide_signal)
         simple
+            turn_vertex_id_into_target_id
             Figure_registry.id_into_name
-            (String.remove_number_with_hash >> Figure_registry.provide_signal)
             edges
 
     let sequential_figure_from_sequence_of_figures
-        (figure_name_to_id: string -> Constant_figure_id)        
-        (figure_id_to_name: Constant_figure_id -> string )        
+        (figure_name_to_id: string -> 'Numerical_id)        
+        (figure_id_to_name: 'Numerical_id -> string )        
         (figures: string seq)
         =
         let subfigures_sequence = 
@@ -134,7 +81,7 @@ module Figure=
                 |>figure_name_to_id
             )
         {
-            edges=
+            Figure.edges=
                 subfigures_sequence
                 |>Seq.map fst
                 |>built.Graph.sequential_edges
@@ -145,7 +92,7 @@ module Figure=
         }|>Renaming_figures.rename_vertices_to_standard_names figure_id_to_name
 
     let sequential_figure_from_sequence_of_vertices
-        (turn_vertex_id_into_figure_id)
+        (turn_vertex_id_into_target_id)
         (vertices: string seq)
         =
         let vertices_sequence = 
@@ -153,7 +100,7 @@ module Figure=
             |>Seq.map (fun vertex->
                 Vertex_id vertex
                 ,
-                turn_vertex_id_into_figure_id vertex
+                turn_vertex_id_into_target_id vertex
             )
         {
             edges=
@@ -188,17 +135,22 @@ module Figure=
                 |>Map.ofSeq
         }//|>Renaming_figures.rename_vertices_to_standard_names
     
-    let sequential_figure_from_text (text:string) =
+    let sequential_figure_from_text
+        target_name_to_id
+        target_id_to_name
+        (text:string) =
         text
         |>Seq.map string
         |>sequential_figure_from_sequence_of_figures
-            Figure_registry.provide_signal
-            Figure_registry.id_into_name
+            target_name_to_id
+            target_id_to_name
 
     [<Fact>]
     let ``try sequence_from_text``()=
         "abba"
         |>sequential_figure_from_text
+            Mapping_functions_registry.name_into_id
+            Mapping_functions_registry.id_into_name
         |>should equal
             {
                 edges=
@@ -221,7 +173,7 @@ module Figure=
         (name:string)
         =
         {
-            edges=Set.empty
+            Figure.edges=Set.empty
             targets=[
                 //(id+"#1")|>Vertex_id,
                 Vertex_id name
@@ -230,7 +182,7 @@ module Figure=
             ]|>Map.ofSeq
         }|>Renaming_figures.rename_vertices_to_standard_names figure_id_to_name
 
-    let vertex_data_from_edges_of_figure (full_vertex_data: Map<Vertex_id, Figure_id>) edges =
+    let vertex_data_from_edges_of_figure (full_vertex_data: Map<Vertex_id, 'Numerical_id>) edges =
         edges
         |>Edges.all_vertices
         |>Seq.map (fun vertex->
@@ -244,7 +196,7 @@ module Figure=
         |>Map.ofSeq
     
     let vertex_data_from_vertices_of_figure 
-        (full_vertex_data: Map<Vertex_id, Constant_figure_id>) 
+        (full_vertex_data: Map<Vertex_id, 'Numerical_id>) 
         (vertices: Vertex_id seq)
         =
         vertices
@@ -255,21 +207,21 @@ module Figure=
 
 
     let vertex_data_from_tuples
-        figure_name_to_id
+        target_name_to_id
         (edges:seq<string*string*string*string>) 
         =
         edges
         |>Seq.map (fun(tail_vertex,tail_target,head_vertex,head_target)->
             [
-                (Vertex_id tail_vertex, figure_name_to_id tail_target);
-                (Vertex_id head_vertex, figure_name_to_id head_target)
+                (Vertex_id tail_vertex, target_name_to_id tail_target);
+                (Vertex_id head_vertex, target_name_to_id head_target)
             ]
         )
         |>Seq.concat
         |>Map.ofSeq 
 
     let from_parts_of_figure
-        (figure:Constant_figure)
+        (figure)
         (vertices:Vertex_id seq)
         (edges:Edge seq) =
         {
@@ -278,15 +230,15 @@ module Figure=
         }
 
     let from_tuples
-        figure_name_to_id
-        figure_id_to_name
+        target_name_to_id
+        target_id_to_name
         (edges:seq<string*string*string*string>) =
         {
-            edges=Graph.from_tuples edges
-            targets=vertex_data_from_tuples figure_name_to_id edges 
+            Figure.edges=Graph.from_tuples edges
+            targets=vertex_data_from_tuples target_name_to_id edges 
         }
-        |>check_correctness
-        |>Renaming_figures.rename_vertices_to_standard_names figure_id_to_name
+        |>Check_figure_correctness.check_correctness
+        |>Renaming_figures.rename_vertices_to_standard_names target_id_to_name
 
     
     let subgraph_with_vertices 
@@ -299,8 +251,16 @@ module Figure=
         
 
 module Conditional_figure =
-    let from_figure_without_impossibles (figure:Constant_figure) =
+    
+    let from_figure_without_impossibles figure =
         {
             Conditional_figure.existing = figure
             impossibles = Set.empty 
         }
+        
+    let conditional_figure_mapped_onto_constants edges =
+        edges
+        |>Figure.simple
+            (String.remove_number >> Mapping_functions_registry.onto_exact_figure)
+            Mapping_functions_registry.id_into_name
+        |>from_figure_without_impossibles

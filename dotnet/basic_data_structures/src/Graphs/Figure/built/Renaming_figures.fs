@@ -22,7 +22,7 @@ module Renaming_figures =
 
     let renamed_subfigures_for_figure 
         (old_to_new_names: Map<Vertex_id, Vertex_id>)
-        (subfigures: IDictionary<Vertex_id, Constant_figure_id>)
+        (subfigures: IDictionary<Vertex_id, 'Numerical_id>)
         =
         subfigures
         |>Seq.map(fun pair->
@@ -128,7 +128,7 @@ module Renaming_figures =
 
 
     let form_for_comparison 
-        (subfigures:Map<Vertex_id, _>)
+        (subfigures: Map<Vertex_id, 'Target>)
         (renamings: Map<Vertex_id, Vertex_id>)
         (vertices: Vertex_id list)
         =
@@ -138,11 +138,11 @@ module Renaming_figures =
             |>Map.tryFind vertex
             |>function
             |Some renamed_vertex->renamed_vertex|>Vertex_id.value
-            |None->subfigures[vertex]|>Constant_figure_id.value|>string
+            |None->subfigures[vertex]|>string
         )|>List.sort
 
     let compare_compeating_vertices
-        (owner_figure:Constant_figure)
+        (owner_figure: IFigure)
         (renamings: Map<Vertex_id, Vertex_id>)
         (vertex1:Vertex_id) 
         (vertex2:Vertex_id) 
@@ -189,7 +189,7 @@ module Renaming_figures =
 
 
     let sort_compeating_vertices_by_their_neighbours
-        (owner_figure:Constant_figure)
+        (owner_figure)
         (renamings: Map<Vertex_id, Vertex_id>)
         (vertices: Vertex_id list)
         =
@@ -206,7 +206,7 @@ module Renaming_figures =
 
     let rec assign_numbers_to_next_vertex_wave
         figure_id_to_name
-        (owner_figure:Constant_figure)
+        (owner_figure: Figure<_>)
         (renamings: Map<Vertex_id, Vertex_id>)
         (figures_to_last_number: Map<_, int>)
         (vertices: Vertex_id list)
@@ -271,8 +271,9 @@ module Renaming_figures =
                 next_vertices
         
     let rename_vertices_to_standard_names
-        figure_id_to_name
-        (owner_figure: Constant_figure)
+        target_id_to_name
+        (owner_figure: Figure<_>)
+        : Figure<_>
         =
         let first_vertices =
             owner_figure
@@ -281,7 +282,7 @@ module Renaming_figures =
         
         let (renamings, _) =
             assign_numbers_to_next_vertex_wave
-                figure_id_to_name
+                target_id_to_name
                 owner_figure
                 Map.empty
                 Map.empty

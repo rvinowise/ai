@@ -9,7 +9,7 @@ module Figure=
 
 
     let add_figure
-        (figure: ai.Constant_figure)
+        (figure: Figure<_>)
         (to_node: infrastructure.Node)
         =
         figure.edges

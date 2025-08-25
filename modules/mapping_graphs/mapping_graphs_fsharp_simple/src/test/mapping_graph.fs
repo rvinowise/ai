@@ -7,7 +7,6 @@ open rvinowise
 open rvinowise.ai
 open rvinowise.ai.Applying_stencil
 open rvinowise.ai.Mapping_graph_with_immutable_mapping
-open rvinowise.ai.built.Figure_from_event_batches
 open rvinowise.ai.ui
 open rvinowise.ai.stencil
 open rvinowise.ui
@@ -18,7 +17,7 @@ module ``mapping a graph``=
     [<Fact>]
     let ``finding following subfigures referencing a specific figure``()=
         let owner_figure = example.Figure.a_high_level_relatively_simple_figure
-        let referenced_figure = Figure_id "f"|>built.Subfigure.referencing_constant_figure
+        let referenced_figure = "f"|> Figure_registry.provide_signal
         (first_vertices_reacheble_from_all_vertices_together 
             (does_vertex_reference_figue
                 owner_figure

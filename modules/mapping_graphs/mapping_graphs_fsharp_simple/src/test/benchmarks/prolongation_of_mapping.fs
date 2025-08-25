@@ -7,6 +7,7 @@ open BenchmarkDotNet.Configs
 open BenchmarkDotNet.Attributes
 open BenchmarkDotNet.Running
 
+open rvinowise
 open rvinowise.ai
 open rvinowise.ai.mapping_graph_impl
 open rvinowise.extensions.benchmark
@@ -15,9 +16,15 @@ open rvinowise.extensions.benchmark
 module prolongation_of_mapping =
 
     type Mappee_case = {
-        simple: Constant_figure
-        conditional: Conditional_figure
+        simple: Figure<Mapping_function_id>
+        conditional: Conditional_figure<Mapping_function_id>
     }
+    
+    let empty_figure_for_mapping =
+        built.Figure.from_tuples
+            Mapping_functions_registry.onto_exact_figure
+            Mapping_functions_registry.id_into_name
+            []
     
     type Benchmarking_prolongation_of_mapping() =
 
@@ -26,11 +33,9 @@ module prolongation_of_mapping =
                 Parameter.value=
                     {
                         simple=
-                            example.Stencil.a_long_stencil|>Figure_from_stencil.convert;
+                            example.Stencil.a_long_stencil.figure.existing;
                         conditional=
-                            example.Stencil.a_long_stencil
-                            |>Figure_from_stencil.convert
-                            |>built.Conditional_figure.from_figure_without_impossibles
+                            example.Stencil.a_long_stencil.figure
                     }
                 
                 name="a_long_mappee"
@@ -39,11 +44,9 @@ module prolongation_of_mapping =
                 Parameter.value=
                     {
                         simple=
-                            example.Stencil.a_fitting_stencil|>Figure_from_stencil.convert;
+                            example.Stencil.a_fitting_stencil.figure.existing;
                         conditional=
-                            example.Stencil.a_fitting_stencil
-                            |>Figure_from_stencil.convert
-                            |>built.Conditional_figure.from_figure_without_impossibles
+                            example.Stencil.a_fitting_stencil.figure
                     }
                 name="a_simple_mappee"
             };
@@ -51,11 +54,9 @@ module prolongation_of_mapping =
                 Parameter.value=
                     {
                         simple=
-                            example.Stencil.a_stencil_with_huge_beginning|>Figure_from_stencil.convert;
+                            example.Stencil.a_stencil_with_huge_beginning.figure.existing;
                         conditional=
-                            example.Stencil.a_stencil_with_huge_beginning
-                            |>Figure_from_stencil.convert
-                            |>built.Conditional_figure.from_figure_without_impossibles
+                            example.Stencil.a_stencil_with_huge_beginning.figure
                     }
                 name="a_mappee_with_huge_beginning"
             }
@@ -70,13 +71,15 @@ module prolongation_of_mapping =
             name="a_figure_with_huge_beginning"}
         ]
         
-
+        
+        
         [<ParamsSource("mappees")>]
         member val mappee =
+            
             {
                 value={
-                    simple=example.Figure.empty
-                    conditional=  example.Figure.empty|>built.Conditional_figure.from_figure_without_impossibles
+                    simple=empty_figure_for_mapping
+                    conditional= built.Conditional_figure.from_figure_without_impossibles empty_figure_for_mapping 
                 }
                 name="default"
             } with get, set
@@ -90,6 +93,7 @@ module prolongation_of_mapping =
         (*not updated (old incomplete algorithm)*)
         member this.prolongation_of_mutable_mapping()=
             Mapping_graph_with_mutable_mapping.map_figure_onto_target
+                Mapping_functions_registry.id_into_function
                 this.target_figure.value
                 this.mappee.value.simple
             |> Consumer().Consume
@@ -97,6 +101,7 @@ module prolongation_of_mapping =
         [<Benchmark>]
         member this.prolongation_of_immutable_mapping()=
             Mapping_graph_with_immutable_mapping.map_figure_onto_target
+                Mapping_functions_registry.id_into_function
                 this.target_figure.value
                 this.mappee.value.simple
             |> Consumer().Consume
@@ -106,6 +111,7 @@ module prolongation_of_mapping =
         member this.prolongation_of_immutable_conditional_mapping()= 
             this.mappee.value.conditional
             |>Mapping_graph_with_immutable_mapping.map_conditional_figure_onto_target
+                Mapping_functions_registry.id_into_function
                 Map.empty
                 this.target_figure.value
             |> Consumer().Consume

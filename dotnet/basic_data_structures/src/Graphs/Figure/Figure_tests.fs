@@ -53,6 +53,8 @@ module Figure_tests=
     let ``try is_sequence``()=
         "abcde"
         |>built.Figure.sequential_figure_from_text
+            Figure_registry.provide_signal
+            Figure_registry.id_into_name
         |>(fun f->f.edges)
         |>Edges.is_sequence
         |>should equal true
@@ -105,7 +107,7 @@ module Figure_tests=
         let figure_name_to_id = Figure_registry.provide_signal
         let figure_id_to_name = Figure_registry.id_into_name
         let figure1 = {
-            Constant_figure.edges=[
+            Figure.edges=[
                 "a1","b1";
                 "a2","b1";
                 "a3","c1";
@@ -130,7 +132,7 @@ module Figure_tests=
             |>Map.ofList
         }
         let figure2 = {
-            Constant_figure.edges=[
+            Figure.edges=[
                 "a1","b1";
                 "a3","b1";
                 "a2","c1";

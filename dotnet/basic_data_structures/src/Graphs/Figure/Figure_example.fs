@@ -76,11 +76,13 @@ module Figure =
             ]
     
     let fitting_stencil_as_figure =
-        built.Figure.simple_without_separator
-            [
-                "b","f";
-                "h","f";
-            ]
+        [
+            "b","f";
+            "h","f";
+        ]
+        |>built.Figure.simple
+            (extensions.String.remove_number >> Mapping_functions_registry.onto_exact_figure)
+            Mapping_functions_registry.id_into_name
 
     let empty =
         built.Figure.from_tuples
