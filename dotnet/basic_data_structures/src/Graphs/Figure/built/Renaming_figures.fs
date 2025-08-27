@@ -142,7 +142,7 @@ module Renaming_figures =
         )|>List.sort
 
     let compare_compeating_vertices
-        (owner_figure: IFigure)
+        (owner_figure)
         (renamings: Map<Vertex_id, Vertex_id>)
         (vertex1:Vertex_id) 
         (vertex2:Vertex_id) 

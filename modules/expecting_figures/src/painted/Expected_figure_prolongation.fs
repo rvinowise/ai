@@ -9,7 +9,7 @@ open rvinowise.ai.ui
 module Expected_figure_prolongation =
 
     let mark_expected_nodes
-        (prolongation:Expected_figure_prolongation) 
+        (prolongation:Expected_figure_prolongation<_>) 
         (node: infrastructure.Node)
         =
         prolongation.expected
@@ -25,7 +25,7 @@ module Expected_figure_prolongation =
 
     let with_expected_prolongation
         name
-        (prolongation:Expected_figure_prolongation) 
+        (prolongation:Expected_figure_prolongation<_>) 
         node
         =
         node
@@ -40,7 +40,7 @@ module Expected_figure_prolongation =
 
     let visualise_prolongation
         id
-        (prolongation:Expected_figure_prolongation) 
+        (prolongation:Expected_figure_prolongation<_>) 
         =
         id
         |>infrastructure.Graph.empty

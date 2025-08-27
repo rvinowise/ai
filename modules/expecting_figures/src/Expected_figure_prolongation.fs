@@ -2,8 +2,10 @@ namespace rvinowise.ai
 
 open rvinowise.ai
 
-type Expected_figure_prolongation = {
-    prolongated: Figure<Constant_figure_id>
+type Expected_figure_prolongation<'Target>
+    when 'Target :> Numerical_id
+    = {
+    prolongated: Figure<'Target>
     expected: Vertex_id Set
 }
 

@@ -83,12 +83,12 @@ type Figure<'Target> when 'Target :> Numerical_id = {
     edges: Edge Set
     targets: Map<Vertex_id, 'Target>
 }
-with
-    interface IFigure with
-        member this.edges = this.edges
-        member this.targets =
-            this.targets
-            |>Map.map (fun _ target -> target :> Numerical_id)
+// with
+//     interface IFigure with
+//         member this.edges = this.edges
+//         member this.targets =
+//             this.targets
+//             |>Map.map (fun _ target -> target :> Numerical_id)
 
 type Conditional_figure<'Target>
     when 'Target :> Numerical_id

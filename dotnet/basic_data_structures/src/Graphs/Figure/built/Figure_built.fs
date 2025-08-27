@@ -147,10 +147,13 @@ module Figure=
 
     [<Fact>]
     let ``try sequence_from_text``()=
+        let target_name_to_id = Figure_registry.provide_signal
+        let target_id_to_name = Figure_registry.id_into_name
+        
         "abba"
         |>sequential_figure_from_text
-            Mapping_functions_registry.name_into_id
-            Mapping_functions_registry.id_into_name
+            target_name_to_id
+            target_id_to_name
         |>should equal
             {
                 edges=
@@ -162,7 +165,7 @@ module Figure=
                     |>Seq.map (fun (vertex,figure) ->
                         Vertex_id vertex
                         ,
-                        Figure_registry.provide_signal figure
+                        target_name_to_id figure
                     )
                     |>Map.ofSeq
             }

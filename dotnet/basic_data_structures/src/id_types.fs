@@ -10,13 +10,18 @@ with
 
 type Numerical_id =
     abstract member value: int
+    //static abstract member nonexistent: unit -> 'Numerical_id
+    //abstract member nonexistent: unit -> Numerical_id
 
 type Mapping_function_id = Mapping_function_id of int
 with
     static member value (Mapping_function_id value) = value
+    static member nonexistent () = Mapping_function_id 0
     
     interface Numerical_id with
+        //static member nonexistent () = Mapping_function_id.nonexistent ()
         member this.value = Mapping_function_id.value this
+        
     
     
 type Constant_figure_id = Constant_figure_id of int
@@ -25,8 +30,13 @@ with
     static member (+) (this, other) =
         Constant_figure_id (Constant_figure_id.value this + Constant_figure_id.value other)
     
+    static member nonexistent () = Constant_figure_id 0
+    
     interface Numerical_id with
+        //member nonexistent () = Constant_figure_id.nonexistent ()
         member this.value = Constant_figure_id.value this
+
+
 
 
 type Vertex_id = |Vertex_id of string
@@ -54,4 +64,6 @@ module Vertex_id =
         |>Vertex_id
         
         
- 
+module Numeric_id =
+    let inline nonexisting_id< ^Target when ^Target : (static member nonexistent: unit -> ^Target)>  = 
+     (^Target : (static member  nonexistent: unit -> ^Target) () )

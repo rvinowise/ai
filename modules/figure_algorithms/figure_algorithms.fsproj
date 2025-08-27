@@ -11,8 +11,6 @@
     <Compile Include="src\Finding_concept\Concept.fs" />
     <Compile Include="src\Finding_concept\Math_concepts.fs" />
     
-    <Compile Include="src\Finding_concept\Finding_concept_with_special_types_of_concepts.fs" />
-    
   </ItemGroup>
 
 

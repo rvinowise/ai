@@ -4,21 +4,20 @@ open rvinowise.ai
 
 module Expecting_figures = 
 
-    let prolongate_expectation_with_an_input_figure 
-        (fired_figure: Figure_id)
-        (expectation: Expected_figure_prolongation) 
+    let inline prolongate_expectation_with_an_input_figure 
+        (fired_figure: 'Numerical_id)
+        (expectation: Expected_figure_prolongation<_>) 
         =
         let expected_figures = 
             expectation.expected
             |>Figure.referenced_figures expectation.prolongated
-            |>Seq.map _.name
+        
         if (Seq.contains fired_figure expected_figures) then
             let fired_subfigures = 
                 expectation.expected
                 |>Set.filter (fun expected -> 
                     expected
                     |>Figure.reference_of_vertex expectation.prolongated
-                    |>_.name
                         = fired_figure
                 )
                     
@@ -39,8 +38,8 @@ module Expecting_figures =
         else
             expectation
 
-    let change_expectations_with_new_input 
-        (expectations: Expected_figure_prolongation seq) 
+    let inline change_expectations_with_new_input 
+        (expectations: Expected_figure_prolongation<_> seq) 
         figure_id
         =
         expectations

@@ -1,5 +1,6 @@
 namespace rvinowise
 
+open System
 open System.Collections.Generic
 
 open rvinowise.ai
@@ -39,7 +40,11 @@ module Mapping_functions_registry =
         
 
     let id_into_name function_id =
-        function_names[Mapping_function_id.value function_id]
+        try
+            function_names[Mapping_function_id.value function_id]
+        with
+        | IndexOutOfRangeException as e ->
+            Debug.Log
         
     let name_into_id function_name =
         function_names_to_ids[function_name]

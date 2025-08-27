@@ -80,9 +80,9 @@ module Mapping_graph_with_immutable_mapping =
         |>Set.intersectMany
         |>choose_first_vertices step_further
 
-    let does_vertex_reference_figue
-        owner_figure
-        referenced_figure
+    let inline does_vertex_reference_figue
+        (owner_figure: Figure<_>)
+        (referenced_figure)
         vertex
         =
         vertex

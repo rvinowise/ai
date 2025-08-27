@@ -10,15 +10,15 @@ module Figure=
     let nonexistent_vertex = Figure_id "nonexistent"
     let nonexistent_constant_figure = Constant_figure_id 0
 
-    let reference_of_vertex 
-        owner_figure 
+    let inline reference_of_vertex 
+        (owner_figure: Figure<'Target>)
         vertex
         =
         match
             Dictionary.some_value owner_figure.targets vertex 
         with
         | Some referenced_figure -> referenced_figure
-        | None -> nonexistent_constant_figure
+        | None -> Numeric_id.nonexisting_id<'Target>
 
 
     let is_vertex_referencing_target 
@@ -82,7 +82,10 @@ module Figure=
 
     
 
-    let name_of_a_sequence (figure:Figure<_>) =
+    let name_of_a_sequence
+        figure_id_to_name
+        (figure:Figure<_>)
+        =
         if Seq.isEmpty figure.edges then 
             figure.targets
             |>Seq.head
@@ -90,7 +93,7 @@ module Figure=
             |>Vertex_id.value
         else
             figure.targets
-            |>Map.map (fun vertex _ -> Vertex_id.value vertex)
+            |>Map.map (fun vertex target -> figure_id_to_name target)
             |>Figure_printing.name_of_a_sequence_from_edges figure.edges
 
     

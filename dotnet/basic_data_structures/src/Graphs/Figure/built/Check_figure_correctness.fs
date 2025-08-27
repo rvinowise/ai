@@ -38,7 +38,7 @@ module Check_figure_correctness =
             )
 
     
-    let error_in_correspondence_between_subfigures_and_edges (figure:IFigure)=
+    let error_in_correspondence_between_subfigures_and_edges (figure)=
         let subfigures_in_edges = 
             figure.edges
             |>Seq.collect (fun edge->

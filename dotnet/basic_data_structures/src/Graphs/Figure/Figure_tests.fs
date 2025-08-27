@@ -35,8 +35,8 @@ module Figure_tests=
     let ``try id_from_sequence``()=
         ["a1","b";"b","a2";"a2","c"]
         |>built.Figure.simple_without_separator
-        |>ai.Figure.name_of_a_sequence
-        |>should equal (Figure_id "abac")
+        |>ai.Figure.name_of_a_sequence Figure_registry.id_into_name
+        |>should equal ( "abac")
     
     
     [<Fact>]
@@ -45,8 +45,8 @@ module Figure_tests=
         |>built.Figure.signal
             Figure_registry.provide_signal
             Figure_registry.id_into_name
-        |>ai.Figure.name_of_a_sequence
-        |>should equal (Figure_id "a")
+        |>ai.Figure.name_of_a_sequence Figure_registry.id_into_name
+        |>should equal ("a")
     
 
     [<Fact>]
@@ -80,7 +80,7 @@ module Figure_tests=
     [<Fact>]
     let ``try rename_vertices_to_standard_names``()=
         built.Figure.from_tuples
-            Figure_registry.provide_signal
+            (Figure_registry.provide_signal)
             Figure_registry.id_into_name
             [
                 "my_a0","a","my_b1","b";
@@ -91,10 +91,10 @@ module Figure_tests=
         |>should equal (
             let edges =
                 [
-                    "a1","a","b1","b";
-                    "a1","a","B1","B";
-                    "B1","B","figure_c1","figure_c";
-                    "B1","B","a2","a";
+                    "a#1","a","b#1","b";
+                    "a#1","a","B#1","B";
+                    "B#1","B","figure_c#1","figure_c";
+                    "B#1","B","a#2","a";
                 ]
             {
                 edges=Graph.from_tuples edges

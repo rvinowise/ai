@@ -255,7 +255,6 @@ module Fusing_figures_into_sequence=
                 a_figure
                 b_figure
         real_ab_figure.edges
-        |>Seq.sort
         |>should equal expected_ab_figure.edges
 
         real_ab_figure.targets

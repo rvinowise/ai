@@ -158,8 +158,7 @@ module ``application of stencils``=
             {
                 Conditional_stencil.figure=
                     [
-                        "N","out";
-                        "out",";";
+                        "N",";";
                     ]|>built.Conditional_figure.conditional_figure_mapped_onto_constants
                 output_border = {
                     before = "N" |>Vertex_id|>Set.singleton

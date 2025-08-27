@@ -3,6 +3,7 @@ namespace rvinowise.ai.test
 open Xunit
 open FsUnit
 
+open rvinowise
 open rvinowise.ai
 open rvinowise.ai.Expecting_figures
 open rvinowise.ai.Expected_figure_prolongation
@@ -36,6 +37,8 @@ module ``expectation of prolongation of figures``=
         prolongation.expected |> should equal first_subfigures
 
 
+    let figure_name_to_id = Figure_registry.provide_signal
+    
     [<Fact>]
     let ``prolongating a figure with a new input changes expectations``()=
         let high_figure = a_high_level_relatively_simple_figure
@@ -45,13 +48,13 @@ module ``expectation of prolongation of figures``=
             ["c#1";"e#1";"h#1";]|>Seq.map Vertex_id
         let initial_expectation = from_figure high_figure
         let next_expectation = 
-            prolongate_expectation_with_an_input_figure (Figure_id "b") initial_expectation 
+            prolongate_expectation_with_an_input_figure (figure_name_to_id "b") initial_expectation 
         
         next_expectation.expected
         |> should equal expected_subfigures_after_b
         
         let next_expectation = 
-            prolongate_expectation_with_an_input_figure (Figure_id "d") next_expectation 
+            prolongate_expectation_with_an_input_figure (figure_name_to_id "d") next_expectation 
         
         next_expectation.expected
         |> should equal expected_subfigures_after_d
@@ -60,9 +63,9 @@ module ``expectation of prolongation of figures``=
         let high_figure = a_high_level_relatively_simple_figure
         let initial_expectation = from_figure high_figure
         let expectation_after_b = 
-            prolongate_expectation_with_an_input_figure (Figure_id "b") initial_expectation
+            prolongate_expectation_with_an_input_figure (figure_name_to_id "b") initial_expectation
         let expectation_after_d = 
-            prolongate_expectation_with_an_input_figure (Figure_id "d") expectation_after_b
+            prolongate_expectation_with_an_input_figure (figure_name_to_id "d") expectation_after_b
         
         "F"
         |>infrastructure.Graph.empty
