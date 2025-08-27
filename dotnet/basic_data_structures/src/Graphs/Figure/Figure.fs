@@ -89,8 +89,8 @@ module Figure=
         if Seq.isEmpty figure.edges then 
             figure.targets
             |>Seq.head
-            |>_.Key
-            |>Vertex_id.value
+            |>_.Value
+            |>figure_id_to_name
         else
             figure.targets
             |>Map.map (fun vertex target -> figure_id_to_name target)

@@ -44,7 +44,7 @@ module Mapping_functions_registry =
             function_names[Mapping_function_id.value function_id]
         with
         | IndexOutOfRangeException as e ->
-            Debug.Log
+            Log.error $"no mapping function with id {function_id}"
         
     let name_into_id function_name =
         function_names_to_ids[function_name]
