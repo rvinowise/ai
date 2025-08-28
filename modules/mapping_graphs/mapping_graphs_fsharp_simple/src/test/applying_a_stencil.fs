@@ -149,12 +149,7 @@ module ``application of stencils``=
     [<Fact>]
     let ``a fitting stencil, applied to a figure, outputs a subgraph (with only one vertex)``()=
         
-        built.Figure.sequential_figure_from_text
-            figure_name_to_id
-            figure_id_to_name
-            "N0;"
-        |>results_of_conditional_stencil_application
-            Mapping_functions_registry.id_into_function
+        let stencil =
             {
                 Conditional_stencil.figure=
                     [
@@ -165,6 +160,14 @@ module ``application of stencils``=
                     after = ";" |>Vertex_id|>Set.singleton
                 } 
             }
+        
+        built.Figure.sequential_figure_from_text
+            figure_name_to_id
+            figure_id_to_name
+            "N0;"
+        |>results_of_conditional_stencil_application
+            Mapping_functions_registry.id_into_function
+            stencil
         |>should equal [
             built.Figure.signal
                 figure_name_to_id

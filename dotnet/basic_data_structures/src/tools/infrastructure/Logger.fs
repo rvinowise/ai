@@ -15,7 +15,7 @@ module Log =
             )
         #if DEBUG
             .MinimumLevel.Debug()
-        #endif
+        #endif   
             .CreateLogger();
     
     let info = logger.Information

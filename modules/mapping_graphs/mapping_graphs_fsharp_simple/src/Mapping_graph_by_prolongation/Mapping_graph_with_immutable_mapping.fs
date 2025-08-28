@@ -213,10 +213,7 @@ module Mapping_graph_with_immutable_mapping =
                 |>Map.containsKey mapped_vertex_in_rail
         
         let can_be_mapped_onto =
-            mapping_functions
-            |>Dictionary.getOrDefault
-                  prolongating_mapping_function_id
-                  (fun _ -> false)
+            mapping_id_to_function prolongating_mapping_function_id
                 
         let is_vertex_suitable_for_mapping target_vertex =
             match needed_target_vertex with

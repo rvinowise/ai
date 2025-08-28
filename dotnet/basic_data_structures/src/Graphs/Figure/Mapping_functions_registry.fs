@@ -22,8 +22,9 @@ module Mapping_functions_registry =
     
     let remember_function name mapping_function =
         let next_id = Mapping_function_id function_names.Count
-        mapping_functions.Add(mapping_function)
         function_names_to_ids[name] <- next_id
+        mapping_functions.Add(mapping_function)
+        function_names.Add(name)
         next_id
     
     let onto_exact_figure target_name =
