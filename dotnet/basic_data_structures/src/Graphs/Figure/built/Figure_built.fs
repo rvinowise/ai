@@ -38,9 +38,7 @@ module Figure=
 
     let simple
         turn_vertex_id_into_target_id
-        target_id_to_name
         (edges:seq<string*string>)
-        :Figure<_>
         =
         {
             Figure.edges=Graph.simple edges
@@ -48,7 +46,6 @@ module Figure=
                 
         }
         |>Check_figure_correctness.check_correctness
-        |>Renaming_figures.rename_vertices_to_standard_names target_id_to_name
     
     
     let simple_without_separator
@@ -57,15 +54,17 @@ module Figure=
         let turn_vertex_id_into_target_id = (String.remove_number >> Figure_registry.provide_signal)
         simple
             turn_vertex_id_into_target_id
-            Figure_registry.id_into_name
             edges
+        |>Renaming_figures.rename_vertices_to_standard_names Figure_registry.id_into_name
+
 
     let simple_with_separator (edges:seq<string*string>) =
         let turn_vertex_id_into_target_id = (String.remove_number_with_hash >> Figure_registry.provide_signal)
         simple
             turn_vertex_id_into_target_id
-            Figure_registry.id_into_name
             edges
+        |>Renaming_figures.rename_vertices_to_standard_names Figure_registry.id_into_name
+
 
     let sequential_figure_from_sequence_of_figures
         (figure_name_to_id: string -> 'Numerical_id)        
@@ -261,9 +260,4 @@ module Conditional_figure =
             impossibles = Set.empty 
         }
         
-    let conditional_figure_mapped_onto_constants edges =
-        edges
-        |>Figure.simple
-            (String.remove_number >> Mapping_functions_registry.onto_exact_figure)
-            Mapping_functions_registry.id_into_name
-        |>from_figure_without_impossibles
+    

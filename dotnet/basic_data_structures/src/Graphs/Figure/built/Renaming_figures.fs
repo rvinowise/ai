@@ -101,19 +101,19 @@ module Renaming_figures =
     let assign_next_numbers_to_sorted_vertices
         (all_renamings: Map<Vertex_id, Vertex_id>)
         (all_figures_to_last_number: Map<_, int>)
-        (referenced_figure)
+        (referenced_target)
         (vertices: Vertex_id list)
         =
         let last_number = 
             all_figures_to_last_number
-            |>Map.tryFind referenced_figure
+            |>Map.tryFind referenced_target
             |>Option.defaultValue 0
 
         let new_renamings =
             vertices
             |>List.length
             |>vertices_with_sequencial_names 
-                referenced_figure
+                referenced_target
                 (last_number+1)
             |>Seq.zip vertices
 
@@ -124,7 +124,7 @@ module Renaming_figures =
             all_renamings
         ,
         all_figures_to_last_number
-        |>Map.add referenced_figure (last_number+(List.length vertices))
+        |>Map.add referenced_target (last_number+(List.length vertices))
 
 
     let form_for_comparison 
@@ -205,7 +205,7 @@ module Renaming_figures =
         |>not
 
     let rec assign_numbers_to_next_vertex_wave
-        figure_id_to_name
+        target_id_to_name
         (owner_figure: Figure<_>)
         (renamings: Map<Vertex_id, Vertex_id>)
         (figures_to_last_number: Map<_, int>)
@@ -217,7 +217,7 @@ module Renaming_figures =
             |>Set.ofList
             |>group_by_figures owner_figure.targets
             |>Map.toSeq
-            |>Seq.map (fun (figure_id,vertices) -> figure_id_to_name figure_id, vertices)
+            |>Seq.map (fun (target_id,vertices) -> target_id_to_name target_id, vertices)
             |>Map.ofSeq
         
         let vertices_of_unique_figures = 
@@ -264,7 +264,7 @@ module Renaming_figures =
         |[]->(renamings, figures_to_last_number)
         |next_vertices->
             assign_numbers_to_next_vertex_wave
-                figure_id_to_name
+                target_id_to_name
                 owner_figure
                 renamings
                 figures_to_last_number

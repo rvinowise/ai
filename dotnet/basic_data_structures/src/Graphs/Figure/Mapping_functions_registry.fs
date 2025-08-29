@@ -29,7 +29,8 @@ module Mapping_functions_registry =
     
     let onto_exact_figure target_name =
         let desired_target_subfigure_id = Figure_registry.provide_signal target_name
-        let mapping_function_name = $"constant_{target_name}"
+        //let mapping_function_name = $"constant_{target_name}"
+        let mapping_function_name = $"{target_name}"
         
         let mapping_function =
             is_vertex_suitable_for_mapping desired_target_subfigure_id
@@ -44,7 +45,7 @@ module Mapping_functions_registry =
         try
             function_names[Mapping_function_id.value function_id]
         with
-        | IndexOutOfRangeException as e ->
+        | :? IndexOutOfRangeException as e ->
             Log.error $"no mapping function with id {function_id}"
         
     let name_into_id function_name =

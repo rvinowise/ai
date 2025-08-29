@@ -17,9 +17,9 @@ module ``application of stencils``=
     let figure_name_to_id = Figure_registry.provide_signal
     let figure_id_to_name = Figure_registry.id_into_name
         
-    let initial_mapping_without_prolongation = Immutable_mapping.ofStringPairs ["b#1","b#3";"h#1","h#1"]
-    let initial_fruitful_mapping = Immutable_mapping.ofStringPairs ["b#1","b#1";"h#1","h#1"]
-    let initial_useless_mapping = Immutable_mapping.ofStringPairs ["b#1","b#2";"h#1","h#1"]
+    let initial_mapping_without_prolongation = Immutable_mapping.ofStringPairs ["b","b#3";"h","h#1"]
+    let initial_fruitful_mapping = Immutable_mapping.ofStringPairs ["b","b#1";"h","h#1"] //outputs f2
+    let initial_useless_mapping = Immutable_mapping.ofStringPairs ["b","b#2";"h","h#1"]
         
     let result_of_fruitful_stencil_application =
         built.Figure.simple_without_separator
@@ -28,13 +28,16 @@ module ``application of stencils``=
             ]
               
 
+    let mapping_id_to_function = Mapping_functions_registry.id_into_function
+    
     [<Fact>]
     let ``impossible to prolongate, because of no matching following subfigures``()=
         prolongate_one_mapping_with_next_subfigures
+            mapping_id_to_function
             example.Figure.fitting_stencil_as_figure
             example.Figure.a_high_level_relatively_simple_figure
             Map.empty
-            [Vertex_id "f#1"]
+            [Vertex_id "f"]
             initial_mapping_without_prolongation
         |> should equal
             []
@@ -43,17 +46,18 @@ module ``application of stencils``=
     let``prolongation with a single following node``()=
         
         prolongate_one_mapping_with_next_subfigures
+            mapping_id_to_function
             example.Figure.fitting_stencil_as_figure
             example.Figure.a_high_level_relatively_simple_figure
             Map.empty
-            [Vertex_id "f#1"]
+            [Vertex_id "f"]
             initial_useless_mapping
         |> should equal
             [
                 Immutable_mapping.ofStringPairs [
-                    "b#1","b#2";
-                    "h#1","h#1";
-                    "f#1","f#2"
+                    "b","b#2";
+                    "h","h#1";
+                    "f","f#2"
                 ]
             ]
     
@@ -72,14 +76,14 @@ module ``application of stencils``=
         |>should equal (
             Set.ofSeq [
                 Immutable_mapping.ofStringPairs [
-                    "b#1","b#1"
-                    "h#1","h#1"
-                    "f#1","f#2"
+                    "b","b#1"
+                    "h","h#1"
+                    "f","f#2"
                 ];
                 Immutable_mapping.ofStringPairs [
-                    "b#1","b#2"
-                    "h#1","h#1"
-                    "f#1","f#2"
+                    "b","b#2"
+                    "h","h#1"
+                    "f","f#2"
                 ]
             ])
 
@@ -94,8 +98,8 @@ module ``application of stencils``=
                     ",#1",";";
                 ]
                 |>built.Figure.simple
-                    (extensions.String.remove_number >> Mapping_functions_registry.onto_exact_figure)
-                    Mapping_functions_registry.id_into_name
+                    (extensions.String.remove_number_with_hash >> Mapping_functions_registry.onto_exact_figure)
+                //|>Renaming_figures.rename_vertices_to_standard_names Mapping_functions_registry.id_into_name
                 |>built.Conditional_figure.from_figure_without_impossibles
             output_border = {
                 before = ["N";",#1"] |> List.map Vertex_id |>Set.ofList 
@@ -103,7 +107,7 @@ module ``application of stencils``=
             } 
         }
         let target =
-            "N0,1,2,3,4,5,6,7,8,9;"
+            "N0,1,2,3,4,5;"
     //mom:   0123456789¹123456789²
             |>built.Figure.sequential_figure_from_text
                 Figure_registry.provide_signal
@@ -116,10 +120,14 @@ module ``application of stencils``=
                 mappee.figure.existing
             |>Set.ofSeq
         
+        mappings.Count
+        //|>should equal 10
+        |>should greaterThan 0
+        
         mappings
         |>Seq.iter (fun mapping->
             mapping
-            |>Seq.map (_.Key)
+            |>Map.keys
             |>Set.ofSeq
             |>should equal (
                 ["N";",#1";",#2";";"]
@@ -154,7 +162,7 @@ module ``application of stencils``=
                 Conditional_stencil.figure=
                     [
                         "N",";";
-                    ]|>built.Conditional_figure.conditional_figure_mapped_onto_constants
+                    ]|>example.Stencil.conditional_figure_mapped_onto_constants
                 output_border = {
                     before = "N" |>Vertex_id|>Set.singleton
                     after = ";" |>Vertex_id|>Set.singleton
@@ -197,9 +205,9 @@ module ``application of stencils``=
             example.Figure.a_high_level_relatively_simple_figure
         |>Set.ofSeq
         |> should equal ([   
-            Immutable_mapping.ofStringPairs ["b#1","b#1";"h#1","h#1"];
-            Immutable_mapping.ofStringPairs ["b#1","b#3";"h#1","h#1"];
-            Immutable_mapping.ofStringPairs ["b#1","b#2";"h#1","h#1"]
+            Immutable_mapping.ofStringPairs ["b","b#1";"h","h#1"];
+            Immutable_mapping.ofStringPairs ["b","b#3";"h","h#1"];
+            Immutable_mapping.ofStringPairs ["b","b#2";"h","h#1"]
         ]|>Set.ofSeq)
     
     [<Fact>]
@@ -209,12 +217,13 @@ module ``application of stencils``=
             (
                 built.Figure.simple
                     (extensions.String.remove_number >> Mapping_functions_registry.onto_exact_figure)
-                    Mapping_functions_registry.id_into_name
                     [
                         "b","f";
                         "h","f";
                         "x","f";
                     ]
+                    |>Renaming_figures.rename_vertices_to_standard_names Mapping_functions_registry.id_into_name
+
             )
             example.Figure.a_high_level_relatively_simple_figure
         |> should be Empty
@@ -230,14 +239,14 @@ module ``application of stencils``=
         |> should equal
             [
                 Immutable_mapping.ofStringPairs [
-                    "b#1","b#1";
-                    "h#1","h#1";
-                    "f#1","f#2";
+                    "b","b#1";
+                    "h","h#1";
+                    "f","f#2";
                 ];
                 Immutable_mapping.ofStringPairs [
-                    "b#1","b#2";
-                    "h#1","h#1";
-                    "f#1","f#2";
+                    "b","b#2";
+                    "h","h#1";
+                    "f","f#2";
                 ];
             ]
 
@@ -265,7 +274,7 @@ module ``application of stencils``=
                         "N",";";
                         ",#1",",#2";
                         ",#1",";";
-                    ]|>built.Conditional_figure.conditional_figure_mapped_onto_constants
+                    ]|>example.Stencil.conditional_figure_mapped_onto_constants
                 output_border = {
                     before = ["N";",#1"] |>List.map Vertex_id|>Set.ofList 
                     after = [",#2";";"] |>List.map Vertex_id|>Set.ofList 

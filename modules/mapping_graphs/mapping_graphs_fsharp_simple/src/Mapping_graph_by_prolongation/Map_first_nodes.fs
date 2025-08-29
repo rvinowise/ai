@@ -28,7 +28,7 @@ module Map_first_nodes =
         vertices_to_map
         =
         let suitable_vertices_in_target =
-            Figure.referenced_targets mappee.targets vertices_to_map
+            Figure.referenced_subfigures mappee.targets vertices_to_map
             |>Seq.map (fun mapping_function_id->
                 let mapping_function = mapping_id_to_function mapping_function_id
 

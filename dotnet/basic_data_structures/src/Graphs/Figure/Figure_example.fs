@@ -7,14 +7,14 @@ module Figure =
     let a_high_level_relatively_simple_figure = 
         built.Figure.simple_without_separator
             [
-                "b0","c";
-                "b0","d";
-                "c","b1";
+                "b1","c";
+                "b1","d";
+                "c","b2";
                 "d","e";
-                "d","f0";
-                "e","f1";
-                "h","f1";
-                "b2","h"
+                "d","f1";
+                "e","f2";
+                "h","f2";
+                "b3","h"
             ]
 
     let a_figure_with_huge_beginning = 
@@ -81,8 +81,7 @@ module Figure =
             "h","f";
         ]
         |>built.Figure.simple
-            (extensions.String.remove_number >> Mapping_functions_registry.onto_exact_figure)
-            Mapping_functions_registry.id_into_name
+            Mapping_functions_registry.onto_exact_figure
 
     let empty =
         built.Figure.from_tuples

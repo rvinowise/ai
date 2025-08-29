@@ -1,6 +1,7 @@
 namespace rvinowise.ai.stencil
     
 open System.Collections.Generic
+open rvinowise
 open rvinowise.ai
 open System.Linq
 open System
@@ -125,10 +126,15 @@ module Immutable_mapping=
         (mapping:Map<Vertex_id,Vertex_id>)
         vertices
         =
-        vertices
-        |>Set.map (fun vertices->
-            mapping[vertices]
-        )
+        try
+            vertices
+            |>Set.map (fun vertices->
+                mapping[vertices]
+            )
+        with
+        | :? KeyNotFoundException as e ->
+            Log.error $"no targets for mapped vertices: {vertices} in the mapping: {mapping}"|>ignore
+            reraise()
     
     let ofStringPairs (pairs: seq<string*string>) =
         pairs

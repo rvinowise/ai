@@ -153,6 +153,9 @@ module String =
         Regex.Replace(label, @"[0-9]", "")
     let remove_number_with_hash label =
         Regex.Replace(label, @"#[0-9]", "")
+        
+    let remove_hash label =
+        Regex.Replace(label, @"#", "")
 
     let remove_text_with_hash label =
         Regex.Replace(label, @"#.*", "")

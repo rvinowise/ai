@@ -5,19 +5,25 @@ open rvinowise.extensions
 
 module Stencil =
 
-    
+    let conditional_figure_mapped_onto_constants edges =
+        edges
+        |>built.Figure.simple (
+             String.remove_number >>
+             String.remove_hash >>
+             Mapping_functions_registry.onto_exact_figure
+        )|>built.Conditional_figure.from_figure_without_impossibles
 
     let a_fitting_stencil =
         {
             Conditional_stencil.figure =
                 [
-                    "b1","f1"
-                    "h1","f1"
+                    "b","f"
+                    "h","f"
                 ]
-                |>built.Conditional_figure.conditional_figure_mapped_onto_constants
+                |>conditional_figure_mapped_onto_constants
             output_border = {
-                before = "b1"|>Vertex_id|>Set.singleton
-                after = "f1"|>Vertex_id|>Set.singleton
+                before = "b"|>Vertex_id|>Set.singleton
+                after = "f"|>Vertex_id|>Set.singleton
             } 
         }
 
@@ -42,7 +48,7 @@ module Stencil =
                     "p","f"
                     "q","f"
                 ]
-                |>built.Conditional_figure.conditional_figure_mapped_onto_constants
+                |>conditional_figure_mapped_onto_constants
             output_border = {
                 before = [
                         "a"
@@ -78,7 +84,7 @@ module Stencil =
                     "r1","s1"
                     "s1","t1"
                     "f2","t1"
-                ]|>built.Conditional_figure.conditional_figure_mapped_onto_constants
+                ]|>conditional_figure_mapped_onto_constants
             output_border = {
                 before = "f1"|>Vertex_id|>Set.singleton
                 after = "o1"|>Vertex_id|>Set.singleton

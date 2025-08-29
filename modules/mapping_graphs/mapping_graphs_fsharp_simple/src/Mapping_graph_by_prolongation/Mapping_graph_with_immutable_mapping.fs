@@ -19,11 +19,11 @@ module Mapping_graph_with_immutable_mapping =
     (* for a figure we have a list of structures, each such structure has a vertex in the stencil,
     which can be mapped onto a sequence of vertices in the target. all those vertices reference the figure from the key *)
     let all_combinations_of_next_mappings 
-        (mappings: Map<Mapping_function_id, struct (Vertex_id*seq<Vertex_id>) list>) 
+        (mappings: seq<struct (Vertex_id*seq<Vertex_id>) list>) 
         =
         mappings
-        |>Seq.map (fun pair->
-            Generator_of_mappings<Vertex_id,Vertex_id> pair.Value
+        |>Seq.map (fun potential_mappings->
+            Generator_of_mappings<Vertex_id,Vertex_id> potential_mappings
         )
         |>Work_with_generators.mapping_combinations_from_generators
     
@@ -144,11 +144,11 @@ module Mapping_graph_with_immutable_mapping =
         
 
     let next_mapping_targets_for_subfigures_to_map
-        (possible_targets_for_mapping_vertex: Vertex_id*Mapping_function_id -> Vertex_id Set)
+        (possible_targets_for_mapping_vertex: Vertex_id*'Target -> Vertex_id Set)
         next_subfigures_to_map
         =
         let rec mapping_targets_for_next_subfigure
-            (left_subfigures_to_map:  list<Vertex_id*Mapping_function_id>)
+            (left_subfigures_to_map:  list<Vertex_id*'Target>)
             (found_mappings: Map<Mapping_function_id,  struct(Vertex_id(*stencil_vertex*) * seq<Vertex_id>(*possible_targets*)) list>)
             =
 
@@ -163,14 +163,14 @@ module Mapping_graph_with_immutable_mapping =
                     Map.empty
                 else
                     let updated_mappings =
-                        let figure = snd current_subfigure_to_map
+                        let target = snd current_subfigure_to_map
                         let updated_targets_of_this_figure =
                             struct(current_subfigure_to_map|>fst, targets|>Seq.cast)
                             ::
                             (found_mappings
-                            |>extensions.Map.getOrDefault figure [])
+                            |>extensions.Map.getOrDefault target [])
                         found_mappings
-                        |>Map.add figure updated_targets_of_this_figure
+                        |>Map.add target updated_targets_of_this_figure
                     mapping_targets_for_next_subfigure
                         left_subfigures_to_map
                         updated_mappings
@@ -182,6 +182,7 @@ module Mapping_graph_with_immutable_mapping =
     let mapping_functions = Dictionary<Mapping_function_id, Numerical_id -> bool> ()
     
     let targets_for_mapping_prolongation
+        mapping_id_to_function
         (mappee)
         (target)
         (mapping_to_prolongate:Map<Vertex_id,Vertex_id>)
@@ -190,7 +191,9 @@ module Mapping_graph_with_immutable_mapping =
         =
         
         let prolongating_vertex = fst prolongating_node
-        let prolongating_mapping_function_id = snd prolongating_node
+        let prolongating_mapping_function_id =
+            prolongating_node
+            |>snd
         
         
         let needed_target_vertex =
@@ -213,7 +216,9 @@ module Mapping_graph_with_immutable_mapping =
                 |>Map.containsKey mapped_vertex_in_rail
         
         let can_be_mapped_onto =
-            mapping_id_to_function prolongating_mapping_function_id
+            mapping_id_to_function
+                prolongating_mapping_function_id
+                target
                 
         let is_vertex_suitable_for_mapping target_vertex =
             match needed_target_vertex with
@@ -225,8 +230,7 @@ module Mapping_graph_with_immutable_mapping =
                 //target_vertex
                 //|>Dictionary.some_value target.targets
                 //|>Option.defaultValue Figure.nonexistent_constant_figure  
-                target.targets[target_vertex]
-                |>can_be_mapped_onto
+                can_be_mapped_onto target_vertex
         
         possible_targets_for_mapping_subfigure
             is_vertex_suitable_for_mapping
@@ -242,7 +246,8 @@ module Mapping_graph_with_immutable_mapping =
         vertices
         |>Seq.filter (fun mappee_vertex -> Map.containsKey mappee_vertex mapping|>not)
     
-    let prolongate_one_mapping_with_next_subfigures 
+    let prolongate_one_mapping_with_next_subfigures
+        mapping_id_to_function
         mappee
         target
         within_mapping
@@ -251,6 +256,7 @@ module Mapping_graph_with_immutable_mapping =
         =
         let possible_targets_for_mapping_vertex =
             targets_for_mapping_prolongation
+                mapping_id_to_function
                 mappee
                 target
                 mapping
@@ -273,12 +279,14 @@ module Mapping_graph_with_immutable_mapping =
                 Seq.empty
             else
                 possible_next_mappings
+                |>Map.values
                 |>all_combinations_of_next_mappings
                 |>prolongate_mapping_with_next_mapped_subfigures mapping
     
     
         
-    let rec prolongate_all_mappings 
+    let rec prolongate_all_mappings
+        mapping_id_to_function
         (mappee:Figure<Mapping_function_id>)
         target
         (last_mapped_vertices: Vertex_id seq)
@@ -295,6 +303,7 @@ module Mapping_graph_with_immutable_mapping =
             mappings
             |>Seq.map (
                 prolongate_one_mapping_with_next_subfigures
+                    mapping_id_to_function
                     mappee
                     target
                     within_mapping
@@ -302,6 +311,7 @@ module Mapping_graph_with_immutable_mapping =
             )
             |>Seq.collect id
             |>prolongate_all_mappings
+                mapping_id_to_function
                 mappee 
                 target 
                 next_vertices_to_map
@@ -309,7 +319,7 @@ module Mapping_graph_with_immutable_mapping =
 
 
     let map_figure_onto_target_within_mapping
-        mapping_id_to_function
+        (mapping_id_to_function: Mapping_function_id -> Figure<_> -> Vertex_id -> bool)
         within_mapping
         target
         mappee
@@ -320,6 +330,7 @@ module Mapping_graph_with_immutable_mapping =
               within_mapping 
               mappee 
         |>prolongate_all_mappings
+            mapping_id_to_function
             mappee 
             target
             (Figure.first_vertices mappee)

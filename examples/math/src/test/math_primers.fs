@@ -25,7 +25,8 @@ module math_primers=
         |>Event_batches.to_sequence_appearances
         |>Finding_many_repetitions.all_repetitions
             (Finding_repetitions.halves_are_close_enough 2)
-            (Reporting_repetitions.write_to_file @"C:\Users\rvi\Downloads\test_repetitions.txt")
+            //(Reporting_repetitions.write_to_file @"C:\Users\rvi\Downloads\test_repetitions.txt")
+            Reporting.dont
         |>Set.ofSeq
         |>should be (supersetOf(
             [
@@ -34,6 +35,7 @@ module math_primers=
             ]|>Set.ofSeq
         ))
 
+    [<Fact(Skip="ui")>]//
     let ``draw training history``()=
         let input_primers =
             History_from_text.event_batches_from_text_blocks [
@@ -51,7 +53,7 @@ module math_primers=
 
 
 
-    [<Fact>]//(Skip="ui")
+    [<Fact(Skip="ui")>]//
     let ``find repetitions which lead to good``()=
         let good_signal = "ok;"
         use input_stream =

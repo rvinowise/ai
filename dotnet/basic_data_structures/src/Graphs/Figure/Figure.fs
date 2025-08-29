@@ -1,8 +1,11 @@
 namespace rvinowise.ai
 
+open System.Collections.Generic
+open rvinowise
 open rvinowise.ai
 open rvinowise.extensions
 
+exception InconsistentFigure of string
 
 [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
 module Figure=
@@ -54,7 +57,7 @@ module Figure=
         |>Seq.choose (Dictionary.some_value owner_figure.targets)
         |>Seq.distinct
 
-    let referenced_targets
+    let referenced_subfigures
         (targets: 'Targets)
         (subfigures:Vertex_id seq)
         =
@@ -62,7 +65,7 @@ module Figure=
         |>Seq.choose (Dictionary.some_value targets)
         |>Seq.distinct
     
-    let vertices_with_their_referenced_targets 
+    let try_vertices_with_their_referenced_targets 
         targets
         vertices
         =
@@ -75,7 +78,22 @@ module Figure=
             |Some referenced_figure ->Some (vertex,referenced_figure)
         )
 
-
+    let vertices_with_their_referenced_targets 
+        targets
+        vertices
+        =
+            vertices
+            |>Seq.map (fun vertex->
+                try
+                    vertex, targets|>Map.find vertex
+                with
+                | :? KeyNotFoundException as e ->
+                    Log.error $"some vertices among {List.ofSeq vertices} don't exist among targets {targets}"
+                    |>InconsistentFigure
+                    |>raise
+            )
+        
+    
     let has_edges (figure:Figure<_>) =
         figure.edges
         |>Seq.isEmpty|>not
@@ -122,9 +140,8 @@ module Figure=
         else
             Edges.last_vertices figure.edges
 
-    let is_signal name (figure:Figure<_>) =
+    let is_signal subfigure_id (figure:Figure<_>) =
         figure.targets.Count = 1
-        // &&
-        // figure.targets
-        // |>Map.toSeq|>Seq.head|>snd|>_.name
-        // |>Figure_id.value = name
+        &&
+        figure.targets
+        |>Map.toSeq|>Seq.head|>snd = subfigure_id

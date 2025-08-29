@@ -132,8 +132,7 @@ module Digit_concept =
     let find_incarnations_of_digit target =
         target
         |>results_of_stencil_application digit_declaration_stencil
-        |>Seq.map (Algorithm.apply_parallel_functions finding_digits_between_commas)
-        |>Seq.collect id
+        |>Seq.collect (Algorithm.apply_parallel_functions finding_digits_between_commas)
         
     [<Fact>]
     let ``find incarnations of digit-concept``()=
@@ -165,7 +164,7 @@ module Digit_concept =
         incarnations
         |>Seq.filter(fun figure->
             figure
-            |>Figure.is_signal "0"
+            |>Figure.is_signal (figure_name_to_id "0")
         )|>Seq.length
         |>should equal 2
     
