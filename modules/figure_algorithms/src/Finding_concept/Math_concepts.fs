@@ -25,14 +25,20 @@ module Digit_concept =
         built.Figure.sequential_figure_from_sequence_of_vertices
             (String.remove_number_with_hash >> Mapping_functions_registry.onto_exact_figure)
     
+    let figure_from_sequence =
+        built.Figure.sequential_figure_from_text
+            figure_name_to_id
+            figure_id_to_name
+    
+    let mappee_from_sequence =
+        built.Figure.sequential_figure_from_text
+            mapping_name_to_id
+            mapping_id_to_name
+    
     let digit_declaration_stencil = {
         Conditional_stencil.figure =
             {
-                existing =
-                    built.Figure.sequential_figure_from_text
-                        mapping_name_to_id
-                        mapping_id_to_name
-                        "D;"
+                existing = mappee_from_sequence "D;"
                 impossibles =
                     [
                         ["D#1";"D#2";";#1"]
@@ -53,9 +59,7 @@ module Digit_concept =
         Conditional_stencil.figure =
             {
                 existing =
-                    built.Figure.sequential_figure_from_text
-                        mapping_name_to_id
-                        mapping_id_to_name
+                    mappee_from_sequence
                         ",,"
                 impossibles =
                     [
@@ -76,11 +80,7 @@ module Digit_concept =
     let before_commas_stencil = {
         Conditional_stencil.figure =
             {
-                existing =
-                    ","
-                    |>built.Figure.sequential_figure_from_text
-                        mapping_name_to_id
-                        mapping_id_to_name
+                existing = mappee_from_sequence ","
                 impossibles =
                     [",#2";",#1"]
                     |>sequential_unmapped_figure_from_sequence_of_vertices
@@ -95,11 +95,8 @@ module Digit_concept =
     let after_commas_stencil = {
         Conditional_stencil.figure =
             {
-                existing =
-                    ","
-                    |>built.Figure.sequential_figure_from_text
-                        mapping_name_to_id
-                        mapping_id_to_name
+                existing = mappee_from_sequence ","
+                    
                 impossibles =
                     [",#1";",#2"]
                     |>sequential_unmapped_figure_from_sequence_of_vertices
@@ -122,13 +119,6 @@ module Digit_concept =
             results_of_stencil_application after_commas_stencil
         ]
         
-    let history =
-        "D0,1,2,3,4,5,6,7,8,9;"
-        |>built.Figure.sequential_figure_from_text
-            mapping_name_to_id
-            mapping_id_to_name
-       
-    
     let find_incarnations_of_digit target =
         target
         |>results_of_stencil_application digit_declaration_stencil
@@ -137,9 +127,7 @@ module Digit_concept =
     [<Fact>]
     let ``find incarnations of digit-concept``()=
         "D0,1,2,3,4,5,6,7,8,9;"
-        |>built.Figure.sequential_figure_from_text
-            figure_name_to_id
-            figure_id_to_name
+        |>figure_from_sequence
         |>find_incarnations_of_digit
         |>Set.ofSeq
         |>should equal (
@@ -154,9 +142,7 @@ module Digit_concept =
         let history_as_figure =
             "D0,1;x,y;z,D0,2;"
     //mom:   0123456789¹123456789²
-            |>built.Figure.sequential_figure_from_text
-                figure_name_to_id
-                figure_id_to_name
+            |>figure_from_sequence
 
         let incarnations = 
             find_incarnations_of_digit history_as_figure
@@ -178,8 +164,111 @@ module Digit_concept =
             |>Set.ofSeq
         )
         
+        
+    let is_non_digit figure vertex =
+        let checked_subfigure =
+            Figure.reference_of_vertex figure vertex
+        
+        find_incarnations_of_digit figure
+        |>Seq.exists (fun digit_incarnation ->
+            digit_incarnation
+            |>Figure.is_signal checked_subfigure
+        )|>not
+        
+    let non_digit_mappee =
+        built.Figure.signal
+            (fun _ -> Mapping_functions_registry.provide_function "non_digit" is_non_digit)
+            Mapping_functions_registry.id_into_name
+            "non_digit"
+        |>built.Conditional_figure.from_figure_without_impossibles
+                
     [<Fact>]
-    let ``mathematical primer``()=
+    let ``find non-digits, i.e. subfigures which are different from specified``()=
+        let history =
+            "D1,2;_1+1=2;"
+    //mom:   0123456789¹123456789²123456789³123456789
+            |>figure_from_sequence
+        
+        let found_non_digits =
+            Mapping_graph_with_immutable_mapping.map_conditional_figure_onto_target
+                Mapping_functions_registry.id_into_function
+                Map.empty
+                history
+                non_digit_mappee
+        let expected_target_subfigures =
+            [
+                "D#1";",#1";";#1";"+#1";"=#1";";#2";"_#1"
+            ]|>Seq.map (Vertex_id >> Set.singleton)
+            |>Set.ofSeq
+        
+        found_non_digits
+        |>Seq.map (Map.values>>Set.ofSeq)|>Set.ofSeq
+        |>should equal expected_target_subfigures
+        
+    let number_declaration_stencil =
+        let non_digit_id = Mapping_functions_registry.remember_function "non-digit" is_non_digit
+        {
+            Conditional_stencil.figure =
+                {
+                    existing =
+                        ["non-digit#1","non-digit#2"]
+                        |>built.Figure.simple (fun _ -> non_digit_id)
+                    impossibles =
+                        ["non-digit#1";"non-digit#3";"non-digit#2"]
+                        |>built.Figure.sequential_figure_from_sequence_of_vertices
+                            (fun _ -> non_digit_id)
+                        |>built.Conditional_figure.from_figure_without_impossibles
+                        |>Set.singleton
+                }
+            output_border = {
+                before = "non-digit#1" |>Vertex_id|>Set.singleton
+                after = "non-digit#2" |>Vertex_id|>Set.singleton
+            } 
+        }    
+    
+    [<Fact>]
+    let ``find numbers``()=
+        
+        let history =
+            "D0,1,2,3,4,5,6,7,8,9; 1+1=2;× 12+23=35;×"
+    //mom:   0123456789¹123456789²123456789³123456789
+            |>figure_from_sequence
+        
+        let found_non_digits =
+            Mapping_graph_with_immutable_mapping.map_conditional_figure_onto_target
+                Mapping_functions_registry.id_into_function
+                Map.empty
+                history
+                non_digit_mappee
+        
+        let found_numbers =
+            history
+            |>results_of_stencil_application number_declaration_stencil 
+        
+        let expected_numbers =
+            [
+                figure_from_sequence "1";
+                figure_from_sequence "2";
+                figure_from_sequence "12";
+                figure_from_sequence "23";
+                figure_from_sequence "35";
+            ]|>Set.ofSeq
+        
+        found_numbers
+        |>Set.ofSeq
+        |>Set.intersect expected_numbers
+        |>should equal expected_numbers 
+        
+        ()
+        
+    [<Fact>]
+    let ``find mathematical primers``()=
+        let history_as_figure =
+            "D0,1,2,3,4,5,6,7,8,9; 1+1=2;× 12+23=35;×"
+    //mom:   0123456789¹123456789²
+            |>figure_from_sequence
+        
+        
         ()
         
 module Number_concept = ()

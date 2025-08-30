@@ -170,8 +170,8 @@ module Figure=
             }
 
     let signal
-        figure_name_to_id
-        figure_id_to_name
+        subfigure_name_to_id
+        subfigure_id_to_name
         (name:string)
         =
         {
@@ -180,9 +180,9 @@ module Figure=
                 //(id+"#1")|>Vertex_id,
                 Vertex_id name
                 ,
-                figure_name_to_id name
+                subfigure_name_to_id name
             ]|>Map.ofSeq
-        }|>Renaming_figures.rename_vertices_to_standard_names figure_id_to_name
+        }|>Renaming_figures.rename_vertices_to_standard_names subfigure_id_to_name
 
     let vertex_data_from_edges_of_figure (full_vertex_data: Map<Vertex_id, 'Numerical_id>) edges =
         edges
