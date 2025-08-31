@@ -205,7 +205,7 @@ module Digit_concept =
         |>Seq.map (Map.values>>Set.ofSeq)|>Set.ofSeq
         |>should equal expected_target_subfigures
         
-    let number_declaration_stencil =
+    let number_stencil =
         let non_digit_id = Mapping_functions_registry.remember_function "non-digit" is_non_digit
         {
             Conditional_stencil.figure =
@@ -226,11 +226,12 @@ module Digit_concept =
             } 
         }    
     
+    
     [<Fact>]
     let ``find numbers``()=
         
         let history =
-            "D0,1,2,3,4,5,6,7,8,9; 1+1=2;× 12+23=35;×"
+            "D0,1,2,3,4; 1+1=2;× 12+31=43;×"
     //mom:   0123456789¹123456789²123456789³123456789
             |>figure_from_sequence
         
@@ -243,15 +244,16 @@ module Digit_concept =
         
         let found_numbers =
             history
-            |>results_of_stencil_application number_declaration_stencil 
-        
+            |>results_of_stencil_application number_stencil 
+            |>Seq.map (Renaming_figures.rename_vertices_to_standard_names figure_id_to_name)
+            
         let expected_numbers =
             [
                 figure_from_sequence "1";
                 figure_from_sequence "2";
                 figure_from_sequence "12";
-                figure_from_sequence "23";
-                figure_from_sequence "35";
+                figure_from_sequence "31";
+                figure_from_sequence "43";
             ]|>Set.ofSeq
         
         found_numbers
@@ -260,6 +262,39 @@ module Digit_concept =
         |>should equal expected_numbers 
         
         ()
+    
+    let math_primer =
+        let non_digit_id = Mapping_functions_registry.provide_function "non_digit" is_non_digit
+        let non_number_id = Mapping_functions_registry.provide_function "non_number" is_non_digit
+        let number_id = Mapping_functions_registry.provide_function "number" is_non_digit
+        {
+            existing =
+                ["number#1","non_number#1","number#2","=#1","number#3",";#1"]
+                |>built.Figure.simple (fun _ -> non_digit_id)
+            impossibles =
+                Set.empty
+        }
+    
+    let math_primer_stencil =
+        let non_digit_id = Mapping_functions_registry.provide_function "non_digit" is_non_digit
+        {
+            Conditional_stencil.figure =
+                {
+                    existing =
+                        ["number#1","non_number#2","number#2","=#1"]
+                        |>built.Figure.simple (fun _ -> non_digit_id)
+                    impossibles =
+                        ["non_digit#1";"non_digit#3";"non_digit#2"]
+                        |>built.Figure.sequential_figure_from_sequence_of_vertices
+                            (fun _ -> non_digit_id)
+                        |>built.Conditional_figure.from_figure_without_impossibles
+                        |>Set.singleton
+                }
+            output_border = {
+                before = "non_digit#1" |>Vertex_id|>Set.singleton
+                after = "non_digit#2" |>Vertex_id|>Set.singleton
+            } 
+        }   
         
     [<Fact>]
     let ``find mathematical primers``()=

@@ -37,7 +37,6 @@
     <Compile Include="src\Graphs\Figure\built\Figure_built.fs" />
     <Compile Include="src\Graphs\Figure\Figure_example.fs" />
     <Compile Include="src\Graphs\Figure\built\fusing_figures_into_a_sequence.fs" />
-    
     <Compile Include="src\Graphs\Sequence.fs" />
 
     <Compile Include="src\Graphs\Stencil\Stencil_types.fs" />
@@ -46,6 +45,9 @@
     
 
     <Compile Include="src\Graphs\Graph\Search_in_graph.fs" />
+    
+
+    <Compile Include="src\Modifying_figures.fs" />
     
     <!-- History -->
     <Compile Include="src\History\Appearances\built.fs" />

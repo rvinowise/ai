@@ -47,38 +47,7 @@ module Mapping_graph_with_immutable_mapping =
         |>Seq.map (copied_mapping_with_prolongation base_mapping)
 
     
-    let choose_first_vertices 
-        (step_further: Vertex_id -> Vertex_id Set)
-        (vertices: Vertex_id Set)
-        =
-        (*the first vertices in this group are those, which can't be reached by iterating over the graph, starting from
-        any other vertex from the selected group*) 
-        let reached_vertices =
-            vertices
-            |>Seq.fold(fun set vertex->
-                    [vertex]
-                    |>Search_in_graph.vertices_reacheble_from_any_vertices
-                        (fun vertex->vertices|>Set.contains vertex)
-                        step_further
-                    |>Set.union set
-                )
-                Set.empty
-        reached_vertices
-        |>Set.difference vertices
-
-    let first_vertices_reacheble_from_all_vertices_together
-        (is_vertex_needed: Vertex_id->bool)
-        (step_further: Vertex_id -> Vertex_id Set)
-        (starting_vertices: Vertex_id seq)
-        =
-        starting_vertices
-        |>Seq.map (
-            Search_in_graph.vertices_reacheble_from_vertex 
-                is_vertex_needed
-                step_further
-        )
-        |>Set.intersectMany
-        |>choose_first_vertices step_further
+    
 
     let inline does_vertex_reference_figue
         (owner_figure: Figure<_>)
@@ -138,7 +107,7 @@ module Mapping_graph_with_immutable_mapping =
 
         prolongating_vertex
         |>targets_of_previously_mapped_vertices mappee_edges mapping
-        |>first_vertices_reacheble_from_all_vertices_together
+        |>Search_in_graph.first_vertices_reacheble_from_all_vertices_together
             is_vertex_needed
             further_step_of_searching_targets
         

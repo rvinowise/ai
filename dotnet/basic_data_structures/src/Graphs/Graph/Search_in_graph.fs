@@ -54,7 +54,39 @@ module Search_in_graph=
             step_further
             
     
+    let choose_first_vertices 
+        (step_further: Vertex_id -> Vertex_id Set)
+        (vertices: Vertex_id Set)
+        =
+        (*the first vertices in this group are those, which can't be reached by iterating over the graph, starting from
+        any other vertex from the selected group*) 
+        let reached_vertices =
+            vertices
+            |>Seq.fold(fun set vertex->
+                    [vertex]
+                    |>vertices_reacheble_from_any_vertices
+                        (fun vertex->vertices|>Set.contains vertex)
+                        step_further
+                    |>Set.union set
+                )
+                Set.empty
+        reached_vertices
+        |>Set.difference vertices
+
     
+    let first_vertices_reacheble_from_all_vertices_together
+        (is_vertex_needed: Vertex_id->bool)
+        (step_further: Vertex_id -> Vertex_id Set)
+        (starting_vertices: Vertex_id seq)
+        =
+        starting_vertices
+        |>Seq.map (
+            vertices_reacheble_from_vertex 
+                is_vertex_needed
+                step_further
+        )
+        |>Set.intersectMany
+        |>choose_first_vertices step_further
 
 
     
