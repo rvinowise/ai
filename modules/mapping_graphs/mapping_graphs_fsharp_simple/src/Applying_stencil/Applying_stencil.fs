@@ -18,16 +18,15 @@ module Applying_stencil =
         |>Seq.isEmpty
 
 
-    let all_vertices_reacheble_from_all_vertices_together
-        (step_further: Vertex_id->Vertex_id Set)
+    let all_edges_reacheble_from_all_vertices_together
+        (step_further)
         starting_vertices
         =
         starting_vertices
         |>Seq.map Seq.singleton
         |>Seq.map (
-            Search_in_graph.vertices_reacheble_from_any_vertices 
+            step_further
                 (fun _->true)
-                step_further
         )|>Set.intersectMany
     
     
@@ -38,24 +37,24 @@ module Applying_stencil =
         =
         output_border.before
         |>Immutable_mapping.targets_of_mapping mapping
-        |>all_vertices_reacheble_from_all_vertices_together 
-            (Edges.next_vertices edges)
+        |>all_edges_reacheble_from_all_vertices_together 
+            (Search_in_graph.next_edges_reacheble_from_any_vertices edges)
         |>Set.ofSeq
         ,
         output_border.after
         |>Immutable_mapping.targets_of_mapping mapping
-        |>all_vertices_reacheble_from_all_vertices_together 
-            (Edges.previous_vertices edges)
+        |>all_edges_reacheble_from_all_vertices_together 
+            (Search_in_graph.previous_edges_reacheble_from_any_vertices edges)
         |>Set.ofSeq
     
     let output_vertices_from_the_middle
         (output_border: Stencil_output_border)
-        (target:Figure<_>)
+        (edges)
         mapping
         =
         let (output_beginning,output_ending) =
             get_output_beginning_and_ending
-                target.edges
+                edges
                 mapping
                 output_border
         
@@ -69,7 +68,7 @@ module Applying_stencil =
         =
         border_vertices
         |>Immutable_mapping.targets_of_mapping mapping
-        |>all_vertices_reacheble_from_all_vertices_together 
+        |>all_edges_reacheble_from_all_vertices_together 
             step_further
         |>Set.ofSeq
     
@@ -94,7 +93,7 @@ module Applying_stencil =
             else
                 output_vertices_from_the_middle
                     output_border
-                    target
+                    target.edges
                     mapping 
         
         

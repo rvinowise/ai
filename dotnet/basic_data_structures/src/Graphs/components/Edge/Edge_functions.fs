@@ -2,8 +2,11 @@ namespace rvinowise.ai
 
 open System.Collections.Generic
 
-module Edges =
 
+
+        
+module Edges =
+        
     let incoming_edges
         (edges: Edge Set) 
         (vertex: Vertex_id) 
@@ -20,14 +23,6 @@ module Edges =
             e.tail = vertex
         )
     
-    let next_edges
-        (edges: Edge Set)
-        (edge: Edge)
-        =
-        edges
-        |>Set.filter (fun e->
-            e.tail = edge.head
-        )
 
     let next_vertices
         (edges: Edge Set) 

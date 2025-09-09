@@ -21,3 +21,10 @@ module Edge=
 
     let ofStringPair (pair: string*string) =
         Edge(fst pair, snd pair)
+        
+        
+    let tail (edge:Edge) =
+        edge.tail
+        
+    let head (edge:Edge) =
+        edge.head
