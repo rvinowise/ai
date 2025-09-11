@@ -24,17 +24,18 @@ module Modifying_figures=
         target_name_to_id
         subfigure_name
         fused_vertices
+        fused_edges
         owner_figure
         =
         let new_subfigure_id =
-            target_name_to_id
+            target_name_to_id subfigure_name
             
-            built.Figure.subgraph_with_vertices owner_figure fused_vertices
+        built.Figure.subgraph_with_vertices owner_figure fused_vertices
         
         let new_vertex = ()
         
-        let first_fused_vertices = Edges.first_vertices fused_vertices
-        let last_fused_vertices = Edges.last_vertices fused_vertices
+        let first_fused_vertices = Edges.first_vertices fused_edges
+        let last_fused_vertices = Edges.last_vertices fused_edges
         
         let vertices_after_subfigure =
             Search_in_graph.first_vertices_reacheble_from_all_vertices_together
@@ -46,7 +47,7 @@ module Modifying_figures=
             Search_in_graph.first_vertices_reacheble_from_all_vertices_together
                 (fun _ -> true)
                 (Edges.previous_vertices owner_figure.edges)
-                last_fused_vertices
+                first_fused_vertices
         
         owner_figure.edges
         

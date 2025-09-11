@@ -1,6 +1,7 @@
 namespace rvinowise.ai
 
 open rvinowise.ai.stencil
+open rvinowise
 
 module Applying_stencil = 
  
@@ -19,15 +20,22 @@ module Applying_stencil =
 
 
     let all_edges_reacheble_from_all_vertices_together
-        (step_further)
+        (find_all_edges_in_direction)
         starting_vertices
         =
-        starting_vertices
-        |>Seq.map Seq.singleton
-        |>Seq.map (
-            step_further
-                (fun _->true)
-        )|>Set.intersectMany
+        let all_edges,all_vertices =
+            starting_vertices
+            |>Seq.map Seq.singleton
+            |>Seq.map (
+                find_all_edges_in_direction
+                    (fun _->true)
+            )|>extensions.Seq.unzip
+        
+        all_edges
+        |>Set.intersectMany
+        ,
+        all_vertices
+        |>Set.intersectMany
     
     
     let get_output_beginning_and_ending
@@ -38,14 +46,14 @@ module Applying_stencil =
         output_border.before
         |>Immutable_mapping.targets_of_mapping mapping
         |>all_edges_reacheble_from_all_vertices_together 
-            (Search_in_graph.next_edges_reacheble_from_any_vertices edges)
-        |>Set.ofSeq
+            (Search_in_graph.next_parts_reacheble_from_any_vertices edges)
         ,
         output_border.after
         |>Immutable_mapping.targets_of_mapping mapping
         |>all_edges_reacheble_from_all_vertices_together 
-            (Search_in_graph.previous_edges_reacheble_from_any_vertices edges)
-        |>Set.ofSeq
+            (Search_in_graph.previous_parts_reacheble_from_any_vertices edges)
+    
+        
     
     let output_vertices_from_the_middle
         (output_border: Stencil_output_border)
@@ -58,37 +66,41 @@ module Applying_stencil =
                 mapping
                 output_border
         
-        (output_beginning,output_ending)
-        ||>Set.intersect 
+        let edges,vertices =
+            (fst output_beginning, fst output_ending),
+            (snd output_beginning, snd output_ending)
+        
+        Set.intersect <|| edges,
+        Set.intersect <|| vertices
+    
     
     let output_vertices_from_side
         (border_vertices: Vertex_id Set)
-        (step_further)
+        (find_all_edges_in_direction)
         mapping
         =
         border_vertices
         |>Immutable_mapping.targets_of_mapping mapping
         |>all_edges_reacheble_from_all_vertices_together 
-            step_further
-        |>Set.ofSeq
+            find_all_edges_in_direction
     
     let retrieve_result_from_output_border
         (output_border: Stencil_output_border)
         (target:Figure<_>)
         mapping 
         =
-        let output_vertices =
+        let output_edges,output_vertices =
             if output_border.before.IsEmpty && output_border.after.IsEmpty then
                 failwith "output is not specified for a stencil"
             elif output_border.before.IsEmpty then
                 output_vertices_from_side
                     output_border.after
-                    (Edges.previous_vertices target.edges)
+                    (Search_in_graph.next_parts_reacheble_from_any_vertices target.edges)
                     mapping
             elif output_border.after.IsEmpty then
                 output_vertices_from_side
                     output_border.before
-                    (Edges.next_vertices target.edges)
+                    (Search_in_graph.previous_parts_reacheble_from_any_vertices target.edges)
                     mapping
             else
                 output_vertices_from_the_middle
@@ -96,12 +108,10 @@ module Applying_stencil =
                     target.edges
                     mapping 
         
-        
         if Set.isEmpty output_vertices then
             None
         else
-            output_vertices
-            |>built.Figure.subgraph_with_vertices target
+            built.Figure.from_parts_of_figure target output_vertices output_edges 
             |>Some
             
                    
@@ -130,4 +140,4 @@ module Applying_stencil =
               Map.empty
               target
         |>Seq.map (retrieve_result_from_output_border stencil.output_border target)
-        |>Seq.choose id
+        //|>Seq.choose id

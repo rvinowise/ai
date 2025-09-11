@@ -252,6 +252,13 @@ module Figure=
         |>from_parts_of_figure original_figure vertices 
         
 
+    let subgraph_with_edges_and_vertices 
+        original_figure
+        edges
+        vertices
+        =
+        from_parts_of_figure original_figure vertices edges
+
 module Conditional_figure =
     
     let from_figure_without_impossibles figure =

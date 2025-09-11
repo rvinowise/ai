@@ -9,7 +9,6 @@ module Search_in_graph=
         (step_further: 'Element -> 'Element Set)
         (reached_goals: 'Element Set)
         (starting_elements: 'Element seq)
-        // 
         =
         let further_elements =
             starting_elements
@@ -46,45 +45,65 @@ module Search_in_graph=
     
     
     
-    let further_edges_from_any_vertices
-        (is_edge_needed: Edge->bool)
+    
+    let further_graph_parts_from_any_vertices
+        (is_edge_needed: Edge*Vertex_id -> bool )
         further_edges_from_vertex
         tip_vertex_of_edge
         (starting_vertices: Vertex_id seq)
         =
-        let step_further (edge:Edge) =
+        let step_further (edge:Edge, vertex) =
+                
             edge
             |>tip_vertex_of_edge
             |>further_edges_from_vertex
+            |>Set.map (fun next_edge ->
+                next_edge, tip_vertex_of_edge next_edge    
+            )
 
-        let first_edges =
+        let first_elements =
             starting_vertices
-            |>Seq.collect (further_edges_from_vertex)
+            |>Seq.collect further_edges_from_vertex
+            |>Seq.map(fun first_edge ->
+                first_edge,tip_vertex_of_edge first_edge
+            )
         
-        graph_elements_reacheble_from_elements
-            is_edge_needed
-            step_further
-            Set.empty
-            first_edges
+        let first_vertices =
+            first_elements
+            |>Seq.map snd 
+        
+        let found_edges, found_vertices =
+            graph_elements_reacheble_from_elements
+                is_edge_needed
+                step_further
+                Set.empty
+                first_elements
+            |>unzip
+            
+        found_edges,
+        first_vertices
+        |>Set.ofSeq
+        |>Set.union found_vertices
     
-    let next_edges_reacheble_from_any_vertices
+    let next_parts_reacheble_from_any_vertices
         all_edges
-        (is_edge_needed: Edge->bool)
+        (is_edge_needed: Edge*Vertex_id->bool)
         (starting_vertices: Vertex_id seq)
         =
-        further_edges_from_any_vertices
+        further_graph_parts_from_any_vertices
             is_edge_needed
             (Edges.outgoing_edges all_edges)
             Edge.head
             starting_vertices
 
     
-    let previous_edges_reacheble_from_any_vertices
+    let previous_parts_reacheble_from_any_vertices
         all_edges
-        (is_edge_needed: Edge->bool)
+        (is_edge_needed: Edge*Vertex_id->bool)
         (starting_vertices: Vertex_id seq)
+        :Edge Set*Vertex_id Set
         =
-        further_edges_from_any_vertices
+        further_graph_parts_from_any_vertices
             is_edge_needed
             (Edges.incoming_edges all_edges)
             Edge.tail

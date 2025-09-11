@@ -246,7 +246,11 @@ module Map =
 
 
 
-
+module Seq =
+    
+    let inline unzip tuples =
+        Seq.map fst tuples,
+        Seq.map snd tuples
 
 
 module Option=
