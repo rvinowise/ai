@@ -7,12 +7,12 @@ open rvinowise.ai
 
 module Figure_registry =
     
-    let signal_names = ResizeArray<string>()
+    let signal_names = ResizeArray<string>() // index in this array is the ID of a signal
     let signal_names_to_ids = Dictionary<string, Constant_figure_id>()
     
     
     let figure_names_to_ids = Dictionary<string, Constant_figure_id>()
-    let figures = Set<Figure<Mapping_function_id>>()
+    let figures = ResizeArray<Figure<Mapping_function_id>> () // index in this array is the ID of a figure
     
     
     
