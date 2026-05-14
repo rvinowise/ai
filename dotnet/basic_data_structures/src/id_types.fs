@@ -16,7 +16,7 @@ type Numerical_id =
 type Mapping_function_id = Mapping_function_id of int
 with
     static member value (Mapping_function_id value) = value
-    static member nonexistent () = Mapping_function_id 0
+    static member nonexistent () = Mapping_function_id -1
     
     interface Numerical_id with
         //static member nonexistent () = Mapping_function_id.nonexistent ()
@@ -30,7 +30,7 @@ with
     static member (+) (this, other) =
         Constant_figure_id (Constant_figure_id.value this + Constant_figure_id.value other)
     
-    static member nonexistent () = Constant_figure_id 0
+    static member nonexistent () = Constant_figure_id -1
     
     interface Numerical_id with
         //member nonexistent () = Constant_figure_id.nonexistent ()

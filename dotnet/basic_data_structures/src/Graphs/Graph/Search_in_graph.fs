@@ -78,12 +78,13 @@ module Search_in_graph=
                 step_further
                 Set.empty
                 first_elements
-            |>unzip
+            |>List.ofSeq
+            |>List.unzip
             
         found_edges,
         first_vertices
         |>Set.ofSeq
-        |>Set.union found_vertices
+        |>Set.union (Set.ofList found_vertices)
     
     let next_parts_reacheble_from_any_vertices
         all_edges
@@ -101,7 +102,6 @@ module Search_in_graph=
         all_edges
         (is_edge_needed: Edge*Vertex_id->bool)
         (starting_vertices: Vertex_id seq)
-        :Edge Set*Vertex_id Set
         =
         further_graph_parts_from_any_vertices
             is_edge_needed

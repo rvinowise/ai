@@ -122,6 +122,7 @@ module Digit_concept =
     let find_incarnations_of_digit target =
         target
         |>results_of_stencil_application digit_declaration_stencil
+        |>Seq.choose id
         |>Seq.collect (Algorithm.apply_parallel_functions finding_digits_between_commas)
         
     [<Fact>]
@@ -245,6 +246,7 @@ module Digit_concept =
         let found_numbers =
             history
             |>results_of_stencil_application number_stencil 
+            |>Seq.choose id
             |>Seq.map (Renaming_figures.rename_vertices_to_standard_names figure_id_to_name)
             
         let expected_numbers =

@@ -17,7 +17,7 @@ module Modifying_figures=
     let figure_from_part_of_figure
         taken_vertices
         bigger_figure
-        =
+        =()
         
     
     let fuse_vertices_into_subfigure

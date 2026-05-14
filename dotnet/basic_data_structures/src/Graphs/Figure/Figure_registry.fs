@@ -7,8 +7,8 @@ open rvinowise.ai
 
 module Figure_registry =
     
-    let signal_names = ResizeArray<string>() // index in this array is the ID of a signal
-    let signal_names_to_ids = Dictionary<string, Constant_figure_id>()
+    let signal_names = ResizeArray<string>() // index in this array is the ID of a signal, it's for finding the name of a signal from its ID
+    let signal_names_to_ids = Dictionary<string, Constant_figure_id>() //for finding the ID of a signal from its name
     
     
     let figure_names_to_ids = Dictionary<string, Constant_figure_id>()
@@ -29,8 +29,8 @@ module Figure_registry =
         |None -> create_signal name
         
 
-    let provide_figure_id name figure =
-        extensions.Dictionary.some_value figures figure
+    let provide_figure_id name =
+        extensions.Dictionary.some_value figure_names_to_ids name
         |>function
         |Some existing_id -> existing_id
         |None -> create_signal name
